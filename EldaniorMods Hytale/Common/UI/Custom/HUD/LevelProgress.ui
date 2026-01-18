@@ -1,0 +1,32 @@
+Group #LevelProgressHud {
+  LayoutMode: Bottom;
+  Anchor: (Bottom: 36 + 74 + 24 + 6 - 2, Width: 662, Height: 38);
+
+  Label #LevelLabel {
+    Style: (
+      FontSize: 14,
+      TextColor: #ffffff,
+      RenderBold: true,
+      Alignment: Center
+    );
+    Anchor: (Width: 662, Height: 18, Top: -4);
+    Text: "LEVEL: 1 XP: 0 / 0";
+  }
+
+  Group {
+    LayoutMode: Left;
+    Anchor: (Left: -3, Width: 662, Height: 18);
+
+    Group {
+      Anchor: (Left: 0, Width: 662, Height: 18);
+      Background: "XPBackground.png";
+
+      ProgressBar #ProgressBar {
+        Anchor: (Width: 662, Height: 18);
+        BarTexturePath: "XPFill.png";
+        EffectTexturePath: "XPEffect.png";
+        Value: 0.0;
+      }
+    }
+  }
+}
