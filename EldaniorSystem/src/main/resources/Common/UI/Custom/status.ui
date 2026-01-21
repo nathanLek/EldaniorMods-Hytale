@@ -1,0 +1,156 @@
+$Common = "Common.ui";
+
+// On définit un style simple pour le bouton plus
+@PlusBtnStyle = (
+    FontSize: 16,
+    TextColor: #4caf50,
+    HorizontalAlignment: Center,
+    VerticalAlignment: Center
+);
+
+Group {
+    LayoutMode: Center;
+
+    // Panneau Principal
+    Group #MainPanel {
+        LayoutMode: Top;
+        Anchor: (Width: 400, Height: 600);
+
+        // Couleur de fond (Format HexRGBA supporté selon les exemples AdminUI)
+        Background: #0a0f1e;
+
+        Padding: (Left: 20, Top: 20, Right: 20, Bottom: 20);
+
+        // --- TITRE ---
+        Label #TitleText {
+            Text: "STATUS";
+            Style: (FontSize: 32, TextColor: #ffffff, Alignment: Center);
+            Anchor: (Height: 50);
+        }
+
+        // Ligne de séparation
+        Group {
+            LayoutMode: Top;
+            Anchor: (Height: 2, Width: 300);
+            Background: #ffffff;
+            Margin: (Bottom: 20);
+        }
+
+        // --- INFO JOUEUR ---
+        Group {
+            LayoutMode: Left;
+            Anchor: (Height: 100);
+
+            // Colonne Gauche
+            Group {
+                LayoutMode: Top;
+
+                Label #NameText {
+                    Text: "NAME: ...";
+                    Style: (FontSize: 16, TextColor: #ffffff);
+                    Margin: (Bottom: 5);
+                }
+                Label #JobText {
+                    Text: "JOB: ...";
+                    Style: (FontSize: 16, TextColor: #ffffff);
+                    Margin: (Bottom: 5);
+                }
+                Label #TitleText {
+                    Text: "TITLE: ...";
+                    Style: (FontSize: 16, TextColor: #ffffff);
+                }
+            }
+
+            // Colonne Droite
+            Group {
+                LayoutMode: Top;
+                Anchor: (Width: 100);
+
+                Label #LevelText {
+                    Text: "1";
+                    Style: (FontSize: 50, TextColor: #ffffff, Alignment: Right);
+                }
+                Label {
+                    Text: "LEVEL";
+                    Style: (FontSize: 12, TextColor: #a0c0e0, Alignment: Right);
+                }
+            }
+        }
+
+        // --- STATS VITALS ---
+        Group {
+            LayoutMode: Left;
+            Anchor: (Height: 40);
+            Margin: (Top: 20);
+
+            Label #HpText { Text: "HP: 100"; Style: (FontSize: 18, TextColor: #ffffff); }
+            Group { Anchor: (Width: 20); }
+            Label #MpText { Text: "MP: 10"; Style: (FontSize: 18, TextColor: #ffffff, Alignment: Right); }
+        }
+
+        // --- GRILLE STATS ---
+        Group {
+            LayoutMode: Top;
+            Margin: (Top: 20);
+
+            // Force
+            Group {
+                LayoutMode: Left;
+                Anchor: (Height: 30);
+                Margin: (Bottom: 5);
+
+                Label { Text: "STR: "; Style: (TextColor: #ffffff); Anchor: (Width: 50); }
+                Label #StrVal { Text: "0"; Style: (TextColor: #ffffff); Anchor: (Width: 30); }
+
+                Button #BtnStr {
+                    Text: "+";
+                    Style: @PlusBtnStyle;
+                    Anchor: (Width: 30, Height: 30);
+                    Background: #222222;
+                }
+            }
+
+            // Vitalité
+            Group {
+                LayoutMode: Left;
+                Anchor: (Height: 30);
+                Margin: (Bottom: 5);
+
+                Label { Text: "VIT: "; Style: (TextColor: #ffffff); Anchor: (Width: 50); }
+                Label #VitVal { Text: "0"; Style: (TextColor: #ffffff); Anchor: (Width: 30); }
+
+                Button #BtnVit {
+                    Text: "+";
+                    Style: @PlusBtnStyle;
+                    Anchor: (Width: 30, Height: 30);
+                    Background: #222222;
+                }
+            }
+
+            // Intelligence
+            Group {
+                LayoutMode: Left;
+                Anchor: (Height: 30);
+                Margin: (Bottom: 5);
+
+                Label { Text: "INT: "; Style: (TextColor: #ffffff); Anchor: (Width: 50); }
+                Label #IntVal { Text: "0"; Style: (TextColor: #ffffff); Anchor: (Width: 30); }
+
+                Button #BtnInt {
+                    Text: "+";
+                    Style: @PlusBtnStyle;
+                    Anchor: (Width: 30, Height: 30);
+                    Background: #222222;
+                }
+            }
+        }
+
+        // --- FOOTER ---
+        Group {
+            LayoutMode: Top;
+            Margin: (Top: 30);
+            Label #MoneyText { Text: "COINS: 0"; Style: (FontSize: 18, TextColor: #FFD700); }
+            Label #PointsText { Text: "Points: 0"; Style: (FontSize: 18, TextColor: #ffffff, Alignment: Right); }
+        }
+    }
+}
