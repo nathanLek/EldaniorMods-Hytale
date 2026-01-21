@@ -1,18 +1,15 @@
-$Common = "../Common.ui";
+$Common = "Common.ui";
 
 @PlusBtnStyle = TextButtonStyle(
     Default: (
-        // État normal
         Background: #222222,
         LabelStyle: (FontSize: 16, TextColor: #4caf50, HorizontalAlignment: Center, VerticalAlignment: Center)
     ),
     Hovered: (
-        // État survolé (un peu plus clair)
         Background: #333333,
         LabelStyle: (FontSize: 16, TextColor: #66ff66, HorizontalAlignment: Center, VerticalAlignment: Center)
     ),
     Pressed: (
-        // État cliqué (un peu plus foncé)
         Background: #111111,
         LabelStyle: (FontSize: 16, TextColor: #228822, HorizontalAlignment: Center, VerticalAlignment: Center)
     ),
