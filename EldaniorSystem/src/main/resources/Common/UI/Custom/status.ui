@@ -1,6 +1,5 @@
 $Common = "Common.ui";
 
-// On définit un style simple pour le bouton plus
 @PlusBtnStyle = (
     FontSize: 16,
     TextColor: #4caf50,
@@ -11,24 +10,18 @@ $Common = "Common.ui";
 Group {
     LayoutMode: Center;
 
-    // Panneau Principal
     Group #MainPanel {
         LayoutMode: Top;
         Anchor: (Width: 400, Height: 600);
-
-        // Couleur de fond (Format HexRGBA supporté selon les exemples AdminUI)
         Background: #0a0f1e;
-
         Padding: (Left: 20, Top: 20, Right: 20, Bottom: 20);
 
-        // --- TITRE ---
         Label #TitleText {
             Text: "STATUS";
             Style: (FontSize: 32, TextColor: #ffffff, Alignment: Center);
             Anchor: (Height: 50);
         }
 
-        // Ligne de séparation
         Group {
             LayoutMode: Top;
             Anchor: (Height: 2, Width: 300);
@@ -36,12 +29,10 @@ Group {
             Margin: (Bottom: 20);
         }
 
-        // --- INFO JOUEUR ---
         Group {
             LayoutMode: Left;
             Anchor: (Height: 100);
 
-            // Colonne Gauche
             Group {
                 LayoutMode: Top;
 
@@ -61,7 +52,6 @@ Group {
                 }
             }
 
-            // Colonne Droite
             Group {
                 LayoutMode: Top;
                 Anchor: (Width: 100);
@@ -77,7 +67,6 @@ Group {
             }
         }
 
-        // --- STATS VITALS ---
         Group {
             LayoutMode: Left;
             Anchor: (Height: 40);
@@ -88,12 +77,10 @@ Group {
             Label #MpText { Text: "MP: 10"; Style: (FontSize: 18, TextColor: #ffffff, Alignment: Right); }
         }
 
-        // --- GRILLE STATS ---
         Group {
             LayoutMode: Top;
             Margin: (Top: 20);
 
-            // Force
             Group {
                 LayoutMode: Left;
                 Anchor: (Height: 30);
@@ -102,7 +89,7 @@ Group {
                 Label { Text: "STR: "; Style: (TextColor: #ffffff); Anchor: (Width: 50); }
                 Label #StrVal { Text: "0"; Style: (TextColor: #ffffff); Anchor: (Width: 30); }
 
-                Button #BtnStr {
+                TextButton #BtnStr {
                     Text: "+";
                     Style: @PlusBtnStyle;
                     Anchor: (Width: 30, Height: 30);
@@ -110,7 +97,6 @@ Group {
                 }
             }
 
-            // Vitalité
             Group {
                 LayoutMode: Left;
                 Anchor: (Height: 30);
@@ -119,7 +105,7 @@ Group {
                 Label { Text: "VIT: "; Style: (TextColor: #ffffff); Anchor: (Width: 50); }
                 Label #VitVal { Text: "0"; Style: (TextColor: #ffffff); Anchor: (Width: 30); }
 
-                Button #BtnVit {
+                TextButton #BtnVit {
                     Text: "+";
                     Style: @PlusBtnStyle;
                     Anchor: (Width: 30, Height: 30);
@@ -127,7 +113,6 @@ Group {
                 }
             }
 
-            // Intelligence
             Group {
                 LayoutMode: Left;
                 Anchor: (Height: 30);
@@ -136,7 +121,7 @@ Group {
                 Label { Text: "INT: "; Style: (TextColor: #ffffff); Anchor: (Width: 50); }
                 Label #IntVal { Text: "0"; Style: (TextColor: #ffffff); Anchor: (Width: 30); }
 
-                Button #BtnInt {
+                TextButton #BtnInt {
                     Text: "+";
                     Style: @PlusBtnStyle;
                     Anchor: (Width: 30, Height: 30);
@@ -145,7 +130,6 @@ Group {
             }
         }
 
-        // --- FOOTER ---
         Group {
             LayoutMode: Top;
             Margin: (Top: 30);
