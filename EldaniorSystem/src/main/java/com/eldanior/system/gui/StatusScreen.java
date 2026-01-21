@@ -31,7 +31,7 @@ public class StatusScreen extends InteractiveCustomUIPage<StatusScreen.StatusEve
     public void build(@Nonnull Ref<EntityStore> ref, @Nonnull UICommandBuilder uiCommandBuilder, @Nonnull UIEventBuilder uiEventBuilder, @Nonnull Store<EntityStore> store) {
 
         // 1. CHEMIN: Le fichier doit être dans resources/Common/UI/Custom/Status.ui
-        uiCommandBuilder.append("Status.ui");
+        uiCommandBuilder.append("status.ui");
 
         // Récupération des données
         ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
