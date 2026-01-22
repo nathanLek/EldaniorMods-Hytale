@@ -70,7 +70,7 @@ public class StatusScreen extends InteractiveCustomUIPage<StatusScreen.StatusEve
         uiCommandBuilder.set("#CmdVal.TextSpans", Message.raw("CH: " + data.getLuck() + " (+20)"));
 
         uiCommandBuilder.set("#PointsText.TextSpans", Message.raw("Points disponibles: " + data.getAttributePoints()));
-        uiCommandBuilder.set("#MoneyText.TextSpans", Message.raw("◎ : " + data.getMoney()));
+        uiCommandBuilder.set("#MoneyText.TextSpans", Message.raw(": " + data.getMoney()));
 
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#BtnStr", EventData.of("Action", "str"));
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#BtnVit", EventData.of("Action", "vit"));
