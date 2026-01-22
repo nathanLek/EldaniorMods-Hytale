@@ -30,17 +30,14 @@ public class StatusScreen extends InteractiveCustomUIPage<StatusScreen.StatusEve
     @Override
     public void build(@Nonnull Ref<EntityStore> ref, @Nonnull UICommandBuilder uiCommandBuilder, @Nonnull UIEventBuilder uiEventBuilder, @Nonnull Store<EntityStore> store) {
 
-        // 1. CHEMIN: Le fichier doit être dans resources/Common/UI/Custom/Status.ui
         uiCommandBuilder.append("status.ui");
 
-        // Récupération des données
         ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
         PlayerLevelData data = store.getComponent(ref, type);
         if (data == null) data = new PlayerLevelData();
 
         String playerName = getPlayerName(ref, store);
 
-        // 2. TEXTE: On utilise .TextSpans et Message.raw() comme dans MyUI
         uiCommandBuilder.set("#NameText.TextSpans", Message.raw("NAME: " + playerName));
         uiCommandBuilder.set("#JobText.TextSpans", Message.raw("JOB: " + data.getPlayerClass()));
         uiCommandBuilder.set("#TitleText.TextSpans", Message.raw("TITLE: " + data.getCurrentTitle()));
@@ -49,17 +46,23 @@ public class StatusScreen extends InteractiveCustomUIPage<StatusScreen.StatusEve
         uiCommandBuilder.set("#HpText.TextSpans", Message.raw("HP: " + (data.getVitality() * 10)));
         uiCommandBuilder.set("#MpText.TextSpans", Message.raw("MP: " + (data.getIntelligence() * 10)));
 
-        uiCommandBuilder.set("#StrVal.TextSpans", Message.raw(String.valueOf(data.getStrength())));
-        uiCommandBuilder.set("#VitVal.TextSpans", Message.raw(String.valueOf(data.getVitality())));
-        uiCommandBuilder.set("#IntVal.TextSpans", Message.raw(String.valueOf(data.getIntelligence())));
+        uiCommandBuilder.set("#StrVal.TextSpans", Message.raw("FOR: " + data.getStrength() + " (+20)"));
+        uiCommandBuilder.set("#VitVal.TextSpans", Message.raw("VIT: " + data.getVitality() + " (+20)"));
+        uiCommandBuilder.set("#IntVal.TextSpans", Message.raw("INT: " + data.getIntelligence() + " (+20)"));
 
-        uiCommandBuilder.set("#PointsText.TextSpans", Message.raw("Points: " + data.getAttributePoints()));
-        uiCommandBuilder.set("#MoneyText.TextSpans", Message.raw("COINS: " + data.getMoney()));
+        uiCommandBuilder.set("#PerVal.TextSpans", Message.raw("END: " + data.getEndurance() + " (+20)"));
+        uiCommandBuilder.set("#AglVal.TextSpans", Message.raw("AGL: " + data.getAgility() + " (+20)"));
+        uiCommandBuilder.set("#CmdVal.TextSpans", Message.raw("CH: " + data.getLuck() + " (+20)"));
 
-        // Evenements
+        uiCommandBuilder.set("#PointsText.TextSpans", Message.raw("Points disponibles: " + data.getAttributePoints()));
+        uiCommandBuilder.set("#MoneyText.TextSpans", Message.raw("◎ : " + data.getMoney()));
+
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#BtnStr", EventData.of("Action", "str"));
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#BtnVit", EventData.of("Action", "vit"));
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#BtnInt", EventData.of("Action", "int"));
+        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#BtnPer", EventData.of("Action", "per"));
+        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#BtnAgl", EventData.of("Action", "agl"));
+        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#BtnCmd", EventData.of("Action", "cmd"));
     }
 
     @Override
@@ -85,12 +88,11 @@ public class StatusScreen extends InteractiveCustomUIPage<StatusScreen.StatusEve
             if (changed) {
                 playerData.setAttributePoints(playerData.getAttributePoints() - 1);
 
-                // On met à jour avec la même méthode (Message.raw)
                 UICommandBuilder update = new UICommandBuilder();
-                update.set("#StrVal.TextSpans", Message.raw(String.valueOf(playerData.getStrength())));
-                update.set("#VitVal.TextSpans", Message.raw(String.valueOf(playerData.getVitality())));
-                update.set("#IntVal.TextSpans", Message.raw(String.valueOf(playerData.getIntelligence())));
-                update.set("#PointsText.TextSpans", Message.raw("Points: " + playerData.getAttributePoints()));
+                update.set("#StrVal.TextSpans", Message.raw("STR: " + playerData.getStrength())); // Ajout "STR: "
+                update.set("#VitVal.TextSpans", Message.raw("VIT: " + playerData.getVitality())); // Ajout "VIT: "
+                update.set("#IntVal.TextSpans", Message.raw("INT: " + playerData.getIntelligence())); // Ajout "INT: "
+                update.set("#PointsText.TextSpans", Message.raw("Points disponibles: " + playerData.getAttributePoints()));
 
                 this.sendUpdate(update);
             }
