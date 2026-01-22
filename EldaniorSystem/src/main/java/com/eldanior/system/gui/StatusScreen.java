@@ -36,6 +36,15 @@ public class StatusScreen extends InteractiveCustomUIPage<StatusScreen.StatusEve
         PlayerLevelData data = store.getComponent(ref, type);
         if (data == null) data = new PlayerLevelData();
 
+        while (data.getExperience() >= data.getRequiredExperience()) {
+            data.setExperience(data.getExperience() - data.getRequiredExperience());
+            data.setLevel(data.getLevel() + 1);
+            data.setAttributePoints(data.getAttributePoints() + 5);
+        }
+
+        int currentHp = data.getMaxHealth();
+        int currentMp = data.getMaxMana();
+
         String playerName = getPlayerName(ref, store);
 
         uiCommandBuilder.set("#NameText.TextSpans", Message.raw("NAME: " + playerName));
@@ -43,8 +52,14 @@ public class StatusScreen extends InteractiveCustomUIPage<StatusScreen.StatusEve
         uiCommandBuilder.set("#TitleText.TextSpans", Message.raw("TITLE: " + data.getCurrentTitle()));
         uiCommandBuilder.set("#LevelText.TextSpans", Message.raw(String.valueOf(data.getLevel())));
 
-        uiCommandBuilder.set("#HpText.TextSpans", Message.raw("HP: " + (data.getVitality() * 10)));
-        uiCommandBuilder.set("#MpText.TextSpans", Message.raw("MP: " + (data.getIntelligence() * 10)));
+        String xpInfo = "LEVEL: " + data.getLevel() + " XP: " + data.getExperience() + " / " + data.getRequiredExperience();
+        uiCommandBuilder.set("#LevelLabel.TextSpans", Message.raw(xpInfo));
+        uiCommandBuilder.set("#ProgressBar.Value", data.getExperienceProgress());
+
+        uiCommandBuilder.set("#MpText.TextSpans", Message.raw("MP: " + currentMp + " / " + data.getMaxMana()));
+        uiCommandBuilder.set("#MpProgressBar.Value", currentMp / (float) data.getMaxMana());
+
+        uiCommandBuilder.set("#LevelLabel.TextSpans", Message.raw("XP: " + data.getExperience() + " / " + data.getRequiredExperience()));
 
         uiCommandBuilder.set("#StrVal.TextSpans", Message.raw("FOR: " + data.getStrength() + " (+20)"));
         uiCommandBuilder.set("#VitVal.TextSpans", Message.raw("VIT: " + data.getVitality() + " (+20)"));
@@ -82,6 +97,15 @@ public class StatusScreen extends InteractiveCustomUIPage<StatusScreen.StatusEve
                 changed = true;
             } else if ("int".equals(data.action)) {
                 playerData.setIntelligence(playerData.getIntelligence() + 1);
+                changed = true;
+            } else if ("per".equals(data.action)) {
+                playerData.setEndurance(playerData.getEndurance() + 1);
+                changed = true;
+            } else if ("agl".equals(data.action)) {
+                playerData.setAgility(playerData.getAgility() + 1);
+                changed = true;
+            } else if ("cmd".equals(data.action)) {
+                playerData.setLuck(playerData.getLuck() + 1);
                 changed = true;
             }
 

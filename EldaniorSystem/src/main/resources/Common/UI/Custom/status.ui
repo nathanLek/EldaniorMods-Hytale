@@ -5,140 +5,314 @@ Group {
 
     Group #MainPanel {
         LayoutMode: Top;
-        Anchor: (Width: 400, Height: 700);
+        Anchor: (Width: 480, Height: 750);
         Background: #1a1f3a;
-        Padding: (Left: 20, Top: 20, Right: 20, Bottom: 20);
+        Padding: (Left: 30, Top: 30, Right: 30, Bottom: 30);
 
         Label {
             Text: "STATUS";
-            Style: (FontSize: 28, TextColor: #ffffff, HorizontalAlignment: Center);
-            Anchor: (Height: 40);
+            Style: (FontSize: 36, TextColor: #ffffff, HorizontalAlignment: Center);
+            Anchor: (Height: 50);
         }
 
         Group {
-            Anchor: (Height: 2);
-            Background: #4a5f8a;
-        }
-
-        Label #NameText {
-            Text: "NAME: ...";
-            Style: (FontSize: 14, TextColor: #ffffff);
-        }
-
-        Label #JobText {
-            Text: "JOB: ...";
-            Style: (FontSize: 14, TextColor: #ffffff);
-        }
-
-        Label #TitleText {
-            Text: "TITLE: ...";
-            Style: (FontSize: 14, TextColor: #ffffff);
-        }
-
-        Label #LevelText {
-            Text: "1";
-            Style: (FontSize: 48, TextColor: #ffffff, HorizontalAlignment: Center);
+            Anchor: (Height: 3);
+            Background: #5a7faa;
         }
 
         Group {
-            Anchor: (Height: 2);
-            Background: #4a5f8a;
+            Anchor: (Height: 10);
         }
 
-        Label #HpText {
-            Text: "HP: 100";
-            Style: (FontSize: 16, TextColor: #ffffff);
+        Group {
+            LayoutMode: Left;
+            Anchor: (Height: 75);
+
+            Group {
+                LayoutMode: Top;
+
+                Label #NameText {
+                    Text: "NAME: ...";
+                    Style: (FontSize: 16, TextColor: #ffffff);
+                }
+
+                Label #JobText {
+                    Text: "JOB: ...";
+                    Style: (FontSize: 14, TextColor: #aabbcc);
+                }
+
+                Label #TitleText {
+                    Text: "TITLE: ...";
+                    Style: (FontSize: 14, TextColor: #aabbcc);
+                }
+            }
+
+            Group {
+                Anchor: (Width: 100);
+            }
+
+            Group {
+                LayoutMode: Top;
+                Anchor: (Width: 80);
+
+                Label #LevelText {
+                    Text: "1";
+                    Style: (FontSize: 52, TextColor: #ffcc66, HorizontalAlignment: Center);
+                }
+
+                Label {
+                    Text: "LEVEL";
+                    Style: (FontSize: 12, TextColor: #8fa5c7, HorizontalAlignment: Center);
+                }
+            }
+        }
+
+        Group {
+            Anchor: (Height: 3);
+            Background: #5a7faa;
+        }
+
+        Group {
+            Anchor: (Height: 8);
+        }
+
+        Label {
+            Text: "MANA";
+            Style: (FontSize: 11, TextColor: #66aaff);
         }
 
         Label #MpText {
-            Text: "MP: 10";
-            Style: (FontSize: 16, TextColor: #ffffff);
+            Text: "MP: 100 / 100";
+            Style: (FontSize: 15, TextColor: #ffffff);
         }
 
         Group {
-            Anchor: (Height: 2);
-            Background: #4a5f8a;
-        }
+            Anchor: (Height: 16);
+            Background: #0f1428;
 
-        Label #StrVal {
-            Text: "STR: 0";
-            Style: (FontSize: 14, TextColor: #ffffff);
-        }
-
-        TextButton #BtnStr {
-            Text: "+";
-            Background: #2a2a2a;
-            Anchor: (Width: 30, Height: 30);
-        }
-
-        Label #VitVal {
-            Text: "VIT: 0";
-            Style: (FontSize: 14, TextColor: #ffffff);
-        }
-
-        TextButton #BtnVit {
-            Text: "+";
-            Background: #2a2a2a;
-            Anchor: (Width: 30, Height: 30);
-        }
-
-        Label #IntVal {
-            Text: "INT: 0";
-            Style: (FontSize: 14, TextColor: #ffffff);
-        }
-
-        TextButton #BtnInt {
-            Text: "+";
-            Background: #2a2a2a;
-            Anchor: (Width: 30, Height: 30);
-        }
-
-        Label #PerVal {
-            Text: "PER: 0";
-            Style: (FontSize: 14, TextColor: #ffffff);
-        }
-
-        TextButton #BtnPer {
-            Text: "+";
-            Background: #2a2a2a;
-            Anchor: (Width: 30, Height: 30);
-        }
-
-        Label #AglVal {
-            Text: "AGL: 0";
-            Style: (FontSize: 14, TextColor: #ffffff);
-        }
-
-        TextButton #BtnAgl {
-            Text: "+";
-            Background: #2a2a2a;
-            Anchor: (Width: 30, Height: 30);
-        }
-
-        Label #CmdVal {
-            Text: "CMD: 0";
-            Style: (FontSize: 14, TextColor: #ffffff);
-        }
-
-        TextButton #BtnCmd {
-            Text: "+";
-            Background: #2a2a2a;
-            Anchor: (Width: 30, Height: 30);
+            ProgressBar #MpProgressBar {
+                BarTexturePath: "MPFill.png";
+                Value: 1.0;
+            }
         }
 
         Group {
-            Anchor: (Height: 2);
-            Background: #4a5f8a;
+            Anchor: (Height: 6);
+        }
+
+        Label {
+            Text: "EXPERIENCE";
+            Style: (FontSize: 11, TextColor: #66ff66);
+        }
+
+        Label #LevelLabel {
+            Text: "XP: 0 / 100";
+            Style: (FontSize: 15, TextColor: #aabbcc);
+        }
+
+        Group {
+            Anchor: (Height: 16);
+            Background: #0f1428;
+
+            ProgressBar #ProgressBar {
+                BarTexturePath: "XPFill.png";
+                Value: 0.0;
+            }
+        }
+
+        Group {
+            Anchor: (Height: 3);
+            Background: #5a7faa;
+        }
+
+        Group {
+            Anchor: (Height: 10);
+        }
+
+        Label {
+            Text: "ATTRIBUTES";
+            Style: (FontSize: 13, TextColor: #ffcc66, HorizontalAlignment: Center);
+        }
+
+        Group {
+            Anchor: (Height: 6);
+        }
+
+        Group {
+            LayoutMode: Left;
+            Anchor: (Height: 200);
+
+            Group {
+                Anchor: (Width: 20);
+            }
+
+            Group {
+                LayoutMode: Top;
+
+                Group {
+                    LayoutMode: Left;
+                    Anchor: (Height: 38);
+
+                    Label #StrVal {
+                        Text: "FOR: 10";
+                        Style: (FontSize: 15, TextColor: #ffffff);
+                        Anchor: (Width: 110);
+                    }
+
+                    TextButton #BtnStr {
+                        Text: "+";
+                        Background: #3a5a7a;
+                        Anchor: (Width: 38, Height: 38);
+                    }
+                }
+
+                Group {
+                    Anchor: (Height: 8);
+                }
+
+                Group {
+                    LayoutMode: Left;
+                    Anchor: (Height: 38);
+
+                    Label #VitVal {
+                        Text: "VIT: 10";
+                        Style: (FontSize: 15, TextColor: #ffffff);
+                        Anchor: (Width: 110);
+                    }
+
+                    TextButton #BtnVit {
+                        Text: "+";
+                        Background: #3a5a7a;
+                        Anchor: (Width: 38, Height: 38);
+                    }
+                }
+
+                Group {
+                    Anchor: (Height: 8);
+                }
+
+                Group {
+                    LayoutMode: Left;
+                    Anchor: (Height: 38);
+
+                    Label #IntVal {
+                        Text: "INT: 10";
+                        Style: (FontSize: 15, TextColor: #ffffff);
+                        Anchor: (Width: 110);
+                    }
+
+                    TextButton #BtnInt {
+                        Text: "+";
+                        Background: #3a5a7a;
+                        Anchor: (Width: 38, Height: 38);
+                    }
+                }
+            }
+
+            Group {
+                Anchor: (Width: 40);
+            }
+
+            Group {
+                LayoutMode: Top;
+
+                Group {
+                    LayoutMode: Left;
+                    Anchor: (Height: 38);
+
+                    Label #PerVal {
+                        Text: "END: 10";
+                        Style: (FontSize: 15, TextColor: #ffffff);
+                        Anchor: (Width: 110);
+                    }
+
+                    TextButton #BtnPer {
+                        Text: "+";
+                        Background: #3a5a7a;
+                        Anchor: (Width: 38, Height: 38);
+                    }
+                }
+
+                Group {
+                    Anchor: (Height: 8);
+                }
+
+                Group {
+                    LayoutMode: Left;
+                    Anchor: (Height: 38);
+
+                    Label #AglVal {
+                        Text: "AGL: 10";
+                        Style: (FontSize: 15, TextColor: #ffffff);
+                        Anchor: (Width: 110);
+                    }
+
+                    TextButton #BtnAgl {
+                        Text: "+";
+                        Background: #3a5a7a;
+                        Anchor: (Width: 38, Height: 38);
+                    }
+                }
+
+                Group {
+                    Anchor: (Height: 8);
+                }
+
+                Group {
+                    LayoutMode: Left;
+                    Anchor: (Height: 38);
+
+                    Label #CmdVal {
+                        Text: "CH: 10";
+                        Style: (FontSize: 15, TextColor: #ffffff);
+                        Anchor: (Width: 110);
+                    }
+
+                    TextButton #BtnCmd {
+                        Text: "+";
+                        Background: #3a5a7a;
+                        Anchor: (Width: 38, Height: 38);
+                    }
+                }
+            }
+
+            Group {
+                Anchor: (Width: 20);
+            }
+        }
+
+        Group {
+            Anchor: (Height: 3);
+            Background: #5a7faa;
+        }
+
+        Group {
+            Anchor: (Height: 10);
         }
 
         Label #PointsText {
-            Text: "Points: 0";
-            Style: (FontSize: 14, TextColor: #8fa5c7);
+            Text: "Points disponibles: 0";
+            Style: (FontSize: 14, TextColor: #66ff66, HorizontalAlignment: Center);
         }
 
-        Label #MoneyText {
-            Text: "COINS: 0";
-            Style: (FontSize: 16, TextColor: #ffd700);
+        Group {
+            Anchor: (Height: 10);
+        }
+
+        Label {
+            Text: "COINS";
+            Style: (FontSize: 11, TextColor: #ffdd44);
+        }
+
+        Group {
+            Anchor: (Height: 42);
+            Background: #0f1428;
+            Padding: (Left: 12, Top: 9, Right: 12, Bottom: 9);
+
+            Label #MoneyText {
+                Text: "◎ 1000";
+                Style: (FontSize: 18, TextColor: #ffd700);
+            }
         }
     }
 }

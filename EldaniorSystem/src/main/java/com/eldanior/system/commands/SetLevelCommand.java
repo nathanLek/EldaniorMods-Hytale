@@ -85,6 +85,8 @@ public class SetLevelCommand extends AbstractAsyncCommand {
                 if (data == null) data = new PlayerLevelData();
 
                 data.setLevel(level);
+                data.setExperience(0);
+                data.setAttributePoints((level - 1) * 5);
                 store.putComponent(ref, type, data);
 
                 // Feedback

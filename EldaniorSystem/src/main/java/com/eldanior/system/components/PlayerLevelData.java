@@ -40,6 +40,24 @@ public class PlayerLevelData implements Component<EntityStore> {
         this.unlockedTitles.add("Novice");
     }
 
+    public int getRequiredExperience() {
+        return (int) (100 + 140 * (level - 1) + 10L * (level - 1) * (level - 1));
+    }
+
+    public void addExperience(int amount) {
+        this.experience += amount;
+        // Boucle au cas où on gagne assez d'XP pour prendre plusieurs niveaux d'un coup
+        while (this.experience >= getRequiredExperience()) {
+            this.experience -= getRequiredExperience();
+            this.level++;
+            this.attributePoints += 5; // Bonus : 5 points par niveau
+        }
+    }
+
+    public float getExperienceProgress() {
+        return (float) this.experience / getRequiredExperience();
+    }
+
     // --- LE CODEC CORRIGÉ (MAJUSCULES OBLIGATOIRES POUR LES CLÉS) ---
     public static final BuilderCodec<PlayerLevelData> CODEC = BuilderCodec.builder(PlayerLevelData.class, PlayerLevelData::new)
             // Progression (J'ai mis des Majuscules partout ici)
