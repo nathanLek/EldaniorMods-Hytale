@@ -6,10 +6,9 @@ public class ESCommand extends AbstractCommandCollection {
 
     public ESCommand() {
         super("es", "Commande principale Eldanior System");
-        this.addSubCommand(new SetLevelCommand());
-        this.addSubCommand(new LevelCommand());
         this.addSubCommand(new StatusCommand());
         this.addSubCommand(new AddXPCommand());
+        this.addSubCommand(new SetLevelCommand());
     }
 
     @Override
