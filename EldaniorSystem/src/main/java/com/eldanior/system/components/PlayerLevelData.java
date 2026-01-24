@@ -50,7 +50,7 @@ public class PlayerLevelData implements Component<EntityStore> {
         while (this.experience >= getRequiredExperience()) {
             this.experience -= getRequiredExperience();
             this.level++;
-            this.attributePoints += 5; // Bonus : 5 points par niveau
+            this.attributePoints += 3; // Bonus : 3 points par niveau
         }
     }
 

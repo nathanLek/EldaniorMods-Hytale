@@ -2,9 +2,7 @@ package com.eldanior.system;
 
 import com.eldanior.system.commands.ESCommand;
 import com.eldanior.system.components.PlayerLevelData;
-import com.eldanior.system.systems.CombatTrackerSystem;
-import com.eldanior.system.systems.CombatStatsSystem;
-import com.eldanior.system.systems.DeathXPSystem;
+import com.eldanior.system.systems.*;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.hypixel.hytale.logger.HytaleLogger;
@@ -59,6 +57,11 @@ public class EldaniorSystem extends JavaPlugin {
             // Enregistre le traqueur de coups
             this.getEntityStoreRegistry().registerSystem(new CombatTrackerSystem());
             this.getEntityStoreRegistry().registerSystem(new CombatStatsSystem());
+            this.getEntityStoreRegistry().registerSystem(new EnduranceSystem());
+            this.getEntityStoreRegistry().registerSystem(new ManaSystem());
+            this.getEntityStoreRegistry().registerSystem(new HealthRegenSystem());
+            this.getEntityStoreRegistry().registerSystem(new FallDamageSystem());
+            this.getEntityStoreRegistry().registerSystem(new SpeedSystem());
 
             // Enregistre le détecteur de mort
             this.getEntityStoreRegistry().registerSystem(new DeathXPSystem());

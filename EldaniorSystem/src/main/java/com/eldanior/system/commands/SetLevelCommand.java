@@ -92,13 +92,14 @@ public class SetLevelCommand extends AbstractAsyncCommand {
                 data.setIntelligence(1);
                 data.setEndurance(1);
                 data.setLuck(1);
+                data.setMoney(1000);
 
                 // 3. On calcule les points disponibles
                 if (level <= 1) {
                     data.setAttributePoints(0);
                 } else {
                     // 5 points par niveau gagné
-                    data.setAttributePoints((level - 1) * 5);
+                    data.setAttributePoints((level - 1) * 3);
                 }
 
                 // 4. IMPORTANT : On applique les changements au moteur (PV, Mana)

@@ -18,6 +18,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Random;
 
+@SuppressWarnings({"unchecked", "deprecation"})
 public class CombatStatsSystem extends DamageEventSystem {
 
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
@@ -25,59 +26,63 @@ public class CombatStatsSystem extends DamageEventSystem {
 
     @Override
     public void handle(int index, @NonNull ArchetypeChunk<EntityStore> archetypeChunk, @NonNull Store<EntityStore> store, @NonNull CommandBuffer<EntityStore> commandBuffer, Damage damage) {
-
         if (damage.isCancelled()) return;
 
-        Ref<EntityStore> victimRef = archetypeChunk.getReferenceTo(index);
-        if (!victimRef.isValid()) return;
+        // 1. FORCE & CHANCE (Attaquant)
+        applyOffensiveStats(damage, store);
 
-        float originalDamage = damage.getAmount();
-        float currentDamage = originalDamage;
+        // 2. ENDURANCE (Défenseur)
+        // C'est ici que l'Endurance agit comme bouclier !
+        applyEnduranceDefense(index, archetypeChunk, store, damage);
+    }
 
-        // --- 1. GESTION DE L'ATTAQUANT (FORCE & CHANCE) ---
+    // Gère la FORCE (Dégâts) et la CHANCE (Critique)
+    private void applyOffensiveStats(Damage damage, Store<EntityStore> store) {
         Damage.Source source = damage.getSource();
-
         if (source instanceof Damage.EntitySource entitySource) {
             Ref<EntityStore> attackerRef = entitySource.getRef();
-
             if (attackerRef.isValid()) {
                 PlayerLevelData attackerData = store.getComponent(attackerRef, EldaniorSystem.get().getPlayerLevelDataType());
-
                 if (attackerData != null) {
+                    float currentDamage = damage.getAmount();
 
-                    // --- NOUVELLE FORMULE (CIBLE : ~12 Dégâts pour 18 Force) ---
-                    // (Force * 0.65) + (Niveau * Force * 0.02)
-                    float strengthBonus = (float) ((attackerData.getStrength() * 0.50) + (attackerData.getLevel() * attackerData.getStrength() * 0.05));
-
+                    // 3000 pts * 0.032 = +96 Dégâts (+5 base = 101 Dégâts)
+                    PlayerLevelData data = new PlayerLevelData();
+                    float strengthBonus = data.getStrength() * 0.032f;
                     currentDamage += strengthBonus;
 
-                    // Message de debug
-                    if (strengthBonus > 0) {
-                        // LOGGER.atInfo().log("Bonus Force: +" + strengthBonus);
+                    damage.setAmount(currentDamage);
+
+                    // CHANCE (Critique)
+                    if (LuckSystem.isCriticalHit(data)) {
+                        damage.setAmount(currentDamage * 1.8f);
                     }
 
-                    // CALCUL CHANCE : Critique
-                    float critChance = attackerData.getLuck() * 0.5f;
-                    if (random.nextFloat() * 100 < critChance) {
-                        currentDamage *= 1.5f;
-                    }
+                    damage.setAmount(currentDamage);
                 }
             }
         }
+    }
 
-        // --- 2. GESTION DE LA VICTIME (ENDURANCE) ---
+    // Gère l'ENDURANCE (Réduction de dégâts)
+    private void applyEnduranceDefense(int index, ArchetypeChunk<EntityStore> chunk, Store<EntityStore> store, Damage damage) {
+        Ref<EntityStore> victimRef = chunk.getReferenceTo(index);
+        if (!victimRef.isValid()) return;
+
         PlayerLevelData victimData = store.getComponent(victimRef, EldaniorSystem.get().getPlayerLevelDataType());
-
         if (victimData != null) {
-            // J'ai aussi réduit un peu l'Endurance pour équilibrer avec la baisse de force
-            // Formule : (End * 0.3) au lieu de 0.5
-            float defense = (float) ((victimData.getEndurance() * 0.3) + (victimData.getLevel() * victimData.getEndurance() * 0.05));
-            currentDamage -= defense;
-            if (currentDamage < 1) currentDamage = 1;
-        }
+            float currentDamage = damage.getAmount();
 
-        // --- 3. APPLICATION ---
-        if (Math.abs(currentDamage - originalDamage) > 0.01f) {
+            // --- ENDURANCE ---
+            // Formule : Chaque point d'Endurance réduit les dégâts de 0.3
+            float defense = (float) (victimData.getEndurance() * 0.3);
+
+            // Application de la réduction
+            currentDamage -= defense;
+
+            // Minimum 1 dégât
+            if (currentDamage < 1) currentDamage = 1;
+
             damage.setAmount(currentDamage);
         }
     }
@@ -90,7 +95,7 @@ public class CombatStatsSystem extends DamageEventSystem {
             Object inst = mod.getMethod("get").invoke(null);
             return (SystemGroup<EntityStore>) mod.getMethod("getFilterDamageGroup").invoke(inst);
         } catch (Throwable e) {
-            LOGGER.atSevere().log("Erreur lors de la récupération du Groupe de Dégâts : " + e.getMessage());
+            LOGGER.atSevere().log("Erreur CombatStatsSystem : " + e.getMessage());
             return null;
         }
     }

@@ -11,51 +11,51 @@ import com.hypixel.hytale.server.core.modules.entitystats.modifier.StaticModifie
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 public class StatCalculator {
-
-    @SuppressWarnings("unchecked")
+    
     public static void updatePlayerStats(Ref<EntityStore> playerRef, Store<EntityStore> store, PlayerLevelData data) {
 
-        // --- 1. Récupération de la Carte des Stats (EntityStatMap) ---
-        // On récupère le composant via le module
+        // 🛡️ SÉCURITÉ ANTI-CRASH
+        // Si les données sont nulles (bug de chargement), on arrête tout de suite pour éviter l'erreur "No provided exception message"
+        if (data == null) {
+            return;
+        }
+
         EntityStatMap statMap = store.getComponent(playerRef, EntityStatsModule.get().getEntityStatMapComponentType());
 
         if (statMap != null) {
 
-            // === VITALITÉ (PV MAX) ===
+            // === 1. VITALITÉ (Objectif 500 PV) ===
             int healthIndex = DefaultEntityStatTypes.getHealth();
-            // Formule : +5 PV par point de Vitalité
-            float healthBonus = data.getVitality() * 5.0f;
+            // 3000 pts * 0.16 = +480 PV (+20 base = 500)
+            float healthBonus = data.getVitality() * 0.16f;
 
-            // Nettoyage ancien bonus
-            statMap.removeModifier(healthIndex, "Eldanior_Vitality_Bonus");
-
-            // Application nouveau bonus
+            statMap.removeModifier(healthIndex, "Eldanior_Vitality");
             if (healthBonus > 0) {
                 StaticModifier healthMod = new StaticModifier(Modifier.ModifierTarget.MAX, StaticModifier.CalculationType.ADDITIVE, healthBonus);
-                statMap.putModifier(healthIndex, "Eldanior_Vitality_Bonus", healthMod);
+                statMap.putModifier(healthIndex, "Eldanior_Vitality", healthMod);
             }
 
-            // === INTELLIGENCE (MANA MAX) ===
+            // === 2. INTELLIGENCE (Objectif 5000 Mana) ===
             int manaIndex = DefaultEntityStatTypes.getMana();
-            // Formule : +10 Mana par point d'Intelligence
-            float manaBonus = data.getIntelligence() * 10.0f;
+            // 3000 pts * 1.66 = +4980 Mana (+20 base = 5000)
+            float manaBonus = data.getIntelligence() * 1.66f;
 
-            statMap.removeModifier(manaIndex, "Eldanior_Intelligence_Bonus");
-
+            statMap.removeModifier(manaIndex, "Eldanior_Intelligence");
             if (manaBonus > 0) {
                 StaticModifier manaMod = new StaticModifier(Modifier.ModifierTarget.MAX, StaticModifier.CalculationType.ADDITIVE, manaBonus);
-                statMap.putModifier(manaIndex, "Eldanior_Intelligence_Bonus", manaMod);
+                statMap.putModifier(manaIndex, "Eldanior_Intelligence", manaMod);
+            }
+
+            // === 3. ENDURANCE -> STAMINA ===
+            int staminaIndex = DefaultEntityStatTypes.getStamina();
+            // 3000 pts * 5.0 = +15000 Stamina (Gros réservoir pour sprinter longtemps)
+            float staminaBonus = data.getEndurance() * 5.0f;
+
+            statMap.removeModifier(staminaIndex, "Eldanior_Endurance");
+            if (staminaBonus > 0) {
+                StaticModifier staminaMod = new StaticModifier(Modifier.ModifierTarget.MAX, StaticModifier.CalculationType.ADDITIVE, staminaBonus);
+                statMap.putModifier(staminaIndex, "Eldanior_Endurance", staminaMod);
             }
         }
-
-        // === AGILITÉ (VITESSE) ===
-        /* TODO: La gestion de la vitesse dépend de ta version d'Hytale.
-           Comme 'PlayerCapabilities' est introuvable, on laisse ça de côté pour l'instant
-           pour que la Vie et le Mana fonctionnent.
-
-           Si tu veux activer la vitesse plus tard, il faudra trouver où se cache 'setWalkSpeed'
-           (souvent dans PhysicsComponent ou Player).
-        */
-        // float speedBonus = data.getAgility() * 0.002f;
     }
 }
