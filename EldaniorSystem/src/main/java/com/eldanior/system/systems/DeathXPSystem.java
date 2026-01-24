@@ -47,7 +47,8 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
             UUID killerUUID = EldaniorSystem.get().getLastAttackers().remove(victimUUID);
 
             if (killerUUID != null) {
-                giveXP(killerUUID, entityRef, store, commandBuffer);
+                // On passe le victimUUID pour récupérer le nom proprement plus tard
+                giveXP(killerUUID, victimUUID, entityRef, store, commandBuffer);
             }
         } catch (Exception e) {
             LOGGER.atSevere().log("ERREUR CRITIQUE dans DeathXPSystem: " + e.getMessage());
@@ -55,19 +56,44 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
         }
     }
 
-    private void giveXP(UUID killerUUID, Ref<EntityStore> victimRef, Store<EntityStore> store, CommandBuffer<EntityStore> commandBuffer) {
+    // Ajout de victimUUID dans les arguments pour récupérer le nom facilement
+    private void giveXP(UUID killerUUID, UUID victimUUID, Ref<EntityStore> victimRef, Store<EntityStore> store, CommandBuffer<EntityStore> commandBuffer) {
         try {
-            PlayerRef playerRef = Universe.get().getPlayer(killerUUID);
-            if (playerRef == null) return;
+            PlayerRef killerRef = Universe.get().getPlayer(killerUUID);
+            if (killerRef == null) return;
+
+            var killerEntityRef = killerRef.getReference();
+            if (killerEntityRef == null) return;
+
+            Store<EntityStore> killerStore = killerEntityRef.getStore();
+            ComponentType<EntityStore, PlayerLevelData> lvlType = EldaniorSystem.get().getPlayerLevelDataType();
+
+            PlayerLevelData killerDataRead = killerStore.getComponent(killerEntityRef, lvlType);
+            int killerLevel = (killerDataRead != null) ? killerDataRead.getLevel() : 1;
 
             int xpAmount = 0;
             String victimName = "Inconnu";
+            boolean isPvP = false;
 
-            // --- CORRECTION 1 : hasComponent -> getComponent != null ---
+            // --- 1. DÉTECTION ET CALCUL XP ---
+
             // A. PvP
             if (store.getComponent(victimRef, Player.getComponentType()) != null) {
-                xpAmount = 100;
+                isPvP = true;
                 victimName = "Joueur";
+
+                // CORRECTION DU NOM : On utilise l'UUID et l'Univers (plus sûr)
+                PlayerRef victimRefObj = Universe.get().getPlayer(victimUUID);
+                if (victimRefObj != null) {
+                    victimName = victimRefObj.getUsername();
+                }
+
+                // Récupération niveau victime
+                PlayerLevelData victimData = store.getComponent(victimRef, lvlType);
+                int victimLevel = (victimData != null) ? victimData.getLevel() : 1;
+
+                // Calcul du ratio
+                xpAmount = calculatePvPXP(killerLevel, victimLevel);
             }
             // B. PvE
             else {
@@ -76,51 +102,78 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
                     String typeId = npc.getNPCTypeId().toLowerCase();
                     victimName = typeId.replace("_", " ");
 
-                    if (typeId.contains("boss")) {
-                        xpAmount = 500;
-                    } else if (typeId.contains("void") || typeId.contains("dungeon")) {
-                        xpAmount = 25;
-                    } else if (typeId.contains("skeleton") || typeId.contains("zombie")) {
-                        xpAmount = 100;
-                    } else if (typeId.contains("cow") || typeId.contains("pig") || typeId.contains("sheep")) {
-                        xpAmount = 100;
-                    } else {
-                        xpAmount = 10;
-                    }
+                    if (typeId.contains("boss")) xpAmount = 500;
+                    else if (typeId.contains("void") || typeId.contains("dungeon")) xpAmount = 25;
+                    else if (typeId.contains("skeleton") || typeId.contains("zombie")) xpAmount = 15;
+                    else if (typeId.contains("cow") || typeId.contains("pig") || typeId.contains("sheep")) xpAmount = 2;
+                    else xpAmount = 10;
                 }
             }
 
-            if (xpAmount == 0) return;
+            if (xpAmount <= 0) return; // Sécurité
 
-            var killerEntityRef = playerRef.getReference();
-            if (killerEntityRef != null) {
-                Store<EntityStore> killerStore = killerEntityRef.getStore();
-                ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
+            // --- 2. ATTRIBUTION ---
 
-                PlayerLevelData existingData = killerStore.getComponent(killerEntityRef, type);
+            PlayerLevelData dataToWrite;
+            if (killerDataRead != null) {
+                dataToWrite = (PlayerLevelData) killerDataRead.clone();
+            } else {
+                dataToWrite = new PlayerLevelData();
+                dataToWrite.setLevel(1);
+            }
 
-                PlayerLevelData data = (existingData != null) ? (PlayerLevelData) existingData.clone() : new PlayerLevelData();
+            assert dataToWrite != null;
+            int oldLvl = dataToWrite.getLevel();
+            dataToWrite.addExperience(xpAmount);
 
-                assert data != null;
-                int oldLvl = data.getLevel();
-                data.addExperience(xpAmount);
+            commandBuffer.putComponent(killerEntityRef, lvlType, dataToWrite);
 
-                commandBuffer.putComponent(killerEntityRef, type, data);
+            // --- 3. FEEDBACK ---
+            String msgContent;
+            if (isPvP) {
+                msgContent = "<color:gold>⚔ PvP : +" + xpAmount + " XP</color> <color:gray>(vs " + victimName + ")</color>";
+            } else {
+                msgContent = "<color:green>+" + xpAmount + " XP</color> <color:gray>(" + victimName + ")</color>";
+            }
 
-                // --- CORRECTION 2 : Action Bar -> Notification ---
-                String msgContent = "<color:green>+" + xpAmount + " XP</color> <color:gray>(" + victimName + ")</color>";
-                // On utilise NotificationHelper car PlayerRef ne supporte pas sendActionBar
-                NotificationHelper.sendNotification(playerRef, msgContent, NotificationStyle.Success);
+            NotificationHelper.sendNotification(killerRef, msgContent, NotificationStyle.Success);
 
-                if (data.getLevel() > oldLvl) {
-                    NotificationHelper.showLevelUpTitle(playerRef, data.getLevel());
-                }
+            if (dataToWrite.getLevel() > oldLvl) {
+                NotificationHelper.showLevelUpTitle(killerRef, dataToWrite.getLevel());
             }
 
         } catch (Exception e) {
             LOGGER.atSevere().log("ERREUR lors du don d'XP : " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Calcule l'XP selon le ratio de niveau.
+     * Formule : 100 * (NiveauVictime / NiveauTueur)
+     */
+    private int calculatePvPXP(int killerLvl, int victimLvl) {
+        int baseXP = 100;
+
+        // Sécurité anti-crash (division par zéro)
+        if (killerLvl < 1) killerLvl = 1;
+        if (victimLvl < 1) victimLvl = 1;
+
+        // Calcul du Ratio (avec des doubles pour la précision)
+        double ratio = (double) victimLvl / (double) killerLvl;
+
+        // Exemples :
+        // 50 vs 50 -> ratio 1.0 -> 100 XP
+        // 10 vs 20 -> ratio 2.0 -> 200 XP (x2 car victime 2x plus forte)
+        // 20 vs 10 -> ratio 0.5 -> 50 XP (divisé par 2 car victime 2x plus faible)
+
+        int finalXP = (int) (baseXP * ratio);
+
+        // Bornes de sécurité
+        if (finalXP < 1) finalXP = 1;      // Minimum 1 XP
+        if (finalXP > 2000) finalXP = 2000; // Maximum 2000 XP (anti-abus extrême)
+
+        return finalXP;
     }
 
     @Nonnull

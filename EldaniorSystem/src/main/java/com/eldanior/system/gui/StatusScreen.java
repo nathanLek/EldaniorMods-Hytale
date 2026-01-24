@@ -56,13 +56,13 @@ public class StatusScreen extends InteractiveCustomUIPage<StatusScreen.StatusEve
         uiCommandBuilder.set("#MpText.TextSpans", Message.raw("MP: " + currentMp + " / " + data.getMaxMana()));
         uiCommandBuilder.set("#MpProgressBar.Value", currentMp / (float) data.getMaxMana());
 
-        uiCommandBuilder.set("#StrVal.TextSpans", Message.raw("FOR: " + data.getStrength() + " (+20)"));
-        uiCommandBuilder.set("#VitVal.TextSpans", Message.raw("VIE: " + data.getVitality() + " (+20)"));
-        uiCommandBuilder.set("#IntVal.TextSpans", Message.raw("INT: " + data.getIntelligence() + " (+20)"));
+        uiCommandBuilder.set("#StrVal.TextSpans", Message.raw("FOR: " + data.getStrength() + " (+0)"));
+        uiCommandBuilder.set("#VitVal.TextSpans", Message.raw("VIE: " + data.getVitality() + " (+0)"));
+        uiCommandBuilder.set("#IntVal.TextSpans", Message.raw("INT: " + data.getIntelligence() + " (+0)"));
 
-        uiCommandBuilder.set("#PerVal.TextSpans", Message.raw("END: " + data.getEndurance() + " (+20)"));
-        uiCommandBuilder.set("#AglVal.TextSpans", Message.raw("AGL: " + data.getAgility() + " (+20)"));
-        uiCommandBuilder.set("#CmdVal.TextSpans", Message.raw("CH: " + data.getLuck() + " (+20)"));
+        uiCommandBuilder.set("#PerVal.TextSpans", Message.raw("END: " + data.getEndurance() + " (+0)"));
+        uiCommandBuilder.set("#AglVal.TextSpans", Message.raw("AGL: " + data.getAgility() + " (+0)"));
+        uiCommandBuilder.set("#CmdVal.TextSpans", Message.raw("CH: " + data.getLuck() + " (+0)"));
 
         uiCommandBuilder.set("#PointsText.TextSpans", Message.raw("Points disponibles: " + data.getAttributePoints()));
         uiCommandBuilder.set("#MoneyText.TextSpans", Message.raw(": " + data.getMoney()));
@@ -109,22 +109,30 @@ public class StatusScreen extends InteractiveCustomUIPage<StatusScreen.StatusEve
             }
 
             if (changed) {
-                // On décrémente les points
+                // 1. On décrémente les points
                 playerData.setAttributePoints(playerData.getAttributePoints() - 1);
 
-                // --- CORRECTION 2 : SAUVEGARDE EXPLICITE ---
-                // Très important ! Sans ça, les points sont perdus au redémarrage
+                // 2. IMPORT DU CALCULATEUR ICI ! <--- C'EST LA CLEF
+                // On met à jour les vraies stats du jeu (PV, Mana, Vitesse)
+                com.eldanior.system.utils.StatCalculator.updatePlayerStats(ref, store, playerData);
+
+                // 3. On sauvegarde les données RPG
                 store.putComponent(ref, type, playerData);
 
-                // On met à jour l'affichage immédiatement pour le joueur
+                // 4. On met à jour l'affichage de l'écran
                 UICommandBuilder update = new UICommandBuilder();
-                update.set("#StrVal.TextSpans", Message.raw("FOR: " + playerData.getStrength() + " (+20)"));
-                update.set("#VitVal.TextSpans", Message.raw("VIT: " + playerData.getVitality() + " (+20)"));
-                update.set("#IntVal.TextSpans", Message.raw("INT: " + playerData.getIntelligence() + " (+20)"));
-                update.set("#PerVal.TextSpans", Message.raw("END: " + playerData.getEndurance() + " (+20)"));
-                update.set("#AglVal.TextSpans", Message.raw("AGL: " + playerData.getAgility() + " (+20)"));
-                update.set("#CmdVal.TextSpans", Message.raw("CH: " + playerData.getLuck() + " (+20)"));
+
+                // Mettre à jour les textes
+                update.set("#StrVal.TextSpans", Message.raw("FOR: " + playerData.getStrength()));
+                update.set("#VitVal.TextSpans", Message.raw("VIE: " + playerData.getVitality()));
+                update.set("#IntVal.TextSpans", Message.raw("INT: " + playerData.getIntelligence()));
+                update.set("#PerVal.TextSpans", Message.raw("END: " + playerData.getEndurance()));
+                update.set("#AglVal.TextSpans", Message.raw("AGL: " + playerData.getAgility()));
+                update.set("#CmdVal.TextSpans", Message.raw("CH: " + playerData.getLuck()));
                 update.set("#PointsText.TextSpans", Message.raw("Points disponibles: " + playerData.getAttributePoints()));
+
+                // Optionnel : Mettre à jour la barre de mana visuelle dans le menu si tu veux
+                // update.set("#MpText.TextSpans", Message.raw("MP: " + ...));
 
                 this.sendUpdate(update);
             }

@@ -25,15 +25,15 @@ public class PlayerLevelData implements Component<EntityStore> {
     private String guildRank = "F";
 
     // Stats
-    private int strength = 10;
-    private int endurance = 10;
-    private int agility = 10;
-    private int vitality = 10;
-    private int intelligence = 10;
-    private int luck = 10;
+    private int strength = 1;
+    private int endurance = 1;
+    private int agility = 1;
+    private int vitality = 1;
+    private int intelligence = 1;
+    private int luck = 1;
 
     // Économie
-    private long money = 0;
+    private long money = 1000;
 
     // --- Constructeur par défaut ---
     public PlayerLevelData() {

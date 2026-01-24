@@ -16,22 +16,22 @@ Group {
         }
 
         Group {
-            Anchor: (Height: 70);
+            Anchor: (Height: 45);
         }
 
         Label #NameText {
             Text: "NAME: ...";
-            Style: (FontSize: 16, TextColor: #ffffff);
+            Style: (FontSize: 20, TextColor: #00ddff);
         }
 
         Label #JobText {
             Text: "CLASSE: ...";
-            Style: (FontSize: 14, TextColor: #aabbcc);
+            Style: (FontSize: 26, TextColor: #ffdd00);
         }
 
         Label #TitleText {
             Text: "TITRE: ...";
-            Style: (FontSize: 14, TextColor: #aabbcc);
+            Style: (FontSize: 16, TextColor: #ffffff);
         }
 
         Group {
