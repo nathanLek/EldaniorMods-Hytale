@@ -18,8 +18,13 @@ import com.hypixel.hytale.server.core.ui.builder.UIEventBuilder;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
+// IMPORTS AJOUTÉS POUR LIRE LES VRAIES STATS
+import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
+import com.hypixel.hytale.server.core.modules.entitystats.EntityStatsModule;
+import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
+
 import javax.annotation.Nonnull;
-import java.lang.reflect.Field;
+import java.util.Objects;
 
 public class StatusScreen extends InteractiveCustomUIPage<StatusScreen.StatusEventData> {
 
@@ -36,13 +41,35 @@ public class StatusScreen extends InteractiveCustomUIPage<StatusScreen.StatusEve
         PlayerLevelData data = store.getComponent(ref, type);
         if (data == null) data = new PlayerLevelData();
 
-        // --- CORRECTION 1 : SUPPRESSION DE LA BOUCLE WHILE ---
-        // On ne calcule plus le level up ici. L'UI se contente de lire ce qui est stocké.
-
-        int currentHp = data.getMaxHealth();
-        int currentMp = data.getMaxMana();
-
+        // 1. Récupération du pseudo (Méthode corrigée)
         String playerName = getPlayerName(ref, store);
+
+        // 2. RECUPERATION DES VRAIES STATS HYTALE (PV / MANA ACTUELS)
+        // On va chercher dans le moteur de jeu ce qui s'affiche réellement sur ton HUD
+        EntityStatMap statMap = store.getComponent(ref, EntityStatsModule.get().getEntityStatMapComponentType());
+
+        float currentHp = 0;
+        // float maxHp = 100; // Pas utilisé dans l'affichage actuel mais dispo si besoin
+        float currentMp = 0;
+        float maxMp = 100;
+
+        if (statMap != null) {
+            // Vie
+            int healthIndex = DefaultEntityStatTypes.getHealth();
+            if (statMap.get(healthIndex) != null) {
+                currentHp = Objects.requireNonNull(statMap.get(healthIndex)).get();
+                // maxHp = statMap.get(healthIndex).getMax();
+            }
+
+            // Mana
+            int manaIndex = DefaultEntityStatTypes.getMana();
+            if (statMap.get(manaIndex) != null) {
+                currentMp = Objects.requireNonNull(statMap.get(manaIndex)).get();   // La valeur qui bouge !
+                maxMp = Objects.requireNonNull(statMap.get(manaIndex)).getMax();    // La valeur max (5000 etc.)
+            }
+        }
+
+        // --- MISE A JOUR DE L'UI ---
 
         uiCommandBuilder.set("#NameText.TextSpans", Message.raw("NOM: " + playerName));
         uiCommandBuilder.set("#JobText.TextSpans", Message.raw("CLASSE: " + data.getPlayerClass()));
@@ -53,8 +80,15 @@ public class StatusScreen extends InteractiveCustomUIPage<StatusScreen.StatusEve
         uiCommandBuilder.set("#LevelLabel.TextSpans", Message.raw(xpInfo));
         uiCommandBuilder.set("#ProgressBar.Value", data.getExperienceProgress());
 
-        uiCommandBuilder.set("#MpText.TextSpans", Message.raw("MP: " + currentMp + " / " + data.getMaxMana()));
-        uiCommandBuilder.set("#MpProgressBar.Value", currentMp / (float) data.getMaxMana());
+        // Affichage du Mana corrigé (Casted en int pour faire propre)
+        uiCommandBuilder.set("#MpText.TextSpans", Message.raw("MP: " + (int)currentMp + " / " + (int)maxMp));
+
+        // Barre de progression (évite la division par zéro)
+        if (maxMp > 0) {
+            uiCommandBuilder.set("#MpProgressBar.Value", currentMp / maxMp);
+        } else {
+            uiCommandBuilder.set("#MpProgressBar.Value", 0.0f);
+        }
 
         uiCommandBuilder.set("#StrVal.TextSpans", Message.raw("FOR: " + data.getStrength() + " (+0)"));
         uiCommandBuilder.set("#VitVal.TextSpans", Message.raw("VIE: " + data.getVitality() + " (+0)"));
@@ -112,8 +146,7 @@ public class StatusScreen extends InteractiveCustomUIPage<StatusScreen.StatusEve
                 // 1. On décrémente les points
                 playerData.setAttributePoints(playerData.getAttributePoints() - 1);
 
-                // 2. IMPORT DU CALCULATEUR ICI ! <--- C'EST LA CLEF
-                // On met à jour les vraies stats du jeu (PV, Mana, Vitesse)
+                // 2. On met à jour les vraies stats du jeu (PV, Mana, Vitesse)
                 com.eldanior.system.utils.StatCalculator.updatePlayerStats(ref, store, playerData);
 
                 // 3. On sauvegarde les données RPG
@@ -131,21 +164,19 @@ public class StatusScreen extends InteractiveCustomUIPage<StatusScreen.StatusEve
                 update.set("#CmdVal.TextSpans", Message.raw("CH: " + playerData.getLuck()));
                 update.set("#PointsText.TextSpans", Message.raw("Points disponibles: " + playerData.getAttributePoints()));
 
-                // Optionnel : Mettre à jour la barre de mana visuelle dans le menu si tu veux
-                // update.set("#MpText.TextSpans", Message.raw("MP: " + ...));
-
                 this.sendUpdate(update);
             }
         }
     }
 
+    // --- CORRECTION DU PSEUDO ---
     private String getPlayerName(Ref<EntityStore> ref, Store<EntityStore> store) {
-        try {
-            PlayerRef info = store.getComponent(ref, PlayerRef.getComponentType());
-            Field f = PlayerRef.class.getDeclaredField("name");
-            f.setAccessible(true);
-            return (String) f.get(info);
-        } catch (Exception e) { return "Player"; }
+        // On utilise la méthode officielle getUsername() qui est stable
+        PlayerRef info = store.getComponent(ref, PlayerRef.getComponentType());
+        if (info != null) {
+            return info.getUsername();
+        }
+        return "Inconnu";
     }
 
     public static class StatusEventData {

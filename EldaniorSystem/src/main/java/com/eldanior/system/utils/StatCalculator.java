@@ -11,14 +11,11 @@ import com.hypixel.hytale.server.core.modules.entitystats.modifier.StaticModifie
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 public class StatCalculator {
-    
+
+    @SuppressWarnings("unchecked")
     public static void updatePlayerStats(Ref<EntityStore> playerRef, Store<EntityStore> store, PlayerLevelData data) {
 
-        // 🛡️ SÉCURITÉ ANTI-CRASH
-        // Si les données sont nulles (bug de chargement), on arrête tout de suite pour éviter l'erreur "No provided exception message"
-        if (data == null) {
-            return;
-        }
+        if (data == null) return;
 
         EntityStatMap statMap = store.getComponent(playerRef, EntityStatsModule.get().getEntityStatMapComponentType());
 
@@ -26,7 +23,6 @@ public class StatCalculator {
 
             // === 1. VITALITÉ (Objectif 500 PV) ===
             int healthIndex = DefaultEntityStatTypes.getHealth();
-            // 3000 pts * 0.16 = +480 PV (+20 base = 500)
             float healthBonus = data.getVitality() * 0.16f;
 
             statMap.removeModifier(healthIndex, "Eldanior_Vitality");
@@ -35,10 +31,12 @@ public class StatCalculator {
                 statMap.putModifier(healthIndex, "Eldanior_Vitality", healthMod);
             }
 
-            // === 2. INTELLIGENCE (Objectif 5000 Mana) ===
+            // === 2. INTELLIGENCE (Objectif 10 000 Mana) ===
             int manaIndex = DefaultEntityStatTypes.getMana();
-            // 3000 pts * 1.66 = +4980 Mana (+20 base = 5000)
-            float manaBonus = data.getIntelligence() * 1.66f;
+
+            // FORMULE : 3.33 mana par point d'intelligence
+            // 3000 pts * 3.33 = 9990 (+10 base = 10 000)
+            float manaBonus = data.getIntelligence() * 3.33f;
 
             statMap.removeModifier(manaIndex, "Eldanior_Intelligence");
             if (manaBonus > 0) {
@@ -46,9 +44,8 @@ public class StatCalculator {
                 statMap.putModifier(manaIndex, "Eldanior_Intelligence", manaMod);
             }
 
-            // === 3. ENDURANCE -> STAMINA ===
+            // === 3. ENDURANCE (Stamina) ===
             int staminaIndex = DefaultEntityStatTypes.getStamina();
-            // 3000 pts * 5.0 = +15000 Stamina (Gros réservoir pour sprinter longtemps)
             float staminaBonus = data.getEndurance() * 5.0f;
 
             statMap.removeModifier(staminaIndex, "Eldanior_Endurance");

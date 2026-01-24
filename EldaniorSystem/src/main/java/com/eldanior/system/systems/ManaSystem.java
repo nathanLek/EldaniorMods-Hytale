@@ -1,7 +1,5 @@
 package com.eldanior.system.systems;
 
-import com.eldanior.system.EldaniorSystem;
-import com.eldanior.system.components.PlayerLevelData;
 import com.hypixel.hytale.component.ArchetypeChunk;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Ref;
@@ -24,17 +22,16 @@ public class ManaSystem extends EntityTickingSystem<EntityStore> {
     @Override
     public void tick(float dt, int index, @Nonnull ArchetypeChunk<EntityStore> archetypeChunk, @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
 
-        // On ne régénère pas à chaque tick (trop rapide), mais toutes les 1 seconde
+        // --- GESTION DU TEMPS (10 secondes) ---
         timer += dt;
-        if (timer < 25.0f) return; // Une fois par 25 seconde
-        timer = 0; // Reset timer pour tous les joueurs traités dans ce chunk (simplifié)
-        // Note: Pour être parfait, le timer devrait être par joueur, mais pour un test c'est ok.
+        if (timer < 10.0f) return;
+        if (index == 0) timer = 0;
 
         Ref<EntityStore> entityRef = archetypeChunk.getReferenceTo(index);
         if (!entityRef.isValid()) return;
 
-        PlayerLevelData data = store.getComponent(entityRef, EldaniorSystem.get().getPlayerLevelDataType());
-        if (data == null) return;
+        // Vérif joueur
+        // if (!store.hasComponent(entityRef, EldaniorSystem.get().getPlayerLevelDataType())) return;
 
         EntityStatMap statMap = store.getComponent(entityRef, EntityStatsModule.get().getEntityStatMapComponentType());
         if (statMap == null) return;
@@ -47,19 +44,18 @@ public class ManaSystem extends EntityTickingSystem<EntityStore> {
         float max = manaValue.getMax();
 
         if (current < max) {
-            // ANCIENNE FORMULE : 1 + (Intell * 0.2)
-            // NOUVELLE FORMULE : Régénération en % du total + Bonus fixe
+            // --- FORMULE : 1H30 POUR REMPLIR (Calibrage précis) ---
+            // 1h30 = 90 min = 5400 secondes.
+            // Avec un tick toutes les 10s, il faut 540 ticks pour tout remplir.
+            // 100% / 540 = 0.185% par tick.
 
-            // Base : 1 mana/sec
-            // Bonus : 0.05% du Mana Max par point d'Intelligence
-            // Au lvl 999 (5000 mana) : on veut regen environ 50-80 par seconde.
+            // Calcul : Si Max = 10 000, ça donne 18.5 points toutes les 10s.
+            float regenAmount = max * 0.000185f;
 
-            // Calcul simplifié : On regen 1.5% du Mana Max par seconde grâce à l'intelligence
-            // Cela assure que la barre se remplit toujours en ~60 secondes, que tu sois lvl 1 ou 999.
+            // Sécurité : On rend au minimum 1 point (sinon au niveau 1 ça ferait 0)
+            if (regenAmount < 1.0f) regenAmount = 1.0f;
 
-            float regenRate = 1.0f + (max * 0.015f);
-
-            float newValue = Math.min(max, current + regenRate);
+            float newValue = Math.min(max, current + regenAmount);
             statMap.setStatValue(manaIndex, newValue);
         }
     }
