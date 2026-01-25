@@ -1,12 +1,13 @@
-package com.eldanior.system.rpg.classes.skills.passives;
+package com.eldanior.system.rpg.classes.skills.Skills;
 
-import com.eldanior.system.rpg.classes.skills.passives.definitions.AuraDragonicDivin;
+import com.eldanior.system.rpg.classes.skills.Skills.definitions.AuraDragonicDivin;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class SkillManager {
 
-    private static final Map<String, PassiveSkillModel> skills = new HashMap<>();
+    private static final Map<String, SkillModel> skills = new HashMap<>();
 
     public static void init() {
         // Enregistrement des compétences concrètes uniquement
@@ -18,11 +19,11 @@ public class SkillManager {
     }
 
     // CORRECTION : Accepte n'importe quel PassiveSkillModel (pas juste AuraDragonicDivin)
-    public static void register(PassiveSkillModel skill) {
+    public static void register(SkillModel skill) {
         skills.put(skill.getId(), skill);
     }
 
-    public static PassiveSkillModel get(String id) {
+    public static SkillModel get(String id) {
         return skills.get(id);
     }
 }

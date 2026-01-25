@@ -2,6 +2,8 @@ package com.eldanior.system.gui;
 
 import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.components.PlayerLevelData;
+import com.eldanior.system.rpg.classes.ClassManager;
+import com.eldanior.system.rpg.classes.ClassModel;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
@@ -17,8 +19,6 @@ import com.hypixel.hytale.server.core.ui.builder.UICommandBuilder;
 import com.hypixel.hytale.server.core.ui.builder.UIEventBuilder;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
-
-// IMPORTS AJOUTÉS POUR LIRE LES VRAIES STATS
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatsModule;
 import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
@@ -41,36 +41,35 @@ public class StatusScreen extends InteractiveCustomUIPage<StatusScreen.StatusEve
         PlayerLevelData data = store.getComponent(ref, type);
         if (data == null) data = new PlayerLevelData();
 
-        // 1. Récupération du pseudo (Méthode corrigée)
+        // 1. Récupération des bonus de classe
+        ClassModel classModel = ClassManager.get(data.getPlayerClassId());
+        int bStr = (classModel != null) ? classModel.getBonusStr() : 0;
+        int bVit = (classModel != null) ? classModel.getBonusVit() : 0;
+        int bInt = (classModel != null) ? classModel.getBonusInt() : 0;
+        int bEnd = (classModel != null) ? classModel.getBonusEnd() : 0;
+        int bAgl = (classModel != null) ? classModel.getBonusAgl() : 0;
+        int bLck = (classModel != null) ? classModel.getBonusLck() : 0;
+
+        // 2. Récupération du pseudo
         String playerName = getPlayerName(ref, store);
 
-        // 2. RECUPERATION DES VRAIES STATS HYTALE (PV / MANA ACTUELS)
-        // On va chercher dans le moteur de jeu ce qui s'affiche réellement sur ton HUD
+        // 3. Récupération des stats HUD (PV / Mana)
         EntityStatMap statMap = store.getComponent(ref, EntityStatsModule.get().getEntityStatMapComponentType());
-
-        float currentHp = 0;
-        // float maxHp = 100; // Pas utilisé dans l'affichage actuel mais dispo si besoin
-        float currentMp = 0;
-        float maxMp = 100;
+        float currentHp = 0, currentMp = 0, maxMp = 100;
 
         if (statMap != null) {
-            // Vie
             int healthIndex = DefaultEntityStatTypes.getHealth();
             if (statMap.get(healthIndex) != null) {
                 currentHp = Objects.requireNonNull(statMap.get(healthIndex)).get();
-                // maxHp = statMap.get(healthIndex).getMax();
             }
-
-            // Mana
             int manaIndex = DefaultEntityStatTypes.getMana();
             if (statMap.get(manaIndex) != null) {
-                currentMp = Objects.requireNonNull(statMap.get(manaIndex)).get();   // La valeur qui bouge !
-                maxMp = Objects.requireNonNull(statMap.get(manaIndex)).getMax();    // La valeur max (5000 etc.)
+                currentMp = Objects.requireNonNull(statMap.get(manaIndex)).get();
+                maxMp = Objects.requireNonNull(statMap.get(manaIndex)).getMax();
             }
         }
 
         // --- MISE A JOUR DE L'UI ---
-
         uiCommandBuilder.set("#NameText.TextSpans", Message.raw("NOM: " + playerName));
         uiCommandBuilder.set("#JobText.TextSpans", Message.raw("CLASSE: " + data.getPlayerClass()));
         uiCommandBuilder.set("#TitleText.TextSpans", Message.raw("TITRE: " + data.getCurrentTitle()));
@@ -80,23 +79,16 @@ public class StatusScreen extends InteractiveCustomUIPage<StatusScreen.StatusEve
         uiCommandBuilder.set("#LevelLabel.TextSpans", Message.raw(xpInfo));
         uiCommandBuilder.set("#ProgressBar.Value", data.getExperienceProgress());
 
-        // Affichage du Mana corrigé (Casted en int pour faire propre)
         uiCommandBuilder.set("#MpText.TextSpans", Message.raw("MP: " + (int)currentMp + " / " + (int)maxMp));
+        uiCommandBuilder.set("#MpProgressBar.Value", maxMp > 0 ? currentMp / maxMp : 0.0f);
 
-        // Barre de progression (évite la division par zéro)
-        if (maxMp > 0) {
-            uiCommandBuilder.set("#MpProgressBar.Value", currentMp / maxMp);
-        } else {
-            uiCommandBuilder.set("#MpProgressBar.Value", 0.0f);
-        }
-
-        uiCommandBuilder.set("#StrVal.TextSpans", Message.raw("FOR: " + data.getStrength() + " (+0)"));
-        uiCommandBuilder.set("#VitVal.TextSpans", Message.raw("VIE: " + data.getVitality() + " (+0)"));
-        uiCommandBuilder.set("#IntVal.TextSpans", Message.raw("INT: " + data.getIntelligence() + " (+0)"));
-
-        uiCommandBuilder.set("#PerVal.TextSpans", Message.raw("END: " + data.getEndurance() + " (+0)"));
-        uiCommandBuilder.set("#AglVal.TextSpans", Message.raw("AGL: " + data.getAgility() + " (+0)"));
-        uiCommandBuilder.set("#CmdVal.TextSpans", Message.raw("CH: " + data.getLuck() + " (+0)"));
+        // Affichage des stats avec bonus (+X)
+        uiCommandBuilder.set("#StrVal.TextSpans", Message.raw("FOR: " + data.getStrength() + " (+" + bStr + ")"));
+        uiCommandBuilder.set("#VitVal.TextSpans", Message.raw("VIE: " + data.getVitality() + " (+" + bVit + ")"));
+        uiCommandBuilder.set("#IntVal.TextSpans", Message.raw("INT: " + data.getIntelligence() + " (+" + bInt + ")"));
+        uiCommandBuilder.set("#PerVal.TextSpans", Message.raw("END: " + data.getEndurance() + " (+" + bEnd + ")"));
+        uiCommandBuilder.set("#AglVal.TextSpans", Message.raw("AGL: " + data.getAgility() + " (+" + bAgl + ")"));
+        uiCommandBuilder.set("#CmdVal.TextSpans", Message.raw("CH: " + data.getLuck() + " (+" + bLck + ")"));
 
         uiCommandBuilder.set("#PointsText.TextSpans", Message.raw("Points disponibles: " + data.getAttributePoints()));
         uiCommandBuilder.set("#MoneyText.TextSpans", Message.raw(": " + data.getMoney()));
@@ -113,55 +105,39 @@ public class StatusScreen extends InteractiveCustomUIPage<StatusScreen.StatusEve
     @Override
     public void handleDataEvent(@Nonnull Ref<EntityStore> ref, @Nonnull Store<EntityStore> store, @Nonnull StatusEventData data) {
         ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
-
-        // On récupère les données
         PlayerLevelData playerData = store.getComponent(ref, type);
         if (playerData == null) return;
 
-        // On effectue les changements si possible
         if (playerData.getAttributePoints() > 0) {
             boolean changed = false;
-
-            if ("str".equals(data.action)) {
-                playerData.setStrength(playerData.getStrength() + 1);
-                changed = true;
-            } else if ("vit".equals(data.action)) {
-                playerData.setVitality(playerData.getVitality() + 1);
-                changed = true;
-            } else if ("int".equals(data.action)) {
-                playerData.setIntelligence(playerData.getIntelligence() + 1);
-                changed = true;
-            } else if ("per".equals(data.action)) {
-                playerData.setEndurance(playerData.getEndurance() + 1);
-                changed = true;
-            } else if ("agl".equals(data.action)) {
-                playerData.setAgility(playerData.getAgility() + 1);
-                changed = true;
-            } else if ("cmd".equals(data.action)) {
-                playerData.setLuck(playerData.getLuck() + 1);
-                changed = true;
-            }
+            if ("str".equals(data.action)) { playerData.setStrength(playerData.getStrength() + 1); changed = true; }
+            else if ("vit".equals(data.action)) { playerData.setVitality(playerData.getVitality() + 1); changed = true; }
+            else if ("int".equals(data.action)) { playerData.setIntelligence(playerData.getIntelligence() + 1); changed = true; }
+            else if ("per".equals(data.action)) { playerData.setEndurance(playerData.getEndurance() + 1); changed = true; }
+            else if ("agl".equals(data.action)) { playerData.setAgility(playerData.getAgility() + 1); changed = true; }
+            else if ("cmd".equals(data.action)) { playerData.setLuck(playerData.getLuck() + 1); changed = true; }
 
             if (changed) {
-                // 1. On décrémente les points
                 playerData.setAttributePoints(playerData.getAttributePoints() - 1);
-
-                // 2. On met à jour les vraies stats du jeu (PV, Mana, Vitesse)
                 com.eldanior.system.utils.StatCalculator.updatePlayerStats(ref, store, playerData);
-
-                // 3. On sauvegarde les données RPG
                 store.putComponent(ref, type, playerData);
 
-                // 4. On met à jour l'affichage de l'écran
-                UICommandBuilder update = new UICommandBuilder();
+                // Récupération des bonus pour la mise à jour visuelle
+                ClassModel classModel = ClassManager.get(playerData.getPlayerClassId());
+                int bStr = (classModel != null) ? classModel.getBonusStr() : 0;
+                int bVit = (classModel != null) ? classModel.getBonusVit() : 0;
+                int bInt = (classModel != null) ? classModel.getBonusInt() : 0;
+                int bEnd = (classModel != null) ? classModel.getBonusEnd() : 0;
+                int bAgl = (classModel != null) ? classModel.getBonusAgl() : 0;
+                int bLck = (classModel != null) ? classModel.getBonusLck() : 0;
 
-                // Mettre à jour les textes
-                update.set("#StrVal.TextSpans", Message.raw("FOR: " + playerData.getStrength()));
-                update.set("#VitVal.TextSpans", Message.raw("VIE: " + playerData.getVitality()));
-                update.set("#IntVal.TextSpans", Message.raw("INT: " + playerData.getIntelligence()));
-                update.set("#PerVal.TextSpans", Message.raw("END: " + playerData.getEndurance()));
-                update.set("#AglVal.TextSpans", Message.raw("AGL: " + playerData.getAgility()));
-                update.set("#CmdVal.TextSpans", Message.raw("CH: " + playerData.getLuck()));
+                UICommandBuilder update = new UICommandBuilder();
+                update.set("#StrVal.TextSpans", Message.raw("FOR: " + playerData.getStrength() + " (+" + bStr + ")"));
+                update.set("#VitVal.TextSpans", Message.raw("VIE: " + playerData.getVitality() + " (+" + bVit + ")"));
+                update.set("#IntVal.TextSpans", Message.raw("INT: " + playerData.getIntelligence() + " (+" + bInt + ")"));
+                update.set("#PerVal.TextSpans", Message.raw("END: " + playerData.getEndurance() + " (+" + bEnd + ")"));
+                update.set("#AglVal.TextSpans", Message.raw("AGL: " + playerData.getAgility() + " (+" + bAgl + ")"));
+                update.set("#CmdVal.TextSpans", Message.raw("CH: " + playerData.getLuck() + " (+" + bLck + ")"));
                 update.set("#PointsText.TextSpans", Message.raw("Points disponibles: " + playerData.getAttributePoints()));
 
                 this.sendUpdate(update);
@@ -169,14 +145,9 @@ public class StatusScreen extends InteractiveCustomUIPage<StatusScreen.StatusEve
         }
     }
 
-    // --- CORRECTION DU PSEUDO ---
     private String getPlayerName(Ref<EntityStore> ref, Store<EntityStore> store) {
-        // On utilise la méthode officielle getUsername() qui est stable
         PlayerRef info = store.getComponent(ref, PlayerRef.getComponentType());
-        if (info != null) {
-            return info.getUsername();
-        }
-        return "Inconnu";
+        return (info != null) ? info.getUsername() : "Inconnu";
     }
 
     public static class StatusEventData {

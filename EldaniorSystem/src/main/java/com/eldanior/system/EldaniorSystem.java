@@ -3,8 +3,9 @@ package com.eldanior.system;
 import com.eldanior.system.commands.ESCommand;
 import com.eldanior.system.components.PlayerLevelData;
 import com.eldanior.system.rpg.classes.ClassManager; // ✅ Import
-import com.eldanior.system.rpg.classes.skills.passives.SkillManager; // ✅ Import
-import com.eldanior.system.rpg.classes.skills.passives.PassiveSkillSystem; // (Vérifie que le package est bon, parfois c'est system.systems ou rpg.skills.passives)
+import com.eldanior.system.rpg.classes.skills.Skills.SkillManager; // ✅ Import
+import com.eldanior.system.rpg.classes.skills.Skills.SkillSystem; // (Vérifie que le package est bon, parfois c'est system.systems ou rpg.skills.passives)
+import com.eldanior.system.rpg.classes.skills.system.AuraSystem;
 import com.eldanior.system.systems.*;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
@@ -87,10 +88,13 @@ public class EldaniorSystem extends JavaPlugin {
             this.getEntityStoreRegistry().registerSystem(new SpeedSystem());
 
             // Le système de passifs (Régénération du Dragon)
-            this.getEntityStoreRegistry().registerSystem(new PassiveSkillSystem());
+            this.getEntityStoreRegistry().registerSystem(new SkillSystem());
 
             // Enregistre le détecteur de mort
             this.getEntityStoreRegistry().registerSystem(new DeathXPSystem());
+
+            // Enregistrement des systèmes de SKILLS
+            this.getEntityStoreRegistry().registerSystem(new AuraSystem());
 
             LOGGER.atInfo().log(">>> SYSTÈMES XP ACTIVÉS <<<");
         } catch (Exception e) {

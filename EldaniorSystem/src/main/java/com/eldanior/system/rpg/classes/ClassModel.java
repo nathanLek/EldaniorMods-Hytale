@@ -2,7 +2,7 @@ package com.eldanior.system.rpg.classes;
 
 import com.eldanior.system.rpg.enums.ClassType;
 import com.eldanior.system.rpg.enums.Rarity;
-import com.eldanior.system.rpg.classes.skills.passives.PassiveSkillModel;
+import com.eldanior.system.rpg.classes.skills.Skills.SkillModel;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
@@ -18,7 +18,7 @@ public abstract class ClassModel {
     private final ClassType type;
 
     // Progression & Evolution
-    private final List<PassiveSkillModel> passiveSkills; // ✅ Changement : C'est une LISTE maintenant
+    private final List<SkillModel> passiveSkills; // ✅ Changement : C'est une LISTE maintenant
     private final String nextClassId;
     private final boolean passiveActive;
     private final int promotionLevel;
@@ -33,7 +33,7 @@ public abstract class ClassModel {
     private final int bonusLck;
 
     public ClassModel(String id, String displayName, String description, Rarity rarity, ClassType type,
-                      @Nullable List<PassiveSkillModel> passiveSkills, // ✅ Paramètre modifié
+                      @Nullable List<SkillModel> passiveSkills, // ✅ Paramètre modifié
                       boolean passiveActive,
                       String nextClassId, int promotionLevel, boolean adminAccess,
                       int str, int vit, int intel, int end, int agl, int lck) {
@@ -65,7 +65,7 @@ public abstract class ClassModel {
     public Rarity getRarity() { return rarity; }
     public ClassType getType() { return type; }
 
-    public List<PassiveSkillModel> getPassiveSkills() { return passiveSkills; } // ✅ Getter modifié
+    public List<SkillModel> getPassiveSkills() { return passiveSkills; } // ✅ Getter modifié
 
     public boolean isPassiveActive() { return passiveActive; }
     public String getNextClassId() { return nextClassId; }

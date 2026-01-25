@@ -1,4 +1,4 @@
-package com.eldanior.system.rpg.classes.skills.passives;
+package com.eldanior.system.rpg.classes.skills.Skills;
 
 import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.components.PlayerLevelData;
@@ -15,7 +15,7 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
 
-public class PassiveSkillSystem extends EntityTickingSystem<EntityStore> {
+public class SkillSystem extends EntityTickingSystem<EntityStore> {
 
     private float timer = 0;
 
@@ -46,7 +46,7 @@ public class PassiveSkillSystem extends EntityTickingSystem<EntityStore> {
 
         // 4. Exécution des Compétences (BOUCLE)
         // On parcourt la liste des compétences définies dans la classe
-        for (PassiveSkillModel skill : classModel.getPassiveSkills()) {
+        for (SkillModel skill : classModel.getPassiveSkills()) {
             if (skill != null) {
                 // On active l'effet (ex: Regen Vie/Mana)
                 skill.onTick(entityRef, store, data);

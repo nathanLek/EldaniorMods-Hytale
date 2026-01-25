@@ -5,7 +5,8 @@ public enum ClassType {
     MAGE("Mage"),
     ASSASSIN("Assassin"),
     ARCHER("Archer"),
-    MERCHANT("Marchand");
+    MERCHANT("Marchand"),
+    DRAGON("Dragon Ancestral");
 
     private final String label;
 
