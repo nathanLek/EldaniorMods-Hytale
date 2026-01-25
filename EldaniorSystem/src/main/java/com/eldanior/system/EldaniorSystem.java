@@ -2,6 +2,9 @@ package com.eldanior.system;
 
 import com.eldanior.system.commands.ESCommand;
 import com.eldanior.system.components.PlayerLevelData;
+import com.eldanior.system.rpg.classes.ClassManager; // ✅ Import
+import com.eldanior.system.rpg.classes.skills.passives.SkillManager; // ✅ Import
+import com.eldanior.system.rpg.classes.skills.passives.PassiveSkillSystem; // (Vérifie que le package est bon, parfois c'est system.systems ou rpg.skills.passives)
 import com.eldanior.system.systems.*;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
@@ -34,6 +37,19 @@ public class EldaniorSystem extends JavaPlugin {
     protected void setup() {
         LOGGER.atInfo().log(">>> ELDANIOR SYSTEM : Initialisation... <<<");
 
+        // =========================================================
+        // 🚨 C'EST ICI QU'IL FALLAIT AJOUTER L'INIT ! 🚨
+        // =========================================================
+        try {
+            ClassManager.init(); // Charge les classes (Warrior, Dragon, etc.)
+            SkillManager.init(); // Charge les skills (Aura, etc.)
+            LOGGER.atInfo().log("- RPG Managers (Classes & Skills) initialisés !");
+        } catch (Exception e) {
+            LOGGER.atSevere().log("ERREUR CRITIQUE lors du chargement des classes RPG : " + e.getMessage());
+            e.printStackTrace();
+        }
+        // =========================================================
+
         // 1. Composants
         try {
             this.playerLevelDataType = this.getEntityStoreRegistry().registerComponent(
@@ -47,14 +63,21 @@ public class EldaniorSystem extends JavaPlugin {
         }
 
         try {
+            // Enregistrement de ta commande principale
+            // Assure-toi que ESCommand gère bien "setclass" et "classinfo" en sous-commandes
+            // OU enregistre SetClassCommand ici si tu l'as séparée.
             this.getCommandRegistry().registerCommand(new ESCommand());
-            LOGGER.atInfo().log(">>> COMMANDE /level ENREGISTRÉE <<<");
+
+            // Si tu as séparé les commandes comme on a vu avant, ajoute-les aussi :
+            // this.getCommandRegistry().registerCommand(new com.eldanior.system.commands.SetClassCommand());
+
+            LOGGER.atInfo().log(">>> COMMANDES ENREGISTRÉES <<<");
         } catch (Exception e) {
             LOGGER.atSevere().log("ERREUR : Impossible d'enregistrer la commande ! " + e.getMessage());
         }
 
         try {
-            // Enregistre le traqueur de coups
+            // Enregistre les systèmes
             this.getEntityStoreRegistry().registerSystem(new CombatTrackerSystem());
             this.getEntityStoreRegistry().registerSystem(new CombatStatsSystem());
             this.getEntityStoreRegistry().registerSystem(new EnduranceSystem());
@@ -63,10 +86,13 @@ public class EldaniorSystem extends JavaPlugin {
             this.getEntityStoreRegistry().registerSystem(new FallDamageSystem());
             this.getEntityStoreRegistry().registerSystem(new SpeedSystem());
 
+            // Le système de passifs (Régénération du Dragon)
+            this.getEntityStoreRegistry().registerSystem(new PassiveSkillSystem());
+
             // Enregistre le détecteur de mort
             this.getEntityStoreRegistry().registerSystem(new DeathXPSystem());
 
-            LOGGER.atInfo().log(">>> SYSTÈMES XP ACTIVÉS (TRACKER + DEATH) <<<");
+            LOGGER.atInfo().log(">>> SYSTÈMES XP ACTIVÉS <<<");
         } catch (Exception e) {
             LOGGER.atSevere().log("Erreur lors de l'enregistrement des systèmes : " + e.getMessage());
         }

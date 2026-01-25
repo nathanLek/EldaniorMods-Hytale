@@ -1,0 +1,63 @@
+package com.eldanior.system.rpg.classes.skills.passives;
+
+import com.eldanior.system.EldaniorSystem;
+import com.eldanior.system.components.PlayerLevelData;
+import com.eldanior.system.rpg.classes.ClassManager;
+import com.eldanior.system.rpg.classes.ClassModel;
+import com.hypixel.hytale.component.ArchetypeChunk;
+import com.hypixel.hytale.component.CommandBuffer;
+import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.component.query.Query;
+import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
+import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+
+import javax.annotation.Nonnull;
+
+public class PassiveSkillSystem extends EntityTickingSystem<EntityStore> {
+
+    private float timer = 0;
+
+    @Override
+    public void tick(float dt, int index, @Nonnull ArchetypeChunk<EntityStore> archetypeChunk, @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
+
+        // 1. Gestion du Timer (Optimisation)
+        // On ne veut pas activer la regen 20 fois par seconde, mais 1 fois par seconde.
+        timer += dt;
+        if (timer < 1.0f) return;
+        if (index == 0) timer = 0; // Reset au début du chunk pour garder la synchro
+
+        Ref<EntityStore> entityRef = archetypeChunk.getReferenceTo(index);
+        if (!entityRef.isValid()) return;
+
+        // 2. Récupération des données du joueur
+        PlayerLevelData data = store.getComponent(entityRef, EldaniorSystem.get().getPlayerLevelDataType());
+        if (data == null) return;
+
+        // 3. Vérification de la Classe
+        String classId = data.getPlayerClassId();
+        if (classId == null || classId.equals("none")) return;
+
+        ClassModel classModel = ClassManager.get(classId);
+
+        // Si la classe n'existe pas ou que les passifs sont désactivés, on arrête
+        if (classModel == null || !classModel.isPassiveActive()) return;
+
+        // 4. Exécution des Compétences (BOUCLE)
+        // On parcourt la liste des compétences définies dans la classe
+        for (PassiveSkillModel skill : classModel.getPassiveSkills()) {
+            if (skill != null) {
+                // On active l'effet (ex: Regen Vie/Mana)
+                skill.onTick(entityRef, store, data);
+            }
+        }
+    }
+
+    @Nonnull
+    @Override
+    public Query<EntityStore> getQuery() {
+        // Ce système ne s'applique qu'aux JOUEURS
+        return Player.getComponentType();
+    }
+}

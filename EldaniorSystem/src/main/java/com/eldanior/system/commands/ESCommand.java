@@ -9,6 +9,8 @@ public class ESCommand extends AbstractCommandCollection {
         this.addSubCommand(new StatusCommand());
         this.addSubCommand(new AddXPCommand());
         this.addSubCommand(new SetLevelCommand());
+        this.addSubCommand(new ClassInfoCommand());
+        this.addSubCommand(new SetClassCommand());
     }
 
     @Override

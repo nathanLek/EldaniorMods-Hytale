@@ -19,7 +19,9 @@ public class PlayerLevelData implements Component<EntityStore> {
     private int attributePoints = 0;
 
     // Identité
-    private String playerClass = "Aventurier";
+    private String playerClass = "Aventurier"; // Nom affiché (ex: Guerrier)
+    private String classId = "none";           // ID technique (ex: warrior) <--- NOUVEAU
+
     private String currentTitle = "Novice";
     private List<String> unlockedTitles = new ArrayList<>();
     private String guildRank = "F";
@@ -46,11 +48,10 @@ public class PlayerLevelData implements Component<EntityStore> {
 
     public void addExperience(int amount) {
         this.experience += amount;
-        // Boucle au cas où on gagne assez d'XP pour prendre plusieurs niveaux d'un coup
         while (this.experience >= getRequiredExperience()) {
             this.experience -= getRequiredExperience();
             this.level++;
-            this.attributePoints += 3; // Bonus : 3 points par niveau
+            this.attributePoints += 3;
         }
     }
 
@@ -58,19 +59,18 @@ public class PlayerLevelData implements Component<EntityStore> {
         return (float) this.experience / getRequiredExperience();
     }
 
-    // --- LE CODEC CORRIGÉ (MAJUSCULES OBLIGATOIRES POUR LES CLÉS) ---
+    // --- LE CODEC MIS À JOUR ---
     public static final BuilderCodec<PlayerLevelData> CODEC = BuilderCodec.builder(PlayerLevelData.class, PlayerLevelData::new)
-            // Progression (J'ai mis des Majuscules partout ici)
             .append(new KeyedCodec<>("Level", Codec.INTEGER), (data, v) -> data.level = v, data -> data.level).add()
             .append(new KeyedCodec<>("Experience", Codec.INTEGER), (data, v) -> data.experience = v, data -> data.experience).add()
             .append(new KeyedCodec<>("AttributePoints", Codec.INTEGER), (data, v) -> data.attributePoints = v, data -> data.attributePoints).add()
 
-            // Strings
             .append(new KeyedCodec<>("PlayerClass", Codec.STRING), (data, v) -> data.playerClass = v, data -> data.playerClass).add()
+            .append(new KeyedCodec<>("ClassId", Codec.STRING), (data, v) -> data.classId = v, data -> data.classId).add() // <--- NOUVEAU
+
             .append(new KeyedCodec<>("CurrentTitle", Codec.STRING), (data, v) -> data.currentTitle = v, data -> data.currentTitle).add()
             .append(new KeyedCodec<>("GuildRank", Codec.STRING), (data, v) -> data.guildRank = v, data -> data.guildRank).add()
 
-            // Stats
             .append(new KeyedCodec<>("Strength", Codec.INTEGER), (data, v) -> data.strength = v, data -> data.strength).add()
             .append(new KeyedCodec<>("Endurance", Codec.INTEGER), (data, v) -> data.endurance = v, data -> data.endurance).add()
             .append(new KeyedCodec<>("Agility", Codec.INTEGER), (data, v) -> data.agility = v, data -> data.agility).add()
@@ -78,10 +78,8 @@ public class PlayerLevelData implements Component<EntityStore> {
             .append(new KeyedCodec<>("Intelligence", Codec.INTEGER), (data, v) -> data.intelligence = v, data -> data.intelligence).add()
             .append(new KeyedCodec<>("Luck", Codec.INTEGER), (data, v) -> data.luck = v, data -> data.luck).add()
 
-            // Argent
             .append(new KeyedCodec<>("Money", Codec.LONG), (data, v) -> data.money = v, data -> data.money).add()
 
-            // Liste de titres
             .append(new KeyedCodec<>("UnlockedTitles", Codec.STRING), (data, value) -> {
                 data.unlockedTitles = new ArrayList<>();
                 if (value != null && !value.isEmpty()) {
@@ -104,7 +102,10 @@ public class PlayerLevelData implements Component<EntityStore> {
         copy.level = this.level;
         copy.experience = this.experience;
         copy.attributePoints = this.attributePoints;
+
         copy.playerClass = this.playerClass;
+        copy.classId = this.classId; // <--- NOUVEAU
+
         copy.currentTitle = this.currentTitle;
         copy.guildRank = this.guildRank;
 
@@ -126,7 +127,10 @@ public class PlayerLevelData implements Component<EntityStore> {
     public int getLevel() { return level; }
     public int getExperience() { return experience; }
     public int getAttributePoints() { return attributePoints; }
+
     public String getPlayerClass() { return playerClass; }
+    public String getPlayerClassId() { return classId; } // <--- NOUVEAU
+
     public String getCurrentTitle() { return currentTitle; }
     public List<String> getUnlockedTitles() { return unlockedTitles; }
     public String getGuildRank() { return guildRank; }
@@ -146,7 +150,10 @@ public class PlayerLevelData implements Component<EntityStore> {
     public void setLevel(int level) { this.level = level; }
     public void setExperience(int experience) { this.experience = experience; }
     public void setAttributePoints(int points) { this.attributePoints = points; }
+
     public void setPlayerClass(String playerClass) { this.playerClass = playerClass; }
+    public void setPlayerClassId(String classId) { this.classId = classId; } // <--- NOUVEAU
+
     public void setCurrentTitle(String title) { this.currentTitle = title; }
     public void setGuildRank(String guildRank) { this.guildRank = guildRank; }
 
