@@ -4,8 +4,9 @@ import com.eldanior.system.rpg.classes.ClassModel;
 import com.eldanior.system.rpg.enums.ClassType;
 import com.eldanior.system.rpg.enums.Rarity;
 import com.eldanior.system.rpg.classes.skills.Skills.definitions.AuraDragonicDivin;
+import com.eldanior.system.rpg.classes.skills.system.config.AuraDragonicConfig; // ✅ Import de la config
 
-import java.util.List; // ✅ Import nécessaire
+import java.util.List;
 
 public class AncestralDragon extends ClassModel {
 
@@ -16,12 +17,13 @@ public class AncestralDragon extends ClassModel {
                 "Une entite mythique dont les veines bresillent de puissance draconique ancienne.",
                 Rarity.DIVINE,
                 ClassType.DRAGON,
-                List.of(new AuraDragonicDivin()),
+                // ✅ On injecte une nouvelle config ici
+                List.of(new AuraDragonicDivin(new AuraDragonicConfig())),
                 true,
                 null,
                 2,
                 true,
-                1000, 2000, 10000, 800, 400, 10000
+                200, 200, 10000, 200, 200, 10000
         );
     }
 }

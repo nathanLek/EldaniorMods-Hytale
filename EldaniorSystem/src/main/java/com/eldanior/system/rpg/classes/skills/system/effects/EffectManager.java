@@ -1,12 +1,17 @@
 package com.eldanior.system.rpg.classes.skills.system.effects;
 
 import com.eldanior.system.utils.NotificationHelper;
+import com.hypixel.hytale.component.CommandBuffer;
+import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.math.vector.Vector3d;
+// CORRECTION 1 : Le bon package pour NotificationStyle
 import com.hypixel.hytale.protocol.packets.interface_.NotificationStyle;
+import com.hypixel.hytale.protocol.SoundCategory;
+import com.hypixel.hytale.server.core.asset.type.soundevent.config.SoundEvent;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
-import com.hypixel.hytale.server.core.universe.world.World;
-
-import java.lang.reflect.Method;
+import com.hypixel.hytale.server.core.universe.world.ParticleUtil;
+import com.hypixel.hytale.server.core.universe.world.SoundUtil;
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 public class EffectManager {
 
@@ -18,51 +23,39 @@ public class EffectManager {
     }
 
     /**
-     * Fait apparaître un effet visuel via Réflexion.
-     * Contourne les erreurs de compilation "Cannot find symbol".
+     * Fait apparaître un effet visuel via l'API Native de Hytale.
+     * Nécessite le Store pour créer l'entité particule.
      */
-    public static void spawnParticle(World world, Vector3d pos, String particleName, int count) {
-        if (world == null || pos == null) return;
-
-        try {
-            // TENTATIVE 1 : Signature Complète (Doubles)
-            Method m = world.getClass().getMethod("spawnParticle", String.class, Vector3d.class, int.class, double.class, double.class, double.class, double.class);
-            m.invoke(world, particleName, pos, count, 0.5, 0.5, 0.5, 0.02);
-            return;
-        } catch (Exception e1) {
-            // Ignorer
-        }
-
-        try {
-            // TENTATIVE 2 : Signature Simple
-            Method m = world.getClass().getMethod("spawnParticle", String.class, Vector3d.class, int.class);
-            m.invoke(world, particleName, pos, count);
-            return;
-        } catch (Exception e2) {
-            // Ignorer
-        }
-
-        try {
-            // TENTATIVE 3 : Alternative "Effect" (Ancienne API)
-            Method m = world.getClass().getMethod("spawnParticleEffect", String.class, Vector3d.class, int.class);
-            m.invoke(world, particleName, pos, count);
-        } catch (Exception e3) {
-            // Si rien ne marche, on log juste une fois pour ne pas spammer
-            // System.out.println("EffectManager: Impossible de trouver spawnParticle pour " + particleName);
-        }
+    public static void spawnParticle(String particleName, Vector3d pos, Store<EntityStore> store) {
+        if (store == null || pos == null) return;
+        // Log de diagnostic
+        System.out.println("Tentative de spawn particule: " + particleName + " à " + pos.toString());
+        ParticleUtil.spawnParticleEffect(particleName, pos, store);
     }
 
     /**
-     * Joue un son via Réflexion.
+     * Joue un son via l'API Native de Hytale.
+     * Nécessite le CommandBuffer pour envoyer l'instruction au serveur.
      */
-    public static void playSound(World world, Vector3d pos, String soundName, float volume, float pitch) {
-        if (world == null || pos == null) return;
+    public static void playSound(String soundName, Vector3d pos, float volume, float pitch, CommandBuffer<EntityStore> commandBuffer) {
+        if (commandBuffer == null || pos == null) return;
 
-        try {
-            Method m = world.getClass().getMethod("playSound", String.class, Vector3d.class, float.class, float.class);
-            m.invoke(world, soundName, pos, volume, pitch);
-        } catch (Exception e) {
-            // Fallback silencieux
+        // Récupération de l'ID du son depuis le registre
+        int soundId = SoundEvent.getAssetMap().getIndex(soundName);
+
+        if (soundId != -1) {
+            // CORRECTION 2 : Utilisation de playSoundEvent3d avec x, y, z
+            SoundUtil.playSoundEvent3d(
+                    soundId,
+                    SoundCategory.SFX,
+                    pos.x, pos.y, pos.z, // On décompose le Vector3d
+                    volume,
+                    pitch,
+                    commandBuffer
+            );
+        } else {
+            // Debug utile si tu te trompes de nom
+            System.out.println("[EffectManager] Son introuvable : " + soundName);
         }
     }
 

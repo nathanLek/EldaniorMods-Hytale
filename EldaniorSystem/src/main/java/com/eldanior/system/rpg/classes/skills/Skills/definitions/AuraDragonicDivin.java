@@ -3,18 +3,17 @@ package com.eldanior.system.rpg.classes.skills.Skills.definitions;
 import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.rpg.classes.skills.Skills.SkillModel;
 import com.eldanior.system.rpg.classes.skills.system.effects.EffectManager;
+import com.eldanior.system.rpg.classes.skills.system.config.AuraDragonicConfig; // Import de la config
 import com.eldanior.system.components.PlayerLevelData;
 import com.eldanior.system.rpg.enums.ClassType;
 import com.eldanior.system.rpg.enums.Rarity;
+import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatsModule;
 import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
-import com.hypixel.hytale.server.core.universe.PlayerRef; // Important
-import com.hypixel.hytale.server.core.universe.Universe;
-import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import java.util.List;
@@ -23,72 +22,51 @@ import java.util.Random;
 public class AuraDragonicDivin extends SkillModel {
 
     private final Random random = new Random();
+    private final AuraDragonicConfig config; // Instance de config
 
-    public AuraDragonicDivin() {
+    public AuraDragonicDivin(AuraDragonicConfig config) {
         super(
                 "aura_dragonic_divin",
                 "Cataclysme Draconique",
                 "Une tempête de chaos qui foudroie et terrifie tous les ennemis proches.",
                 Rarity.DIVINE,
                 ClassType.DRAGON,
-                10.0f,
                 20.0f,
+                30.0f,
                 1.0f,
                 true,
                 5.0f,
-                30.0f,
+                10.0f,
                 List.of("dragon_fear", "lightning_storm")
         );
+        this.config = config != null ? config : new AuraDragonicConfig();
     }
 
-    /**
-     * VISUEL SUR LE LANCEUR (Le Dragon)
-     */
     @Override
-    public void onTick(Ref<EntityStore> playerRef, Store<EntityStore> store, PlayerLevelData data) {
+    public void onTick(Ref<EntityStore> playerRef, Store<EntityStore> store, CommandBuffer<EntityStore> commandBuffer, PlayerLevelData data) {
         TransformComponent trans = store.getComponent(playerRef, TransformComponent.getComponentType());
         if (trans == null) return;
 
-        // CORRECTION : On récupère le monde via PlayerRef, pas TransformComponent
-        PlayerRef pRef = store.getComponent(playerRef, PlayerRef.getComponentType());
-        if (pRef == null) return;
+        // Utilisation de la config pour la particule d'aura
+        EffectManager.spawnParticle(config.getAuraParticle(), trans.getPosition(), store);
 
-        World world = Universe.get().getWorld(pRef.getWorldUuid());
-        if (world == null) return;
-
-        // Aura violette
-        EffectManager.spawnParticle(world, trans.getPosition(), "hytale:fx_dragon_aura", 8);
-
-        // Si Mana > 80%, lueur sacrée
         EntityStatMap stats = store.getComponent(playerRef, EntityStatsModule.get().getEntityStatMapComponentType());
         if (stats != null) {
             var mana = stats.get(DefaultEntityStatTypes.getMana());
             if (mana != null && (mana.get() / mana.getMax()) > 0.8f) {
-                EffectManager.spawnParticle(world, trans.getPosition(), "hytale:fx_holy_glow", 3);
+                EffectManager.spawnParticle("hytale:fx_holy_glow", trans.getPosition(), store);
             }
         }
     }
 
-    /**
-     * LOGIQUE & VISUEL SUR LES CIBLES
-     */
     @Override
-    public void onAuraTick(Ref<EntityStore> source, Ref<EntityStore> target, Store<EntityStore> store, double distance) {
+    public void onAuraTick(Ref<EntityStore> source, Ref<EntityStore> target, Store<EntityStore> store, CommandBuffer<EntityStore> commandBuffer, double distance) {
         PlayerLevelData data = store.getComponent(source, EldaniorSystem.get().getPlayerLevelDataType());
         EntityStatMap sourceStats = store.getComponent(source, EntityStatsModule.get().getEntityStatMapComponentType());
         TransformComponent targetTrans = store.getComponent(target, TransformComponent.getComponentType());
 
         if (data == null || sourceStats == null || targetTrans == null) return;
 
-        // CORRECTION : On utilise le PlayerRef de la SOURCE (le lanceur) pour trouver le monde
-        // Car la cible (monstre) n'a pas forcément de PlayerRef
-        PlayerRef sourcePRef = store.getComponent(source, PlayerRef.getComponentType());
-        if (sourcePRef == null) return;
-
-        World world = Universe.get().getWorld(sourcePRef.getWorldUuid());
-        if (world == null) return;
-
-        // Calcul Puissance
         float rarityMult = getRarityMultiplier();
         float levelMult = 1.0f + (data.getLevel() / 50.0f);
         float manaMult = 1.0f;
@@ -100,7 +78,6 @@ public class AuraDragonicDivin extends SkillModel {
 
         float puissanceTotale = rarityMult * levelMult * manaMult;
 
-        // Application Dégâts
         EntityStatMap targetStats = store.getComponent(target, EntityStatsModule.get().getEntityStatMapComponentType());
         if (targetStats != null) {
             int hpIdx = DefaultEntityStatTypes.getHealth();
@@ -114,13 +91,21 @@ public class AuraDragonicDivin extends SkillModel {
                 if (finalDamage > 1.0f) {
                     targetStats.setStatValue(hpIdx, Math.max(0, hp.get() - finalDamage));
 
-                    // --- VISUEL D'IMPACT ---
-                    EffectManager.spawnParticle(world, targetTrans.getPosition(), "hytale:fx_curse_black", 2);
+                    // Particule d'impact via config
+                    EffectManager.spawnParticle(config.getImpactParticle(), targetTrans.getPosition(), store);
 
-                    // --- SON & ECLAIR SI PUISSANT ---
                     if (puissanceTotale > 5.0f && random.nextFloat() < 0.20f) {
-                        EffectManager.spawnParticle(world, targetTrans.getPosition(), "hytale:fx_lightning_strike", 1);
-                        EffectManager.playSound(world, targetTrans.getPosition(), "eldanior:sfx_dragon_thunder", 1.0f, 0.8f + (random.nextFloat() * 0.4f));
+                        // Particule d'éclair via config
+                        EffectManager.spawnParticle(config.getLightningParticle(), targetTrans.getPosition(), store);
+
+                        // Son via config
+                        EffectManager.playSound(
+                                config.getSoundId(),
+                                targetTrans.getPosition(),
+                                1.0f,
+                                0.8f + (random.nextFloat() * 0.4f),
+                                commandBuffer
+                        );
                     }
                 }
             }

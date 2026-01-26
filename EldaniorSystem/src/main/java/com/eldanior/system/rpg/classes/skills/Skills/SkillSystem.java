@@ -23,10 +23,9 @@ public class SkillSystem extends EntityTickingSystem<EntityStore> {
     public void tick(float dt, int index, @Nonnull ArchetypeChunk<EntityStore> archetypeChunk, @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
 
         // 1. Gestion du Timer (Optimisation)
-        // On ne veut pas activer la regen 20 fois par seconde, mais 1 fois par seconde.
         timer += dt;
         if (timer < 1.0f) return;
-        if (index == 0) timer = 0; // Reset au début du chunk pour garder la synchro
+        if (index == 0) timer = 0;
 
         Ref<EntityStore> entityRef = archetypeChunk.getReferenceTo(index);
         if (!entityRef.isValid()) return;
@@ -41,15 +40,13 @@ public class SkillSystem extends EntityTickingSystem<EntityStore> {
 
         ClassModel classModel = ClassManager.get(classId);
 
-        // Si la classe n'existe pas ou que les passifs sont désactivés, on arrête
         if (classModel == null || !classModel.isPassiveActive()) return;
 
         // 4. Exécution des Compétences (BOUCLE)
-        // On parcourt la liste des compétences définies dans la classe
         for (SkillModel skill : classModel.getPassiveSkills()) {
             if (skill != null) {
-                // On active l'effet (ex: Regen Vie/Mana)
-                skill.onTick(entityRef, store, data);
+                // MISE A JOUR : On passe le CommandBuffer ici !
+                skill.onTick(entityRef, store, commandBuffer, data);
             }
         }
     }
@@ -57,7 +54,6 @@ public class SkillSystem extends EntityTickingSystem<EntityStore> {
     @Nonnull
     @Override
     public Query<EntityStore> getQuery() {
-        // Ce système ne s'applique qu'aux JOUEURS
         return Player.getComponentType();
     }
 }

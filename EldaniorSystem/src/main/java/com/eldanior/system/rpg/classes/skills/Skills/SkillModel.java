@@ -3,6 +3,7 @@ package com.eldanior.system.rpg.classes.skills.Skills;
 import com.eldanior.system.components.PlayerLevelData;
 import com.eldanior.system.rpg.enums.ClassType;
 import com.eldanior.system.rpg.enums.Rarity;
+import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
@@ -20,13 +21,13 @@ public abstract class SkillModel {
     private final ClassType classType;
 
     // --- Mécaniques Temporelles ---
-    private final float activationTime; // Temps d'activation ou durée active pour les auras
+    private final float activationTime;
     private final float cooldown;
     private final float tickInterval;
 
     // --- Propriétés ---
     private final boolean isPassive;
-    private final float radius; // Rayon d'action pour les auras (0 si non applicable)
+    private final float radius;
     private boolean isSelected;
 
     // --- Coûts & Ressources ---
@@ -67,19 +68,18 @@ public abstract class SkillModel {
 
     /**
      * Méthode appelée à chaque tick pour le porteur du skill.
+     * Ajout de CommandBuffer pour les sons.
      */
-    public abstract void onTick(Ref<EntityStore> playerRef, Store<EntityStore> store, PlayerLevelData data);
+    public abstract void onTick(Ref<EntityStore> playerRef, Store<EntityStore> store, CommandBuffer<EntityStore> commandBuffer, PlayerLevelData data);
 
     /**
      * Méthode appelée par l'AuraSystem lorsqu'une entité est dans le rayon du skill.
+     * Ajout de CommandBuffer pour les sons d'impact.
      */
-    public abstract void onAuraTick(Ref<EntityStore> source, Ref<EntityStore> target, Store<EntityStore> store, double distance);
+    public abstract void onAuraTick(Ref<EntityStore> source, Ref<EntityStore> target, Store<EntityStore> store, CommandBuffer<EntityStore> commandBuffer, double distance);
 
     // ================= LOGIQUE MÉTIER =================
 
-    /**
-     * Détermine quel type de ressource est consommé selon la classe.
-     */
     public String getResourceType() {
         if (this.classType == ClassType.MAGE || this.classType == ClassType.DRAGON) {
             return "Mana";
@@ -94,7 +94,7 @@ public abstract class SkillModel {
             case EPIC -> 1.5f;
             case UNIQUE -> 2.0f;
             case LEGENDARY -> 2.5f;
-            case DIVINE -> 3.5f; // Le Dragon Ancestral va piquer !
+            case DIVINE -> 3.5f;
             default -> 1.0f;
         };
     }

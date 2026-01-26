@@ -1,7 +1,7 @@
 package com.eldanior.system.rpg.classes.skills.Skills;
 
 import com.eldanior.system.rpg.classes.skills.Skills.definitions.AuraDragonicDivin;
-
+import com.eldanior.system.rpg.classes.skills.system.config.AuraDragonicConfig; // Import de la config
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,15 +10,15 @@ public class SkillManager {
     private static final Map<String, SkillModel> skills = new HashMap<>();
 
     public static void init() {
-        // Enregistrement des compétences concrètes uniquement
-        register(new AuraDragonicDivin());
+        // Initialisation de la config (par défaut ici, ou chargée via un fichier)
+        AuraDragonicConfig dragonConfig = new AuraDragonicConfig();
 
-        // Plus tard, tu ajouteras ici : register(new StoneSkin()); etc.
+        // Enregistrement avec la config
+        register(new AuraDragonicDivin(dragonConfig));
 
         System.out.println("[Eldanior] Skills Passifs charges.");
     }
 
-    // CORRECTION : Accepte n'importe quel PassiveSkillModel (pas juste AuraDragonicDivin)
     public static void register(SkillModel skill) {
         skills.put(skill.getId(), skill);
     }
