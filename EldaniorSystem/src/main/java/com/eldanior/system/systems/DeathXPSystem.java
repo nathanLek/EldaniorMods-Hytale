@@ -19,45 +19,94 @@ import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.npc.entities.NPCEntity;
 import com.hypixel.hytale.protocol.packets.interface_.NotificationStyle;
+import com.hypixel.hytale.server.core.inventory.Inventory;
+import com.hypixel.hytale.server.core.inventory.ItemStack;
+import com.hypixel.hytale.server.core.inventory.container.ItemContainer;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Système gérant la mort des entités : distribution d'XP et sauvegarde des items persistants.
+ */
 public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
 
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
     private final Map<UUID, Boolean> processedDeaths = new ConcurrentHashMap<>();
 
     @Override
-    public void tick(float dt, int index, @Nonnull ArchetypeChunk<EntityStore> archetypeChunk, @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
+    public void tick(float dt, int index, @Nonnull ArchetypeChunk<EntityStore> archetypeChunk,
+                     @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
         try {
             Ref<EntityStore> entityRef = archetypeChunk.getReferenceTo(index);
             if (!entityRef.isValid()) return;
 
-            UUIDComponent uuidComp = (UUIDComponent) store.getComponent(entityRef, UUIDComponent.getComponentType());
+            UUIDComponent uuidComp = store.getComponent(entityRef, UUIDComponent.getComponentType());
             if (uuidComp == null) return;
             UUID victimUUID = uuidComp.getUuid();
 
+            // Sécurité pour ne traiter la mort qu'une seule fois par tick
             if (processedDeaths.containsKey(victimUUID)) return;
             processedDeaths.put(victimUUID, true);
 
-            UUID killerUUID = EldaniorSystem.get().getLastAttackers().remove(victimUUID);
+            // --- 1. LOGIQUE DE PERSISTANCE DES SKILLS (Hytale API) ---
+            saveSkillItemsOnDeath(entityRef, store, victimUUID);
 
+            // --- 2. LOGIQUE D'XP ---
+            UUID killerUUID = EldaniorSystem.get().getLastAttackers().remove(victimUUID);
             if (killerUUID != null) {
-                // On passe le victimUUID pour récupérer le nom proprement plus tard
                 giveXP(killerUUID, victimUUID, entityRef, store, commandBuffer);
             }
+
         } catch (Exception e) {
-            LOGGER.atSevere().log("ERREUR CRITIQUE dans DeathXPSystem: " + e.getMessage());
-            e.printStackTrace();
+            LOGGER.atSevere().withCause(e).log("ERREUR CRITIQUE dans DeathXPSystem");
         }
     }
 
-    // Ajout de victimUUID dans les arguments pour récupérer le nom facilement
-    private void giveXP(UUID killerUUID, UUID victimUUID, Ref<EntityStore> victimRef, Store<EntityStore> store, CommandBuffer<EntityStore> commandBuffer) {
+    /**
+     * Scanne l'inventaire de la victime et sauvegarde les items possédant un SkillId.
+     */
+    private void saveSkillItemsOnDeath(Ref<EntityStore> victimRef, Store<EntityStore> store, UUID victimUUID) {
+        Player player = store.getComponent(victimRef, Player.getComponentType());
+        if (player == null) return; // Ce n'est pas un joueur
+
+        Inventory inventory = player.getInventory();
+        List<ItemStack> persistentStacks = new ArrayList<>();
+
+        // On scanne la Hotbar et le Storage principal
+        scanContainerForPersistentItems(inventory.getHotbar(), persistentStacks);
+        scanContainerForPersistentItems(inventory.getStorage(), persistentStacks);
+
+        if (!persistentStacks.isEmpty()) {
+            // On délègue le stockage à l'instance principale pour le respawn
+            EldaniorSystem.get().getPersistentItems().put(victimUUID, persistentStacks);
+            LOGGER.atInfo().log("Inventaire sécurisé pour " + player.getDisplayName() +
+                    " (" + persistentStacks.size() + " items)");
+        }
+    }
+
+    /**
+     * Parcourt un conteneur d'items et ajoute les items de skill à la liste de sauvegarde.
+     */
+    private void scanContainerForPersistentItems(ItemContainer container, List<ItemStack> list) {
+        container.forEach((slot, stack) -> {
+            if (stack != null && !stack.isEmpty()) {
+                // Utilisation de la clé statique depuis EldaniorSystem
+                String skillId = stack.getFromMetadataOrNull((com.hypixel.hytale.codec.KeyedCodec<String>) EldaniorSystem.getSkillIdKey());
+                if (skillId != null && !skillId.isEmpty()) {
+                    list.add(stack);
+                }
+            }
+        });
+    }
+
+    private void giveXP(UUID killerUUID, UUID victimUUID, Ref<EntityStore> victimRef,
+                        Store<EntityStore> store, CommandBuffer<EntityStore> commandBuffer) {
         try {
             PlayerRef killerRef = Universe.get().getPlayer(killerUUID);
             if (killerRef == null) return;
@@ -75,66 +124,40 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
             String victimName = "Inconnu";
             boolean isPvP = false;
 
-            // --- 1. DÉTECTION ET CALCUL XP ---
-
-            // A. PvP
+            // Détection Joueur vs NPC
             if (store.getComponent(victimRef, Player.getComponentType()) != null) {
                 isPvP = true;
-                victimName = "Joueur";
-
-                // CORRECTION DU NOM : On utilise l'UUID et l'Univers (plus sûr)
                 PlayerRef victimRefObj = Universe.get().getPlayer(victimUUID);
-                if (victimRefObj != null) {
-                    victimName = victimRefObj.getUsername();
-                }
+                victimName = (victimRefObj != null) ? victimRefObj.getUsername() : "Joueur";
 
-                // Récupération niveau victime
                 PlayerLevelData victimData = store.getComponent(victimRef, lvlType);
                 int victimLevel = (victimData != null) ? victimData.getLevel() : 1;
-
-                // Calcul du ratio
                 xpAmount = calculatePvPXP(killerLevel, victimLevel);
-            }
-            // B. PvE
-            else {
-                NPCEntity npc = store.getComponent(victimRef, Objects.requireNonNull(NPCEntity.getComponentType()));
+            } else {
+                NPCEntity npc = store.getComponent(victimRef, NPCEntity.getComponentType());
                 if (npc != null) {
                     String typeId = npc.getNPCTypeId().toLowerCase();
                     victimName = typeId.replace("_", " ");
-
-                    if (typeId.contains("boss")) xpAmount = 500;
-                    else if (typeId.contains("void") || typeId.contains("dungeon")) xpAmount = 25;
-                    else if (typeId.contains("skeleton") || typeId.contains("zombie")) xpAmount = 15;
-                    else if (typeId.contains("cow") || typeId.contains("pig") || typeId.contains("sheep")) xpAmount = 2;
-                    else xpAmount = 10;
+                    xpAmount = calculatePvEXP(typeId);
                 }
             }
 
-            if (xpAmount <= 0) return; // Sécurité
+            if (xpAmount <= 0) return;
 
-            // --- 2. ATTRIBUTION ---
+            // Attribution XP
+            PlayerLevelData dataToWrite = (killerDataRead != null)
+                    ? (PlayerLevelData) killerDataRead.clone()
+                    : new PlayerLevelData();
 
-            PlayerLevelData dataToWrite;
-            if (killerDataRead != null) {
-                dataToWrite = (PlayerLevelData) killerDataRead.clone();
-            } else {
-                dataToWrite = new PlayerLevelData();
-                dataToWrite.setLevel(1);
-            }
-
-            assert dataToWrite != null;
             int oldLvl = dataToWrite.getLevel();
             dataToWrite.addExperience(xpAmount);
 
             commandBuffer.putComponent(killerEntityRef, lvlType, dataToWrite);
 
-            // --- 3. FEEDBACK ---
-            String msgContent;
-            if (isPvP) {
-                msgContent = "<color:gold>⚔ PvP : +" + xpAmount + " XP</color> <color:gray>(vs " + victimName + ")</color>";
-            } else {
-                msgContent = "<color:green>+" + xpAmount + " XP</color> <color:gray>(" + victimName + ")</color>";
-            }
+            // Feedback
+            String msgContent = isPvP
+                    ? "<color:gold>⚔ PvP : +" + xpAmount + " XP</color> <color:gray>(vs " + victimName + ")</color>"
+                    : "<color:green>+" + xpAmount + " XP</color> <color:gray>(" + victimName + ")</color>";
 
             NotificationHelper.sendNotification(killerRef, msgContent, NotificationStyle.Success);
 
@@ -143,37 +166,21 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
             }
 
         } catch (Exception e) {
-            LOGGER.atSevere().log("ERREUR lors du don d'XP : " + e.getMessage());
-            e.printStackTrace();
+            LOGGER.atSevere().withCause(e).log("ERREUR lors du don d'XP");
         }
     }
 
-    /**
-     * Calcule l'XP selon le ratio de niveau.
-     * Formule : 100 * (NiveauVictime / NiveauTueur)
-     */
+    private int calculatePvEXP(String typeId) {
+        if (typeId.contains("boss")) return 500;
+        if (typeId.contains("void") || typeId.contains("dungeon")) return 25;
+        if (typeId.contains("skeleton") || typeId.contains("zombie")) return 15;
+        if (typeId.contains("cow") || typeId.contains("pig") || typeId.contains("sheep")) return 2;
+        return 10;
+    }
+
     private int calculatePvPXP(int killerLvl, int victimLvl) {
-        int baseXP = 100;
-
-        // Sécurité anti-crash (division par zéro)
-        if (killerLvl < 1) killerLvl = 1;
-        if (victimLvl < 1) victimLvl = 1;
-
-        // Calcul du Ratio (avec des doubles pour la précision)
-        double ratio = (double) victimLvl / (double) killerLvl;
-
-        // Exemples :
-        // 50 vs 50 -> ratio 1.0 -> 100 XP
-        // 10 vs 20 -> ratio 2.0 -> 200 XP (x2 car victime 2x plus forte)
-        // 20 vs 10 -> ratio 0.5 -> 50 XP (divisé par 2 car victime 2x plus faible)
-
-        int finalXP = (int) (baseXP * ratio);
-
-        // Bornes de sécurité
-        if (finalXP < 1) finalXP = 1;      // Minimum 1 XP
-        if (finalXP > 2000) finalXP = 2000; // Maximum 2000 XP (anti-abus extrême)
-
-        return finalXP;
+        double ratio = (double) Math.max(1, victimLvl) / (double) Math.max(1, killerLvl);
+        return (int) Math.min(2000, Math.max(1, 100 * ratio));
     }
 
     @Nonnull

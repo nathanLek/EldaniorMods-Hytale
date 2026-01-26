@@ -22,22 +22,16 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import javax.annotation.Nonnull;
 import java.util.*;
 
-public class AuraSystem extends EntityTickingSystem<EntityStore> {
+public class SkillsSystem extends EntityTickingSystem<EntityStore> {
 
-    // UUID Joueur -> (ID Skill -> Timestamp début)
     private final Map<UUID, Map<String, Long>> activationTimes = new HashMap<>();
-    // UUID Joueur -> (ID Skill -> Timestamp fin cooldown)
     private final Map<UUID, Map<String, Long>> cooldownTimes = new HashMap<>();
-    // UUID Joueur -> (ID Skill -> Timestamp prochaine consommation de mana)
     private final Map<UUID, Map<String, Long>> nextResourceTick = new HashMap<>();
-
     private float timer = 0;
 
     @Override
     public void tick(float dt, int index, @Nonnull ArchetypeChunk<EntityStore> archetypeChunk, @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
-
         timer += dt;
-        // On garde un tick rate assez rapide (0.2s) pour que les dégâts soient réactifs
         if (timer < 0.2f) return;
         if (index == 0) timer = 0;
 
@@ -48,11 +42,8 @@ public class AuraSystem extends EntityTickingSystem<EntityStore> {
         if (transform == null) return;
         Vector3d entityPos = transform.getPosition();
 
-        Collection<PlayerRef> players = Universe.get().getPlayers();
-
-        for (PlayerRef player : players) {
+        for (PlayerRef player : Universe.get().getPlayers()) {
             var sourceRef = player.getReference();
-            // On évite que le joueur se tape lui-même
             if (sourceRef == null || sourceRef.equals(entityRef) || !sourceRef.isValid()) continue;
 
             PlayerLevelData pData = store.getComponent(sourceRef, EldaniorSystem.get().getPlayerLevelDataType());
@@ -61,18 +52,23 @@ public class AuraSystem extends EntityTickingSystem<EntityStore> {
             ClassModel classModel = ClassManager.get(pData.getPlayerClassId());
             if (classModel == null) continue;
 
-            for (Object skillObj : classModel.getPassiveSkills()) {
-                if (!(skillObj instanceof SkillModel skill)) continue;
+            for (SkillModel skill : classModel.getPassiveSkills()) {
+                if (skill == null || skill.getRadius() <= 0) continue;
 
-                if (skill.getRadius() <= 0) continue;
-
-                handleAuraLogic(player, sourceRef, entityRef, store, commandBuffer, skill, entityPos, pData);
+                // --- LOGIQUE DE TÉLÉCOMMANDE ---
+                // On ne lance handleSkillLogic QUE si le skill est activé dans le PlayerLevelData
+                if (pData.isSkillEnabled(skill.getId())) {
+                    handleSkillLogic(player, sourceRef, entityRef, store, commandBuffer, skill, entityPos, pData);
+                } else {
+                    cleanupSkillTimers(player.getUuid(), skill.getId());
+                }
             }
         }
     }
 
-    private void handleAuraLogic(PlayerRef player, Ref<EntityStore> sourceRef, Ref<EntityStore> targetRef,
-                                 Store<EntityStore> store, CommandBuffer<EntityStore> commandBuffer, SkillModel skill, Vector3d targetPos, PlayerLevelData pData) {
+    private void handleSkillLogic(PlayerRef player, Ref<EntityStore> sourceRef, Ref<EntityStore> targetRef,
+                                  Store<EntityStore> store, CommandBuffer<EntityStore> commandBuffer,
+                                  SkillModel skill, Vector3d targetPos, PlayerLevelData pData) {
 
         UUID pid = player.getUuid();
         String skillId = skill.getId();
@@ -82,55 +78,39 @@ public class AuraSystem extends EntityTickingSystem<EntityStore> {
         cooldownTimes.putIfAbsent(pid, new HashMap<>());
         nextResourceTick.putIfAbsent(pid, new HashMap<>());
 
-        // 1. Vérif Cooldown
-        long cdEnd = cooldownTimes.get(pid).getOrDefault(skillId, 0L);
-        if (now < cdEnd) return;
+        if (now < cooldownTimes.get(pid).getOrDefault(skillId, 0L)) return;
 
-        // 2. Gestion Activation Initiale
         long start = activationTimes.get(pid).getOrDefault(skillId, 0L);
-
-        if (start == 0 || (now > cdEnd && start < cdEnd)) {
-            // Tentative d'activation : on paye le premier coût
+        if (start == 0) {
             if (consumeResource(sourceRef, store, skill)) {
                 activationTimes.get(pid).put(skillId, now);
-                // Prochaine consommation dans 1 seconde
                 nextResourceTick.get(pid).put(skillId, now + 1000L);
-                EffectManager.sendBuffFeedback(player, "§a⚡ " + skill.getName() + " activée !");
+                String mode = (skill.getActivationTime() <= 0) ? "§6[Permanent]" : "§e[" + skill.getActivationTime() + "s]";
+                EffectManager.sendBuffFeedback(player, "§a⚡ " + skill.getName() + " " + mode + " activée !");
                 start = now;
-            } else {
-                return; // Pas assez de mana pour démarrer
-            }
+            } else return;
         }
 
-        // 3. Vérif Durée Totale
-        long durationMs = (long) (skill.getActivationTime() * 1000);
-        if (now > start + durationMs) {
+        // Vérification durée (si > 0)
+        if (skill.getActivationTime() > 0 && now > start + (long)(skill.getActivationTime() * 1000)) {
             stopSkill(player, pid, skillId, now, skill.getCooldown());
             return;
         }
 
-        // 4. Consommation périodique (CORRECTIF ICI)
-        // On ne consomme que si le temps est écoulé, indépendamment du nombre d'ennemis
-        long nextConsum = nextResourceTick.get(pid).getOrDefault(skillId, 0L);
-
-        if (now >= nextConsum) {
+        // Consommation Mana
+        if (now >= nextResourceTick.get(pid).getOrDefault(skillId, 0L)) {
             if (!consumeResource(sourceRef, store, skill)) {
                 stopSkill(player, pid, skillId, now, skill.getCooldown());
                 return;
             }
-            // On repousse la prochaine consommation de 1s
             nextResourceTick.get(pid).put(skillId, now + 1000L);
         }
 
-        // --- APPLICATION DE L'EFFET (Indépendant de la consommation) ---
         TransformComponent sourceTrans = store.getComponent(sourceRef, TransformComponent.getComponentType());
         if (sourceTrans == null) return;
 
-        // Effet visuel sur le lanceur (ne le jouer que si on est proche du prochain tick de ressource pour éviter le spam ?)
-        // Ou on le laisse à chaque tick (0.2s) pour que ce soit fluide.
         skill.onTick(sourceRef, store, commandBuffer, pData);
 
-        // Effets sur les cibles (Dégâts)
         double dist = EffectManager.getDistance(targetPos, sourceTrans.getPosition());
         if (dist <= skill.getRadius()) {
             skill.onAuraTick(sourceRef, targetRef, store, commandBuffer, dist);
@@ -140,27 +120,32 @@ public class AuraSystem extends EntityTickingSystem<EntityStore> {
     private boolean consumeResource(Ref<EntityStore> source, Store<EntityStore> store, SkillModel skill) {
         EntityStatMap statMap = store.getComponent(source, EntityStatsModule.get().getEntityStatMapComponentType());
         if (statMap == null) return false;
-
-        int resourceIndex = skill.getResourceType().equals("Mana") || skill.getResourceType().equals("Dragon")
-                ? DefaultEntityStatTypes.getMana()
-                : DefaultEntityStatTypes.getStamina();
-
-        EntityStatValue resource = statMap.get(resourceIndex);
-
-        // CORRECTION : Si le coût est de 0 (ex: passif gratuit), on return true direct
+        int resIdx = (skill.getResourceType().equals("Mana") || skill.getResourceType().equals("Dragon")) ? DefaultEntityStatTypes.getMana() : DefaultEntityStatTypes.getStamina();
+        EntityStatValue res = statMap.get(resIdx);
         if (skill.getResourceCostPerSecond() <= 0) return true;
-
-        if (resource == null || resource.get() < skill.getResourceCostPerSecond()) return false;
-
-        statMap.setStatValue(resourceIndex, resource.get() - skill.getResourceCostPerSecond());
+        if (res == null || res.get() < skill.getResourceCostPerSecond()) return false;
+        statMap.setStatValue(resIdx, res.get() - skill.getResourceCostPerSecond());
         return true;
     }
 
     private void stopSkill(PlayerRef player, UUID pid, String skillId, long now, float cooldown) {
-        activationTimes.get(pid).remove(skillId);
-        nextResourceTick.get(pid).remove(skillId); // Nettoyage
+        cleanupSkillTimers(pid, skillId);
         cooldownTimes.get(pid).put(skillId, now + (long)(cooldown * 1000));
-        EffectManager.sendCombatFeedback(player, "§7 Fin de compétence...", false);
+        EffectManager.sendCombatFeedback(player, "§7 Fin de compétence : " + skillId, false);
+
+        var ref = player.getReference();
+        if (ref != null) {
+            PlayerLevelData data = ref.getStore().getComponent(ref, EldaniorSystem.get().getPlayerLevelDataType());
+            if (data != null && data.isSkillEnabled(skillId)) {
+                data.toggleSkill(skillId); // OFF
+                ref.getStore().putComponent(ref, EldaniorSystem.get().getPlayerLevelDataType(), data);
+            }
+        }
+    }
+
+    private void cleanupSkillTimers(UUID pid, String skillId) {
+        if (activationTimes.containsKey(pid)) activationTimes.get(pid).remove(skillId);
+        if (nextResourceTick.containsKey(pid)) nextResourceTick.get(pid).remove(skillId);
     }
 
     @Nonnull

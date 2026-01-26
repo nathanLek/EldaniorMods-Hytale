@@ -1,11 +1,17 @@
 package com.eldanior.system.utils;
-
+import com.eldanior.system.EldaniorSystem;
+import com.eldanior.system.rpg.classes.skills.Skills.SkillModel;
 import com.hypixel.hytale.protocol.packets.interface_.NotificationStyle;
+import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.util.EventTitleUtil;
 import com.hypixel.hytale.server.core.util.NotificationUtil;
+import org.bson.BsonDocument;
+import org.bson.BsonString;
+
 import java.util.UUID;
 import javax.annotation.Nonnull;
 
@@ -56,5 +62,23 @@ public class NotificationHelper {
 
     public static void showLevelUpTitle(@Nonnull PlayerRef playerRef, int newLevel) {
         showEventTitle(playerRef, "LEVEL UP!", "Niveau" + newLevel, true);
+    }
+
+    public static void giveSkillItem(PlayerRef playerRef, SkillModel skill) {
+        BsonDocument metadata = new BsonDocument();
+        metadata.put("displayName", new BsonString("§dSkill Test : " + skill.getName()));
+        metadata.put(EldaniorSystem.getSkillIdKey().getKey(), new BsonString(skill.getId()));
+
+        // ESSAI : ID "Food_Apple". Si ça fait un point d'interrogation, remets "hytale:apple"
+        // Le but est d'avoir un item consommable.
+        ItemStack stack = new ItemStack("Plant_Fruit_Apple", 1, metadata);
+
+        var ref = playerRef.getReference();
+        if (ref != null) {
+            Player p = ref.getStore().getComponent(ref, Player.getComponentType());
+            if (p != null) {
+                p.getInventory().getHotbar().setItemStackForSlot((short) 0, stack); // Slot 1 (0 en index)
+            }
+        }
     }
 }

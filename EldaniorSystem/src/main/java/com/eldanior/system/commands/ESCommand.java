@@ -11,6 +11,7 @@ public class ESCommand extends AbstractCommandCollection {
         this.addSubCommand(new SetLevelCommand());
         this.addSubCommand(new ClassInfoCommand());
         this.addSubCommand(new SetClassCommand());
+        this.addSubCommand(new GiveSkillItemCommand());
     }
 
     @Override

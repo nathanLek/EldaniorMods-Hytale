@@ -2,11 +2,14 @@ package com.eldanior.system;
 
 import com.eldanior.system.commands.ESCommand;
 import com.eldanior.system.components.PlayerLevelData;
-import com.eldanior.system.rpg.classes.ClassManager; // ✅ Import
-import com.eldanior.system.rpg.classes.skills.Skills.SkillManager; // ✅ Import
-import com.eldanior.system.rpg.classes.skills.Skills.SkillSystem; // (Vérifie que le package est bon, parfois c'est system.systems ou rpg.skills.passives)
-import com.eldanior.system.rpg.classes.skills.system.AuraSystem;
+import com.eldanior.system.components.SkillItemComponent;
+import com.eldanior.system.rpg.classes.ClassManager;
+import com.eldanior.system.rpg.classes.skills.Skills.SkillManager;
+import com.eldanior.system.rpg.classes.skills.Skills.SkillSystem;
+import com.eldanior.system.rpg.classes.skills.system.SkillsSystem;
+import com.eldanior.system.rpg.classes.skills.system.SkillActivationSystem;
 import com.eldanior.system.systems.*;
+import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.hypixel.hytale.logger.HytaleLogger;
@@ -22,63 +25,50 @@ public class EldaniorSystem extends JavaPlugin {
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
     private static EldaniorSystem instance;
     private ComponentType<EntityStore, PlayerLevelData> playerLevelDataType;
+    private SkillActivationSystem activationSystem;
+
+    private static final com.hypixel.hytale.codec.KeyedCodec<String> SKILL_ID_KEY =
+            new com.hypixel.hytale.codec.KeyedCodec<>("SkillId", com.hypixel.hytale.codec.Codec.STRING);
+
+    private final Map<UUID, UUID> lastAttackers = new ConcurrentHashMap<>();
+    private final Map<UUID, java.util.List<com.hypixel.hytale.server.core.inventory.ItemStack>> persistentItems = new ConcurrentHashMap<>();
 
     public EldaniorSystem(JavaPluginInit init) {
         super(init);
         instance = this;
     }
 
-    private final Map<UUID, UUID> lastAttackers = new ConcurrentHashMap<>();
-
-    public Map<UUID, UUID> getLastAttackers() {
-        return lastAttackers;
-    }
-
     @Override
     protected void setup() {
         LOGGER.atInfo().log(">>> ELDANIOR SYSTEM : Initialisation... <<<");
 
-        // =========================================================
-        // 🚨 C'EST ICI QU'IL FALLAIT AJOUTER L'INIT ! 🚨
-        // =========================================================
+        // 1. INIT MANAGERS
         try {
-            ClassManager.init(); // Charge les classes (Warrior, Dragon, etc.)
-            SkillManager.init(); // Charge les skills (Aura, etc.)
-            LOGGER.atInfo().log("- RPG Managers (Classes & Skills) initialisés !");
+            ClassManager.init();
+            SkillManager.init();
+            LOGGER.atInfo().log("- RPG Managers initialisés !");
         } catch (Exception e) {
-            LOGGER.atSevere().log("ERREUR CRITIQUE lors du chargement des classes RPG : " + e.getMessage());
-            e.printStackTrace();
+            LOGGER.atSevere().withCause(e).log("ERREUR Managers");
         }
-        // =========================================================
 
-        // 1. Composants
+        // 2. ENREGISTREMENT COMPOSANTS (ECS)
         try {
             this.playerLevelDataType = this.getEntityStoreRegistry().registerComponent(
-                    PlayerLevelData.class,
-                    "PlayerLevelData",
-                    PlayerLevelData.CODEC
-            );
-            LOGGER.atInfo().log("- Composant PlayerLevelData enregistré avec succès !");
+                    PlayerLevelData.class, "PlayerLevelData", PlayerLevelData.CODEC);
+
+            this.getEntityStoreRegistry().registerComponent(
+                    SkillItemComponent.class, "SkillItem", SkillItemComponent.CODEC);
+
+            LOGGER.atInfo().log("- Composants ECS enregistrés !");
         } catch (Exception e) {
-            LOGGER.atSevere().log("ERREUR CRITIQUE : Impossible d'enregistrer PlayerLevelData ! " + e.getMessage());
+            LOGGER.atSevere().withCause(e).log("ERREUR Composants");
         }
 
+        // 3. ENREGISTREMENT COMMANDES
+        this.getCommandRegistry().registerCommand(new ESCommand());
+
+        // 4. ENREGISTREMENT SYSTÈMES ET EVENTS
         try {
-            // Enregistrement de ta commande principale
-            // Assure-toi que ESCommand gère bien "setclass" et "classinfo" en sous-commandes
-            // OU enregistre SetClassCommand ici si tu l'as séparée.
-            this.getCommandRegistry().registerCommand(new ESCommand());
-
-            // Si tu as séparé les commandes comme on a vu avant, ajoute-les aussi :
-            // this.getCommandRegistry().registerCommand(new com.eldanior.system.commands.SetClassCommand());
-
-            LOGGER.atInfo().log(">>> COMMANDES ENREGISTRÉES <<<");
-        } catch (Exception e) {
-            LOGGER.atSevere().log("ERREUR : Impossible d'enregistrer la commande ! " + e.getMessage());
-        }
-
-        try {
-            // Enregistre les systèmes
             this.getEntityStoreRegistry().registerSystem(new CombatTrackerSystem());
             this.getEntityStoreRegistry().registerSystem(new CombatStatsSystem());
             this.getEntityStoreRegistry().registerSystem(new EnduranceSystem());
@@ -86,25 +76,37 @@ public class EldaniorSystem extends JavaPlugin {
             this.getEntityStoreRegistry().registerSystem(new HealthRegenSystem());
             this.getEntityStoreRegistry().registerSystem(new FallDamageSystem());
             this.getEntityStoreRegistry().registerSystem(new SpeedSystem());
-
-            // Le système de passifs (Régénération du Dragon)
             this.getEntityStoreRegistry().registerSystem(new SkillSystem());
-
-            // Enregistre le détecteur de mort
             this.getEntityStoreRegistry().registerSystem(new DeathXPSystem());
+            this.getEntityStoreRegistry().registerSystem(new SkillsSystem());
+            this.getEntityStoreRegistry().registerSystem(new SkillItemDropSystem());
+            this.getEntityStoreRegistry().registerSystem(new SkillActivationSystem());
 
-            // Enregistrement des systèmes de SKILLS
-            this.getEntityStoreRegistry().registerSystem(new AuraSystem());
-
-            LOGGER.atInfo().log(">>> SYSTÈMES XP ACTIVÉS <<<");
+            LOGGER.atInfo().log("- Systèmes ECS activés !");
         } catch (Exception e) {
-            LOGGER.atSevere().log("Erreur lors de l'enregistrement des systèmes : " + e.getMessage());
+            LOGGER.atSevere().log("Erreur enregistrement systèmes : " + e.getMessage());
         }
+
+        LOGGER.atInfo().log(">>> ELDANIOR SYSTEM PRÊT <<<");
     }
 
-    public static EldaniorSystem get() { return instance; }
+    public static EldaniorSystem get() {
+        return instance;
+    }
 
     public ComponentType<EntityStore, PlayerLevelData> getPlayerLevelDataType() {
         return playerLevelDataType;
+    }
+
+    public Map<UUID, UUID> getLastAttackers() {
+        return lastAttackers;
+    }
+
+    public static KeyedCodec<String> getSkillIdKey() {
+        return SKILL_ID_KEY;
+    }
+
+    public Map<UUID, java.util.List<com.hypixel.hytale.server.core.inventory.ItemStack>> getPersistentItems() {
+        return persistentItems;
     }
 }
