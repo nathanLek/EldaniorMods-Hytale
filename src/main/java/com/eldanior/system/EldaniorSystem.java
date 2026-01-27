@@ -1,0 +1,84 @@
+package com.eldanior.system;
+
+import com.eldanior.system.Leveling.systems.*;
+import com.eldanior.system.classes.ClassManager;
+import com.eldanior.system.Leveling.commands.ESCommand;
+import com.eldanior.system.Leveling.components.PlayerLevelData;
+import com.hypixel.hytale.server.core.plugin.JavaPlugin;
+import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
+import com.hypixel.hytale.logger.HytaleLogger;
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import com.hypixel.hytale.component.ComponentType;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+
+public class EldaniorSystem extends JavaPlugin {
+
+    private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
+    private static EldaniorSystem instance;
+    private ComponentType<EntityStore, PlayerLevelData> playerLevelDataType;
+
+    private final Map<UUID, UUID> lastAttackers = new ConcurrentHashMap<>();
+    private final Map<UUID, java.util.List<com.hypixel.hytale.server.core.inventory.ItemStack>> persistentItems = new ConcurrentHashMap<>();
+
+    public EldaniorSystem(JavaPluginInit init) {
+        super(init);
+        instance = this;
+    }
+
+    @Override
+    protected void setup() {
+        LOGGER.atInfo().log(">>> ELDANIOR SYSTEM : Initialisation... <<<");
+
+        // 1. INIT MANAGERS
+        try {
+            ClassManager.init();
+            LOGGER.atInfo().log("- RPG Managers initialisés !");
+        } catch (Exception e) {
+            LOGGER.atSevere().withCause(e).log("ERREUR Managers");
+        }
+
+        // 2. ENREGISTREMENT COMPOSANTS (ECS)
+        try {
+            this.playerLevelDataType = this.getEntityStoreRegistry().registerComponent(
+                    PlayerLevelData.class, "PlayerLevelData", PlayerLevelData.CODEC);
+        } catch (Exception e) {
+            LOGGER.atSevere().withCause(e).log("ERREUR Composants");
+        }
+
+        // 3. ENREGISTREMENT COMMANDES
+        this.getCommandRegistry().registerCommand(new ESCommand());
+
+        // 4. ENREGISTREMENT SYSTÈMES ET EVENTS
+        try {
+            // Systèmes RPG de base
+            this.getEntityStoreRegistry().registerSystem(new CombatTrackerSystem());
+            this.getEntityStoreRegistry().registerSystem(new CombatStatsSystem());
+            this.getEntityStoreRegistry().registerSystem(new EnduranceSystem());
+            this.getEntityStoreRegistry().registerSystem(new ManaSystem());
+            this.getEntityStoreRegistry().registerSystem(new HealthRegenSystem());
+            this.getEntityStoreRegistry().registerSystem(new FallDamageSystem());
+            this.getEntityStoreRegistry().registerSystem(new SpeedSystem());
+            this.getEntityStoreRegistry().registerSystem(new DeathXPSystem());
+
+            LOGGER.atInfo().log("- Systèmes ECS activés !");
+        } catch (Exception e) {
+            LOGGER.atSevere().log("Erreur enregistrement systèmes : " + e.getMessage());
+        }
+
+        LOGGER.atInfo().log(">>> ELDANIOR SYSTEM PRÊT <<<");
+    }
+
+    public static EldaniorSystem get() {
+        return instance;
+    }
+
+    public ComponentType<EntityStore, PlayerLevelData> getPlayerLevelDataType() {
+        return playerLevelDataType;
+    }
+
+    public Map<UUID, UUID> getLastAttackers() {
+        return lastAttackers;
+    }
+}
