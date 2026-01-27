@@ -12,6 +12,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PlayerLevelData implements Component<EntityStore> {
 
@@ -39,9 +41,14 @@ public class PlayerLevelData implements Component<EntityStore> {
     // Économie
     private long money = 1000;
 
-    // --- NOUVEAU : Liste des compétences activées (Télécommande) ---
+    // --- Liste des compétences activées (Télécommande) ---
     private List<String> unlockedSkills = new ArrayList<>();
     private Set<String> enabledSkills = new HashSet<>();
+
+    // --- NOUVEAU : Gestion Transitoire (Cooldowns) ---
+    // "transient" signifie que ces données ne sont pas sauvegardées dans la base de données
+    // (on reset les cooldowns si le serveur redémarre)
+    private transient Map<String, Long> cooldowns = new HashMap<>();
 
     public PlayerLevelData() {
         this.unlockedTitles.add("Novice");
@@ -64,7 +71,7 @@ public class PlayerLevelData implements Component<EntityStore> {
         return (float) this.experience / getRequiredExperience();
     }
 
-    // --- LOGIQUE DE TÉLÉCOMMANDE ---
+    // --- LOGIQUE DE TÉLÉCOMMANDE (Compétences à bascule) ---
     public boolean toggleSkill(String skillId) {
         if (this.enabledSkills.contains(skillId)) {
             this.enabledSkills.remove(skillId);
@@ -79,7 +86,45 @@ public class PlayerLevelData implements Component<EntityStore> {
         return this.enabledSkills.contains(skillId);
     }
 
-    // --- LE CODEC MIS À JOUR ---
+    // --- NOUVEAU : LOGIQUE DE COMBAT (Cooldowns & Mana) ---
+
+    /**
+     * Vérifie si le joueur a assez de mana.
+     * @param amount Le coût en mana.
+     * @return true si le joueur peut payer le coût.
+     */
+    public boolean hasEnoughMana(float amount) {
+        // TODO: Connecter cela au système de stats réel (EntityStatMap)
+        // Pour l'instant, on retourne toujours true pour faciliter les tests.
+        return true;
+    }
+
+    /**
+     * Vérifie si la compétence est disponible (pas en cooldown).
+     */
+    public boolean canCast(String skillId) {
+        if (!cooldowns.containsKey(skillId)) return true;
+        return System.currentTimeMillis() >= cooldowns.get(skillId);
+    }
+
+    /**
+     * Applique un cooldown à une compétence.
+     * @param durationSeconds La durée en secondes avant réutilisation.
+     */
+    public void applyCooldown(String skillId, float durationSeconds) {
+        long readyTime = System.currentTimeMillis() + (long)(durationSeconds * 1000);
+        cooldowns.put(skillId, readyTime);
+    }
+
+    /**
+     * Récupère le temps restant avant la fin du cooldown (en millisecondes).
+     */
+    public long getRemainingCooldown(String skillId) {
+        if (!cooldowns.containsKey(skillId)) return 0;
+        return Math.max(0, cooldowns.get(skillId) - System.currentTimeMillis());
+    }
+
+    // --- LE CODEC ---
     public static final BuilderCodec<PlayerLevelData> CODEC = BuilderCodec.builder(PlayerLevelData.class, PlayerLevelData::new)
             .append(new KeyedCodec<>("Level", Codec.INTEGER), (data, v) -> data.level = v, data -> data.level).add()
             .append(new KeyedCodec<>("Experience", Codec.INTEGER), (data, v) -> data.experience = v, data -> data.experience).add()
@@ -140,6 +185,8 @@ public class PlayerLevelData implements Component<EntityStore> {
         if (this.unlockedTitles != null) {
             copy.unlockedTitles = new ArrayList<>(this.unlockedTitles);
         }
+        // Pas besoin de cloner 'cooldowns' car c'est transitoire
+        copy.cooldowns = new HashMap<>();
         return copy;
     }
 
@@ -155,7 +202,6 @@ public class PlayerLevelData implements Component<EntityStore> {
 
     public void forgetAllSkills() {
         unlockedSkills.clear();
-        // On pense aussi à désactiver les effets en cours
         enabledSkills.clear();
     }
 

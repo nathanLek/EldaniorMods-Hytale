@@ -1,0 +1,42 @@
+{
+  "Model": "Ingredient_Stick",
+  "LaunchForce": 25,
+  "Physics": {
+    "Type": "Standard",
+    "Gravity": 0.05,
+    "TerminalVelocityAir": 50,
+    "Bounciness": 0.0,
+    "SticksVertically": false
+  },
+  "LaunchWorldSoundEventId": "hytale:sfx/magic/fire_cast",
+  "SpawnOffset": { "X": 0.0, "Y": 0.0, "Z": 0.0 },
+  "Interactions": {
+    "ProjectileHit": {
+      "Interactions": [
+        {
+          "Type": "Explode",
+          "Config": {
+            "DamageEntities": true,
+            "DamageBlocks": false,
+            "EntityDamageRadius": 3,
+            "EntityDamage": 10,
+            "BlockDamageRadius": 0
+          }
+        },
+        {
+          "Type": "Particle",
+          "Particle": "hytale:explosion_large",
+          "Count": 1
+        },
+        {
+          "Type": "Despawn"
+        }
+      ]
+    },
+    "ProjectileMiss": {
+      "Interactions": [
+        { "Type": "Despawn" }
+      ]
+    }
+  }
+}

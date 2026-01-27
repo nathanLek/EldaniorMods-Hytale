@@ -1,92 +1,44 @@
 package com.eldanior.system.rpg.classes.skills.Skills;
 
-import com.eldanior.system.components.PlayerLevelData;
 import com.eldanior.system.rpg.enums.ClassType;
 import com.eldanior.system.rpg.enums.Rarity;
-import com.hypixel.hytale.component.CommandBuffer;
-import com.hypixel.hytale.component.Ref;
-import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * Modèle de base pour TOUTES les compétences (Actives ou Passives).
+ */
 public abstract class SkillModel {
 
-    // --- Identité ---
     private final String id;
     private final String name;
     private final String description;
     private final Rarity rarity;
     private final ClassType classType;
 
-    // --- Mécaniques Temporelles ---
-    private final float activationTime;
+    // Le cooldown (temps de recharge)
     private final float cooldown;
-    private final float tickInterval;
 
-    // --- Propriétés ---
-    private final boolean isPassive;
-    private final float radius;
-    private boolean isSelected;
+    // Le coût (Mana par activation OU Mana par seconde selon le type)
+    private final float resourceCost;
 
-    // --- Coûts & Ressources ---
-    private final float resourceCostPerSecond;
-
-    // --- Placeholders (Futur) ---
-    private String itemActivation;
-    private String consumableRequired;
-
-    // --- Effets ---
-    private final List<String> effectIds;
-
-    // ================= CONSTRUCTEUR COMPLET =================
-    public SkillModel(String id, String name, String description,
-                      Rarity rarity, ClassType classType,
-                      float activationTime, float cooldown, float tickInterval,
-                      boolean isPassive, float resourceCostPerSecond, float radius,
-                      List<String> effectIds) {
+    public SkillModel(String id, String name, String description, Rarity rarity, ClassType classType, float cooldown, float resourceCost) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.rarity = rarity;
         this.classType = classType;
-        this.activationTime = activationTime;
         this.cooldown = cooldown;
-        this.tickInterval = tickInterval;
-        this.isPassive = isPassive;
-        this.resourceCostPerSecond = resourceCostPerSecond;
-        this.radius = radius;
-
-        this.effectIds = (effectIds != null) ? effectIds : new ArrayList<>();
-        this.isSelected = false;
-        this.itemActivation = null;
-        this.consumableRequired = null;
+        this.resourceCost = resourceCost;
     }
 
-    // ================= LOGIQUE ABSTRAITE =================
+    public String getId() { return id; }
+    public String getName() { return name; }
+    public String getDescription() { return description; }
+    public Rarity getRarity() { return rarity; }
+    public ClassType getClassType() { return classType; }
+    public float getCooldown() { return cooldown; }
+    public float getResourceCost() { return resourceCost; }
 
-    /**
-     * Méthode appelée à chaque tick pour le porteur du skill.
-     * Ajout de CommandBuffer pour les sons.
-     */
-    public abstract void onTick(Ref<EntityStore> playerRef, Store<EntityStore> store, CommandBuffer<EntityStore> commandBuffer, PlayerLevelData data);
-
-    /**
-     * Méthode appelée par l'AuraSystem lorsqu'une entité est dans le rayon du skill.
-     * Ajout de CommandBuffer pour les sons d'impact.
-     */
-    public abstract void onAuraTick(Ref<EntityStore> source, Ref<EntityStore> target, Store<EntityStore> store, CommandBuffer<EntityStore> commandBuffer, double distance);
-
-    // ================= LOGIQUE MÉTIER =================
-
-    public String getResourceType() {
-        if (this.classType == ClassType.MAGE || this.classType == ClassType.DRAGON) {
-            return "Mana";
-        }
-        return "Endurance";
-    }
-
+    // Petit utilitaire pour le multiplicateur de rareté (commun à tous)
     public float getRarityMultiplier() {
         return switch (this.rarity) {
             case COMMON -> 1.0f;
@@ -98,24 +50,4 @@ public abstract class SkillModel {
             default -> 1.0f;
         };
     }
-
-    // ================= GETTERS & SETTERS =================
-
-    public String getId() { return id; }
-    public String getName() { return name; }
-    public String getDescription() { return description; }
-    public Rarity getRarity() { return rarity; }
-    public ClassType getClassType() { return classType; }
-    public float getActivationTime() { return activationTime; }
-    public float getCooldown() { return cooldown; }
-    public float getTickInterval() { return tickInterval; }
-    public boolean isPassive() { return isPassive; }
-    public float getRadius() { return radius; }
-    public boolean isSelected() { return isSelected; }
-    public void setSelected(boolean selected) { isSelected = selected; }
-    public float getResourceCostPerSecond() { return resourceCostPerSecond; }
-    public List<String> getEffectIds() { return effectIds; }
-
-    public void setItemActivation(String item) { this.itemActivation = item; }
-    public void setConsumableRequired(String item) { this.consumableRequired = item; }
 }

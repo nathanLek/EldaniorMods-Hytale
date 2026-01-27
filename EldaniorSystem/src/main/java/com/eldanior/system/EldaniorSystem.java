@@ -2,12 +2,10 @@ package com.eldanior.system;
 
 import com.eldanior.system.commands.ESCommand;
 import com.eldanior.system.components.PlayerLevelData;
-import com.eldanior.system.components.SkillItemComponent;
 import com.eldanior.system.items.Interaction.SkillInteractions;
 import com.eldanior.system.rpg.classes.ClassManager;
 import com.eldanior.system.rpg.classes.skills.Skills.SkillManager;
-import com.eldanior.system.rpg.classes.skills.Skills.SkillSystem;
-import com.eldanior.system.rpg.classes.skills.system.SkillsSystem;
+import com.eldanior.system.rpg.classes.skills.Skills.SkillSystem; // IMPERATIF
 import com.eldanior.system.systems.*;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
@@ -56,9 +54,6 @@ public class EldaniorSystem extends JavaPlugin {
             this.playerLevelDataType = this.getEntityStoreRegistry().registerComponent(
                     PlayerLevelData.class, "PlayerLevelData", PlayerLevelData.CODEC);
 
-            this.getEntityStoreRegistry().registerComponent(
-                    SkillItemComponent.class, "SkillItem", SkillItemComponent.CODEC);
-
             this.getCodecRegistry(Interaction.CODEC).register("SkillToggle", SkillInteractions.class, SkillInteractions.CODEC);
 
             LOGGER.atInfo().log("- Composants ECS enregistrés !");
@@ -71,6 +66,7 @@ public class EldaniorSystem extends JavaPlugin {
 
         // 4. ENREGISTREMENT SYSTÈMES ET EVENTS
         try {
+            // Systèmes RPG de base
             this.getEntityStoreRegistry().registerSystem(new CombatTrackerSystem());
             this.getEntityStoreRegistry().registerSystem(new CombatStatsSystem());
             this.getEntityStoreRegistry().registerSystem(new EnduranceSystem());
@@ -78,10 +74,11 @@ public class EldaniorSystem extends JavaPlugin {
             this.getEntityStoreRegistry().registerSystem(new HealthRegenSystem());
             this.getEntityStoreRegistry().registerSystem(new FallDamageSystem());
             this.getEntityStoreRegistry().registerSystem(new SpeedSystem());
-            this.getEntityStoreRegistry().registerSystem(new SkillSystem());
             this.getEntityStoreRegistry().registerSystem(new DeathXPSystem());
-            this.getEntityStoreRegistry().registerSystem(new SkillsSystem());
             this.getEntityStoreRegistry().registerSystem(new SkillItemDropSystem());
+
+            // AJOUT ESSENTIEL : Le moteur de compétences passives
+            this.getEntityStoreRegistry().registerSystem(new SkillSystem());
 
             LOGGER.atInfo().log("- Systèmes ECS activés !");
         } catch (Exception e) {

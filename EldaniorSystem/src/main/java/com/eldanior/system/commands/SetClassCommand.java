@@ -5,6 +5,7 @@ import com.eldanior.system.components.PlayerLevelData;
 import com.eldanior.system.rpg.classes.ClassManager;
 import com.eldanior.system.rpg.classes.ClassModel;
 import com.eldanior.system.rpg.classes.skills.Skills.SkillModel; //
+import com.eldanior.system.rpg.classes.skills.Skills.ToggledSkill;
 import com.eldanior.system.utils.StatCalculator;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Store;
@@ -105,11 +106,20 @@ public class SetClassCommand extends AbstractAsyncCommand {
                 // On efface les anciens skills pour éviter les cumuls bizarres
                 data.forgetAllSkills();
 
-                // On apprend les skills de la nouvelle classe
                 if (model.getPassiveSkills() != null) {
                     for (SkillModel skill : model.getPassiveSkills()) {
                         if (skill != null) {
+                            // On apprend le skill
                             data.learnSkill(skill.getId());
+
+                            // NOUVEAU : Si c'est un passif/aura, on l'active DIRECTEMENT
+                            // Car changer de classe implique qu'on devient cette classe.
+                            if (skill instanceof ToggledSkill) {
+                                // On force l'activation sans passer par le toggle
+                                // (Il faudra peut-être ajouter une méthode "enableSkill" dans PlayerLevelData pour être plus propre)
+                                // Pour l'instant, on utilise toggleSkill en sachant qu'il était désactivé (forgetAllSkills)
+                                data.toggleSkill(skill.getId());
+                            }
                         }
                     }
                 }

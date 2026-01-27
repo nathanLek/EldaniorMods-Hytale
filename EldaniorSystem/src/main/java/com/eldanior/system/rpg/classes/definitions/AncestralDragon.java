@@ -4,7 +4,7 @@ import com.eldanior.system.rpg.classes.ClassModel;
 import com.eldanior.system.rpg.enums.ClassType;
 import com.eldanior.system.rpg.enums.Rarity;
 import com.eldanior.system.rpg.classes.skills.Skills.definitions.AuraDragonicDivin;
-import com.eldanior.system.rpg.classes.skills.system.config.AuraDragonicConfig; // ✅ Import de la config
+import com.eldanior.system.rpg.classes.skills.Skills.config.AuraDragonicConfig; // ✅ Import de la config
 
 import java.util.List;
 

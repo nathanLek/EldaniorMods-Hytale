@@ -1,4 +1,4 @@
-package com.eldanior.system.rpg.classes.skills.system.effects;
+package com.eldanior.system.rpg.classes.skills.Skills.effects;
 
 import com.eldanior.system.utils.NotificationHelper;
 import com.hypixel.hytale.component.CommandBuffer;

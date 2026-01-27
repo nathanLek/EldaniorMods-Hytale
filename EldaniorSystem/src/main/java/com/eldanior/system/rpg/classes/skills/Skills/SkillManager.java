@@ -1,7 +1,8 @@
 package com.eldanior.system.rpg.classes.skills.Skills;
 
+import com.eldanior.system.rpg.classes.skills.Skills.config.AuraDragonicConfig;
 import com.eldanior.system.rpg.classes.skills.Skills.definitions.AuraDragonicDivin;
-import com.eldanior.system.rpg.classes.skills.system.config.AuraDragonicConfig; // Import de la config
+import com.eldanior.system.rpg.classes.skills.Skills.definitions.FireballSkill;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,17 +11,23 @@ public class SkillManager {
     private static final Map<String, SkillModel> skills = new HashMap<>();
 
     public static void init() {
-        // Initialisation de la config (par défaut ici, ou chargée via un fichier)
+        // 1. Initialisation des Configs
         AuraDragonicConfig dragonConfig = new AuraDragonicConfig();
 
-        // Enregistrement avec la config
+        // 2. Enregistrement des Compétences
+        // Passifs / Auras
         register(new AuraDragonicDivin(dragonConfig));
 
-        System.out.println("[Eldanior] Skills Passifs charges.");
+        // Actifs / Sorts (C'est ici qu'on ajoute tes nouveaux sorts !)
+        register(new FireballSkill());
+
+        System.out.println("[Eldanior] " + skills.size() + " Skills chargés : " + skills.keySet());
     }
 
     public static void register(SkillModel skill) {
-        skills.put(skill.getId(), skill);
+        if (skill != null) {
+            skills.put(skill.getId(), skill);
+        }
     }
 
     public static SkillModel get(String id) {

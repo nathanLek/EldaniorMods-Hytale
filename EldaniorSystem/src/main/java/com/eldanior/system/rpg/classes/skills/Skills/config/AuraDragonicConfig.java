@@ -1,4 +1,4 @@
-package com.eldanior.system.rpg.classes.skills.system.config;
+package com.eldanior.system.rpg.classes.skills.Skills.config;
 
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;

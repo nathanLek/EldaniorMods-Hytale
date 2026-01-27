@@ -22,7 +22,6 @@ public class SkillSystem extends EntityTickingSystem<EntityStore> {
     @Override
     public void tick(float dt, int index, @Nonnull ArchetypeChunk<EntityStore> archetypeChunk, @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
 
-        // 1. Gestion du Timer (Optimisation)
         timer += dt;
         if (timer < 1.0f) return;
         if (index == 0) timer = 0;
@@ -30,23 +29,27 @@ public class SkillSystem extends EntityTickingSystem<EntityStore> {
         Ref<EntityStore> entityRef = archetypeChunk.getReferenceTo(index);
         if (!entityRef.isValid()) return;
 
-        // 2. Récupération des données du joueur
         PlayerLevelData data = store.getComponent(entityRef, EldaniorSystem.get().getPlayerLevelDataType());
         if (data == null) return;
 
-        // 3. Vérification de la Classe
         String classId = data.getPlayerClassId();
         if (classId == null || classId.equals("none")) return;
 
         ClassModel classModel = ClassManager.get(classId);
+        if (classModel == null) return; // On retire isPassiveActive pour l'instant
 
-        if (classModel == null || !classModel.isPassiveActive()) return;
-
-        // 4. Exécution des Compétences (BOUCLE)
+        // --- CORRECTION ICI ---
         for (SkillModel skill : classModel.getPassiveSkills()) {
-            if (skill != null) {
-                // MISE A JOUR : On passe le CommandBuffer ici !
-                skill.onTick(entityRef, store, commandBuffer, data);
+            // On vérifie que c'est bien une compétence "à bascule" (Aura/Passif)
+            if (skill instanceof ToggledSkill) {
+                ToggledSkill toggledSkill = (ToggledSkill) skill;
+
+                // On vérifie si le joueur l'a activée
+                if (data.isSkillEnabled(skill.getId())) {
+                    toggledSkill.onTick(entityRef, store, commandBuffer, data);
+                    // Note : Pour l'instant on ne gère pas le coût en mana par seconde ici,
+                    // on pourra l'ajouter dans data.consumeMana() plus tard.
+                }
             }
         }
     }
