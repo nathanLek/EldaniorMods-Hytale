@@ -27,7 +27,7 @@ public class AuraDragonicDivin extends SkillModel {
     public AuraDragonicDivin(AuraDragonicConfig config) {
         super(
                 "aura_dragonic_divin",
-                "Cataclysme Draconique",
+                "Aura Draconique",
                 "Une tempête de chaos qui foudroie et terrifie tous les ennemis proches.",
                 Rarity.DIVINE,
                 ClassType.DRAGON,

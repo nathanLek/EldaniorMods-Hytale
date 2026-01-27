@@ -2,6 +2,7 @@ package com.eldanior.system.utils;
 import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.rpg.classes.skills.Skills.SkillModel;
 import com.hypixel.hytale.protocol.packets.interface_.NotificationStyle;
+import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
@@ -71,7 +72,7 @@ public class NotificationHelper {
 
         // ESSAI : ID "Food_Apple". Si ça fait un point d'interrogation, remets "hytale:apple"
         // Le but est d'avoir un item consommable.
-        ItemStack stack = new ItemStack("Plant_Fruit_Apple", 1, metadata);
+        ItemStack stack = new ItemStack("skill_activator", 1, metadata);
 
         var ref = playerRef.getReference();
         if (ref != null) {
@@ -79,6 +80,20 @@ public class NotificationHelper {
             if (p != null) {
                 p.getInventory().getHotbar().setItemStackForSlot((short) 0, stack); // Slot 1 (0 en index)
             }
+        }
+    }
+
+    public static void sendSuccess(Player player, String message) {
+        if (player != null) {
+            // La méthode standard pour envoyer un message simple à un joueur
+            player.sendMessage(Message.parse(message));
+            // Si tu veux aussi jouer un son ou autre, ajoute-le ici
+        }
+    }
+
+    public static void sendWarning(Player player, String message) {
+        if (player != null) {
+            player.sendMessage(Message.parse(message));
         }
     }
 }

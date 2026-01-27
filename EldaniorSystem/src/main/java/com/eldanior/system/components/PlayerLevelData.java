@@ -40,6 +40,7 @@ public class PlayerLevelData implements Component<EntityStore> {
     private long money = 1000;
 
     // --- NOUVEAU : Liste des compétences activées (Télécommande) ---
+    private List<String> unlockedSkills = new ArrayList<>();
     private Set<String> enabledSkills = new HashSet<>();
 
     public PlayerLevelData() {
@@ -95,6 +96,12 @@ public class PlayerLevelData implements Component<EntityStore> {
             .append(new KeyedCodec<>("Luck", Codec.INTEGER), (data, v) -> data.luck = v, data -> data.luck).add()
             .append(new KeyedCodec<>("Money", Codec.LONG), (data, v) -> data.money = v, data -> data.money).add()
             // CODEC pour EnabledSkills (Set -> String CSV)
+            .append(new KeyedCodec<>("UnlockedSkills", Codec.STRING), (data, value) -> {
+                data.unlockedSkills = new ArrayList<>();
+                if (value != null && !value.isEmpty()) {
+                    data.unlockedSkills.addAll(Arrays.asList(value.split(",")));
+                }
+            }, (data) -> String.join(",", data.unlockedSkills)).add()
             .append(new KeyedCodec<>("EnabledSkills", Codec.STRING), (data, value) -> {
                 data.enabledSkills = new HashSet<>();
                 if (value != null && !value.isEmpty()) {
@@ -134,6 +141,22 @@ public class PlayerLevelData implements Component<EntityStore> {
             copy.unlockedTitles = new ArrayList<>(this.unlockedTitles);
         }
         return copy;
+    }
+
+    public List<String> getUnlockedSkills() {
+        return unlockedSkills;
+    }
+
+    public void learnSkill(String skillId) {
+        if (!unlockedSkills.contains(skillId)) {
+            unlockedSkills.add(skillId);
+        }
+    }
+
+    public void forgetAllSkills() {
+        unlockedSkills.clear();
+        // On pense aussi à désactiver les effets en cours
+        enabledSkills.clear();
     }
 
     // ================= GETTERS =================

@@ -3,13 +3,14 @@ package com.eldanior.system;
 import com.eldanior.system.commands.ESCommand;
 import com.eldanior.system.components.PlayerLevelData;
 import com.eldanior.system.components.SkillItemComponent;
+import com.eldanior.system.items.Interaction.SkillInteractions;
 import com.eldanior.system.rpg.classes.ClassManager;
 import com.eldanior.system.rpg.classes.skills.Skills.SkillManager;
 import com.eldanior.system.rpg.classes.skills.Skills.SkillSystem;
 import com.eldanior.system.rpg.classes.skills.system.SkillsSystem;
-import com.eldanior.system.rpg.classes.skills.system.SkillActivationSystem;
 import com.eldanior.system.systems.*;
 import com.hypixel.hytale.codec.KeyedCodec;
+import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.hypixel.hytale.logger.HytaleLogger;
@@ -25,7 +26,6 @@ public class EldaniorSystem extends JavaPlugin {
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
     private static EldaniorSystem instance;
     private ComponentType<EntityStore, PlayerLevelData> playerLevelDataType;
-    private SkillActivationSystem activationSystem;
 
     private static final com.hypixel.hytale.codec.KeyedCodec<String> SKILL_ID_KEY =
             new com.hypixel.hytale.codec.KeyedCodec<>("SkillId", com.hypixel.hytale.codec.Codec.STRING);
@@ -59,6 +59,8 @@ public class EldaniorSystem extends JavaPlugin {
             this.getEntityStoreRegistry().registerComponent(
                     SkillItemComponent.class, "SkillItem", SkillItemComponent.CODEC);
 
+            this.getCodecRegistry(Interaction.CODEC).register("SkillToggle", SkillInteractions.class, SkillInteractions.CODEC);
+
             LOGGER.atInfo().log("- Composants ECS enregistrés !");
         } catch (Exception e) {
             LOGGER.atSevere().withCause(e).log("ERREUR Composants");
@@ -80,7 +82,6 @@ public class EldaniorSystem extends JavaPlugin {
             this.getEntityStoreRegistry().registerSystem(new DeathXPSystem());
             this.getEntityStoreRegistry().registerSystem(new SkillsSystem());
             this.getEntityStoreRegistry().registerSystem(new SkillItemDropSystem());
-            this.getEntityStoreRegistry().registerSystem(new SkillActivationSystem());
 
             LOGGER.atInfo().log("- Systèmes ECS activés !");
         } catch (Exception e) {

@@ -2,8 +2,7 @@ package com.eldanior.system.rpg.classes.skills.system;
 
 import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.components.PlayerLevelData;
-import com.eldanior.system.rpg.classes.ClassManager;
-import com.eldanior.system.rpg.classes.ClassModel;
+import com.eldanior.system.rpg.classes.skills.Skills.SkillManager; //
 import com.eldanior.system.rpg.classes.skills.Skills.SkillModel;
 import com.eldanior.system.rpg.classes.skills.system.effects.EffectManager;
 import com.hypixel.hytale.component.*;
@@ -47,16 +46,20 @@ public class SkillsSystem extends EntityTickingSystem<EntityStore> {
             if (sourceRef == null || sourceRef.equals(entityRef) || !sourceRef.isValid()) continue;
 
             PlayerLevelData pData = store.getComponent(sourceRef, EldaniorSystem.get().getPlayerLevelDataType());
-            if (pData == null || pData.getPlayerClassId() == null) continue;
+            // Plus besoin de vérifier le ClassId ici, on vérifie juste si le joueur a des données
+            if (pData == null) continue;
 
-            ClassModel classModel = ClassManager.get(pData.getPlayerClassId());
-            if (classModel == null) continue;
+            // --- NOUVELLE LOGIQUE : On itère sur les compétences ACQUISES par le joueur ---
+            // On suppose que pData.getUnlockedSkills() renvoie List<String>
+            for (String skillId : pData.getUnlockedSkills()) {
 
-            for (SkillModel skill : classModel.getPassiveSkills()) {
+                // On récupère la définition technique du skill
+                SkillModel skill = SkillManager.get(skillId);
+
                 if (skill == null || skill.getRadius() <= 0) continue;
 
                 // --- LOGIQUE DE TÉLÉCOMMANDE ---
-                // On ne lance handleSkillLogic QUE si le skill est activé dans le PlayerLevelData
+                // On ne lance handleSkillLogic QUE si le skill est activé dans le PlayerLevelData (Toggle ON)
                 if (pData.isSkillEnabled(skill.getId())) {
                     handleSkillLogic(player, sourceRef, entityRef, store, commandBuffer, skill, entityPos, pData);
                 } else {

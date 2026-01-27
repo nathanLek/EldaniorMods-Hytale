@@ -4,6 +4,7 @@ import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.components.PlayerLevelData;
 import com.eldanior.system.rpg.classes.ClassManager;
 import com.eldanior.system.rpg.classes.ClassModel;
+import com.eldanior.system.rpg.classes.skills.Skills.SkillModel; //
 import com.eldanior.system.utils.StatCalculator;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Store;
@@ -30,7 +31,6 @@ public class SetClassCommand extends AbstractAsyncCommand {
 
     public SetClassCommand() {
         super("setclass", "Définir la classe RPG d'un joueur");
-        // Exactement comme ton SetLevelCommand : On définit les arguments requis
         this.playerArg = this.withRequiredArg("joueur", "Nom du joueur", ArgTypes.STRING);
         this.classIdArg = this.withRequiredArg("classId", "ID de la classe (ex: warrior)", ArgTypes.STRING);
     }
@@ -54,7 +54,7 @@ public class SetClassCommand extends AbstractAsyncCommand {
         String targetName = this.playerArg.get(ctx);
         String classId = this.classIdArg.get(ctx);
 
-        // Recherche du joueur (Logique SetLevelCommand)
+        // Recherche du joueur
         PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
         if (targetRef == null) {
             sender.sendMessage(Message.raw("§cErreur : Joueur '" + targetName + "' introuvable."));
@@ -64,7 +64,7 @@ public class SetClassCommand extends AbstractAsyncCommand {
         assert sender.getWorld() != null;
         return CompletableFuture.runAsync(() -> {
             try {
-                // Reflection pour UUID (Ta méthode robuste)
+                // Reflection pour UUID
                 Field uuidField = PlayerRef.class.getDeclaredField("uuid");
                 uuidField.setAccessible(true);
                 UUID targetUUID = (UUID) uuidField.get(targetRef);
@@ -92,18 +92,29 @@ public class SetClassCommand extends AbstractAsyncCommand {
                 ClassModel model = ClassManager.get(classId.toLowerCase());
                 if (model == null) {
                     sender.sendMessage(Message.raw("§cErreur : Classe '" + classId + "' inconnue."));
-
-                    // ✅ CORRECTION : On affiche la liste dynamique réelle !
-                    // Si cette liste est vide à l'écran, c'est que le ClassManager.init() n'a pas marché.
                     sender.sendMessage(Message.raw("§7IDs réellement chargés : " + ClassManager.getAvailableIds()));
                     return;
                 }
 
                 // --- APPLICATION ---
+                // 1. Identité de la classe
                 data.setPlayerClass(model.getDisplayName());
                 data.setPlayerClassId(model.getId());
 
-                // Reset Stats & Bonus (Comme SetLevel reset les stats, ici on applique les nouvelles bases)
+                // 2. Transfert des Compétences (NOUVEAU)
+                // On efface les anciens skills pour éviter les cumuls bizarres
+                data.forgetAllSkills();
+
+                // On apprend les skills de la nouvelle classe
+                if (model.getPassiveSkills() != null) {
+                    for (SkillModel skill : model.getPassiveSkills()) {
+                        if (skill != null) {
+                            data.learnSkill(skill.getId());
+                        }
+                    }
+                }
+
+                // 3. Reset Stats & Bonus
                 data.setStrength(1 + model.getBonusStr());
                 data.setVitality(1 + model.getBonusVit());
                 data.setIntelligence(1 + model.getBonusInt());
@@ -115,7 +126,7 @@ public class SetClassCommand extends AbstractAsyncCommand {
                 StatCalculator.updatePlayerStats(ref, store, data);
                 store.putComponent(ref, type, data);
 
-                sender.sendMessage(Message.raw("§aSuccès : " + targetName + " est maintenant un " + model.getDisplayName()));
+                sender.sendMessage(Message.raw("§aSuccès : " + targetName + " est maintenant " + model.getDisplayName() + " (Skills mis à jour)"));
                 targetPlayer.sendMessage(Message.raw("§eVotre classe a été changée en : §6" + model.getDisplayName()));
 
             } catch (Exception e) {
