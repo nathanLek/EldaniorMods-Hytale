@@ -1,4 +1,4 @@
-package com.eldanior.system.Leveling.commands;
+package com.eldanior.system.classes.commands;
 
 import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.Leveling.components.PlayerLevelData;

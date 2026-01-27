@@ -2,7 +2,6 @@ package com.eldanior.system;
 
 import com.eldanior.system.Leveling.systems.*;
 import com.eldanior.system.classes.ClassManager;
-import com.eldanior.system.Leveling.commands.ESCommand;
 import com.eldanior.system.Leveling.components.PlayerLevelData;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
