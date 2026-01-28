@@ -89,6 +89,10 @@ public class SetLevelCommand extends AbstractAsyncCommand {
 
                 if (level <= 1) {
                     data.setAttributePoints(0);
+                    // On vide la liste des compétences débloquées
+                    if (data.getUnlockedSkills() != null) {
+                        data.getUnlockedSkills().clear();
+                    }
                 } else {
                     data.setAttributePoints((level - 1) * 3);
                 }

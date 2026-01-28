@@ -21,7 +21,7 @@ public class GiveRelicCommand extends CommandBase {
         if (!(context.sender() instanceof Player player)) return;
 
         // L'ID complet : namespace + id défini dans le JSON
-        String fullId = "eldaniorsystem:test_item";
+        String fullId = "skill_page_fireball";
 
         try {
             // Création de l'item

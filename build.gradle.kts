@@ -90,17 +90,9 @@ tasks.withType<ProcessResources> {
     inputs.properties(replaceProperties)
 }
 
-sourceSets {
-    main {
-        resources {
-            srcDir("src/main/resources")
-        }
-    }
-}
-
 /// --- TÂCHE DE LANCEMENT DU SERVEUR (VERSION COMPATIBLE ZIP) ---
 tasks.register<Exec>("runServer") {
-    group = "hytale"
+    group = "Hytale"
     description = "Lance le serveur (Stratégie: Assets dans /mods)."
     dependsOn("jar")
 
@@ -168,6 +160,14 @@ tasks.register<Exec>("runServer") {
     workingDir = runDir
     args("-Xmx1G", "-Xms1G", "-jar", serverJar.absolutePath)
     standardInput = System.`in`
+}
+
+tasks.jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    destinationDirectory.set(file("/Users/nathanlecat/Library/Application Support/Hytale/UserData/Mods"))
+    from("src/main/resources") {
+        include("**/*")
+    }
 }
 
 tasks.withType<Jar> {

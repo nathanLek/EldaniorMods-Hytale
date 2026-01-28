@@ -4,6 +4,7 @@ import com.eldanior.system.Leveling.systems.*;
 import com.eldanior.system.classes.ClassManager;
 import com.eldanior.system.Leveling.components.PlayerLevelData;
 import com.eldanior.system.skills.InteractionManager;
+import com.eldanior.system.skills.SkillManager;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.hypixel.hytale.logger.HytaleLogger;
@@ -30,6 +31,7 @@ public class EldaniorSystem extends JavaPlugin {
     @Override
     protected void setup() {
         LOGGER.atInfo().log(">>> ELDANIOR SYSTEM : Initialisation... <<<");
+        SkillManager.init();
 
         // 1. INIT MANAGERS
         try {
