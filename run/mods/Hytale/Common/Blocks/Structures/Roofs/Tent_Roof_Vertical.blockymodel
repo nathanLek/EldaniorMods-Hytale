@@ -1,0 +1,111 @@
+{
+  "lod": "off",
+  "nodes": [ {
+      "id": "6",
+      "name": "TopFix",
+      "children": [],
+      "position": {
+        "x": 0,
+        "y": 16,
+        "z": -14
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": -1
+      },
+      "shape": {
+        "type": "box",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": -1
+        },
+        "stretch": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "settings": {
+          "size": {
+            "x": 32,
+            "y": 32,
+            "z": 2
+          }
+        },
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "standard",
+        "unwrapMode": "custom",
+        "textureLayout": {
+          "front": {
+            "offset": {
+              "x": 63,
+              "y": 32
+            },
+            "mirror": {
+              "x": true,
+              "y": true
+            },
+            "angle": 180
+          },
+          "back": {
+            "offset": {
+              "x": 95,
+              "y": 32
+            },
+            "mirror": {
+              "x": true,
+              "y": false
+            },
+            "angle": 0
+          },
+          "right": {
+            "offset": {
+              "x": 33,
+              "y": 32
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 180
+          },
+          "bottom": {
+            "offset": {
+              "x": 33,
+              "y": 32
+            },
+            "mirror": {
+              "x": false,
+              "y": true
+            },
+            "angle": 270
+          },
+          "left": {
+            "offset": {
+              "x": 30,
+              "y": 0
+            },
+            "mirror": {
+              "x": true,
+              "y": true
+            },
+            "angle": 180
+          },
+          "top": {
+            "offset": {
+              "x": 31,
+              "y": 30
+            },
+            "mirror": {
+              "x": false,
+              "y": false
+            },
+            "angle": 270
+          }
+        }
+      }
+    } ]
+}

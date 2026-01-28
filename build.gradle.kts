@@ -1,5 +1,7 @@
 import org.gradle.internal.os.OperatingSystem
 
+import java.nio.file.Files
+
 plugins {
     java
     id("org.jetbrains.gradle.plugin.idea-ext") version "1.3"
@@ -66,6 +68,9 @@ java {
 
 // --- TÂCHES AUTOMATIQUES ---
 tasks.withType<ProcessResources> {
+    // AJOUT DE CETTE LIGNE POUR RÉGLER L'ERREUR DE DOUBLON
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
     val replaceProperties = mapOf(
         "plugin_name" to project.name,
         "plugin_version" to project.version,
@@ -74,9 +79,8 @@ tasks.withType<ProcessResources> {
         "plugin_author" to (project.findProperty("plugin_author") ?: "Me"),
         "plugin_website" to (project.findProperty("plugin_website") ?: ""),
         "plugin_main_entrypoint" to (project.findProperty("plugin_main_entrypoint") ?: ""),
-
-        // --- C'est celle qui manquait ---
-        "server_version" to (project.findProperty("server_version") ?: "*")
+        "server_version" to (project.findProperty("server_version") ?: "*"),
+        "includes_pack" to (project.findProperty("includes_pack") ?: true)
     )
 
     filesMatching(listOf("**/*.json", "manifest.json")) {
@@ -86,8 +90,93 @@ tasks.withType<ProcessResources> {
     inputs.properties(replaceProperties)
 }
 
+sourceSets {
+    main {
+        resources {
+            srcDir("src/main/resources")
+        }
+    }
+}
+
+/// --- TÂCHE DE LANCEMENT DU SERVEUR (VERSION COMPATIBLE ZIP) ---
+tasks.register<Exec>("runServer") {
+    group = "hytale"
+    description = "Lance le serveur (Stratégie: Assets dans /mods)."
+    dependsOn("jar")
+
+    val javaToolchains = project.extensions.getByType<JavaToolchainService>()
+    val javaLauncher = javaToolchains.launcherFor {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }.get()
+    executable(javaLauncher.executablePath.asFile.absolutePath)
+
+    val runDir = file("run")
+    val modsDir = runDir.resolve("mods")
+    val serverJar = file(serverJarPath)
+    val gameRootDir = serverJar.parentFile.parentFile
+    val assetsZip = gameRootDir.resolve("Assets.zip")
+
+    // STRATÉGIE : On met les assets dans 'mods/Hytale'
+    // Ainsi, le nom du dossier est "Hytale" (ce qui plait au manifest)
+    // Et le serveur le scanne automatiquement.
+    val destAssets = modsDir.resolve("Hytale")
+
+    doFirst {
+        println(">>> PRÉPARATION DU LANCEMENT <<<")
+
+        if (!modsDir.exists()) modsDir.mkdirs()
+
+        // A. Copie du Mod (Votre code)
+        val pluginJar = tasks.jar.get().archiveFile.get().asFile
+        if (pluginJar.exists()) {
+            copy { from(pluginJar); into(modsDir) }
+        }
+
+        // B. Nettoyage des anciennes tentatives qui font planter le serveur
+        val badFolder = runDir.resolve("HytaleAssets")
+        if (badFolder.exists()) {
+            println("🧹 Suppression du dossier 'HytaleAssets' racine (cause de conflits)...")
+            badFolder.deleteRecursively()
+        }
+
+        // C. Extraction des Assets dans mods/Hytale
+        if (!destAssets.exists()) {
+            println("🔍 Extraction des assets vers 'mods/Hytale'...")
+            if (assetsZip.exists()) {
+                println("📦 Assets.zip trouvé ! Extraction en cours...")
+
+                copy {
+                    from(zipTree(assetsZip))
+                    into(destAssets)
+                }
+
+                // On supprime quand même le hash par sécurité, au cas où
+                val hashFile = destAssets.resolve("CommonAssetsIndex.hashes")
+                if (hashFile.exists()) hashFile.delete()
+
+                println("✅ Assets installés dans le dossier des mods.")
+            } else {
+                println("⚠️ ATTENTION : Assets.zip introuvable !")
+            }
+        } else {
+            println("✅ Assets déjà présents dans mods/Hytale.")
+        }
+
+        println(">>> LANCEMENT DU SERVEUR <<<")
+    }
+
+    workingDir = runDir
+    args("-Xmx1G", "-Xms1G", "-jar", serverJar.absolutePath)
+    standardInput = System.`in`
+}
+
+tasks.withType<Jar> {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
 tasks.withType<Javadoc> {
     options {
         (this as StandardJavadocDocletOptions).addStringOption("Xdoclint:none", "-quiet")
     }
 }
+

@@ -3,6 +3,7 @@ package com.eldanior.system;
 import com.eldanior.system.Leveling.systems.*;
 import com.eldanior.system.classes.ClassManager;
 import com.eldanior.system.Leveling.components.PlayerLevelData;
+import com.eldanior.system.skills.InteractionManager;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.hypixel.hytale.logger.HytaleLogger;
@@ -46,7 +47,15 @@ public class EldaniorSystem extends JavaPlugin {
             LOGGER.atSevere().withCause(e).log("ERREUR Composants");
         }
 
-        // 3. ENREGISTREMENT COMMANDES
+        // 3. ENREGISTREMENT DES INTERACTIONS (CORRIGÉ)
+        try {
+            InteractionManager.registerInteractions(this);
+            LOGGER.atInfo().log("- Interactions Eldanior enregistrées !");
+        } catch (Exception e) {
+            LOGGER.atSevere().withCause(e).log("ERREUR lors de l'enregistrement des interactions");
+        }
+
+        // 4. ENREGISTREMENT COMMANDES
         this.getCommandRegistry().registerCommand(new ESCommand());
 
         // 4. ENREGISTREMENT SYSTÈMES ET EVENTS
