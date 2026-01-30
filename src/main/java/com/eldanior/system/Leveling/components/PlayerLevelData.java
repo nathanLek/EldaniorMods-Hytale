@@ -4,6 +4,7 @@ import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.component.Component;
+import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nullable;
@@ -16,6 +17,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PlayerLevelData implements Component<EntityStore> {
+
+    public static ComponentType<EntityStore, PlayerLevelData> TYPE;
 
     // --- Variables ---
     private int level = 1;
@@ -65,8 +68,6 @@ public class PlayerLevelData implements Component<EntityStore> {
 
 
     public boolean hasEnoughMana(float amount) {
-        // TODO: Connecter cela au système de stats réel (EntityStatMap)
-        // Pour l'instant, on retourne toujours true pour faciliter les tests.
         return true;
     }
 

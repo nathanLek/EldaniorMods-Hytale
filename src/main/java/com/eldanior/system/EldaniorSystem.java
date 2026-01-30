@@ -1,5 +1,6 @@
 package com.eldanior.system;
 
+import com.eldanior.system.Inventory.components.PlayerPersonalChestData;
 import com.eldanior.system.Leveling.systems.*;
 import com.eldanior.system.classes.ClassManager;
 import com.eldanior.system.Leveling.components.PlayerLevelData;
@@ -19,9 +20,9 @@ public class EldaniorSystem extends JavaPlugin {
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
     private static EldaniorSystem instance;
     private ComponentType<EntityStore, PlayerLevelData> playerLevelDataType;
+    private ComponentType<EntityStore, PlayerPersonalChestData> playerPersonalChestDataType;
 
     private final Map<UUID, UUID> lastAttackers = new ConcurrentHashMap<>();
-    private final Map<UUID, java.util.List<com.hypixel.hytale.server.core.inventory.ItemStack>> persistentItems = new ConcurrentHashMap<>();
 
     public EldaniorSystem(JavaPluginInit init) {
         super(init);
@@ -30,39 +31,54 @@ public class EldaniorSystem extends JavaPlugin {
 
     @Override
     protected void setup() {
-        LOGGER.atInfo().log(">>> ELDANIOR SYSTEM : Initialisation... <<<");
-        SkillManager.init();
+        LOGGER.atInfo().log(">>> ELDANIOR SYSTEM : DÉMARRAGE DU SETUP <<<");
 
-        // 1. INIT MANAGERS
+        // 1. Initialisation des Managers
         try {
+            SkillManager.init();
             ClassManager.init();
-            LOGGER.atInfo().log("- RPG Managers initialisés !");
+            LOGGER.atInfo().log("[OK] Managers RPG initialisés.");
         } catch (Exception e) {
-            LOGGER.atSevere().withCause(e).log("ERREUR Managers");
+            LOGGER.atSevere().withCause(e).log("[ERREUR] Échec init Managers");
         }
 
-        // 2. ENREGISTREMENT COMPOSANTS (ECS)
+        // 2. Enregistrement PlayerLevelData (Isolé)
         try {
+            LOGGER.atInfo().log("... Enregistrement PlayerLevelData ...");
             this.playerLevelDataType = this.getEntityStoreRegistry().registerComponent(
                     PlayerLevelData.class, "PlayerLevelData", PlayerLevelData.CODEC);
+            PlayerLevelData.TYPE = this.playerLevelDataType;
+            LOGGER.atInfo().log("[OK] PlayerLevelData enregistré !");
         } catch (Exception e) {
-            LOGGER.atSevere().withCause(e).log("ERREUR Composants");
+            LOGGER.atSevere().withCause(e).log("[ERREUR CRITIQUE] Impossible d'enregistrer PlayerLevelData");
         }
 
-        // 3. ENREGISTREMENT DES INTERACTIONS (CORRIGÉ)
+        // 3. Enregistrement PlayerPersonalChestData (Isolé et détaillé)
+        try {
+            LOGGER.atInfo().log("... Enregistrement PlayerPersonalChestData ...");
+
+            this.playerPersonalChestDataType = this.getEntityStoreRegistry().registerComponent(
+                    PlayerPersonalChestData.class,
+                    "PlayerPersonalChestData",
+                    PlayerPersonalChestData.CODEC
+            );
+
+            LOGGER.atInfo().log("PlayerPersonalChestDataType: " + (playerPersonalChestDataType != null));
+        } catch (Exception e) {
+            // C'EST ICI QUE L'ERREUR VA S'AFFICHER
+            LOGGER.atSevere().withCause(e).log("[ERREUR CRITIQUE] Impossible d'enregistrer PlayerPersonalChestData");
+        }
+
+        // 4. Interactions
         try {
             InteractionManager.registerInteractions(this);
-            LOGGER.atInfo().log("- Interactions Eldanior enregistrées !");
+            LOGGER.atInfo().log("[OK] Interactions enregistrées.");
         } catch (Exception e) {
-            LOGGER.atSevere().withCause(e).log("ERREUR lors de l'enregistrement des interactions");
+            LOGGER.atSevere().withCause(e).log("[ERREUR] Interactions");
         }
 
-        // 4. ENREGISTREMENT COMMANDES
-        this.getCommandRegistry().registerCommand(new ESCommand());
-
-        // 4. ENREGISTREMENT SYSTÈMES ET EVENTS
+        // 5. Systèmes ECS
         try {
-            // Systèmes RPG de base
             this.getEntityStoreRegistry().registerSystem(new CombatTrackerSystem());
             this.getEntityStoreRegistry().registerSystem(new CombatStatsSystem());
             this.getEntityStoreRegistry().registerSystem(new EnduranceSystem());
@@ -71,13 +87,17 @@ public class EldaniorSystem extends JavaPlugin {
             this.getEntityStoreRegistry().registerSystem(new FallDamageSystem());
             this.getEntityStoreRegistry().registerSystem(new SpeedSystem());
             this.getEntityStoreRegistry().registerSystem(new DeathXPSystem());
-
-            LOGGER.atInfo().log("- Systèmes ECS activés !");
+            LOGGER.atInfo().log("[OK] Systèmes ECS activés.");
         } catch (Exception e) {
-            LOGGER.atSevere().log("Erreur enregistrement systèmes : " + e.getMessage());
+            LOGGER.atSevere().log("[ERREUR] Systèmes ECS : " + e.getMessage());
         }
 
-        LOGGER.atInfo().log(">>> ELDANIOR SYSTEM PRÊT <<<");
+        // 6. Enregistrement de la commande (à la toute fin pour être sûr)
+        this.getCommandRegistry().registerCommand(new com.eldanior.system.ESCommand());
+        // Assure-toi que InventoryCommand est bien enregistré quelque part, soit dans ESCommand, soit ici :
+        this.getCommandRegistry().registerCommand(new com.eldanior.system.Inventory.commands.InventoryCommand());
+
+        LOGGER.atInfo().log(">>> ELDANIOR SYSTEM : SETUP TERMINÉ <<<");
     }
 
     public static EldaniorSystem get() {
@@ -86,6 +106,10 @@ public class EldaniorSystem extends JavaPlugin {
 
     public ComponentType<EntityStore, PlayerLevelData> getPlayerLevelDataType() {
         return playerLevelDataType;
+    }
+
+    public ComponentType<EntityStore, PlayerPersonalChestData> getPlayerPersonalChestDataType() {
+        return playerPersonalChestDataType;
     }
 
     public Map<UUID, UUID> getLastAttackers() {

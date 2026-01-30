@@ -1,5 +1,6 @@
 package com.eldanior.system;
 
+import com.eldanior.system.Inventory.commands.InventoryCommand;
 import com.eldanior.system.Leveling.commands.*;
 import com.eldanior.system.classes.commands.ClassInfoCommand;
 import com.eldanior.system.classes.commands.SetClassCommand;
@@ -17,6 +18,7 @@ public class ESCommand extends AbstractCommandCollection {
         this.addSubCommand(new SetClassCommand());
 
         this.addSubCommand(new GiveRelicCommand());
+        this.addSubCommand(new InventoryCommand());
     }
 
     @Override
