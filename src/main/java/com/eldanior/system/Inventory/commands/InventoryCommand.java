@@ -43,7 +43,6 @@ public class InventoryCommand extends AbstractAsyncCommand {
                 System.out.println("=== [INVENTORY] CustomUIPage ===");
 
                 Ref<EntityStore> ref = sender.getReference();
-                assert ref != null;
                 Store<EntityStore> store = ref.getStore();
 
                 ComponentType<EntityStore, PlayerPersonalChestData> type =
@@ -57,8 +56,17 @@ public class InventoryCommand extends AbstractAsyncCommand {
 
                 PlayerRef playerRef = store.getComponent(ref, PlayerRef.getComponentType());
 
+                // ⭐ GARDER LA HOTBAR VISIBLE
+                // On doit modifier le HudManager pour ne pas masquer la hotbar
+                sender.getHudManager().showHudComponents(
+                        playerRef,
+                        com.hypixel.hytale.protocol.packets.interface_.HudComponent.Hotbar,
+                        com.hypixel.hytale.protocol.packets.interface_.HudComponent.Health,
+                        com.hypixel.hytale.protocol.packets.interface_.HudComponent.Stamina,
+                        com.hypixel.hytale.protocol.packets.interface_.HudComponent.Mana
+                );
+
                 // Ouvrir la page custom
-                assert playerRef != null;
                 PersonalChestPage page = new PersonalChestPage(playerRef, chestData);
                 sender.getPageManager().openCustomPage(ref, store, page);
 

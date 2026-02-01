@@ -1,7 +1,7 @@
 package com.eldanior.system.classes.models;
 
-import com.eldanior.system.classes.enums.ClassType;
-import com.eldanior.system.classes.enums.Rarity;
+import com.eldanior.system.config.enums.ClassType;
+import com.eldanior.system.config.enums.Rarity;
 
 public abstract class ClassModel {
 

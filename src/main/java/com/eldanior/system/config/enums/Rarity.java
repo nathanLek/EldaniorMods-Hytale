@@ -1,4 +1,4 @@
-package com.eldanior.system.classes.enums;
+package com.eldanior.system.config.enums;
 
 public enum Rarity {
     COMMON("Commun", "§f"),      // Blanc

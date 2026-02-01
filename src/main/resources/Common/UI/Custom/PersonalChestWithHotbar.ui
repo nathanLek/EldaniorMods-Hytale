@@ -3,7 +3,7 @@ Group {
 
   Group #MainPanel {
     LayoutMode: Top;
-    Anchor: (Width: 650, Height: 500);
+    Anchor: (Width: 650, Height: 620);
     Background: #1a1a1a(0.95);
     Padding: (Full: 20);
 
@@ -19,12 +19,26 @@ Group {
     }
 
     Group {
+      Anchor: (Height: 10);
+    }
+
+    Label {
+      Text: "COFFRE (cliquez pour retirer)";
+      Style: (
+        FontSize: 14,
+        TextColor: #aaaaaa,
+        HorizontalAlignment: Center
+      );
       Anchor: (Height: 20);
     }
 
-    Group #InventoryGrid {
+    Group {
+      Anchor: (Height: 5);
+    }
+
+    Group #ChestGrid {
       LayoutMode: Top;
-      Anchor: (Height: 330);
+      Anchor: (Height: 230);
 
       Group {
         LayoutMode: Left;
@@ -98,7 +112,57 @@ Group {
     }
 
     Group {
-      Anchor: (Height: 30);
+      Anchor: (Height: 20);
+    }
+
+    Group {
+      Anchor: (Height: 2);
+      Background: #555555;
+    }
+
+    Group {
+      Anchor: (Height: 10);
+    }
+
+    Label {
+      Text: "HOTBAR (cliquez pour déposer)";
+      Style: (
+        FontSize: 14,
+        TextColor: #aaaaaa,
+        HorizontalAlignment: Center
+      );
+      Anchor: (Height: 20);
+    }
+
+    Group {
+      Anchor: (Height: 5);
+    }
+
+    Group #HotbarGrid {
+      LayoutMode: Left;
+      Anchor: (Height: 70);
+
+      Button #Hotbar0 { Anchor: (Width: 64, Height: 64); Padding: (Full: 4); Background: #3a3a00; ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+      Group { Anchor: (Width: 5); }
+      Button #Hotbar1 { Anchor: (Width: 64, Height: 64); Padding: (Full: 4); Background: #3a3a00; ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+      Group { Anchor: (Width: 5); }
+      Button #Hotbar2 { Anchor: (Width: 64, Height: 64); Padding: (Full: 4); Background: #3a3a00; ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+      Group { Anchor: (Width: 5); }
+      Button #Hotbar3 { Anchor: (Width: 64, Height: 64); Padding: (Full: 4); Background: #3a3a00; ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+      Group { Anchor: (Width: 5); }
+      Button #Hotbar4 { Anchor: (Width: 64, Height: 64); Padding: (Full: 4); Background: #3a3a00; ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+      Group { Anchor: (Width: 5); }
+      Button #Hotbar5 { Anchor: (Width: 64, Height: 64); Padding: (Full: 4); Background: #3a3a00; ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+      Group { Anchor: (Width: 5); }
+      Button #Hotbar6 { Anchor: (Width: 64, Height: 64); Padding: (Full: 4); Background: #3a3a00; ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+      Group { Anchor: (Width: 5); }
+      Button #Hotbar7 { Anchor: (Width: 64, Height: 64); Padding: (Full: 4); Background: #3a3a00; ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+      Group { Anchor: (Width: 5); }
+      Button #Hotbar8 { Anchor: (Width: 64, Height: 64); Padding: (Full: 4); Background: #3a3a00; ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+    }
+
+    Group {
+      Anchor: (Height: 15);
     }
 
     Button #BtnClose {
