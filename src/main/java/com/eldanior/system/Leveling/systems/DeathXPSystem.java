@@ -3,6 +3,7 @@ package com.eldanior.system.Leveling.systems;
 import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.Leveling.components.PlayerLevelData;
 import com.eldanior.system.Leveling.utils.NotificationHelper;
+import com.eldanior.system.config.enums.MobXP;
 import com.hypixel.hytale.component.ArchetypeChunk;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.ComponentType;
@@ -124,11 +125,7 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
     }
 
     private int calculatePvEXP(String typeId) {
-        if (typeId.contains("boss")) return 500;
-        if (typeId.contains("void") || typeId.contains("dungeon")) return 25;
-        if (typeId.contains("skeleton") || typeId.contains("zombie")) return 15;
-        if (typeId.contains("cow") || typeId.contains("pig") || typeId.contains("sheep")) return 2;
-        return 10;
+        return MobXP.getXpForId(typeId);
     }
 
     private int calculatePvPXP(int killerLvl, int victimLvl) {

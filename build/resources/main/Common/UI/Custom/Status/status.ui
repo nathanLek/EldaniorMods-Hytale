@@ -1,0 +1,381 @@
+$Common = "../Common.ui";
+
+Group {
+    LayoutMode: Center;
+
+    Group #MainPanel {
+        Anchor: (Width: 800, Height: 700);
+        Background: "background_status.png";
+
+        Group #NavButtons {
+            LayoutMode: Left;
+            Anchor: (Width: 800, Height: 700);
+            Padding: (Left: 62, Top: 578);
+
+            Group {
+                Anchor: (Width: 110, Height: 45);
+
+                TextButton #BtnShop {
+                    Text: "";
+                    Anchor: (Width: 125, Height: 60);
+                    Background: "shop_button.png";
+                }
+            }
+
+            Group { Anchor: (Width: 35); }
+
+            Group {
+                Anchor: (Width: 110, Height: 45);
+
+                TextButton #BtnInventory {
+                    Text: "";
+                    Anchor: (Width: 125, Height: 60);
+                    Background: "inventory_button.png";
+                }
+            }
+
+            Group { Anchor: (Width: 35); }
+
+            Group {
+                Anchor: (Width: 110, Height: 45);
+
+                TextButton #BtnStatus {
+                    Text: "";
+                    Anchor: (Width: 125, Height: 60);
+                    Background: "status_button.png";
+                }
+            }
+
+            Group { Anchor: (Width: 35); }
+
+            Group {
+                Anchor: (Width: 110, Height: 45);
+
+                TextButton #BtnSkills {
+                    Text: "";
+                    Anchor: (Width: 125, Height: 60);
+                    Background: "skills_button.png";
+                }
+            }
+
+            Group { Anchor: (Width: 35); }
+
+            Group {
+                Anchor: (Width: 110, Height: 45);
+
+                TextButton #BtnClasses {
+                    Text: "";
+                    Anchor: (Width: 125, Height: 60);
+                    Background: "classes_button.png";
+                }
+            }
+        }
+
+        Group #ContentPanel {
+            LayoutMode: Top;
+            Anchor: (Width: 800, Height: 700);
+            Padding: (Left: 60, Top: 115, Right: 60, Bottom: 155);
+
+            Group {
+                LayoutMode: Top;
+                Anchor: (Height: 60);
+
+                Group {
+                    LayoutMode: Left;
+                    Anchor: (Height: 28);
+
+                    Label #ClassText {
+                        Text: "CLASSE";
+                        Style: (FontSize: 24, TextColor: #8B4513);
+                        Anchor: (Width: 340);
+                    }
+
+                    Label #NameText {
+                        Text: "NOM";
+                        Style: (FontSize: 24, TextColor: #6B4423);
+                    }
+                }
+
+                Group { Anchor: (Height: 4); }
+
+                Label #TitleText {
+                    Text: "TITRE";
+                    Style: (FontSize: 14, TextColor: #8B7355);
+                    Anchor: (Height: 20);
+                }
+            }
+
+            Group { Anchor: (Height: 12); }
+
+            Label #LevelLabel {
+                Text: "XP : 0 / 100";
+                Style: (FontSize: 13, TextColor: #8B7355);
+                Anchor: (Height: 20);
+            }
+
+            Group {
+                Anchor: (Height: 26);
+                Background: #C4A484;
+
+                ProgressBar #ProgressBar {
+                    BarTexturePath: "XPFill.png";
+                    Value: 0.0;
+                }
+            }
+
+            Group { Anchor: (Height: 10); }
+
+            Group {
+                LayoutMode: Left;
+                Anchor: (Height: 20);
+
+                Label {
+                    Text: "MANA";
+                    Style: (FontSize: 11, TextColor: #8B4513);
+                    Anchor: (Width: 55);
+                }
+
+                Label #MpText {
+                    Text: "100 / 100";
+                    Style: (FontSize: 12, TextColor: #6B4423);
+                }
+            }
+
+            Group {
+                Anchor: (Height: 24);
+                Background: #C4A484;
+
+                ProgressBar #MpProgressBar {
+                    BarTexturePath: "MPFill.png";
+                    Value: 1.0;
+                }
+            }
+
+            Group { Anchor: (Height: 12); }
+
+            Group {
+                Anchor: (Height: 1);
+                Background: #8B7355;
+            }
+
+            Group { Anchor: (Height: 8); }
+
+            Label {
+                Text: "ATTRIBUTS";
+                Style: (FontSize: 22, TextColor: #8B4513, HorizontalAlignment: Center);
+                Anchor: (Height: 20);
+            }
+
+            Group { Anchor: (Height: 20); }
+
+            Group {
+                LayoutMode: Left;
+                Anchor: (Height: 130, Width: 640);
+
+                Group {
+                    LayoutMode: Top;
+                    Anchor: (Width: 340);
+
+                    Group {
+                        LayoutMode: Left;
+                        Anchor: (Height: 40);
+
+                        Label #StrVal {
+                            Text: "FORCE 1";
+                            Style: (FontSize: 20, TextColor: #6B4423);
+                            Anchor: (Width: 250, Height: 40);
+                        }
+
+                        Group {
+                            Anchor: (Width: 38, Height: 38);
+                            Background: "buttonPlus.png";
+
+                            TextButton #BtnStr {
+                                Text: "";
+                                Anchor: (Width: 38, Height: 38);
+                            }
+                        }
+                    }
+
+                    Group { Anchor: (Height: 5); }
+
+                    Group {
+                        LayoutMode: Left;
+                        Anchor: (Height: 40);
+
+                        Label #VitVal {
+                            Text: "VITALITE 1";
+                            Style: (FontSize: 20, TextColor: #6B4423);
+                            Anchor: (Width: 250, Height: 40);
+                        }
+
+                        Group {
+                            Anchor: (Width: 38, Height: 38);
+                            Background: "buttonPlus.png";
+
+                            TextButton #BtnVit {
+                                Text: "";
+                                Anchor: (Width: 38, Height: 38);
+                            }
+                        }
+                    }
+
+                    Group { Anchor: (Height: 5); }
+
+                    Group {
+                        LayoutMode: Left;
+                        Anchor: (Height: 40);
+
+                        Label #IntVal {
+                            Text: "INTELLIGENCE 1";
+                            Style: (FontSize: 20, TextColor: #6B4423);
+                            Anchor: (Width: 250, Height: 40);
+                        }
+
+                        Group {
+                            Anchor: (Width: 38, Height: 38);
+                            Background: "buttonPlus.png";
+
+                            TextButton #BtnInt {
+                                Text: "";
+                                Anchor: (Width: 38, Height: 38);
+                            }
+                        }
+                    }
+                }
+
+                Group {
+                    LayoutMode: Top;
+                    Anchor: (Width: 340);
+
+                    Group {
+                        LayoutMode: Left;
+                        Anchor: (Height: 40);
+
+                        Label #PerVal {
+                            Text: "ENDURANCE 1";
+                            Style: (FontSize: 20, TextColor: #6B4423);
+                            Anchor: (Width: 250, Height: 40);
+                        }
+
+                        Group {
+                            Anchor: (Width: 38, Height: 38);
+                            Background: "buttonPlus.png";
+
+                            TextButton #BtnPer {
+                                Text: "";
+                                Anchor: (Width: 38, Height: 38);
+                            }
+                        }
+                    }
+
+                    Group { Anchor: (Height: 5); }
+
+                    Group {
+                        LayoutMode: Left;
+                        Anchor: (Height: 40);
+
+                        Label #AglVal {
+                            Text: "AGLILITE 1";
+                            Style: (FontSize: 20, TextColor: #6B4423);
+                            Anchor: (Width: 250, Height: 40);
+                        }
+
+                        Group {
+                            Anchor: (Width: 38, Height: 38);
+                            Background: "buttonPlus.png";
+
+                            TextButton #BtnAgl {
+                                Text: "";
+                                Anchor: (Width: 38, Height: 38);
+                            }
+                        }
+                    }
+
+                    Group { Anchor: (Height: 5); }
+
+                    Group {
+                        LayoutMode: Left;
+                        Anchor: (Height: 40);
+
+                        Label #CmdVal {
+                            Text: "CHANCE 1";
+                            Style: (FontSize: 20, TextColor: #6B4423);
+                            Anchor: (Width: 250, Height: 40);
+                        }
+
+                        Group {
+                            Anchor: (Width: 38, Height: 38);
+                            Background: "buttonPlus.png";
+
+                            TextButton #BtnCmd {
+                                Text: "";
+                                Anchor: (Width: 38, Height: 38);
+                            }
+                        }
+                    }
+                }
+            }
+
+            Group { Anchor: (Height: 10); }
+
+            Group {
+                Anchor: (Height: 1);
+                Background: #8B7355;
+            }
+
+            Group { Anchor: (Height: 8); }
+
+            Group {
+                LayoutMode: Top;
+                Anchor: (Height: 52);
+
+                Label #PointsText {
+                    Text: "Points : 0";
+                    Style: (FontSize: 18, TextColor: #8B4513, HorizontalAlignment: Center);
+                    Anchor: (Height: 22);
+                }
+
+                Group { Anchor: (Height: 4); }
+
+                Group {
+                    LayoutMode: Left;
+                    Anchor: (Height: 26);
+
+                    Group { Anchor: (Width: 275); }
+
+                    Label {
+                        Background: "iconGold.png";
+                        Style: (FontSize: 18, TextColor: #D4AF37);
+                        Anchor: (Width: 24, Height: 24);
+                    }
+
+                    Group { Anchor: (Width: 4); }
+
+                    Label #MoneyText {
+                        Text: "1000";
+                        Style: (FontSize: 17, TextColor: #8B4513);
+                        Anchor: (Height: 26);
+                    }
+                }
+            }
+        }
+
+        Group #LevelBadge {
+            LayoutMode: Left;
+            Anchor: (Width: 800, Height: 700);
+            Padding: (Left: 660, Top: 0);
+
+            Group {
+                Anchor: (Width: 160, Height: 640);
+
+                Label #LevelText {
+                    Text: "NIV. 1";
+                    Style: (FontSize: 20, TextColor: #D1D437, HorizontalAlignment: Center);
+                    Anchor: (Width: 160, Height: 640);
+                }
+            }
+        }
+
+    }
+}

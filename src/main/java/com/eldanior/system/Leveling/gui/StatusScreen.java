@@ -35,13 +35,12 @@ public class StatusScreen extends InteractiveCustomUIPage<StatusScreen.StatusEve
     @Override
     public void build(@Nonnull Ref<EntityStore> ref, @Nonnull UICommandBuilder uiCommandBuilder, @Nonnull UIEventBuilder uiEventBuilder, @Nonnull Store<EntityStore> store) {
 
-        uiCommandBuilder.append("status.ui");
+        uiCommandBuilder.append("Status/status.ui");
 
         ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
         PlayerLevelData data = store.getComponent(ref, type);
         if (data == null) data = new PlayerLevelData();
 
-        // 1. Récupération des bonus de classe
         ClassModel classModel = ClassManager.get(data.getPlayerClassId());
         int bStr = (classModel != null) ? classModel.getBonusStr() : 0;
         int bVit = (classModel != null) ? classModel.getBonusVit() : 0;
@@ -50,18 +49,12 @@ public class StatusScreen extends InteractiveCustomUIPage<StatusScreen.StatusEve
         int bAgl = (classModel != null) ? classModel.getBonusAgl() : 0;
         int bLck = (classModel != null) ? classModel.getBonusLck() : 0;
 
-        // 2. Récupération du pseudo
         String playerName = getPlayerName(ref, store);
 
-        // 3. Récupération des stats HUD (PV / Mana)
         EntityStatMap statMap = store.getComponent(ref, EntityStatsModule.get().getEntityStatMapComponentType());
-        float currentHp = 0, currentMp = 0, maxMp = 100;
+        float currentMp = 0, maxMp = 100;
 
         if (statMap != null) {
-            int healthIndex = DefaultEntityStatTypes.getHealth();
-            if (statMap.get(healthIndex) != null) {
-                currentHp = Objects.requireNonNull(statMap.get(healthIndex)).get();
-            }
             int manaIndex = DefaultEntityStatTypes.getMana();
             if (statMap.get(manaIndex) != null) {
                 currentMp = Objects.requireNonNull(statMap.get(manaIndex)).get();
@@ -69,78 +62,125 @@ public class StatusScreen extends InteractiveCustomUIPage<StatusScreen.StatusEve
             }
         }
 
-        // --- MISE A JOUR DE L'UI ---
-        uiCommandBuilder.set("#NameText.TextSpans", Message.raw("NOM: " + playerName));
-        uiCommandBuilder.set("#JobText.TextSpans", Message.raw("CLASSE: " + data.getPlayerClass()));
-        uiCommandBuilder.set("#TitleText.TextSpans", Message.raw("TITRE: " + data.getCurrentTitle()));
-        uiCommandBuilder.set("#LevelText.TextSpans", Message.raw(String.valueOf(data.getLevel())));
+        // --- Header : identité du joueur ---
+        uiCommandBuilder.set("#ClassText.TextSpans", Message.raw(data.getPlayerClass()));
+        uiCommandBuilder.set("#NameText.TextSpans", Message.raw("NOM : " + playerName));
+        uiCommandBuilder.set("#TitleText.TextSpans", Message.raw("TITRE : " + data.getCurrentTitle()));
 
-        String xpInfo = "LEVEL: " + data.getLevel() + " XP: " + data.getExperience() + " / " + data.getRequiredExperience();
-        uiCommandBuilder.set("#LevelLabel.TextSpans", Message.raw(xpInfo));
+        // --- Niveau & XP ---
+        uiCommandBuilder.set("#LevelText.TextSpans", Message.raw(String.valueOf(data.getLevel())));
+        uiCommandBuilder.set("#LevelLabel.TextSpans",
+                Message.raw("XP : " + data.getExperience() + " / " + data.getRequiredExperience()));
         uiCommandBuilder.set("#ProgressBar.Value", data.getExperienceProgress());
 
-        uiCommandBuilder.set("#MpText.TextSpans", Message.raw("MP: " + (int)currentMp + " / " + (int)maxMp));
+        // --- Mana ---
+        uiCommandBuilder.set("#MpText.TextSpans",
+                Message.raw((int) currentMp + " / " + (int) maxMp));
         uiCommandBuilder.set("#MpProgressBar.Value", maxMp > 0 ? currentMp / maxMp : 0.0f);
 
-        // Affichage des stats avec bonus (+X)
-        uiCommandBuilder.set("#StrVal.TextSpans", Message.raw("FOR: " + data.getStrength() + " (+" + bStr + ")"));
-        uiCommandBuilder.set("#VitVal.TextSpans", Message.raw("VIE: " + data.getVitality() + " (+" + bVit + ")"));
-        uiCommandBuilder.set("#IntVal.TextSpans", Message.raw("INT: " + data.getIntelligence() + " (+" + bInt + ")"));
-        uiCommandBuilder.set("#PerVal.TextSpans", Message.raw("END: " + data.getEndurance() + " (+" + bEnd + ")"));
-        uiCommandBuilder.set("#AglVal.TextSpans", Message.raw("AGL: " + data.getAgility() + " (+" + bAgl + ")"));
-        uiCommandBuilder.set("#CmdVal.TextSpans", Message.raw("CH: " + data.getLuck() + " (+" + bLck + ")"));
+        // --- Attributs avec bonus classe ---
+        uiCommandBuilder.set("#StrVal.TextSpans", Message.raw("FORCE  " + data.getStrength() + "  (+" + bStr + ")"));
+        uiCommandBuilder.set("#VitVal.TextSpans", Message.raw("VITALITE  " + data.getVitality() + "  (+" + bVit + ")"));
+        uiCommandBuilder.set("#IntVal.TextSpans", Message.raw("INTELLIGENCE  " + data.getIntelligence() + "  (+" + bInt + ")"));
+        uiCommandBuilder.set("#PerVal.TextSpans", Message.raw("ENDURANCE  " + data.getEndurance() + "  (+" + bEnd + ")"));
+        uiCommandBuilder.set("#AglVal.TextSpans", Message.raw("AGLILITE  " + data.getAgility() + "  (+" + bAgl + ")"));
+        uiCommandBuilder.set("#CmdVal.TextSpans", Message.raw("CHANCE   " + data.getLuck() + "  (+" + bLck + ")"));
 
-        uiCommandBuilder.set("#PointsText.TextSpans", Message.raw("Points disponibles: " + data.getAttributePoints()));
-        uiCommandBuilder.set("#MoneyText.TextSpans", Message.raw(": " + data.getMoney()));
+        // --- Pied de page ---
+        uiCommandBuilder.set("#PointsText.TextSpans",
+                Message.raw("Points Disponibles : " + data.getAttributePoints()));
+        uiCommandBuilder.set("#MoneyText.TextSpans",
+                Message.raw(" " + data.getMoney()));
 
-        // Bindings des boutons
+        // --- Bindings : attributs ---
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#BtnStr", EventData.of("Action", "str"));
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#BtnVit", EventData.of("Action", "vit"));
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#BtnInt", EventData.of("Action", "int"));
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#BtnPer", EventData.of("Action", "per"));
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#BtnAgl", EventData.of("Action", "agl"));
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#BtnCmd", EventData.of("Action", "cmd"));
+
+        // --- Bindings : navigation (footer) ---
+        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#BtnShop", EventData.of("Action", "nav_shop"));
+        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#BtnInventory", EventData.of("Action", "nav_inventory"));
+        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#BtnStatus", EventData.of("Action", "nav_status"));
+        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#BtnSkills", EventData.of("Action", "nav_skills"));
+        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#BtnClasses", EventData.of("Action", "nav_classes"));
     }
 
     @Override
     public void handleDataEvent(@Nonnull Ref<EntityStore> ref, @Nonnull Store<EntityStore> store, @Nonnull StatusEventData data) {
+        if (data.action == null) return;
+
+        // --- Navigation : délégation vers les futures écrans ---
+        if (data.action.startsWith("nav_")) {
+            handleNavigation(ref, store, data.action);
+            return;
+        }
+
+        // --- Allocation de points d'attribut ---
         ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
         PlayerLevelData playerData = store.getComponent(ref, type);
-        if (playerData == null) return;
+        if (playerData == null || playerData.getAttributePoints() <= 0) return;
 
-        if (playerData.getAttributePoints() > 0) {
-            boolean changed = false;
-            if ("str".equals(data.action)) { playerData.setStrength(playerData.getStrength() + 1); changed = true; }
-            else if ("vit".equals(data.action)) { playerData.setVitality(playerData.getVitality() + 1); changed = true; }
-            else if ("int".equals(data.action)) { playerData.setIntelligence(playerData.getIntelligence() + 1); changed = true; }
-            else if ("per".equals(data.action)) { playerData.setEndurance(playerData.getEndurance() + 1); changed = true; }
-            else if ("agl".equals(data.action)) { playerData.setAgility(playerData.getAgility() + 1); changed = true; }
-            else if ("cmd".equals(data.action)) { playerData.setLuck(playerData.getLuck() + 1); changed = true; }
+        boolean changed = switch (data.action) {
+            case "str" -> { playerData.setStrength(playerData.getStrength() + 1); yield true; }
+            case "vit" -> { playerData.setVitality(playerData.getVitality() + 1); yield true; }
+            case "int" -> { playerData.setIntelligence(playerData.getIntelligence() + 1); yield true; }
+            case "per" -> { playerData.setEndurance(playerData.getEndurance() + 1); yield true; }
+            case "agl" -> { playerData.setAgility(playerData.getAgility() + 1); yield true; }
+            case "cmd" -> { playerData.setLuck(playerData.getLuck() + 1); yield true; }
+            default -> false;
+        };
 
-            if (changed) {
-                playerData.setAttributePoints(playerData.getAttributePoints() - 1);
-                com.eldanior.system.Leveling.utils.StatCalculator.updatePlayerStats(ref, store, playerData);
-                store.putComponent(ref, type, playerData);
+        if (!changed) return;
 
-                // Récupération des bonus pour la mise à jour visuelle
-                ClassModel classModel = ClassManager.get(playerData.getPlayerClassId());
-                int bStr = (classModel != null) ? classModel.getBonusStr() : 0;
-                int bVit = (classModel != null) ? classModel.getBonusVit() : 0;
-                int bInt = (classModel != null) ? classModel.getBonusInt() : 0;
-                int bEnd = (classModel != null) ? classModel.getBonusEnd() : 0;
-                int bAgl = (classModel != null) ? classModel.getBonusAgl() : 0;
-                int bLck = (classModel != null) ? classModel.getBonusLck() : 0;
+        playerData.setAttributePoints(playerData.getAttributePoints() - 1);
+        com.eldanior.system.Leveling.utils.StatCalculator.updatePlayerStats(ref, store, playerData);
+        store.putComponent(ref, type, playerData);
 
-                UICommandBuilder update = new UICommandBuilder();
-                update.set("#StrVal.TextSpans", Message.raw("FOR: " + playerData.getStrength() + " (+" + bStr + ")"));
-                update.set("#VitVal.TextSpans", Message.raw("VIE: " + playerData.getVitality() + " (+" + bVit + ")"));
-                update.set("#IntVal.TextSpans", Message.raw("INT: " + playerData.getIntelligence() + " (+" + bInt + ")"));
-                update.set("#PerVal.TextSpans", Message.raw("END: " + playerData.getEndurance() + " (+" + bEnd + ")"));
-                update.set("#AglVal.TextSpans", Message.raw("AGL: " + playerData.getAgility() + " (+" + bAgl + ")"));
-                update.set("#CmdVal.TextSpans", Message.raw("CH: " + playerData.getLuck() + " (+" + bLck + ")"));
-                update.set("#PointsText.TextSpans", Message.raw("Points disponibles: " + playerData.getAttributePoints()));
+        ClassModel classModel = ClassManager.get(playerData.getPlayerClassId());
+        int bStr = (classModel != null) ? classModel.getBonusStr() : 0;
+        int bVit = (classModel != null) ? classModel.getBonusVit() : 0;
+        int bInt = (classModel != null) ? classModel.getBonusInt() : 0;
+        int bEnd = (classModel != null) ? classModel.getBonusEnd() : 0;
+        int bAgl = (classModel != null) ? classModel.getBonusAgl() : 0;
+        int bLck = (classModel != null) ? classModel.getBonusLck() : 0;
 
-                this.sendUpdate(update);
+        UICommandBuilder update = new UICommandBuilder();
+        update.set("#StrVal.TextSpans", Message.raw("FORCE  " + playerData.getStrength() + "  (+" + bStr + ")"));
+        update.set("#VitVal.TextSpans", Message.raw("VITALITE  " + playerData.getVitality() + "  (+" + bVit + ")"));
+        update.set("#IntVal.TextSpans", Message.raw("INTELLIGENCE  " + playerData.getIntelligence() + "  (+" + bInt + ")"));
+        update.set("#PerVal.TextSpans", Message.raw("ENDURANCE  " + playerData.getEndurance() + "  (+" + bEnd + ")"));
+        update.set("#AglVal.TextSpans", Message.raw("AGLILITE  " + playerData.getAgility() + "  (+" + bAgl + ")"));
+        update.set("#CmdVal.TextSpans", Message.raw("CHANCE   " + playerData.getLuck() + "  (+" + bLck + ")"));
+        update.set("#PointsText.TextSpans", Message.raw("Points : " + playerData.getAttributePoints()));
+
+        this.sendUpdate(update);
+    }
+
+    private void handleNavigation(Ref<EntityStore> ref, Store<EntityStore> store, String action) {
+        PlayerRef playerRef = store.getComponent(ref, PlayerRef.getComponentType());
+        if (playerRef == null) return;
+
+        // TODO : chaque cas ouvre son écran dédié une fois implémenté
+        // Pour l'instant, on ferme le StatusScreen et on envoie un message de placeholder
+        switch (action) {
+            case "nav_shop" -> {
+                playerRef.sendMessage(Message.raw("§e[TODO] Ouverture du Shop..."));
+                this.close();
+            }
+            case "nav_inventory" -> {
+                playerRef.sendMessage(Message.raw("§e[TODO] Ouverture de l'Inventaire..."));
+                this.close();
+            }
+            case "nav_skills" -> {
+                playerRef.sendMessage(Message.raw("§e[TODO] Ouverture des Skills..."));
+                this.close();
+            }
+            case "nav_classes" -> {
+                playerRef.sendMessage(Message.raw("§e[TODO] Ouverture des Classes..."));
+                this.close();
             }
         }
     }

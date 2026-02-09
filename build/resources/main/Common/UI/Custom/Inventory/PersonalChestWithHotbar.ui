@@ -1,0 +1,182 @@
+$Common = "../Common.ui";
+
+Group {
+  LayoutMode: Center;
+
+  Group #MainPanel {
+    LayoutMode: Top;
+    Anchor: (Width: 800, Height: 700);
+    Background: "background_inventory.png";
+    Padding: (Left: 70, Top: 155, Right: 70, Bottom: 0);
+
+    Group #ChestGrid {
+      LayoutMode: Top;
+      Anchor: (Height: 220);
+
+      Group {
+        LayoutMode: Left;
+        Anchor: (Height: 70);
+        Button #Slot0 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+        Group { Anchor: (Width: 9); }
+        Button #Slot1 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+        Group { Anchor: (Width: 9); }
+        Button #Slot2 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+        Group { Anchor: (Width: 9); }
+        Button #Slot3 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+        Group { Anchor: (Width: 9); }
+        Button #Slot4 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+        Group { Anchor: (Width: 9); }
+        Button #Slot5 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+        Group { Anchor: (Width: 9); }
+        Button #Slot6 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+        Group { Anchor: (Width: 9); }
+        Button #Slot7 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+        Group { Anchor: (Width: 9); }
+        Button #Slot8 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+      }
+
+      Group { Anchor: (Height: 2); }
+
+      Group {
+        LayoutMode: Left;
+        Anchor: (Height: 70);
+        Button #Slot9 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+        Group { Anchor: (Width: 9); }
+        Button #Slot10 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+        Group { Anchor: (Width: 9); }
+        Button #Slot11 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+        Group { Anchor: (Width: 9); }
+        Button #Slot12 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+        Group { Anchor: (Width: 9); }
+        Button #Slot13 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+        Group { Anchor: (Width: 9); }
+        Button #Slot14 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+        Group { Anchor: (Width: 9); }
+        Button #Slot15 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+        Group { Anchor: (Width: 9); }
+        Button #Slot16 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+        Group { Anchor: (Width: 9); }
+        Button #Slot17 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+      }
+
+      Group { Anchor: (Height: 2); }
+
+      Group {
+        LayoutMode: Left;
+        Anchor: (Height: 70);
+        Button #Slot18 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+        Group { Anchor: (Width: 9); }
+        Button #Slot19 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+        Group { Anchor: (Width: 9); }
+        Button #Slot20 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+        Group { Anchor: (Width: 9); }
+        Button #Slot21 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+        Group { Anchor: (Width: 9); }
+        Button #Slot22 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+        Group { Anchor: (Width: 9); }
+        Button #Slot23 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+        Group { Anchor: (Width: 9); }
+        Button #Slot24 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+        Group { Anchor: (Width: 9); }
+        Button #Slot25 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+        Group { Anchor: (Width: 9); }
+        Button #Slot26 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+      }
+    }
+
+    Group {
+      Anchor: (Height: 115);
+    }
+
+    Group #HotbarGrid {
+      LayoutMode: Left;
+      Anchor: (Height: -9);
+
+      Button #Hotbar0 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+      Group { Anchor: (Width: 9); }
+      Button #Hotbar1 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+      Group { Anchor: (Width: 9); }
+      Button #Hotbar2 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+      Group { Anchor: (Width: 9); }
+      Button #Hotbar3 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+      Group { Anchor: (Width: 9); }
+      Button #Hotbar4 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+      Group { Anchor: (Width: 9); }
+      Button #Hotbar5 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+      Group { Anchor: (Width: 9); }
+      Button #Hotbar6 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+      Group { Anchor: (Width: 9); }
+      Button #Hotbar7 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+      Group { Anchor: (Width: 9); }
+      Button #Hotbar8 { Anchor: (Width: 65, Height: 65); Padding: (Full: 4); ItemIcon #Icon { Visible: false; } Label #Quantity { Visible: false; Style: (FontSize: 12, TextColor: #ffffff); } }
+    }
+
+    Group {
+      Anchor: (Height: 15);
+    }
+
+    Group #NavButtons {
+        LayoutMode: Left;
+        Anchor: (Width: 800, Height: 290);
+        Padding: (Left: 62);
+
+        Group {
+            Anchor: (Width: 110, Height: 45);
+
+            TextButton #BtnShop {
+                Text: "";
+                Anchor: (Width: 125, Height: 60);
+                Background: "shop_button.png";
+            }
+        }
+
+        Group { Anchor: (Width: 35); }
+
+        Group {
+            Anchor: (Width: 110, Height: 45);
+
+            TextButton #BtnInventory {
+                Text: "";
+                Anchor: (Width: 125, Height: 60);
+                Background: "inventory_button.png";
+            }
+        }
+
+        Group { Anchor: (Width: 35); }
+
+        Group {
+            Anchor: (Width: 110, Height: 45);
+
+            TextButton #BtnStatus {
+                Text: "";
+                Anchor: (Width: 125, Height: 60);
+                Background: "status_button.png";
+            }
+        }
+
+        Group { Anchor: (Width: 35); }
+
+        Group {
+            Anchor: (Width: 110, Height: 45);
+
+            TextButton #BtnSkills {
+                Text: "";
+                Anchor: (Width: 125, Height: 60);
+                Background: "skills_button.png";
+            }
+        }
+
+        Group { Anchor: (Width: 35); }
+
+        Group {
+            Anchor: (Width: 110, Height: 45);
+
+            TextButton #BtnClasses {
+                Text: "";
+                Anchor: (Width: 125, Height: 60);
+                Background: "classes_button.png";
+            }
+        }
+    }
+  }
+}

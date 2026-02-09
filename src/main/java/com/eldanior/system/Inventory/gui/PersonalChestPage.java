@@ -36,7 +36,6 @@ public class PersonalChestPage extends InteractiveCustomUIPage<PersonalChestPage
 
     private final PlayerPersonalChestData chestData;
     private final List<ItemStack> chestItems;
-    private static final String PORTAL_PARTICLE_EFFECT = "Portal_Round_Blue";
 
     public PersonalChestPage(@Nonnull PlayerRef playerRef, @Nonnull PlayerPersonalChestData chestData) {
         super(playerRef, CustomPageLifetime.CanDismiss, ChestEventData.CODEC);
@@ -50,7 +49,7 @@ public class PersonalChestPage extends InteractiveCustomUIPage<PersonalChestPage
 
     @Override
     public void build(@Nonnull Ref<EntityStore> ref, @Nonnull UICommandBuilder commands, @Nonnull UIEventBuilder events, @Nonnull Store<EntityStore> store) {
-        commands.append("PersonalChestWithHotbar.ui");
+        commands.append("Inventory/PersonalChestWithHotbar.ui");
         InventoryEffectConfig config = new InventoryEffectConfig();
         spawnParticleEffect(ref, store, config);
         updateFullUI(ref, store, commands, events);
@@ -59,19 +58,21 @@ public class PersonalChestPage extends InteractiveCustomUIPage<PersonalChestPage
     private void updateFullUI(Ref<EntityStore> ref, Store<EntityStore> store, UICommandBuilder commands, UIEventBuilder events) {
         updateChestSlots(commands, events);
         updateHotbarSlots(ref, store, commands, events);
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#BtnClose", EventData.of("Action", "close"));
+
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#BtnShop", EventData.of("Action", "nav_shop"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#BtnInventory", EventData.of("Action", "nav_inventory"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#BtnStatus", EventData.of("Action", "nav_status"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#BtnSkills", EventData.of("Action", "nav_skills"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#BtnClasses", EventData.of("Action", "nav_classes"));
     }
 
     private void spawnParticleEffect(Ref<EntityStore> playerRef, Store<EntityStore> store, InventoryEffectConfig config) {
-        // 1. Visuel : On utilise l'ID de la config
         TransformComponent playerTransform = store.getComponent(playerRef, TransformComponent.getComponentType());
         if (playerTransform != null) {
             Vector3d position = playerTransform.getPosition().add(0, 0.5, 0);
             ParticleUtil.spawnParticleEffect(config.getOpenParticleId(), position, store);
         }
 
-        // 2. Gameplay : On applique l'effet défini dans la config avec la durée configurée
-        // On vérifie d'abord si l'ID n'est pas vide ou null pour éviter les erreurs
         if (config.getOpenStatusEffectId() != null && !config.getOpenStatusEffectId().isEmpty()) {
             EffectsManager.applyCustomEffect(
                     playerRef,
@@ -84,25 +85,19 @@ public class PersonalChestPage extends InteractiveCustomUIPage<PersonalChestPage
     }
 
     private void playCloseEffect(Ref<EntityStore> playerRef, Store<EntityStore> store, InventoryEffectConfig config) {
-        // 1. Visuel : Particule de fermeture depuis la config
-
         TransformComponent playerTransform = store.getComponent(playerRef, TransformComponent.getComponentType());
-        assert playerTransform != null;
-        float yaw = (float) Math.toRadians(playerTransform.getRotation().getYaw());
-        float pitch = (float) Math.toRadians(playerTransform.getRotation().getPitch());
-
-        double x = -Math.sin(yaw) * Math.cos(pitch);
-        double y = -Math.sin(pitch);
-        double z = Math.cos(yaw) * Math.cos(pitch);
-
-        Vector3d lookDirection = new Vector3d(x, y, z).normalize();
-
         if (playerTransform != null) {
-            //Vector3d position = playerTransform.getPosition().add(0, 0, 0);
+            float yaw = (float) Math.toRadians(playerTransform.getRotation().getYaw());
+            float pitch = (float) Math.toRadians(playerTransform.getRotation().getPitch());
+
+            double x = -Math.sin(yaw) * Math.cos(pitch);
+            double y = -Math.sin(pitch);
+            double z = Math.cos(yaw) * Math.cos(pitch);
+
+            Vector3d lookDirection = new Vector3d(x, y, z).normalize();
             ParticleUtil.spawnParticleEffect(config.getCloseParticleId(), lookDirection, store);
         }
 
-        // 2. Gameplay : Nettoyage de l'effet d'ouverture (si nécessaire)
         if (config.getOpenStatusEffectId() != null && !config.getOpenStatusEffectId().isEmpty()) {
             EffectsManager.removeEffect(playerRef, config.getOpenStatusEffectId(), store);
         }
@@ -126,7 +121,6 @@ public class PersonalChestPage extends InteractiveCustomUIPage<PersonalChestPage
                 } else {
                     commands.set(qtyPath + ".Visible", false);
                 }
-
             } else {
                 commands.set(iconPath + ".Visible", false);
                 commands.set(qtyPath + ".Visible", false);
@@ -164,7 +158,6 @@ public class PersonalChestPage extends InteractiveCustomUIPage<PersonalChestPage
                 } else {
                     commands.set(qtyPath + ".Visible", false);
                 }
-
             } else {
                 commands.set(iconPath + ".Visible", false);
                 commands.set(qtyPath + ".Visible", false);
@@ -180,34 +173,44 @@ public class PersonalChestPage extends InteractiveCustomUIPage<PersonalChestPage
 
     @Override
     public void handleDataEvent(@Nonnull Ref<EntityStore> ref, @Nonnull Store<EntityStore> store, @Nonnull ChestEventData data) {
-        if ("close".equals(data.action)) {
-            saveAndClose(ref, store);
-            return;
-        }
+        Player player = store.getComponent(ref, Player.getComponentType());
+        if (player == null) return;
 
-        if ("depositToChest".equals(data.action) && data.hotbarSlot != null) {
-            int hotbarSlot = Integer.parseInt(data.hotbarSlot);
-
-            Player player = store.getComponent(ref, Player.getComponentType());
-            if (player == null) return;
-
-            Inventory inventory = player.getInventory();
-            ItemContainer hotbar = inventory.getHotbar();
-            ItemStack item = hotbar.getItemStack((short) hotbarSlot);
-
-            if (item != null && !item.isEmpty()) {
-                handleDepositToChest(ref, store, hotbarSlot);
-            }
-
-        } else if ("takeFromChest".equals(data.action) && data.slotIndex != null) {
-            int slotIndex = Integer.parseInt(data.slotIndex);
-
-            if (slotIndex >= 0 && slotIndex < chestItems.size()) {
-                ItemStack item = chestItems.get(slotIndex);
-                if (item != null && !item.isEmpty()) {
-                    handleTakeFromChest(ref, store, slotIndex);
+        switch (data.action) {
+            case "nav_shop":
+                player.sendMessage(Message.raw("§e[Navigation] Shop (à implémenter)"));
+                break;
+            case "nav_inventory":
+                player.sendMessage(Message.raw("§e[Navigation] Inventaire (à implémenter)"));
+                break;
+            case "nav_status":
+                player.sendMessage(Message.raw("§e[Navigation] Statut (à implémenter)"));
+                break;
+            case "nav_skills":
+                player.sendMessage(Message.raw("§e[Navigation] Compétences (à implémenter)"));
+                break;
+            case "nav_classes":
+                player.sendMessage(Message.raw("§e[Navigation] Classes (à implémenter)"));
+                break;
+            case "close":
+                saveAndClose(ref, store);
+                break;
+            case "depositToChest":
+                if (data.hotbarSlot != null) {
+                    handleDepositToChest(ref, store, Integer.parseInt(data.hotbarSlot));
                 }
-            }
+                break;
+            case "takeFromChest":
+                if (data.slotIndex != null) {
+                    int slotIndex = Integer.parseInt(data.slotIndex);
+                    if (slotIndex >= 0 && slotIndex < chestItems.size()) {
+                        ItemStack item = chestItems.get(slotIndex);
+                        if (item != null && !item.isEmpty()) {
+                            handleTakeFromChest(ref, store, slotIndex);
+                        }
+                    }
+                }
+                break;
         }
     }
 
@@ -221,9 +224,7 @@ public class PersonalChestPage extends InteractiveCustomUIPage<PersonalChestPage
         if (hotbarSlot < 0 || hotbarSlot >= 9) return;
 
         ItemStack itemToDeposit = hotbar.getItemStack((short) hotbarSlot);
-        if (itemToDeposit == null || itemToDeposit.isEmpty()) {
-            return;
-        }
+        if (itemToDeposit == null || itemToDeposit.isEmpty()) return;
 
         int emptySlot = -1;
         for (int i = 0; i < 27; i++) {
@@ -257,9 +258,7 @@ public class PersonalChestPage extends InteractiveCustomUIPage<PersonalChestPage
         if (slotIndex < 0 || slotIndex >= chestItems.size()) return;
 
         ItemStack itemToTake = chestItems.get(slotIndex);
-        if (itemToTake == null || itemToTake.isEmpty()) {
-            return;
-        }
+        if (itemToTake == null || itemToTake.isEmpty()) return;
 
         Inventory inventory = player.getInventory();
         ItemContainer hotbar = inventory.getHotbar();
