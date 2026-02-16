@@ -1,8 +1,8 @@
 package com.eldanior.system.classes.definitions;
 
 import com.eldanior.system.classes.models.ClassModel;
-import com.eldanior.system.config.enums.ClassType;
-import com.eldanior.system.config.enums.Rarity;
+import com.eldanior.system.config.configs.ClassType;
+import com.eldanior.system.config.configs.Rarity;
 
 public class Merchant extends ClassModel {
 

@@ -1,7 +1,7 @@
 package com.eldanior.system.Leveling.commands;
 
 import com.eldanior.system.EldaniorSystem;
-import com.eldanior.system.Leveling.components.PlayerLevelData;
+import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.Leveling.utils.NotificationHelper;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Store;

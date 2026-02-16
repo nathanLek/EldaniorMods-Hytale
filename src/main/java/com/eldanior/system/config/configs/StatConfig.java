@@ -1,0 +1,118 @@
+package com.eldanior.system.config.configs;
+
+import com.eldanior.system.config.Player.PlayerLevelData;
+import com.eldanior.system.classes.models.ClassModel;
+import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
+
+import java.util.function.ToIntFunction;
+
+public enum StatConfig {
+
+    // === STATS CLASSIQUES (EntityStatMap) ===
+    // Ordre : Type, StatID, Key, Base, Ratio, Regen, Cap (NOUVEAU), ProviderPlayer, ProviderClass
+
+    VITALITY(StatType.ATTRIBUTE, DefaultEntityStatTypes.getHealth(), "Eldanior_Vitality", 0.0f, 0.5f, 0.005f, 0.0f,
+            PlayerLevelData::getVitality, ClassModel::getBonusVit),
+
+    INTELLIGENCE(StatType.ATTRIBUTE, DefaultEntityStatTypes.getMana(), "Eldanior_Intelligence", 0.0f, 3.33f, 0.005f, 0.0f,
+            PlayerLevelData::getIntelligence, ClassModel::getBonusInt),
+
+    ENDURANCE(StatType.ATTRIBUTE, DefaultEntityStatTypes.getStamina(), "Eldanior_Endurance", 0.0f, 3.0f, 0.03f, 0.0f,
+            PlayerLevelData::getEndurance, ClassModel::getBonusEnd),
+
+    // === MOUVEMENTS ===
+    AGILITY_SPEED(StatType.MOVEMENT_SPEED, -1, "Eldanior_Speed", 1.5f, 0.0005f, 0.0f, 3.0f, // Cap vitesse x3
+            PlayerLevelData::getAgility, null),
+
+    AGILITY_JUMP(StatType.MOVEMENT_JUMP, -1, "Eldanior_Jump", 11.8f, 0.004f, 0.0f, 20.0f, // Cap saut 20 blocks
+            PlayerLevelData::getAgility, null),
+
+    AGILITY_FALL_RESISTANCE(StatType.MECHANIC, -1, "Agility_Fall", 0.0f, 0.0007f, 0.0f, 1.0f,
+            PlayerLevelData::getAgility, ClassModel::getBonusAgl),
+
+    // 5. DEGATS FORCE : +0.032 dégâts par point
+    STRENGTH_DAMAGE(StatType.MECHANIC, -1, "Strength_Dmg", 0.0f, 0.072f, 0.0f, 0.0f,
+            PlayerLevelData::getStrength, ClassModel::getBonusStr),
+
+    // 6. DEFENSE ENDURANCE : -0.3 dégâts reçus par point
+    ENDURANCE_DEFENSE(StatType.MECHANIC, -1, "Endurance_Def", 0.0f, 0.03f, 0.0f, 0.0f,
+            PlayerLevelData::getEndurance, ClassModel::getBonusEnd),
+
+    // === MÉCANIQUES DE CHANCE (Nouveau !) ===
+    // 1. CRITIQUE : Ratio 0.027%, Cap à 80%
+    LUCK_CRITICAL(StatType.MECHANIC, -1, "Luck_Crit", 0.0f, 0.05f, 0.0f, 80.0f,
+            PlayerLevelData::getLuck, ClassModel::getBonusLck),
+
+    // 2. LOOT : Ratio 0.5%, Pas de cap
+    LUCK_LOOT(StatType.MECHANIC, -1, "Luck_Loot", 0.0f, 0.005f, 0.0f, 100.0f,
+            PlayerLevelData::getLuck, ClassModel::getBonusLck),
+
+    // 3. EVENT RARE : Ratio 0.2%, Pas de cap
+    LUCK_EVENT(StatType.MECHANIC, -1, "Luck_Event", 0.0f, 0.005f, 0.0f, 50.0f,
+            PlayerLevelData::getLuck, ClassModel::getBonusLck);
+
+
+    // --- DÉFINITIONS ---
+    public enum StatType {
+        ATTRIBUTE,      // Vie, Mana...
+        MOVEMENT_SPEED, // Vitesse
+        MOVEMENT_JUMP,  // Saut
+        MECHANIC        // Calculs internes (Crit, Loot...)
+    }
+
+    private final StatType type;
+    private final int statId;
+    private final String modifierKey;
+    private final float baseValue;
+    private final float ratio;
+    private final float regenRate;
+    private final float cap; // NOUVEAU CHAMP
+    private final ToIntFunction<PlayerLevelData> playerProvider;
+    private final ToIntFunction<ClassModel> classProvider;
+
+    StatConfig(StatType type, int statId, String modifierKey, float baseValue, float ratio, float regenRate, float cap,
+               ToIntFunction<PlayerLevelData> playerProvider, ToIntFunction<ClassModel> classProvider) {
+        this.type = type;
+        this.statId = statId;
+        this.modifierKey = modifierKey;
+        this.baseValue = baseValue;
+        this.ratio = ratio;
+        this.regenRate = regenRate;
+        this.cap = cap;
+        this.playerProvider = playerProvider;
+        this.classProvider = classProvider;
+    }
+
+    // --- GETTERS ---
+    public StatType getType() { return type; }
+    public int getStatId() { return statId; }
+    public String getModifierKey() { return modifierKey; }
+    public float getBaseValue() { return baseValue; }
+    public float getRatio() { return ratio; }
+    public float getRegenRate() { return regenRate; }
+    public float getCap() { return cap; } // NOUVEAU GETTER
+
+    public ToIntFunction<PlayerLevelData> getPlayerProvider() { return playerProvider; }
+    public ToIntFunction<ClassModel> getClassProvider() { return classProvider; }
+
+    // --- MÉTHODES UTILES ---
+
+    // Récupère les points totaux (Joueur + Classe)
+    public int getTotalPoints(PlayerLevelData data, ClassModel model) {
+        int playerPoints = playerProvider.applyAsInt(data);
+        int classPoints = (model != null && classProvider != null) ? classProvider.applyAsInt(model) : 0;
+        return playerPoints + classPoints;
+    }
+
+    // Calcule la valeur finale (Base + (Points * Ratio)), en respectant le CAP
+    public float getFinalValue(PlayerLevelData data, ClassModel model) {
+        int points = getTotalPoints(data, model);
+        float value = baseValue + (points * ratio);
+
+        // Application du CAP si défini (> 0)
+        if (cap > 0 && value > cap) {
+            return cap;
+        }
+        return value;
+    }
+}

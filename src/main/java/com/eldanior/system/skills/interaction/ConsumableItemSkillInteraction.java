@@ -1,7 +1,7 @@
 package com.eldanior.system.skills.interaction;
 
 import com.eldanior.system.EldaniorSystem;
-import com.eldanior.system.Leveling.components.PlayerLevelData;
+import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.skills.SkillManager;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.protocol.InteractionType;

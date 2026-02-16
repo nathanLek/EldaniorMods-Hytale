@@ -1,8 +1,8 @@
 package com.eldanior.system.classes.definitions;
 
 import com.eldanior.system.classes.models.ClassModel;
-import com.eldanior.system.config.enums.ClassType;
-import com.eldanior.system.config.enums.Rarity;
+import com.eldanior.system.config.configs.ClassType;
+import com.eldanior.system.config.configs.Rarity;
 
 public class Warrior extends ClassModel {
 
@@ -16,8 +16,7 @@ public class Warrior extends ClassModel {
                 null,
                 20,
                 false,
-                5,
-                5, 5, 0, 3, 1
+                5, 5, 2, 2, 3, 1
         );
     }
 }

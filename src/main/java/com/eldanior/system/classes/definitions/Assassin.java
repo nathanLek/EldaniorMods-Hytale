@@ -1,8 +1,8 @@
 package com.eldanior.system.classes.definitions;
 
 import com.eldanior.system.classes.models.ClassModel;
-import com.eldanior.system.config.enums.ClassType;
-import com.eldanior.system.config.enums.Rarity;
+import com.eldanior.system.config.configs.ClassType;
+import com.eldanior.system.config.configs.Rarity;
 
 public class Assassin extends ClassModel {
 
@@ -16,7 +16,7 @@ public class Assassin extends ClassModel {
                 null,
                 20,
                 false,
-                3, 3, 2, 0, 2, 6
+                1000, 300, 200, 0, 2000, 600
         );
     }
 }

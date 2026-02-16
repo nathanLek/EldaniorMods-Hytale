@@ -1,7 +1,7 @@
 package com.eldanior.system.classes.commands;
 
 import com.eldanior.system.EldaniorSystem;
-import com.eldanior.system.Leveling.components.PlayerLevelData;
+import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.classes.ClassManager;
 import com.eldanior.system.classes.models.ClassModel;
 import com.eldanior.system.Leveling.utils.StatCalculator;

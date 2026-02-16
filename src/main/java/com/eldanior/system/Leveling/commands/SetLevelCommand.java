@@ -1,7 +1,7 @@
 package com.eldanior.system.Leveling.commands;
 
 import com.eldanior.system.EldaniorSystem;
-import com.eldanior.system.Leveling.components.PlayerLevelData;
+import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.Leveling.utils.StatCalculator;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Store;
@@ -89,6 +89,7 @@ public class SetLevelCommand extends AbstractAsyncCommand {
 
                 if (level <= 1) {
                     data.setAttributePoints(0);
+                    StatCalculator.updatePlayerStats(ref, store, data);
                     // On vide la liste des compétences débloquées
                     if (data.getUnlockedSkills() != null) {
                         data.getUnlockedSkills().clear();

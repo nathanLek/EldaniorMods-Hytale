@@ -1,9 +1,10 @@
 package com.eldanior.system.Leveling.systems;
 
 import com.eldanior.system.EldaniorSystem;
-import com.eldanior.system.Leveling.components.PlayerLevelData;
+import com.eldanior.system.Leveling.utils.StatCalculator;
+import com.eldanior.system.config.Player.PlayerLevelData; // CORRECTION IMPORT
 import com.eldanior.system.Leveling.utils.NotificationHelper;
-import com.eldanior.system.config.enums.MobXP;
+import com.eldanior.system.config.configs.MobXP;
 import com.hypixel.hytale.component.ArchetypeChunk;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.ComponentType;
@@ -61,10 +62,10 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
     private void giveXP(UUID killerUUID, UUID victimUUID, Ref<EntityStore> victimRef,
                         Store<EntityStore> store, CommandBuffer<EntityStore> commandBuffer) {
         try {
-            PlayerRef killerRef = Universe.get().getPlayer(killerUUID);
-            if (killerRef == null) return;
+            PlayerRef killerRefObj = Universe.get().getPlayer(killerUUID);
+            if (killerRefObj == null) return;
 
-            var killerEntityRef = killerRef.getReference();
+            var killerEntityRef = killerRefObj.getReference();
             if (killerEntityRef == null) return;
 
             Store<EntityStore> killerStore = killerEntityRef.getStore();
@@ -113,10 +114,14 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
                     ? "<color:gold>⚔ PvP : +" + xpAmount + " XP</color> <color:gray>(vs " + victimName + ")</color>"
                     : "<color:green>+" + xpAmount + " XP</color> <color:gray>(" + victimName + ")</color>";
 
-            NotificationHelper.sendNotification(killerRef, msgContent, NotificationStyle.Success);
+            NotificationHelper.sendNotification(killerRefObj, msgContent, NotificationStyle.Success);
 
+            // --- CORRECTION ICI ---
             if (dataToWrite.getLevel() > oldLvl) {
-                NotificationHelper.showLevelUpTitle(killerRef, dataToWrite.getLevel());
+                NotificationHelper.showLevelUpTitle(killerRefObj, dataToWrite.getLevel());
+
+                // On utilise 'killerEntityRef' et 'killerStore' ici !
+                StatCalculator.updatePlayerStats(killerEntityRef, killerStore, dataToWrite);
             }
 
         } catch (Exception e) {

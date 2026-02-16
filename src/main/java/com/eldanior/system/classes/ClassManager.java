@@ -11,6 +11,7 @@ public class ClassManager {
     private static final Map<String, ClassModel> classes = new HashMap<>();
 
     public static void init() {
+        register(new Novice());
         register(new Warrior());
         register(new Mage());
         register(new Assassin());

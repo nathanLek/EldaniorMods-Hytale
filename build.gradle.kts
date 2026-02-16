@@ -55,6 +55,7 @@ dependencies {
     // Corrections pour les annotations manquantes
     compileOnly("org.jspecify:jspecify:1.0.0")
     compileOnly("org.jetbrains:annotations:24.1.0")
+    implementation("com.google.guava:guava:31.1-jre")
 }
 
 java {
