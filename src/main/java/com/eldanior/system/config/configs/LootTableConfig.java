@@ -9,7 +9,7 @@ import java.util.Random;
 public enum LootTableConfig {
 
     // === FORET ===
-    FOREST_COMMON("treasure_forest_common", 300,
+    FOREST_COMMON("donjon_common", 300,
             new LootEntry("Weapon_Sword_Crude",           1, 1,  1, 30),
             new LootEntry("Plant_Fruit_Apple",           5, 1,  20, 100),
             new LootEntry("Potion_Regen_Stamina_Small",           1, 1,  3, 15),
@@ -20,14 +20,13 @@ public enum LootTableConfig {
             new LootEntry("Food_Chicken_Raw",   5,  1,  5,  100)
     ),
 
-    DEFAULT("treasure_default", 300,
+    DEFAULT("default", 300,
             new LootEntry("Weapon_Sword_Crude",           1, 1,  1, 30),
             new LootEntry("Plant_Fruit_Apple",           5, 1,  20, 100),
-            new LootEntry("Tool_Repair_kit_Iron",           5, 1,  3, 20),
             new LootEntry("Potion_Regen_Stamina_Small",           1, 1,  3, 15),
             new LootEntry("Potion_Health_Small",           1, 1,  3, 15),
             new LootEntry("Weapon_Shield_Rusty",          1, 1,  1,  60),
-            new LootEntry("Weapon_Axe_Tribal",      1, 1,  4,  40),
+            new LootEntry("Weapon_Axe_Tribal",      1, 1,  1,  40),
             new LootEntry("Weapon_Shortbow_Bomb",   1,  1,  1,  35),
             new LootEntry("Food_Chicken_Raw",   5,  1,  5,  100)
     );

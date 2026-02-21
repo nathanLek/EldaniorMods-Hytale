@@ -79,6 +79,10 @@ public class SetClassCommand extends AbstractAsyncCommand {
                 PlayerLevelData data = store.getComponent(ref, type);
 
                 if (data == null) {
+                    data = new PlayerLevelData();
+                }
+
+                if (data == null) {
                     sender.sendMessage(Message.raw("§cErreur : Données introuvables."));
                     return;
                 }

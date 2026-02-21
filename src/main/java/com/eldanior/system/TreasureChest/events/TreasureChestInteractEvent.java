@@ -1,10 +1,12 @@
 package com.eldanior.system.TreasureChest.events;
 
 import com.eldanior.system.EldaniorSystem;
+import com.eldanior.system.Leveling.systems.LuckSystem;
 import com.eldanior.system.Leveling.utils.NotificationHelper;
 import com.eldanior.system.TreasureChest.components.OpenedContainerComponent;
 import com.eldanior.system.TreasureChest.components.PlayerChestData;
 import com.eldanior.system.TreasureChest.resources.TreasureChestTemplate;
+import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.config.configs.LootTableConfig;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
@@ -72,7 +74,38 @@ public class TreasureChestInteractEvent extends EntityEventSystem<EntityStore, U
                         List<ItemStack> finalSelection = new ArrayList<>();
 
                         if (rawLoot != null && !rawLoot.isEmpty()) {
-                            int targetCount = ThreadLocalRandom.current().nextInt(1, 5);
+
+                            // 1. On récupère les données de niveau du joueur
+                            // Assure-toi que "EldaniorSystem.get().getPlayerLevelDataType()" correspond bien à ton type de composant
+                            PlayerLevelData levelData = store.getComponent(playerRef, EldaniorSystem.get().getPlayerLevelDataType());
+
+                            // 2. On récupère le score de chance
+                            float luckBonus = LuckSystem.getLootQualityBonus(levelData);
+
+                            // 3. Base : Entre 1 et 5 objets
+                            int targetCount = ThreadLocalRandom.current().nextInt(1, 6);
+
+                            // 4. Calcul des objets bonus avec une courbe de rendement décroissant (Racine carrée)
+                            // Plus le diviseur est grand, plus c'est difficile d'avoir des objets bonus.
+                            // Avec 10.0f, 3000 de chance donne environ 5.4 objets bonus.
+                            float divisor = 10.0f;
+                            float preciseExtra = (float) Math.sqrt(Math.max(0, luckBonus)) / divisor;
+
+                            int extraItems = (int) preciseExtra; // Le nombre fixe d'objets garantis par la chance
+
+                            // Reste de chance (la virgule). Ex: 5.4 -> 40% de chance d'avoir un 6ème objet
+                            float remainingChance = preciseExtra - extraItems;
+                            if (ThreadLocalRandom.current().nextFloat() < remainingChance) {
+                                extraItems++;
+                            }
+
+                            // On ajoute les bonus au total
+                            targetCount += extraItems;
+
+                            // 5. SÉCURITÉ ABSOLUE : On ne donne jamais plus d'objets qu'il n'y en a dans la liste brute
+                            targetCount = Math.min(targetCount, rawLoot.size());
+
+                            // --- ON MÉLANGE ET ON RÉCUPÈRE ---
                             Collections.shuffle(rawLoot);
 
                             for (int i = 0; i < targetCount && i < rawLoot.size(); i++) {
