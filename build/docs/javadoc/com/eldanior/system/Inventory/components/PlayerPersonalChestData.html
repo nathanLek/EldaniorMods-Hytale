@@ -108,12 +108,15 @@ implements com.hypixel.hytale.component.Component&lt;com.hypixel.hytale.server.c
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static final com.hypixel.hytale.codec.builder.BuilderCodec<wbr>&lt;<a href="PlayerPersonalChestData.html" title="class in com.eldanior.system.Inventory.components">PlayerPersonalChestData</a>&gt;</code></div>
-<div class="col-second even-row-color"><code><a href="#CODEC" class="member-name-link">CODEC</a></code></div>
+<div class="col-first even-row-color"><code>static final int</code></div>
+<div class="col-second even-row-color"><code><a href="#CHEST_SIZE" class="member-name-link">CHEST_SIZE</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static com.hypixel.hytale.component.ComponentType<wbr>&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore,<wbr><a href="PlayerPersonalChestData.html" title="class in com.eldanior.system.Inventory.components">PlayerPersonalChestData</a>&gt;</code></div>
-<div class="col-second odd-row-color"><code><a href="#TYPE" class="member-name-link">TYPE</a></code></div>
+<div class="col-first odd-row-color"><code>static final com.hypixel.hytale.codec.builder.BuilderCodec<wbr>&lt;<a href="PlayerPersonalChestData.html" title="class in com.eldanior.system.Inventory.components">PlayerPersonalChestData</a>&gt;</code></div>
+<div class="col-second odd-row-color"><code><a href="#CODEC" class="member-name-link">CODEC</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static com.hypixel.hytale.component.ComponentType<wbr>&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore,<wbr><a href="PlayerPersonalChestData.html" title="class in com.eldanior.system.Inventory.components">PlayerPersonalChestData</a>&gt;</code></div>
+<div class="col-second even-row-color"><code><a href="#TYPE" class="member-name-link">TYPE</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.hypixel.hytale.component.Component">Fields inherited from interface&nbsp;com.hypixel.hytale.component.Component</h3>
@@ -144,11 +147,30 @@ implements com.hypixel.hytale.component.Component&lt;com.hypixel.hytale.server.c
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.hypixel.hytale.component.Component<wbr>&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#clone()" class="member-name-link">clone</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#clearSlot(int)" class="member-name-link">clearSlot</a><wbr>(int&nbsp;slot)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.hypixel.hytale.component.Component<wbr>&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#clone()" class="member-name-link">clone</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#countItems()" class="member-name-link">countItems</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#findFirstEmptySlot()" class="member-name-link">findFirstEmptySlot</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>com.hypixel.hytale.server.core.inventory.ItemStack</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getItem(int)" class="member-name-link">getItem</a><wbr>(int&nbsp;slot)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;com.hypixel.hytale.server.core.inventory.ItemStack&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStoredItems()" class="member-name-link">getStoredItems</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isFull()" class="member-name-link">isFull</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setItem(int,com.hypixel.hytale.server.core.inventory.ItemStack)" class="member-name-link">setItem</a><wbr>(int&nbsp;slot,
+ com.hypixel.hytale.server.core.inventory.ItemStack&nbsp;item)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStoredItems(java.util.List)" class="member-name-link">setStoredItems</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;com.hypixel.hytale.server.core.inventory.ItemStack&gt;&nbsp;items)</code></div>
@@ -173,6 +195,20 @@ implements com.hypixel.hytale.component.Component&lt;com.hypixel.hytale.server.c
 <section class="field-details" id="field-detail">
 <h2>Field Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="CHEST_SIZE">
+<h3>CHEST_SIZE</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">CHEST_SIZE</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list">
+<li><a href="../../../../../constant-values.html#com.eldanior.system.Inventory.components.PlayerPersonalChestData.CHEST_SIZE">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
 <li>
 <section class="detail" id="TYPE">
 <h3>TYPE</h3>
@@ -217,6 +253,43 @@ implements com.hypixel.hytale.component.Component&lt;com.hypixel.hytale.server.c
 <section class="detail" id="setStoredItems(java.util.List)">
 <h3>setStoredItems</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setStoredItems</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;com.hypixel.hytale.server.core.inventory.ItemStack&gt;&nbsp;items)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getItem(int)">
+<h3>getItem</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.hypixel.hytale.server.core.inventory.ItemStack</span>&nbsp;<span class="element-name">getItem</span><wbr><span class="parameters">(int&nbsp;slot)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="setItem(int,com.hypixel.hytale.server.core.inventory.ItemStack)">
+<h3>setItem</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setItem</span><wbr><span class="parameters">(int&nbsp;slot,
+ com.hypixel.hytale.server.core.inventory.ItemStack&nbsp;item)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="clearSlot(int)">
+<h3>clearSlot</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">clearSlot</span><wbr><span class="parameters">(int&nbsp;slot)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="findFirstEmptySlot()">
+<h3>findFirstEmptySlot</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">findFirstEmptySlot</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isFull()">
+<h3>isFull</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isFull</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="countItems()">
+<h3>countItems</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">countItems</span>()</div>
 </section>
 </li>
 <li>

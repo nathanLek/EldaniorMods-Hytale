@@ -95,7 +95,7 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="LootTableConfig.html" title="enum class in com.eldanior.system.config.configs">LootTableConfig</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public static record </span><span class="element-name type-name-label">LootTableConfig.LootEntry</span>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;itemId, int&nbsp;maxStack, int&nbsp;minQuantity, int&nbsp;maxQuantity, int&nbsp;dropChance)
+<div class="type-signature"><span class="modifiers">public static record </span><span class="element-name type-name-label">LootTableConfig.LootEntry</span>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;itemId, int&nbsp;maxStack, int&nbsp;minQuantity, int&nbsp;maxQuantity, double&nbsp;dropChance)
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Record.html" title="class or interface in java.lang" class="external-link">Record</a></span></div>
 </section>
 <section class="summary">
@@ -108,11 +108,11 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,int,int,int,int)" class="member-name-link">LootEntry</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;itemId,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,int,int,int,double)" class="member-name-link">LootEntry</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;itemId,
  int&nbsp;maxStack,
  int&nbsp;minQuantity,
  int&nbsp;maxQuantity,
- int&nbsp;dropChance)</code></div>
+ double&nbsp;dropChance)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Creates an instance of a <code>LootEntry</code> record class.</div>
 </div>
@@ -130,7 +130,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dropChance()" class="member-name-link">dropChance</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <code>dropChance</code> record component.</div>
@@ -188,13 +188,13 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(java.lang.String,int,int,int,int)">
+<section class="detail" id="&lt;init&gt;(java.lang.String,int,int,int,double)">
 <h3>LootEntry</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">LootEntry</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;itemId,
  int&nbsp;maxStack,
  int&nbsp;minQuantity,
  int&nbsp;maxQuantity,
- int&nbsp;dropChance)</span></div>
+ double&nbsp;dropChance)</span></div>
 <div class="block">Creates an instance of a <code>LootEntry</code> record class.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -302,7 +302,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="dropChance()">
 <h3>dropChance</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">dropChance</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">dropChance</span>()</div>
 <div class="block">Returns the value of the <code>dropChance</code> record component.</div>
 <dl class="notes">
 <dt>Returns:</dt>

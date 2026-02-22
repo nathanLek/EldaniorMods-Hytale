@@ -16,7 +16,7 @@ public class Assassin extends ClassModel {
                 null,
                 20,
                 false,
-                1000, 300, 200, 0, 2000, 600
+                1000, 300, 200, 0, 2000, 3000
         );
     }
 }

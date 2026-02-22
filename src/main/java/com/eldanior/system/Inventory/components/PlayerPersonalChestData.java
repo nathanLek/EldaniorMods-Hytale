@@ -1,16 +1,12 @@
 package com.eldanior.system.Inventory.components;
 
-import com.hypixel.hytale.codec.Codec;
+import com.eldanior.system.TreasureChest.components.PlayerChestData.ItemStackListCodec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.component.Component;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
-import org.bson.BsonArray;
-import org.bson.BsonDocument;
-import org.bson.BsonString;
-import org.bson.BsonInt32;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -18,96 +14,42 @@ import java.util.List;
 
 public class PlayerPersonalChestData implements Component<EntityStore> {
 
-    // Variable statique pour l'accès facile (indispensable pour ta commande)
+    public static final int CHEST_SIZE = 27;
+
     public static ComponentType<EntityStore, PlayerPersonalChestData> TYPE;
 
-    private List<ItemStack> storedItems = new ArrayList<>();
+    private List<ItemStack> storedItems;
 
     public PlayerPersonalChestData() {
-        for (int i = 0; i < 27; i++) {
-            storedItems.add(ItemStack.EMPTY);
-        }
+        this.storedItems = createEmptyChest();
     }
 
     public static final BuilderCodec<PlayerPersonalChestData> CODEC =
             BuilderCodec.builder(PlayerPersonalChestData.class, PlayerPersonalChestData::new)
-                    .append(new KeyedCodec<>("StoredItemsData", Codec.STRING),
-                            (data, serialized) -> {
-                                data.storedItems = deserializeItems(serialized);
-                            },
-                            data -> serializeItems(data.storedItems))
-                    .add()
+                    .addField(
+                            new KeyedCodec<>("StoredItems", new ItemStackListCodec()),
+                            (data, value) -> data.storedItems = normalize(value),
+                            data -> data.storedItems
+                    )
                     .build();
 
-    private static String serializeItems(List<ItemStack> items) {
-        BsonArray array = new BsonArray();
-        for (ItemStack item : items) {
-            BsonDocument doc = new BsonDocument();
-            if (item != null && !item.isEmpty()) {
-                doc.put("id", new BsonString(item.getItemId()));
-                doc.put("qty", new BsonInt32(item.getQuantity()));
-                doc.put("dur", new BsonInt32((int)item.getDurability()));
-                doc.put("max", new BsonInt32((int)item.getMaxDurability()));
-                if (item.getMetadata() != null) {
-                    doc.put("meta", item.getMetadata());
-                }
-            } else {
-                doc.put("id", new BsonString("Empty"));
-            }
-            array.add(doc);
+    private static List<ItemStack> createEmptyChest() {
+        List<ItemStack> list = new ArrayList<>(CHEST_SIZE);
+        for (int i = 0; i < CHEST_SIZE; i++) {
+            list.add(ItemStack.EMPTY);
         }
-
-        BsonDocument wrapper = new BsonDocument();
-        wrapper.put("items", array);
-
-        return wrapper.toJson();
+        return list;
     }
 
-    private static List<ItemStack> deserializeItems(String serialized) {
-        List<ItemStack> items = new ArrayList<>();
+    private static List<ItemStack> normalize(List<ItemStack> raw) {
+        if (raw == null) return createEmptyChest();
 
-        if (serialized == null || serialized.isEmpty() || serialized.equals("null")) {
-            for (int i = 0; i < 27; i++) items.add(ItemStack.EMPTY);
-            return items;
+        List<ItemStack> result = new ArrayList<>(CHEST_SIZE);
+        for (int i = 0; i < CHEST_SIZE; i++) {
+            ItemStack item = (i < raw.size()) ? raw.get(i) : null;
+            result.add((item != null && !item.isEmpty()) ? item : ItemStack.EMPTY);
         }
-
-        try {
-            BsonDocument wrapper = BsonDocument.parse(serialized);
-
-            if (!wrapper.containsKey("items")) {
-                for (int i = 0; i < 27; i++) items.add(ItemStack.EMPTY);
-                return items;
-            }
-
-            BsonArray array = wrapper.getArray("items");
-
-            for (int i = 0; i < array.size(); i++) {
-                BsonDocument doc = array.get(i).asDocument();
-                String id = doc.getString("id").getValue();
-
-                if ("Empty".equals(id)) {
-                    items.add(ItemStack.EMPTY);
-                } else {
-                    int qty = doc.getInt32("qty").getValue();
-                    double dur = doc.getInt32("dur").getValue();
-                    double max = doc.getInt32("max").getValue();
-                    BsonDocument meta = doc.containsKey("meta") ? doc.getDocument("meta") : null;
-                    items.add(new ItemStack(id, qty, dur, max, meta));
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            items.clear(); // En cas d'erreur de parsing, on reset pour éviter les bugs
-            for (int i = 0; i < 27; i++) {
-                items.add(ItemStack.EMPTY);
-            }
-        }
-
-        // Compléter si la liste est trop courte
-        while (items.size() < 27) {
-            items.add(ItemStack.EMPTY);
-        }
-        return items;
+        return result;
     }
 
     public List<ItemStack> getStoredItems() {
@@ -115,15 +57,52 @@ public class PlayerPersonalChestData implements Component<EntityStore> {
     }
 
     public void setStoredItems(List<ItemStack> items) {
-        this.storedItems = new ArrayList<>(items);
+        this.storedItems = normalize(items);
+    }
+
+    public ItemStack getItem(int slot) {
+        if (slot < 0 || slot >= CHEST_SIZE) return ItemStack.EMPTY;
+        ItemStack item = storedItems.get(slot);
+        return (item != null) ? item : ItemStack.EMPTY;
+    }
+
+    public void setItem(int slot, ItemStack item) {
+        if (slot < 0 || slot >= CHEST_SIZE) return;
+        storedItems.set(slot, (item != null && !item.isEmpty()) ? item : ItemStack.EMPTY);
+    }
+
+    public void clearSlot(int slot) {
+        setItem(slot, ItemStack.EMPTY);
+    }
+
+    public int findFirstEmptySlot() {
+        for (int i = 0; i < CHEST_SIZE; i++) {
+            ItemStack item = storedItems.get(i);
+            if (item == null || item.isEmpty()) return i;
+        }
+        return -1;
+    }
+
+    public boolean isFull() {
+        return findFirstEmptySlot() == -1;
+    }
+
+    public int countItems() {
+        int count = 0;
+        for (ItemStack item : storedItems) {
+            if (item != null && !item.isEmpty()) count++;
+        }
+        return count;
     }
 
     @Nullable
     @Override
     public Component<EntityStore> clone() {
         PlayerPersonalChestData copy = new PlayerPersonalChestData();
-        copy.storedItems = new ArrayList<>();
-        copy.storedItems.addAll(this.storedItems);
+        copy.storedItems = new ArrayList<>(CHEST_SIZE);
+        for (ItemStack item : this.storedItems) {
+            copy.storedItems.add(item);
+        }
         return copy;
     }
 }
