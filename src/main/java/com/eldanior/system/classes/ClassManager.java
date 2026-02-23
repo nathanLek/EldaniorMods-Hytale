@@ -3,6 +3,7 @@ package com.eldanior.system.classes;
 import com.eldanior.system.classes.definitions.*;
 import com.eldanior.system.classes.models.ClassModel;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,11 +13,14 @@ public class ClassManager {
 
     public static void init() {
         register(new Novice());
+
         register(new Warrior());
         register(new Mage());
         register(new Assassin());
         register(new Archer());
         register(new Merchant());
+
+        register(new Templier());
         System.out.println("[Eldanior] " + classes.size() + " classes RPG chargees.");
     }
 
@@ -24,6 +28,10 @@ public class ClassManager {
         if (model != null) {
             classes.put(model.getId(), model);
         }
+    }
+
+    public static Collection<ClassModel> getAll() {
+        return classes.values();
     }
 
     public static ClassModel get(String id) {

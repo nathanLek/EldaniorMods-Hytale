@@ -40,9 +40,12 @@ public class StatusScreen extends InteractiveCustomUIPage<StatusScreen.StatusEve
 
         ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
         PlayerLevelData data = store.getComponent(ref, type);
-        if (data == null) data = new PlayerLevelData();
+        if (data == null) {
+            data = new PlayerLevelData();
+            store.putComponent(ref, type, data);
+        }
 
-        StatCalculator.updatePlayerStats(ref, store, data);
+        //StatCalculator.updatePlayerStats(ref, store, data);
 
         ClassModel classModel = ClassManager.get(data.getPlayerClassId());
         int bStr = (classModel != null) ? classModel.getBonusStr() : 0;

@@ -125,6 +125,7 @@ public class EldaniorSystem extends JavaPlugin {
 
         // 5. Systèmes ECS
         try {
+            this.getEntityStoreRegistry().registerSystem(new PlayerLoginSystem());
             this.getEntityStoreRegistry().registerSystem(new CombatTrackerSystem());
             this.getEntityStoreRegistry().registerSystem(new CombatStatsSystem());
             this.getEntityStoreRegistry().registerSystem(new GlobalRegenSystem());

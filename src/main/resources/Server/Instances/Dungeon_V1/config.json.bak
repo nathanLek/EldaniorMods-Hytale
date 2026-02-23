@@ -1,0 +1,64 @@
+{
+  "Version": 4,
+  "UUID": {
+    "$binary": "LP5Zc44uRP2JqSqHIlpgAA==",
+    "$type": "04"
+  },
+  "DisplayName": "DungeonTraining",
+  "Seed": 1771730098943,
+  "SpawnProvider": {
+    "Id": "Global",
+    "SpawnPoint": {
+      "X": 102.17613220214844,
+      "Y": 84.0000991821289,
+      "Z": -37.12106704711914,
+      "Pitch": -16.532503128051758,
+      "Yaw": 88.3157730102539,
+      "Roll": 0.0
+    }
+  },
+  "WorldGen": {
+    "Type": "HytaleGenerator",
+    "WorldStructure": "Default_Flat"
+  },
+  "WorldMap": {
+    "Type": "WorldGen"
+  },
+  "ChunkStorage": {
+    "Type": "Hytale"
+  },
+  "ChunkConfig": {},
+  "IsTicking": true,
+  "IsBlockTicking": true,
+  "IsPvpEnabled": false,
+  "IsFallDamageEnabled": false,
+  "IsGameTimePaused": true,
+  "GameTime": "0001-01-01T12:00:00Z",
+  "ClientEffects": {
+    "SunHeightPercent": 100.0,
+    "SunAngleDegrees": 0.0,
+    "BloomIntensity": 0.30000001192092896,
+    "BloomPower": 8.0,
+    "SunIntensity": 0.25,
+    "SunshaftIntensity": 0.30000001192092896,
+    "SunshaftScaleFactor": 4.0
+  },
+  "RequiredPlugins": {},
+  "GameMode": "Creative",
+  "IsSpawningNPC": true,
+  "IsSpawnMarkersEnabled": true,
+  "IsAllNPCFrozen": false,
+  "GameplayConfig": "Default",
+  "IsCompassUpdating": true,
+  "IsSavingPlayers": true,
+  "IsSavingChunks": true,
+  "SaveNewChunks": true,
+  "IsUnloadingChunks": true,
+  "IsObjectiveMarkersEnabled": true,
+  "DeleteOnUniverseStart": false,
+  "DeleteOnRemove": false,
+  "ResourceStorage": {
+    "Type": "Hytale"
+  },
+  "Plugin": {}
+}

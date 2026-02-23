@@ -13,8 +13,8 @@ public class Warrior extends ClassModel {
                 "Un combattant robuste specialise dans le corps a corps.",
                 Rarity.COMMON,
                 ClassType.WARRIOR,
-                null,
-                20,
+                "templier",
+                120,
                 false,
                 5, 5, 2, 2, 3, 1
         );

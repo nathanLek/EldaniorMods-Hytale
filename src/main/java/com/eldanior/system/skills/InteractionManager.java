@@ -1,5 +1,6 @@
 package com.eldanior.system.skills;
 
+import com.eldanior.system.classes.gui.OpenClassSelectionInteraction;
 import com.eldanior.system.skills.interaction.ConsumableItemSkillInteraction;
 import com.eldanior.system.skills.skillsInteraction.FireBallInteraction;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
@@ -16,5 +17,9 @@ public class InteractionManager {
         plugin.getCodecRegistry(Interaction.CODEC)
                 .register("FireBallInteraction",
                         FireBallInteraction.class, FireBallInteraction.CODEC);
+        // TA NOUVELLE INTERACTION BENCH CLASS
+        plugin.getCodecRegistry(Interaction.CODEC)
+                .register("OpenClassSelectionInteraction",
+                        OpenClassSelectionInteraction.class, OpenClassSelectionInteraction.CODEC);
     }
 }

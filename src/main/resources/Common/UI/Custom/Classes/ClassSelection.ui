@@ -1,0 +1,48 @@
+$C = "../Common.ui";
+
+SceneBlur {}
+
+Group {
+  Background: #000000(0.70);
+}
+
+Group {
+  LayoutMode: Middle;
+
+  Group {
+    LayoutMode: Top;
+    Anchor: (Width: 700);
+
+    Label {
+      Text: "CHOIX DE CLASSE";
+      Anchor: (Height: 50);
+      Style: (FontName: "Secondary", FontSize: 26, RenderBold: true, RenderUppercase: true, TextColor: #b6cfee, HorizontalAlignment: Center);
+    }
+
+    Group { Anchor: (Height: 12); }
+
+    Group {
+      LayoutMode: Left;
+      Anchor: (Height: 200);
+
+      Button #ClassTile0 { Anchor: (Width: 160, Height: 190); Padding: (Full: 2); Style: (Default: (Background: #0d1b2a), Hovered: (Background: #1a3a5c), Pressed: (Background: #0a2a4a)); ItemIcon #CategoryIcon { Anchor: (Width: 100, Height: 100); Visible: true; } Label #ClassLabel { Text: ""; Style: (FontName: "Secondary", FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #b4c8c9, HorizontalAlignment: Center, VerticalAlignment: End, Wrap: true); Anchor: (Bottom: 8, Full: 0); } }
+      Group { Anchor: (Width: 8); }
+      Button #ClassTile1 { Anchor: (Width: 160, Height: 190); Padding: (Full: 2); Style: (Default: (Background: #0d1b2a), Hovered: (Background: #1a3a5c), Pressed: (Background: #0a2a4a)); ItemIcon #CategoryIcon { Anchor: (Width: 100, Height: 100); Visible: true; } Label #ClassLabel { Text: ""; Style: (FontName: "Secondary", FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #b4c8c9, HorizontalAlignment: Center, VerticalAlignment: End, Wrap: true); Anchor: (Bottom: 8, Full: 0); } }
+      Group { Anchor: (Width: 8); }
+      Button #ClassTile2 { Anchor: (Width: 160, Height: 190); Padding: (Full: 2); Style: (Default: (Background: #0d1b2a), Hovered: (Background: #1a3a5c), Pressed: (Background: #0a2a4a)); ItemIcon #CategoryIcon { Anchor: (Width: 100, Height: 100); Visible: true; } Label #ClassLabel { Text: ""; Style: (FontName: "Secondary", FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #b4c8c9, HorizontalAlignment: Center, VerticalAlignment: End, Wrap: true); Anchor: (Bottom: 8, Full: 0); } }
+      Group { Anchor: (Width: 8); }
+      Button #ClassTile3 { Anchor: (Width: 160, Height: 190); Padding: (Full: 2); Style: (Default: (Background: #0d1b2a), Hovered: (Background: #1a3a5c), Pressed: (Background: #0a2a4a)); ItemIcon #CategoryIcon { Anchor: (Width: 100, Height: 100); Visible: true; } Label #ClassLabel { Text: ""; Style: (FontName: "Secondary", FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #b4c8c9, HorizontalAlignment: Center, VerticalAlignment: End, Wrap: true); Anchor: (Bottom: 8, Full: 0); } }
+    }
+
+    Group { Anchor: (Height: 10); }
+
+    Group {
+      LayoutMode: Left;
+      Anchor: (Height: 200);
+
+      Button #ClassTile4 { Anchor: (Width: 160, Height: 190); Padding: (Full: 2); Style: (Default: (Background: #0d1b2a), Hovered: (Background: #1a3a5c), Pressed: (Background: #0a2a4a)); ItemIcon #CategoryIcon { Anchor: (Width: 100, Height: 100); Visible: true; } Label #ClassLabel { Text: ""; Style: (FontName: "Secondary", FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #b4c8c9, HorizontalAlignment: Center, VerticalAlignment: End, Wrap: true); Anchor: (Bottom: 8, Full: 0); } }
+      Group { Anchor: (Width: 8); }
+      Button #ClassTile5 { Anchor: (Width: 160, Height: 190); Padding: (Full: 2); Style: (Default: (Background: #0d1b2a), Hovered: (Background: #1a3a5c), Pressed: (Background: #0a2a4a)); ItemIcon #CategoryIcon { Anchor: (Width: 100, Height: 100); Visible: true; } Label #ClassLabel { Text: ""; Style: (FontName: "Secondary", FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #b4c8c9, HorizontalAlignment: Center, VerticalAlignment: End, Wrap: true); Anchor: (Bottom: 8, Full: 0); } }
+    }
+  }
+}

@@ -84,7 +84,7 @@ tasks.withType<ProcessResources> {
         "includes_pack" to (project.findProperty("includes_pack") ?: true)
     )
 
-    filesMatching(listOf("**/*.json", "manifest.json")) {
+    filesMatching("manifest.json") {
         expand(replaceProperties)
     }
 

@@ -6,12 +6,13 @@ import com.eldanior.system.classes.models.ClassModel;
 import com.eldanior.system.config.configs.StatConfig;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.protocol.MovementSettings;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.entity.entities.player.movement.MovementManager;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatsModule;
-import com.hypixel.hytale.server.core.modules.entitystats.EntityStatValue; // IMPORT IMPORTANT
+import com.hypixel.hytale.server.core.modules.entitystats.EntityStatValue;
 import com.hypixel.hytale.server.core.modules.entitystats.modifier.Modifier;
 import com.hypixel.hytale.server.core.modules.entitystats.modifier.StaticModifier;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
@@ -23,11 +24,19 @@ import java.util.UUID;
 
 public class StatCalculator {
 
+    private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
+
     public static void updatePlayerStats(Ref<EntityStore> playerRef, Store<EntityStore> store, PlayerLevelData data) {
         if (data == null) return;
 
         EntityStatMap statMap = store.getComponent(playerRef, EntityStatsModule.get().getEntityStatMapComponentType());
-        // Note: statMap peut être null si le joueur vient de se connecter
+
+        // GUARD : Si la statMap est null (joueur en cours de chargement), on logue et on skip.
+        // Le PlayerLoginSystem réessaiera au tick suivant jusqu'à ce qu'elle soit disponible.
+        if (statMap == null) {
+            LOGGER.atWarning().log("[StatCalculator] statMap null pour ce joueur — sera réappliqué au prochain tick.");
+            return;
+        }
 
         ClassModel model = ClassManager.get(data.getPlayerClassId());
 
@@ -41,18 +50,15 @@ public class StatCalculator {
 
         int totalPoints = config.getTotalPoints(data, model);
 
-        // --- CAS 1 : Statistique classique (Vie, Mana) ---
-        if (config.getType() == StatConfig.StatType.ATTRIBUTE && statMap != null) {
+        if (config.getType() == StatConfig.StatType.ATTRIBUTE) {
 
-            // 1. On récupère la valeur AVANT modification
             EntityStatValue statValue = statMap.get(config.getStatId());
             if (statValue == null) return;
 
             float oldMax = statValue.getMax();
             float currentVal = statValue.get();
 
-            // 2. Calcul et Application du Bonus
-            float bonus = totalPoints * config.getRatio(); // (Note: J'ai retiré ton ratio 0.16 en dur pour utiliser config)
+            float bonus = totalPoints * config.getRatio();
 
             statMap.removeModifier(config.getStatId(), config.getModifierKey());
 
@@ -61,21 +67,15 @@ public class StatCalculator {
                         new StaticModifier(Modifier.ModifierTarget.MAX, StaticModifier.CalculationType.ADDITIVE, bonus));
             }
 
-            // 3. AUTO-REMPLISSAGE (Le fix que tu as demandé)
-            // Hytale recalcule le Max immédiatement après le putModifier.
             float newMax = statValue.getMax();
 
-            // Si le max a augmenté (ex: on a gagné 10 PV max), on ajoute 10 PV à la vie actuelle.
             if (newMax > oldMax) {
                 float difference = newMax - oldMax;
                 float newValue = currentVal + difference;
-
-                // On s'assure de ne pas dépasser le nouveau max (sécurité)
                 statMap.setStatValue(config.getStatId(), Math.min(newMax, newValue));
             }
         }
 
-        // --- CAS 2 : Mouvement (Vitesse, Saut) ---
         else if (config.getType() != StatConfig.StatType.ATTRIBUTE) {
             MovementManager manager = store.getComponent(playerRef, MovementManager.getComponentType());
             if (manager == null) return;
