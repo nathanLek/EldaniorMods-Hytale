@@ -18,6 +18,7 @@ import com.eldanior.system.config.configs.system.MobNameplateColorSystem;
 import com.eldanior.system.config.configs.system.MobNameplateUpdateOnDamageSystem;
 import com.eldanior.system.skills.InteractionManager;
 import com.eldanior.system.skills.SkillManager;
+import com.eldanior.system.skills.system.DetectionSystem;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.ResourceType; // Nouveau
 import com.hypixel.hytale.logger.HytaleLogger;
@@ -136,6 +137,8 @@ public class EldaniorSystem extends JavaPlugin {
             this.getEntityStoreRegistry().registerSystem(new MobDamageReductionSystem());
             this.getEntityStoreRegistry().registerSystem(new MobDeathCheckSystem());
             this.getEntityStoreRegistry().registerSystem(new MobNameplateColorSystem());
+
+            this.getEntityStoreRegistry().registerSystem(new DetectionSystem());
 
             this.getEntityStoreRegistry().registerSystem(new TreasureContainerMonitoringSystem(OPENED_CONTAINER_TYPE));
             this.getEntityStoreRegistry().registerSystem(new TreasureChestInteractEvent());

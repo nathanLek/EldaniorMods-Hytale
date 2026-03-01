@@ -4,6 +4,7 @@ import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.config.configs.StatConfig;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.protocol.packets.interface_.NotificationStyle;
 import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
@@ -19,4 +20,10 @@ public interface IPassiveCombatSkill {
     // --- STATISTIQUES ---
     default float getFlatStatBonus(StatConfig stat) { return 0.0f; }
     default float getStatMultiplier(StatConfig stat) { return 1.0f; }
+    default String getRadarMessage(int mobCount, int playerCount, int closestDistance) {
+        // Message par défaut pour les autres compétences
+        int total = mobCount + playerCount;
+        return "<color:red>" + total + " présence(s) à proximité</color>";
+    }
+    default NotificationStyle getRadarStyle() { return null; }
 }

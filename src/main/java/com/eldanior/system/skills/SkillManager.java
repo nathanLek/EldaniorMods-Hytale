@@ -140,11 +140,69 @@ public class SkillManager {
                 List.of(), // Puissance maximale atteinte !
                 List.of("STONE_SKIN", "BRONZE_SKIN", "IRON_SKIN", "STEEL_SKIN", "OBSIDIAN_SKIN", "DIAMOND_SKIN")
         ));
-        register("skill_page_athleticism", new SkillModel(
-                "ATHLETICISM", null, "Athlétisme", "novice, warrior, assassin", // Accessible à tous par exemple
+        register("skill_page_wind_step", new SkillModel(
+                "WIND_STEP", null, "Pas de Vent", "novice, warrior, assassin",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of()
+        ));
+        register("skill_page_light_reflexes", new SkillModel(
+                "LIGHT_REFLEXES", null, "Réflexes Éclairs", "warrior, assassin, novice",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+                List.of(),
+                List.of()
+        ));
+        register("skill_page_suppleness", new SkillModel(
+                "ELDANIOR_SUPPLENESS", null, "Souplesse d'Eldanior", "novice, warrior, assassin",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+                List.of(),
+                List.of()
+        ));
+        register("skill_page_keen_senses", new SkillModel(
+                "KEEN_SENSES", null, "Sens Aiguisés", "assassin, warrior",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+                List.of(),
+                List.of()
+        ));
+        register("skill_page_athleticism", new SkillModel(
+                "ATHLETICISM", null, "Athlétisme", "novice, warrior, assassin",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+                List.of(),
+                List.of()
+        ));
+        register("skill_page_eagle_eye", new SkillModel(
+                "EAGLE_EYE", null, "Œil de Rapace", "warrior, assassin",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+                List.of(), List.of()
+        ));
+
+        register("skill_page_survival_instinct", new SkillModel(
+                "SURVIVAL_INSTINCT", null, "Instinct de Survie", "novice, warrior",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+                List.of("UNIVERSAL_DETECTION"), List.of()
+        ));
+        register("skill_page_universal_detection", new SkillModel(
+                "UNIVERSAL_DETECTION", null, "Detection Universel", "mage, warrior",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+                List.of(), List.of("SURVIVAL_INSTINCT")
+        ));
+
+        register("skill_page_night_vision", new SkillModel(
+                "NIGHT_VISION", null, "Vision Nocturne", "warrior, assassin",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+                List.of(), List.of()
+        ));
+
+        register("skill_page_sixth_sense", new SkillModel(
+                "SIXTH_SENSE", null, "Sixième Sens", "warrior, assassin",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+                List.of(), List.of()
+        ));
+
+        register("skill_page_tracker", new SkillModel(
+                "TRACKER", null, "Pisteur", "warrior",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+                List.of(), List.of()
         ));
         register("skill_page_sword_mastery", new SkillModel(
                 "SWORD_MASTERY", null, "Maîtrise de l'Épée", "warrior",

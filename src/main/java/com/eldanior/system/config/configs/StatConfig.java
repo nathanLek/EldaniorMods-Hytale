@@ -22,6 +22,22 @@ public enum StatConfig {
             PlayerLevelData::getEndurance, ClassModel::getBonusEnd),
 
     // === MOUVEMENTS ===
+    DETECTION_RANGE(StatType.MECHANIC, -1, "Detection_Range", 30.0f, 0.1f, 0.0f, 100.0f,
+            PlayerLevelData::getAgility, ClassModel::getBonusAgl),
+
+    THREAT_AWARENESS(StatType.MECHANIC, -1, "Threat_Aware", 10.0f, 0.05f, 0.0f, 40.0f,
+            PlayerLevelData::getLuck, ClassModel::getBonusLck),
+
+    LOW_LIGHT_VISIBILITY(StatType.MECHANIC, -1, "Light_Vis", 1.0f, 0.002f, 0.0f, 2.0f,
+            PlayerLevelData::getLuck, ClassModel::getBonusLck),
+
+    STEALTH_DETECTION(StatType.MECHANIC, -1, "Stealth_Det", 5.0f, 0.1f, 0.0f, 30.0f,
+            PlayerLevelData::getAgility, ClassModel::getBonusAgl),
+
+    TRACKING_EVIDENCE(StatType.MECHANIC, -1, "Track_Evid", 1.0f, 0.01f, 0.0f, 5.0f,
+            PlayerLevelData::getLuck, ClassModel::getBonusLck),
+
+    // === MOUVEMENTS ===
     AGILITY_SPEED(StatType.MOVEMENT_SPEED, -1, "Eldanior_Speed", 1.5f, 0.0005f, 0.0f, 3.0f, // Cap vitesse x3
             PlayerLevelData::getAgility, ClassModel::getBonusAgl),
 
