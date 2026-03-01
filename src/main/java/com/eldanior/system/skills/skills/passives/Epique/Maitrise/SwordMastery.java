@@ -1,4 +1,4 @@
-package com.eldanior.system.skills.skills.passives;
+package com.eldanior.system.skills.skills.passives.Epique.Maitrise;
 
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.skills.skillsInteraction.IPassiveCombatSkill;
@@ -17,37 +17,34 @@ public class SwordMastery implements IPassiveCombatSkill {
 
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
 
-    @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> victimRef) {
+    @Override // 🌟 Signature mise à jour avec 5 arguments
+    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
 
-        // 1. On récupère la référence de l'attaquant
-        Damage.Source source = damage.getSource();
-        if (!(source instanceof Damage.EntitySource entitySource)) return;
-        Ref<EntityStore> attackerRef = entitySource.getRef();
+        if (attackerRef == null) return;
 
-        // 2. On récupère le composant Player de l'attaquant
+        // 1. On récupère le composant Player directement via attackerRef
         Player player = store.getComponent(attackerRef, Player.getComponentType());
         if (player == null) return;
 
-        // 3. 🌟 ON UTILISE LA MÉTHODE PARFAITE DE TON API !
+        // 2. On récupère l'objet en main
         ItemStack mainHandItem = player.getInventory().getItemInHand();
 
-        // Si la main est vide ou que l'objet n'est pas une épée, on annule
+        // 3. Vérification : Main vide ou pas une épée ?
         if (mainHandItem == null) return;
         if (!mainHandItem.getItemId().toLowerCase().contains("sword")) return;
 
-        // --- APPLIQUE LE BONUS ---
+        // --- APPLIQUE LE BONUS (+15%) ---
         float currentDamage = damage.getAmount();
-        damage.setAmount(currentDamage * 1.15f); // +15% de dégâts
+        float newDamage = currentDamage * 1.15f;
+        damage.setAmount(newDamage);
 
-        LOGGER.atInfo().log("[Skill] SWORD_MASTERY activé ! Dégâts modifiés : " + damage.getAmount());
+        LOGGER.atInfo().log("[Skill] SWORD_MASTERY activé ! " + currentDamage + " -> " + newDamage);
 
         // --- EFFET VISUEL SUR L'ENNEMI ---
         if (victimRef != null) {
             TransformComponent transform = store.getComponent(victimRef, TransformComponent.getComponentType());
-
             if (transform != null) {
-                Vector3d pos = transform.getPosition().add(0, 1.0, 0);
+                Vector3d pos = transform.getPosition().add(0, 1.2, 0);
                 ParticleUtil.spawnParticleEffect("Shield_Block", pos, store);
             }
         }

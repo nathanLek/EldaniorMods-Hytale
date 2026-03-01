@@ -117,7 +117,8 @@ public class CombatStatsSystem extends DamageEventSystem {
         // Passifs offensifs (Sword Mastery, etc.)
         for (PassiveSkill skill : attackerData.getActivePassives()) {
             if (skill.getLogic() != null) {
-                skill.getLogic().onAttack(damage, attackerData, store, victimRef);
+                // Ajoute "attackerRef" ici entre store et victimRef !
+                skill.getLogic().onAttack(damage, attackerData, store, attackerRef, victimRef);
             }
         }
     }

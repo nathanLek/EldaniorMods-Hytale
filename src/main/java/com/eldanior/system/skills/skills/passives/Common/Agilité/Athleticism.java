@@ -1,4 +1,4 @@
-package com.eldanior.system.skills.skills.passives;
+package com.eldanior.system.skills.skills.passives.Common.Agilité;
 
 import com.eldanior.system.config.configs.StatConfig;
 import com.eldanior.system.skills.skillsInteraction.IPassiveCombatSkill;

@@ -10,16 +10,13 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 public interface IPassiveCombatSkill {
 
     // --- COMBAT ---
-    // Méthode pour l'attaque
-    default void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> victimRef) {}
+    // Ajout de attackerRef ici pour pouvoir identifier l'attaquant (celui qui a le passif)
+    default void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {}
 
-    // Méthode pour la défense (avec notre paramètre victimRef, et surtout "default" et "{}")
+    // Méthode pour la défense (Déjà correcte)
     default void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {}
 
     // --- STATISTIQUES ---
-    // Pour ajouter des points fixes
     default float getFlatStatBonus(StatConfig stat) { return 0.0f; }
-
-    // Pour multiplier une stat (ex: 1.2f = +20% Vitesse, +20% Chance de Crit...)
     default float getStatMultiplier(StatConfig stat) { return 1.0f; }
 }

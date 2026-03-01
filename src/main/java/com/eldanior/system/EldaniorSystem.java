@@ -23,7 +23,6 @@ import com.hypixel.hytale.component.ResourceType; // Nouveau
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
-import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.universe.world.events.StartWorldEvent;
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore; // Nouveau
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;

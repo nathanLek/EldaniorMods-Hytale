@@ -31,6 +31,9 @@ public enum StatConfig {
     AGILITY_FALL_RESISTANCE(StatType.MECHANIC, -1, "Agility_Fall", 0.0f, 0.0007f, 0.0f, 1.0f,
             PlayerLevelData::getAgility, ClassModel::getBonusAgl),
 
+    ATTACK_SPEED(StatType.MECHANIC, -1, "Eldanior_Attack_Speed", 1.0f, 0.005f, 0.0f, 4.0f, // Cap à x4
+            PlayerLevelData::getAgility, ClassModel::getBonusAgl),
+
     // 5. DEGATS FORCE : +0.032 dégâts par point
     STRENGTH_DAMAGE(StatType.MECHANIC, -1, "Strength_Dmg", 0.0f, 0.072f, 0.0f, 0.0f,
             PlayerLevelData::getStrength, ClassModel::getBonusStr),

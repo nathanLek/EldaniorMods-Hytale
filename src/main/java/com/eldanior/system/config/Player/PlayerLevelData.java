@@ -11,13 +11,7 @@ import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class PlayerLevelData implements Component<EntityStore> {
 
@@ -44,6 +38,9 @@ public class PlayerLevelData implements Component<EntityStore> {
     private int intelligence = 1;
     private int luck = 1;
     private long money = 1000;
+    private UUID lastVictimUUID;
+    private int hauntingThrustStacks;
+    private transient long lastDamageTakenTime = 0;
 
     private List<String> unlockedSkills = new ArrayList<>();
     private Set<String> enabledSkills = new HashSet<>();
@@ -144,6 +141,10 @@ public class PlayerLevelData implements Component<EntityStore> {
         copy.intelligence = this.intelligence;
         copy.luck = this.luck;
         copy.money = this.money;
+        copy.lastVictimUUID = this.lastVictimUUID;
+        copy.hauntingThrustStacks = this.hauntingThrustStacks;
+        copy.lastDamageTakenTime = this.lastDamageTakenTime;
+
 
         copy.enabledSkills = new HashSet<>(this.enabledSkills);
         if (this.unlockedTitles != null) {
@@ -263,6 +264,13 @@ public class PlayerLevelData implements Component<EntityStore> {
         ClassModel model = ClassManager.get(this.classId);
         return model != null ? model.getBonusLck() : 0;
     }
+
+    public UUID getLastVictimUUID() { return lastVictimUUID; }
+    public void setLastVictimUUID(UUID lastVictimUUID) { this.lastVictimUUID = lastVictimUUID; }
+    public int getHauntingThrustStacks() { return hauntingThrustStacks; }
+    public void setHauntingThrustStacks(int stacks) { this.hauntingThrustStacks = stacks; }
+    public long getLastDamageTakenTime() { return lastDamageTakenTime; }
+    public void setLastDamageTakenTime(long time) { this.lastDamageTakenTime = time; }
 
     // ================= SETTERS =================
     public void setLevel(int level) { this.level = level; }

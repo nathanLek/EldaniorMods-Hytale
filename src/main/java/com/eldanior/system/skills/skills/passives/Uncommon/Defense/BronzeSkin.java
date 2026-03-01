@@ -1,4 +1,4 @@
-package com.eldanior.system.skills.skills.passives;
+package com.eldanior.system.skills.skills.passives.Uncommon.Defense;
 
 import com.eldanior.system.Leveling.utils.NotificationHelper;
 import com.eldanior.system.config.Player.PlayerLevelData;
