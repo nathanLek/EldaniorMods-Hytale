@@ -4,6 +4,8 @@ import com.eldanior.system.classes.models.ClassModel;
 import com.eldanior.system.config.configs.ClassType;
 import com.eldanior.system.config.configs.Rarity;
 
+import java.util.List;
+
 public class Templier extends ClassModel {
 
     public Templier() {
@@ -13,6 +15,7 @@ public class Templier extends ClassModel {
                 "Un Templier robuste specialise dans le corps a corps.",
                 Rarity.RARE,
                 ClassType.WARRIOR,
+                List.of(),
                 null,
                 250,
                 false,

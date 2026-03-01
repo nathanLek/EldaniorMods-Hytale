@@ -1,9 +1,62 @@
-# Parchemin Fireball
-items.skill_page_fireball.name=Parchemin Antique : Boule de Feu
-items.skill_page_fireball.description=<b>Rareté : Légendaire</b>\n<i>Un parchemin scellé contenant les secrets des mages d'Eldanior.</i>\n\n<b>[Clic F]</b> pour apprendre la compétence.
-# Skill - Fireball
-items.fireball.name=Grimoire des Flammes Éternelles
-items.fireball.description=<i>Lié à votre âme par le parchemin antique.</i>\n\n<b>[Clic F]</b> Canalise une boule de feu dévastatrice.\nConsomme <b>100 Mana</b>.
+# Parchemin Iron Skin (Peau de Fer / Peau d'Acier)
+items.skill_page_iron_skin.name=Parchemin Martial : Peau d'Acier
+items.skill_page_iron_skin.description=<b>Rareté : Rare</b>\n<i>Un parchemin lourd et résistant, renfermant les techniques de défense des gardiens d'Eldanior.</i>\n\n<b>[Clic Droit]</b> pour apprendre la compétence.
+# Parchemin Athleticism
+items.skill_page_athleticism.name=Parchemin d'Agilité : Athlétisme
+items.skill_page_athleticism.description=<b>Rareté : Commun</b>\n<i>Un parchemin usé par le vent, détaillant les techniques de souffle des éclaireurs d'Eldanior.</i>\n\n<b>[Clic F]</b> pour apprendre la compétence.
+# Parchemin Maitrise de l'Epée
+items.skill_page_sword_mastery.name=Parchemin de Maitrise : Epée
+items.skill_page_sword_mastery.description=<b>Rareté : Commun</b>\n<i>Un parchemin usé par le vent, détaillant les techniques d'épée des guerriers d'Eldanior.</i>\n\n<b>[Clic F]</b> pour apprendre la compétence.
+# Parchemin Detection De Point Vital
+items.skill_page_detection_of_vital_points.name=Parchemin de Detection : Point Vital
+items.skill_page_detection_of_vital_points.description=<b>Rareté : Commun</b>\n<i>Un parchemin usé par le vent, détaillant les techniques d'épée des guerriers d'Eldanior.</i>\n\n<b>[Clic F]</b> pour apprendre la compétence.
+# Parchemin Detection De Point Vital
+items.skill_page_mana_well.name=Parchemin Magique : Puit de Mana
+items.skill_page_mana_well.description=<b>Rareté : Commun</b>\n<i>Un parchemin usé par le vent, détaillant les techniques d'épée des guerriers d'Eldanior.</i>\n\n<b>[Clic F]</b> pour apprendre la compétence.
+
+
+# Skill - Invocations
+# COMMON
+items.Pact_Summary.name=Pacte Sommaire
+items.Pact_Summary.description=<b>Rareté : COMMUN</b>\n<b>Type </b>: INVOCATION\n"Un contrat éphémère pour une loyauté incertaine."\n\n<b>[Clic Droit]</b> Invoque un Goblin Mineur.\n <i>Coût : 60 Mana</i>\n <i>Temps d'activation : 1s</i>\n <i>Cooldown : 40s</i>
+
+# UNCOMMON
+items.Familiar_Link.name=Lien du Familier
+items.Familiar_Link.description=<b>Rareté : INHABITUEL</b>\n<b>Type : INVOCATION</b>\n"Un pacte silencieux unissant le mage à sa bête astrale."\n\n<b>[Clic Droit]</b> Invoque un Loup d'Éther.\n <i>Coût : 150 Mana</i>\n <i>Temps d'activation : 3s</i>\n <i>Cooldown : 60s</i>
+
+# RARE
+items.Mastery_Of_Chimeras.name=Maîtrise des Chimères
+items.Mastery_Of_Chimeras.description=<b>Rareté : RARE</b>\n<b>Type : INVOCATION</b>\n"Un affront aux lois de la nature, forgé dans la chair et la magie."\n\n<b>[Clic Droit]</b> Invoque une Bête Chimérique.\n <i>Coût : 300 Mana</i>\n <i>Temps d'activation : 3.5s</i>\n <i>Cooldown : 100s</i>
+
+# EPIC
+items.Seal_Of_The_Ancients.name=Sceau des Anciens
+items.Seal_Of_The_Ancients.description=<b>Rareté : EPIQUE</b>\n<b>Type : INVOCATION</b>\n"La terre tremble, car le grimoire ordonne."\n\n<b>[Clic Droit]</b> Invoque L'Éveil du Gardien.\n <i>Coût : 1200 Mana</i>\n <i>Temps d'activation : 5s</i>\n <i>Cooldown : 180s</i>
+
+# UNIQUE
+items.Pact_Of_Forgotten_Blood.name=Pacte du Sang Oublié
+items.Pact_Of_Forgotten_Blood.description=<b>Rareté : UNIQUE</b>\n<b>Type : INVOCATION</b>\n"Une goutte suffit à réveiller les cauchemars enfouis dans les veines du monde."\n\n<b>[Clic Droit]</b> Invoque un Limier de Sang.\n <i>Coût : 1950 Mana</i>\n <i>Temps d'activation : 3s</i>\n <i>Cooldown : 50s</i>\n\n<b>[Touche A]</b> Déclenche l'Incarnation du Sang Primordial.\n <i>Coût : 2200 Mana</i>\n <i>Temps d'activation : 6.5s</i>\n <i>Cooldown : 320s</i>
+
+# LEGENDAIRE
+items.Word_Of_Creation.name=Verbe de la Création
+items.Word_Of_Creation.description=<b>Rareté : LEGENDAIRE</b>\n<b>Type : INVOCATION</b>\n"Une syllabe oubliée, murmurée à l'aube des temps pour forger le cosmos."\n\n<b>[Clic Droit]</b> Invoque un Héro de la Genèse.\n <i>Coût : 3400 Mana</i>\n <i>Temps d'activation : 5s</i>\n <i>Cooldown : 290s</i>\n\n<b>[Touche A]</b> Déclenche l'Incarnation du Premier Mot.\n <i>Coût : 3500 Mana</i>\n <i>Temps d'activation : 3s</i>\n <i>Cooldown : 450s</i>
+
+# DIVIN
+items.Decree_Of_Genesis.name=Décret de la Genèse
+items.Decree_Of_Genesis.description=<b>Rareté : DIVIN</b>\n<b>Type : INVOCATION</b>\n"Au commencement était le Verbe, et le Verbe ordonna à la matière de s'éveiller."\n\n<b>[Clic Droit]</b> Invoque les Esprits Élémentaires.\n <i>Coût : 5500 Mana</i>\n <i>Temps d'activation : 8s</i>\n <i>Cooldown : 200s</i>\n\n<b>[Touche A]</b> Déclenche l'Émanation du Créateur.\n <i>Coût : 4000 Mana</i>\n <i>Temps d'activation : 4s</i>\n <i>Cooldown : 600s</i>
+
+# Skill - Matérialisation : Materialisation_Of_The_Ancient_Dragon
+
+items.Materialisation_Of_The_Ancient_Dragon.name=Matérialisation du Dragon Ancien
+items.Materialisation_Of_The_Ancient_Dragon.description=<b>Rareté : DIVIN</b>\n<b>Type : Matérialisation</b>\n"Au commencement était le Verbe, et le Verbe ordonna à la matière de s'éveiller."\n\n<b>[Clic Droit]</b> Transforme toi en Dragon Véritable.\n <i>Coût : 6500 Mana</i>\n <i>Temps d'activation : 2s</i>\n <i>Cooldown : 0s</i>
+
+items.Morph_Raven.name=Matérialisation en Corbeaux d'Éther
+items.Morph_Raven.description=<b>Rareté : ÉPIQUE</b>\n<b>Type : MATÉRIALISATION</b>\n"Le corps se fragmente en mille ailes sombres pour ne devenir qu'un avec le vide."\n\n<b>[Clic Droit]</b> Transforme l'utilisateur en Corbeaux d'Ether.\n <i>Coût : 850 Mana</i>\n <i>Durée : 10s</i>\n <i>Cooldown : 0s</i>
+
+
+
+
+
+
 
 
 items.PortalKey_Dungeon_V1.name=Clé du DONJON D'ENTRAINEMENT
@@ -14,3 +67,5 @@ portals.dungeon_v1.description= <i>Une petite cave poussiéreuse de <b>Rank E</b
 portals.dungeon_v1.tip1= Le <b>Rank E</b> est parfait pour s'échauffer.\nNe gaspillez pas vos meilleures potions ici !\n
 portals.dungeon_v1.tip2= Pensez à fouiller les tonneaux,\nles donjons de <b>Rank E</b> regorgent souvent de \npetites ressources utiles.\n
 portals.dungeon_v1.tip3= </b> Si vous survivez et tuez le Boss ici, \nvous serez bientôt prêt pour le Rank D !
+
+# Categorie - EldaniorSystem

@@ -2,6 +2,7 @@ package com.eldanior.system.config.configs;
 
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.classes.models.ClassModel;
+import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
 import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
 
 import java.util.function.ToIntFunction;
@@ -22,10 +23,10 @@ public enum StatConfig {
 
     // === MOUVEMENTS ===
     AGILITY_SPEED(StatType.MOVEMENT_SPEED, -1, "Eldanior_Speed", 1.5f, 0.0005f, 0.0f, 3.0f, // Cap vitesse x3
-            PlayerLevelData::getAgility, null),
+            PlayerLevelData::getAgility, ClassModel::getBonusAgl),
 
     AGILITY_JUMP(StatType.MOVEMENT_JUMP, -1, "Eldanior_Jump", 11.8f, 0.004f, 0.0f, 20.0f, // Cap saut 20 blocks
-            PlayerLevelData::getAgility, null),
+            PlayerLevelData::getAgility, ClassModel::getBonusAgl),
 
     AGILITY_FALL_RESISTANCE(StatType.MECHANIC, -1, "Agility_Fall", 0.0f, 0.0007f, 0.0f, 1.0f,
             PlayerLevelData::getAgility, ClassModel::getBonusAgl),
@@ -108,6 +109,20 @@ public enum StatConfig {
     public float getFinalValue(PlayerLevelData data, ClassModel model) {
         int points = getTotalPoints(data, model);
         float value = baseValue + (points * ratio);
+
+        // --- LA MAGIE DES PASSIFS EST ICI ---
+        if (data != null && data.getActivePassives() != null) {
+            for (PassiveSkill skill : data.getActivePassives()) {
+                if (skill.getLogic() != null) {
+                    // 1. On ajoute les bonus bruts (ex: +20% de chances de crit brutes)
+                    value += skill.getLogic().getFlatStatBonus(this);
+
+                    // 2. On applique les multiplicateurs (ex: x1.15 vitesse)
+                    value *= skill.getLogic().getStatMultiplier(this);
+                }
+            }
+        }
+        // ------------------------------------
 
         // Application du CAP si défini (> 0)
         if (cap > 0 && value > cap) {

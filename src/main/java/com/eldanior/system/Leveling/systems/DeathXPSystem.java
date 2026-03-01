@@ -119,9 +119,6 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
             // --- CORRECTION ICI ---
             if (dataToWrite.getLevel() > oldLvl) {
                 NotificationHelper.showLevelUpTitle(killerRefObj, dataToWrite.getLevel());
-
-                // On utilise 'killerEntityRef' et 'killerStore' ici !
-                StatCalculator.updatePlayerStats(killerEntityRef, killerStore, dataToWrite);
             }
 
         } catch (Exception e) {

@@ -3,6 +3,9 @@ package com.eldanior.system.classes.definitions;
 import com.eldanior.system.classes.models.ClassModel;
 import com.eldanior.system.config.configs.ClassType;
 import com.eldanior.system.config.configs.Rarity;
+import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
+
+import java.util.List;
 
 public class Warrior extends ClassModel {
 
@@ -13,6 +16,7 @@ public class Warrior extends ClassModel {
                 "Un combattant robuste specialise dans le corps a corps.",
                 Rarity.COMMON,
                 ClassType.WARRIOR,
+                List.of(),
                 "templier",
                 120,
                 false,

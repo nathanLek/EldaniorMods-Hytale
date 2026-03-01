@@ -21,6 +21,7 @@ public class ClassManager {
         register(new Merchant());
 
         register(new Templier());
+
         System.out.println("[Eldanior] " + classes.size() + " classes RPG chargees.");
     }
 

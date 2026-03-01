@@ -4,6 +4,8 @@ import com.eldanior.system.classes.models.ClassModel;
 import com.eldanior.system.config.configs.ClassType;
 import com.eldanior.system.config.configs.Rarity;
 
+import java.util.List;
+
 public class Assassin extends ClassModel {
 
     public Assassin() {
@@ -13,6 +15,7 @@ public class Assassin extends ClassModel {
                 "Un tueur silencieux qui frappe dans l'ombre.",
                 Rarity.COMMON,
                 ClassType.ASSASSIN,
+                List.of(),
                 null,
                 20,
                 false,

@@ -1,5 +1,8 @@
 package com.eldanior.system.config.Player;
 
+import com.eldanior.system.classes.ClassManager;
+import com.eldanior.system.classes.models.ClassModel;
+import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
@@ -31,8 +34,9 @@ public class PlayerLevelData implements Component<EntityStore> {
     private String currentTitle = "";
     private List<String> unlockedTitles = new ArrayList<>();
     private String guildRank = "F";
+    private String activeSkillId = "";
 
-    // Stats
+    // Stats de BASE (Investies par le joueur)
     private int strength = 1;
     private int endurance = 1;
     private int agility = 1;
@@ -59,7 +63,6 @@ public class PlayerLevelData implements Component<EntityStore> {
             this.experience -= getRequiredExperience();
             this.level++;
             this.attributePoints += 3;
-            // Note: Tu pourrais vouloir déclencher un événement LevelUp ici
         }
     }
 
@@ -122,7 +125,7 @@ public class PlayerLevelData implements Component<EntityStore> {
             }, (data) -> String.join(",", data.unlockedTitles)).add()
             .build();
 
-    // --- Méthode CLONE (Corrigée pour les cooldowns) ---
+    // --- Méthode CLONE ---
     @Nullable
     @Override
     public Component<EntityStore> clone() {
@@ -150,29 +153,54 @@ public class PlayerLevelData implements Component<EntityStore> {
             copy.unlockedSkills = new ArrayList<>(this.unlockedSkills);
         }
 
-        // CORRECTION IMPORTANTE : On copie aussi les cooldowns !
-        // Sinon, ajouter un point de stat réinitialisait les sorts.
         copy.cooldowns = new HashMap<>(this.cooldowns);
 
         return copy;
     }
 
-    public List<String> getUnlockedSkills() {
-        return unlockedSkills;
-    }
+    // ================= SKILLS METHODS =================
 
+    public List<String> getUnlockedSkills() { return unlockedSkills; }
     public void learnSkill(String skillId) {
-        if (!unlockedSkills.contains(skillId)) {
-            unlockedSkills.add(skillId);
-        }
+        if (!unlockedSkills.contains(skillId)) unlockedSkills.add(skillId);
     }
-
     public void forgetAllSkills() {
         unlockedSkills.clear();
         enabledSkills.clear();
     }
+    public String getActiveSkillId() { return activeSkillId; }
+    public void setActiveSkillId(String id) { this.activeSkillId = id; }
 
-    // ================= GETTERS =================
+    // === NOUVEAU GETTER DYNAMIQUE DES PASSIFS ===
+    public List<PassiveSkill> getActivePassives() {
+        List<PassiveSkill> activePassives = new ArrayList<>();
+
+        // 1. Récupération des passifs "Innés" de la classe
+        ClassModel model = ClassManager.get(this.classId);
+        if (model != null && model.getSkillsPassiveIds() != null) {
+            activePassives.addAll(model.getSkillsPassiveIds());
+        }
+
+        // 2. Récupération des passifs "Appris" via les parchemins
+        for (String skillId : this.unlockedSkills) {
+            try {
+                // On essaie de convertir le String (ex: "IRON_SKIN") en Enum
+                PassiveSkill learnedPassive = PassiveSkill.valueOf(skillId.toUpperCase());
+
+                // On l'ajoute seulement s'il n'est pas déjà dans la liste
+                if (!activePassives.contains(learnedPassive)) {
+                    activePassives.add(learnedPassive);
+                }
+            } catch (IllegalArgumentException e) {
+                // Ce n'est pas grave ! Ça veut dire que ce skillId est un sort ACTIF (comme "fireball")
+                // et pas un passif. On l'ignore simplement pour le combat passif.
+            }
+        }
+
+        return activePassives;
+    }
+
+    // ================= GETTERS (Identité & Base) =================
     public int getLevel() { return level; }
     public int getExperience() { return experience; }
     public int getAttributePoints() { return attributePoints; }
@@ -181,18 +209,52 @@ public class PlayerLevelData implements Component<EntityStore> {
     public String getCurrentTitle() { return currentTitle; }
     public List<String> getUnlockedTitles() { return unlockedTitles; }
     public String getGuildRank() { return guildRank; }
+    public long getMoney() { return money; }
+
+    // Points investis par le joueur (sans bonus de classe)
     public int getStrength() { return strength; }
     public int getEndurance() { return endurance; }
     public int getAgility() { return agility; }
     public int getVitality() { return vitality; }
     public int getIntelligence() { return intelligence; }
     public int getLuck() { return luck; }
-    public long getMoney() { return money; }
 
-    // Note: Ces méthodes calculent des valeurs "d'affichage" ou théoriques.
-    // Les vraies valeurs appliquées au joueur sont gérées par StatCalculator.
-    public int getMaxMana() { return intelligence * 10; }
-    public int getMaxHealth() { return vitality * 10; }
+    // ================= GETTERS (TOTAUX AVEC BONUS DE CLASSE) =================
+    public int getTotalStrength() { return strength + getClassBonusStr(); }
+    public int getTotalEndurance() { return endurance + getClassBonusEnd(); }
+    public int getTotalAgility() { return agility + getClassBonusAgl(); }
+    public int getTotalVitality() { return vitality + getClassBonusVit(); }
+    public int getTotalIntelligence() { return intelligence + getClassBonusInt(); }
+    public int getTotalLuck() { return luck + getClassBonusLck(); }
+
+    public int getMaxMana() { return getTotalIntelligence() * 10; }
+    public int getMaxHealth() { return getTotalVitality() * 10; }
+
+    // Utilitaires internes pour récupérer le bonus de classe
+    private int getClassBonusStr() {
+        ClassModel model = ClassManager.get(this.classId);
+        return model != null ? model.getBonusStr() : 0;
+    }
+    private int getClassBonusEnd() {
+        ClassModel model = ClassManager.get(this.classId);
+        return model != null ? model.getBonusEnd() : 0;
+    }
+    private int getClassBonusAgl() {
+        ClassModel model = ClassManager.get(this.classId);
+        return model != null ? model.getBonusAgl() : 0;
+    }
+    private int getClassBonusVit() {
+        ClassModel model = ClassManager.get(this.classId);
+        return model != null ? model.getBonusVit() : 0;
+    }
+    private int getClassBonusInt() {
+        ClassModel model = ClassManager.get(this.classId);
+        return model != null ? model.getBonusInt() : 0;
+    }
+    private int getClassBonusLck() {
+        ClassModel model = ClassManager.get(this.classId);
+        return model != null ? model.getBonusLck() : 0;
+    }
 
     // ================= SETTERS =================
     public void setLevel(int level) { this.level = level; }
@@ -202,6 +264,8 @@ public class PlayerLevelData implements Component<EntityStore> {
     public void setPlayerClassId(String classId) { this.classId = classId; }
     public void setCurrentTitle(String title) { this.currentTitle = title; }
     public void setGuildRank(String guildRank) { this.guildRank = guildRank; }
+
+    // Ces setters ne modifient que les points de base (ex: lors d'un Level Up)
     public void setStrength(int strength) { this.strength = strength; }
     public void setEndurance(int endurance) { this.endurance = endurance; }
     public void setAgility(int agility) { this.agility = agility; }

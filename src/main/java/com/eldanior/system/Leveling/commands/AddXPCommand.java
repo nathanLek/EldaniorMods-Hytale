@@ -24,14 +24,11 @@ import java.util.concurrent.CompletableFuture;
 
 public class AddXPCommand extends AbstractAsyncCommand {
 
-    // Déclaration propre des arguments (Exactement comme ton SetLevelCommand)
     private final RequiredArg<String> playerArg;
     private final RequiredArg<Integer> amountArg;
 
     public AddXPCommand() {
         super("addxp", "Ajouter de l'expérience à un joueur");
-
-        // Initialisation propre des arguments
         this.playerArg = this.withRequiredArg("joueur", "Nom du joueur", ArgTypes.STRING);
         this.amountArg = this.withRequiredArg("nombre", "Quantité d'XP", ArgTypes.INTEGER);
     }
@@ -43,52 +40,40 @@ public class AddXPCommand extends AbstractAsyncCommand {
     @Override
     public CompletableFuture<Void> executeAsync(@Nonnull CommandContext ctx) {
 
-        // 1. Vérification que c'est un joueur
         if (!(ctx.sender() instanceof Player sender)) return CompletableFuture.completedFuture(null);
 
-        // 2. Vérification Permission (Manuelle comme dans ton exemple)
         if (!sender.hasPermission("eldanior.command.addxp")) {
-            // J'utilise ton NotificationHelper car c'est plus joli que Message.raw
-            sender.sendMessage(Message.raw( "Erreur : Pas de permission."));
+            sender.sendMessage(Message.raw("Erreur : Pas de permission."));
             return CompletableFuture.completedFuture(null);
         }
 
-        // 3. Récupération des valeurs
         String playerName = this.playerArg.get(ctx);
         int amount = this.amountArg.get(ctx);
 
-        // Validation simple
         if (amount <= 0) {
-            sender.sendMessage(Message.raw( "Erreur : Le montant doit être positif."));
+            sender.sendMessage(Message.raw("Erreur : Le montant doit être positif."));
             return CompletableFuture.completedFuture(null);
         }
 
-        // 4. Récupération du Ticket (Ref) initial
         PlayerRef targetRef = Universe.get().getPlayerByUsername(playerName, NameMatching.EXACT_IGNORE_CASE);
-
         if (targetRef == null) {
             sender.sendMessage(Message.raw("Erreur : Joueur introuvable."));
             return CompletableFuture.completedFuture(null);
         }
 
-        // 5. Exécution sur le Thread Principal (La méthode ROBUSTE de ton exemple)
         assert sender.getWorld() != null;
         return CompletableFuture.runAsync(() -> {
             try {
-                // --- LA TECHNIQUE DE REFLEXION (La clé pour que ça marche) ---
                 Field uuidField = PlayerRef.class.getDeclaredField("uuid");
                 uuidField.setAccessible(true);
                 UUID targetUUID = (UUID) uuidField.get(targetRef);
 
-                // On récupère l'entité Player connectée via son UUID
                 PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
-
                 if (targetPlayer == null) {
-                    sender.sendMessage(Message.raw( "Erreur : Le joueur doit être connecté."));
+                    sender.sendMessage(Message.raw("Erreur : Le joueur doit être connecté."));
                     return;
                 }
 
-                // 6. Modification des données ECS
                 var ref = targetPlayer.getReference();
                 if (ref == null) return;
 
@@ -99,26 +84,22 @@ public class AddXPCommand extends AbstractAsyncCommand {
                 if (data == null) data = new PlayerLevelData();
 
                 int oldLvl = data.getLevel();
-
-                // --- ACTION : AJOUT D'XP ---
                 data.addExperience(amount);
 
-                // Sauvegarde
                 store.putComponent(ref, type, data);
-
-                // 7. Feedback (Messages)
-                String msgTarget = "Reçu : <color:green>+" + amount + " XP</color> (Admin)";
-                NotificationHelper.sendNotification(targetPlayer, msgTarget, NotificationStyle.Success);
 
                 if (data.getLevel() > oldLvl) {
                     NotificationHelper.showLevelUpTitle(targetPlayer, data.getLevel());
                 }
 
+                String msgTarget = "Reçu : <color:green>+" + amount + " XP</color> (Admin)";
+                NotificationHelper.sendNotification(targetPlayer, msgTarget, NotificationStyle.Success);
+
                 String msgSender = "Donné : <color:green>" + amount + " XP</color> à <color:yellow>" + targetPlayer.getUsername() + "</color>";
-                sender.sendMessage(Message.raw( msgSender));
+                sender.sendMessage(Message.raw(msgSender));
 
             } catch (Exception e) {
-                sender.sendMessage(Message.raw( "Erreur technique : " + e.getMessage()));
+                sender.sendMessage(Message.raw("Erreur technique : " + e.getMessage()));
                 e.printStackTrace();
             }
         }, sender.getWorld());

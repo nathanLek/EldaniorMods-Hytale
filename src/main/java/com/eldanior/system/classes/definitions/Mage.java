@@ -4,6 +4,8 @@ import com.eldanior.system.classes.models.ClassModel;
 import com.eldanior.system.config.configs.ClassType;
 import com.eldanior.system.config.configs.Rarity;
 
+import java.util.List;
+
 public class Mage extends ClassModel {
 
     public Mage() {
@@ -13,10 +15,11 @@ public class Mage extends ClassModel {
                 "Un maitre des arcanes utilisant le mana.",
                 Rarity.COMMON,
                 ClassType.MAGE,
+                List.of(),
                 null,
                 20,
                 false,
-                0, 0, 1, 8, 2, 1
+                3, 3, 12, 2, 2, 3
         );
     }
 }

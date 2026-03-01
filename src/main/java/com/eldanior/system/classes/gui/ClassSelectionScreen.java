@@ -121,12 +121,6 @@ public class ClassSelectionScreen extends InteractiveCustomUIPage<ClassSelection
         playerData.setPlayerClass(model.getDisplayName());
         playerData.setPlayerClassId(model.getId());
         playerData.forgetAllSkills();
-        playerData.setStrength(1 + model.getBonusStr());
-        playerData.setVitality(1 + model.getBonusVit());
-        playerData.setIntelligence(1 + model.getBonusInt());
-        playerData.setEndurance(1 + model.getBonusEnd());
-        playerData.setAgility(1 + model.getBonusAgl());
-        playerData.setLuck(1 + model.getBonusLck());
 
         System.out.println("[DEBUG] : == > 9 ");
 

@@ -5,6 +5,8 @@ import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.classes.ClassManager;
 import com.eldanior.system.classes.models.ClassModel;
 import com.eldanior.system.config.configs.StatConfig;
+import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
+import com.eldanior.system.Leveling.utils.NotificationHelper;
 import com.hypixel.hytale.component.ArchetypeChunk;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Ref;
@@ -12,9 +14,13 @@ import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.component.SystemGroup;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.logger.HytaleLogger;
+import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
 import com.hypixel.hytale.server.core.modules.entity.damage.DamageEventSystem;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import com.hypixel.hytale.protocol.packets.interface_.NotificationStyle;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -24,7 +30,7 @@ public class CombatStatsSystem extends DamageEventSystem {
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
 
     // Configurable ici : Multiplicateur de dégâts critique (1.8 = +80% dégâts)
-    private static final float CRIT_MULTIPLIER = 1.8f;
+    private static final float CRIT_MULTIPLIER = 2f;
 
     @Override
     public void handle(int index, @Nonnull ArchetypeChunk<EntityStore> archetypeChunk,
@@ -33,67 +39,114 @@ public class CombatStatsSystem extends DamageEventSystem {
 
         if (damage.isCancelled()) return;
 
-        // 1. Gestion de l'Attaquant (Bonus Force + Critique)
-        applyOffensiveStats(damage, store);
+        Ref<EntityStore> victimRef = archetypeChunk.getReferenceTo(index);
+        if (!victimRef.isValid()) return;
 
-        // 2. Gestion de la Victime (Réduction Endurance)
-        applyEnduranceDefense(index, archetypeChunk, store, damage);
+        // 1. GESTION DE L'ESQUIVE (Basée sur l'Agilité Totale)
+        if (tryDodge(victimRef, store, damage)) {
+            return; // Si l'attaque est esquivée, on arrête tout calcul !
+        }
+
+        // 2. Gestion de l'Attaquant (Force + Critique + Passifs)
+        applyOffensiveStats(damage, store, victimRef);
+
+        if (damage.isCancelled()) return;
+
+        // 3. Gestion de la Victime (Endurance + Passifs)
+        applyEnduranceDefense(victimRef, store, damage);
     }
 
-    private void applyOffensiveStats(Damage damage, Store<EntityStore> store) {
+    private boolean tryDodge(Ref<EntityStore> victimRef, Store<EntityStore> store, Damage damage) {
+        PlayerLevelData victimData = store.getComponent(victimRef, EldaniorSystem.get().getPlayerLevelDataType());
+        if (victimData == null) return false;
+
+        // Calcul de la chance d'esquive : 0.1% par point d'Agilité
+        float dodgeChance = victimData.getTotalAgility() * 0.001f;
+        if (dodgeChance > 0.60f) dodgeChance = 0.60f; // Cap à 60% d'esquive max
+
+        if (Math.random() < dodgeChance) {
+            damage.setCancelled(true);
+
+            // Notification optionnelle pour le joueur
+            UUIDComponent uuidComp = store.getComponent(victimRef, UUIDComponent.getComponentType());
+            if (uuidComp != null) {
+                PlayerRef playerRef = Universe.get().getPlayer(uuidComp.getUuid());
+                if (playerRef != null) {
+                    NotificationHelper.sendNotification(playerRef, "<color:aqua>Esquive !</color>", NotificationStyle.Success);
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    private void applyOffensiveStats(Damage damage, Store<EntityStore> store, Ref<EntityStore> victimRef) {
         Damage.Source source = damage.getSource();
 
-        // On vérifie si la source est une entité vivante
         if (!(source instanceof Damage.EntitySource entitySource)) return;
 
         Ref<EntityStore> attackerRef = entitySource.getRef();
         if (!attackerRef.isValid()) return;
 
-        // Récupération des données de l'attaquant
         PlayerLevelData attackerData = store.getComponent(attackerRef, EldaniorSystem.get().getPlayerLevelDataType());
         if (attackerData == null) return;
 
         ClassModel attackerClass = ClassManager.get(attackerData.getPlayerClassId());
 
         // --- A. BONUS DE FORCE ---
-        // Utilise StatConfig : Points * 0.032
         float strengthBonus = StatConfig.STRENGTH_DAMAGE.getFinalValue(attackerData, attackerClass);
-
-        float currentDamage = damage.getAmount();
-        currentDamage += strengthBonus;
+        float currentDamage = damage.getAmount() + strengthBonus;
 
         // --- B. COUP CRITIQUE ---
-        // Utilise LuckSystem (qui utilise StatConfig.LUCK_CRITICAL)
         if (LuckSystem.isCriticalHit(attackerData)) {
             currentDamage *= CRIT_MULTIPLIER;
-            LOGGER.atSevere().log("Coup Critique Donnée ===> ", currentDamage);
-            // Optionnel : Ajouter un effet visuel ou sonore ici plus tard
+            LOGGER.atSevere().log("Coup Critique Donné ===> " + currentDamage);
         }
 
+        // On applique les dégâts calculés avant d'appeler les passifs
         damage.setAmount(currentDamage);
+
+        // --- C. PASSIFS OFFENSIFS DE CLASSE ---
+        // Ex: SWORD_MASTERY va lire le damage.getAmount(), le multiplier par 1.15 et le set.
+        for (PassiveSkill skill : attackerData.getActivePassives()) {
+            if (skill.getLogic() != null) {
+                skill.getLogic().onAttack(damage, attackerData, store, victimRef);
+            }
+        }
     }
 
-    private void applyEnduranceDefense(int index, ArchetypeChunk<EntityStore> chunk, Store<EntityStore> store, Damage damage) {
-        Ref<EntityStore> victimRef = chunk.getReferenceTo(index);
-        if (!victimRef.isValid()) return;
-
-        // Récupération des données de la victime
+    private void applyEnduranceDefense(Ref<EntityStore> victimRef, Store<EntityStore> store, Damage damage) {
         PlayerLevelData victimData = store.getComponent(victimRef, EldaniorSystem.get().getPlayerLevelDataType());
         if (victimData == null) return;
 
         ClassModel victimClass = ClassManager.get(victimData.getPlayerClassId());
 
         // --- C. DEFENSE ENDURANCE ---
-        // Utilise StatConfig : Points * 0.3
         float defense = StatConfig.ENDURANCE_DEFENSE.getFinalValue(victimData, victimClass);
+        float currentDamage = damage.getAmount() - defense;
 
-        float currentDamage = damage.getAmount();
-        currentDamage -= defense;
-
-        // On s'assure qu'on ne soigne pas l'ennemi en tapant (minimum 1 dégât)
         if (currentDamage < 1) currentDamage = 1;
-
         damage.setAmount(currentDamage);
+
+        // Récupération de l'attaquant pour l'envoyer au passif défensif (ex: renvoi de dégâts)
+        Ref<EntityStore> attackerRef = null;
+        if (damage.getSource() instanceof Damage.EntitySource entitySource) {
+            attackerRef = entitySource.getRef();
+        }
+
+        // --- D. PASSIFS DÉFENSIFS DE CLASSE ---
+        for (PassiveSkill skill : victimData.getActivePassives()) {
+            if (skill.getLogic() != null) {
+                // ✅ On ajoute victimRef à la fin de l'appel !
+                // (Si ta variable s'appelle "ref" ou "entityRef" dans cette méthode, mets ça à la place de "victimRef")
+                skill.getLogic().onDefend(damage, victimData, store, attackerRef, victimRef);
+            }
+        }
+
+        // Sécurité finale : un passif défensif n'a pas le droit de soigner l'ennemi (dégâts < 0)
+        if (!damage.isCancelled() && damage.getAmount() < 1) {
+            damage.setAmount(1);
+        }
     }
 
     // --- Partie Technique Hytale ---

@@ -4,6 +4,8 @@ import com.eldanior.system.classes.models.ClassModel;
 import com.eldanior.system.config.configs.ClassType;
 import com.eldanior.system.config.configs.Rarity;
 
+import java.util.List;
+
 public class Archer extends ClassModel {
 
     public Archer() {
@@ -13,11 +15,11 @@ public class Archer extends ClassModel {
                 "Un expert du tir a distance.",
                 Rarity.COMMON,
                 ClassType.ARCHER,
+                List.of(),
                 null,
                 20,
                 false,
-                2,
-                2, 2, 0, 3, 7
+                2, 2, 2, 0, 3, 7
         );
     }
 }

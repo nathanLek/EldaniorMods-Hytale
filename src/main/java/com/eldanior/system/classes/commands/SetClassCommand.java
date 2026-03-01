@@ -65,7 +65,6 @@ public class SetClassCommand extends AbstractAsyncCommand {
                 UUID targetUUID = (UUID) uuidField.get(targetRef);
 
                 PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
-
                 if (targetPlayer == null) {
                     sender.sendMessage(Message.raw("§cErreur : Le joueur doit être connecté."));
                     return;
@@ -78,14 +77,7 @@ public class SetClassCommand extends AbstractAsyncCommand {
                 ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
                 PlayerLevelData data = store.getComponent(ref, type);
 
-                if (data == null) {
-                    data = new PlayerLevelData();
-                }
-
-                if (data == null) {
-                    sender.sendMessage(Message.raw("§cErreur : Données introuvables."));
-                    return;
-                }
+                if (data == null) data = new PlayerLevelData();
 
                 ClassModel model = ClassManager.get(classId.toLowerCase());
                 if (model == null) {
@@ -97,15 +89,10 @@ public class SetClassCommand extends AbstractAsyncCommand {
                 data.setPlayerClass(model.getDisplayName());
                 data.setPlayerClassId(model.getId());
                 data.forgetAllSkills();
-                data.setStrength(1 + model.getBonusStr());
-                data.setVitality(1 + model.getBonusVit());
-                data.setIntelligence(1 + model.getBonusInt());
-                data.setEndurance(1 + model.getBonusEnd());
-                data.setAgility(1 + model.getBonusAgl());
-                data.setLuck(1 + model.getBonusLck());
 
-                StatCalculator.updatePlayerStats(ref, store, data);
+                // Persiste d'abord, calcule ensuite
                 store.putComponent(ref, type, data);
+                StatCalculator.updatePlayerStats(ref, store, data);
 
                 sender.sendMessage(Message.raw("§aSuccès : " + targetName + " est maintenant " + model.getDisplayName() + " (Skills mis à jour)"));
                 targetPlayer.sendMessage(Message.raw("§eVotre classe a été changée en : §6" + model.getDisplayName()));
