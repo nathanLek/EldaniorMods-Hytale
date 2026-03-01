@@ -3,7 +3,6 @@ package com.eldanior.system.skills.interaction;
 import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.skills.SkillManager;
-// 🌟 NOUVEAUX IMPORTS POUR LIRE LA CLASSE PARENTE
 import com.eldanior.system.classes.ClassManager;
 import com.eldanior.system.classes.models.ClassModel;
 
@@ -18,6 +17,7 @@ import com.hypixel.hytale.server.core.entity.InteractionContext;
 
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 import java.awt.Color;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -43,23 +43,17 @@ public class ConsumableItemSkillInteraction extends SimpleInteraction {
 
         SkillManager.getSkillFromItem(heldItem.getItemId()).ifPresent(skill -> {
 
-            // 1. On récupère la classe actuelle du joueur
             String playerClass = data.getPlayerClassId().toLowerCase();
-
-            // 2. 🌟 On récupère la classe parente via le ClassModel
             ClassModel classModel = ClassManager.get(data.getPlayerClassId());
-            // Remplace "getParentId()" par la méthode exacte de ton ClassModel (ex: getParentClass(), getParent(), etc.)
-            String parentClass = (classModel != null && classModel.getType().name().toLowerCase() != null)
+            String parentClass = classModel != null
                     ? classModel.getType().name().toLowerCase()
                     : "";
 
             String requiredClass = skill.requiredClass();
 
-            // 3. On vérifie les permissions (Parent OU Classe Actuelle)
+            // Vérification de la classe
             if (requiredClass != null && !requiredClass.equalsIgnoreCase("all")) {
                 String reqLower = requiredClass.toLowerCase();
-
-                // Si la classe requise ne contient NI la classe actuelle, NI la classe parente
                 if (!reqLower.contains(playerClass) && !reqLower.contains(parentClass)) {
                     player.sendMessage(Message.raw("Votre classe n'est pas apte à déchiffrer ce savoir !")
                             .color(Color.ORANGE));
@@ -67,25 +61,68 @@ public class ConsumableItemSkillInteraction extends SimpleInteraction {
                 }
             }
 
-            if (!data.getUnlockedSkills().contains(skill.skillId())) {
-                data.learnSkill(skill.skillId());
+            List<String> playerSkills = data.getUnlockedSkills();
+            String newSkillId = skill.skillId();
+
+            // 1. Possède-t-il DÉJÀ exactement cette compétence ?
+            if (playerSkills.contains(newSkillId)) {
+                player.sendMessage(Message.raw("Vous maîtrisez déjà ce savoir !").color(Color.RED));
+                return;
+            }
+
+            // 2. Possède-t-il une compétence SUPÉRIEURE (LevelUp) ? -> On bloque !
+            // Remplace .levelUp() par le vrai nom de ta méthode dans SkillModel
+            if (skill.levelUp() != null) {
+                for (String higherSkill : skill.levelUp()) {
+                    if (playerSkills.contains(higherSkill)) {
+                        player.sendMessage(Message.raw("Vous maîtrisez déjà une version supérieure de ce savoir !")
+                                .color(Color.RED));
+                        return;
+                    }
+                }
+            }
+
+            // 3. Possède-t-il une compétence INFÉRIEURE (LevelDown) ? -> On prépare l'évolution
+            String skillToEvolve = null;
+            // Remplace .levelDown() par le vrai nom de ta méthode dans SkillModel
+            if (skill.levelDown() != null) {
+                for (String lowerSkill : skill.levelDown()) {
+                    if (playerSkills.contains(lowerSkill)) {
+                        skillToEvolve = lowerSkill;
+                        break; // On a trouvé l'ancienne compétence, on s'arrête
+                    }
+                }
+            }
+
+            // --- APPLICATION DU SAVOIR ---
+
+            if (skillToEvolve != null) {
+                // C'EST UNE ÉVOLUTION !
+                // (Assure-toi d'avoir créé une méthode removeSkill() dans ton PlayerLevelData)
+                data.removeSkill(skillToEvolve);
+                data.learnSkill(newSkillId);
+
+                player.sendMessage(Message.raw("Évolution de " + skillToEvolve + " ! Le savoir a muté en : " + skill.displayName())
+                        .color(Color.MAGENTA).bold(true));
+            } else {
+                // C'EST UN NOUVEL APPRENTISSAGE (Classique)
+                data.learnSkill(newSkillId);
 
                 player.sendMessage(Message.raw("Savoir acquis : " + skill.displayName())
                         .color(Color.CYAN).bold(true));
-
-                int slot = context.getHeldItemSlot();
-                new Timer().schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        try {
-                            player.getInventory().getHotbar().removeItemStackFromSlot((short) slot, 1, true, false);
-                        } catch (Exception ignored) {}
-                    }
-                }, 50);
-
-            } else {
-                player.sendMessage(Message.raw("Vous maîtrisez déjà ce savoir !").color(Color.RED));
             }
+
+            // Suppression du parchemin
+            int slot = context.getHeldItemSlot();
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    try {
+                        player.getInventory().getHotbar().removeItemStackFromSlot((short) slot, 1, true, false);
+                    } catch (Exception ignored) {}
+                }
+            }, 50);
+
         });
     }
 }

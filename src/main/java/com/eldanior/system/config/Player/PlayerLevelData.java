@@ -200,6 +200,14 @@ public class PlayerLevelData implements Component<EntityStore> {
         return activePassives;
     }
 
+    public void removeSkill(String skillId) {
+        // On la retire des compétences débloquées
+        unlockedSkills.remove(skillId);
+
+        // Par sécurité, on la retire aussi des compétences actives/équipées !
+        enabledSkills.remove(skillId);
+    }
+
     // ================= GETTERS (Identité & Base) =================
     public int getLevel() { return level; }
     public int getExperience() { return experience; }

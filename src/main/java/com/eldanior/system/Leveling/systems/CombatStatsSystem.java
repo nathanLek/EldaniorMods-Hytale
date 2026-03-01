@@ -4,14 +4,11 @@ import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.classes.ClassManager;
 import com.eldanior.system.classes.models.ClassModel;
+import com.eldanior.system.config.configs.Mobs.MobLevelData;
 import com.eldanior.system.config.configs.StatConfig;
 import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
 import com.eldanior.system.Leveling.utils.NotificationHelper;
-import com.hypixel.hytale.component.ArchetypeChunk;
-import com.hypixel.hytale.component.CommandBuffer;
-import com.hypixel.hytale.component.Ref;
-import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.component.SystemGroup;
+import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.entity.UUIDComponent;
@@ -82,32 +79,42 @@ public class CombatStatsSystem extends DamageEventSystem {
 
     private void applyOffensiveStats(Damage damage, Store<EntityStore> store, Ref<EntityStore> victimRef) {
         Damage.Source source = damage.getSource();
-
         if (!(source instanceof Damage.EntitySource entitySource)) return;
 
         Ref<EntityStore> attackerRef = entitySource.getRef();
         if (!attackerRef.isValid()) return;
 
+        // --- 🌟 NOUVEAU : SI L'ATTAQUANT EST UN MOB ---
+        // On lui donne son bonus de dégâts ici, AVANT de calculer la défense du joueur !
+        ComponentType<EntityStore, MobLevelData> mobLevelType = EldaniorSystem.get().getMobLevelDataType();
+        if (mobLevelType != null) {
+            var mobData = store.getComponent(attackerRef, mobLevelType);
+            if (mobData != null && mobData.isStatsApplied()) {
+                float damageBonus = mobData.getLevel() * com.eldanior.system.config.configs.MobsWorldConfig.DAMAGE_PER_LEVEL;
+                damage.setAmount(damage.getAmount() + damageBonus);
+                return; // Le mob n'a pas de force ou de crit de joueur, on s'arrête là !
+            }
+        }
+
+        // --- SI L'ATTAQUANT EST UN JOUEUR ---
         PlayerLevelData attackerData = store.getComponent(attackerRef, EldaniorSystem.get().getPlayerLevelDataType());
         if (attackerData == null) return;
 
         ClassModel attackerClass = ClassManager.get(attackerData.getPlayerClassId());
 
-        // --- A. BONUS DE FORCE ---
+        // Force
         float strengthBonus = StatConfig.STRENGTH_DAMAGE.getFinalValue(attackerData, attackerClass);
         float currentDamage = damage.getAmount() + strengthBonus;
 
-        // --- B. COUP CRITIQUE ---
+        // Coup Critique
         if (LuckSystem.isCriticalHit(attackerData)) {
             currentDamage *= CRIT_MULTIPLIER;
             LOGGER.atSevere().log("Coup Critique Donné ===> " + currentDamage);
         }
 
-        // On applique les dégâts calculés avant d'appeler les passifs
         damage.setAmount(currentDamage);
 
-        // --- C. PASSIFS OFFENSIFS DE CLASSE ---
-        // Ex: SWORD_MASTERY va lire le damage.getAmount(), le multiplier par 1.15 et le set.
+        // Passifs offensifs (Sword Mastery, etc.)
         for (PassiveSkill skill : attackerData.getActivePassives()) {
             if (skill.getLogic() != null) {
                 skill.getLogic().onAttack(damage, attackerData, store, victimRef);
@@ -157,7 +164,11 @@ public class CombatStatsSystem extends DamageEventSystem {
         try {
             Class<?> mod = Class.forName("com.hypixel.hytale.server.core.modules.entity.damage.DamageModule");
             Object inst = mod.getMethod("get").invoke(null);
+
+            // 🌟 CORRECTION DE PRIORITÉ ICI : On utilise ApplyDamageGroup
+            // pour que tes stats et passifs soient appliqués en TOUT DERNIER !
             return (SystemGroup<EntityStore>) mod.getMethod("getFilterDamageGroup").invoke(inst);
+
         } catch (Throwable e) {
             LOGGER.atSevere().log("Erreur critique dans CombatStatsSystem : " + e.getMessage());
             return null;

@@ -21,9 +21,7 @@ public class MobDamageReductionSystem extends DamageEventSystem {
 
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
 
-    // Ecart de niveau à partir duquel la réduction est totalement annulée (joueur >> mob)
     private static final float MAX_LEVEL_GAP = 100f;
-    // Dégâts minimum garantis si écart > -MAX_LEVEL_GAP
     private static final float MIN_DAMAGE = 1f;
 
     @Override
@@ -48,8 +46,9 @@ public class MobDamageReductionSystem extends DamageEventSystem {
         if (!(source instanceof Damage.EntitySource entitySource)) return;
 
         Ref<EntityStore> attackerRef = entitySource.getRef();
-        Player attackerPlayer = store.getComponent(attackerRef, Player.getComponentType());
+        if (!attackerRef.isValid()) return; // Sécurité supplémentaire
 
+        Player attackerPlayer = store.getComponent(attackerRef, Player.getComponentType());
         ComponentType<EntityStore, MobLevelData> mobLevelType = EldaniorSystem.get().getMobLevelDataType();
 
         // CAS 1 : Joueur attaque un mob
@@ -73,26 +72,17 @@ public class MobDamageReductionSystem extends DamageEventSystem {
                     + " (multiplier:" + multiplier + ")");
         }
 
-        // CAS 2 : Mob attaque
-        else {
-            MobLevelData mobData = store.getComponent(attackerRef, mobLevelType);
-            if (mobData == null || !mobData.isStatsApplied()) return;
-
-            float damageBonus = mobData.getLevel() * com.eldanior.system.config.configs.MobsWorldConfig.DAMAGE_PER_LEVEL;
-            damage.setAmount(damage.getAmount() + damageBonus);
-        }
+        // Le CAS 2 est maintenant supprimé comme convenu,
+        // car il est géré dans CombatStatsSystem !
     }
 
     private float computeFinalDamage(float originalDamage, float multiplier, int playerLevel, int mobLevel) {
         float levelGap = playerLevel - mobLevel;
 
-        // Joueur très supérieur (+100 niveaux) → aucune réduction
         if (levelGap >= MAX_LEVEL_GAP) {
             return originalDamage;
         }
 
-        // Joueur supérieur (gap positif) → réduction atténuée proportionnellement
-        // Joueur inférieur ou égal (gap <= 0) → réduction normale
         float reductionFactor;
         if (levelGap > 0) {
             reductionFactor = 1.0f - (levelGap / MAX_LEVEL_GAP);
@@ -100,11 +90,9 @@ public class MobDamageReductionSystem extends DamageEventSystem {
             reductionFactor = 1.0f;
         }
 
-        // Diviseur effectif : entre 1.0 (aucune réduction) et multiplier (réduction pleine)
         float effectiveDivisor = 1.0f + (multiplier - 1.0f) * reductionFactor;
         float reducedDamage = originalDamage / effectiveDivisor;
 
-        // Minimum 1 dégât garanti sauf si joueur très inférieur (-100 niveaux ou plus)
         if (levelGap > -MAX_LEVEL_GAP && reducedDamage < MIN_DAMAGE) {
             return MIN_DAMAGE;
         }
