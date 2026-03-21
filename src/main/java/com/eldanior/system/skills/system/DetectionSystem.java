@@ -16,6 +16,7 @@ import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
 import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.protocol.packets.interface_.NotificationStyle;
+import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
@@ -33,7 +34,6 @@ public class DetectionSystem extends EntityTickingSystem<EntityStore> {
         long lastSeen;
         long lastMessageTime;
 
-        // On sépare les Mobs et les Joueurs
         final Set<Ref<EntityStore>> detectedMobs = ConcurrentHashMap.newKeySet();
         final Set<Ref<EntityStore>> detectedPlayers = ConcurrentHashMap.newKeySet();
 
@@ -51,12 +51,10 @@ public class DetectionSystem extends EntityTickingSystem<EntityStore> {
         PlayerLevelData pData = archetypeChunk.getComponent(index, EldaniorSystem.get().getPlayerLevelDataType());
         boolean isPlayer = (pData != null);
 
-        // 1. MISE À JOUR DU RADAR DU JOUEUR (S'il en a un)
         if (isPlayer) {
             updatePlayerRadar(index, archetypeChunk, entityRef, pData, store);
         }
 
-        // 2. DÉTECTION DES CIBLES (Les monstres ET les autres joueurs)
         if (activeRadars.isEmpty()) return;
 
         boolean isMob = archetypeChunk.getComponent(index, EldaniorSystem.get().getMobLevelDataType()) != null;
@@ -90,7 +88,8 @@ public class DetectionSystem extends EntityTickingSystem<EntityStore> {
 
         if (pData.getActivePassives() != null) {
             for (PassiveSkill skill : pData.getActivePassives()) {
-                if (skill.getLogic() != null && skill.getLogic().getRadarMessage(0, 0, 0) != null) {
+                // CORRECTION ICI : On utilise des valeurs vides correspondant à la nouvelle méthode
+                if (skill.getLogic() != null && skill.getLogic().getRadarMessage(java.util.Collections.emptyList(), 0, 0) != null) {
                     radar.activeSkillLogic = skill.getLogic();
                     break;
                 }
@@ -102,15 +101,13 @@ public class DetectionSystem extends EntityTickingSystem<EntityStore> {
 
         long now = System.currentTimeMillis();
         if (now - radar.lastMessageTime >= 20000) {
-            int mCount = radar.detectedMobs.size();
-            int pCount = radar.detectedPlayers.size();
 
-            if (mCount > 0 || pCount > 0) {
+            if (!radar.detectedMobs.isEmpty() || !radar.detectedPlayers.isEmpty()) {
                 PlayerRef pRef = chunk.getComponent(index, PlayerRef.getComponentType());
                 if (pRef != null) {
 
-                    // --- CALCUL DE LA DISTANCE LA PLUS PROCHE ---
-                    double closestDistSq = Double.MAX_VALUE;
+                    // --- CRÉATION DE LA LISTE DES CIBLES ---
+                    java.util.List<IPassiveCombatSkill.RadarTarget> allTargets = new java.util.ArrayList<>();
 
                     for (Ref<EntityStore> target : radar.detectedMobs) {
                         TransformComponent t = store.getComponent(target, TransformComponent.getComponentType());
@@ -119,29 +116,54 @@ public class DetectionSystem extends EntityTickingSystem<EntityStore> {
                             double dx = radar.pos.x - tPos.x;
                             double dy = radar.pos.y - tPos.y;
                             double dz = radar.pos.z - tPos.z;
-                            closestDistSq = Math.min(closestDistSq, (dx * dx) + (dy * dy) + (dz * dz));
+                            int dist = (int) Math.sqrt((dx * dx) + (dy * dy) + (dz * dz));
+
+                            // ⚠️ Adapte ici si tu as une méthode pour récupérer le vrai nom du mob
+                            String mobName = "Monstre";
+                            allTargets.add(new IPassiveCombatSkill.RadarTarget(mobName, dist, false));
                         }
                     }
 
                     for (Ref<EntityStore> target : radar.detectedPlayers) {
                         TransformComponent t = store.getComponent(target, TransformComponent.getComponentType());
-                        if (t != null) {
+                        Player targetPlayer = store.getComponent(target, Player.getComponentType());
+                        if (t != null && targetPlayer != null) {
                             Vector3d tPos = t.getPosition();
                             double dx = radar.pos.x - tPos.x;
                             double dy = radar.pos.y - tPos.y;
                             double dz = radar.pos.z - tPos.z;
-                            closestDistSq = Math.min(closestDistSq, (dx * dx) + (dy * dy) + (dz * dz));
+                            int dist = (int) Math.sqrt((dx * dx) + (dy * dy) + (dz * dz));
+
+                            String playerName = targetPlayer.getDisplayName();
+                            allTargets.add(new IPassiveCombatSkill.RadarTarget(playerName != null ? playerName : "Joueur", dist, true));
                         }
                     }
 
-                    int closestDist = (int) Math.sqrt(closestDistSq);
+                    // On trie tout le monde du plus proche au plus éloigné
+                    java.util.Collections.sort(allTargets);
+
+                    // On garde les 3 premiers (les plus proches), et on compte le reste
+                    java.util.List<IPassiveCombatSkill.RadarTarget> closestTargets = new java.util.ArrayList<>();
+                    int extraMobs = 0;
+                    int extraPlayers = 0;
+
+                    for (int i = 0; i < allTargets.size(); i++) {
+                        if (i < 3) {
+                            closestTargets.add(allTargets.get(i));
+                        } else {
+                            // En Java (Record), on accède aux variables par nomDeVariable()
+                            if (allTargets.get(i).isPlayer()) extraPlayers++;
+                            else extraMobs++;
+                        }
+                    }
 
                     // --- ENVOI DU MESSAGE ---
-                    String message = "<color:red>" + (mCount + pCount) + " menace(s) à " + closestDist + "m</color>";
+                    int total = allTargets.size();
+                    String message = "<color:red>" + total + " menace(s) à proximité</color>";
                     NotificationStyle style = NotificationStyle.Warning;
 
                     if (radar.activeSkillLogic != null) {
-                        String customMsg = radar.activeSkillLogic.getRadarMessage(mCount, pCount, closestDist);
+                        String customMsg = radar.activeSkillLogic.getRadarMessage(closestTargets, extraMobs, extraPlayers);
                         if (customMsg != null) message = customMsg;
 
                         NotificationStyle customStyle = radar.activeSkillLogic.getRadarStyle();
@@ -162,7 +184,6 @@ public class DetectionSystem extends EntityTickingSystem<EntityStore> {
             Ref<EntityStore> radarOwner = entry.getKey();
             PlayerRadarInfo radar = entry.getValue();
 
-            // Ne pas s'ajouter soi-même à son propre radar
             if (radarOwner.equals(targetRef)) continue;
 
             if (now - radar.lastSeen > 2000) {

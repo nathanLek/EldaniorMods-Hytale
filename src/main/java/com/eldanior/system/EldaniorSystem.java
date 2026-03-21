@@ -147,6 +147,7 @@ public class EldaniorSystem extends JavaPlugin {
             this.getEntityStoreRegistry().registerSystem(new TreasureChestBreakBlockEvent());
             this.getEntityStoreRegistry().registerSystem(new TreasureChestDamageBlockEvent());
             this.getEntityStoreRegistry().registerSystem(new TreasureChestRangeSystem());
+            this.getEntityStoreRegistry().registerSystem(new CraftingRestrictionSystem());
 
             LOGGER.atInfo().log("[OK] Systèmes ECS activés.");
         } catch (Exception e) {

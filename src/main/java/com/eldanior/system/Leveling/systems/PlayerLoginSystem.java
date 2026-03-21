@@ -14,6 +14,7 @@ import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatsModule;
+import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
@@ -59,7 +60,14 @@ public class PlayerLoginSystem extends EntityTickingSystem<EntityStore> {
         final PlayerLevelData finalData = data;
 
         commandBuffer.run(deferredStore -> {
+            LOGGER.atInfo().log("[PlayerLogin] Mana avant update : " +
+                    statMap.get(DefaultEntityStatTypes.getMana()).get() +
+                    " / " + statMap.get(DefaultEntityStatTypes.getMana()).getMax());
+
             StatCalculator.updatePlayerStats(playerRef, deferredStore, finalData);
+            LOGGER.atInfo().log("[PlayerLogin] Mana après update : " +
+                    statMap.get(DefaultEntityStatTypes.getMana()).get() +
+                    " / " + statMap.get(DefaultEntityStatTypes.getMana()).getMax());
             LOGGER.atInfo().log("[PlayerLogin] Stats appliquées pour : " + uuid + " Lv." + finalData.getLevel());
         });
 

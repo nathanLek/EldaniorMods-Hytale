@@ -1,0 +1,14 @@
+package com.eldanior.system.skills.skills.passives.Common.Endurance;
+
+import com.eldanior.system.config.configs.StatConfig;
+import com.eldanior.system.skills.skillsInteraction.IPassiveCombatSkill;
+
+public class ThickSkin implements IPassiveCombatSkill {
+    @Override
+    public float getFlatStatBonus(StatConfig stat) {
+        if (stat == StatConfig.ENDURANCE_DEFENSE) {
+            return 5.0f; // +5 à la Défense d'Endurance
+        }
+        return 0.0f;
+    }
+}

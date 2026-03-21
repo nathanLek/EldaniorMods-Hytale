@@ -8,22 +8,33 @@ import com.hypixel.hytale.protocol.packets.interface_.NotificationStyle;
 import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
+import java.util.List;
+
 public interface IPassiveCombatSkill {
 
-    // --- COMBAT ---
-    // Ajout de attackerRef ici pour pouvoir identifier l'attaquant (celui qui a le passif)
+    record RadarTarget(String name, int distance, boolean isPlayer) implements Comparable<RadarTarget> {
+    @Override
+        public int compareTo(RadarTarget o) {
+            return Integer.compare(this.distance, o.distance); // Trie par distance
+        }
+    }
     default void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {}
-
-    // Méthode pour la défense (Déjà correcte)
     default void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {}
 
     // --- STATISTIQUES ---
     default float getFlatStatBonus(StatConfig stat) { return 0.0f; }
     default float getStatMultiplier(StatConfig stat) { return 1.0f; }
-    default String getRadarMessage(int mobCount, int playerCount, int closestDistance) {
-        // Message par défaut pour les autres compétences
-        int total = mobCount + playerCount;
+
+    // --- DETECTION ---
+    default String getRadarMessage(List<RadarTarget> closestTargets, int extraMobs, int extraPlayers) {
+        int total = closestTargets.size() + extraMobs + extraPlayers;
+        if (total == 0) return null;
         return "<color:red>" + total + " présence(s) à proximité</color>";
     }
     default NotificationStyle getRadarStyle() { return null; }
+
+    // --- REGENERATION ---
+    default float getRegenMultiplier(StatConfig stat) {
+        return 1.0f;
+    }
 }

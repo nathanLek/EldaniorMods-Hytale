@@ -25,13 +25,59 @@ Group {
       LayoutMode: Left;
       Anchor: (Height: 200);
 
-      Button #ClassTile0 { Anchor: (Width: 160, Height: 190); Padding: (Full: 2); Style: (Default: (Background: #0d1b2a), Hovered: (Background: #1a3a5c), Pressed: (Background: #0a2a4a)); ItemIcon #CategoryIcon { Anchor: (Width: 100, Height: 100); Visible: true; } Label #ClassLabel { Text: ""; Style: (FontName: "Secondary", FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #b4c8c9, HorizontalAlignment: Center, VerticalAlignment: End, Wrap: true); Anchor: (Bottom: 8, Full: 0); } }
+      Button #ClassTile0 {
+        Anchor: (Width: 160, Height: 190);
+        Padding: (Full: 6);
+        Style: (Default: (Background: #0d1b2a), Hovered: (Background: #1a3a5c), Pressed: (Background: #0a2a4a));
+        Group #RarityBorderTop    { Anchor: (Full: 0, Top: 2);    Background: #FFFFFF; }
+        Group #RarityBorderBottom { Anchor: (Full: 0, Bottom: 2); Background: #FFFFFF; }
+        Group #RarityBorderLeft   { Anchor: (Left: 2, Full: 0);   Background: #FFFFFF; }
+        Group #RarityBorderRight  { Anchor: (Right: 2, Full: 0);  Background: #FFFFFF; }
+        ItemIcon #CategoryIcon { Anchor: (Width: 100, Height: 100); Visible: true; }
+        Label #ClassLabel { Text: ""; Style: (FontName: "Secondary", FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #b4c8c9, HorizontalAlignment: Center, VerticalAlignment: End, Wrap: true); Anchor: (Bottom: 8, Full: 0); }
+      }
+
       Group { Anchor: (Width: 8); }
-      Button #ClassTile1 { Anchor: (Width: 160, Height: 190); Padding: (Full: 2); Style: (Default: (Background: #0d1b2a), Hovered: (Background: #1a3a5c), Pressed: (Background: #0a2a4a)); ItemIcon #CategoryIcon { Anchor: (Width: 100, Height: 100); Visible: true; } Label #ClassLabel { Text: ""; Style: (FontName: "Secondary", FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #b4c8c9, HorizontalAlignment: Center, VerticalAlignment: End, Wrap: true); Anchor: (Bottom: 8, Full: 0); } }
+
+      Button #ClassTile1 {
+        Anchor: (Width: 160, Height: 190);
+        Padding: (Full: 6);
+        Style: (Default: (Background: #0d1b2a), Hovered: (Background: #1a3a5c), Pressed: (Background: #0a2a4a));
+        Group #RarityBorderTop    { Anchor: (Full: 0, Top: 2);    Background: #FFFFFF; }
+        Group #RarityBorderBottom { Anchor: (Full: 0, Bottom: 2); Background: #FFFFFF; }
+        Group #RarityBorderLeft   { Anchor: (Left: 2, Full: 0);   Background: #FFFFFF; }
+        Group #RarityBorderRight  { Anchor: (Right: 2, Full: 0);  Background: #FFFFFF; }
+        ItemIcon #CategoryIcon { Anchor: (Width: 100, Height: 100); Visible: true; }
+        Label #ClassLabel { Text: ""; Style: (FontName: "Secondary", FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #b4c8c9, HorizontalAlignment: Center, VerticalAlignment: End, Wrap: true); Anchor: (Bottom: 8, Full: 0); }
+      }
+
       Group { Anchor: (Width: 8); }
-      Button #ClassTile2 { Anchor: (Width: 160, Height: 190); Padding: (Full: 2); Style: (Default: (Background: #0d1b2a), Hovered: (Background: #1a3a5c), Pressed: (Background: #0a2a4a)); ItemIcon #CategoryIcon { Anchor: (Width: 100, Height: 100); Visible: true; } Label #ClassLabel { Text: ""; Style: (FontName: "Secondary", FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #b4c8c9, HorizontalAlignment: Center, VerticalAlignment: End, Wrap: true); Anchor: (Bottom: 8, Full: 0); } }
+
+      Button #ClassTile2 {
+        Anchor: (Width: 160, Height: 190);
+        Padding: (Full: 6);
+        Style: (Default: (Background: #0d1b2a), Hovered: (Background: #1a3a5c), Pressed: (Background: #0a2a4a));
+        Group #RarityBorderTop    { Anchor: (Full: 0, Top: 2);    Background: #FFFFFF; }
+        Group #RarityBorderBottom { Anchor: (Full: 0, Bottom: 2); Background: #FFFFFF; }
+        Group #RarityBorderLeft   { Anchor: (Left: 2, Full: 0);   Background: #FFFFFF; }
+        Group #RarityBorderRight  { Anchor: (Right: 2, Full: 0);  Background: #FFFFFF; }
+        ItemIcon #CategoryIcon { Anchor: (Width: 100, Height: 100); Visible: true; }
+        Label #ClassLabel { Text: ""; Style: (FontName: "Secondary", FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #b4c8c9, HorizontalAlignment: Center, VerticalAlignment: End, Wrap: true); Anchor: (Bottom: 8, Full: 0); }
+      }
+
       Group { Anchor: (Width: 8); }
-      Button #ClassTile3 { Anchor: (Width: 160, Height: 190); Padding: (Full: 2); Style: (Default: (Background: #0d1b2a), Hovered: (Background: #1a3a5c), Pressed: (Background: #0a2a4a)); ItemIcon #CategoryIcon { Anchor: (Width: 100, Height: 100); Visible: true; } Label #ClassLabel { Text: ""; Style: (FontName: "Secondary", FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #b4c8c9, HorizontalAlignment: Center, VerticalAlignment: End, Wrap: true); Anchor: (Bottom: 8, Full: 0); } }
+
+      Button #ClassTile3 {
+        Anchor: (Width: 160, Height: 190);
+        Padding: (Full: 6);
+        Style: (Default: (Background: #0d1b2a), Hovered: (Background: #1a3a5c), Pressed: (Background: #0a2a4a));
+        Group #RarityBorderTop    { Anchor: (Full: 0, Top: 2);    Background: #FFFFFF; }
+        Group #RarityBorderBottom { Anchor: (Full: 0, Bottom: 2); Background: #FFFFFF; }
+        Group #RarityBorderLeft   { Anchor: (Left: 2, Full: 0);   Background: #FFFFFF; }
+        Group #RarityBorderRight  { Anchor: (Right: 2, Full: 0);  Background: #FFFFFF; }
+        ItemIcon #CategoryIcon { Anchor: (Width: 100, Height: 100); Visible: true; }
+        Label #ClassLabel { Text: ""; Style: (FontName: "Secondary", FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #b4c8c9, HorizontalAlignment: Center, VerticalAlignment: End, Wrap: true); Anchor: (Bottom: 8, Full: 0); }
+      }
     }
 
     Group { Anchor: (Height: 10); }
@@ -40,9 +86,31 @@ Group {
       LayoutMode: Left;
       Anchor: (Height: 200);
 
-      Button #ClassTile4 { Anchor: (Width: 160, Height: 190); Padding: (Full: 2); Style: (Default: (Background: #0d1b2a), Hovered: (Background: #1a3a5c), Pressed: (Background: #0a2a4a)); ItemIcon #CategoryIcon { Anchor: (Width: 100, Height: 100); Visible: true; } Label #ClassLabel { Text: ""; Style: (FontName: "Secondary", FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #b4c8c9, HorizontalAlignment: Center, VerticalAlignment: End, Wrap: true); Anchor: (Bottom: 8, Full: 0); } }
+      Button #ClassTile4 {
+        Anchor: (Width: 160, Height: 190);
+        Padding: (Full: 6);
+        Style: (Default: (Background: #0d1b2a), Hovered: (Background: #1a3a5c), Pressed: (Background: #0a2a4a));
+        Group #RarityBorderTop    { Anchor: (Full: 0, Top: 2);    Background: #FFFFFF; }
+        Group #RarityBorderBottom { Anchor: (Full: 0, Bottom: 2); Background: #FFFFFF; }
+        Group #RarityBorderLeft   { Anchor: (Left: 2, Full: 0);   Background: #FFFFFF; }
+        Group #RarityBorderRight  { Anchor: (Right: 2, Full: 0);  Background: #FFFFFF; }
+        ItemIcon #CategoryIcon { Anchor: (Width: 100, Height: 100); Visible: true; }
+        Label #ClassLabel { Text: ""; Style: (FontName: "Secondary", FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #b4c8c9, HorizontalAlignment: Center, VerticalAlignment: End, Wrap: true); Anchor: (Bottom: 8, Full: 0); }
+      }
+
       Group { Anchor: (Width: 8); }
-      Button #ClassTile5 { Anchor: (Width: 160, Height: 190); Padding: (Full: 2); Style: (Default: (Background: #0d1b2a), Hovered: (Background: #1a3a5c), Pressed: (Background: #0a2a4a)); ItemIcon #CategoryIcon { Anchor: (Width: 100, Height: 100); Visible: true; } Label #ClassLabel { Text: ""; Style: (FontName: "Secondary", FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #b4c8c9, HorizontalAlignment: Center, VerticalAlignment: End, Wrap: true); Anchor: (Bottom: 8, Full: 0); } }
+
+      Button #ClassTile5 {
+        Anchor: (Width: 160, Height: 190);
+        Padding: (Full: 6);
+        Style: (Default: (Background: #0d1b2a), Hovered: (Background: #1a3a5c), Pressed: (Background: #0a2a4a));
+        Group #RarityBorderTop    { Anchor: (Full: 0, Top: 2);    Background: #FFFFFF; }
+        Group #RarityBorderBottom { Anchor: (Full: 0, Bottom: 2); Background: #FFFFFF; }
+        Group #RarityBorderLeft   { Anchor: (Left: 2, Full: 0);   Background: #FFFFFF; }
+        Group #RarityBorderRight  { Anchor: (Right: 2, Full: 0);  Background: #FFFFFF; }
+        ItemIcon #CategoryIcon { Anchor: (Width: 100, Height: 100); Visible: true; }
+        Label #ClassLabel { Text: ""; Style: (FontName: "Secondary", FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #b4c8c9, HorizontalAlignment: Center, VerticalAlignment: End, Wrap: true); Anchor: (Bottom: 8, Full: 0); }
+      }
     }
   }
 }

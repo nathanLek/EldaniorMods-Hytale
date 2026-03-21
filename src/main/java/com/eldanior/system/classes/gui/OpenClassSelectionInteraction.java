@@ -20,12 +20,13 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class OpenClassSelectionInteraction extends SimpleInteraction {
 
     private static final int REQUIRED_LEVEL = 20;
+    private static final Random RANDOM = new Random();
 
     public OpenClassSelectionInteraction() { super(); }
 
@@ -60,21 +61,22 @@ public class OpenClassSelectionInteraction extends SimpleInteraction {
             return;
         }
 
+        // --- 1. CHOIX DE LA CLASSE DE BASE (Niveau 20) ---
         if (isNovice) {
-            List<ClassModel> baseClasses = new ArrayList<>();
+            List<String> baseClassIds = new ArrayList<>();
             for (ClassModel m : ClassManager.getAll()) {
                 if (!m.isAdminAccess()
                         && !m.getId().equalsIgnoreCase("novice")
-                        && m.getRarity() == Rarity.COMMON
-                        && m.getType() != ClassType.NOVICE) {
-                    baseClasses.add(m);
+                        && !ClassManager.isEvolution(m.getId())) {
+                    baseClassIds.add(m.getId());
                 }
             }
-            ClassIntroScreen.setPending(baseClasses, false);
-            player.getPageManager().openCustomPage(entityRef, store, new ClassIntroScreen(playerRef));
+            player.getPageManager().openCustomPage(entityRef, store,
+                    new ClassIntroScreen(playerRef, baseClassIds, false));
             return;
         }
 
+        // --- 2. ÉVOLUTION DE CLASSE (Niveau 120, etc.) ---
         ClassModel currentClass = ClassManager.get(currentClassId);
         if (currentClass == null) return;
 
@@ -86,26 +88,81 @@ public class OpenClassSelectionInteraction extends SimpleInteraction {
             return;
         }
 
-        List<ClassModel> evolutions = new ArrayList<>();
-        for (ClassModel m : ClassManager.getAll()) {
-            if (!m.isAdminAccess()
-                    && m.getType() == currentClass.getType()
-                    && m.getPromotionLevel() > currentClass.getPromotionLevel()) {
-                evolutions.add(m);
-            }
-        }
+        List<String> possibleEvolutions = currentClass.getNextClassId();
 
-        if (evolutions.isEmpty()) {
+        if (possibleEvolutions == null || possibleEvolutions.isEmpty()) {
             NotificationHelper.sendNotification(playerRef,
-                    "<color:gray>Aucune évolution disponible pour votre classe.</color>",
+                    "<color:gray>Vous avez atteint le sommet. Aucune évolution supplémentaire disponible.</color>",
                     NotificationStyle.Warning);
             return;
         }
 
-        Collections.shuffle(evolutions);
-        List<ClassModel> proposed = evolutions.subList(0, Math.min(3, evolutions.size()));
+        // --- 3. SYSTÈME DE GACHA AVEC TAUX DE DROP ---
+        List<String> proposedIds = performGachaRoll(possibleEvolutions, 3);
 
-        ClassIntroScreen.setPending(proposed, true);
-        player.getPageManager().openCustomPage(entityRef, store, new ClassEvolutionIntroScreen(playerRef));
+        player.getPageManager().openCustomPage(entityRef, store,
+                new ClassEvolutionIntroScreen(playerRef, proposedIds));
+    }
+
+    // ==========================================================
+    // MÉTHODES DU GACHA
+    // ==========================================================
+
+    /**
+     * Effectue un tirage au sort pondéré pour choisir 'amount' classes uniques.
+     */
+    private List<String> performGachaRoll(List<String> pool, int amount) {
+        List<String> result = new ArrayList<>();
+        List<String> remainingPool = new ArrayList<>(pool);
+
+        int maxChoices = Math.min(amount, remainingPool.size());
+
+        for (int i = 0; i < maxChoices; i++) {
+            int totalWeight = 0;
+
+            // Étape A : Calcul du poids total de l'urne restante
+            for (String id : remainingPool) {
+                ClassModel model = ClassManager.get(id);
+                if (model != null) {
+                    totalWeight += getRarityWeight(model.getRarity());
+                }
+            }
+
+            if (totalWeight == 0) break; // Sécurité
+
+            // Étape B : On lance un dé de 0 à totalWeight
+            int roll = RANDOM.nextInt(totalWeight);
+            int currentWeightSum = 0;
+
+            // Étape C : On cherche sur quelle classe le dé est tombé
+            for (int j = 0; j < remainingPool.size(); j++) {
+                String id = remainingPool.get(j);
+                ClassModel model = ClassManager.get(id);
+
+                if (model != null) {
+                    currentWeightSum += getRarityWeight(model.getRarity());
+
+                    // Si on dépasse le lancer de dé, c'est que c'est cette classe qui a été piochée !
+                    if (currentWeightSum > roll) {
+                        result.add(id);
+                        remainingPool.remove(j); // On la retire de l'urne pour ne pas la piocher en double
+                        break;
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    private int getRarityWeight(Rarity rarity) {
+        return switch (rarity) {
+            case COMMON    -> 50000; // 1 chance sur 2 (50%)
+            case RARE      -> 33333; // 1 chance sur 3 (~33.3%)
+            case EPIC      -> 6666;  // 1 chance sur 15 (~6.6%)
+            case UNIQUE    -> 500;   // 1 chance sur 200 (0.5%)
+            case LEGENDARY -> 125;   // 1 chance sur 800 (0.125%)
+            case DIVINE    -> 20;    // 1 chance sur 5000 (0.02%)
+            default        -> 50000;
+        };
     }
 }

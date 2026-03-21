@@ -16,8 +16,8 @@ public class Assassin extends ClassModel {
                 Rarity.COMMON,
                 ClassType.ASSASSIN,
                 List.of(),
-                null,
-                20,
+                List.of(),
+                120,
                 false,
                 1000, 300, 200, 0, 2000, 3000
         );

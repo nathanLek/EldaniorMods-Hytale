@@ -1,6 +1,5 @@
 package com.eldanior.system.classes.gui;
 
-import com.eldanior.system.classes.models.ClassModel;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
@@ -21,16 +20,15 @@ import java.util.List;
 
 public class ClassIntroScreen extends InteractiveCustomUIPage<ClassIntroScreen.IntroEventData> {
 
-    public static List<ClassModel> pendingClasses;
-    public static boolean pendingIsEvolution;
+    // --- CORRECTION : Variables d'instance (personnelles au joueur) au lieu de statiques ---
+    private final List<String> availableClasses;
+    private final boolean isEvolution;
 
-    public static void setPending(List<ClassModel> classes, boolean isEvolution) {
-        pendingClasses = classes;
-        pendingIsEvolution = isEvolution;
-    }
-
-    public ClassIntroScreen(@Nonnull PlayerRef playerRef) {
+    // Le constructeur demande maintenant directement la liste lors de la création de l'écran
+    public ClassIntroScreen(@Nonnull PlayerRef playerRef, List<String> availableClasses, boolean isEvolution) {
         super(playerRef, CustomPageLifetime.CanDismiss, IntroEventData.CODEC);
+        this.availableClasses = availableClasses;
+        this.isEvolution = isEvolution;
     }
 
     @Override
@@ -53,8 +51,9 @@ public class ClassIntroScreen extends InteractiveCustomUIPage<ClassIntroScreen.I
         PlayerRef playerRef = store.getComponent(ref, PlayerRef.getComponentType());
         if (player == null || playerRef == null) return;
 
+        // On transmet la liste personnelle du joueur à l'écran de sélection !
         player.getPageManager().openCustomPage(ref, store,
-                new ClassSelectionScreen(playerRef, pendingClasses, pendingIsEvolution));
+                new ClassSelectionScreen(playerRef, this.availableClasses, this.isEvolution));
     }
 
     public static class IntroEventData {

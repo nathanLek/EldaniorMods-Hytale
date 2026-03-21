@@ -12,13 +12,13 @@ public enum StatConfig {
     // === STATS CLASSIQUES (EntityStatMap) ===
     // Ordre : Type, StatID, Key, Base, Ratio, Regen, Cap (NOUVEAU), ProviderPlayer, ProviderClass
 
-    VITALITY(StatType.ATTRIBUTE, DefaultEntityStatTypes.getHealth(), "Eldanior_Vitality", 0.0f, 0.5f, 0.005f, 0.0f,
+    VITALITY(StatType.ATTRIBUTE, DefaultEntityStatTypes.getHealth(), "Eldanior_Vitality", 0.0f, 0.5f, 0.0002778f, 0.0f,
             PlayerLevelData::getVitality, ClassModel::getBonusVit),
 
-    INTELLIGENCE(StatType.ATTRIBUTE, DefaultEntityStatTypes.getMana(), "Eldanior_Intelligence", 0.0f, 3.33f, 0.005f, 0.0f,
+    INTELLIGENCE(StatType.ATTRIBUTE, DefaultEntityStatTypes.getMana(), "Eldanior_Intelligence", 0.0f, 3.33f, 0.0001852f, 0.0f,
             PlayerLevelData::getIntelligence, ClassModel::getBonusInt),
 
-    ENDURANCE(StatType.ATTRIBUTE, DefaultEntityStatTypes.getStamina(), "Eldanior_Endurance", 0.0f, 3.0f, 0.03f, 0.0f,
+    ENDURANCE(StatType.ATTRIBUTE, DefaultEntityStatTypes.getStamina(), "Eldanior_Endurance", 0.0f, 0.5f, 0, 0.0f,
             PlayerLevelData::getEndurance, ClassModel::getBonusEnd),
 
     // === MOUVEMENTS ===
@@ -48,6 +48,9 @@ public enum StatConfig {
             PlayerLevelData::getAgility, ClassModel::getBonusAgl),
 
     ATTACK_SPEED(StatType.MECHANIC, -1, "Eldanior_Attack_Speed", 1.0f, 0.005f, 0.0f, 4.0f, // Cap à x4
+            PlayerLevelData::getAgility, ClassModel::getBonusAgl),
+
+    DODGE_CHANCE(StatType.MECHANIC, -1, "Agility_Dodge", 0.0f, 0.5f, 0.0f, 80.0f,
             PlayerLevelData::getAgility, ClassModel::getBonusAgl),
 
     // 5. DEGATS FORCE : +0.032 dégâts par point

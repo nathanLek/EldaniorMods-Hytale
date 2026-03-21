@@ -18,7 +18,7 @@ public abstract class ClassModel {
     private final List<PassiveSkill> passiveSkills; // Utilisation de l'Enum pour la sécurité
 
     // Progression & Evolution
-    private final String nextClassId;
+    private final List<String> nextClassId;
     private final int promotionLevel;
     private final boolean adminAccess;
 
@@ -37,7 +37,7 @@ public abstract class ClassModel {
             Rarity rarity,
             ClassType type,
             List<PassiveSkill> passiveSkills,
-            String nextClassId,
+            List<String> nextClassId,
             int promotionLevel,
             boolean adminAccess,
             int str,
@@ -54,7 +54,7 @@ public abstract class ClassModel {
         this.type = type;
         // On s'assure que la liste n'est jamais nulle pour éviter les NullPointerException
         this.passiveSkills = (passiveSkills != null) ? List.copyOf(passiveSkills) : Collections.emptyList();
-        this.nextClassId = nextClassId;
+        this.nextClassId = (nextClassId != null) ? List.copyOf(nextClassId) : Collections.emptyList();
         this.promotionLevel = promotionLevel;
         this.adminAccess = adminAccess;
         this.bonusStr = str;
@@ -78,7 +78,7 @@ public abstract class ClassModel {
      */
     public List<PassiveSkill> getSkillsPassiveIds() { return passiveSkills; }
 
-    public String getNextClassId() { return nextClassId; }
+    public List<String> getNextClassId() { return nextClassId; }
     public int getPromotionLevel() { return promotionLevel; }
     public boolean isAdminAccess() { return adminAccess; }
 

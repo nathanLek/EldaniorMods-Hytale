@@ -16,8 +16,8 @@ public class Mage extends ClassModel {
                 Rarity.COMMON,
                 ClassType.MAGE,
                 List.of(),
-                null,
-                20,
+                List.of(),
+                120,
                 false,
                 3, 3, 12, 2, 2, 3
         );

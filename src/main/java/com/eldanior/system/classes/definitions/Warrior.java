@@ -17,7 +17,7 @@ public class Warrior extends ClassModel {
                 Rarity.COMMON,
                 ClassType.WARRIOR,
                 List.of(),
-                "templier",
+                List.of("templier", "epeiste", "fantassin", "brute", "mercenaire", "avant_garde", "ravageur", "bretteur", "lame_mage", "champion", "colosse", "executeur", "gardien_runique", "titan", "heros", "fleau", "sang_dragon", "DivineApotre"),
                 120,
                 false,
                 5, 5, 2, 2, 3, 1

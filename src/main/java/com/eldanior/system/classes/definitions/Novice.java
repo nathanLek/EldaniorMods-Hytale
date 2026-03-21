@@ -16,8 +16,8 @@ public class Novice extends ClassModel {
                 Rarity.COMMON,
                 ClassType.NOVICE,
                 List.of(),
-                null,
-                0,
+                List.of("assassin", "warrior", "mage", "merchant", "archer"),
+                20,
                 false,
                 0, 0, 0, 0, 0, 0
         );

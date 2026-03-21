@@ -21,10 +21,12 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import java.lang.reflect.Method;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class StatCalculator {
 
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
+    private static final AtomicBoolean regenMethodsLogged = new AtomicBoolean(false);
 
     public static void updatePlayerStats(Ref<EntityStore> playerRef, Store<EntityStore> store, PlayerLevelData data) {
         if (data == null) return;
@@ -44,13 +46,11 @@ public class StatCalculator {
             if (changed) statMapChanged = true;
         }
 
-        // Sync réseau de la statMap si au moins une stat ATTRIBUTE a changé
         if (statMapChanged) {
             syncStatMap(store, playerRef, statMap);
         }
     }
 
-    // Retourne true si une stat ATTRIBUTE a été modifiée
     private static boolean applyStat(EntityStatMap statMap, Store<EntityStore> store, Ref<EntityStore> playerRef,
                                      StatConfig config, PlayerLevelData data, ClassModel model) {
 
@@ -59,12 +59,10 @@ public class StatCalculator {
             EntityStatValue statValue = statMap.get(config.getStatId());
             if (statValue == null) return false;
 
-            float oldMax     = statValue.getMax();
+            float oldMax  = statValue.getMax();
             float currentVal = statValue.get();
 
-            // ✅ CORRECTION : On utilise la valeur finale calculée avec les passifs !
-            // On soustrait la baseValue car le modificateur Hytale s'ajoute à la base de l'entité.
-            float bonus      = config.getFinalValue(data, model) - config.getBaseValue();
+            float bonus = config.getFinalValue(data, model) - config.getBaseValue();
 
             statMap.removeModifier(config.getStatId(), config.getModifierKey());
 
@@ -74,10 +72,12 @@ public class StatCalculator {
             }
 
             float newMax = statValue.getMax();
+            float restoredValue = (newMax > oldMax)
+                    ? Math.min(newMax, currentVal + (newMax - oldMax))
+                    : currentVal;
 
-            if (newMax > oldMax) {
-                float newValue = currentVal + (newMax - oldMax);
-                statMap.setStatValue(config.getStatId(), Math.min(newMax, newValue));
+            if (statValue.get() != restoredValue) {
+                statMap.setStatValue(config.getStatId(), restoredValue);
             }
 
             return true;
@@ -93,18 +93,14 @@ public class StatCalculator {
             boolean changed = false;
 
             if (config.getType() == StatConfig.StatType.MOVEMENT_SPEED) {
-                // ✅ CORRECTION : Le sprint lit désormais getFinalValue() qui inclut les passifs (Athleticism) !
                 float newSpeed = config.getFinalValue(data, model);
 
                 if (Math.abs(settings.forwardSprintSpeedMultiplier - newSpeed) > 0.001f) {
                     settings.forwardSprintSpeedMultiplier = newSpeed;
                     settings.strafeRunSpeedMultiplier     = newSpeed;
-                    // Optionnel : tu peux aussi booster la vitesse de marche !
-                    // settings.forwardWalkSpeedMultiplier   = newSpeed;
                     changed = true;
                 }
             } else {
-                // ✅ CORRECTION : Le saut lit aussi les passifs !
                 float newJump = config.getFinalValue(data, model);
 
                 if (Math.abs(settings.jumpForce - newJump) > 0.01f) {
@@ -130,7 +126,6 @@ public class StatCalculator {
             PlayerRef playerRef = Universe.get().getPlayer(playerUuid);
             if (playerRef == null) return;
 
-            // Tente les méthodes connues pour syncer la statMap au client
             for (Method m : statMap.getClass().getMethods()) {
                 if ((m.getName().equals("sync") || m.getName().equals("sendUpdate")
                         || m.getName().equals("update") || m.getName().equals("markDirty"))
@@ -140,7 +135,6 @@ public class StatCalculator {
                 }
             }
 
-            // Fallback : re-persisté le composant pour forcer la propagation
             store.putComponent(entityRef, EntityStatsModule.get().getEntityStatMapComponentType(), statMap);
 
         } catch (Exception e) {

@@ -1,108 +1,198 @@
 # Parchemin Maitrise de l'Epée
-items.skill_page_sword_mastery.name=Parchemin de Maitrise : Epée
+items.skill_page_sword_mastery.name=Maitrise de l'Epée
 items.skill_page_sword_mastery.description=<b>Rareté : Commun</b>\n<i>Un parchemin usé par le vent, détaillant les techniques d'épée des guerriers d'Eldanior.</i>\n\n<b>[Clic F]</b> pour apprendre la compétence.
 # Parchemin Detection De Point Vital
-items.skill_page_detection_of_vital_points.name=Parchemin de Detection : Point Vital
+items.skill_page_detection_of_vital_points.name=Point Vital
 items.skill_page_detection_of_vital_points.description=<b>Rareté : Commun</b>\n<i>Un parchemin usé par le vent, détaillant les techniques d'épée des guerriers d'Eldanior.</i>\n\n<b>[Clic F]</b> pour apprendre la compétence.
-# Parchemin Detection De Point Vital
-items.skill_page_mana_well.name=Parchemin Magique : Puit de Mana
+
+# Esprit Éveillé (Common)
+items.skill_page_awakened_mind.name=Esprit Éveillé
+items.skill_page_awakened_mind.description=<b>Rareté : Commun</b>\n<i>Vous sentez les flux magiques courir dans vos veines.</i>\n\n<b>Effet :</b> Augmente passivement votre Intelligence de 15 points, accroissant ainsi votre réserve de Mana.\n\n<b>[Clic F]</b> pour apprendre.
+# Frappe Arcanique (Common)
+items.skill_page_arcane_strike.name=Frappe Arcanique
+items.skill_page_arcane_strike.description=<b>Rareté : Commun</b>\n<i>Vos coups sont chargés d'énergie instable.</i>\n\n<b>Effet :</b> Vos attaques ont 20% de chance d'infliger 8 points de dégâts arcaniques supplémentaires.\n\n<b>[Clic F]</b> pour apprendre.
+# Barrière de Mana (Common)
+items.skill_page_mana_barrier.name=Barrière de Mana
+items.skill_page_mana_barrier.description=<b>Rareté : Commun</b>\n<i>Le surplus d'énergie magique vous sert d'armure.</i>\n\n<b>Effet :</b> Tant que votre réserve de Mana est à au moins 50%, tous les dégâts que vous subissez sont réduits de 10%.\n\n<b>[Clic F]</b> pour apprendre.
+# Puissance Débordante (Common)
+items.skill_page_overflowing_power.name=Puissance Débordante
+items.skill_page_overflowing_power.description=<b>Rareté : Commun</b>\n<i>Canaliser toute sa concentration rend redoutable.</i>\n\n<b>Effet :</b> Si votre réserve de Mana est pleine (100%), vos attaques infligent 15% de dégâts supplémentaires.\n\n<b>[Clic F]</b> pour apprendre.
+# Voile Mystique (Common)
+items.skill_page_mystic_veil.name=Voile Mystique
+items.skill_page_mystic_veil.description=<b>Rareté : Commun</b>\n<i>Un champ de force latent absorbe les chocs mortels.</i>\n\n<b>Effet :</b> Vous avez 15% de chance de réduire les dégâts d'une attaque subie de 25%.\n\n<b>[Clic F]</b> pour apprendre.
+# Puit de Mana (Epic)
+items.skill_page_mana_well.name=Puit de Mana
 items.skill_page_mana_well.description=<b>Rareté : Commun</b>\n<i>Un parchemin usé par le vent, détaillant les techniques d'épée des guerriers d'Eldanior.</i>\n\n<b>[Clic F]</b> pour apprendre la compétence.
 
 # 1. Frappe Instinctive(Common)
-items.skill_page_instinctive_strike.name=Parchemin d'Attaque : Frappe Instinctive
+items.skill_page_instinctive_strike.name=Frappe Instinctive
 items.skill_page_instinctive_strike.description=<b>Rareté : Commun</b>\n<i>L'instinct du guerrier guide votre lame. 5% de chances d'infliger 10% de dégâts bonus.</i>\n\n<b>[Clic F]</b> pour apprendre la compétence.
 # 2. Frappe de Prédateur(Uncommon)
-items.skill_page_predatory_strike.name=Parchemin d'Attaque : Frappe de Prédateur
+items.skill_page_predatory_strike.name=Frappe de Prédateur
 items.skill_page_predatory_strike.description=<b>Rareté : Inhabituel</b>\n<i>10% de chances d'infliger 15% de dégâts bonus.</i>\n\n<b>[Clic F]</b> pour apprendre.
 # 3. Frappe de Fureur (Rare)
-items.skill_page_fury_strike.name=Parchemin d'Attaque : Frappe de Fureur
+items.skill_page_fury_strike.name=Frappe de Fureur
 items.skill_page_fury_strike.description=<b>Rareté : Rare</b>\n<i>Libérez une force dévastatrice sur les ennemis chancelants.</i>\n\n<b>Effet :</b> 12% de chances d'infliger 25% de dégâts bonus.\n<b>[Clic F]</b> pour apprendre.
 # 4. Frappe Sismique (Épique)
-items.skill_page_seismic_strike.name=Parchemin d'Attaque : Frappe Sismique
+items.skill_page_seismic_strike.name=Frappe Sismique
 items.skill_page_seismic_strike.description=<b>Rareté : Épique</b>\n<i>Le poids de vos péchés s'abat sur vos ennemis.</i>\n\n<b>Effet :</b> 15% de chances d'infliger 35% de dégâts supplémentaires.\n<b>Impact :</b> Crée une détonation visuelle à l'impact.\n\n<b>[Clic F]</b> pour apprendre.
 # 5. Frappe Fantôme (Unique)
-items.skill_page_phantom_strike.name=Parchemin d'Attaque : Frappe Fantôme
+items.skill_page_phantom_strike.name=Frappe Fantôme
 items.skill_page_phantom_strike.description=<b>Rareté : Unique</b>\n<i>Une lame qui n'existe qu'à moitié dans ce monde, frappant l'âme autant que la chair.</i>\n\n<b>Effet :</b> 18% de chances d'infliger 50% de dégâts supplémentaires.\n<b>Propriété :</b> Traverse les défenses les plus solides.\n\n<b>[Clic F]</b> pour apprendre.
 # 6. Frappe de l'Annihilateur (Légendaire)
-items.skill_page_annihilator_strike.name=Parchemin d'Attaque : Frappe de l'Annihilateur
+items.skill_page_annihilator_strike.name=Frappe de l'Annihilateur
 items.skill_page_annihilator_strike.description=<b>Rareté : Légendaire</b>\n<i>Un seul coup peut mettre fin à une ère.</i>\n\n<b>Effet :</b> 22% de chances d'infliger 75% de dégâts bonus.\n<b>Écho :</b> 25% de chances de doubler la puissance de l'impact lors du déclenchement.\n\n<b>[Clic F]</b> pour apprendre.
 # 7. Décret de la Genèse (Divin)
-items.skill_page_judgment_of_genesis.name=Manuscrit Sacré : Décret de la Genèse
+items.skill_page_judgment_of_genesis.name=Décret de la Genèse
 items.skill_page_judgment_of_genesis.description=<b>Rareté : Divin</b>\n<i>Le Verbe s'est fait chair, et la chair s'est brisée.</i>\n\n<b>Effet :</b> 30% de chances d'infliger 150% de dégâts bonus.\n<b>Oblivion :</b> Si les PV de la cible tombent sous 15%, elle est instantanément effacée de l'existence.\n\n<b>[Clic F]</b> pour devenir l'instrument du destin.
 
 # 1. Peau de Pierre (5%)
-items.skill_page_stone_skin.name=Parchemin de Défense : Peau de Pierre
+items.skill_page_stone_skin.name=Peau de Pierre
 items.skill_page_stone_skin.description=<b>Rareté : Commun</b>\n<i>Un parchemin aux reflets de terre. Réduit les dégâts physiques subis de 5%.</i>\n\n<b>[Clic F]</b> pour apprendre la compétence.
 # 2. Peau de Bronze (8%)
-items.skill_page_bronze_skin.name=Parchemin de Défense : Peau de Bronze
+items.skill_page_bronze_skin.name=Peau de Bronze
 items.skill_page_bronze_skin.description=<b>Rareté : Inhabituel</b>\n<i>Un parchemin aux reflets cuivrés. Réduit les dégâts physiques subis de 8%.</i>\n\n<b>[Clic F]</b> pour apprendre la compétence.
 # 3. Peau de Fer (10%)
-items.skill_page_iron_skin.name=Parchemin de Défense : Peau de Fer
+items.skill_page_iron_skin.name=Peau de Fer
 items.skill_page_iron_skin.description=<b>Rareté : Rare</b>\n<i>Un lourd parchemin scellé par du fer forgé. Réduit les dégâts physiques subis de 10%.</i>\n\n<b>[Clic F]</b> pour apprendre la compétence.
 # 4. Peau d'Acier (15%)
-items.skill_page_steel_skin.name=Parchemin de Défense : Peau d'Acier
+items.skill_page_steel_skin.name=Peau d'Acier
 items.skill_page_steel_skin.description=<b>Rareté : Épique</b>\n<i>Une relique militaire de l'ancien empire d'Eldanior. Réduit les dégâts physiques subis de 15%.</i>\n\n<b>[Clic F]</b> pour apprendre la compétence.
 # 5. Peau d'Obsidienne (25%)
-items.skill_page_obsidian_skin.name=Parchemin de Défense : Peau d'Obsidienne
+items.skill_page_obsidian_skin.name=Peau d'Obsidienne
 items.skill_page_obsidian_skin.description=<b>Rareté : Unique</b>\n<i>Un parchemin sombre comme la nuit, dégageant une chaleur volcanique. Réduit les dégâts physiques subis de 25%.</i>\n\n<b>[Clic F]</b> pour apprendre la compétence.
 # 6. Peau de Diamant (35%)
-items.skill_page_diamond_skin.name=Parchemin de Défense : Peau de Diamant
+items.skill_page_diamond_skin.name=Peau de Diamant
 items.skill_page_diamond_skin.description=<b>Rareté : Légendaire</b>\n<i>Un écrit cristallin, quasi-indestructible et précieux. Réduit les dégâts physiques subis de 35%.</i>\n\n<b>[Clic F]</b> pour apprendre la compétence.
 # 7. Égide Divine (50%)
-items.skill_page_divine_aegis.name=Parchemin de Défense : Égide Divine
+items.skill_page_divine_aegis.name=Égide Divine
 items.skill_page_divine_aegis.description=<b>Rareté : Divin</b>\n<i>Un manuscrit flamboyant, béni par les Dieux d'Orbis eux-mêmes. Réduit les dégâts physiques subis de 50%.</i>\n\n<b>[Clic F]</b> pour apprendre la compétence.
 
 # 1. Entaille Profonde
-items.skill_page_deep_slash.name=Parchemin d'Attaque : Entaille Profonde
+items.skill_page_deep_slash.name=Entaille Profonde
 items.skill_page_deep_slash.description=<b>Rareté : Commun</b>\n<i>Une technique pour frapper les zones charnues. Ajoute 1 points de dégâts à toutes vos attaques physiques.</i>\n\n<b>[Clic F]</b> pour apprendre la compétence.
 # 1. Vivacité du Duelliste
-items.skill_page_duelist_swiftness.name=Parchemin d'Attaque : Vivacité du Duelliste
+items.skill_page_duelist_swiftness.name=Vivacité du Duelliste
 items.skill_page_duelist_swiftness.description=<b>Rareté : Commun</b>\n<i>Le secret ne réside pas dans la force, mais dans le tempo. Augmente votre vitesse d'attaque de 5%.</i>\n\n<b>[Clic F]</b> pour apprendre la compétence.
 # 1. Point de Pression
-items.skill_page_pressure_point.name=Parchemin d'Attaque : Point de Pression
+items.skill_page_pressure_point.name=Point de Pression
 items.skill_page_pressure_point.description=<b>Rareté : Commun</b>\n<i>Le premier coup sur une cible en pleine santé inflige 15% de dégâts bonus.</i>\n\n<b>[Clic F]</b> pour apprendre la compétence.
 # 1. Estocade Obsédante
-items.skill_page_haunting_thrust.name=Parchemin d'Attaque : Estocade Obsédante
+items.skill_page_haunting_thrust.name=Estocade Obsédante
 items.skill_page_haunting_thrust.description=<b>Rareté : Commun</b>\n<i>Chaque coup consécutif sur la même cible augmente vos dégâts de 3% (Max 15%).</i>\n\n<b>[Clic F]</b> pour apprendre la compétence.
 # 1. Frappe Opportuniste
-items.skill_page_opportunist_strike.name=Parchemin d'Attaque : Frappe Opportuniste
+items.skill_page_opportunist_strike.name=Frappe Opportuniste
 items.skill_page_opportunist_strike.description=<b>Rareté : Commun</b>\n<i>Inflige +12% de dégâts si vous avez été touché durant les 2 dernières secondes.</i>\n\n<b>[Clic F]</b> pour apprendre la compétence.
-
+# 1. Frappe Chanceuse
+items.skill_page_lucky_strike.name=Frappe Chanceuse
+items.skill_page_lucky_strike.description=<b>Rareté : Commun</b>\n<i>Vous savez frapper là où ça fait mal, même les yeux fermés.</i>\n\n<b>Effet :</b> Augmente vos chances de Coup Critique de 3%.\n\n<b>[Clic F]</b> pour apprendre.
+# 1. Chasseur de Trésors
+items.skill_page_treasure_hunter.name=Chasseur de Trésors
+items.skill_page_treasure_hunter.description=<b>Rareté : Commun</b>\n<i>Les richesses semblent naturellement glisser dans vos poches.</i>\n\n<b>Effet :</b> Augmente de 5% vos chances de trouver du butin rare.\n\n<b>[Clic F]</b> pour apprendre.
+# 1. Bon Présage
+items.skill_page_good_omen.name=Bon Présage
+items.skill_page_good_omen.description=<b>Rareté : Commun</b>\n<i>Les astres s'alignent en votre faveur.</i>\n\n<b>Effet :</b> Augmente de 15% vos chances de déclencher des événements rares.\n\n<b>[Clic F]</b> pour apprendre.
+# 1. Esquive Miraculeuse
+items.skill_page_miracle_dodge.name=Esquive Miraculeuse
+items.skill_page_miracle_dodge.description=<b>Rareté : Commun</b>\n<i>Un faux pas providentiel qui vous sauve la vie.</i>\n\n<b>Effet :</b> Vous avez 3% de chance d'esquiver complètement n'importe quelle attaque subie.\n\n<b>[Clic F]</b> pour apprendre.
 # 1. Pas de Vent
-items.skill_page_wind_step.name=Parchemin d'Agilité : Pas de Vent
+items.skill_page_wind_step.name=Pas de Vent
 items.skill_page_wind_step.description=<b>Rareté : Commun</b>\n<i>L'air semble porter vos pas.</i>\n\n<b>Effet :</b> +3% Vitesse de déplacement.\n\n<b>[Clic F]</b> pour apprendre.
 # 1. Réflexes Éclairs
-items.skill_page_light_reflexes.name=Parchemin d'Agilité : Réflexes Éclairs
+items.skill_page_light_reflexes.name=Réflexes Éclairs
 items.skill_page_light_reflexes.description=<b>Rareté : Commun</b>\n<i>Frappez avant que l'ennemi ne cligne des yeux.</i>\n\n<b>Effet :</b> +4% Vitesse d'attaque.\n\n<b>[Clic F]</b> pour apprendre.
 # 1. Souplesse
-items.skill_page_suppleness.name=Parchemin d'Agilité : Souplesse
+items.skill_page_suppleness.name=Souplesse
 items.skill_page_suppleness.description=<b>Rareté : Commun</b>\n<i>Les montagnes d'Eldanior ne sont plus un obstacle.</i>\n\n<b>Effet :</b> +10% Hauteur de saut.\n\n<b>[Clic F]</b> pour apprendre.
 # 1. Sens Aiguisés
-items.skill_page_keen_senses.name=Parchemin d'Agilité : Sens Aiguisés
+items.skill_page_keen_senses.name=Sens Aiguisés
 items.skill_page_keen_senses.description=<b>Rareté : Commun</b>\n<i>Percevez les failles dans la garde adverse.</i>\n\n<b>Effet :</b> +2% Chance de Critique.\n\n<b>[Clic F]</b> pour apprendre.
 # 1. Athleticism
-items.skill_page_athleticism.name=Parchemin d'Agilité : Athlétisme
+items.skill_page_athleticism.name=Athlétisme
 items.skill_page_athleticism.description=<b>Rareté : Commun</b>\n<i>Un parchemin usé par le vent, détaillant les techniques de souffle des éclaireurs d'Eldanior.</i>\n\n<b>[Clic F]</b> pour apprendre la compétence.
 
 # 1. Œil de Rapace
-items.skill_page_eagle_eye.name=Parchemin de Détection : Œil de Rapace
+items.skill_page_eagle_eye.name=Œil de Rapace
 items.skill_page_eagle_eye.description=<b>Rareté : Commun</b>\n<i>Votre regard perce les horizons lointains.</i>\n\n<b>Effet :</b> +15% Distance de détection.\n\n<b>[Clic F]</b> pour apprendre.
 # 1. Instinct de Survie
-items.skill_page_survival_instinct.name=Parchemin de Détection : Instinct de Survie
+items.skill_page_survival_instinct.name=Instinct de Survie
 items.skill_page_survival_instinct.description=<b>Rareté : Commun</b>\n<i>Ressentez le danger avant qu'il ne frappe.</i>\n\n<b>Effet :</b> +10% Conscience des menaces.\n\n<b>[Clic F]</b> pour apprendre.
 # 3. Detection Universel
-items.skill_page_universal_detection.name=Parchemin de Détection : Detection Universel
+items.skill_page_universal_detection.name=Detection Universel
 items.skill_page_universal_detection.description=<b>Rareté : Legendaire</b>\n<i>Ressentez le danger avant qu'il ne frappe.</i>\n\n<b>Effet :</b> +400% Conscience des menaces.\n\n<b>[Clic F]</b> pour apprendre.
 
 # 1. Vision Nocturne
-items.skill_page_night_vision.name=Parchemin de Détection : Vision Nocturne
+items.skill_page_night_vision.name=Vision Nocturne
 items.skill_page_night_vision.description=<b>Rareté : Commun</b>\n<i>L'obscurité ne vous cache plus rien.</i>\n\n<b>Effet :</b> +20% Visibilité nocturne.\n\n<b>[Clic F]</b> pour apprendre.
 # 1. Sixième Sens
-items.skill_page_sixth_sense.name=Parchemin de Détection : Sixième Sens
+items.skill_page_sixth_sense.name=Sixième Sens
 items.skill_page_sixth_sense.description=<b>Rareté : Commun</b>\n<i>Même l'invisible laisse une trace.</i>\n\n<b>Effet :</b> +5% Détection de l'invisibilité.\n\n<b>[Clic F]</b> pour apprendre.
 # 1. Pisteur
-items.skill_page_tracker.name=Parchemin de Détection : Pisteur
+items.skill_page_tracker.name=Pisteur
 items.skill_page_tracker.description=<b>Rareté : Commun</b>\n<i>Suivez votre proie à la trace.</i>\n\n<b>Effet :</b> +25% Clarté des pistes.\n\n<b>[Clic F]</b> pour apprendre.
+
+# 1. Tono'Squive (Unique)
+items.skill_page_tono_squive.name=Tono'Squive
+items.skill_page_tono_squive.description=<b>Rareté : Unique</b>\n<i>Suivez l'enseignement du grand guerrier Tono.</i>\n\n<b>Effet :</b> Augmente vos chances d'esquive de 30%.\n\n<b>[Clic F]</b> pour apprendre.
+# 1. Jugement de Koda (Legendaire)
+items.skill_page_koda_judgment.name=Jugement de Kodha
+items.skill_page_koda_judgment.description=<b>Rareté : Légendaire</b>\n<i>Kodha ne frappe qu'une seule fois. Mais une fois suffit.</i>\n\n<b>Effet :</b> Si votre Endurance est à 90% lors d'une attaque, vous avez 12% de chance d'exécuter instantanément votre cible.\n• Les chances augmentent si l'ennemi est plus faible que vous.\n• Les chances diminuent si l'ennemi est plus fort.\n• Inefficace contre les cibles ayant 100 niveaux de plus que vous.\n\n<b>[Clic F]</b> pour apprendre.
+# 1. Mauvais Présage (Unique)
+items.skill_page_mauvais_presage.name=Mauvais Présage
+items.skill_page_mauvais_presage.description=<b>Rareté : Unique</b>\n<i>Un simple toucher suffit à drainer l'essence vitale de vos ennemis.</i>\n\n<b>Effet :</b> Vos attaques ont 10% de chance de maudire la cible.\n• Épuisement : L'Endurance de la cible est instantanément réduite à 0.\n• Toxine : Inflige des dégâts supplémentaires équivalents à 15% des Points de Vie <b>MAXIMAUX</b> de la cible.\n\n<b>[Clic F]</b> pour apprendre.
+# 1. Égide de Dyna (Divin)
+items.skill_page_dyna_aegis.name=Égide de Dyna
+items.skill_page_dyna_aegis.description=<b>Rareté : Divin</b>\n<i>Les dieux n'abandonnent jamais leurs champions.</i>\n\n<b>Effet :</b> Lorsque votre santé tombe à 50% ou moins, Dyna intervient pour vous rendre totalement invincible aux dégâts pendant 5 secondes.\nTemps de recharge : 2 minutes.\n\n<b>[Clic F]</b> pour apprendre.
+
+# 1. Résolution de Fer (Commun)
+items.skill_page_iron_resolve.name=Résolution de Fer
+items.skill_page_iron_resolve.description=<b>Rareté : Commun</b>\n<i>Votre volonté est aussi dure que le fer.</i>\n\n<b>Effet :</b> Réduit tous les dégâts subis de 3 points.\n\n<b>[Clic F]</b> pour apprendre.
+
+# 1. Parade Mineure (Commun)
+items.skill_page_minor_parry.name=Parade Mineure
+items.skill_page_minor_parry.description=<b>Rareté : Commun</b>\n<i>Un bon coup d'œil permet de dévier les attaques les plus évidentes.</i>\n\n<b>Effet :</b> 15% de chance de réduire les dégâts d'une attaque de 15%.\n\n<b>[Clic F]</b> pour apprendre.
+
+# 1. Garde de Chasseur (Commun)
+items.skill_page_hunter_guard.name=Garde de Chasseur
+items.skill_page_hunter_guard.description=<b>Rareté : Commun</b>\n<i>L'expérience de la traque vous apprend à anticiper les coups des bêtes.</i>\n\n<b>Effet :</b> Réduit les dégâts infligés par les monstres de 10%.\n\n<b>[Clic F]</b> pour apprendre.
+
+# 1. Corps Robuste (Commun)
+items.skill_page_sturdy_body.name=Corps Robuste
+items.skill_page_sturdy_body.description=<b>Rareté : Commun</b>\n<i>L'entraînement physique intensif porte enfin ses fruits.</i>\n\n<b>Effet :</b> Augmente passivement votre Endurance de 15 points.\n\n<b>[Clic F]</b> pour apprendre.
+# 1. Artisanat (Rare)
+items.skill_page_artisanat.name=Artisanat
+items.skill_page_artisanat.description=<b>Rareté : Rare</b>\n<i>Le savoir-faire manuel pour transformer des matières brutes en équipement.</i>\n\n<b>Effet :</b> Débloque l'utilisation des établis, des forges et autres stations de confection.\n<color:gray>• Sans cette compétence, il est impossible de crafter.</color>\n\n<b>[Clic F]</b> pour apprendre.
+
+# --- ENDURANCE ---
+# 1. Souffle Inépuisable (Commun)
+items.skill_page_tireless_breath.name=Souffle Inépuisable
+items.skill_page_tireless_breath.description=<b>Rareté : Commun</b>\n<i>La fatigue n'est qu'une illusion de l'esprit.</i>\n\n<b>Effet :</b> Augmente passivement votre Endurance maximale de 10 points.\n\n<b>[Clic F]</b> pour apprendre.
+# 1. Peau Épaisse (Commun)
+items.skill_page_thick_skin.name=Peau Épaisse
+items.skill_page_thick_skin.description=<b>Rareté : Commun</b>\n<i>Les coups semblent glisser sur votre peau endurcie.</i>\n\n<b>Effet :</b> Augmente votre score de Défense d'Endurance de 5, réduisant passivement les dégâts subis.\n\n<b>[Clic F]</b> pour apprendre.
+# 1. Posture Solide (Commun)
+items.skill_page_solid_stance.name=Posture Solide
+items.skill_page_solid_stance.description=<b>Rareté : Commun</b>\n<i>Un corps reposé encaisse bien mieux les chocs.</i>\n\n<b>Effet :</b> Tant que votre Endurance est supérieure à 80%, tous les dégâts subis sont réduits de 10%.\n\n<b>[Clic F]</b> pour apprendre.
+# 1. Vigueur Combative (Commun)
+items.skill_page_combat_vigor.name=Vigueur Combative
+items.skill_page_combat_vigor.description=<b>Rareté : Commun</b>\n<i>L'adrénaline du combat nourrit vos muscles.</i>\n\n<b>Effet :</b> Chaque attaque portée a 20% de chance de vous rendre 5 points d'Endurance instantanément.\n\n<b>[Clic F]</b> pour apprendre.
+# 1. Second Souffle (Commun)
+items.skill_page_second_wind.name=Second Souffle
+items.skill_page_second_wind.description=<b>Rareté : Commun</b>\n<i>Quand tout semble perdu, l'instinct de survie prend le relais.</i>\n\n<b>Effet :</b> Subir un coup lorsque votre Endurance est sous la barre des 20% a 15% de chance de vous rendre immédiatement 25 points d'Endurance.\n\n<b>[Clic F]</b> pour apprendre.
+
+# --- REGENERATION ---
+# 1. Régénération Cellulaire (Commun)
+items.skill_page_cellular_regeneration.name=Régénération Cellulaire
+items.skill_page_cellular_regeneration.description=<b>Rareté : Commun</b>\n<i>Chaque blessure force votre corps à réagir violemment pour survivre.</i>\n\n<b>Effet :</b> Vous avez 15% de chance de restaurer 5% de vos Points de Vie maximaux à chaque fois que vous subissez des dégâts.\n\n<b>[Clic F]</b> pour apprendre.
+# 1. Respiration Active (Commun)
+items.skill_page_active_breathing.name=Respiration Active
+items.skill_page_active_breathing.description=<b>Rareté : Commun</b>\n<i>Une technique de respiration qui permet de frapper sans jamais s'épuiser.</i>\n\n<b>Effet :</b> Vos attaques ont 20% de chance de vous rendre immédiatement 8 points d'Endurance.\n\n<b>[Clic F]</b> pour apprendre.
+# 1. Siphon Spirituel (Commun)
+items.skill_page_spiritual_siphon.name=Siphon Spirituel
+items.skill_page_spiritual_siphon.description=<b>Rareté : Commun</b>\n<i>Le flux magique retourne toujours à sa source.</i>\n\n<b>Effet :</b> Vos attaques ont 20% de chance de vous restituer 5 points de Mana en drainant l'énergie de l'impact.\n\n<b>[Clic F]</b> pour apprendre.
+# 1. Source de Mana (Commun)
+items.skill_page_mana_font.name=Parchemin Magique : Source de Mana
+items.skill_page_mana_font.description=<b>Rareté : Commun</b>\n<i>Votre corps agit comme un aimant pour les énergies environnantes.</i>\n\n<b>Effet :</b> Multiplie votre vitesse de régénération naturelle de Mana par 3 (Réduit le temps de recharge complet d'environ 3 heures à 1 heure).\n\n<b>[Clic F]</b> pour apprendre.
 
 
 # Skill - Invocations

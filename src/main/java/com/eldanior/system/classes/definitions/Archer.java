@@ -16,8 +16,8 @@ public class Archer extends ClassModel {
                 Rarity.COMMON,
                 ClassType.ARCHER,
                 List.of(),
-                null,
-                20,
+                List.of(),
+                120,
                 false,
                 2, 2, 2, 0, 3, 7
         );

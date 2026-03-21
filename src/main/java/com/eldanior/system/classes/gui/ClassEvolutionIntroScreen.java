@@ -16,11 +16,17 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 
 public class ClassEvolutionIntroScreen extends InteractiveCustomUIPage<ClassEvolutionIntroScreen.IntroEventData> {
 
-    public ClassEvolutionIntroScreen(@Nonnull PlayerRef playerRef) {
+    // --- NOUVEAU : On stocke les classes tirées au sort spécifiquement pour ce joueur ---
+    private final List<String> rolledClasses;
+
+    // On modifie le constructeur pour accepter cette liste
+    public ClassEvolutionIntroScreen(@Nonnull PlayerRef playerRef, List<String> rolledClasses) {
         super(playerRef, CustomPageLifetime.CanDismiss, IntroEventData.CODEC);
+        this.rolledClasses = rolledClasses;
     }
 
     @Override
@@ -43,8 +49,9 @@ public class ClassEvolutionIntroScreen extends InteractiveCustomUIPage<ClassEvol
         PlayerRef playerRef = store.getComponent(ref, PlayerRef.getComponentType());
         if (player == null || playerRef == null) return;
 
+        // --- CORRECTION ICI : On utilise la liste personnelle du joueur ---
         player.getPageManager().openCustomPage(ref, store,
-                new ClassSelectionScreen(playerRef, ClassIntroScreen.pendingClasses, true));
+                new ClassSelectionScreen(playerRef, this.rolledClasses, true));
     }
 
     public static class IntroEventData {

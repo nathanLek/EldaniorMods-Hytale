@@ -1,4 +1,4 @@
-package com.eldanior.system.classes.definitions;
+package com.eldanior.system.classes.definitions.warrior;
 
 import com.eldanior.system.classes.models.ClassModel;
 import com.eldanior.system.config.configs.ClassType;
@@ -16,7 +16,7 @@ public class Templier extends ClassModel {
                 Rarity.RARE,
                 ClassType.WARRIOR,
                 List.of(),
-                null,
+                List.of(),
                 250,
                 false,
                 25, 25, 2, 25, 30, 30

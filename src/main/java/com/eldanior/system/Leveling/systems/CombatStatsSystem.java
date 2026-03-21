@@ -39,7 +39,7 @@ public class CombatStatsSystem extends DamageEventSystem {
         Ref<EntityStore> victimRef = archetypeChunk.getReferenceTo(index);
         if (!victimRef.isValid()) return;
 
-        // 1. GESTION DE L'ESQUIVE (Basée sur l'Agilité Totale)
+        // 1. GESTION DE L'ESQUIVE (Maintenant gérée par le StatConfig !)
         if (tryDodge(victimRef, store, damage)) {
             return; // Si l'attaque est esquivée, on arrête tout calcul !
         }
@@ -57,19 +57,64 @@ public class CombatStatsSystem extends DamageEventSystem {
         PlayerLevelData victimData = store.getComponent(victimRef, EldaniorSystem.get().getPlayerLevelDataType());
         if (victimData == null) return false;
 
-        // Calcul de la chance d'esquive : 0.1% par point d'Agilité
-        float dodgeChance = victimData.getTotalAgility() * 0.001f;
-        if (dodgeChance > 0.60f) dodgeChance = 0.60f; // Cap à 60% d'esquive max
+        ClassModel victimClass = ClassManager.get(victimData.getPlayerClassId());
+        float dodgeChance = StatConfig.DODGE_CHANCE.getFinalValue(victimData, victimClass);
 
-        if (Math.random() < dodgeChance) {
+        // --- 1. RECHERCHE DE L'ATTAQUANT ET DE SON NIVEAU ---
+        int attackerLevel = -1;
+
+        if (damage.getSource() instanceof Damage.EntitySource entitySource) {
+            Ref<EntityStore> attackerRef = entitySource.getRef();
+            if (attackerRef != null && attackerRef.isValid()) {
+
+                // Est-ce un Mob ?
+                var mobLevelType = EldaniorSystem.get().getMobLevelDataType();
+                if (mobLevelType != null) {
+                    var mobData = store.getComponent(attackerRef, mobLevelType);
+                    if (mobData != null) {
+                        attackerLevel = mobData.getLevel();
+                    }
+                }
+
+                // Si ce n'est pas un Mob, est-ce un Joueur ?
+                if (attackerLevel == -1) {
+                    PlayerLevelData attackerData = store.getComponent(attackerRef, EldaniorSystem.get().getPlayerLevelDataType());
+                    if (attackerData != null) {
+                        attackerLevel = attackerData.getLevel();
+                    }
+                }
+            }
+        }
+
+        // --- 2. CALCUL DU MALUS DE NIVEAU ---
+        if (attackerLevel != -1) {
+            int victimLevel = victimData.getLevel();
+            int levelGap = attackerLevel - victimLevel;
+
+            // Si l'ennemi a plus de 5 niveaux de plus que le joueur
+            if (levelGap > 5) {
+                // Exemple : On retire 5% de la chance d'esquive pour chaque niveau de différence au-dessus de 5.
+                // Si l'ennemi a 10 niveaux de plus (levelGap = 10) : (10 - 5) * 0.05 = 0.25 (25% de malus)
+                float penaltyMultiplier = 1.0f - ((levelGap - 5) * 0.05f);
+
+                // On s'assure que le joueur a toujours au moins une infime chance d'esquiver (ex: max 90% de malus)
+                if (penaltyMultiplier < 0.1f) {
+                    penaltyMultiplier = 0.1f;
+                }
+
+                // On applique la réduction
+                dodgeChance *= penaltyMultiplier;
+            }
+        }
+
+        // --- 3. LANCEMENT DU DÉ ---
+        if (Math.random() < (dodgeChance / 100.0f)) {
             damage.setCancelled(true);
-
-            // Notification optionnelle pour le joueur
             UUIDComponent uuidComp = store.getComponent(victimRef, UUIDComponent.getComponentType());
             if (uuidComp != null) {
                 PlayerRef playerRef = Universe.get().getPlayer(uuidComp.getUuid());
                 if (playerRef != null) {
-                    NotificationHelper.sendNotification(playerRef, "<color:aqua>Esquive !</color>", NotificationStyle.Success);
+                    NotificationHelper.sendNotification(playerRef, "<color:aqua>💨 Esquive !</color>", NotificationStyle.Success);
                 }
             }
             return true;
@@ -84,29 +129,24 @@ public class CombatStatsSystem extends DamageEventSystem {
         Ref<EntityStore> attackerRef = entitySource.getRef();
         if (!attackerRef.isValid()) return;
 
-        // --- 🌟 NOUVEAU : SI L'ATTAQUANT EST UN MOB ---
-        // On lui donne son bonus de dégâts ici, AVANT de calculer la défense du joueur !
         ComponentType<EntityStore, MobLevelData> mobLevelType = EldaniorSystem.get().getMobLevelDataType();
         if (mobLevelType != null) {
             var mobData = store.getComponent(attackerRef, mobLevelType);
             if (mobData != null && mobData.isStatsApplied()) {
                 float damageBonus = mobData.getLevel() * com.eldanior.system.config.configs.MobsWorldConfig.DAMAGE_PER_LEVEL;
                 damage.setAmount(damage.getAmount() + damageBonus);
-                return; // Le mob n'a pas de force ou de crit de joueur, on s'arrête là !
+                return;
             }
         }
 
-        // --- SI L'ATTAQUANT EST UN JOUEUR ---
         PlayerLevelData attackerData = store.getComponent(attackerRef, EldaniorSystem.get().getPlayerLevelDataType());
         if (attackerData == null) return;
 
         ClassModel attackerClass = ClassManager.get(attackerData.getPlayerClassId());
 
-        // Force
         float strengthBonus = StatConfig.STRENGTH_DAMAGE.getFinalValue(attackerData, attackerClass);
         float currentDamage = damage.getAmount() + strengthBonus;
 
-        // Coup Critique
         if (LuckSystem.isCriticalHit(attackerData)) {
             currentDamage *= CRIT_MULTIPLIER;
             LOGGER.atSevere().log("Coup Critique Donné ===> " + currentDamage);
@@ -114,10 +154,8 @@ public class CombatStatsSystem extends DamageEventSystem {
 
         damage.setAmount(currentDamage);
 
-        // Passifs offensifs (Sword Mastery, etc.)
         for (PassiveSkill skill : attackerData.getActivePassives()) {
             if (skill.getLogic() != null) {
-                // Ajoute "attackerRef" ici entre store et victimRef !
                 skill.getLogic().onAttack(damage, attackerData, store, attackerRef, victimRef);
             }
         }
@@ -129,35 +167,28 @@ public class CombatStatsSystem extends DamageEventSystem {
 
         ClassModel victimClass = ClassManager.get(victimData.getPlayerClassId());
 
-        // --- C. DEFENSE ENDURANCE ---
         float defense = StatConfig.ENDURANCE_DEFENSE.getFinalValue(victimData, victimClass);
         float currentDamage = damage.getAmount() - defense;
 
         if (currentDamage < 1) currentDamage = 1;
         damage.setAmount(currentDamage);
 
-        // Récupération de l'attaquant pour l'envoyer au passif défensif (ex: renvoi de dégâts)
         Ref<EntityStore> attackerRef = null;
         if (damage.getSource() instanceof Damage.EntitySource entitySource) {
             attackerRef = entitySource.getRef();
         }
 
-        // --- D. PASSIFS DÉFENSIFS DE CLASSE ---
         for (PassiveSkill skill : victimData.getActivePassives()) {
             if (skill.getLogic() != null) {
-                // ✅ On ajoute victimRef à la fin de l'appel !
-                // (Si ta variable s'appelle "ref" ou "entityRef" dans cette méthode, mets ça à la place de "victimRef")
                 skill.getLogic().onDefend(damage, victimData, store, attackerRef, victimRef);
             }
         }
 
-        // Sécurité finale : un passif défensif n'a pas le droit de soigner l'ennemi (dégâts < 0)
         if (!damage.isCancelled() && damage.getAmount() < 1) {
             damage.setAmount(1);
         }
     }
 
-    // --- Partie Technique Hytale ---
     @Nullable
     @Override
     @SuppressWarnings("unchecked")
@@ -165,11 +196,7 @@ public class CombatStatsSystem extends DamageEventSystem {
         try {
             Class<?> mod = Class.forName("com.hypixel.hytale.server.core.modules.entity.damage.DamageModule");
             Object inst = mod.getMethod("get").invoke(null);
-
-            // 🌟 CORRECTION DE PRIORITÉ ICI : On utilise ApplyDamageGroup
-            // pour que tes stats et passifs soient appliqués en TOUT DERNIER !
             return (SystemGroup<EntityStore>) mod.getMethod("getFilterDamageGroup").invoke(inst);
-
         } catch (Throwable e) {
             LOGGER.atSevere().log("Erreur critique dans CombatStatsSystem : " + e.getMessage());
             return null;
