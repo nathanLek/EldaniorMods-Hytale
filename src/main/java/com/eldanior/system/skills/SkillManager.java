@@ -268,6 +268,12 @@ public class SkillManager {
         ));
 
         // --- MAGIE ---
+        register("skill_page_fly", new SkillModel(
+                "VOL", null, "Vol", "mage",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+                List.of(),
+                List.of()
+        ));
         register("skill_page_mana_well", new SkillModel(
                 "MANAWELL", null, "Maîtrise de l'Épée", "mage",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
@@ -385,6 +391,12 @@ public class SkillManager {
         ));
 
         // --- REGENERATION ---
+        register("skill_page_mana_heart", new SkillModel(
+                "MANA_HEART", null, "Coeur de Mana", "dragon",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+                List.of(),
+                List.of()
+        ));
         register("skill_page_mana_font", new SkillModel(
                 "MANA_FONT", null, "Source de Mana", "mage",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,

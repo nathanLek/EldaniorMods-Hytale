@@ -13,6 +13,7 @@ import com.eldanior.system.skills.skills.passives.Common.Regeneration.SpiritualS
 import com.eldanior.system.skills.skills.passives.Divin.Attack.JudgmentOfGenesis;
 import com.eldanior.system.skills.skills.passives.Divin.Defense.DivineAegis;
 import com.eldanior.system.skills.skills.passives.Divin.Defense.DynaAegis;
+import com.eldanior.system.skills.skills.passives.Divin.Regeneration.ManaHeart;
 import com.eldanior.system.skills.skills.passives.Epique.Attack.DetectionOfVitalPoints;
 import com.eldanior.system.skills.skills.passives.Epique.Attack.SeismicStrike;
 import com.eldanior.system.skills.skills.passives.Epique.Defense.SteelSkin;
@@ -22,6 +23,7 @@ import com.eldanior.system.skills.skills.passives.Epique.Maitrise.SwordMastery;
 import com.eldanior.system.skills.skills.passives.Legendaire.Attack.AnnihilatorStrike;
 import com.eldanior.system.skills.skills.passives.Legendaire.Attack.KodaJudgment;
 import com.eldanior.system.skills.skills.passives.Legendaire.Defense.DiamondSkin;
+import com.eldanior.system.skills.skills.passives.Legendaire.Magique.Fly;
 import com.eldanior.system.skills.skills.passives.Rare.Attack.FuryStrike;
 import com.eldanior.system.skills.skills.passives.Rare.Maitrise.Artisanat;
 import com.eldanior.system.skills.skills.passives.Rare.Defense.IronSkin;
@@ -75,12 +77,14 @@ public enum PassiveSkill {
     MANA_BARRIER("MANA_BARRIER", "Barrière de Mana", "Réduit les dégâts subis de 10% si votre Mana est >= 50%.", new ManaBarrier()),
     OVERFLOWING_POWER("OVERFLOWING_POWER", "Puissance Débordante", "Vos attaques infligent +15% de dégâts si votre Mana est à 100%.", new OverflowingPower()),
     MYSTIC_VEIL("MYSTIC_VEIL", "Voile Mystique", "15% de chance de réduire les dégâts subis de 25%.", new MysticVeil()),
+    VOL("VOL", "Vol", "Capacité de vol (1 mana/s).", new Fly()),
 
     // --- REGENERATION ---
     CELLULAR_REGENERATION("CELLULAR_REGENERATION", "Régénération Cellulaire", "15% de chance de restaurer 5% de vos PV Max en subissant une attaque.", new CellularRegeneration()),
     ACTIVE_BREATHING("ACTIVE_BREATHING", "Respiration Active", "20% de chance de restaurer 8 points d'Endurance par attaque.", new ActiveBreathing()),
     SPIRITUAL_SIPHON("SPIRITUAL_SIPHON", "Siphon Spirituel", "20% de chance de restaurer 5 points de Mana par attaque.", new SpiritualSiphon()),
     MANA_FONT("MANA_FONT", "Source de Mana", "Multiplie la régénération naturelle de Mana par 1.5.", new ManaFont()),
+    MANA_HEART("MANA_HEART", "Coeur de Mana", "Multiplie la régénération naturelle de Mana par 10.5.", new ManaHeart()),
 
     WIND_STEP("WIND_STEP", "Pas de Vent", "+3% Vitesse de déplacement.", new WindStep()),
     LIGHT_REFLEXES("LIGHT_REFLEXES", "Réflexes Éclairs", "+4% Vitesse d'attaque.", new LightReflexes()),

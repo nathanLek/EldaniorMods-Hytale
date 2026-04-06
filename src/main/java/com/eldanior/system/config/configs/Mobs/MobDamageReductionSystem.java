@@ -2,6 +2,7 @@ package com.eldanior.system.config.configs.Mobs;
 
 import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.config.Player.PlayerLevelData;
+import com.eldanior.system.config.configs.MobXP;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.server.core.entity.entities.Player;
@@ -12,6 +13,7 @@ import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatsModule;
 import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import com.hypixel.hytale.server.npc.entities.NPCEntity;
 import com.hypixel.hytale.logger.HytaleLogger;
 
 import javax.annotation.Nonnull;
@@ -41,17 +43,27 @@ public class MobDamageReductionSystem extends DamageEventSystem {
                        @Nonnull Damage damage) {
 
         Ref<EntityStore> targetRef = chunk.getReferenceTo(index);
+
+        NPCEntity npc = store.getComponent(targetRef, Objects.requireNonNull(NPCEntity.getComponentType()));
+        if (npc != null) {
+            // CORRECTION ICI : On utilise IMobConfig au lieu de MobXP
+            IMobConfig mobData = MobXP.getMobDataForId(npc.getNPCTypeId());
+            if (mobData.isInvincible()) {
+                damage.setAmount(0f);
+                return;
+            }
+        }
+
         Damage.Source source = damage.getSource();
 
         if (!(source instanceof Damage.EntitySource entitySource)) return;
 
         Ref<EntityStore> attackerRef = entitySource.getRef();
-        if (!attackerRef.isValid()) return; // Sécurité supplémentaire
+        if (!attackerRef.isValid()) return;
 
         Player attackerPlayer = store.getComponent(attackerRef, Player.getComponentType());
         ComponentType<EntityStore, MobLevelData> mobLevelType = EldaniorSystem.get().getMobLevelDataType();
 
-        // CAS 1 : Joueur attaque un mob
         if (attackerPlayer != null) {
             MobLevelData mobData = store.getComponent(targetRef, mobLevelType);
             if (mobData == null || !mobData.isStatsApplied()) return;
@@ -71,9 +83,6 @@ public class MobDamageReductionSystem extends DamageEventSystem {
                     + " Lv." + mobLevel + " | Brut:" + originalDamage + " → Final:" + finalDamage
                     + " (multiplier:" + multiplier + ")");
         }
-
-        // Le CAS 2 est maintenant supprimé comme convenu,
-        // car il est géré dans CombatStatsSystem !
     }
 
     private float computeFinalDamage(float originalDamage, float multiplier, int playerLevel, int mobLevel) {

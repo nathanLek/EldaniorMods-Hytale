@@ -12,11 +12,12 @@ import com.hypixel.hytale.component.system.EntityEventSystem;
 import com.hypixel.hytale.math.vector.Vector3i;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.event.events.ecs.DamageBlockEvent;
-import com.hypixel.hytale.server.core.universe.world.meta.state.ItemContainerState;
+import com.hypixel.hytale.server.core.modules.block.BlockModule;
+import com.hypixel.hytale.server.core.modules.block.components.ItemContainerBlock;
+import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 
-@SuppressWarnings({"deprecation", "removal", "ConstantConditions"})
 public class TreasureChestDamageBlockEvent extends EntityEventSystem<EntityStore, DamageBlockEvent> {
 
     public TreasureChestDamageBlockEvent() {
@@ -29,51 +30,48 @@ public class TreasureChestDamageBlockEvent extends EntityEventSystem<EntityStore
         if (player == null) return;
 
         Vector3i target = event.getTargetBlock();
+        World world = player.getWorld();
 
-        // 1. Vérification directe : Est-ce le coffre lui-même ?
-        if (isProtectedChest(player, target.getX(), target.getY(), target.getZ())) {
-            if (shouldCancelDamage(player, target.getX(), target.getY(), target.getZ())) {
+        if (isProtectedChest(world, target.getX(), target.getY(), target.getZ())) {
+            assert world != null;
+            if (shouldCancelDamage(world, target.getX(), target.getY(), target.getZ())) {
                 event.setCancelled(true);
                 return;
             }
         }
 
-        // 2. Vérification indirecte : Est-ce un bloc de support (sous le coffre) ?
-        // On vérifie les coffres potentiellement posés au-dessus (Y + 1)
-        if (isProtectedChest(player, target.getX(), target.getY() + 1, target.getZ()) ||
-                isProtectedChest(player, target.getX() + 1, target.getY() + 1, target.getZ()) ||
-                isProtectedChest(player, target.getX(), target.getY() + 1, target.getZ() + 1)) {
-
+        if (isProtectedChest(world, target.getX(), target.getY() + 1, target.getZ()) ||
+                isProtectedChest(world, target.getX() + 1, target.getY() + 1, target.getZ()) ||
+                isProtectedChest(world, target.getX(), target.getY() + 1, target.getZ() + 1)) {
             event.setCancelled(true);
         }
     }
 
-    /**
-     * Détermine si les dégâts sur le bloc doivent être annulés selon la config.
-     */
-    private boolean shouldCancelDamage(Player player, int x, int y, int z) {
-        TreasureChestConfig config = player.getWorld().getChunkStore().getStore().getResource(EldaniorSystem.CONFIG_RESOURCE_TYPE);
-        com.hypixel.hytale.server.core.universe.world.meta.BlockState blockState = player.getWorld().getState(x, y, z, true);
+    // ✅ getWindows() est disponible directement sur ItemContainerBlock (confirmé par la décompilation)
+    private boolean shouldCancelDamage(World world, int x, int y, int z) {
+        TreasureChestConfig config = world.getChunkStore().getStore().getResource(EldaniorSystem.CONFIG_RESOURCE_TYPE);
 
-        if (config != null && config.isCanPlayerBreakLootChests() && blockState instanceof ItemContainerState containerState) {
-            // Si le coffre est autorisé à la casse, on ne bloque que si personne n'a la fenêtre ouverte
-            return !containerState.getWindows().isEmpty();
+        ItemContainerBlock container = BlockModule.getComponent(
+                ItemContainerBlock.getComponentType(), world, x, y, z
+        );
+
+        if (config.isCanPlayerBreakLootChests() && container != null) {
+            return !container.getWindows().isEmpty();
         }
 
-        // Par défaut, si c'est un coffre protégé et que la config interdit la casse : on annule.
         return true;
     }
 
-    /**
-     * Vérifie si le bloc à ces coordonnées est un Treasure Chest.
-     */
-    private boolean isProtectedChest(Player player, int x, int y, int z) {
-        com.hypixel.hytale.server.core.universe.world.meta.BlockState blockState = player.getWorld().getState(x, y, z, true);
-        if (blockState instanceof ItemContainerState containerState) {
-            TreasureChestTemplate template = containerState.getReference().getStore().getResource(EldaniorSystem.CHEST_TEMPLATE_TYPE);
-            return template != null && template.hasTemplate(x, y, z);
-        }
-        return false;
+    // ✅ World passé en paramètre, calculé une seule fois dans handle()
+    private boolean isProtectedChest(World world, int x, int y, int z) {
+        ItemContainerBlock container = BlockModule.getComponent(
+                ItemContainerBlock.getComponentType(), world, x, y, z
+        );
+
+        if (container == null) return false;
+
+        TreasureChestTemplate template = world.getChunkStore().getStore().getResource(EldaniorSystem.CHEST_TEMPLATE_TYPE);
+        return template.hasTemplate(x, y, z);
     }
 
     @Override

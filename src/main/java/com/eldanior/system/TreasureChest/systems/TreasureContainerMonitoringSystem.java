@@ -12,6 +12,8 @@ import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
+import com.hypixel.hytale.server.core.modules.block.BlockModule;
+import com.hypixel.hytale.server.core.modules.block.components.ItemContainerBlock;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
@@ -19,7 +21,6 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings({"deprecation", "removal", "unchecked", "ConstantConditions"})
 public class TreasureContainerMonitoringSystem extends EntityTickingSystem<EntityStore> {
 
     private final ComponentType<EntityStore, OpenedContainerComponent> containerComponentType;
@@ -37,11 +38,16 @@ public class TreasureContainerMonitoringSystem extends EntityTickingSystem<Entit
         if (player == null || monitor == null) return;
 
         World world = player.getWorld();
-        com.hypixel.hytale.server.core.universe.world.meta.BlockState blockState = world.getState(monitor.getX(), monitor.getY(), monitor.getZ(), true);
+
+        // ✅ Utilisation de TA méthode (issue de TreasureChestBreakBlockEvent) au lieu de world.getState()
+        assert world != null;
+        ItemContainerBlock container = BlockModule.getComponent(
+                ItemContainerBlock.getComponentType(), world, monitor.getX(), monitor.getY(), monitor.getZ()
+        );
 
         boolean stillOpen = false;
-        if (blockState instanceof com.hypixel.hytale.server.core.universe.world.meta.state.ItemContainerState containerState) {
-            if (!containerState.getWindows().isEmpty()) {
+        if (container != null) {
+            if (!container.getWindows().isEmpty()) {
                 stillOpen = true;
             }
         }
@@ -49,13 +55,14 @@ public class TreasureContainerMonitoringSystem extends EntityTickingSystem<Entit
         if (!stillOpen) {
             PlayerChestData playerChestData = store.getComponent(playerRef, EldaniorSystem.get().getPlayerChestDataType());
 
-            if (blockState instanceof com.hypixel.hytale.server.core.universe.world.meta.state.ItemContainerState containerState) {
+            if (container != null) {
                 if (playerChestData != null) {
                     List<ItemStack> itemsRemaining = new ArrayList<>();
 
                     // On récupère l'état EXACT du coffre au moment de la fermeture
-                    for (int i = 0; i < containerState.getItemContainer().getCapacity(); ++i) {
-                        ItemStack stack = containerState.getItemContainer().getItemStack((short) i);
+                    // Utilisation de short pour la boucle comme dans ton GenerateTreasureCommand
+                    for (short i = 0; i < container.getCapacity(); i++) {
+                        ItemStack stack = container.getItemContainer().getItemStack(i);
                         if (stack != null) {
                             itemsRemaining.add(stack);
                         }
@@ -66,7 +73,7 @@ public class TreasureContainerMonitoringSystem extends EntityTickingSystem<Entit
                     commandBuffer.replaceComponent(playerRef, EldaniorSystem.get().getPlayerChestDataType(), playerChestData);
 
                     // On nettoie le monde physique
-                    containerState.getItemContainer().clear();
+                    container.getItemContainer().clear();
                 }
             }
             commandBuffer.removeComponent(playerRef, this.containerComponentType);

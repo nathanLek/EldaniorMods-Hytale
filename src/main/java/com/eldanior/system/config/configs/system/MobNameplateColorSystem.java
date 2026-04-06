@@ -2,6 +2,8 @@ package com.eldanior.system.config.configs.system;
 
 import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.config.Player.PlayerPositionTracker;
+import com.eldanior.system.config.configs.MobXP;
+import com.eldanior.system.config.configs.Mobs.IMobConfig; // <-- NOUVEL IMPORT ICI
 import com.eldanior.system.config.configs.Mobs.MobLevelData;
 import com.eldanior.system.config.configs.Mobs.MobVirtualHPSystem;
 import com.hypixel.hytale.component.*;
@@ -41,6 +43,16 @@ public class MobNameplateColorSystem extends EntityTickingSystem<EntityStore> {
         NPCEntity npc = store.getComponent(mobRef, Objects.requireNonNull(NPCEntity.getComponentType()));
         if (npc == null) return;
 
+        String mobTypeId = npc.getNPCTypeId();
+
+        String specialTitle = getSpecialNPCTitle(mobTypeId);
+
+        if (specialTitle != null) {
+            Nameplate nameplate = new Nameplate(specialTitle);
+            commandBuffer.putComponent(mobRef, Nameplate.getComponentType(), nameplate);
+            return;
+        }
+
         ComponentType<EntityStore, MobLevelData> mobLevelType = EldaniorSystem.get().getMobLevelDataType();
         MobLevelData mobData = store.getComponent(mobRef, mobLevelType);
 
@@ -52,9 +64,7 @@ public class MobNameplateColorSystem extends EntityTickingSystem<EntityStore> {
         Vector3d mobPos = mobTransform.getPosition();
         int mobLevel = mobData.getLevel();
 
-        // Récupère les HP actuels du mob
         String hpText = getHPText(mobRef, store);
-
         UUID nearestPlayerUUID = getPlayerUUID(mobPos);
 
         String nameplateText;
@@ -75,6 +85,14 @@ public class MobNameplateColorSystem extends EntityTickingSystem<EntityStore> {
         commandBuffer.putComponent(mobRef, Nameplate.getComponentType(), nameplate);
     }
 
+    private @Nullable String getSpecialNPCTitle(String mobTypeId) {
+        if (mobTypeId == null) return null;
+
+        // CORRECTION ICI : On utilise IMobConfig au lieu de MobXP
+        IMobConfig mobData = MobXP.getMobDataForId(mobTypeId);
+        return mobData.getCustomTitle();
+    }
+
     private String getHPText(Ref<EntityStore> mobRef, Store<EntityStore> store) {
         EntityStatMap statMap = store.getComponent(mobRef,
                 EntityStatsModule.get().getEntityStatMapComponentType());
@@ -87,9 +105,8 @@ public class MobNameplateColorSystem extends EntityTickingSystem<EntityStore> {
             int healthIndex = DefaultEntityStatTypes.getHealth();
             if (statMap.get(healthIndex) != null) {
                 float currentHPReal = Objects.requireNonNull(statMap.get(healthIndex)).get();
-                float baseHP = Objects.requireNonNull(statMap.get(healthIndex)).getMax(); // HP max = HP de base
+                float baseHP = Objects.requireNonNull(statMap.get(healthIndex)).getMax();
 
-                // Calcule les HP virtuels
                 float multiplier = MobVirtualHPSystem.getHPMultiplier(mobData.getLevel(), baseHP);
                 float virtualMaxHP = MobVirtualHPSystem.getVirtualMaxHP(mobData.getLevel(), baseHP);
                 float virtualCurrentHP = currentHPReal * multiplier;

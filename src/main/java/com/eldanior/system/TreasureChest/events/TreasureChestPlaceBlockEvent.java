@@ -12,11 +12,12 @@ import com.hypixel.hytale.math.vector.Vector3i;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.event.events.ecs.PlaceBlockEvent;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
-import com.hypixel.hytale.server.core.universe.world.meta.state.ItemContainerState;
+import com.hypixel.hytale.server.core.modules.block.BlockModule;
+import com.hypixel.hytale.server.core.modules.block.components.ItemContainerBlock;
+import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 
-@SuppressWarnings({"deprecation", "removal", "ConstantConditions"})
 public class TreasureChestPlaceBlockEvent extends EntityEventSystem<EntityStore, PlaceBlockEvent> {
 
     public TreasureChestPlaceBlockEvent() {
@@ -29,36 +30,32 @@ public class TreasureChestPlaceBlockEvent extends EntityEventSystem<EntityStore,
         if (player == null) return;
 
         ItemStack item = event.getItemInHand();
+        if (item == null || !item.getItemId().toLowerCase().contains("chest")) return;
 
-        // On vérifie si le joueur tient un bloc de type "chest" (coffre)
-        if (item != null && item.getItemId().toLowerCase().contains("chest")) {
-            Vector3i pos = event.getTargetBlock();
+        Vector3i pos = event.getTargetBlock();
+        World world = player.getWorld();
 
-            // On vérifie les 4 blocs adjacents horizontaux (X et Z)
-            if (isProtectedChest(player, pos.getX() + 1, pos.getY(), pos.getZ()) ||
-                    isProtectedChest(player, pos.getX() - 1, pos.getY(), pos.getZ()) ||
-                    isProtectedChest(player, pos.getX(), pos.getY(), pos.getZ() + 1) ||
-                    isProtectedChest(player, pos.getX(), pos.getY(), pos.getZ() - 1)) {
-
-                // Si un des coffres voisins est un Treasure Chest, on bloque la pose
-                event.setCancelled(true);
-            }
+        if (isProtectedChest(world, pos.getX() + 1, pos.getY(), pos.getZ()) ||
+                isProtectedChest(world, pos.getX() - 1, pos.getY(), pos.getZ()) ||
+                isProtectedChest(world, pos.getX(), pos.getY(), pos.getZ() + 1) ||
+                isProtectedChest(world, pos.getX(), pos.getY(), pos.getZ() - 1)) {
+            event.setCancelled(true);
         }
     }
 
-    /**
-     * Méthode utilitaire pour vérifier si un bloc à une coordonnée précise est un Treasure Chest enregistré.
-     */
-    private boolean isProtectedChest(Player player, int x, int y, int z) {
-        // Utilisation du chemin complet (FQN) pour éviter l'avertissement de dépréciation sur l'import
-        com.hypixel.hytale.server.core.universe.world.meta.BlockState blockState = player.getWorld().getState(x, y, z, true);
+    // ✅ Update 4 : BlockModule.getComponent() remplace player.getWorld().getState()
+    // Le World est passé en paramètre pour éviter de l'appeler N fois via player.getWorld()
+    private boolean isProtectedChest(World world, int x, int y, int z) {
+        ItemContainerBlock container = BlockModule.getComponent(
+                ItemContainerBlock.getComponentType(),
+                world, x, y, z
+        );
 
-        if (blockState instanceof ItemContainerState containerState) {
-            TreasureChestTemplate template = containerState.getReference().getStore().getResource(EldaniorSystem.CHEST_TEMPLATE_TYPE);
-            return template != null && template.hasTemplate(x, y, z);
-        }
+        if (container == null) return false;
 
-        return false;
+        // ✅ Le template est récupéré directement depuis le ChunkStore du World
+        TreasureChestTemplate template = world.getChunkStore().getStore().getResource(EldaniorSystem.CHEST_TEMPLATE_TYPE);
+        return template != null && template.hasTemplate(x, y, z);
     }
 
     @Override

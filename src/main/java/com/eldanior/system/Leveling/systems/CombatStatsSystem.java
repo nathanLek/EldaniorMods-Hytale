@@ -65,7 +65,7 @@ public class CombatStatsSystem extends DamageEventSystem {
 
         if (damage.getSource() instanceof Damage.EntitySource entitySource) {
             Ref<EntityStore> attackerRef = entitySource.getRef();
-            if (attackerRef != null && attackerRef.isValid()) {
+            if (attackerRef.isValid()) {
 
                 // Est-ce un Mob ?
                 var mobLevelType = EldaniorSystem.get().getMobLevelDataType();
@@ -114,7 +114,7 @@ public class CombatStatsSystem extends DamageEventSystem {
             if (uuidComp != null) {
                 PlayerRef playerRef = Universe.get().getPlayer(uuidComp.getUuid());
                 if (playerRef != null) {
-                    NotificationHelper.sendNotification(playerRef, "<color:aqua>💨 Esquive !</color>", NotificationStyle.Success);
+                    NotificationHelper.sendNotification(playerRef, "<color:aqua>Esquive !</color>", NotificationStyle.Success);
                 }
             }
             return true;

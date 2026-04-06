@@ -13,12 +13,14 @@ import com.eldanior.system.classes.ClassManager;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.config.Player.PlayerPositionTracker;
 import com.eldanior.system.config.configs.Mobs.*;
+import com.eldanior.system.config.configs.system.MasterySystem;
 import com.eldanior.system.config.configs.system.MobDeathCheckSystem;
 import com.eldanior.system.config.configs.system.MobNameplateColorSystem;
 import com.eldanior.system.config.configs.system.MobNameplateUpdateOnDamageSystem;
 import com.eldanior.system.skills.InteractionManager;
 import com.eldanior.system.skills.SkillManager;
 import com.eldanior.system.skills.system.DetectionSystem;
+import com.eldanior.system.skills.system.FlySystem;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.ResourceType; // Nouveau
 import com.hypixel.hytale.logger.HytaleLogger;
@@ -148,6 +150,8 @@ public class EldaniorSystem extends JavaPlugin {
             this.getEntityStoreRegistry().registerSystem(new TreasureChestDamageBlockEvent());
             this.getEntityStoreRegistry().registerSystem(new TreasureChestRangeSystem());
             this.getEntityStoreRegistry().registerSystem(new CraftingRestrictionSystem());
+            this.getEntityStoreRegistry().registerSystem(new MasterySystem());
+            this.getEntityStoreRegistry().registerSystem(new FlySystem());
 
             LOGGER.atInfo().log("[OK] Systèmes ECS activés.");
         } catch (Exception e) {

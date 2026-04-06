@@ -2,6 +2,8 @@ package com.eldanior.system.config.configs.system;
 
 import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.config.Player.PlayerPositionTracker;
+import com.eldanior.system.config.configs.MobXP;
+import com.eldanior.system.config.configs.Mobs.IMobConfig;
 import com.eldanior.system.config.configs.Mobs.MobLevelData;
 import com.eldanior.system.config.configs.Mobs.MobVirtualHPSystem;
 import com.hypixel.hytale.component.*;
@@ -27,7 +29,6 @@ public class MobNameplateUpdateOnDamageSystem extends DamageEventSystem {
 
     @Override
     public SystemGroup<EntityStore> getGroup() {
-        // S'exécute APRÈS que les dégâts soient appliqués
         return DamageModule.get().getInspectDamageGroup();
     }
 
@@ -44,16 +45,25 @@ public class MobNameplateUpdateOnDamageSystem extends DamageEventSystem {
 
         Ref<EntityStore> targetRef = chunk.getReferenceTo(index);
 
-        // Vérifie si la cible est un NPC avec un niveau
-        NPCEntity npc = store.getComponent(targetRef, NPCEntity.getComponentType());
+        NPCEntity npc = store.getComponent(targetRef, Objects.requireNonNull(NPCEntity.getComponentType()));
         if (npc == null) return;
+
+        String mobTypeId = npc.getNPCTypeId();
+
+        // CORRECTION ICI : On utilise IMobConfig au lieu de MobXP
+        IMobConfig mobXPData = MobXP.getMobDataForId(mobTypeId);
+
+        if (mobXPData.getCustomTitle() != null) {
+            Nameplate nameplate = new Nameplate(mobXPData.getCustomTitle());
+            commandBuffer.putComponent(targetRef, Nameplate.getComponentType(), nameplate);
+            return;
+        }
 
         ComponentType<EntityStore, MobLevelData> mobLevelType = EldaniorSystem.get().getMobLevelDataType();
         MobLevelData mobData = store.getComponent(targetRef, mobLevelType);
 
         if (mobData == null || !mobData.isStatsApplied()) return;
 
-        // Met à jour la nameplate IMMÉDIATEMENT après les dégâts
         updateNameplate(targetRef, npc, mobData, store, commandBuffer);
     }
 
@@ -66,10 +76,8 @@ public class MobNameplateUpdateOnDamageSystem extends DamageEventSystem {
         Vector3d mobPos = mobTransform.getPosition();
         int mobLevel = mobData.getLevel();
 
-        // Récupère les HP actuels
         String hpText = getHPText(mobRef, mobData, store);
 
-        // Trouve le joueur le plus proche
         UUID nearestPlayerUUID = getPlayerUUID(mobPos);
 
         String nameplateText;

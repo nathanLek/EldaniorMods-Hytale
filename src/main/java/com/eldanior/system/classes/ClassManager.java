@@ -14,6 +14,8 @@ public class ClassManager {
     private static final Set<String> evolutionIds = new HashSet<>();
 
     public static void init() {
+        register(new DragonAncestral());
+
         register(new Novice());
 
         register(new Warrior());

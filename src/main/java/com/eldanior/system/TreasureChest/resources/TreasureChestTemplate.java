@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -46,6 +47,10 @@ public class TreasureChestTemplate implements Resource<ChunkStore> {
         for(Map.Entry<String, ChestData> entry : other.templates.entrySet()) {
             this.templates.put(entry.getKey(), new ChestData(entry.getValue()));
         }
+    }
+
+    public Set<String> getTemplateKeys() {
+        return this.templates.keySet();
     }
 
     @Nullable

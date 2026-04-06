@@ -1,0 +1,71 @@
+{
+  "TranslationProperties": {
+    "Name": "10 Elda",
+    "Description": "[Clic F]: Transférer Dans la Banque"
+  },
+  "Categories": [
+    "Eldanior_System.Coins"
+  ],
+  "Set": "Scrap",
+  "BlockType": {
+    "DrawType": "Model",
+    "CustomModel": "Items/Coins/Elda_Coins.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Items/Coins/Elda_Silver_Coins.png",
+        "Weight": 1
+      },
+      {
+        "Texture": "Items/Coins/Elda_Silver_Coins.png",
+        "Weight": 1
+      }
+    ],
+    "Flags": {},
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "SoftBlocks"
+      }
+    },
+    "BlockParticleSetId": "Metal",
+    "BlockSoundSetId": "Coins",
+    "VariantRotation": "NESW",
+    "Material": "Solid",
+    "Opacity": "Semitransparent",
+    "RandomRotation": "YawStep1",
+    "ParticleColor": "#ffd848",
+    "Particles": [
+      {
+        "SystemId": "Block_Gem_Sparks",
+        "Color": "#ffce76",
+        "TargetEntityPart": "Entity"
+      }
+    ],
+    "HitboxType": "Rubble",
+    "RequiresAlphaBlending": false
+  },
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 1.4,
+    "Rotation": [
+      347,
+      333,
+      360
+    ],
+    "Translation": [
+      7,
+      -7
+    ]
+  },
+  "Tags": {
+    "Type": [
+      "Deco"
+    ]
+  },
+  "Icon": "Icons/ItemsGenerated/Elda_Silver_Coins_Icone.png",
+  "ItemSoundSetId": "ISS_Blocks_Wood",
+  "Quality": "Common",
+  "DropOnDeath": true,
+  "Interactions": {
+    "Use": "Root_ConsumableItemMoneyInteraction"
+  }
+}

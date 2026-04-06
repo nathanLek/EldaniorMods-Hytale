@@ -3,6 +3,7 @@ package com.eldanior.system.classes.definitions.marchand;
 import com.eldanior.system.classes.models.ClassModel;
 import com.eldanior.system.config.configs.ClassType;
 import com.eldanior.system.config.configs.Rarity;
+import com.eldanior.system.config.configs.WeaponMastery;
 import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class WorldForger extends ClassModel {
                 Rarity.LEGENDARY,
                 ClassType.MERCHANT,
                 List.of(PassiveSkill.ARTISANAT),
+                List.of(WeaponMastery.ANY),
                 null,
                 999,
                 false,
