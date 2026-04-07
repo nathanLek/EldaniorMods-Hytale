@@ -14,7 +14,6 @@ public enum defaultData implements IMobConfig {
     private final boolean isInvincible;
     private final String customTitle;
 
-    // Constructeur standard
     defaultData(String keyword, int xp, int minLevel, int maxLevel) {
         this.keyword = keyword;
         this.xp = xp;

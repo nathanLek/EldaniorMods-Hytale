@@ -6,8 +6,8 @@ import com.eldanior.system.config.configs.Mobs.IMobConfig;
 public enum DragonData implements IMobConfig {
 
     SNAPDRAGON("snapdragon", 1000, 500, 600),
-    DRAGON_FIRE("dragon_fire", 10000, 700, 999),
-    DRAGON_FROST("dragon_frost", 10000, 700, 999);
+    DRAGON_FIRE("dragon fire", 10000, 700, 999),
+    DRAGON_FROST("dragon frost", 10000, 700, 999);
 
     private final String keyword;
     private final int xp;
@@ -16,7 +16,6 @@ public enum DragonData implements IMobConfig {
     private final boolean isInvincible;
     private final String customTitle;
 
-    // Constructeur standard
     DragonData(String keyword, int xp, int minLevel, int maxLevel) {
         this.keyword = keyword;
         this.xp = xp;

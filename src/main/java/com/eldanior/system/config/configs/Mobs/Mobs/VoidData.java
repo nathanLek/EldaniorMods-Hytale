@@ -5,11 +5,12 @@ import com.eldanior.system.config.configs.Mobs.IMobConfig;
 
 public enum VoidData implements IMobConfig {
 
-    SPAWN_VOID("spawn_void", 150, 200, 500),
-    SPECTRE_VOID("spectre_void", 80, 200, 500),
-    CRAWLER_VOID("crawler_void", 60, 200, 500),
-    EYE_VOID("eye_void", 50, 200, 500),
-    LARVA_VOID("larva_void", 20, 200, 500);
+    SPAWN_VOID("spawn void", 150, 200, 500),
+    SPECTRE_VOID("spectre void", 80, 200, 500),
+    CRAWLER_VOID("crawler void", 60, 200, 500),
+    EYE_VOID("eye void", 50, 200, 500),
+    NECROMANCER_VOID("necromancer void", 50, 200, 500),
+    LARVA_VOID("larva void", 20, 200, 500);
 
     private final String keyword;
     private final int xp;
@@ -18,7 +19,6 @@ public enum VoidData implements IMobConfig {
     private final boolean isInvincible;
     private final String customTitle;
 
-    // Constructeur standard
     VoidData(String keyword, int xp, int minLevel, int maxLevel) {
         this.keyword = keyword;
         this.xp = xp;

@@ -3,15 +3,9 @@ package com.eldanior.system.config.configs.Mobs.Mobs;
 
 import com.eldanior.system.config.configs.Mobs.IMobConfig;
 
-public enum BossData implements IMobConfig {
+public enum FenData implements IMobConfig {
 
-    GOLEM_GUARDIAN_VOID("golem guardian void", 1400, 800, 999),
-    SHADOW_KNIGHT("shadow knight", 2000, 600, 900),
-    WHALE_HUMPBACK("whale humpback", 1500, 700, 999),
-    YETI("yeti", 1650, 400, 900),
-    WRAITH("wraith", 100, 350, 700),
-    HEDERA("hedera", 1500, 500, 700),
-    WEREWOLF("werewolf", 1300, 700, 950);
+    FEN_STALKER("fen stalker", 300, 200, 400);
 
     private final String keyword;
     private final int xp;
@@ -20,7 +14,7 @@ public enum BossData implements IMobConfig {
     private final boolean isInvincible;
     private final String customTitle;
 
-    BossData(String keyword, int xp, int minLevel, int maxLevel) {
+    FenData(String keyword, int xp, int minLevel, int maxLevel) {
         this.keyword = keyword;
         this.xp = xp;
         this.minLevel = minLevel;

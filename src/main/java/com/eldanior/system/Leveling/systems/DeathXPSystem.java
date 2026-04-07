@@ -4,6 +4,7 @@ import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.Leveling.utils.NotificationHelper;
 import com.eldanior.system.config.configs.MobXP;
+import com.eldanior.system.config.configs.Mobs.MobLevelData;
 import com.hypixel.hytale.component.AddReason;
 import com.hypixel.hytale.component.ArchetypeChunk;
 import com.hypixel.hytale.component.CommandBuffer;
@@ -81,6 +82,7 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
             int killerLevel = (killerDataRead != null) ? killerDataRead.getLevel() : 1;
 
             int xpAmount = 0;
+            int victimLevel = 1; // NOUVEAU : On déclare le niveau de la victime ici pour qu'il soit accessible partout
             String victimName = "Inconnu";
             boolean isPvP = false;
             boolean isMob = false;
@@ -91,7 +93,7 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
                 victimName = (victimRefObj != null) ? victimRefObj.getUsername() : "Joueur";
 
                 PlayerLevelData victimData = store.getComponent(victimRef, lvlType);
-                int victimLevel = (victimData != null) ? victimData.getLevel() : 1;
+                victimLevel = (victimData != null) ? victimData.getLevel() : 1;
                 xpAmount = calculatePvPXP(killerLevel, victimLevel);
             } else {
                 NPCEntity npc = store.getComponent(victimRef, Objects.requireNonNull(NPCEntity.getComponentType()));
@@ -100,10 +102,29 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
                     String typeId = npc.getNPCTypeId().toLowerCase();
                     victimName = typeId.replace("_", " ");
                     xpAmount = calculatePvEXP(typeId);
+
+                    // NOUVEAU : On récupère le niveau exact du monstre
+                    ComponentType<EntityStore, MobLevelData> mobLevelType = EldaniorSystem.get().getMobLevelDataType();
+                    MobLevelData mobData = store.getComponent(victimRef, mobLevelType);
+
+                    // S'il n'a pas de niveau dynamique, on prend son niveau minimum par défaut
+                    victimLevel = (mobData != null) ? mobData.getLevel() : MobXP.getMinLevelForId(npc.getNPCTypeId());
                 }
             }
 
+            // Si le monstre/joueur donne 0 XP de base, on arrête tout
             if (xpAmount <= 0) return;
+
+            // --- NOUVEAU : CALCUL DU SCALING D'XP ---
+            // On calcule l'écart (Victime - Tueur)
+            int levelGap = victimLevel - killerLevel;
+
+            // 1 niveau d'écart = 0.005 (0.5%) | Ex: +10 niveaux = 1.05 | -10 niveaux = 0.95
+            double multiplier = 1.0 + (levelGap * 0.005);
+
+            // On applique le multiplicateur et on empêche l'XP de tomber sous 1 point
+            xpAmount = (int) Math.max(1, Math.round(xpAmount * multiplier));
+            // ----------------------------------------
 
             PlayerLevelData dataToWrite = (killerDataRead != null)
                     ? (PlayerLevelData) killerDataRead.clone()
@@ -134,10 +155,8 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
                         if (victimTransform != null) {
                             Vector3d spawnPos = victimTransform.getPosition();
 
-                            int mobLevel = MobXP.getMinLevelForId(npcComp.getNPCTypeId());
-                            int levelDiff = mobLevel - killerLevel;
-
-                            int maxAmount = Math.max(1, Math.min(10, 5 + levelDiff));
+                            // OPTIMISATION : On utilise directement la variable "levelGap" calculée plus haut !
+                            int maxAmount = Math.max(1, Math.min(10, 5 + levelGap));
                             int quantity = 1 + random.nextInt(maxAmount);
 
                             ItemStack coinStack = new ItemStack("Elda_Copper_Coins", quantity);

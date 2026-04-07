@@ -5,11 +5,10 @@ import com.eldanior.system.config.configs.Mobs.IMobConfig;
 
 public enum ElementalData implements IMobConfig {
 
-    // === ELEMENTALS ===
-    SPIRIT_THUNDER("spirit_thunder", 100, 300, 800),
-    SPIRIT_EMBER("spirit_ember", 80, 300, 800),
-    SPIRIT_FROST("spirit_frost", 60, 300, 800),
-    SPIRIT_ROOT("spirit_root", 40, 300, 800);
+    SPIRIT_THUNDER("spirit thunder", 100, 300, 800),
+    SPIRIT_EMBER("spirit ember", 80, 300, 800),
+    SPIRIT_FROST("spirit frost", 60, 300, 800),
+    SPIRIT_ROOT("spirit root", 40, 300, 800);
 
     private final String keyword;
     private final int xp;
@@ -18,7 +17,6 @@ public enum ElementalData implements IMobConfig {
     private final boolean isInvincible;
     private final String customTitle;
 
-    // Constructeur standard
     ElementalData(String keyword, int xp, int minLevel, int maxLevel) {
         this.keyword = keyword;
         this.xp = xp;

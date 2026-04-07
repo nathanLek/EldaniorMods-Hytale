@@ -5,12 +5,12 @@ import com.eldanior.system.config.configs.Mobs.IMobConfig;
 
 public enum FeranData implements IMobConfig {
 
-    FERAN_WINDWALKER("feran_windwalker", 50, 50, 200),
-    FERAN_SHARPTOOTH("feran_sharptooth", 50, 50, 200),
-    FERAN_LONGTOOTH("feran_longtooth", 50, 50, 200),
-    FERAN_BURROWER("feran_burrower", 45, 50, 200),
-    FERAN_CIVILIAN("feran_civilian", 35, 50, 200),
-    FERAN_CUB("feran_cub", 15, 50, 200);
+    FERAN_WINDWALKER("feran windwalker", 50, 50, 200),
+    FERAN_SHARPTOOTH("feran sharptooth", 50, 50, 200),
+    FERAN_LONGTOOTH("feran longtooth", 50, 50, 200),
+    FERAN_BURROWER("feran burrower", 45, 50, 200),
+    FERAN_CIVILIAN("feran civilian", 35, 50, 200),
+    FERAN_CUB("feran cub", 15, 50, 200);
 
     private final String keyword;
     private final int xp;
@@ -19,7 +19,6 @@ public enum FeranData implements IMobConfig {
     private final boolean isInvincible;
     private final String customTitle;
 
-    // Constructeur standard
     FeranData(String keyword, int xp, int minLevel, int maxLevel) {
         this.keyword = keyword;
         this.xp = xp;

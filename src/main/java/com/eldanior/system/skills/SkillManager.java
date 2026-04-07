@@ -13,50 +13,50 @@ public class SkillManager {
 
         // --- ATTAQUE ---
         register("skill_page_mauvais_presage", new SkillModel(
-                "MAUVAIS_PRESAGE", null, "Mauvais Présage", "warrior",
+                "MAUVAIS_PRESAGE", null, "Mauvais Présage", "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of()
         ));
         register("skill_page_koda_judgment", new SkillModel(
-                "KODA_JUDGMENT", null, "Jugement de Koda", "warrior", // Adapté pour le warrior ou l'assassin
+                "KODA_JUDGMENT", null, "Jugement de Koda", "warrior, dragon", // Adapté pour le warrior ou l'assassin
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), // Légendaire, donc pas d'évolution suivante pour le moment !
                 List.of()
         ));
         register("skill_page_opportunist_strike", new SkillModel(
-                "OPPORTUNIST_STRIKE", null, "Frappe Opportuniste", "warrior",
+                "OPPORTUNIST_STRIKE", null, "Frappe Opportuniste", "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of()
         ));
         register("skill_page_haunting_thrust", new SkillModel(
-                "HAUNTING_THRUST", null, "Estocade Obsédante", "warrior",
+                "HAUNTING_THRUST", null, "Estocade Obsédante", "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of()
         ));
         register("skill_page_pressure_point", new SkillModel(
-                "PRESSURE_POINT", null, "Point de Pression", "warrior",
+                "PRESSURE_POINT", null, "Point de Pression", "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of()
         ));
         register("skill_page_duelist_swiftness", new SkillModel(
-                "DUELIST_SWIFTNESS", null, "Vivacité du Duelliste", "warrior",
+                "DUELIST_SWIFTNESS", null, "Vivacité du Duelliste", "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of()
         ));
         register("skill_page_deep_slash", new SkillModel(
-                "DEEP_SLASH", null, "Entaille Profonde", "warrior",
+                "DEEP_SLASH", null, "Entaille Profonde", "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of()
         ));
 
         register("skill_page_instinctive_strike", new SkillModel(
-                "INSTINCTIVE_STRIKE", null, "Frappe Instinctive", "warrior",
+                "INSTINCTIVE_STRIKE", null, "Frappe Instinctive", "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("PREDATORY_STRIKE", "FURY_STRIKE", "SEISMIC_STRIKE", "PHANTOM_STRIKE", "ANNIHILATOR_STRIKE", "JUDGMENT_OF_GENESIS"),
                 List.of()
@@ -65,7 +65,7 @@ public class SkillManager {
                 "PREDATORY_STRIKE",
                 null, // Ici, on met l'ID du skill précédent si c'est une évolution
                 "Frappe de Prédateur",
-                "warrior",
+                "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("FURY_STRIKE","SEISMIC_STRIKE", "PHANTOM_STRIKE", "ANNIHILATOR_STRIKE", "JUDGMENT_OF_GENESIS"),
                 List.of("INSTINCTIVE_STRIKE")
@@ -74,7 +74,7 @@ public class SkillManager {
                 "FURY_STRIKE",
                 "null", // Ici, on met l'ID du skill précédent si c'est une évolution
                 "Frappe de Fureur",
-                "warrior",
+                "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("SEISMIC_STRIKE", "PHANTOM_STRIKE", "ANNIHILATOR_STRIKE", "JUDGMENT_OF_GENESIS"),
                 List.of("PREDATORY_STRIKE", "INSTINCTIVE_STRIKE")
@@ -82,7 +82,7 @@ public class SkillManager {
         register("skill_page_seismic_strike", new SkillModel(
                 "SEISMIC_STRIKE",
                 null,
-                "Frappe Sismique", "warrior",
+                "Frappe Sismique", "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("PHANTOM_STRIKE", "ANNIHILATOR_STRIKE", "JUDGMENT_OF_GENESIS"),
                 List.of("PREDATORY_STRIKE", "INSTINCTIVE_STRIKE", "FURY_STRIKE")
@@ -90,7 +90,7 @@ public class SkillManager {
         register("skill_page_phantom_strike", new SkillModel(
                 "PHANTOM_STRIKE",
                 null,
-                "Frappe Fantôme", "warrior",
+                "Frappe Fantôme", "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("ANNIHILATOR_STRIKE", "JUDGMENT_OF_GENESIS"),
                 List.of("PREDATORY_STRIKE", "INSTINCTIVE_STRIKE", "FURY_STRIKE", "SEISMIC_STRIKE" )
@@ -98,7 +98,7 @@ public class SkillManager {
         register("skill_page_annihilator_strike", new SkillModel(
                 "ANNIHILATOR_STRIKE",
                 null,
-                "Frappe de l'Annihilateur", "warrior",
+                "Frappe de l'Annihilateur", "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("JUDGMENT_OF_GENESIS"),
                 List.of("PREDATORY_STRIKE", "INSTINCTIVE_STRIKE", "FURY_STRIKE", "SEISMIC_STRIKE", "PHANTOM_STRIKE")
@@ -106,7 +106,7 @@ public class SkillManager {
         register("skill_page_judgment_of_genesis", new SkillModel(
                 "JUDGMENT_OF_GENESIS",
                 null,
-                "Décret de la Genèse", "warrior",
+                "Décret de la Genèse", "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of("PREDATORY_STRIKE", "INSTINCTIVE_STRIKE", "FURY_STRIKE", "SEISMIC_STRIKE", "PHANTOM_STRIKE", "ANNIHILATOR_STRIKE")
@@ -114,73 +114,73 @@ public class SkillManager {
 
         // --- DEFENSE ---
         register("skill_page_dyna_aegis", new SkillModel(
-                "DYNA_AEGIS", null, "Égide de Dyna", "warrior",
+                "DYNA_AEGIS", null, "Égide de Dyna", "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of()
         ));
         register("skill_page_iron_resolve", new SkillModel(
-                "IRON_RESOLVE", null, "Résolution de Fer", "warrior",
+                "IRON_RESOLVE", null, "Résolution de Fer", "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("STEEL_RESOLVE", "TITAN_RESOLVE", "UNBREAKABLE_WILL"), // Évolutions futures
                 List.of()
         ));
         register("skill_page_minor_parry", new SkillModel(
-                "MINOR_PARRY", null, "Parade Mineure", "warrior",
+                "MINOR_PARRY", null, "Parade Mineure", "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("EXPERT_PARRY", "MASTER_PARRY", "PERFECT_RIPOSTE"), // Évolutions futures
                 List.of()
         ));
         register("skill_page_hunter_guard", new SkillModel(
-                "HUNTER_GUARD", null, "Garde de Chasseur", "warrior",
+                "HUNTER_GUARD", null, "Garde de Chasseur", "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("BEAST_GUARD", "MONSTER_HUNTER_GUARD", "DRAGON_SLAYER_GUARD"), // Évolutions futures
                 List.of()
         ));
         register("skill_page_sturdy_body", new SkillModel(
-                "STURDY_BODY", null, "Corps Robuste", "warrior",
+                "STURDY_BODY", null, "Corps Robuste", "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("IRON_BODY", "STEEL_BODY", "DIAMOND_BODY", "IMMORTAL_BODY"), // Évolutions futures
                 List.of()
         ));
         register("skill_page_stone_skin", new SkillModel(
-                "STONE_SKIN", null, "Peau de Pierre", "warrior",
+                "STONE_SKIN", null, "Peau de Pierre", "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("BRONZE_SKIN", "IRON_SKIN", "STEEL_SKIN", "OBSIDIAN_SKIN", "DIAMOND_SKIN", "DIVINE_AEGIS"),
                 List.of()
         ));
         register("skill_page_bronze_skin", new SkillModel(
-                "BRONZE_SKIN", null, "Peau de Bronze", "warrior",
+                "BRONZE_SKIN", null, "Peau de Bronze", "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("IRON_SKIN", "STEEL_SKIN", "OBSIDIAN_SKIN", "DIAMOND_SKIN", "DIVINE_AEGIS"),
                 List.of("STONE_SKIN")
         ));
         register("skill_page_iron_skin", new SkillModel(
-                "IRON_SKIN", null, "Peau de Fer", "warrior",
+                "IRON_SKIN", null, "Peau de Fer", "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("STEEL_SKIN", "OBSIDIAN_SKIN", "DIAMOND_SKIN", "DIVINE_AEGIS"),
                 List.of("STONE_SKIN", "BRONZE_SKIN")
         ));
         register("skill_page_steel_skin", new SkillModel(
-                "STEEL_SKIN", null, "Peau d'Acier", "warrior",
+                "STEEL_SKIN", null, "Peau d'Acier", "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("OBSIDIAN_SKIN", "DIAMOND_SKIN", "DIVINE_AEGIS"),
                 List.of("STONE_SKIN", "BRONZE_SKIN", "IRON_SKIN")
         ));
         register("skill_page_obsidian_skin", new SkillModel(
-                "OBSIDIAN_SKIN", null, "Peau d'Obsidienne", "warrior",
+                "OBSIDIAN_SKIN", null, "Peau d'Obsidienne", "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("DIAMOND_SKIN", "DIVINE_AEGIS"),
                 List.of("STONE_SKIN", "BRONZE_SKIN", "IRON_SKIN", "STEEL_SKIN")
         ));
         register("skill_page_diamond_skin", new SkillModel(
-                "DIAMOND_SKIN", null, "Peau de Diamant", "warrior",
+                "DIAMOND_SKIN", null, "Peau de Diamant", "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("DIVINE_AEGIS"),
                 List.of("STONE_SKIN", "BRONZE_SKIN", "IRON_SKIN", "STEEL_SKIN", "OBSIDIAN_SKIN")
         ));
         register("skill_page_divine_aegis", new SkillModel(
-                "DIVINE_AEGIS", null, "Égide Divine", "warrior",
+                "DIVINE_AEGIS", null, "Égide Divine", "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), // Puissance maximale atteinte !
                 List.of("STONE_SKIN", "BRONZE_SKIN", "IRON_SKIN", "STEEL_SKIN", "OBSIDIAN_SKIN", "DIAMOND_SKIN")
@@ -188,80 +188,80 @@ public class SkillManager {
 
         // --- AGILITY ---
         register("skill_page_wind_step", new SkillModel(
-                "WIND_STEP", null, "Pas de Vent", "novice, warrior, assassin",
+                "WIND_STEP", null, "Pas de Vent", "novice, dragon, warrior, assassin",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of()
         ));
         register("skill_page_light_reflexes", new SkillModel(
-                "LIGHT_REFLEXES", null, "Réflexes Éclairs", "warrior, assassin, novice",
+                "LIGHT_REFLEXES", null, "Réflexes Éclairs", "warrior, dragon, assassin, novice",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of()
         ));
         register("skill_page_suppleness", new SkillModel(
-                "ELDANIOR_SUPPLENESS", null, "Souplesse d'Eldanior", "novice, warrior, assassin",
+                "ELDANIOR_SUPPLENESS", null, "Souplesse d'Eldanior", "novice, dragon, warrior, assassin",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of()
         ));
         register("skill_page_athleticism", new SkillModel(
-                "ATHLETICISM", null, "Athlétisme", "novice, warrior, assassin",
+                "ATHLETICISM", null, "Athlétisme", "novice, dragon, warrior, assassin",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of()
         ));
         register("skill_page_eagle_eye", new SkillModel(
-                "EAGLE_EYE", null, "Œil de Rapace", "warrior, assassin",
+                "EAGLE_EYE", null, "Œil de Rapace", "warrior, dragon, assassin",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), List.of()
         ));
 
         register("skill_page_tono_squive", new SkillModel(
-                "TONOSQUIVE", null, "Esquive de Tono", "warrior",
+                "TONOSQUIVE", null, "Esquive de Tono", "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), List.of()
         ));
 
         // --- DETECTION ---
         register("skill_page_survival_instinct", new SkillModel(
-                "SURVIVAL_INSTINCT", null, "Instinct de Survie", "novice, warrior",
+                "SURVIVAL_INSTINCT", null, "Instinct de Survie", "novice, dragon, warrior",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("UNIVERSAL_DETECTION"), List.of()
         ));
         register("skill_page_keen_senses", new SkillModel(
-                "KEEN_SENSES", null, "Sens Aiguisés", "assassin, warrior",
+                "KEEN_SENSES", null, "Sens Aiguisés", "assassin, dragon, warrior",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of()
         ));
         register("skill_page_universal_detection", new SkillModel(
-                "UNIVERSAL_DETECTION", null, "Detection Universel", "mage, warrior",
+                "UNIVERSAL_DETECTION", null, "Detection Universel", "mage, dragon, warrior",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), List.of("SURVIVAL_INSTINCT")
         ));
 
         register("skill_page_night_vision", new SkillModel(
-                "NIGHT_VISION", null, "Vision Nocturne", "warrior, assassin",
+                "NIGHT_VISION", null, "Vision Nocturne", "warrior, dragon, assassin",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), List.of()
         ));
 
         register("skill_page_sixth_sense", new SkillModel(
-                "SIXTH_SENSE", null, "Sixième Sens", "warrior, assassin",
+                "SIXTH_SENSE", null, "Sixième Sens", "warrior, dragon, assassin",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), List.of()
         ));
 
         register("skill_page_tracker", new SkillModel(
-                "TRACKER", null, "Pisteur", "warrior",
+                "TRACKER", null, "Pisteur", "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), List.of()
         ));
 
         // --- MAITRISE ---
         register("skill_page_sword_mastery", new SkillModel(
-                "SWORD_MASTERY", null, "Maîtrise de l'Épée", "warrior",
+                "SWORD_MASTERY", null, "Maîtrise de l'Épée", "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of()
@@ -269,47 +269,47 @@ public class SkillManager {
 
         // --- MAGIE ---
         register("skill_page_fly", new SkillModel(
-                "VOL", null, "Vol", "mage",
+                "VOL", null, "Vol", "mage, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of()
         ));
         register("skill_page_mana_well", new SkillModel(
-                "MANAWELL", null, "Maîtrise de l'Épée", "mage",
+                "MANAWELL", null, "Maîtrise de l'Épée", "mage, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of()
         ));
         register("skill_page_awakened_mind", new SkillModel(
-                "AWAKENED_MIND", null, "Esprit Éveillé", "mage",
+                "AWAKENED_MIND", null, "Esprit Éveillé", "mage, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("EXPANDED_MIND"),
                 List.of()
         ));
 
         register("skill_page_arcane_strike", new SkillModel(
-                "ARCANE_STRIKE", null, "Frappe Arcanique", "mage",
+                "ARCANE_STRIKE", null, "Frappe Arcanique", "mage, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("SPELLBLADE"),
                 List.of()
         ));
 
         register("skill_page_mana_barrier", new SkillModel(
-                "MANA_BARRIER", null, "Barrière de Mana", "mage",
+                "MANA_BARRIER", null, "Barrière de Mana", "mage, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("ARCANE_SHIELD"),
                 List.of()
         ));
 
         register("skill_page_overflowing_power", new SkillModel(
-                "OVERFLOWING_POWER", null, "Puissance Débordante", "mage",
+                "OVERFLOWING_POWER", null, "Puissance Débordante", "mage, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("UNLEASHED_MAGIC"),
                 List.of()
         ));
 
         register("skill_page_mystic_veil", new SkillModel(
-                "MYSTIC_VEIL", null, "Voile Mystique", "mage",
+                "MYSTIC_VEIL", null, "Voile Mystique", "mage, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("ASTRAL_CLOAK"),
                 List.of()
@@ -317,38 +317,38 @@ public class SkillManager {
 
         // --- CHANCE ---
         register("skill_page_artisanat", new SkillModel(
-                "ARTISANAT", null, "Artisanat", "merchant",
+                "ARTISANAT", null, "Artisanat", "merchant, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of()
         ));
         register("skill_page_detection_of_vital_points", new SkillModel(
-                "DETECTIONOFVITALPOINTS", null, "Maîtrise de l'Épée", "warrior",
+                "DETECTIONOFVITALPOINTS", null, "Maîtrise de l'Épée", "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of()
         ));
         register("skill_page_lucky_strike", new SkillModel(
-                "LUCKY_STRIKE", null, "Frappe Chanceuse", "merchant", // J'ai mis merchant, adapte si besoin !
+                "LUCKY_STRIKE", null, "Frappe Chanceuse", "merchant, dragon", // J'ai mis merchant, adapte si besoin !
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of()
         ));
         register("skill_page_treasure_hunter", new SkillModel(
-                "TREASURE_HUNTER", null, "Chasseur de Trésors", "merchant",
+                "TREASURE_HUNTER", null, "Chasseur de Trésors", "merchant, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of()
         ));
         register("skill_page_good_omen", new SkillModel(
-                "GOOD_OMEN", null, "Bon Présage", "merchant",
+                "GOOD_OMEN", null, "Bon Présage", "merchant, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of()
         ));
 
         register("skill_page_miracle_dodge", new SkillModel(
-                "MIRACLE_DODGE", null, "Esquive Miraculeuse", "assassin",
+                "MIRACLE_DODGE", null, "Esquive Miraculeuse", "assassin, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of()
@@ -356,35 +356,35 @@ public class SkillManager {
 
         // --- ENDURANCE ---
         register("skill_page_tireless_breath", new SkillModel(
-                "TIRELESS_BREATH", null, "Souffle Inépuisable", "warrior",
+                "TIRELESS_BREATH", null, "Souffle Inépuisable", "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("LUNGS_OF_STEEL"),
                 List.of()
         ));
 
         register("skill_page_thick_skin", new SkillModel(
-                "THICK_SKIN", null, "Peau Épaisse", "warrior",
+                "THICK_SKIN", null, "Peau Épaisse", "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("STONE_SKIN"),
                 List.of()
         ));
 
         register("skill_page_solid_stance", new SkillModel(
-                "SOLID_STANCE", null, "Posture Solide", "warrior",
+                "SOLID_STANCE", null, "Posture Solide", "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("UNMOVABLE_MOUNTAIN"),
                 List.of()
         ));
 
         register("skill_page_combat_vigor", new SkillModel(
-                "COMBAT_VIGOR", null, "Vigueur Combative", "warrior",
+                "COMBAT_VIGOR", null, "Vigueur Combative", "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("RELENTLESS_ASSAULT"),
                 List.of()
         ));
 
         register("skill_page_second_wind", new SkillModel(
-                "SECOND_WIND", null, "Second Souffle", "warrior",
+                "SECOND_WIND", null, "Second Souffle", "warrior, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("SURVIVOR_INSTINCT"),
                 List.of()
@@ -398,25 +398,25 @@ public class SkillManager {
                 List.of()
         ));
         register("skill_page_mana_font", new SkillModel(
-                "MANA_FONT", null, "Source de Mana", "mage",
+                "MANA_FONT", null, "Source de Mana", "mage, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), // Évolution future possible !
                 List.of()
         ));
         register("skill_page_cellular_regeneration", new SkillModel(
-                "CELLULAR_REGENERATION", null, "Régénération Cellulaire", "paladin", // Ou "warrior"
+                "CELLULAR_REGENERATION", null, "Régénération Cellulaire", "paladin, dragon", // Ou "warrior"
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("TROLL_BLOOD"),
                 List.of()
         ));
         register("skill_page_active_breathing", new SkillModel(
-                "ACTIVE_BREATHING", null, "Respiration Active", "assassin",
+                "ACTIVE_BREATHING", null, "Respiration Active", "assassin, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("IRON_LUNGS"),
                 List.of()
         ));
         register("skill_page_spiritual_siphon", new SkillModel(
-                "SPIRITUAL_SIPHON", null, "Siphon Spirituel", "mage",
+                "SPIRITUAL_SIPHON", null, "Siphon Spirituel", "mage, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("SOUL_STEALER"),
                 List.of()

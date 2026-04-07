@@ -12,6 +12,7 @@ import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
+import com.hypixel.hytale.server.core.inventory.container.ItemContainer;
 import com.hypixel.hytale.server.core.modules.block.BlockModule;
 import com.hypixel.hytale.server.core.modules.block.components.ItemContainerBlock;
 import com.hypixel.hytale.server.core.universe.world.World;
@@ -59,21 +60,24 @@ public class TreasureContainerMonitoringSystem extends EntityTickingSystem<Entit
                 if (playerChestData != null) {
                     List<ItemStack> itemsRemaining = new ArrayList<>();
 
-                    // On récupère l'état EXACT du coffre au moment de la fermeture
-                    // Utilisation de short pour la boucle comme dans ton GenerateTreasureCommand
-                    for (short i = 0; i < container.getCapacity(); i++) {
-                        ItemStack stack = container.getItemContainer().getItemStack(i);
-                        if (stack != null) {
-                            itemsRemaining.add(stack);
+                    // CORRECTION ICI : On utilise la capacité de l'inventaire interne, pas celle du bloc
+                    ItemContainer itemContainer = container.getItemContainer();
+
+                    if (itemContainer != null) {
+                        for (short i = 0; i < itemContainer.getCapacity(); i++) {
+                            ItemStack stack = itemContainer.getItemStack(i);
+                            if (stack != null) {
+                                itemsRemaining.add(stack);
+                            }
                         }
+
+                        // MISE À JOUR DE LA PERSISTANCE (Si vide, on enregistre une liste vide)
+                        playerChestData.setInventory(monitor.getX(), monitor.getY(), monitor.getZ(), world.getName(), itemsRemaining);
+                        commandBuffer.replaceComponent(playerRef, EldaniorSystem.get().getPlayerChestDataType(), playerChestData);
+
+                        // On nettoie le monde physique
+                        itemContainer.clear();
                     }
-
-                    // MISE À JOUR DE LA PERSISTANCE (Si vide, on enregistre une liste vide)
-                    playerChestData.setInventory(monitor.getX(), monitor.getY(), monitor.getZ(), world.getName(), itemsRemaining);
-                    commandBuffer.replaceComponent(playerRef, EldaniorSystem.get().getPlayerChestDataType(), playerChestData);
-
-                    // On nettoie le monde physique
-                    container.getItemContainer().clear();
                 }
             }
             commandBuffer.removeComponent(playerRef, this.containerComponentType);

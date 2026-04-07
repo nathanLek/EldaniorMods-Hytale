@@ -5,15 +5,15 @@ import com.eldanior.system.config.configs.Mobs.IMobConfig;
 
 public enum KweebecData implements IMobConfig {
 
-    KWEEBEC_RAZORLEAF("kweebec_razorleaf", 60, 50, 200),
-    KWEEBEC_SAPLING_ORANGE("kweebec_sapling_orange", 35, 50, 200),
-    KWEEBEC_SAPLING_PINK("kweebec_sapling_pink", 35, 50, 200),
-    KWEEBEC_SAPLING("kweebec_sapling", 40, 50, 200),
-    KWEEBEC_ROOTLING("kweebec_rootling", 35, 50, 200),
-    KWEEBEC_SPROUTLING("kweebec_sproutling", 25, 50, 200),
-    KWEEBEC_SEEDLING("kweebec_seedling", 15, 50, 200),
+    KWEEBEC_RAZORLEAF("kweebec razorleaf", 60, 50, 200),
+    KWEEBEC_SAPLING_ORANGE("kweebec sapling orange", 35, 50, 200),
+    KWEEBEC_SAPLING_PINK("kweebec sapling pink", 35, 50, 200),
+    KWEEBEC_SAPLING("kweebec sapling", 40, 50, 200),
+    KWEEBEC_ROOTLING("kweebec rootling", 35, 50, 200),
+    KWEEBEC_SPROUTLING("kweebec sproutling", 25, 50, 200),
+    KWEEBEC_SEEDLING("kweebec seedling", 15, 50, 200),
     KWEEBEC_PRISONER("kweebec_prisoner", 30, 50, 200),
-    KWEEBEC_ELDER("kweebec_elder", 30, 50, 200);
+    KWEEBEC_ELDER("kweebec elder", 30, 50, 200);
 
     private final String keyword;
     private final int xp;
@@ -22,7 +22,6 @@ public enum KweebecData implements IMobConfig {
     private final boolean isInvincible;
     private final String customTitle;
 
-    // Constructeur standard
     KweebecData(String keyword, int xp, int minLevel, int maxLevel) {
         this.keyword = keyword;
         this.xp = xp;

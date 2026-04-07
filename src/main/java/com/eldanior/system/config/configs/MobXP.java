@@ -25,8 +25,10 @@ public class MobXP {
         register(AquaticData.values());
         register(BossData.values());
         register(defaultData.values());
+        register(DinosaureData.values());
         register(DragonData.values());
         register(ElementalData.values());
+        register(FenData.values());
         register(FeranData.values());
         register(GoblinData.values());
         register(GolemData.values());
@@ -34,8 +36,10 @@ public class MobXP {
         register(NpcData.values());
         register(OtherMobData.values());
         register(OutlandersData.values());
+        register(SaurianData.values());
         register(ScaraksData.values());
         register(SkeletonData.values());
+        register(SlothianData.values());
         register(TrorkData.values());
         register(VoidData.values());
         register(ZombieData.values());

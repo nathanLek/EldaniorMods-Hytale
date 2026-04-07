@@ -14,6 +14,8 @@ public enum TrorkData implements IMobConfig {
     TRORK_GUARD("trork guard", 40, 200, 400),
     TRORK_MAULER("trork mauler", 40, 200, 400),
     TRORK_SENTRY("trork sentry", 40, 100, 250),
+    WOLF_TRORK_SHAMAN("wolf trork shaman", 70, 20, 250),
+    WOLF_TRORK_HUNTER("wolf trork hunter", 40, 20, 250),
     TRORK_UNARMED("trork unarmed", 20, 120, 270);
 
     private final String keyword;
@@ -23,7 +25,6 @@ public enum TrorkData implements IMobConfig {
     private final boolean isInvincible;
     private final String customTitle;
 
-    // Constructeur standard
     TrorkData(String keyword, int xp, int minLevel, int maxLevel) {
         this.keyword = keyword;
         this.xp = xp;

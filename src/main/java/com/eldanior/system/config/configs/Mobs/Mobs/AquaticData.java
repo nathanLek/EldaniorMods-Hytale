@@ -14,8 +14,6 @@ public enum AquaticData implements IMobConfig {
     JELLYFISH_YELLOW("jellyfish yellow", 30, 1, 100),
     EEL_MORAY("eel moray", 60, 1, 100),
     SNAPJAW("snapjaw", 60, 1, 100),
-    TRILOBITE_BLACK("trilobite black", 50, 1, 100),
-    TRILOBITE("trilobite", 50, 1, 100),
     PIKE("pike", 30, 1, 100),
     SALMON("salmon", 20, 1, 100),
     TROUT_RAINBOW("trout rainbow", 20, 1, 100),
@@ -32,6 +30,7 @@ public enum AquaticData implements IMobConfig {
     TANG_SAILFIN("tang sailfin", 15, 1, 100),
     LOBSTER("lobster", 40, 1, 100),
     CRAB("crab", 30, 1, 100),
+    TADPOLE_RHINO("tadpole rhino", 30, 1, 100),
     SHELLFISH_LAVA("shellfish lava", 20, 1, 100),
     MINNOW("minnow", 5, 1, 100);
 
@@ -42,7 +41,6 @@ public enum AquaticData implements IMobConfig {
     private final boolean isInvincible;
     private final String customTitle;
 
-    // Constructeur standard
     AquaticData(String keyword, int xp, int minLevel, int maxLevel) {
         this.keyword = keyword;
         this.xp = xp;

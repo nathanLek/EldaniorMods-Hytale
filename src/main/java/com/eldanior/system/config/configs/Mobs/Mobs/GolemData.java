@@ -5,7 +5,6 @@ import com.eldanior.system.config.configs.Mobs.IMobConfig;
 
 public enum GolemData implements IMobConfig {
 
-    GOLEM_GUARDIAN_VOID("golem guardian void", 1400, 800, 999),
     GOLEM_CRYSTAL_EARTH("golem crystal earth", 150, 300, 800),
     GOLEM_CRYSTAL_FLAME("golem crystal flame", 200, 300, 800),
     GOLEM_CRYSTAL_FROST("golem crystal frost", 180, 300, 800),
@@ -20,7 +19,6 @@ public enum GolemData implements IMobConfig {
     private final boolean isInvincible;
     private final String customTitle;
 
-    // Constructeur standard
     GolemData(String keyword, int xp, int minLevel, int maxLevel) {
         this.keyword = keyword;
         this.xp = xp;

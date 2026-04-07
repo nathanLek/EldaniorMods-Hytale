@@ -9,6 +9,7 @@ public enum SkeletonData implements IMobConfig {
     SKELETON_INCANDESCENT_FIGHTER("skeleton incandescent fighter", 80, 100, 500),
     SKELETON_INCANDESCENT_MAGE("skeleton incandescent mage", 80, 100, 500),
     SKELETON_INCANDESCENT_HEAD("skeleton incandescent head", 50, 100, 500),
+
     SKELETON_BURNT_PRAETORIAN("skeleton burnt praetorian", 150, 100, 500),
     SKELETON_BURNT_ALCHEMIST("skeleton burnt alchemist", 70, 100, 500),
     SKELETON_BURNT_SOLDIER("skeleton burnt soldier", 60, 100, 500),
@@ -50,6 +51,9 @@ public enum SkeletonData implements IMobConfig {
     SKELETON_FIGHTER("skeleton fighter", 25, 100, 500),
     SKELETON_BASE("skeleton", 20, 100, 500),
 
+    RISEN_GUNNER("risen gunner", 20, 100, 500),
+    RISEN_KNIGHT("risen knight", 20, 100, 500),
+
     DUNGEON_SKELETON_SAND_SOLDIER("dungeon skeleton sand soldier", 45, 100, 500),
     DUNGEON_SKELETON_SAND_ARCHER("dungeon skeleton sand archer", 45, 100, 500),
     DUNGEON_SKELETON_SAND_ASSASSIN("dungeon skeleton sand assassin", 45, 100, 500),
@@ -62,7 +66,6 @@ public enum SkeletonData implements IMobConfig {
     private final boolean isInvincible;
     private final String customTitle;
 
-    // Constructeur standard
     SkeletonData(String keyword, int xp, int minLevel, int maxLevel) {
         this.keyword = keyword;
         this.xp = xp;

@@ -4,7 +4,6 @@ import com.eldanior.system.config.configs.Mobs.IMobConfig;
 
 public enum NpcData implements IMobConfig {
 
-    // === NPC ===
     BANK_NPC("bank_npc", "Banquier", true),
     FORGERON_TIER1("forgeron_tier1_merchant", "Forgeron", true),
     ALCHEMIST_NPC("Alchemist_Npc", "Alchimiste", true),
@@ -18,8 +17,6 @@ public enum NpcData implements IMobConfig {
 
     MARCHANT1_NPC("Marchant1_Npc", "Marchant", true),
     MARCHANT2_NPC("Marchant2_Npc", "Marchant", true),
-
-    // ATTENTION : On met un point-virgule ici pour terminer la liste !
     MARCHANT3_NPC("Marchant3_Npc", "Marchant", true);
 
     private final String keyword;
