@@ -22,7 +22,7 @@ public class DragonAncestral extends ClassModel {
                 List.of(),
                 999,
                 true,
-                1000, 1000, 2000, 500, 500, 1000
+                500, 500, 1500, 500, 500, 1000
         );
     }
 }

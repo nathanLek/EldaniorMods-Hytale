@@ -56,6 +56,11 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
             if (processedDeaths.containsKey(victimUUID)) return;
             processedDeaths.put(victimUUID, true);
 
+            // --- PÉNALITÉ DE MORT : -10% XP si la victime est un joueur ---
+            if (store.getComponent(entityRef, Player.getComponentType()) != null) {
+                applyDeathPenalty(victimUUID, entityRef, store, commandBuffer);
+            }
+
             UUID killerUUID = EldaniorSystem.get().getLastAttackers().remove(victimUUID);
             if (killerUUID != null) {
                 processKillRewards(killerUUID, victimUUID, entityRef, store, commandBuffer);
@@ -119,8 +124,8 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
             // On calcule l'écart (Victime - Tueur)
             int levelGap = victimLevel - killerLevel;
 
-            // 1 niveau d'écart = 0.005 (0.5%) | Ex: +10 niveaux = 1.05 | -10 niveaux = 0.95
-            double multiplier = 1.0 + (levelGap * 0.005);
+            // 1 niveau d'écart = 0.02 (2%) | Ex: +10 niveaux = 1.20 | -10 niveaux = 0.80
+            double multiplier = 1.0 + (levelGap * 0.02);
 
             // On applique le multiplicateur et on empêche l'XP de tomber sous 1 point
             xpAmount = (int) Math.max(1, Math.round(xpAmount * multiplier));
@@ -155,11 +160,13 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
                         if (victimTransform != null) {
                             Vector3d spawnPos = victimTransform.getPosition();
 
-                            // OPTIMISATION : On utilise directement la variable "levelGap" calculée plus haut !
+                            // Quantité basée sur le level gap
                             int maxAmount = Math.max(1, Math.min(10, 5 + levelGap));
                             int quantity = 1 + random.nextInt(maxAmount);
 
-                            ItemStack coinStack = new ItemStack("Elda_Copper_Coins", quantity);
+                            // Type de coin scalé selon le niveau du mob tué
+                            String coinType = com.eldanior.system.config.configs.CoinItemRegistry.getCoinTypeForLevel(victimLevel);
+                            ItemStack coinStack = new ItemStack(coinType, quantity);
 
                             Holder<EntityStore> itemEntityHolder = ItemComponent.generateItemDrop(store, coinStack, spawnPos, Vector3f.ZERO, 0.0F, 0.5F, 0.0F);
                             if (itemEntityHolder != null) {
@@ -175,13 +182,46 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
         }
     }
 
+    private void applyDeathPenalty(UUID playerUUID, Ref<EntityStore> playerRef,
+                                    Store<EntityStore> store, CommandBuffer<EntityStore> commandBuffer) {
+        try {
+            PlayerRef playerRefObj = Universe.get().getPlayer(playerUUID);
+            if (playerRefObj == null) return;
+
+            var playerEntityRef = playerRefObj.getReference();
+            if (playerEntityRef == null) return;
+
+            Store<EntityStore> playerStore = playerEntityRef.getStore();
+            ComponentType<EntityStore, PlayerLevelData> lvlType = EldaniorSystem.get().getPlayerLevelDataType();
+            PlayerLevelData dataRead = playerStore.getComponent(playerEntityRef, lvlType);
+            if (dataRead == null) return;
+
+            PlayerLevelData dataToWrite = (PlayerLevelData) dataRead.clone();
+            if (dataToWrite == null) return;
+
+            int xpLost = dataToWrite.removeExperiencePercent(0.10);
+            commandBuffer.putComponent(playerEntityRef, lvlType, dataToWrite);
+
+            if (xpLost > 0) {
+                NotificationHelper.sendNotification(playerRefObj,
+                        "<color:red>☠ Mort : -" + xpLost + " XP (-10%)</color>",
+                        NotificationStyle.Danger);
+            }
+        } catch (Exception e) {
+            LOGGER.atSevere().withCause(e).log("ERREUR lors de la pénalité de mort");
+        }
+    }
+
     private int calculatePvEXP(String typeId) {
         return MobXP.getXpForId(typeId);
     }
 
     private int calculatePvPXP(int killerLvl, int victimLvl) {
         double ratio = (double) Math.max(1, victimLvl) / (double) Math.max(1, killerLvl);
-        return (int) Math.min(2000, Math.max(1, 100 * ratio));
+        int baseXP = (int) (100 * ratio);
+        // Cap dynamique : 500 + 5 * niveau victime (Lv100 = cap 1000, Lv500 = cap 3000)
+        int dynamicCap = 500 + (5 * Math.max(1, victimLvl));
+        return Math.max(1, Math.min(dynamicCap, baseXP));
     }
 
     @Nonnull

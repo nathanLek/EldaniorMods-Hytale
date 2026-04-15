@@ -84,15 +84,19 @@ public class TreasureChestInteractEvent extends EntityEventSystem<EntityStore, U
                     PlayerLevelData levelData = store.getComponent(playerRef, EldaniorSystem.get().getPlayerLevelDataType());
                     float luckBonus = LuckSystem.getLootQualityBonus(levelData);
 
-                    int targetCount = ThreadLocalRandom.current().nextInt(1, 6);
-                    float preciseExtra = (float) Math.sqrt(Math.max(0, luckBonus)) / 10.0f;
+                    // Base : 1 ou 2 items (0 chance)
+                    // Bonus : jusqu'à +4 items à 3000 points de chance → max 6 items
+                    int baseCount = 1 + ThreadLocalRandom.current().nextInt(2);
+                    float luckRatio = Math.min(Math.max(luckBonus, 0) / 3000.0f, 1.0f);
+                    float preciseExtra = luckRatio * 4.0f;
                     int extraItems = (int) preciseExtra;
 
                     if (ThreadLocalRandom.current().nextFloat() < (preciseExtra - extraItems)) {
                         extraItems++;
                     }
 
-                    targetCount = Math.min(targetCount + extraItems, rawLoot.size());
+                    int targetCount = Math.min(baseCount + extraItems, 6);
+                    targetCount = Math.min(targetCount, rawLoot.size());
                     Collections.shuffle(rawLoot);
 
                     List<ItemStack> finalSelection = new ArrayList<>(rawLoot.subList(0, targetCount));

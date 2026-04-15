@@ -21,7 +21,7 @@ public class Assassin extends ClassModel {
                 List.of(),
                 120,
                 false,
-                1000, 300, 200, 0, 2000, 3000
+                4, 3, 3, 2, 10, 3
         );
     }
 }

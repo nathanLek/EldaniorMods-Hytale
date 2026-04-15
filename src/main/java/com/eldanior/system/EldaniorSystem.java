@@ -58,6 +58,7 @@ public class EldaniorSystem extends JavaPlugin {
     }
 
     @Override
+
     protected void setup() {
         LOGGER.atInfo().log(">>> ELDANIOR SYSTEM : DÉMARRAGE DU SETUP <<<");
 

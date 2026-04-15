@@ -41,6 +41,7 @@ public class PlayerLevelData implements Component<EntityStore> {
     private UUID lastVictimUUID;
     private int hauntingThrustStacks;
     private transient long lastDamageTakenTime = 0;
+    private int currentMana = -1; // -1 = pas encore initialisé, sera mis à maxMana au premier accès
 
     private List<String> unlockedSkills = new ArrayList<>();
     private Set<String> enabledSkills = new HashSet<>();
@@ -51,7 +52,7 @@ public class PlayerLevelData implements Component<EntityStore> {
     }
 
     public int getRequiredExperience() {
-        return (int) (100 + 140 * (level - 1) + 10L * (level - 1) * (level - 1));
+        return (int) (100 + 140 * (level - 1) + 5L * (level - 1) * (level - 1));
     }
 
     public void addExperience(int amount) {
@@ -63,12 +64,33 @@ public class PlayerLevelData implements Component<EntityStore> {
         }
     }
 
+    public int removeExperiencePercent(double percent) {
+        int loss = (int) (this.experience * percent);
+        this.experience = Math.max(0, this.experience - loss);
+        return loss;
+    }
+
     public float getExperienceProgress() {
         return (float) this.experience / getRequiredExperience();
     }
 
+    public int getCurrentMana() {
+        if (currentMana < 0) currentMana = getMaxMana();
+        return Math.min(currentMana, getMaxMana());
+    }
+
     public boolean hasEnoughMana(float amount) {
-        return true;
+        return getCurrentMana() >= (int) amount;
+    }
+
+    public void consumeMana(int amount) {
+        if (currentMana < 0) currentMana = getMaxMana();
+        currentMana = Math.max(0, currentMana - amount);
+    }
+
+    public void restoreMana(int amount) {
+        if (currentMana < 0) currentMana = getMaxMana();
+        currentMana = Math.min(getMaxMana(), currentMana + amount);
     }
 
     public boolean canCast(String skillId) {
@@ -102,6 +124,7 @@ public class PlayerLevelData implements Component<EntityStore> {
             .append(new KeyedCodec<>("Intelligence", Codec.INTEGER), (data, v) -> data.intelligence = v, data -> data.intelligence).add()
             .append(new KeyedCodec<>("Luck", Codec.INTEGER), (data, v) -> data.luck = v, data -> data.luck).add()
             .append(new KeyedCodec<>("Money", Codec.LONG), (data, v) -> data.money = v, data -> data.money).add()
+            .append(new KeyedCodec<>("CurrentMana", Codec.INTEGER), (data, v) -> data.currentMana = v, data -> data.getCurrentMana()).add()
             .append(new KeyedCodec<>("UnlockedSkills", Codec.STRING), (data, value) -> {
                 data.unlockedSkills = new ArrayList<>();
                 if (value != null && !value.isEmpty()) {
@@ -141,6 +164,7 @@ public class PlayerLevelData implements Component<EntityStore> {
         copy.intelligence = this.intelligence;
         copy.luck = this.luck;
         copy.money = this.money;
+        copy.currentMana = this.currentMana;
         copy.lastVictimUUID = this.lastVictimUUID;
         copy.hauntingThrustStacks = this.hauntingThrustStacks;
         copy.lastDamageTakenTime = this.lastDamageTakenTime;

@@ -5,12 +5,12 @@ import com.eldanior.system.config.configs.Mobs.IMobConfig;
 
 public enum GolemData implements IMobConfig {
 
-    GOLEM_CRYSTAL_EARTH("golem crystal earth", 150, 300, 800),
-    GOLEM_CRYSTAL_FLAME("golem crystal flame", 200, 300, 800),
-    GOLEM_CRYSTAL_FROST("golem crystal frost", 180, 300, 800),
-    GOLEM_CRYSTAL_SAND("golem crystal sand", 160, 300, 800),
-    GOLEM_CRYSTAL_THUNDER("golem crystal thunder", 160, 300, 800),
-    GOLEM_FIRESTEEL("golem firesteel", 180, 300, 800);
+    GOLEM_CRYSTAL_EARTH("golem crystal earth", 150, 300, 500),
+    GOLEM_CRYSTAL_FLAME("golem crystal flame", 200, 400, 650),
+    GOLEM_CRYSTAL_FROST("golem crystal frost", 180, 350, 600),
+    GOLEM_CRYSTAL_SAND("golem crystal sand", 160, 320, 550),
+    GOLEM_CRYSTAL_THUNDER("golem crystal thunder", 160, 320, 550),
+    GOLEM_FIRESTEEL("golem firesteel", 180, 350, 600);
 
     private final String keyword;
     private final int xp;

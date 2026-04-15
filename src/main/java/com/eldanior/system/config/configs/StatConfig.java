@@ -58,7 +58,7 @@ public enum StatConfig {
             PlayerLevelData::getStrength, ClassModel::getBonusStr),
 
     // 6. DEFENSE ENDURANCE : -0.3 dégâts reçus par point
-    ENDURANCE_DEFENSE(StatType.MECHANIC, -1, "Endurance_Def", 0.0f, 0.03f, 0.0f, 0.0f,
+    ENDURANCE_DEFENSE(StatType.MECHANIC, -1, "Endurance_Def", 0.0f, 0.05f, 0.0f, 0.0f,
             PlayerLevelData::getEndurance, ClassModel::getBonusEnd),
 
     // === MÉCANIQUES DE CHANCE (Nouveau !) ===
@@ -146,9 +146,14 @@ public enum StatConfig {
         }
         // ------------------------------------
 
-        // Application du CAP si défini (> 0)
+        // Rendements décroissants au-delà du cap (soft cap)
+        // Au lieu d'un mur dur, les points au-delà donnent 30% d'efficacité
+        // Plafond absolu : cap + 15% (ex: dodge 80% → max 92%)
         if (cap > 0 && value > cap) {
-            return cap;
+            float overflow = value - cap;
+            float bonus = overflow * 0.3f;
+            float maxBonus = cap * 0.15f;
+            return cap + Math.min(bonus, maxBonus);
         }
         return value;
     }

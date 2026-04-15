@@ -45,7 +45,7 @@ public class CombatStatsSystem extends DamageEventSystem {
         }
 
         // 2. Gestion de l'Attaquant (Force + Critique + Passifs)
-        applyOffensiveStats(damage, store, victimRef);
+        applyOffensiveStats(damage, store, victimRef, commandBuffer);
 
         if (damage.isCancelled()) return;
 
@@ -122,7 +122,8 @@ public class CombatStatsSystem extends DamageEventSystem {
         return false;
     }
 
-    private void applyOffensiveStats(Damage damage, Store<EntityStore> store, Ref<EntityStore> victimRef) {
+    private void applyOffensiveStats(Damage damage, Store<EntityStore> store, Ref<EntityStore> victimRef,
+                                      CommandBuffer<EntityStore> commandBuffer) {
         Damage.Source source = damage.getSource();
         if (!(source instanceof Damage.EntitySource entitySource)) return;
 
@@ -154,10 +155,25 @@ public class CombatStatsSystem extends DamageEventSystem {
 
         damage.setAmount(currentDamage);
 
+        // Cloner les données pour tracker la consommation de mana
+        boolean manaConsumed = false;
+        PlayerLevelData manaTracker = (PlayerLevelData) attackerData.clone();
+
         for (PassiveSkill skill : attackerData.getActivePassives()) {
             if (skill.getLogic() != null) {
+                int manaCost = skill.getManaCost();
+                if (manaCost > 0) {
+                    if (!manaTracker.hasEnoughMana(manaCost)) continue; // Pas assez de mana, skip le skill
+                    manaTracker.consumeMana(manaCost);
+                    manaConsumed = true;
+                }
                 skill.getLogic().onAttack(damage, attackerData, store, attackerRef, victimRef);
             }
+        }
+
+        // Persister la consommation de mana si elle a eu lieu
+        if (manaConsumed) {
+            commandBuffer.putComponent(attackerRef, EldaniorSystem.get().getPlayerLevelDataType(), manaTracker);
         }
     }
 

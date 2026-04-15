@@ -5,10 +5,10 @@ import com.eldanior.system.config.configs.Mobs.IMobConfig;
 
 public enum ElementalData implements IMobConfig {
 
-    SPIRIT_THUNDER("spirit thunder", 100, 300, 800),
-    SPIRIT_EMBER("spirit ember", 80, 300, 800),
-    SPIRIT_FROST("spirit frost", 60, 300, 800),
-    SPIRIT_ROOT("spirit root", 40, 300, 800);
+    SPIRIT_THUNDER("spirit thunder", 100, 400, 600),
+    SPIRIT_EMBER("spirit ember", 80, 350, 550),
+    SPIRIT_FROST("spirit frost", 60, 320, 500),
+    SPIRIT_ROOT("spirit root", 40, 300, 450);
 
     private final String keyword;
     private final int xp;

@@ -22,4 +22,12 @@ public final class CoinItemRegistry {
     public static boolean isCoinItem(String itemId) {
         return COIN_VALUES.containsKey(itemId);
     }
+
+    public static String getCoinTypeForLevel(int level) {
+        if (level >= 600) return "Elda_Zenith_Coins";
+        if (level >= 350) return "Elda_Diamond_Coins";
+        if (level >= 150) return "Elda_Gold_Coins";
+        if (level >= 50)  return "Elda_Silver_Coins";
+        return "Elda_Copper_Coins";
+    }
 }

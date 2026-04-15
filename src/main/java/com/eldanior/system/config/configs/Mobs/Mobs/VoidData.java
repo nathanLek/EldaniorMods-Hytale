@@ -5,12 +5,12 @@ import com.eldanior.system.config.configs.Mobs.IMobConfig;
 
 public enum VoidData implements IMobConfig {
 
-    SPAWN_VOID("spawn void", 150, 200, 500),
-    SPECTRE_VOID("spectre void", 80, 200, 500),
-    CRAWLER_VOID("crawler void", 60, 200, 500),
-    EYE_VOID("eye void", 50, 200, 500),
-    NECROMANCER_VOID("necromancer void", 50, 200, 500),
-    LARVA_VOID("larva void", 20, 200, 500);
+    SPAWN_VOID("spawn void", 150, 350, 500),
+    SPECTRE_VOID("spectre void", 80, 280, 420),
+    CRAWLER_VOID("crawler void", 60, 250, 380),
+    EYE_VOID("eye void", 50, 230, 350),
+    NECROMANCER_VOID("necromancer void", 50, 230, 350),
+    LARVA_VOID("larva void", 20, 200, 300);
 
     private final String keyword;
     private final int xp;

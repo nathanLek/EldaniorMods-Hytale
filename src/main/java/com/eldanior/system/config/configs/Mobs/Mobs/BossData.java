@@ -5,13 +5,13 @@ import com.eldanior.system.config.configs.Mobs.IMobConfig;
 
 public enum BossData implements IMobConfig {
 
-    GOLEM_GUARDIAN_VOID("golem guardian void", 1400, 800, 999),
-    SHADOW_KNIGHT("shadow knight", 2000, 600, 900),
-    WHALE_HUMPBACK("whale humpback", 1500, 700, 999),
-    YETI("yeti", 1650, 400, 900),
-    WRAITH("wraith", 100, 350, 700),
+    GOLEM_GUARDIAN_VOID("golem guardian void", 1400, 850, 999),
+    SHADOW_KNIGHT("shadow knight", 2000, 700, 850),
+    WHALE_HUMPBACK("whale humpback", 1500, 750, 900),
+    YETI("yeti", 1650, 500, 700),
+    WRAITH("wraith", 1500, 350, 500),
     HEDERA("hedera", 1500, 500, 700),
-    WEREWOLF("werewolf", 1300, 700, 950);
+    WEREWOLF("werewolf", 1300, 700, 850);
 
     private final String keyword;
     private final int xp;
