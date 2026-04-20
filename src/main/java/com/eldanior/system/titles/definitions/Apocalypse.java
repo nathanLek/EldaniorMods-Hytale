@@ -1,0 +1,10 @@
+package com.eldanior.system.titles.definitions;
+import com.eldanior.system.config.Player.PlayerLevelData;
+import com.eldanior.system.config.configs.Rarity;
+import com.eldanior.system.titles.enums.TitleCategory;
+import com.eldanior.system.titles.models.*;
+import java.util.List;
+public class Apocalypse extends TitleModel {
+    public Apocalypse() { super("apocalypse", "Apocalypse", "Un million de morts. Vous etes un cataclysme.", Rarity.DIVINE, TitleCategory.COMBAT, new TitleBonus(20,0,0,15,0,0), List.of(new TitleEffect(TitleEffect.TitleEffectType.DAMAGE_BONUS_VS_MOB, "all", 0.15))); }
+    @Override public boolean checkUnlockCondition(PlayerLevelData data) { return data.getTotalMobKills() >= 1000000; }
+}

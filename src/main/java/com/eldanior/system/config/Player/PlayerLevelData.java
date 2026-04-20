@@ -3,6 +3,11 @@ package com.eldanior.system.config.Player;
 import com.eldanior.system.classes.ClassManager;
 import com.eldanior.system.classes.models.ClassModel;
 import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
+import com.eldanior.system.titles.TitleManager;
+import com.eldanior.system.titles.models.TitleBonus;
+import com.eldanior.system.titles.models.TitleModel;
+import com.eldanior.system.titles.nobility.family.FamilyManager;
+import com.eldanior.system.titles.nobility.family.NobleFamilyModel;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
@@ -30,6 +35,25 @@ public class PlayerLevelData implements Component<EntityStore> {
     private String guildRank = "F";
     private String activeSkillId = "";
 
+    // Noblesse
+    private String nobilityRank = "ROTURIER";
+    private String nobleFamilyId = "";
+    private String status = "";  // PATRIARCH, VICE, MEMBER, ou vide
+    private int dignity = 0;
+
+    // Eglise
+    private String churchRank = "LAIQUE";
+    private int faith = 0;
+
+    // Exploration
+    private int chestsDiscovered = 0;
+
+    // PvP
+    private int playerKills = 0;
+    private int playerDeaths = 0;
+    private int killStreak = 0;
+    private int bestKillStreak = 0;
+
     // Stats de BASE (Investies par le joueur)
     private int strength = 1;
     private int endurance = 1;
@@ -47,8 +71,12 @@ public class PlayerLevelData implements Component<EntityStore> {
     private Set<String> enabledSkills = new HashSet<>();
     private transient Map<String, Long> cooldowns = new HashMap<>();
 
+    // Kill tracking par type de mob (ex: "goblin_scrapper" -> 150)
+    private Map<String, Integer> mobKills = new HashMap<>();
+
     public PlayerLevelData() {
-        this.unlockedTitles.add("Novice");
+        this.unlockedTitles.add("novice");
+        this.currentTitle = "novice";
     }
 
     public int getRequiredExperience() {
@@ -117,6 +145,17 @@ public class PlayerLevelData implements Component<EntityStore> {
             .append(new KeyedCodec<>("ClassId", Codec.STRING), (data, v) -> data.classId = v, data -> data.classId).add()
             .append(new KeyedCodec<>("CurrentTitle", Codec.STRING), (data, v) -> data.currentTitle = v, data -> data.currentTitle).add()
             .append(new KeyedCodec<>("GuildRank", Codec.STRING), (data, v) -> data.guildRank = v, data -> data.guildRank).add()
+            .append(new KeyedCodec<>("NobilityRank", Codec.STRING), (data, v) -> data.nobilityRank = v, data -> data.nobilityRank).add()
+            .append(new KeyedCodec<>("NobleFamilyId", Codec.STRING), (data, v) -> data.nobleFamilyId = v, data -> data.nobleFamilyId).add()
+            .append(new KeyedCodec<>("Status", Codec.STRING), (data, v) -> data.status = v, data -> data.status).add()
+            .append(new KeyedCodec<>("Dignity", Codec.INTEGER), (data, v) -> data.dignity = v, data -> data.dignity).add()
+            .append(new KeyedCodec<>("ChurchRank", Codec.STRING), (data, v) -> data.churchRank = v, data -> data.churchRank).add()
+            .append(new KeyedCodec<>("Faith", Codec.INTEGER), (data, v) -> data.faith = v, data -> data.faith).add()
+            .append(new KeyedCodec<>("ChestsDiscovered", Codec.INTEGER), (data, v) -> data.chestsDiscovered = v, data -> data.chestsDiscovered).add()
+            .append(new KeyedCodec<>("PlayerKills", Codec.INTEGER), (data, v) -> data.playerKills = v, data -> data.playerKills).add()
+            .append(new KeyedCodec<>("PlayerDeaths", Codec.INTEGER), (data, v) -> data.playerDeaths = v, data -> data.playerDeaths).add()
+            .append(new KeyedCodec<>("KillStreak", Codec.INTEGER), (data, v) -> data.killStreak = v, data -> data.killStreak).add()
+            .append(new KeyedCodec<>("BestKillStreak", Codec.INTEGER), (data, v) -> data.bestKillStreak = v, data -> data.bestKillStreak).add()
             .append(new KeyedCodec<>("Strength", Codec.INTEGER), (data, v) -> data.strength = v, data -> data.strength).add()
             .append(new KeyedCodec<>("Endurance", Codec.INTEGER), (data, v) -> data.endurance = v, data -> data.endurance).add()
             .append(new KeyedCodec<>("Agility", Codec.INTEGER), (data, v) -> data.agility = v, data -> data.agility).add()
@@ -143,6 +182,26 @@ public class PlayerLevelData implements Component<EntityStore> {
                     data.unlockedTitles.addAll(Arrays.asList(value.split(",")));
                 }
             }, (data) -> String.join(",", data.unlockedTitles)).add()
+            .append(new KeyedCodec<>("MobKills", Codec.STRING), (data, value) -> {
+                data.mobKills = new HashMap<>();
+                if (value != null && !value.isEmpty()) {
+                    for (String entry : value.split(",")) {
+                        String[] parts = entry.split(":");
+                        if (parts.length == 2) {
+                            try {
+                                data.mobKills.put(parts[0], Integer.parseInt(parts[1]));
+                            } catch (NumberFormatException ignored) {}
+                        }
+                    }
+                }
+            }, (data) -> {
+                StringBuilder sb = new StringBuilder();
+                for (Map.Entry<String, Integer> e : data.mobKills.entrySet()) {
+                    if (sb.length() > 0) sb.append(",");
+                    sb.append(e.getKey()).append(":").append(e.getValue());
+                }
+                return sb.toString();
+            }).add()
             .build();
 
     // --- Méthode CLONE ---
@@ -157,6 +216,17 @@ public class PlayerLevelData implements Component<EntityStore> {
         copy.classId = this.classId;
         copy.currentTitle = this.currentTitle;
         copy.guildRank = this.guildRank;
+        copy.nobilityRank = this.nobilityRank;
+        copy.nobleFamilyId = this.nobleFamilyId;
+        copy.status = this.status;
+        copy.dignity = this.dignity;
+        copy.churchRank = this.churchRank;
+        copy.faith = this.faith;
+        copy.chestsDiscovered = this.chestsDiscovered;
+        copy.playerKills = this.playerKills;
+        copy.playerDeaths = this.playerDeaths;
+        copy.killStreak = this.killStreak;
+        copy.bestKillStreak = this.bestKillStreak;
         copy.strength = this.strength;
         copy.endurance = this.endurance;
         copy.agility = this.agility;
@@ -179,6 +249,7 @@ public class PlayerLevelData implements Component<EntityStore> {
         }
 
         copy.cooldowns = new HashMap<>(this.cooldowns);
+        copy.mobKills = new HashMap<>(this.mobKills);
 
         return copy;
     }
@@ -222,6 +293,17 @@ public class PlayerLevelData implements Component<EntityStore> {
             }
         }
 
+        // 3. Récupération du passif familial (noblesse)
+        if (this.nobleFamilyId != null && !this.nobleFamilyId.isEmpty()) {
+            NobleFamilyModel family = FamilyManager.get(this.nobleFamilyId);
+            if (family != null && family.getFamilyPassive() != null) {
+                PassiveSkill familySkill = family.getFamilyPassive();
+                if (!activePassives.contains(familySkill)) {
+                    activePassives.add(familySkill);
+                }
+            }
+        }
+
         return activePassives;
     }
 
@@ -243,6 +325,47 @@ public class PlayerLevelData implements Component<EntityStore> {
     public List<String> getUnlockedTitles() { return unlockedTitles; }
     public String getGuildRank() { return guildRank; }
     public long getMoney() { return money; }
+    public String getNobilityRank() { return nobilityRank; }
+    public String getNobleFamilyId() { return nobleFamilyId; }
+    public String getStatus() { return status; }
+    public int getDignity() { return dignity; }
+    public String getChurchRank() { return churchRank; }
+    public int getFaith() { return faith; }
+    public int getChestsDiscovered() { return chestsDiscovered; }
+    public void addChestDiscovered() { this.chestsDiscovered++; }
+
+    // PvP
+    public int getPlayerKills() { return playerKills; }
+    public int getPlayerDeaths() { return playerDeaths; }
+    public int getKillStreak() { return killStreak; }
+    public int getBestKillStreak() { return bestKillStreak; }
+
+    public double getKDR() {
+        if (playerDeaths == 0) return playerKills;
+        return (double) playerKills / playerDeaths;
+    }
+
+    public boolean isPK() {
+        return playerKills >= 10 && getKDR() >= 2.0;
+    }
+
+    public void addPlayerKill() {
+        this.playerKills++;
+        this.killStreak++;
+        if (this.killStreak > this.bestKillStreak) {
+            this.bestKillStreak = this.killStreak;
+        }
+        // Devenir PK = excommunication automatique
+        if (isPK() && !"LAIQUE".equals(this.churchRank)) {
+            this.churchRank = "LAIQUE";
+            this.faith = 0;
+        }
+    }
+
+    public void addPlayerDeath() {
+        this.playerDeaths++;
+        this.killStreak = 0;
+    }
 
     // Points investis par le joueur (sans bonus de classe)
     public int getStrength() { return strength; }
@@ -252,13 +375,13 @@ public class PlayerLevelData implements Component<EntityStore> {
     public int getIntelligence() { return intelligence; }
     public int getLuck() { return luck; }
 
-    // ================= GETTERS (TOTAUX AVEC BONUS DE CLASSE) =================
-    public int getTotalStrength() { return strength + getClassBonusStr(); }
-    public int getTotalEndurance() { return endurance + getClassBonusEnd(); }
-    public int getTotalAgility() { return agility + getClassBonusAgl(); }
-    public int getTotalVitality() { return vitality + getClassBonusVit(); }
-    public int getTotalIntelligence() { return intelligence + getClassBonusInt(); }
-    public int getTotalLuck() { return luck + getClassBonusLck(); }
+    // ================= GETTERS (TOTAUX AVEC BONUS DE CLASSE + TITRE) =================
+    public int getTotalStrength() { return strength + getClassBonusStr() + getTitleBonusStr(); }
+    public int getTotalEndurance() { return endurance + getClassBonusEnd() + getTitleBonusEnd(); }
+    public int getTotalAgility() { return agility + getClassBonusAgl() + getTitleBonusAgl(); }
+    public int getTotalVitality() { return vitality + getClassBonusVit() + getTitleBonusVit(); }
+    public int getTotalIntelligence() { return intelligence + getClassBonusInt() + getTitleBonusInt(); }
+    public int getTotalLuck() { return luck + getClassBonusLck() + getTitleBonusLck(); }
 
     public int getMaxMana() { return getTotalIntelligence() * 10; }
     public int getMaxHealth() { return getTotalVitality() * 10; }
@@ -289,6 +412,19 @@ public class PlayerLevelData implements Component<EntityStore> {
         return model != null ? model.getBonusLck() : 0;
     }
 
+    // Utilitaires internes pour recuperer le bonus de titre
+    private TitleBonus getTitleBonus() {
+        if (currentTitle == null || currentTitle.isEmpty()) return TitleBonus.NONE;
+        TitleModel title = TitleManager.get(currentTitle);
+        return title != null ? title.getBonus() : TitleBonus.NONE;
+    }
+    private int getTitleBonusStr() { return getTitleBonus().strength(); }
+    private int getTitleBonusVit() { return getTitleBonus().vitality(); }
+    private int getTitleBonusInt() { return getTitleBonus().intelligence(); }
+    private int getTitleBonusEnd() { return getTitleBonus().endurance(); }
+    private int getTitleBonusAgl() { return getTitleBonus().agility(); }
+    private int getTitleBonusLck() { return getTitleBonus().luck(); }
+
     public UUID getLastVictimUUID() { return lastVictimUUID; }
     public void setLastVictimUUID(UUID lastVictimUUID) { this.lastVictimUUID = lastVictimUUID; }
     public int getHauntingThrustStacks() { return hauntingThrustStacks; }
@@ -304,6 +440,16 @@ public class PlayerLevelData implements Component<EntityStore> {
     public void setPlayerClassId(String classId) { this.classId = classId; }
     public void setCurrentTitle(String title) { this.currentTitle = title; }
     public void setGuildRank(String guildRank) { this.guildRank = guildRank; }
+    public void setNobilityRank(String rank) { this.nobilityRank = rank; }
+    public void setNobleFamilyId(String id) { this.nobleFamilyId = id; }
+    public void setStatus(String role) { this.status = role; }
+    public void setDignity(int dignity) { this.dignity = dignity; }
+    public void setChurchRank(String rank) { this.churchRank = rank; }
+    public void setFaith(int faith) { this.faith = faith; }
+
+    public boolean isPatriarch() { return "PATRIARCH".equals(status); }
+    public boolean isVicePatriarch() { return "VICE".equals(status); }
+    public boolean canInviteToFamily() { return isPatriarch() || isVicePatriarch(); }
 
     // Ces setters ne modifient que les points de base (ex: lors d'un Level Up)
     public void setStrength(int strength) { this.strength = strength; }
@@ -319,6 +465,50 @@ public class PlayerLevelData implements Component<EntityStore> {
         if (!this.unlockedTitles.contains(title)) {
             this.unlockedTitles.add(title);
         }
+    }
+
+    public void removeTitle(String titleId) {
+        if (this.unlockedTitles != null) {
+            this.unlockedTitles.remove(titleId);
+        }
+        // Si le titre retiré était équipé, on repasse sur "novice"
+        if (titleId.equals(this.currentTitle)) {
+            this.currentTitle = "novice";
+        }
+    }
+
+    public void resetTitles() {
+        this.unlockedTitles = new ArrayList<>();
+        this.unlockedTitles.add("novice");
+        this.currentTitle = "novice";
+        this.mobKills = new HashMap<>();
+    }
+
+    // ================= KILL TRACKING =================
+    public Map<String, Integer> getMobKills() { return mobKills; }
+
+    public int getMobKillCount(String mobTypeId) {
+        return mobKills.getOrDefault(mobTypeId.toLowerCase(), 0);
+    }
+
+    public int getMobKillCountContaining(String keyword) {
+        String key = keyword.toLowerCase();
+        int total = 0;
+        for (Map.Entry<String, Integer> entry : mobKills.entrySet()) {
+            if (entry.getKey().contains(key)) {
+                total += entry.getValue();
+            }
+        }
+        return total;
+    }
+
+    public int getTotalMobKills() {
+        return mobKills.values().stream().mapToInt(Integer::intValue).sum();
+    }
+
+    public void addMobKill(String mobTypeId) {
+        String key = mobTypeId.toLowerCase();
+        mobKills.put(key, mobKills.getOrDefault(key, 0) + 1);
     }
 
     public void addMoney(long amount) { this.money += amount; }

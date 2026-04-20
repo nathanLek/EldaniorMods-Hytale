@@ -5,10 +5,11 @@ import com.eldanior.system.config.configs.Mobs.IMobConfig;
 
 public enum SaurianData implements IMobConfig {
 
-    SAURIAN_HUNTER("saurian hunter", 300, 200, 400),
-    SAURIAN_ROGUE("saurian rogue", 300, 200, 400),
-    SAURIAN_WARRIOR("saurian warrior", 300, 200, 400),
-    SAURIAN("saurian", 300, 200, 400);
+    // === SAURIAN (Lv90-170) — Tier 3 ennemi ===
+    SAURIAN("saurian", 70, 90, 130),
+    SAURIAN_HUNTER("saurian hunter", 80, 100, 145),
+    SAURIAN_ROGUE("saurian rogue", 90, 110, 160),
+    SAURIAN_WARRIOR("saurian warrior", 100, 120, 170);
 
     private final String keyword;
     private final int xp;

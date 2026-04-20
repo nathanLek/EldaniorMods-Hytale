@@ -5,12 +5,13 @@ import com.eldanior.system.config.configs.Mobs.IMobConfig;
 
 public enum GolemData implements IMobConfig {
 
-    GOLEM_CRYSTAL_EARTH("golem crystal earth", 150, 300, 500),
-    GOLEM_CRYSTAL_FLAME("golem crystal flame", 200, 400, 650),
-    GOLEM_CRYSTAL_FROST("golem crystal frost", 180, 350, 600),
-    GOLEM_CRYSTAL_SAND("golem crystal sand", 160, 320, 550),
-    GOLEM_CRYSTAL_THUNDER("golem crystal thunder", 160, 320, 550),
-    GOLEM_FIRESTEEL("golem firesteel", 180, 350, 600);
+    // === GOLEM (Lv670-770) — Tier 12 ennemi ===
+    GOLEM_CRYSTAL_EARTH("golem crystal earth", 800, 670, 700),
+    GOLEM_CRYSTAL_SAND("golem crystal sand", 850, 685, 715),
+    GOLEM_CRYSTAL_THUNDER("golem crystal thunder", 870, 695, 725),
+    GOLEM_CRYSTAL_FROST("golem crystal frost", 900, 710, 740),
+    GOLEM_FIRESTEEL("golem firesteel", 950, 725, 755),
+    GOLEM_CRYSTAL_FLAME("golem crystal flame", 1000, 740, 770);
 
     private final String keyword;
     private final int xp;

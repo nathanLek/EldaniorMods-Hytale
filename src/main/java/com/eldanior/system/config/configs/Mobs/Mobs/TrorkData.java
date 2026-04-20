@@ -5,18 +5,27 @@ import com.eldanior.system.config.configs.Mobs.IMobConfig;
 
 public enum TrorkData implements IMobConfig {
 
-    TRORK_DOCTOR_WITCH("trork doctor witch", 60, 400, 550),
-    TRORK_CHIEFTAIN("trork chieftain", 100, 400, 550),
-    TRORK_WARRIOR("trork warrior", 40, 300, 500),
-    TRORK_SHAMAN("trork shaman", 45, 300, 500),
-    TRORK_BRAWLER("trork brawler", 40, 250, 450),
-    TRORK_HUNTER("trork hunter", 40, 150, 250),
-    TRORK_GUARD("trork guard", 40, 200, 400),
-    TRORK_MAULER("trork mauler", 40, 200, 400),
-    TRORK_SENTRY("trork sentry", 40, 100, 250),
-    WOLF_TRORK_SHAMAN("wolf trork shaman", 70, 20, 250),
-    WOLF_TRORK_HUNTER("wolf trork hunter", 40, 20, 250),
-    TRORK_UNARMED("trork unarmed", 20, 120, 270);
+    // === TRORK (Lv400-490) — Tier 8 ennemi ===
+
+    // --- Sans armes / éclaireurs (Lv400-435) ---
+    TRORK_UNARMED("trork unarmed", 250, 400, 420),
+    TRORK_SENTRY("trork sentry", 270, 405, 425),
+    TRORK_HUNTER("trork hunter", 285, 410, 435),
+    WOLF_TRORK_HUNTER("wolf trork hunter", 290, 410, 435),
+
+    // --- Combattants (Lv415-460) ---
+    TRORK_BRAWLER("trork brawler", 310, 415, 445),
+    TRORK_GUARD("trork guard", 325, 420, 450),
+    TRORK_MAULER("trork mauler", 340, 425, 455),
+    TRORK_WARRIOR("trork warrior", 360, 430, 460),
+
+    // --- Casters (Lv430-480) ---
+    WOLF_TRORK_SHAMAN("wolf trork shaman", 370, 430, 460),
+    TRORK_SHAMAN("trork shaman", 390, 440, 470),
+    TRORK_DOCTOR_WITCH("trork doctor witch", 420, 450, 480),
+
+    // --- Chef boss (Lv460-490) ---
+    TRORK_CHIEFTAIN("trork chieftain", 500, 460, 490);
 
     private final String keyword;
     private final int xp;

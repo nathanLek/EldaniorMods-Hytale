@@ -93,8 +93,29 @@ public class SetLevelCommand extends AbstractAsyncCommand {
                     data.setAttributePoints(0); // Avant, tu oubliais de remettre ça à 0 !
 
                     data.setPlayerClass("Novice");
-                    data.setPlayerClassId("novice");// On vide les passifs de classe
+                    data.setPlayerClassId("novice");
                     data.forgetAllSkills();
+
+                    // Reset titres + kills
+                    data.resetTitles();
+
+                    // Reset noblesse + famille
+                    String oldFamilyId = data.getNobleFamilyId();
+                    if (oldFamilyId != null && !oldFamilyId.isEmpty() && data.isPatriarch()) {
+                        com.eldanior.system.titles.nobility.family.FamilyManager.releaseFamily(oldFamilyId);
+                    }
+                    data.setNobilityRank("ROTURIER");
+                    data.setNobleFamilyId("");
+                    data.setStatus("");
+                    data.setDignity(0);
+
+                    // Reset eglise
+                    data.setChurchRank("LAIQUE");
+                    data.setFaith(0);
+
+                    // Reset PvP - on ne reset PAS les stats PvP car c'est l'historique du joueur
+                    // Si tu veux les reset aussi, decommenter :
+                    // data.playerKills = 0; data.playerDeaths = 0; data.killStreak = 0; data.bestKillStreak = 0;
 
                 } else {
                     // --- GESTION DES POINTS SI ON LE MONTÉ DE NIVEAU ---

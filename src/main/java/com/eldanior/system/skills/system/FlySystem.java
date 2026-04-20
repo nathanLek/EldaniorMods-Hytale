@@ -27,6 +27,7 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -35,6 +36,9 @@ public class FlySystem extends EntityTickingSystem<EntityStore> {
     private static final float FLY_SPEED = 6.5f;
 
     private final Map<UUID, Float> flightTimers = new ConcurrentHashMap<>();
+    // Tracks players whose flight was enabled BY THIS SYSTEM (via the VOL skill).
+    // Prevents overriding canFly when it was enabled externally (creative/admin commands).
+    private final Set<UUID> flyEnabledBySystem = ConcurrentHashMap.newKeySet();
 
     @Override
     public void tick(float dt, int index, @Nonnull ArchetypeChunk<EntityStore> archetypeChunk, @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
@@ -86,6 +90,7 @@ public class FlySystem extends EntityTickingSystem<EntityStore> {
                         if (currentlyCanFly) {
                             NotificationHelper.sendNotification(playerRef, "<color:red>Vol désactivé : Plus de mana</color>", NotificationStyle.Warning);
                             forceStopFlying(player, playerRef, movementManager, settings, commandBuffer);
+                            flyEnabledBySystem.remove(playerUUID);
                         }
                         return;
                     }
@@ -105,11 +110,13 @@ public class FlySystem extends EntityTickingSystem<EntityStore> {
 
                 SavedMovementStates saved = new SavedMovementStates(false);
                 playerRef.getPacketHandler().writeNoCache(new SetMovementStates(saved));
+                flyEnabledBySystem.add(playerUUID);
             }
 
-        } else if (currentlyCanFly) {
+        } else if (currentlyCanFly && flyEnabledBySystem.contains(playerUUID)) {
             forceStopFlying(player, playerRef, movementManager, settings, commandBuffer);
             flightTimers.remove(playerUUID);
+            flyEnabledBySystem.remove(playerUUID);
         }
     }
 

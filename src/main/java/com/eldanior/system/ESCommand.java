@@ -8,6 +8,12 @@ import com.eldanior.system.classes.commands.ClassInfoCommand;
 import com.eldanior.system.classes.commands.SetClassCommand;
 import com.eldanior.system.skills.commands.GiveRelicCommand;
 import com.eldanior.system.skills.commands.WithdrawCommand;
+import com.eldanior.system.titles.commands.TitleListCommand;
+import com.eldanior.system.titles.commands.TitleOneArgCommand;
+import com.eldanior.system.titles.commands.TitleTwoArgCommand;
+import com.eldanior.system.titles.nobility.commands.*;
+import com.eldanior.system.titles.church.commands.ChurchCommand;
+import com.eldanior.system.titles.church.commands.ChurchPromoteCommand;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractCommandCollection;
 
 public class ESCommand extends AbstractCommandCollection {
@@ -24,6 +30,27 @@ public class ESCommand extends AbstractCommandCollection {
         this.addSubCommand(new DeleteTreasureCommand());
         this.addSubCommand(new TreasureConfigCommand());
         this.addSubCommand(new WithdrawCommand());
+
+        // Titres
+        this.addSubCommand(new TitleListCommand());
+        this.addSubCommand(new TitleOneArgCommand());
+        this.addSubCommand(new TitleTwoArgCommand());
+
+        // Rangs
+        this.addSubCommand(new RankCommand());
+        this.addSubCommand(new RankPromoteCommand());
+        this.addSubCommand(new KingdomCommand());
+
+        // Status
+        this.addSubCommand(new NobilityStatusCommand());
+
+        // Eglise
+        this.addSubCommand(new ChurchCommand());
+        this.addSubCommand(new ChurchPromoteCommand());
+
+        // Famille
+        this.addSubCommand(new FamilyCommand());
+        this.addSubCommand(new FamilySetCommand());
     }
 
     @Override

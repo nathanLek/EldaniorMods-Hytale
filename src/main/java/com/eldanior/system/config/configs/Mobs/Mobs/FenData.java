@@ -5,7 +5,8 @@ import com.eldanior.system.config.configs.Mobs.IMobConfig;
 
 public enum FenData implements IMobConfig {
 
-    FEN_STALKER("fen stalker", 300, 200, 400);
+    // === FEN — Race PACIFIQUE (Lv80-160) ===
+    FEN_STALKER("fen stalker", 80, 100, 160);
 
     private final String keyword;
     private final int xp;

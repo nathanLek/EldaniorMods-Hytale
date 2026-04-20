@@ -5,13 +5,20 @@ import com.eldanior.system.config.configs.Mobs.IMobConfig;
 
 public enum BossData implements IMobConfig {
 
-    GOLEM_GUARDIAN_VOID("golem guardian void", 1400, 850, 999),
-    SHADOW_KNIGHT("shadow knight", 2000, 700, 850),
-    WHALE_HUMPBACK("whale humpback", 1500, 750, 900),
-    YETI("yeti", 1650, 500, 700),
-    WRAITH("wraith", 1500, 350, 500),
-    HEDERA("hedera", 1500, 500, 700),
-    WEREWOLF("werewolf", 1300, 700, 850);
+    // --- Tier 1 — Boss bas niveau (Lv300-500) ---
+    WRAITH("wraith", 1800, 350, 500),
+
+    // --- Tier 2 — Boss mid (Lv500-700) ---
+    WEREWOLF("werewolf", 2400, 500, 700),
+    YETI("yeti", 2800, 550, 700),
+
+    // --- Tier 3 — Boss haut (Lv700-850) ---
+    HEDERA("hedera", 3200, 650, 800),
+    WHALE_HUMPBACK("whale humpback", 3800, 700, 850),
+    SHADOW_KNIGHT("shadow knight", 4000, 750, 850),
+
+    // --- Tier 4 — End-game (Lv850-999) ---
+    GOLEM_GUARDIAN_VOID("golem guardian void", 5500, 850, 999);
 
     private final String keyword;
     private final int xp;

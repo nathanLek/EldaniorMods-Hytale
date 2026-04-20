@@ -5,12 +5,19 @@ import com.eldanior.system.config.configs.Mobs.IMobConfig;
 
 public enum VoidData implements IMobConfig {
 
-    SPAWN_VOID("spawn void", 150, 350, 500),
-    SPECTRE_VOID("spectre void", 80, 280, 420),
-    CRAWLER_VOID("crawler void", 60, 250, 380),
-    EYE_VOID("eye void", 50, 230, 350),
-    NECROMANCER_VOID("necromancer void", 50, 230, 350),
-    LARVA_VOID("larva void", 20, 200, 300);
+    // === VOID (Lv530-630) — Tier 10 ennemi ===
+
+    // --- Larves & support (Lv530-595) ---
+    LARVA_VOID("larva void", 450, 530, 555),
+    EYE_VOID("eye void", 480, 540, 565),
+    CRAWLER_VOID("crawler void", 510, 550, 580),
+    NECROMANCER_VOID("necromancer void", 540, 565, 595),
+
+    // --- Élite spectral (Lv580-610) ---
+    SPECTRE_VOID("spectre void", 590, 580, 610),
+
+    // --- Boss invocateur (Lv600-630) ---
+    SPAWN_VOID("spawn void", 700, 600, 630);
 
     private final String keyword;
     private final int xp;

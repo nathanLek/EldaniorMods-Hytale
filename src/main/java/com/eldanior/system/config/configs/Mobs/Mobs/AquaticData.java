@@ -5,34 +5,45 @@ import com.eldanior.system.config.configs.Mobs.IMobConfig;
 
 public enum AquaticData implements IMobConfig {
 
-    SHARK_HAMMERHEAD("shark hammerhead", 1000, 1, 100),
-    JELLYFISH_MAN_OF_WAR("jellyfish man of war", 60, 1, 100),
-    JELLYFISH_BLUE("jellyfish blue", 30, 1, 100),
-    JELLYFISH_CYAN("jellyfish cyan", 30, 1, 100),
-    JELLYFISH_GREEN("jellyfish green", 30, 1, 100),
-    JELLYFISH_RED("jellyfish red", 30, 1, 100),
-    JELLYFISH_YELLOW("jellyfish yellow", 30, 1, 100),
-    EEL_MORAY("eel moray", 60, 1, 100),
-    SNAPJAW("snapjaw", 60, 1, 100),
-    PIKE("pike", 30, 1, 100),
-    SALMON("salmon", 20, 1, 100),
-    TROUT_RAINBOW("trout rainbow", 20, 1, 100),
-    CATFISH("catfish", 20, 1, 100),
-    BLUEGILL("bluegill", 20, 1, 100),
-    FROSTGILL("frostgill", 50, 1, 100),
-    PIRANHA_BLACK("piranha black", 30, 1, 100),
-    PIRANHA("piranha", 25, 1, 100),
-    PUFFERFISH("pufferfish", 25, 1, 100),
-    CLOWNFISH("clownfish", 15, 1, 100),
-    TANG_BLUE("tang blue", 15, 1, 100),
-    TANG_CHEVRON("tang chevron", 15, 1, 100),
-    TANG_LEMON_PEEL("tang lemon peel", 15, 1, 100),
-    TANG_SAILFIN("tang sailfin", 15, 1, 100),
-    LOBSTER("lobster", 40, 1, 100),
-    CRAB("crab", 30, 1, 100),
-    TADPOLE_RHINO("tadpole rhino", 30, 1, 100),
-    SHELLFISH_LAVA("shellfish lava", 20, 1, 100),
-    MINNOW("minnow", 5, 1, 100);
+    // --- Petits poissons inoffensifs (Lv1-25) ---
+    MINNOW("minnow", 5, 1, 15),
+    CLOWNFISH("clownfish", 10, 1, 20),
+    BLUEGILL("bluegill", 10, 1, 20),
+    TANG_BLUE("tang blue", 12, 1, 25),
+    TANG_CHEVRON("tang chevron", 12, 1, 25),
+    TANG_LEMON_PEEL("tang lemon peel", 12, 1, 25),
+    TANG_SAILFIN("tang sailfin", 12, 1, 25),
+
+    // --- Poissons moyens / proies (Lv1-50) ---
+    TADPOLE_RHINO("tadpole rhino", 20, 1, 30),
+    SALMON("salmon", 25, 5, 40),
+    TROUT_RAINBOW("trout rainbow", 25, 5, 40),
+    CATFISH("catfish", 30, 10, 50),
+    PUFFERFISH("pufferfish", 30, 10, 45),
+    PIKE("pike", 35, 15, 50),
+
+    // --- Crustacés (Lv5-60) ---
+    CRAB("crab", 35, 5, 40),
+    SHELLFISH_LAVA("shellfish lava", 45, 25, 60),
+    LOBSTER("lobster", 50, 15, 50),
+
+    // --- Méduses (Lv10-70) ---
+    JELLYFISH_BLUE("jellyfish blue", 30, 10, 50),
+    JELLYFISH_CYAN("jellyfish cyan", 30, 10, 50),
+    JELLYFISH_GREEN("jellyfish green", 30, 10, 50),
+    JELLYFISH_RED("jellyfish red", 30, 10, 50),
+    JELLYFISH_YELLOW("jellyfish yellow", 30, 10, 50),
+    JELLYFISH_MAN_OF_WAR("jellyfish man of war", 80, 30, 70),
+
+    // --- Prédateurs aquatiques (Lv20-100) ---
+    PIRANHA("piranha", 50, 20, 70),
+    PIRANHA_BLACK("piranha black", 70, 30, 80),
+    EEL_MORAY("eel moray", 90, 40, 90),
+    SNAPJAW("snapjaw", 100, 40, 100),
+    FROSTGILL("frostgill", 110, 50, 100),
+
+    // --- Boss aquatique (Lv80-150) ---
+    SHARK_HAMMERHEAD("shark hammerhead", 350, 80, 150);
 
     private final String keyword;
     private final int xp;

@@ -11,6 +11,11 @@ import com.eldanior.system.TreasureChest.systems.TreasureChestRangeSystem;
 import com.eldanior.system.TreasureChest.systems.TreasureContainerMonitoringSystem;
 import com.eldanior.system.classes.ClassManager;
 import com.eldanior.system.config.Player.PlayerLevelData;
+import com.eldanior.system.titles.TitleManager;
+import com.eldanior.system.titles.church.ChurchManager;
+import com.eldanior.system.titles.nobility.NobilityManager;
+import com.eldanior.system.titles.nobility.family.FamilyManager;
+import com.eldanior.system.titles.nobility.PlayerNameplateSystem;
 import com.eldanior.system.config.Player.PlayerPositionTracker;
 import com.eldanior.system.config.configs.Mobs.*;
 import com.eldanior.system.config.configs.system.MasterySystem;
@@ -21,6 +26,7 @@ import com.eldanior.system.skills.InteractionManager;
 import com.eldanior.system.skills.SkillManager;
 import com.eldanior.system.skills.system.DetectionSystem;
 import com.eldanior.system.skills.system.FlySystem;
+import com.eldanior.system.skills.system.MorphFlightSystem;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.ResourceType; // Nouveau
 import com.hypixel.hytale.logger.HytaleLogger;
@@ -69,6 +75,10 @@ public class EldaniorSystem extends JavaPlugin {
         try {
             SkillManager.init();
             ClassManager.init();
+            TitleManager.init();
+            NobilityManager.init();
+            FamilyManager.init();
+            ChurchManager.init();
             LOGGER.atInfo().log("[OK] Managers et Registres initialisés.");
         } catch (Exception e) {
             LOGGER.atSevere().withCause(e).log("[ERREUR] Échec init Managers/Registres");
@@ -153,6 +163,8 @@ public class EldaniorSystem extends JavaPlugin {
             this.getEntityStoreRegistry().registerSystem(new CraftingRestrictionSystem());
             this.getEntityStoreRegistry().registerSystem(new MasterySystem());
             this.getEntityStoreRegistry().registerSystem(new FlySystem());
+            this.getEntityStoreRegistry().registerSystem(new MorphFlightSystem());
+            this.getEntityStoreRegistry().registerSystem(new PlayerNameplateSystem());
 
             LOGGER.atInfo().log("[OK] Systèmes ECS activés.");
         } catch (Exception e) {

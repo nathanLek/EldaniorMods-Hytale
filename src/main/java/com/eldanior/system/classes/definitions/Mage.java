@@ -21,7 +21,7 @@ public class Mage extends ClassModel {
                 List.of(),
                 120,
                 false,
-                3, 3, 12, 2, 2, 3
+                3, 3, 10000, 2, 2, 3
         );
     }
 }

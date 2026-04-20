@@ -5,13 +5,20 @@ import com.eldanior.system.config.configs.Mobs.IMobConfig;
 
 public enum DinosaureData implements IMobConfig {
 
-    ARCHAEOPTERYX("archaeopteryx", 40, 1, 30),
-    PTERODACTYL("pterodactyl", 50, 1, 30),
-    RAPTOR_CAVE("raptor cave", 80, 20, 250),
-    TRILLODON("trillodon", 80, 20, 250),
-    TRILOBITE_BLACK("trilobite black", 50, 1, 100),
-    TRILOBITE("trilobite", 50, 1, 100),
-    REX_CAVE("rex_cave", 1450, 600, 999);
+    // === DINOSAURES (Lv740-830) — Tier 13 ennemi ===
+
+    // --- Petits dinos & arthropodes (Lv740-780) ---
+    TRILOBITE("trilobite", 1000, 740, 760),
+    ARCHAEOPTERYX("archaeopteryx", 1100, 745, 770),
+    PTERODACTYL("pterodactyl", 1150, 750, 775),
+    TRILOBITE_BLACK("trilobite black", 1200, 755, 780),
+
+    // --- Prédateurs dinos (Lv770-820) ---
+    RAPTOR_CAVE("raptor cave", 1500, 770, 805),
+    TRILLODON("trillodon", 1700, 785, 820),
+
+    // --- T-Rex boss (Lv805-830) ---
+    REX_CAVE("rex_cave", 2200, 805, 830);
 
     private final String keyword;
     private final int xp;

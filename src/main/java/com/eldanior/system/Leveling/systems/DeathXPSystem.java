@@ -5,6 +5,8 @@ import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.Leveling.utils.NotificationHelper;
 import com.eldanior.system.config.configs.MobXP;
 import com.eldanior.system.config.configs.Mobs.MobLevelData;
+import com.eldanior.system.titles.TitleManager;
+import com.eldanior.system.titles.models.TitleModel;
 import com.hypixel.hytale.component.AddReason;
 import com.hypixel.hytale.component.ArchetypeChunk;
 import com.hypixel.hytale.component.CommandBuffer;
@@ -138,6 +140,39 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
             assert dataToWrite != null;
             int oldLvl = dataToWrite.getLevel();
             dataToWrite.addExperience(xpAmount);
+
+            // --- PVP KILL TRACKING ---
+            if (isPvP) {
+                dataToWrite.addPlayerKill();
+
+                // Verifier titres PvP
+                java.util.List<TitleModel> pvpTitles = TitleManager.checkTitleUnlocks(dataToWrite);
+                for (TitleModel title : pvpTitles) {
+                    dataToWrite.addTitle(title.getId());
+                    NotificationHelper.sendNotification(killerRefObj,
+                            "<color:gold>★ Titre debloque : " + title.getDisplayName() + " !</color>",
+                            NotificationStyle.Success);
+                }
+            }
+
+            // --- KILL TRACKING + TITLE CHECK ---
+            if (isMob) {
+                NPCEntity npcForKill = store.getComponent(victimRef, NPCEntity.getComponentType());
+                if (npcForKill != null) {
+                    String mobTypeId = npcForKill.getNPCTypeId().toLowerCase();
+                    dataToWrite.addMobKill(mobTypeId);
+
+                    // Verifier si de nouveaux titres sont debloques
+                    java.util.List<TitleModel> newTitles = TitleManager.checkTitleUnlocks(dataToWrite);
+                    for (TitleModel title : newTitles) {
+                        dataToWrite.addTitle(title.getId());
+                        NotificationHelper.sendNotification(killerRefObj,
+                                "<color:gold>★ Titre debloque : " + title.getDisplayName() + " !</color>",
+                                NotificationStyle.Success);
+                    }
+                }
+            }
+
             commandBuffer.putComponent(killerEntityRef, lvlType, dataToWrite);
 
             String xpMsg = isPvP
@@ -199,6 +234,7 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
             PlayerLevelData dataToWrite = (PlayerLevelData) dataRead.clone();
             if (dataToWrite == null) return;
 
+            dataToWrite.addPlayerDeath();
             int xpLost = dataToWrite.removeExperiencePercent(0.10);
             commandBuffer.putComponent(playerEntityRef, lvlType, dataToWrite);
 

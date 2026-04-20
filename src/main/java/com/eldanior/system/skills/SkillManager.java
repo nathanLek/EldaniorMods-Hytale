@@ -13,50 +13,50 @@ public class SkillManager {
 
         // --- ATTAQUE ---
         register("skill_page_mauvais_presage", new SkillModel(
-                "MAUVAIS_PRESAGE", null, "Mauvais Présage", "warrior, dragon",
+                "MAUVAIS_PRESAGE", null, "Mauvais Présage", "warrior, assassin, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of()
         ));
         register("skill_page_koda_judgment", new SkillModel(
-                "KODA_JUDGMENT", null, "Jugement de Koda", "warrior, dragon", // Adapté pour le warrior ou l'assassin
+                "KODA_JUDGMENT", null, "Jugement de Koda", "warrior, assassin, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), // Légendaire, donc pas d'évolution suivante pour le moment !
                 List.of()
         ));
         register("skill_page_opportunist_strike", new SkillModel(
-                "OPPORTUNIST_STRIKE", null, "Frappe Opportuniste", "warrior, dragon",
+                "OPPORTUNIST_STRIKE", null, "Frappe Opportuniste", "warrior, assassin, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of()
         ));
         register("skill_page_haunting_thrust", new SkillModel(
-                "HAUNTING_THRUST", null, "Estocade Obsédante", "warrior, dragon",
+                "HAUNTING_THRUST", null, "Estocade Obsédante", "warrior, assassin, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("RELENTLESS_HUNT", "BLOOD_HUNT", "DEATH_HUNT"),
                 List.of()
         ));
         register("skill_page_pressure_point", new SkillModel(
-                "PRESSURE_POINT", null, "Point de Pression", "warrior, dragon",
+                "PRESSURE_POINT", null, "Point de Pression", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("VITAL_PRESSURE", "CRUSHING_PRESSURE", "ANNIHILATING_PRESSURE", "SOUL_CRUSHING_PRESSURE"),
                 List.of()
         ));
         register("skill_page_duelist_swiftness", new SkillModel(
-                "DUELIST_SWIFTNESS", null, "Vivacité du Duelliste", "warrior, dragon",
+                "DUELIST_SWIFTNESS", null, "Vivacité du Duelliste", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("COMBATANT_SWIFTNESS", "WARRIOR_SWIFTNESS", "BERSERKER_SWIFTNESS", "DEMIGOD_SWIFTNESS", "GOD_SLAYER_SWIFTNESS", "CREATOR_SWIFTNESS"),
                 List.of()
         ));
         register("skill_page_deep_slash", new SkillModel(
-                "DEEP_SLASH", null, "Entaille Profonde", "warrior, dragon",
+                "DEEP_SLASH", null, "Entaille Profonde", "warrior, assassin, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("SHARP_BLADE", "CRIMSON_BLADE", "VOID_BLADE", "ABYSS_BLADE", "GENESIS_EDGE", "CREATOR_EDGE"),
                 List.of()
         ));
 
         register("skill_page_instinctive_strike", new SkillModel(
-                "INSTINCTIVE_STRIKE", null, "Frappe Instinctive", "warrior, dragon",
+                "INSTINCTIVE_STRIKE", null, "Frappe Instinctive", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("PREDATORY_STRIKE", "FURY_STRIKE", "SEISMIC_STRIKE", "PHANTOM_STRIKE", "ANNIHILATOR_STRIKE", "JUDGMENT_OF_GENESIS"),
                 List.of()
@@ -65,7 +65,7 @@ public class SkillManager {
                 "PREDATORY_STRIKE",
                 null, // Ici, on met l'ID du skill précédent si c'est une évolution
                 "Frappe de Prédateur",
-                "warrior, dragon",
+                "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("FURY_STRIKE","SEISMIC_STRIKE", "PHANTOM_STRIKE", "ANNIHILATOR_STRIKE", "JUDGMENT_OF_GENESIS"),
                 List.of("INSTINCTIVE_STRIKE")
@@ -74,42 +74,42 @@ public class SkillManager {
                 "FURY_STRIKE",
                 "null", // Ici, on met l'ID du skill précédent si c'est une évolution
                 "Frappe de Fureur",
-                "warrior, dragon",
+                "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("SEISMIC_STRIKE", "PHANTOM_STRIKE", "ANNIHILATOR_STRIKE", "JUDGMENT_OF_GENESIS"),
-                List.of("PREDATORY_STRIKE", "INSTINCTIVE_STRIKE")
+                List.of("INSTINCTIVE_STRIKE", "PREDATORY_STRIKE")
         ));
         register("skill_page_seismic_strike", new SkillModel(
                 "SEISMIC_STRIKE",
                 null,
-                "Frappe Sismique", "warrior, dragon",
+                "Frappe Sismique", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("PHANTOM_STRIKE", "ANNIHILATOR_STRIKE", "JUDGMENT_OF_GENESIS"),
-                List.of("PREDATORY_STRIKE", "INSTINCTIVE_STRIKE", "FURY_STRIKE")
+                List.of("INSTINCTIVE_STRIKE", "PREDATORY_STRIKE", "FURY_STRIKE")
         ));
         register("skill_page_phantom_strike", new SkillModel(
                 "PHANTOM_STRIKE",
                 null,
-                "Frappe Fantôme", "warrior, dragon",
+                "Frappe Fantôme", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("ANNIHILATOR_STRIKE", "JUDGMENT_OF_GENESIS"),
-                List.of("PREDATORY_STRIKE", "INSTINCTIVE_STRIKE", "FURY_STRIKE", "SEISMIC_STRIKE" )
+                List.of("INSTINCTIVE_STRIKE", "PREDATORY_STRIKE", "FURY_STRIKE", "SEISMIC_STRIKE")
         ));
         register("skill_page_annihilator_strike", new SkillModel(
                 "ANNIHILATOR_STRIKE",
                 null,
-                "Frappe de l'Annihilateur", "warrior, dragon",
+                "Frappe de l'Annihilateur", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("JUDGMENT_OF_GENESIS"),
-                List.of("PREDATORY_STRIKE", "INSTINCTIVE_STRIKE", "FURY_STRIKE", "SEISMIC_STRIKE", "PHANTOM_STRIKE")
+                List.of("INSTINCTIVE_STRIKE", "PREDATORY_STRIKE", "FURY_STRIKE", "SEISMIC_STRIKE", "PHANTOM_STRIKE")
         ));
         register("skill_page_judgment_of_genesis", new SkillModel(
                 "JUDGMENT_OF_GENESIS",
                 null,
-                "Décret de la Genèse", "warrior, dragon",
+                "Décret de la Genèse", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
-                List.of("PREDATORY_STRIKE", "INSTINCTIVE_STRIKE", "FURY_STRIKE", "SEISMIC_STRIKE", "PHANTOM_STRIKE", "ANNIHILATOR_STRIKE")
+                List.of("INSTINCTIVE_STRIKE", "PREDATORY_STRIKE", "FURY_STRIKE", "SEISMIC_STRIKE", "PHANTOM_STRIKE", "ANNIHILATOR_STRIKE")
         ));
 
         // --- DEFENSE ---
@@ -132,7 +132,7 @@ public class SkillManager {
                 List.of()
         ));
         register("skill_page_hunter_guard", new SkillModel(
-                "HUNTER_GUARD", null, "Garde de Chasseur", "warrior, dragon",
+                "HUNTER_GUARD", null, "Garde de Chasseur", "warrior, archer, assassin, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("BEAST_GUARD", "MONSTER_SLAYER_GUARD", "DRAGON_SLAYER_GUARD"),
                 List.of()
@@ -188,80 +188,80 @@ public class SkillManager {
 
         // --- AGILITY ---
         register("skill_page_wind_step", new SkillModel(
-                "WIND_STEP", null, "Pas de Vent", "novice, dragon, warrior, assassin",
+                "WIND_STEP", null, "Pas de Vent", "novice, warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("GALE_STEP", "STORM_STEP", "VOID_STEP", "DIMENSIONAL_STEP", "CELESTIAL_STEP", "CREATOR_STEP"),
                 List.of()
         ));
         register("skill_page_light_reflexes", new SkillModel(
-                "LIGHT_REFLEXES", null, "Réflexes Éclairs", "warrior, dragon, assassin, novice",
+                "LIGHT_REFLEXES", null, "Réflexes Éclairs", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("THUNDER_REFLEXES", "LIGHTNING_REFLEXES", "DIVINE_REFLEXES", "COSMIC_REFLEXES"),
                 List.of()
         ));
         register("skill_page_suppleness", new SkillModel(
-                "ELDANIOR_SUPPLENESS", null, "Souplesse d'Eldanior", "novice, dragon, warrior, assassin",
+                "ELDANIOR_SUPPLENESS", null, "Souplesse d'Eldanior", "novice, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("CATLIKE_POISE", "ACROBATIC_POISE", "GRAVITY_DEFIANCE"),
                 List.of()
         ));
         register("skill_page_athleticism", new SkillModel(
-                "ATHLETICISM", null, "Athlétisme", "novice, dragon, warrior, assassin",
+                "ATHLETICISM", null, "Athlétisme", "novice, warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("MARATHON_RUNNER"),
                 List.of()
         ));
         register("skill_page_eagle_eye", new SkillModel(
-                "EAGLE_EYE", null, "Œil de Rapace", "warrior, dragon, assassin",
+                "EAGLE_EYE", null, "Œil de Rapace", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("HAWK_EYE", "EAGLE_VISION", "OMNISCIENT_VISION", "ALL_SEEING_EYE", "GENESIS_VISION", "CREATOR_VISION"), List.of()
         ));
 
         register("skill_page_tono_squive", new SkillModel(
-                "TONOSQUIVE", null, "Esquive de Tono", "warrior, dragon",
+                "TONOSQUIVE", null, "Esquive de Tono", "assassin, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), List.of()
         ));
 
         // --- DETECTION ---
         register("skill_page_survival_instinct", new SkillModel(
-                "SURVIVAL_INSTINCT", null, "Instinct de Survie", "novice, dragon, warrior",
+                "SURVIVAL_INSTINCT", null, "Instinct de Survie", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("DANGER_SENSE", "COMBAT_INTUITION", "WAR_PROPHECY", "FATE_VISION"), List.of()
         ));
         register("skill_page_keen_senses", new SkillModel(
-                "KEEN_SENSES", null, "Sens Aiguisés", "assassin, dragon, warrior",
+                "KEEN_SENSES", null, "Sens Aiguisés", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("RAZOR_SENSES", "DEADLY_PRECISION", "FATAL_PRECISION", "ABSOLUTE_PRECISION", "OMNISCIENT_PRECISION", "CREATOR_PRECISION"),
                 List.of()
         ));
         register("skill_page_universal_detection", new SkillModel(
-                "UNIVERSAL_DETECTION", null, "Detection Universel", "mage, dragon, warrior",
+                "UNIVERSAL_DETECTION", null, "Detection Universel", "mage, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), List.of("SURVIVAL_INSTINCT")
         ));
 
         register("skill_page_night_vision", new SkillModel(
-                "NIGHT_VISION", null, "Vision Nocturne", "warrior, dragon, assassin",
+                "NIGHT_VISION", null, "Vision Nocturne", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("DARK_VISION", "ABYSSAL_VISION", "VOID_SIGHT"), List.of()
         ));
 
         register("skill_page_sixth_sense", new SkillModel(
-                "SIXTH_SENSE", null, "Sixième Sens", "warrior, dragon, assassin",
+                "SIXTH_SENSE", null, "Sixième Sens", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("PSYCHIC_AWARENESS", "MIND_READER", "SOUL_READER", "TRUE_SIGHT", "OMNI_SIGHT", "ABSOLUTE_SIGHT"), List.of()
         ));
 
         register("skill_page_tracker", new SkillModel(
-                "TRACKER", null, "Pisteur", "warrior, dragon",
+                "TRACKER", null, "Pisteur", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("MASTER_TRACKER"), List.of()
         ));
 
         // --- MAITRISE ---
         register("skill_page_sword_mastery", new SkillModel(
-                "SWORD_MASTERY", null, "Maîtrise de l'Épée", "warrior, dragon",
+                "SWORD_MASTERY", null, "Maîtrise de l'Épée", "warrior, assassin, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of("MINOR_SWORD_MASTERY")
@@ -324,13 +324,13 @@ public class SkillManager {
                 List.of()
         ));
         register("skill_page_detection_of_vital_points", new SkillModel(
-                "DETECTIONOFVITALPOINTS", null, "Maîtrise de l'Épée", "warrior, dragon",
+                "DETECTIONOFVITALPOINTS", null, "Maîtrise de l'Épée", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of()
         ));
         register("skill_page_lucky_strike", new SkillModel(
-                "LUCKY_STRIKE", null, "Frappe Chanceuse", "merchant, dragon", // J'ai mis merchant, adapte si besoin !
+                "LUCKY_STRIKE", null, "Frappe Chanceuse", "merchant, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("CRITICAL_LUCK", "DESTINY_STRIKE", "DIVINE_STRIKE", "COSMIC_STRIKE", "GENESIS_STRIKE", "CREATOR_STRIKE"),
                 List.of()
@@ -349,7 +349,7 @@ public class SkillManager {
         ));
 
         register("skill_page_miracle_dodge", new SkillModel(
-                "MIRACLE_DODGE", null, "Esquive Miraculeuse", "assassin, dragon",
+                "MIRACLE_DODGE", null, "Esquive Miraculeuse", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("PHANTOM_DODGE", "SHADOW_DODGE", "DIMENSIONAL_DODGE", "REALITY_DODGE", "TIME_DODGE", "FATE_DODGE"),
                 List.of()
@@ -363,7 +363,7 @@ public class SkillManager {
 
         // --- ENDURANCE ---
         register("skill_page_tireless_breath", new SkillModel(
-                "TIRELESS_BREATH", null, "Souffle Inépuisable", "warrior, dragon",
+                "TIRELESS_BREATH", null, "Souffle Inépuisable", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("LUNGS_OF_STEEL", "DRAGON_LUNGS", "TITAN_LUNGS", "COSMIC_LUNGS", "CELESTIAL_LUNGS", "CREATOR_LUNGS"),
                 List.of()
@@ -384,14 +384,14 @@ public class SkillManager {
         ));
 
         register("skill_page_combat_vigor", new SkillModel(
-                "COMBAT_VIGOR", null, "Vigueur Combative", "warrior, dragon",
+                "COMBAT_VIGOR", null, "Vigueur Combative", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("BATTLE_FRENZY", "WAR_FRENZY", "BLOOD_FRENZY", "RAGE_FRENZY"),
                 List.of()
         ));
 
         register("skill_page_second_wind", new SkillModel(
-                "SECOND_WIND", null, "Second Souffle", "warrior, dragon",
+                "SECOND_WIND", null, "Second Souffle", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("SURVIVOR_SPIRIT"),
                 List.of()
@@ -399,7 +399,7 @@ public class SkillManager {
 
         // --- REGENERATION ---
         register("skill_page_mana_heart", new SkillModel(
-                "MANA_HEART", null, "Coeur de Mana", "dragon",
+                "MANA_HEART", null, "Coeur de Mana", "mage, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of()
@@ -411,13 +411,13 @@ public class SkillManager {
                 List.of()
         ));
         register("skill_page_cellular_regeneration", new SkillModel(
-                "CELLULAR_REGENERATION", null, "Régénération Cellulaire", "paladin, dragon", // Ou "warrior"
+                "CELLULAR_REGENERATION", null, "Régénération Cellulaire", "warrior, mage, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("TROLL_BLOOD", "HYDRA_BLOOD", "PHOENIX_BLOOD", "ETERNAL_BLOOD", "GENESIS_BLOOD", "CREATOR_BLOOD"),
                 List.of()
         ));
         register("skill_page_active_breathing", new SkillModel(
-                "ACTIVE_BREATHING", null, "Respiration Active", "assassin, dragon",
+                "ACTIVE_BREATHING", null, "Respiration Active", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("IRON_LUNGS", "ADAMANTINE_LUNGS", "MYTHRIL_LUNGS"),
                 List.of()
@@ -469,19 +469,19 @@ public class SkillManager {
 
         // --- VIE ---
         register("skill_page_robust_constitution", new SkillModel(
-                "ROBUST_CONSTITUTION", null, "Constitution Robuste", "warrior, dragon",
+                "ROBUST_CONSTITUTION", null, "Constitution Robuste", "warrior, mage, assassin, archer, merchant, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("STEEL_CONSTITUTION", "TITAN_CONSTITUTION", "GOD_CONSTITUTION", "COSMIC_CONSTITUTION", "CELESTIAL_CONSTITUTION", "CREATOR_CONSTITUTION"),
                 List.of()
         ));
         register("skill_page_life_force", new SkillModel(
-                "LIFE_FORCE", null, "Force Vitale", "warrior, dragon",
+                "LIFE_FORCE", null, "Force Vitale", "warrior, mage, assassin, archer, merchant, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("OVERFLOWING_LIFE", "BURSTING_LIFE", "ETERNAL_LIFE", "INFINITE_LIFE"),
                 List.of()
         ));
         register("skill_page_vital_blood", new SkillModel(
-                "VITAL_BLOOD", null, "Sang Vital", "warrior, dragon",
+                "VITAL_BLOOD", null, "Sang Vital", "warrior, mage, assassin, archer, merchant, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("ENRICHED_BLOOD", "ANCIENT_BLOOD", "DRAGON_BLOOD"),
                 List.of()
@@ -493,7 +493,7 @@ public class SkillManager {
                 List.of()
         ));
         register("skill_page_perseverance", new SkillModel(
-                "PERSEVERANCE", null, "Persévérance", "warrior, dragon",
+                "PERSEVERANCE", null, "Persévérance", "warrior, mage, assassin, archer, merchant, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("UNDYING"),
                 List.of()
@@ -505,25 +505,25 @@ public class SkillManager {
 
         // --- ATTAQUE (Uncommon) ---
         register("skill_page_sharp_blade", new SkillModel(
-                "SHARP_BLADE", null, "Lame Aiguisée", "warrior, dragon",
+                "SHARP_BLADE", null, "Lame Aiguisée", "warrior, assassin, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("CRIMSON_BLADE", "VOID_BLADE", "ABYSS_BLADE", "GENESIS_EDGE", "CREATOR_EDGE"),
                 List.of("DEEP_SLASH")
         ));
         register("skill_page_combatant_swiftness", new SkillModel(
-                "COMBATANT_SWIFTNESS", null, "Vivacité du Combattant", "warrior, dragon",
+                "COMBATANT_SWIFTNESS", null, "Vivacité du Combattant", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("WARRIOR_SWIFTNESS", "BERSERKER_SWIFTNESS", "DEMIGOD_SWIFTNESS", "GOD_SLAYER_SWIFTNESS", "CREATOR_SWIFTNESS"),
                 List.of("DUELIST_SWIFTNESS")
         ));
         register("skill_page_vital_pressure", new SkillModel(
-                "VITAL_PRESSURE", null, "Pression Vitale", "warrior, dragon",
+                "VITAL_PRESSURE", null, "Pression Vitale", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("CRUSHING_PRESSURE", "ANNIHILATING_PRESSURE", "SOUL_CRUSHING_PRESSURE"),
                 List.of("PRESSURE_POINT")
         ));
         register("skill_page_relentless_hunt", new SkillModel(
-                "RELENTLESS_HUNT", null, "Chasse Implacable", "warrior, dragon",
+                "RELENTLESS_HUNT", null, "Chasse Implacable", "warrior, assassin, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("BLOOD_HUNT", "DEATH_HUNT"),
                 List.of("HAUNTING_THRUST")
@@ -543,7 +543,7 @@ public class SkillManager {
                 List.of("MINOR_PARRY")
         ));
         register("skill_page_beast_guard", new SkillModel(
-                "BEAST_GUARD", null, "Garde Bestiale", "warrior, dragon",
+                "BEAST_GUARD", null, "Garde Bestiale", "warrior, archer, assassin, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("MONSTER_SLAYER_GUARD", "DRAGON_SLAYER_GUARD"),
                 List.of("HUNTER_GUARD")
@@ -557,31 +557,31 @@ public class SkillManager {
 
         // --- AGILITÉ (Uncommon) ---
         register("skill_page_gale_step", new SkillModel(
-                "GALE_STEP", null, "Pas de Bourrasque", "novice, dragon, warrior, assassin",
+                "GALE_STEP", null, "Pas de Bourrasque", "novice, warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("STORM_STEP", "VOID_STEP", "DIMENSIONAL_STEP", "CELESTIAL_STEP", "CREATOR_STEP"),
                 List.of("WIND_STEP")
         ));
         register("skill_page_thunder_reflexes", new SkillModel(
-                "THUNDER_REFLEXES", null, "Réflexes Tonnerre", "novice, dragon, warrior, assassin",
+                "THUNDER_REFLEXES", null, "Réflexes Tonnerre", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("LIGHTNING_REFLEXES", "DIVINE_REFLEXES", "COSMIC_REFLEXES"),
                 List.of("LIGHT_REFLEXES")
         ));
         register("skill_page_catlike_poise", new SkillModel(
-                "CATLIKE_POISE", null, "Grâce Féline", "novice, dragon, warrior, assassin",
+                "CATLIKE_POISE", null, "Grâce Féline", "novice, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("ACROBATIC_POISE", "GRAVITY_DEFIANCE"),
                 List.of("ELDANIOR_SUPPLENESS")
         ));
         register("skill_page_razor_senses", new SkillModel(
-                "RAZOR_SENSES", null, "Sens Tranchants", "novice, dragon, warrior, assassin",
+                "RAZOR_SENSES", null, "Sens Tranchants", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("DEADLY_PRECISION", "FATAL_PRECISION", "ABSOLUTE_PRECISION", "OMNISCIENT_PRECISION", "CREATOR_PRECISION"),
                 List.of("KEEN_SENSES")
         ));
         register("skill_page_marathon_runner", new SkillModel(
-                "MARATHON_RUNNER", null, "Marathonien", "novice, dragon, warrior, assassin",
+                "MARATHON_RUNNER", null, "Marathonien", "novice, warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of("ATHLETICISM")
@@ -589,31 +589,31 @@ public class SkillManager {
 
         // --- DETECTION (Uncommon) ---
         register("skill_page_hawk_eye", new SkillModel(
-                "HAWK_EYE", null, "Œil de Faucon", "warrior, dragon, assassin",
+                "HAWK_EYE", null, "Œil de Faucon", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("EAGLE_VISION", "OMNISCIENT_VISION", "ALL_SEEING_EYE", "GENESIS_VISION", "CREATOR_VISION"),
                 List.of("EAGLE_EYE")
         ));
         register("skill_page_danger_sense", new SkillModel(
-                "DANGER_SENSE", null, "Sens du Danger", "warrior, dragon, assassin",
+                "DANGER_SENSE", null, "Sens du Danger", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("COMBAT_INTUITION", "WAR_PROPHECY", "FATE_VISION"),
                 List.of("SURVIVAL_INSTINCT")
         ));
         register("skill_page_dark_vision", new SkillModel(
-                "DARK_VISION", null, "Vision des Ténèbres", "warrior, dragon, assassin",
+                "DARK_VISION", null, "Vision des Ténèbres", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("ABYSSAL_VISION", "VOID_SIGHT"),
                 List.of("NIGHT_VISION")
         ));
         register("skill_page_psychic_awareness", new SkillModel(
-                "PSYCHIC_AWARENESS", null, "Conscience Psychique", "warrior, dragon, assassin",
+                "PSYCHIC_AWARENESS", null, "Conscience Psychique", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("MIND_READER", "SOUL_READER", "TRUE_SIGHT", "OMNI_SIGHT", "ABSOLUTE_SIGHT"),
                 List.of("SIXTH_SENSE")
         ));
         register("skill_page_master_tracker", new SkillModel(
-                "MASTER_TRACKER", null, "Pisteur Maître", "warrior, dragon, assassin",
+                "MASTER_TRACKER", null, "Pisteur Maître", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of("TRACKER")
@@ -621,7 +621,7 @@ public class SkillManager {
 
         // --- ENDURANCE (Uncommon) ---
         register("skill_page_lungs_of_steel", new SkillModel(
-                "LUNGS_OF_STEEL", null, "Poumons d'Acier", "warrior, dragon",
+                "LUNGS_OF_STEEL", null, "Poumons d'Acier", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("DRAGON_LUNGS", "TITAN_LUNGS", "COSMIC_LUNGS", "CELESTIAL_LUNGS", "CREATOR_LUNGS"),
                 List.of("TIRELESS_BREATH")
@@ -639,17 +639,18 @@ public class SkillManager {
                 List.of("SOLID_STANCE")
         ));
         register("skill_page_battle_frenzy", new SkillModel(
-                "BATTLE_FRENZY", null, "Frénésie de Combat", "warrior, dragon",
+                "BATTLE_FRENZY", null, "Frénésie de Combat", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("WAR_FRENZY", "BLOOD_FRENZY", "RAGE_FRENZY"),
                 List.of("COMBAT_VIGOR")
         ));
         register("skill_page_survivor_spirit", new SkillModel(
-                "SURVIVOR_SPIRIT", null, "Esprit du Survivant", "warrior, dragon",
+                "SURVIVOR_SPIRIT", null, "Esprit du Survivant", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of("SECOND_WIND")
         ));
+
 
         // --- MAGIQUE (Uncommon) ---
         register("skill_page_expanded_mind", new SkillModel(
@@ -685,7 +686,7 @@ public class SkillManager {
 
         // --- CHANCE (Uncommon) ---
         register("skill_page_critical_luck", new SkillModel(
-                "CRITICAL_LUCK", null, "Chance Critique", "merchant, dragon",
+                "CRITICAL_LUCK", null, "Chance Critique", "merchant, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("DESTINY_STRIKE", "DIVINE_STRIKE", "COSMIC_STRIKE", "GENESIS_STRIKE", "CREATOR_STRIKE"),
                 List.of("LUCKY_STRIKE")
@@ -703,7 +704,7 @@ public class SkillManager {
                 List.of("GOOD_OMEN")
         ));
         register("skill_page_phantom_dodge", new SkillModel(
-                "PHANTOM_DODGE", null, "Esquive Fantôme", "assassin, dragon",
+                "PHANTOM_DODGE", null, "Esquive Fantôme", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("SHADOW_DODGE", "DIMENSIONAL_DODGE", "REALITY_DODGE", "TIME_DODGE", "FATE_DODGE"),
                 List.of("MIRACLE_DODGE")
@@ -717,13 +718,13 @@ public class SkillManager {
 
         // --- REGENERATION (Uncommon) ---
         register("skill_page_troll_blood", new SkillModel(
-                "TROLL_BLOOD", null, "Sang de Troll", "paladin, dragon",
+                "TROLL_BLOOD", null, "Sang de Troll", "warrior, mage, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("HYDRA_BLOOD", "PHOENIX_BLOOD", "ETERNAL_BLOOD", "GENESIS_BLOOD", "CREATOR_BLOOD"),
                 List.of("CELLULAR_REGENERATION")
         ));
         register("skill_page_iron_lungs", new SkillModel(
-                "IRON_LUNGS", null, "Poumons de Fer", "assassin, dragon",
+                "IRON_LUNGS", null, "Poumons de Fer", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("ADAMANTINE_LUNGS", "MYTHRIL_LUNGS"),
                 List.of("ACTIVE_BREATHING")
@@ -781,19 +782,19 @@ public class SkillManager {
 
         // --- VIE (Uncommon) ---
         register("skill_page_steel_constitution", new SkillModel(
-                "STEEL_CONSTITUTION", null, "Constitution d'Acier", "warrior, dragon",
+                "STEEL_CONSTITUTION", null, "Constitution d'Acier", "warrior, mage, assassin, archer, merchant, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("TITAN_CONSTITUTION", "GOD_CONSTITUTION", "COSMIC_CONSTITUTION", "CELESTIAL_CONSTITUTION", "CREATOR_CONSTITUTION"),
                 List.of("ROBUST_CONSTITUTION")
         ));
         register("skill_page_overflowing_life", new SkillModel(
-                "OVERFLOWING_LIFE", null, "Vie Débordante", "warrior, dragon",
+                "OVERFLOWING_LIFE", null, "Vie Débordante", "warrior, mage, assassin, archer, merchant, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("BURSTING_LIFE", "ETERNAL_LIFE", "INFINITE_LIFE"),
                 List.of("LIFE_FORCE")
         ));
         register("skill_page_enriched_blood", new SkillModel(
-                "ENRICHED_BLOOD", null, "Sang Enrichi", "warrior, dragon",
+                "ENRICHED_BLOOD", null, "Sang Enrichi", "warrior, mage, assassin, archer, merchant, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("ANCIENT_BLOOD", "DRAGON_BLOOD"),
                 List.of("VITAL_BLOOD")
@@ -805,7 +806,7 @@ public class SkillManager {
                 List.of("HEART_OF_OAK")
         ));
         register("skill_page_undying", new SkillModel(
-                "UNDYING", null, "Immortel", "warrior, dragon",
+                "UNDYING", null, "Immortel", "warrior, mage, assassin, archer, merchant, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of("PERSEVERANCE")
@@ -819,7 +820,7 @@ public class SkillManager {
                 List.of()
         ));
         register("skill_page_bow_mastery", new SkillModel(
-                "BOW_MASTERY", null, "Maîtrise de l'Arc", "assassin, dragon",
+                "BOW_MASTERY", null, "Maîtrise de l'Arc", "archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("MARKSMAN_MASTERY", "SNIPER_MASTERY", "LEGENDARY_SNIPER_MASTERY"),
                 List.of()
@@ -831,13 +832,13 @@ public class SkillManager {
                 List.of()
         ));
         register("skill_page_dagger_mastery", new SkillModel(
-                "DAGGER_MASTERY", null, "Maîtrise de la Dague", "assassin, dragon",
+                "DAGGER_MASTERY", null, "Maîtrise de la Dague", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("SHADOW_BLADE_MASTERY", "ASSASSIN_BLADE_MASTERY", "LEGENDARY_DAGGER_MASTERY", "DIVIN_DAGGER_MASTERY", "CREATOR_DAGGER_MASTERY"),
                 List.of()
         ));
         register("skill_page_minor_sword_mastery", new SkillModel(
-                "MINOR_SWORD_MASTERY", null, "Initiation à l'Épée", "warrior, dragon",
+                "MINOR_SWORD_MASTERY", null, "Initiation à l'Épée", "warrior, assassin, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("SWORD_MASTERY"),
                 List.of()
@@ -849,22 +850,22 @@ public class SkillManager {
 
         // --- RARE ATTACK ---
         register("skill_page_crimson_blade", new SkillModel(
-                "CRIMSON_BLADE", null, "Lame Pourpre", "warrior, dragon",
+                "CRIMSON_BLADE", null, "Lame Pourpre", "warrior, assassin, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("VOID_BLADE", "ABYSS_BLADE", "GENESIS_EDGE", "CREATOR_EDGE"), List.of("DEEP_SLASH", "SHARP_BLADE")
         ));
         register("skill_page_warrior_swiftness", new SkillModel(
-                "WARRIOR_SWIFTNESS", null, "Vivacité du Guerrier", "warrior, dragon",
+                "WARRIOR_SWIFTNESS", null, "Vivacité du Guerrier", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("BERSERKER_SWIFTNESS", "DEMIGOD_SWIFTNESS", "GOD_SLAYER_SWIFTNESS", "CREATOR_SWIFTNESS"), List.of("DUELIST_SWIFTNESS", "COMBATANT_SWIFTNESS")
         ));
         register("skill_page_crushing_pressure", new SkillModel(
-                "CRUSHING_PRESSURE", null, "Pression Écrasante", "warrior, dragon",
+                "CRUSHING_PRESSURE", null, "Pression Écrasante", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("ANNIHILATING_PRESSURE", "SOUL_CRUSHING_PRESSURE"), List.of("PRESSURE_POINT", "VITAL_PRESSURE")
         ));
         register("skill_page_blood_hunt", new SkillModel(
-                "BLOOD_HUNT", null, "Traque Sanguinaire", "warrior, dragon",
+                "BLOOD_HUNT", null, "Traque Sanguinaire", "warrior, assassin, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("DEATH_HUNT"), List.of("HAUNTING_THRUST", "RELENTLESS_HUNT")
         ));
@@ -881,7 +882,7 @@ public class SkillManager {
                 List.of("PERFECT_PARRY", "DIVINE_PARRY", "CELESTIAL_PARRY", "CREATOR_PARRY"), List.of("MINOR_PARRY", "EXPERT_PARRY")
         ));
         register("skill_page_monster_slayer_guard", new SkillModel(
-                "MONSTER_SLAYER_GUARD", null, "Garde du Tueur", "warrior, dragon",
+                "MONSTER_SLAYER_GUARD", null, "Garde du Tueur", "warrior, archer, assassin, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("DRAGON_SLAYER_GUARD"), List.of("HUNTER_GUARD", "BEAST_GUARD")
         ));
@@ -893,51 +894,51 @@ public class SkillManager {
 
         // --- RARE AGILITÉ ---
         register("skill_page_storm_step", new SkillModel(
-                "STORM_STEP", null, "Pas de Tempête", "novice, dragon, warrior, assassin",
+                "STORM_STEP", null, "Pas de Tempête", "novice, warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("VOID_STEP", "DIMENSIONAL_STEP", "CELESTIAL_STEP", "CREATOR_STEP"), List.of("WIND_STEP", "GALE_STEP")
         ));
         register("skill_page_lightning_reflexes", new SkillModel(
-                "LIGHTNING_REFLEXES", null, "Réflexes de Foudre", "warrior, dragon, assassin, novice",
+                "LIGHTNING_REFLEXES", null, "Réflexes de Foudre", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("DIVINE_REFLEXES", "COSMIC_REFLEXES"), List.of("LIGHT_REFLEXES", "THUNDER_REFLEXES")
         ));
         register("skill_page_acrobatic_poise", new SkillModel(
-                "ACROBATIC_POISE", null, "Souplesse Acrobatique", "novice, dragon, warrior, assassin",
+                "ACROBATIC_POISE", null, "Souplesse Acrobatique", "novice, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("GRAVITY_DEFIANCE"), List.of("ELDANIOR_SUPPLENESS", "CATLIKE_POISE")
         ));
         register("skill_page_deadly_precision", new SkillModel(
-                "DEADLY_PRECISION", null, "Précision Mortelle", "assassin, dragon, warrior",
+                "DEADLY_PRECISION", null, "Précision Mortelle", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("FATAL_PRECISION", "ABSOLUTE_PRECISION", "OMNISCIENT_PRECISION", "CREATOR_PRECISION"), List.of("KEEN_SENSES", "RAZOR_SENSES")
         ));
 
         // --- RARE DETECTION ---
         register("skill_page_eagle_vision", new SkillModel(
-                "EAGLE_VISION", null, "Vision d'Aigle", "warrior, dragon, assassin",
+                "EAGLE_VISION", null, "Vision d'Aigle", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("OMNISCIENT_VISION", "ALL_SEEING_EYE", "GENESIS_VISION", "CREATOR_VISION"), List.of("EAGLE_EYE", "HAWK_EYE")
         ));
         register("skill_page_combat_intuition", new SkillModel(
-                "COMBAT_INTUITION", null, "Intuition de Combat", "novice, dragon, warrior",
+                "COMBAT_INTUITION", null, "Intuition de Combat", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("WAR_PROPHECY", "FATE_VISION"), List.of("SURVIVAL_INSTINCT", "DANGER_SENSE")
         ));
         register("skill_page_abyssal_vision", new SkillModel(
-                "ABYSSAL_VISION", null, "Vision Abyssale", "warrior, dragon, assassin",
+                "ABYSSAL_VISION", null, "Vision Abyssale", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("VOID_SIGHT"), List.of("NIGHT_VISION", "DARK_VISION")
         ));
         register("skill_page_mind_reader", new SkillModel(
-                "MIND_READER", null, "Lecture Mentale", "warrior, dragon, assassin",
+                "MIND_READER", null, "Lecture Mentale", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("SOUL_READER", "TRUE_SIGHT", "OMNI_SIGHT", "ABSOLUTE_SIGHT"), List.of("SIXTH_SENSE", "PSYCHIC_AWARENESS")
         ));
 
         // --- RARE ENDURANCE ---
         register("skill_page_dragon_lungs", new SkillModel(
-                "DRAGON_LUNGS", null, "Poumons de Dragon", "warrior, dragon",
+                "DRAGON_LUNGS", null, "Poumons de Dragon", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("TITAN_LUNGS", "COSMIC_LUNGS", "CELESTIAL_LUNGS", "CREATOR_LUNGS"), List.of("TIRELESS_BREATH", "LUNGS_OF_STEEL")
         ));
@@ -952,7 +953,7 @@ public class SkillManager {
                 List.of("ETERNAL_FORTRESS", "DIVINE_FORTRESS", "CELESTIAL_FORTRESS", "CREATOR_FORTRESS"), List.of("SOLID_STANCE", "UNMOVABLE_MOUNTAIN")
         ));
         register("skill_page_war_frenzy", new SkillModel(
-                "WAR_FRENZY", null, "Frénésie Guerrière", "warrior, dragon",
+                "WAR_FRENZY", null, "Frénésie Guerrière", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("BLOOD_FRENZY", "RAGE_FRENZY"), List.of("COMBAT_VIGOR", "BATTLE_FRENZY")
         ));
@@ -981,7 +982,7 @@ public class SkillManager {
 
         // --- RARE CHANCE ---
         register("skill_page_destiny_strike", new SkillModel(
-                "DESTINY_STRIKE", null, "Frappe du Destin", "merchant, dragon",
+                "DESTINY_STRIKE", null, "Frappe du Destin", "merchant, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("DIVINE_STRIKE", "COSMIC_STRIKE", "GENESIS_STRIKE", "CREATOR_STRIKE"), List.of("LUCKY_STRIKE", "CRITICAL_LUCK")
         ));
@@ -996,19 +997,19 @@ public class SkillManager {
                 List.of("COSMIC_OMEN"), List.of("GOOD_OMEN", "FATED_OMEN")
         ));
         register("skill_page_shadow_dodge", new SkillModel(
-                "SHADOW_DODGE", null, "Esquive de l'Ombre", "assassin, dragon",
+                "SHADOW_DODGE", null, "Esquive de l'Ombre", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("DIMENSIONAL_DODGE", "REALITY_DODGE", "TIME_DODGE", "FATE_DODGE"), List.of("MIRACLE_DODGE", "PHANTOM_DODGE")
         ));
 
         // --- RARE REGENERATION ---
         register("skill_page_hydra_blood", new SkillModel(
-                "HYDRA_BLOOD", null, "Sang d'Hydre", "paladin, dragon",
+                "HYDRA_BLOOD", null, "Sang d'Hydre", "warrior, mage, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("PHOENIX_BLOOD", "ETERNAL_BLOOD", "GENESIS_BLOOD", "CREATOR_BLOOD"), List.of("CELLULAR_REGENERATION", "TROLL_BLOOD")
         ));
         register("skill_page_adamantine_lungs", new SkillModel(
-                "ADAMANTINE_LUNGS", null, "Poumons d'Adamantine", "assassin, dragon",
+                "ADAMANTINE_LUNGS", null, "Poumons d'Adamantine", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("MYTHRIL_LUNGS"), List.of("ACTIVE_BREATHING", "IRON_LUNGS")
         ));
@@ -1047,17 +1048,17 @@ public class SkillManager {
 
         // --- RARE VIE ---
         register("skill_page_titan_constitution", new SkillModel(
-                "TITAN_CONSTITUTION", null, "Constitution de Titan", "warrior, dragon",
+                "TITAN_CONSTITUTION", null, "Constitution de Titan", "warrior, mage, assassin, archer, merchant, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("GOD_CONSTITUTION", "COSMIC_CONSTITUTION", "CELESTIAL_CONSTITUTION", "CREATOR_CONSTITUTION"), List.of("ROBUST_CONSTITUTION", "STEEL_CONSTITUTION")
         ));
         register("skill_page_bursting_life", new SkillModel(
-                "BURSTING_LIFE", null, "Vie Explosive", "warrior, dragon",
+                "BURSTING_LIFE", null, "Vie Explosive", "warrior, mage, assassin, archer, merchant, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("ETERNAL_LIFE", "INFINITE_LIFE"), List.of("LIFE_FORCE", "OVERFLOWING_LIFE")
         ));
         register("skill_page_ancient_blood", new SkillModel(
-                "ANCIENT_BLOOD", null, "Sang Ancestral", "warrior, dragon",
+                "ANCIENT_BLOOD", null, "Sang Ancestral", "warrior, mage, assassin, archer, merchant, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("DRAGON_BLOOD"), List.of("VITAL_BLOOD", "ENRICHED_BLOOD")
         ));
@@ -1074,7 +1075,7 @@ public class SkillManager {
                 List.of("WAR_AXE_MASTERY", "LEGENDARY_AXE_MASTERY", "DIVIN_AXE_MASTERY", "CREATOR_AXE_MASTERY"), List.of("AXE_MASTERY")
         ));
         register("skill_page_marksman_mastery", new SkillModel(
-                "MARKSMAN_MASTERY", null, "Maîtrise du Tir", "assassin, dragon",
+                "MARKSMAN_MASTERY", null, "Maîtrise du Tir", "archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("SNIPER_MASTERY", "LEGENDARY_SNIPER_MASTERY"), List.of("BOW_MASTERY")
         ));
@@ -1084,7 +1085,7 @@ public class SkillManager {
                 List.of("DRAGON_SPEAR_MASTERY"), List.of("SPEAR_MASTERY")
         ));
         register("skill_page_shadow_blade_mastery", new SkillModel(
-                "SHADOW_BLADE_MASTERY", null, "Maîtrise de la Lame d'Ombre", "assassin, dragon",
+                "SHADOW_BLADE_MASTERY", null, "Maîtrise de la Lame d'Ombre", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("ASSASSIN_BLADE_MASTERY", "LEGENDARY_DAGGER_MASTERY", "DIVIN_DAGGER_MASTERY", "CREATOR_DAGGER_MASTERY"), List.of("DAGGER_MASTERY")
         ));
@@ -1095,22 +1096,22 @@ public class SkillManager {
 
         // --- ÉPIQUE ATTACK ---
         register("skill_page_void_blade", new SkillModel(
-                "VOID_BLADE", null, "Lame du Néant", "warrior, dragon",
+                "VOID_BLADE", null, "Lame du Néant", "warrior, assassin, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("ABYSS_BLADE", "GENESIS_EDGE", "CREATOR_EDGE"), List.of("DEEP_SLASH", "SHARP_BLADE", "CRIMSON_BLADE")
         ));
         register("skill_page_berserker_swiftness", new SkillModel(
-                "BERSERKER_SWIFTNESS", null, "Vivacité du Berserker", "warrior, dragon",
+                "BERSERKER_SWIFTNESS", null, "Vivacité du Berserker", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("DEMIGOD_SWIFTNESS", "GOD_SLAYER_SWIFTNESS", "CREATOR_SWIFTNESS"), List.of("DUELIST_SWIFTNESS", "COMBATANT_SWIFTNESS", "WARRIOR_SWIFTNESS")
         ));
         register("skill_page_annihilating_pressure", new SkillModel(
-                "ANNIHILATING_PRESSURE", null, "Pression Annihilante", "warrior, dragon",
+                "ANNIHILATING_PRESSURE", null, "Pression Annihilante", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("SOUL_CRUSHING_PRESSURE"), List.of("PRESSURE_POINT", "VITAL_PRESSURE", "CRUSHING_PRESSURE")
         ));
         register("skill_page_death_hunt", new SkillModel(
-                "DEATH_HUNT", null, "Traque Mortelle", "warrior, dragon",
+                "DEATH_HUNT", null, "Traque Mortelle", "warrior, assassin, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), List.of("HAUNTING_THRUST", "RELENTLESS_HUNT", "BLOOD_HUNT")
         ));
@@ -1127,7 +1128,7 @@ public class SkillManager {
                 List.of("DIVINE_PARRY", "CELESTIAL_PARRY", "CREATOR_PARRY"), List.of("MINOR_PARRY", "EXPERT_PARRY", "MASTER_PARRY")
         ));
         register("skill_page_dragon_slayer_guard", new SkillModel(
-                "DRAGON_SLAYER_GUARD", null, "Garde du Tueur de Dragon", "warrior, dragon",
+                "DRAGON_SLAYER_GUARD", null, "Garde du Tueur de Dragon", "warrior, archer, assassin, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), List.of("HUNTER_GUARD", "BEAST_GUARD", "MONSTER_SLAYER_GUARD")
         ));
@@ -1139,51 +1140,51 @@ public class SkillManager {
 
         // --- ÉPIQUE AGILITÉ ---
         register("skill_page_void_step", new SkillModel(
-                "VOID_STEP", null, "Pas du Néant", "novice, dragon, warrior, assassin",
+                "VOID_STEP", null, "Pas du Néant", "novice, warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("DIMENSIONAL_STEP", "CELESTIAL_STEP", "CREATOR_STEP"), List.of("WIND_STEP", "GALE_STEP", "STORM_STEP")
         ));
         register("skill_page_divine_reflexes", new SkillModel(
-                "DIVINE_REFLEXES", null, "Réflexes Divins", "warrior, dragon, assassin, novice",
+                "DIVINE_REFLEXES", null, "Réflexes Divins", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("COSMIC_REFLEXES"), List.of("LIGHT_REFLEXES", "THUNDER_REFLEXES", "LIGHTNING_REFLEXES")
         ));
         register("skill_page_gravity_defiance", new SkillModel(
-                "GRAVITY_DEFIANCE", null, "Défi à la Gravité", "novice, dragon, warrior, assassin",
+                "GRAVITY_DEFIANCE", null, "Défi à la Gravité", "novice, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), List.of("ELDANIOR_SUPPLENESS", "CATLIKE_POISE", "ACROBATIC_POISE")
         ));
         register("skill_page_fatal_precision", new SkillModel(
-                "FATAL_PRECISION", null, "Précision Fatale", "assassin, dragon, warrior",
+                "FATAL_PRECISION", null, "Précision Fatale", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("ABSOLUTE_PRECISION", "OMNISCIENT_PRECISION", "CREATOR_PRECISION"), List.of("KEEN_SENSES", "RAZOR_SENSES", "DEADLY_PRECISION")
         ));
 
         // --- ÉPIQUE DETECTION ---
         register("skill_page_omniscient_vision", new SkillModel(
-                "OMNISCIENT_VISION", null, "Vision Omnisciente", "warrior, dragon, assassin",
+                "OMNISCIENT_VISION", null, "Vision Omnisciente", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("ALL_SEEING_EYE", "GENESIS_VISION", "CREATOR_VISION"), List.of("EAGLE_EYE", "HAWK_EYE", "EAGLE_VISION")
         ));
         register("skill_page_war_prophecy", new SkillModel(
-                "WAR_PROPHECY", null, "Prophétie de Guerre", "novice, dragon, warrior",
+                "WAR_PROPHECY", null, "Prophétie de Guerre", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("FATE_VISION"), List.of("SURVIVAL_INSTINCT", "DANGER_SENSE", "COMBAT_INTUITION")
         ));
         register("skill_page_void_sight", new SkillModel(
-                "VOID_SIGHT", null, "Vue du Néant", "warrior, dragon, assassin",
+                "VOID_SIGHT", null, "Vue du Néant", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), List.of("NIGHT_VISION", "DARK_VISION", "ABYSSAL_VISION")
         ));
         register("skill_page_soul_reader", new SkillModel(
-                "SOUL_READER", null, "Lecture d'Âme", "warrior, dragon, assassin",
+                "SOUL_READER", null, "Lecture d'Âme", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("TRUE_SIGHT", "OMNI_SIGHT", "ABSOLUTE_SIGHT"), List.of("SIXTH_SENSE", "PSYCHIC_AWARENESS", "MIND_READER")
         ));
 
         // --- ÉPIQUE ENDURANCE ---
         register("skill_page_titan_lungs", new SkillModel(
-                "TITAN_LUNGS", null, "Poumons de Titan", "warrior, dragon",
+                "TITAN_LUNGS", null, "Poumons de Titan", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("COSMIC_LUNGS", "CELESTIAL_LUNGS", "CREATOR_LUNGS"), List.of("TIRELESS_BREATH", "LUNGS_OF_STEEL", "DRAGON_LUNGS")
         ));
@@ -1198,7 +1199,7 @@ public class SkillManager {
                 List.of("DIVINE_FORTRESS", "CELESTIAL_FORTRESS", "CREATOR_FORTRESS"), List.of("SOLID_STANCE", "UNMOVABLE_MOUNTAIN", "LIVING_FORTRESS")
         ));
         register("skill_page_blood_frenzy", new SkillModel(
-                "BLOOD_FRENZY", null, "Frénésie Sanguinaire", "warrior, dragon",
+                "BLOOD_FRENZY", null, "Frénésie Sanguinaire", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("RAGE_FRENZY"), List.of("COMBAT_VIGOR", "BATTLE_FRENZY", "WAR_FRENZY")
         ));
@@ -1227,7 +1228,7 @@ public class SkillManager {
 
         // --- ÉPIQUE CHANCE ---
         register("skill_page_divine_strike", new SkillModel(
-                "DIVINE_STRIKE", null, "Frappe Divine", "merchant, dragon",
+                "DIVINE_STRIKE", null, "Frappe Divine", "merchant, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("COSMIC_STRIKE", "GENESIS_STRIKE", "CREATOR_STRIKE"), List.of("LUCKY_STRIKE", "CRITICAL_LUCK", "DESTINY_STRIKE")
         ));
@@ -1242,14 +1243,14 @@ public class SkillManager {
                 List.of(), List.of("GOOD_OMEN", "FATED_OMEN", "PROPHECY_OMEN")
         ));
         register("skill_page_dimensional_dodge", new SkillModel(
-                "DIMENSIONAL_DODGE", null, "Esquive Dimensionnelle", "assassin, dragon",
+                "DIMENSIONAL_DODGE", null, "Esquive Dimensionnelle", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("REALITY_DODGE", "TIME_DODGE", "FATE_DODGE"), List.of("MIRACLE_DODGE", "PHANTOM_DODGE", "SHADOW_DODGE")
         ));
 
         // --- ÉPIQUE REGENERATION ---
         register("skill_page_phoenix_blood", new SkillModel(
-                "PHOENIX_BLOOD", null, "Sang de Phénix", "paladin, dragon",
+                "PHOENIX_BLOOD", null, "Sang de Phénix", "warrior, mage, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("ETERNAL_BLOOD", "GENESIS_BLOOD", "CREATOR_BLOOD"), List.of("CELLULAR_REGENERATION", "TROLL_BLOOD", "HYDRA_BLOOD")
         ));
@@ -1293,17 +1294,17 @@ public class SkillManager {
 
         // --- ÉPIQUE VIE ---
         register("skill_page_god_constitution", new SkillModel(
-                "GOD_CONSTITUTION", null, "Constitution Divine", "warrior, dragon",
+                "GOD_CONSTITUTION", null, "Constitution Divine", "warrior, mage, assassin, archer, merchant, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("COSMIC_CONSTITUTION", "CELESTIAL_CONSTITUTION", "CREATOR_CONSTITUTION"), List.of("ROBUST_CONSTITUTION", "STEEL_CONSTITUTION", "TITAN_CONSTITUTION")
         ));
         register("skill_page_eternal_life", new SkillModel(
-                "ETERNAL_LIFE", null, "Vie Éternelle", "warrior, dragon",
+                "ETERNAL_LIFE", null, "Vie Éternelle", "warrior, mage, assassin, archer, merchant, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("INFINITE_LIFE"), List.of("LIFE_FORCE", "OVERFLOWING_LIFE", "BURSTING_LIFE")
         ));
         register("skill_page_dragon_blood", new SkillModel(
-                "DRAGON_BLOOD", null, "Sang de Dragon", "warrior, dragon",
+                "DRAGON_BLOOD", null, "Sang de Dragon", "warrior, mage, assassin, archer, merchant, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), List.of("VITAL_BLOOD", "ENRICHED_BLOOD", "ANCIENT_BLOOD")
         ));
@@ -1320,7 +1321,7 @@ public class SkillManager {
                 List.of("LEGENDARY_AXE_MASTERY", "DIVIN_AXE_MASTERY", "CREATOR_AXE_MASTERY"), List.of("AXE_MASTERY", "GREAT_AXE_MASTERY")
         ));
         register("skill_page_sniper_mastery", new SkillModel(
-                "SNIPER_MASTERY", null, "Maîtrise du Sniper", "assassin, dragon",
+                "SNIPER_MASTERY", null, "Maîtrise du Sniper", "archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("LEGENDARY_SNIPER_MASTERY"), List.of("BOW_MASTERY", "MARKSMAN_MASTERY")
         ));
@@ -1330,7 +1331,7 @@ public class SkillManager {
                 List.of(), List.of("SPEAR_MASTERY", "HALBERD_MASTERY")
         ));
         register("skill_page_assassin_blade_mastery", new SkillModel(
-                "ASSASSIN_BLADE_MASTERY", null, "Maîtrise de la Lame d'Assassin", "assassin, dragon",
+                "ASSASSIN_BLADE_MASTERY", null, "Maîtrise de la Lame d'Assassin", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("LEGENDARY_DAGGER_MASTERY", "DIVIN_DAGGER_MASTERY", "CREATOR_DAGGER_MASTERY"), List.of("DAGGER_MASTERY", "SHADOW_BLADE_MASTERY")
         ));
@@ -1341,17 +1342,17 @@ public class SkillManager {
 
         // --- UNIQUE ATTACK ---
         register("skill_page_abyss_blade", new SkillModel(
-                "ABYSS_BLADE", null, "Lame de l'Abîme", "warrior, dragon",
+                "ABYSS_BLADE", null, "Lame de l'Abîme", "warrior, assassin, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("GENESIS_EDGE", "CREATOR_EDGE"), List.of("DEEP_SLASH", "SHARP_BLADE", "CRIMSON_BLADE", "VOID_BLADE")
         ));
         register("skill_page_demigod_swiftness", new SkillModel(
-                "DEMIGOD_SWIFTNESS", null, "Vivacité du Demi-Dieu", "warrior, dragon",
+                "DEMIGOD_SWIFTNESS", null, "Vivacité du Demi-Dieu", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("GOD_SLAYER_SWIFTNESS", "CREATOR_SWIFTNESS"), List.of("DUELIST_SWIFTNESS", "COMBATANT_SWIFTNESS", "WARRIOR_SWIFTNESS", "BERSERKER_SWIFTNESS")
         ));
         register("skill_page_soul_crushing_pressure", new SkillModel(
-                "SOUL_CRUSHING_PRESSURE", null, "Pression Brise-Âme", "warrior, dragon",
+                "SOUL_CRUSHING_PRESSURE", null, "Pression Brise-Âme", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), List.of("PRESSURE_POINT", "VITAL_PRESSURE", "CRUSHING_PRESSURE", "ANNIHILATING_PRESSURE")
         ));
@@ -1375,41 +1376,41 @@ public class SkillManager {
 
         // --- UNIQUE AGILITÉ ---
         register("skill_page_dimensional_step", new SkillModel(
-                "DIMENSIONAL_STEP", null, "Pas Dimensionnel", "novice, dragon, warrior, assassin",
+                "DIMENSIONAL_STEP", null, "Pas Dimensionnel", "novice, warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("CELESTIAL_STEP", "CREATOR_STEP"), List.of("WIND_STEP", "GALE_STEP", "STORM_STEP", "VOID_STEP")
         ));
         register("skill_page_cosmic_reflexes", new SkillModel(
-                "COSMIC_REFLEXES", null, "Réflexes Cosmiques", "warrior, dragon, assassin, novice",
+                "COSMIC_REFLEXES", null, "Réflexes Cosmiques", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), List.of("LIGHT_REFLEXES", "THUNDER_REFLEXES", "LIGHTNING_REFLEXES", "DIVINE_REFLEXES")
         ));
         register("skill_page_absolute_precision", new SkillModel(
-                "ABSOLUTE_PRECISION", null, "Précision Absolue", "assassin, dragon, warrior",
+                "ABSOLUTE_PRECISION", null, "Précision Absolue", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("OMNISCIENT_PRECISION", "CREATOR_PRECISION"), List.of("KEEN_SENSES", "RAZOR_SENSES", "DEADLY_PRECISION", "FATAL_PRECISION")
         ));
 
         // --- UNIQUE DETECTION ---
         register("skill_page_all_seeing_eye", new SkillModel(
-                "ALL_SEEING_EYE", null, "Oeil Omniscient", "warrior, dragon, assassin",
+                "ALL_SEEING_EYE", null, "Oeil Omniscient", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("GENESIS_VISION", "CREATOR_VISION"), List.of("EAGLE_EYE", "HAWK_EYE", "EAGLE_VISION", "OMNISCIENT_VISION")
         ));
         register("skill_page_fate_vision", new SkillModel(
-                "FATE_VISION", null, "Vision du Destin", "novice, dragon, warrior",
+                "FATE_VISION", null, "Vision du Destin", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), List.of("SURVIVAL_INSTINCT", "DANGER_SENSE", "COMBAT_INTUITION", "WAR_PROPHECY")
         ));
         register("skill_page_true_sight", new SkillModel(
-                "TRUE_SIGHT", null, "Vision Véritable", "warrior, dragon, assassin",
+                "TRUE_SIGHT", null, "Vision Véritable", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("OMNI_SIGHT", "ABSOLUTE_SIGHT"), List.of("SIXTH_SENSE", "PSYCHIC_AWARENESS", "MIND_READER", "SOUL_READER")
         ));
 
         // --- UNIQUE ENDURANCE ---
         register("skill_page_cosmic_lungs", new SkillModel(
-                "COSMIC_LUNGS", null, "Poumons Cosmiques", "warrior, dragon",
+                "COSMIC_LUNGS", null, "Poumons Cosmiques", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("CELESTIAL_LUNGS", "CREATOR_LUNGS"), List.of("TIRELESS_BREATH", "LUNGS_OF_STEEL", "DRAGON_LUNGS", "TITAN_LUNGS")
         ));
@@ -1419,7 +1420,7 @@ public class SkillManager {
                 List.of("CELESTIAL_FORTRESS", "CREATOR_FORTRESS"), List.of("SOLID_STANCE", "UNMOVABLE_MOUNTAIN", "LIVING_FORTRESS", "ETERNAL_FORTRESS")
         ));
         register("skill_page_rage_frenzy", new SkillModel(
-                "RAGE_FRENZY", null, "Frénésie Enragée", "warrior, dragon",
+                "RAGE_FRENZY", null, "Frénésie Enragée", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), List.of("COMBAT_VIGOR", "BATTLE_FRENZY", "WAR_FRENZY", "BLOOD_FRENZY")
         ));
@@ -1443,7 +1444,7 @@ public class SkillManager {
 
         // --- UNIQUE CHANCE ---
         register("skill_page_cosmic_strike", new SkillModel(
-                "COSMIC_STRIKE", null, "Frappe Cosmique", "merchant, dragon",
+                "COSMIC_STRIKE", null, "Frappe Cosmique", "merchant, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("GENESIS_STRIKE", "CREATOR_STRIKE"), List.of("LUCKY_STRIKE", "CRITICAL_LUCK", "DESTINY_STRIKE", "DIVINE_STRIKE")
         ));
@@ -1453,14 +1454,14 @@ public class SkillManager {
                 List.of(), List.of("TREASURE_HUNTER", "RELIC_HUNTER", "ARTIFACT_HUNTER", "LEGEND_HUNTER")
         ));
         register("skill_page_reality_dodge", new SkillModel(
-                "REALITY_DODGE", null, "Esquive de la Réalité", "assassin, dragon",
+                "REALITY_DODGE", null, "Esquive de la Réalité", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("TIME_DODGE", "FATE_DODGE"), List.of("MIRACLE_DODGE", "PHANTOM_DODGE", "SHADOW_DODGE", "DIMENSIONAL_DODGE")
         ));
 
         // --- UNIQUE REGENERATION ---
         register("skill_page_eternal_blood", new SkillModel(
-                "ETERNAL_BLOOD", null, "Sang Éternel", "paladin, dragon",
+                "ETERNAL_BLOOD", null, "Sang Éternel", "warrior, mage, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("GENESIS_BLOOD", "CREATOR_BLOOD"), List.of("CELLULAR_REGENERATION", "TROLL_BLOOD", "HYDRA_BLOOD", "PHOENIX_BLOOD")
         ));
@@ -1494,12 +1495,12 @@ public class SkillManager {
 
         // --- UNIQUE VIE ---
         register("skill_page_cosmic_constitution", new SkillModel(
-                "COSMIC_CONSTITUTION", null, "Constitution Cosmique", "warrior, dragon",
+                "COSMIC_CONSTITUTION", null, "Constitution Cosmique", "warrior, mage, assassin, archer, merchant, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("CELESTIAL_CONSTITUTION", "CREATOR_CONSTITUTION"), List.of("ROBUST_CONSTITUTION", "STEEL_CONSTITUTION", "TITAN_CONSTITUTION", "GOD_CONSTITUTION")
         ));
         register("skill_page_infinite_life", new SkillModel(
-                "INFINITE_LIFE", null, "Vie Infinie", "warrior, dragon",
+                "INFINITE_LIFE", null, "Vie Infinie", "warrior, mage, assassin, archer, merchant, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), List.of("LIFE_FORCE", "OVERFLOWING_LIFE", "BURSTING_LIFE", "ETERNAL_LIFE")
         ));
@@ -1516,12 +1517,12 @@ public class SkillManager {
                 List.of("DIVIN_AXE_MASTERY", "CREATOR_AXE_MASTERY"), List.of("AXE_MASTERY", "GREAT_AXE_MASTERY", "WAR_AXE_MASTERY")
         ));
         register("skill_page_legendary_sniper_mastery", new SkillModel(
-                "LEGENDARY_SNIPER_MASTERY", null, "Maîtrise Légendaire du Tir", "assassin, dragon",
+                "LEGENDARY_SNIPER_MASTERY", null, "Maîtrise Légendaire du Tir", "archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), List.of("BOW_MASTERY", "MARKSMAN_MASTERY", "SNIPER_MASTERY")
         ));
         register("skill_page_legendary_dagger_mastery", new SkillModel(
-                "LEGENDARY_DAGGER_MASTERY", null, "Maîtrise Légendaire de la Dague", "assassin, dragon",
+                "LEGENDARY_DAGGER_MASTERY", null, "Maîtrise Légendaire de la Dague", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("DIVIN_DAGGER_MASTERY", "CREATOR_DAGGER_MASTERY"), List.of("DAGGER_MASTERY", "SHADOW_BLADE_MASTERY", "ASSASSIN_BLADE_MASTERY")
         ));
@@ -1532,12 +1533,12 @@ public class SkillManager {
 
         // --- LÉGENDAIRE ATTACK ---
         register("skill_page_genesis_edge", new SkillModel(
-                "GENESIS_EDGE", null, "Tranchant de la Genèse", "warrior, dragon",
+                "GENESIS_EDGE", null, "Tranchant de la Genèse", "warrior, assassin, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("CREATOR_EDGE"), List.of("DEEP_SLASH", "SHARP_BLADE", "CRIMSON_BLADE", "VOID_BLADE", "ABYSS_BLADE")
         ));
         register("skill_page_god_slayer_swiftness", new SkillModel(
-                "GOD_SLAYER_SWIFTNESS", null, "Vivacité du Tueur de Dieux", "warrior, dragon",
+                "GOD_SLAYER_SWIFTNESS", null, "Vivacité du Tueur de Dieux", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("CREATOR_SWIFTNESS"), List.of("DUELIST_SWIFTNESS", "COMBATANT_SWIFTNESS", "WARRIOR_SWIFTNESS", "BERSERKER_SWIFTNESS", "DEMIGOD_SWIFTNESS")
         ));
@@ -1556,31 +1557,31 @@ public class SkillManager {
 
         // --- LÉGENDAIRE AGILITÉ ---
         register("skill_page_celestial_step", new SkillModel(
-                "CELESTIAL_STEP", null, "Pas Céleste", "novice, dragon, warrior, assassin",
+                "CELESTIAL_STEP", null, "Pas Céleste", "novice, warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("CREATOR_STEP"), List.of("WIND_STEP", "GALE_STEP", "STORM_STEP", "VOID_STEP", "DIMENSIONAL_STEP")
         ));
         register("skill_page_omniscient_precision", new SkillModel(
-                "OMNISCIENT_PRECISION", null, "Précision Omnisciente", "assassin, dragon, warrior",
+                "OMNISCIENT_PRECISION", null, "Précision Omnisciente", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("CREATOR_PRECISION"), List.of("KEEN_SENSES", "RAZOR_SENSES", "DEADLY_PRECISION", "FATAL_PRECISION", "ABSOLUTE_PRECISION")
         ));
 
         // --- LÉGENDAIRE DETECTION ---
         register("skill_page_genesis_vision", new SkillModel(
-                "GENESIS_VISION", null, "Vision de la Genèse", "warrior, dragon, assassin",
+                "GENESIS_VISION", null, "Vision de la Genèse", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("CREATOR_VISION"), List.of("EAGLE_EYE", "HAWK_EYE", "EAGLE_VISION", "OMNISCIENT_VISION", "ALL_SEEING_EYE")
         ));
         register("skill_page_omni_sight", new SkillModel(
-                "OMNI_SIGHT", null, "Vision Totale", "warrior, dragon, assassin",
+                "OMNI_SIGHT", null, "Vision Totale", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("ABSOLUTE_SIGHT"), List.of("SIXTH_SENSE", "PSYCHIC_AWARENESS", "MIND_READER", "SOUL_READER", "TRUE_SIGHT")
         ));
 
         // --- LÉGENDAIRE ENDURANCE ---
         register("skill_page_celestial_lungs", new SkillModel(
-                "CELESTIAL_LUNGS", null, "Poumons Célestes", "warrior, dragon",
+                "CELESTIAL_LUNGS", null, "Poumons Célestes", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("CREATOR_LUNGS"), List.of("TIRELESS_BREATH", "LUNGS_OF_STEEL", "DRAGON_LUNGS", "TITAN_LUNGS", "COSMIC_LUNGS")
         ));
@@ -1604,19 +1605,19 @@ public class SkillManager {
 
         // --- LÉGENDAIRE CHANCE ---
         register("skill_page_genesis_strike", new SkillModel(
-                "GENESIS_STRIKE", null, "Frappe de la Genèse", "merchant, dragon",
+                "GENESIS_STRIKE", null, "Frappe de la Genèse", "merchant, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("CREATOR_STRIKE"), List.of("LUCKY_STRIKE", "CRITICAL_LUCK", "DESTINY_STRIKE", "DIVINE_STRIKE", "COSMIC_STRIKE")
         ));
         register("skill_page_time_dodge", new SkillModel(
-                "TIME_DODGE", null, "Esquive Temporelle", "assassin, dragon",
+                "TIME_DODGE", null, "Esquive Temporelle", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("FATE_DODGE"), List.of("MIRACLE_DODGE", "PHANTOM_DODGE", "SHADOW_DODGE", "DIMENSIONAL_DODGE", "REALITY_DODGE")
         ));
 
         // --- LÉGENDAIRE REGENERATION ---
         register("skill_page_genesis_blood", new SkillModel(
-                "GENESIS_BLOOD", null, "Sang de la Genèse", "paladin, dragon",
+                "GENESIS_BLOOD", null, "Sang de la Genèse", "warrior, mage, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("CREATOR_BLOOD"), List.of("CELLULAR_REGENERATION", "TROLL_BLOOD", "HYDRA_BLOOD", "PHOENIX_BLOOD", "ETERNAL_BLOOD")
         ));
@@ -1640,7 +1641,7 @@ public class SkillManager {
 
         // --- LÉGENDAIRE VIE ---
         register("skill_page_celestial_constitution", new SkillModel(
-                "CELESTIAL_CONSTITUTION", null, "Constitution Céleste", "warrior, dragon",
+                "CELESTIAL_CONSTITUTION", null, "Constitution Céleste", "warrior, mage, assassin, archer, merchant, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("CREATOR_CONSTITUTION"), List.of("ROBUST_CONSTITUTION", "STEEL_CONSTITUTION", "TITAN_CONSTITUTION", "GOD_CONSTITUTION", "COSMIC_CONSTITUTION")
         ));
@@ -1657,7 +1658,7 @@ public class SkillManager {
                 List.of("CREATOR_AXE_MASTERY"), List.of("AXE_MASTERY", "GREAT_AXE_MASTERY", "WAR_AXE_MASTERY", "LEGENDARY_AXE_MASTERY")
         ));
         register("skill_page_divin_dagger_mastery", new SkillModel(
-                "DIVIN_DAGGER_MASTERY", null, "Maîtrise Divine de la Dague", "assassin, dragon",
+                "DIVIN_DAGGER_MASTERY", null, "Maîtrise Divine de la Dague", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of("CREATOR_DAGGER_MASTERY"), List.of("DAGGER_MASTERY", "SHADOW_BLADE_MASTERY", "ASSASSIN_BLADE_MASTERY", "LEGENDARY_DAGGER_MASTERY")
         ));
@@ -1668,12 +1669,12 @@ public class SkillManager {
 
         // --- DIVIN ATTACK ---
         register("skill_page_creator_edge", new SkillModel(
-                "CREATOR_EDGE", null, "Tranchant du Créateur", "warrior, dragon",
+                "CREATOR_EDGE", null, "Tranchant du Créateur", "warrior, assassin, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), List.of("DEEP_SLASH", "SHARP_BLADE", "CRIMSON_BLADE", "VOID_BLADE", "ABYSS_BLADE", "GENESIS_EDGE")
         ));
         register("skill_page_creator_swiftness", new SkillModel(
-                "CREATOR_SWIFTNESS", null, "Vivacité du Créateur", "warrior, dragon",
+                "CREATOR_SWIFTNESS", null, "Vivacité du Créateur", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), List.of("DUELIST_SWIFTNESS", "COMBATANT_SWIFTNESS", "WARRIOR_SWIFTNESS", "BERSERKER_SWIFTNESS", "DEMIGOD_SWIFTNESS", "GOD_SLAYER_SWIFTNESS")
         ));
@@ -1692,31 +1693,31 @@ public class SkillManager {
 
         // --- DIVIN AGILITÉ ---
         register("skill_page_creator_step", new SkillModel(
-                "CREATOR_STEP", null, "Pas du Créateur", "novice, dragon, warrior, assassin",
+                "CREATOR_STEP", null, "Pas du Créateur", "novice, warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), List.of("WIND_STEP", "GALE_STEP", "STORM_STEP", "VOID_STEP", "DIMENSIONAL_STEP", "CELESTIAL_STEP")
         ));
         register("skill_page_creator_precision", new SkillModel(
-                "CREATOR_PRECISION", null, "Précision du Créateur", "assassin, dragon, warrior",
+                "CREATOR_PRECISION", null, "Précision du Créateur", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), List.of("KEEN_SENSES", "RAZOR_SENSES", "DEADLY_PRECISION", "FATAL_PRECISION", "ABSOLUTE_PRECISION", "OMNISCIENT_PRECISION")
         ));
 
         // --- DIVIN DETECTION ---
         register("skill_page_creator_vision", new SkillModel(
-                "CREATOR_VISION", null, "Vision du Créateur", "warrior, dragon, assassin",
+                "CREATOR_VISION", null, "Vision du Créateur", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), List.of("EAGLE_EYE", "HAWK_EYE", "EAGLE_VISION", "OMNISCIENT_VISION", "ALL_SEEING_EYE", "GENESIS_VISION")
         ));
         register("skill_page_absolute_sight", new SkillModel(
-                "ABSOLUTE_SIGHT", null, "Vue Absolue", "warrior, dragon, assassin",
+                "ABSOLUTE_SIGHT", null, "Vue Absolue", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), List.of("SIXTH_SENSE", "PSYCHIC_AWARENESS", "MIND_READER", "SOUL_READER", "TRUE_SIGHT", "OMNI_SIGHT")
         ));
 
         // --- DIVIN ENDURANCE ---
         register("skill_page_creator_lungs", new SkillModel(
-                "CREATOR_LUNGS", null, "Poumons du Créateur", "warrior, dragon",
+                "CREATOR_LUNGS", null, "Poumons du Créateur", "warrior, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), List.of("TIRELESS_BREATH", "LUNGS_OF_STEEL", "DRAGON_LUNGS", "TITAN_LUNGS", "COSMIC_LUNGS", "CELESTIAL_LUNGS")
         ));
@@ -1740,19 +1741,19 @@ public class SkillManager {
 
         // --- DIVIN CHANCE ---
         register("skill_page_creator_strike", new SkillModel(
-                "CREATOR_STRIKE", null, "Frappe du Créateur", "merchant, dragon",
+                "CREATOR_STRIKE", null, "Frappe du Créateur", "merchant, assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), List.of("LUCKY_STRIKE", "CRITICAL_LUCK", "DESTINY_STRIKE", "DIVINE_STRIKE", "COSMIC_STRIKE", "GENESIS_STRIKE")
         ));
         register("skill_page_fate_dodge", new SkillModel(
-                "FATE_DODGE", null, "Esquive du Destin", "assassin, dragon",
+                "FATE_DODGE", null, "Esquive du Destin", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), List.of("MIRACLE_DODGE", "PHANTOM_DODGE", "SHADOW_DODGE", "DIMENSIONAL_DODGE", "REALITY_DODGE", "TIME_DODGE")
         ));
 
         // --- DIVIN REGENERATION ---
         register("skill_page_creator_blood", new SkillModel(
-                "CREATOR_BLOOD", null, "Sang du Créateur", "paladin, dragon",
+                "CREATOR_BLOOD", null, "Sang du Créateur", "warrior, mage, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), List.of("CELLULAR_REGENERATION", "TROLL_BLOOD", "HYDRA_BLOOD", "PHOENIX_BLOOD", "ETERNAL_BLOOD", "GENESIS_BLOOD")
         ));
@@ -1776,7 +1777,7 @@ public class SkillManager {
 
         // --- DIVIN VIE ---
         register("skill_page_creator_constitution", new SkillModel(
-                "CREATOR_CONSTITUTION", null, "Constitution du Créateur", "warrior, dragon",
+                "CREATOR_CONSTITUTION", null, "Constitution du Créateur", "warrior, mage, assassin, archer, merchant, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), List.of("ROBUST_CONSTITUTION", "STEEL_CONSTITUTION", "TITAN_CONSTITUTION", "GOD_CONSTITUTION", "COSMIC_CONSTITUTION", "CELESTIAL_CONSTITUTION")
         ));
@@ -1793,7 +1794,7 @@ public class SkillManager {
                 List.of(), List.of("AXE_MASTERY", "GREAT_AXE_MASTERY", "WAR_AXE_MASTERY", "LEGENDARY_AXE_MASTERY", "DIVIN_AXE_MASTERY")
         ));
         register("skill_page_creator_dagger_mastery", new SkillModel(
-                "CREATOR_DAGGER_MASTERY", null, "Maîtrise Absolue de la Dague", "assassin, dragon",
+                "CREATOR_DAGGER_MASTERY", null, "Maîtrise Absolue de la Dague", "assassin, archer, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), List.of("DAGGER_MASTERY", "SHADOW_BLADE_MASTERY", "ASSASSIN_BLADE_MASTERY", "LEGENDARY_DAGGER_MASTERY", "DIVIN_DAGGER_MASTERY")
         ));

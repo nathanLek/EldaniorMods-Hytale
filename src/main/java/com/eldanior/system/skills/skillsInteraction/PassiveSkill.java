@@ -80,6 +80,7 @@ import com.eldanior.system.skills.skills.passives.Unique.Regeneration.*;
 import com.eldanior.system.skills.skills.passives.Unique.Resistance.*;
 import com.eldanior.system.skills.skills.passives.Unique.Vie.*;
 import com.eldanior.system.skills.skills.passives.Unique.Maitrise.*;
+import com.eldanior.system.skills.skills.passives.Family.*;
 
 public enum PassiveSkill {
 
@@ -546,7 +547,18 @@ public enum PassiveSkill {
 
     // --- DIVIN MAÎTRISE ---
     CREATOR_AXE_MASTERY("CREATOR_AXE_MASTERY", "Maîtrise Absolue de la Hache", "+35% dégâts hache.", new CreatorAxeMastery()),
-    CREATOR_DAGGER_MASTERY("CREATOR_DAGGER_MASTERY", "Maîtrise Absolue de la Dague", "+35% dégâts dague.", new CreatorDaggerMastery());
+    CREATOR_DAGGER_MASTERY("CREATOR_DAGGER_MASTERY", "Maîtrise Absolue de la Dague", "+35% dégâts dague.", new CreatorDaggerMastery()),
+
+    // ===================== FAMILLE NOBLE =====================
+    FAMILY_ROYAL_AUTHORITY("FAMILY_ROYAL_AUTHORITY", "Autorite Royale", "Bonus de degats evolutif (Famille Eldanior).", new RoyalAuthority()),
+    FAMILY_PHOENIX_BLOOD("FAMILY_PHOENIX_BLOOD", "Sang du Phenix", "Bonus de PV max evolutif (Famille Ashford).", new PhoenixBloodFamily()),
+    FAMILY_DRAGON_FURY("FAMILY_DRAGON_FURY", "Fureur Draconique", "Bonus de degats evolutif (Famille Drakenhart).", new DragonFury()),
+    FAMILY_DIVINE_LIGHT("FAMILY_DIVINE_LIGHT", "Lumiere Divine", "Bonus de mana evolutif (Famille Luminara).", new DivineLight()),
+    FAMILY_GOLDEN_FORTUNE("FAMILY_GOLDEN_FORTUNE", "Fortune Doree", "Bonus d'argent evolutif (Famille Valmontis).", new GoldenFortune()),
+    FAMILY_FROST_RESILIENCE("FAMILY_FROST_RESILIENCE", "Resilience du Givre", "Reduction de degats evolutive (Famille Frostguard).", new FrostResilience()),
+    FAMILY_IRON_WILL("FAMILY_IRON_WILL", "Volonte de Fer", "Bonus d'XP evolutif (Famille Ironveil).", new IronWillFamily()),
+    FAMILY_SHADOW_STRIKE("FAMILY_SHADOW_STRIKE", "Frappe de l'Ombre", "Bonus de degats critiques evolutif (Famille Shadowmere).", new ShadowStrike()),
+    FAMILY_STORM_VIGOR("FAMILY_STORM_VIGOR", "Vigueur de la Tempete", "Bonus de dignite evolutif (Famille Stormcrest).", new StormVigor());
 
     private final String id;
     private final String displayName;

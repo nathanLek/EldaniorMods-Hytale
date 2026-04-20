@@ -5,12 +5,13 @@ import com.eldanior.system.config.configs.Mobs.IMobConfig;
 
 public enum FeranData implements IMobConfig {
 
-    FERAN_WINDWALKER("feran windwalker", 50, 50, 200),
-    FERAN_SHARPTOOTH("feran sharptooth", 50, 50, 200),
-    FERAN_LONGTOOTH("feran longtooth", 50, 50, 200),
-    FERAN_BURROWER("feran burrower", 45, 50, 200),
-    FERAN_CIVILIAN("feran civilian", 35, 50, 200),
-    FERAN_CUB("feran cub", 15, 50, 200);
+    // === FERAN — Race PACIFIQUE (Lv80-160) ===
+    FERAN_CUB("feran cub", 30, 80, 110),
+    FERAN_CIVILIAN("feran civilian", 40, 85, 120),
+    FERAN_BURROWER("feran burrower", 50, 90, 130),
+    FERAN_LONGTOOTH("feran longtooth", 65, 100, 140),
+    FERAN_SHARPTOOTH("feran sharptooth", 75, 110, 150),
+    FERAN_WINDWALKER("feran windwalker", 90, 120, 160);
 
     private final String keyword;
     private final int xp;

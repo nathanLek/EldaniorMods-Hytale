@@ -5,17 +5,26 @@ import com.eldanior.system.config.configs.Mobs.IMobConfig;
 
 public enum OutlandersData implements IMobConfig {
 
-    OUTLANDER_BERSERKER("outlander berserker", 70, 150, 400),
-    OUTLANDER_MARAUDER("outlander marauder", 60, 150, 400),
-    OUTLANDER_PRIEST("outlander priest", 65, 100, 200),
-    OUTLANDER_SORCERER("outlander sorcerer", 65, 100, 200),
-    OUTLANDER_BRUTE("outlander brute", 80, 200, 500),
-    OUTLANDER_CULTIST("outlander cultist", 50, 100, 350),
-    OUTLANDER_HUNTER("outlander hunter", 80, 120, 370),
-    OUTLANDER_STALKER("outlander stalker", 40, 130, 380),
-    WOLF_OUTLANDER_SORCERER("wolf outlander sorcerer", 80, 20, 250),
-    WOLF_OUTLANDER_PRIEST("wolf outlander priest", 80, 20, 250),
-    OUTLANDER_PEON("outlander peon", 30, 90, 300);
+    // === OUTLANDER (Lv460-560) — Tier 9 ennemi ===
+
+    // --- Sous-fifres (Lv460-505) ---
+    OUTLANDER_PEON("outlander peon", 350, 460, 485),
+    OUTLANDER_CULTIST("outlander cultist", 380, 465, 490),
+    OUTLANDER_STALKER("outlander stalker", 410, 470, 500),
+    OUTLANDER_HUNTER("outlander hunter", 430, 475, 505),
+
+    // --- Casters (Lv480-525) ---
+    WOLF_OUTLANDER_PRIEST("wolf outlander priest", 450, 480, 510),
+    WOLF_OUTLANDER_SORCERER("wolf outlander sorcerer", 460, 480, 510),
+    OUTLANDER_PRIEST("outlander priest", 480, 490, 520),
+    OUTLANDER_SORCERER("outlander sorcerer", 490, 495, 525),
+
+    // --- Combattants élites (Lv505-545) ---
+    OUTLANDER_MARAUDER("outlander marauder", 510, 505, 535),
+    OUTLANDER_BERSERKER("outlander berserker", 540, 515, 545),
+
+    // --- Boss (Lv530-560) ---
+    OUTLANDER_BRUTE("outlander brute", 600, 530, 560);
 
     private final String keyword;
     private final int xp;

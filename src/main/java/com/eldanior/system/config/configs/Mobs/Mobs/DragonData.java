@@ -5,9 +5,14 @@ import com.eldanior.system.config.configs.Mobs.IMobConfig;
 
 public enum DragonData implements IMobConfig {
 
-    SNAPDRAGON("snapdragon", 1000, 500, 600),
-    DRAGON_FIRE("dragon fire", 10000, 700, 999),
-    DRAGON_FROST("dragon frost", 10000, 700, 999);
+    // === DRAGONS (Lv860-999) — Tier 15 ennemi (END-GAME) ===
+
+    // --- Petit dragon (Lv860-900) ---
+    SNAPDRAGON("snapdragon", 4000, 860, 900),
+
+    // --- Dragons élémentaires (Lv920-999) ---
+    DRAGON_FROST("dragon frost", 8000, 920, 999),
+    DRAGON_FIRE("dragon fire", 10000, 940, 999);
 
     private final String keyword;
     private final int xp;
