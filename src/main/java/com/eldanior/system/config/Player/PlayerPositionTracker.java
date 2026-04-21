@@ -19,6 +19,7 @@ public class PlayerPositionTracker extends EntityTickingSystem<EntityStore> {
     // Map STATIQUE partagée globalement
     public static final Map<UUID, Vector3d> PLAYER_POSITIONS = new ConcurrentHashMap<>();
     public static final Map<UUID, Integer> PLAYER_LEVELS = new ConcurrentHashMap<>();
+    public static final Map<UUID, Integer> PLAYER_DIGNITY = new ConcurrentHashMap<>();
 
     @Override
     public void tick(float dt, int index, @Nonnull ArchetypeChunk<EntityStore> chunk,
@@ -44,6 +45,7 @@ public class PlayerPositionTracker extends EntityTickingSystem<EntityStore> {
 
         PLAYER_POSITIONS.put(playerUUID, transform.getPosition());
         PLAYER_LEVELS.put(playerUUID, playerLevel);
+        PLAYER_DIGNITY.put(playerUUID, (playerData != null) ? playerData.getDignity() : 0);
     }
 
     private UUID getPlayerUUID(Player player) {

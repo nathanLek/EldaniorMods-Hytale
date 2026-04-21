@@ -5,6 +5,10 @@ import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.Leveling.utils.NotificationHelper;
 import com.eldanior.system.config.configs.MobXP;
 import com.eldanior.system.config.configs.Mobs.MobLevelData;
+import com.eldanior.system.guild.Guild;
+import com.eldanior.system.guild.GuildManager;
+import com.eldanior.system.party.Party;
+import com.eldanior.system.party.PartyManager;
 import com.eldanior.system.titles.TitleManager;
 import com.eldanior.system.titles.models.TitleModel;
 import com.hypixel.hytale.component.AddReason;
@@ -141,9 +145,13 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
             int oldLvl = dataToWrite.getLevel();
             dataToWrite.addExperience(xpAmount);
 
+            // --- GUILD STATS TRACKING ---
+            Guild killerGuild = GuildManager.getPlayerGuild(killerUUID);
+
             // --- PVP KILL TRACKING ---
             if (isPvP) {
                 dataToWrite.addPlayerKill();
+                if (killerGuild != null) killerGuild.addPlayerKill();
 
                 // Verifier titres PvP
                 java.util.List<TitleModel> pvpTitles = TitleManager.checkTitleUnlocks(dataToWrite);
@@ -161,6 +169,7 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
                 if (npcForKill != null) {
                     String mobTypeId = npcForKill.getNPCTypeId().toLowerCase();
                     dataToWrite.addMobKill(mobTypeId);
+                    if (killerGuild != null) killerGuild.addMobKill();
 
                     // Verifier si de nouveaux titres sont debloques
                     java.util.List<TitleModel> newTitles = TitleManager.checkTitleUnlocks(dataToWrite);
@@ -182,6 +191,33 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
 
             if (dataToWrite.getLevel() > oldLvl) {
                 NotificationHelper.showLevelUpTitle(killerRefObj, dataToWrite.getLevel());
+            }
+
+            // --- PARTAGE XP GROUPE (10% aux autres membres) ---
+            Party killerParty = PartyManager.getParty(killerUUID);
+            if (killerParty != null && xpAmount > 0) {
+                int sharedXP = Math.max(1, (int)(xpAmount * 0.10));
+                for (UUID memberUUID : killerParty.getMemberUUIDs()) {
+                    if (memberUUID.equals(killerUUID)) continue;
+                    PlayerRef memberRef = Universe.get().getPlayer(memberUUID);
+                    if (memberRef == null) continue;
+                    var memberEntityRef = memberRef.getReference();
+                    if (memberEntityRef == null) continue;
+                    Store<EntityStore> memberStore = memberEntityRef.getStore();
+                    PlayerLevelData memberData = memberStore.getComponent(memberEntityRef, lvlType);
+                    if (memberData == null) continue;
+                    PlayerLevelData memberCopy = (PlayerLevelData) memberData.clone();
+                    if (memberCopy == null) continue;
+                    int memberOldLvl = memberCopy.getLevel();
+                    memberCopy.addExperience(sharedXP);
+                    commandBuffer.putComponent(memberEntityRef, lvlType, memberCopy);
+                    NotificationHelper.sendNotification(memberRef,
+                            "<color:aqua>+" + sharedXP + " XP (groupe)</color>",
+                            NotificationStyle.Success);
+                    if (memberCopy.getLevel() > memberOldLvl) {
+                        NotificationHelper.showLevelUpTitle(memberRef, memberCopy.getLevel());
+                    }
+                }
             }
 
             if (isMob) {
@@ -235,6 +271,8 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
             if (dataToWrite == null) return;
 
             dataToWrite.addPlayerDeath();
+            Guild victimGuild = GuildManager.getPlayerGuild(playerUUID);
+            if (victimGuild != null) victimGuild.addDeath();
             int xpLost = dataToWrite.removeExperiencePercent(0.10);
             commandBuffer.putComponent(playerEntityRef, lvlType, dataToWrite);
 

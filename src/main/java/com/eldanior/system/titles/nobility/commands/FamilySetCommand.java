@@ -24,10 +24,6 @@ import java.lang.reflect.Field;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-/**
- * /es familyset <joueur> <familyId>
- * Admin : forcer une famille sur un joueur
- */
 public class FamilySetCommand extends AbstractAsyncCommand {
 
     private final RequiredArg<String> playerArg;

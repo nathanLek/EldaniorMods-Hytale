@@ -1,0 +1,307 @@
+Group {
+    LayoutMode: Top;
+    Padding: (Top: 10);
+
+    Group {
+        LayoutMode: Left;
+        Anchor: (Height: 310);
+
+        Group { FlexWeight: 1; }
+
+        Group #PartyPanel {
+            Anchor: (Width: 210, Height: 310);
+            LayoutMode: Top;
+            Padding: (Horizontal: 8, Vertical: 8);
+
+            Label #PartyTitle {
+                Style: (HorizontalAlignment: Center, FontSize: 14, TextColor: #FFD700, RenderBold: true, RenderUppercase: true, LetterSpacing: 1);
+                Text: "Groupe";
+                Anchor: (Height: 20);
+            }
+
+            Group { Anchor: (Height: 4); }
+            Group { Anchor: (Height: 1); Background: #FFD700(0.3); }
+            Group { Anchor: (Height: 6); }
+
+            // === MEMBRE 1 ===
+            Group #Member1Card {
+                Anchor: (Height: 46);
+                Background: #1a2030(0.80);
+                LayoutMode: Left;
+                Padding: (Horizontal: 6, Vertical: 4);
+                Visible: false;
+
+                Group {
+                    Anchor: (Width: 36, Height: 38);
+                    LayoutMode: Top;
+
+                    Label #Member1Badge {
+                        Style: (FontSize: 9, TextColor: #FFD700, HorizontalAlignment: Center, RenderBold: true);
+                        Text: "";
+                        Anchor: (Height: 14);
+                    }
+                    Label #Member1Level {
+                        Style: (FontSize: 10, TextColor: #aabbcc, HorizontalAlignment: Center, RenderBold: true);
+                        Text: "";
+                        Anchor: (Height: 16);
+                    }
+                }
+
+                Group {
+                    FlexWeight: 1;
+                    LayoutMode: Top;
+                    Padding: (Left: 4);
+
+                    Label #Member1Name {
+                        Style: (FontSize: 11, TextColor: #ffffff, RenderBold: true);
+                        Text: "";
+                        Anchor: (Height: 15);
+                    }
+                    Label #Member1Class {
+                        Style: (FontSize: 9, TextColor: #8899aa);
+                        Text: "";
+                        Anchor: (Height: 11);
+                    }
+
+                    Group { Anchor: (Height: 2); }
+
+                    Group {
+                        Anchor: (Height: 8);
+                        Background: #333a47;
+
+                        ProgressBar #Member1Bar {
+                            BarTexturePath: "HPFill.png";
+                            Value: 1.0;
+                        }
+                    }
+                }
+            }
+
+            Group { Anchor: (Height: 3); }
+
+            // === MEMBRE 2 ===
+            Group #Member2Card {
+                Anchor: (Height: 46);
+                Background: #1a2030(0.80);
+                LayoutMode: Left;
+                Padding: (Horizontal: 6, Vertical: 4);
+                Visible: false;
+
+                Group {
+                    Anchor: (Width: 36, Height: 38);
+                    LayoutMode: Top;
+
+                    Label #Member2Badge {
+                        Style: (FontSize: 9, TextColor: #FFD700, HorizontalAlignment: Center, RenderBold: true);
+                        Text: "";
+                        Anchor: (Height: 14);
+                    }
+                    Label #Member2Level {
+                        Style: (FontSize: 10, TextColor: #aabbcc, HorizontalAlignment: Center, RenderBold: true);
+                        Text: "";
+                        Anchor: (Height: 16);
+                    }
+                }
+
+                Group {
+                    FlexWeight: 1;
+                    LayoutMode: Top;
+                    Padding: (Left: 4);
+
+                    Label #Member2Name {
+                        Style: (FontSize: 11, TextColor: #ffffff, RenderBold: true);
+                        Text: "";
+                        Anchor: (Height: 15);
+                    }
+                    Label #Member2Class {
+                        Style: (FontSize: 9, TextColor: #8899aa);
+                        Text: "";
+                        Anchor: (Height: 11);
+                    }
+
+                    Group { Anchor: (Height: 2); }
+
+                    Group {
+                        Anchor: (Height: 8);
+                        Background: #333a47;
+
+                        ProgressBar #Member2Bar {
+                            BarTexturePath: "HPFill.png";
+                            Value: 1.0;
+                        }
+                    }
+                }
+            }
+
+            Group { Anchor: (Height: 3); }
+
+            // === MEMBRE 3 ===
+            Group #Member3Card {
+                Anchor: (Height: 46);
+                Background: #1a2030(0.80);
+                LayoutMode: Left;
+                Padding: (Horizontal: 6, Vertical: 4);
+                Visible: false;
+
+                Group {
+                    Anchor: (Width: 36, Height: 38);
+                    LayoutMode: Top;
+
+                    Label #Member3Badge {
+                        Style: (FontSize: 9, TextColor: #FFD700, HorizontalAlignment: Center, RenderBold: true);
+                        Text: "";
+                        Anchor: (Height: 14);
+                    }
+                    Label #Member3Level {
+                        Style: (FontSize: 10, TextColor: #aabbcc, HorizontalAlignment: Center, RenderBold: true);
+                        Text: "";
+                        Anchor: (Height: 16);
+                    }
+                }
+
+                Group {
+                    FlexWeight: 1;
+                    LayoutMode: Top;
+                    Padding: (Left: 4);
+
+                    Label #Member3Name {
+                        Style: (FontSize: 11, TextColor: #ffffff, RenderBold: true);
+                        Text: "";
+                        Anchor: (Height: 15);
+                    }
+                    Label #Member3Class {
+                        Style: (FontSize: 9, TextColor: #8899aa);
+                        Text: "";
+                        Anchor: (Height: 11);
+                    }
+
+                    Group { Anchor: (Height: 2); }
+
+                    Group {
+                        Anchor: (Height: 8);
+                        Background: #333a47;
+
+                        ProgressBar #Member3Bar {
+                            BarTexturePath: "HPFill.png";
+                            Value: 1.0;
+                        }
+                    }
+                }
+            }
+
+            Group { Anchor: (Height: 3); }
+
+            // === MEMBRE 4 ===
+            Group #Member4Card {
+                Anchor: (Height: 46);
+                Background: #1a2030(0.80);
+                LayoutMode: Left;
+                Padding: (Horizontal: 6, Vertical: 4);
+                Visible: false;
+
+                Group {
+                    Anchor: (Width: 36, Height: 38);
+                    LayoutMode: Top;
+
+                    Label #Member4Badge {
+                        Style: (FontSize: 9, TextColor: #FFD700, HorizontalAlignment: Center, RenderBold: true);
+                        Text: "";
+                        Anchor: (Height: 14);
+                    }
+                    Label #Member4Level {
+                        Style: (FontSize: 10, TextColor: #aabbcc, HorizontalAlignment: Center, RenderBold: true);
+                        Text: "";
+                        Anchor: (Height: 16);
+                    }
+                }
+
+                Group {
+                    FlexWeight: 1;
+                    LayoutMode: Top;
+                    Padding: (Left: 4);
+
+                    Label #Member4Name {
+                        Style: (FontSize: 11, TextColor: #ffffff, RenderBold: true);
+                        Text: "";
+                        Anchor: (Height: 15);
+                    }
+                    Label #Member4Class {
+                        Style: (FontSize: 9, TextColor: #8899aa);
+                        Text: "";
+                        Anchor: (Height: 11);
+                    }
+
+                    Group { Anchor: (Height: 2); }
+
+                    Group {
+                        Anchor: (Height: 8);
+                        Background: #333a47;
+
+                        ProgressBar #Member4Bar {
+                            BarTexturePath: "HPFill.png";
+                            Value: 1.0;
+                        }
+                    }
+                }
+            }
+
+            Group { Anchor: (Height: 3); }
+
+            // === MEMBRE 5 ===
+            Group #Member5Card {
+                Anchor: (Height: 46);
+                Background: #1a2030(0.80);
+                LayoutMode: Left;
+                Padding: (Horizontal: 6, Vertical: 4);
+                Visible: false;
+
+                Group {
+                    Anchor: (Width: 36, Height: 38);
+                    LayoutMode: Top;
+
+                    Label #Member5Badge {
+                        Style: (FontSize: 9, TextColor: #FFD700, HorizontalAlignment: Center, RenderBold: true);
+                        Text: "";
+                        Anchor: (Height: 14);
+                    }
+                    Label #Member5Level {
+                        Style: (FontSize: 10, TextColor: #aabbcc, HorizontalAlignment: Center, RenderBold: true);
+                        Text: "";
+                        Anchor: (Height: 16);
+                    }
+                }
+
+                Group {
+                    FlexWeight: 1;
+                    LayoutMode: Top;
+                    Padding: (Left: 4);
+
+                    Label #Member5Name {
+                        Style: (FontSize: 11, TextColor: #ffffff, RenderBold: true);
+                        Text: "";
+                        Anchor: (Height: 15);
+                    }
+                    Label #Member5Class {
+                        Style: (FontSize: 9, TextColor: #8899aa);
+                        Text: "";
+                        Anchor: (Height: 11);
+                    }
+
+                    Group { Anchor: (Height: 2); }
+
+                    Group {
+                        Anchor: (Height: 8);
+                        Background: #333a47;
+
+                        ProgressBar #Member5Bar {
+                            BarTexturePath: "HPFill.png";
+                            Value: 1.0;
+                        }
+                    }
+                }
+            }
+        }
+
+        Group { Anchor: (Width: 10); }
+    }
+}

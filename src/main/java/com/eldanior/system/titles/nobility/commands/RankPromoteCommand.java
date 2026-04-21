@@ -23,9 +23,6 @@ import java.lang.reflect.Field;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-/**
- * /es rankpromote <joueur> <rang>
- */
 public class RankPromoteCommand extends AbstractAsyncCommand {
 
     private final RequiredArg<String> playerArg;

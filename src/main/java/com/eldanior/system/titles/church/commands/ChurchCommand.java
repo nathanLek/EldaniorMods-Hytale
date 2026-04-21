@@ -22,10 +22,6 @@ import java.lang.reflect.Field;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-/**
- * /es church <action> <joueur>
- * Actions: setpope, demote, ordain, info, status
- */
 public class ChurchCommand extends AbstractAsyncCommand {
 
     private final RequiredArg<String> actionArg;

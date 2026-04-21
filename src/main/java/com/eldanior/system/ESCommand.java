@@ -11,9 +11,14 @@ import com.eldanior.system.skills.commands.WithdrawCommand;
 import com.eldanior.system.titles.commands.TitleListCommand;
 import com.eldanior.system.titles.commands.TitleOneArgCommand;
 import com.eldanior.system.titles.commands.TitleTwoArgCommand;
+import com.eldanior.system.guild.commands.GuildCommand;
+import com.eldanior.system.guild.commands.GuildCreateCommand;
+import com.eldanior.system.guild.commands.GuildDisbandCommand;
 import com.eldanior.system.titles.nobility.commands.*;
 import com.eldanior.system.titles.church.commands.ChurchCommand;
 import com.eldanior.system.titles.church.commands.ChurchPromoteCommand;
+import com.eldanior.system.gui.SystemCommand;
+import com.eldanior.system.party.commands.PartyCommand;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractCommandCollection;
 
 public class ESCommand extends AbstractCommandCollection {
@@ -48,9 +53,20 @@ public class ESCommand extends AbstractCommandCollection {
         this.addSubCommand(new ChurchCommand());
         this.addSubCommand(new ChurchPromoteCommand());
 
+        // Guilde
+        this.addSubCommand(new GuildCommand());
+        this.addSubCommand(new GuildCreateCommand());
+        this.addSubCommand(new GuildDisbandCommand());
+
+        // Groupe
+        this.addSubCommand(new PartyCommand());
+
         // Famille
         this.addSubCommand(new FamilyCommand());
         this.addSubCommand(new FamilySetCommand());
+
+        // Interface unifiee
+        this.addSubCommand(new SystemCommand());
     }
 
     @Override

@@ -108,6 +108,12 @@ public class TreasureChestInteractEvent extends EntityEventSystem<EntityStore, U
                     playerData.setLastLootTime(target.getX(), target.getY(), target.getZ(), worldName, currentTime);
                     commandBuffer.replaceComponent(playerRef, EldaniorSystem.get().getPlayerChestDataType(), playerData);
 
+                    // Incrementer le compteur de coffres du profil
+                    if (levelData != null) {
+                        levelData.addChestDiscovered();
+                        commandBuffer.replaceComponent(playerRef, EldaniorSystem.get().getPlayerLevelDataType(), levelData);
+                    }
+
                     String msgSuccess = "<color:gold>Trésor découvert !</color> <color:gray>(+" + finalSelection.size() + " objets)</color>";
                     PlayerRef pRef = store.getComponent(playerRef, PlayerRef.getComponentType());
                     assert pRef != null;

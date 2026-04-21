@@ -20,10 +20,6 @@ import java.lang.reflect.Field;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-/**
- * /es status <action> <joueur>
- * Actions: setvice, info
- */
 public class NobilityStatusCommand extends AbstractAsyncCommand {
 
     private final RequiredArg<String> actionArg;

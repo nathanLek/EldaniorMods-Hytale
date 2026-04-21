@@ -96,8 +96,13 @@ public class SetLevelCommand extends AbstractAsyncCommand {
                     data.setPlayerClassId("novice");
                     data.forgetAllSkills();
 
-                    // Reset titres + kills
+                    // Reset titres + kills + stats PvP + coffres
                     data.resetTitles();
+                    data.setPlayerKills(0);
+                    data.setPlayerDeaths(0);
+                    data.setKillStreak(0);
+                    data.setBestKillStreak(0);
+                    data.setChestsDiscovered(0);
 
                     // Reset noblesse + famille
                     String oldFamilyId = data.getNobleFamilyId();
@@ -113,9 +118,9 @@ public class SetLevelCommand extends AbstractAsyncCommand {
                     data.setChurchRank("LAIQUE");
                     data.setFaith(0);
 
-                    // Reset PvP - on ne reset PAS les stats PvP car c'est l'historique du joueur
-                    // Si tu veux les reset aussi, decommenter :
-                    // data.playerKills = 0; data.playerDeaths = 0; data.killStreak = 0; data.bestKillStreak = 0;
+                    // Reset guilde
+                    data.setGuildId("");
+                    data.setGuildRole("");
 
                 } else {
                     // --- GESTION DES POINTS SI ON LE MONTÉ DE NIVEAU ---

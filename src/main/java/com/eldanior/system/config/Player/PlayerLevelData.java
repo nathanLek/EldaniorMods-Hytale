@@ -54,6 +54,10 @@ public class PlayerLevelData implements Component<EntityStore> {
     private int killStreak = 0;
     private int bestKillStreak = 0;
 
+    // Guilde
+    private String guildId = "";
+    private String guildRole = "";  // CHEF, OFFICER, MEMBER
+
     // Stats de BASE (Investies par le joueur)
     private int strength = 1;
     private int endurance = 1;
@@ -156,6 +160,8 @@ public class PlayerLevelData implements Component<EntityStore> {
             .append(new KeyedCodec<>("PlayerDeaths", Codec.INTEGER), (data, v) -> data.playerDeaths = v, data -> data.playerDeaths).add()
             .append(new KeyedCodec<>("KillStreak", Codec.INTEGER), (data, v) -> data.killStreak = v, data -> data.killStreak).add()
             .append(new KeyedCodec<>("BestKillStreak", Codec.INTEGER), (data, v) -> data.bestKillStreak = v, data -> data.bestKillStreak).add()
+            .append(new KeyedCodec<>("GuildId", Codec.STRING), (data, v) -> data.guildId = v, data -> data.guildId).add()
+            .append(new KeyedCodec<>("GuildRole", Codec.STRING), (data, v) -> data.guildRole = v, data -> data.guildRole).add()
             .append(new KeyedCodec<>("Strength", Codec.INTEGER), (data, v) -> data.strength = v, data -> data.strength).add()
             .append(new KeyedCodec<>("Endurance", Codec.INTEGER), (data, v) -> data.endurance = v, data -> data.endurance).add()
             .append(new KeyedCodec<>("Agility", Codec.INTEGER), (data, v) -> data.agility = v, data -> data.agility).add()
@@ -227,6 +233,8 @@ public class PlayerLevelData implements Component<EntityStore> {
         copy.playerDeaths = this.playerDeaths;
         copy.killStreak = this.killStreak;
         copy.bestKillStreak = this.bestKillStreak;
+        copy.guildId = this.guildId;
+        copy.guildRole = this.guildRole;
         copy.strength = this.strength;
         copy.endurance = this.endurance;
         copy.agility = this.agility;
@@ -257,6 +265,10 @@ public class PlayerLevelData implements Component<EntityStore> {
     // ================= SKILLS METHODS =================
 
     public List<String> getUnlockedSkills() { return unlockedSkills; }
+    public Set<String> getEnabledSkills() { return enabledSkills; }
+    public boolean isSkillEnabled(String skillId) { return enabledSkills.contains(skillId); }
+    public void enableSkill(String skillId) { enabledSkills.add(skillId); }
+    public void disableSkill(String skillId) { enabledSkills.remove(skillId); }
     public void learnSkill(String skillId) {
         if (!unlockedSkills.contains(skillId)) unlockedSkills.add(skillId);
     }
@@ -334,11 +346,31 @@ public class PlayerLevelData implements Component<EntityStore> {
     public int getChestsDiscovered() { return chestsDiscovered; }
     public void addChestDiscovered() { this.chestsDiscovered++; }
 
+    // Guilde
+    public String getGuildId() { return guildId; }
+    public String getGuildRole() { return guildRole; }
+    public void setGuildId(String id) { this.guildId = id; }
+    public void setGuildRole(String role) { this.guildRole = role; }
+    public boolean hasGuild() { return guildId != null && !guildId.isEmpty(); }
+    public boolean isGuildChef() { return "CHEF".equals(guildRole); }
+    public boolean isGuildOfficer() { return "OFFICER".equals(guildRole); }
+    public boolean canInviteToGuild() { return isGuildChef() || isGuildOfficer(); }
+    public boolean canJoinGuild() {
+        // Ne peut pas rejoindre une guilde si membre d'une famille noble
+        String familyId = getNobleFamilyId();
+        return (familyId == null || familyId.isEmpty()) && !hasGuild();
+    }
+
     // PvP
     public int getPlayerKills() { return playerKills; }
     public int getPlayerDeaths() { return playerDeaths; }
     public int getKillStreak() { return killStreak; }
     public int getBestKillStreak() { return bestKillStreak; }
+    public void setPlayerKills(int v) { this.playerKills = v; }
+    public void setPlayerDeaths(int v) { this.playerDeaths = v; }
+    public void setKillStreak(int v) { this.killStreak = v; }
+    public void setBestKillStreak(int v) { this.bestKillStreak = v; }
+    public void setChestsDiscovered(int v) { this.chestsDiscovered = v; }
 
     public double getKDR() {
         if (playerDeaths == 0) return playerKills;

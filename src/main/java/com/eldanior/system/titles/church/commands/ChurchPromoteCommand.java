@@ -22,9 +22,6 @@ import java.lang.reflect.Field;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-/**
- * /es churchpromote <joueur> <rang>
- */
 public class ChurchPromoteCommand extends AbstractAsyncCommand {
 
     private final RequiredArg<String> playerArg;

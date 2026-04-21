@@ -1,0 +1,24 @@
+{
+  "Duration": 3,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#6a0dad",
+    "EntityTopTint": "#9b30ff",
+    "HorizontalSpeedMultiplier": 0.15,
+    "ModelVFXId": "Intangible_Dark",
+    "Particles": [
+      {
+        "SystemId": "Effect_Death"
+      },
+      {
+        "SystemId": "Drop_Epic"
+      },
+      {
+        "SystemId": "Potion_Health_Implosion"
+      }
+    ],
+    "MovementEffects": {
+      "DisableAll": true
+    },
+    "KnockbackMultiplier": 0
+  }
+}

@@ -24,10 +24,7 @@ import java.lang.reflect.Field;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-/**
- * /es family <action> <joueur/familyId>
- * Actions: choose, invite, info
- */
+// /es family [action] [joueur/familyId] — Actions: choose, invite, info
 public class FamilyCommand extends AbstractAsyncCommand {
 
     private final RequiredArg<String> actionArg;

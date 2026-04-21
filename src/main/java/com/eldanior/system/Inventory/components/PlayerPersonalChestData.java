@@ -14,7 +14,7 @@ import java.util.List;
 
 public class PlayerPersonalChestData implements Component<EntityStore> {
 
-    public static final int CHEST_SIZE = 27;
+    public static final int CHEST_SIZE = 45;
 
     public static ComponentType<EntityStore, PlayerPersonalChestData> TYPE;
 

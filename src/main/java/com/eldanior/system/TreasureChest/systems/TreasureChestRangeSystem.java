@@ -1,6 +1,9 @@
 package com.eldanior.system.TreasureChest.systems;
 
 import com.eldanior.system.EldaniorSystem;
+import com.eldanior.system.config.Player.PlayerLevelData;
+import com.eldanior.system.titles.TitleManager;
+import com.eldanior.system.titles.models.TitleModel;
 import com.eldanior.system.TreasureChest.components.PlayerChestData;
 import com.eldanior.system.TreasureChest.resources.TreasureChestConfig;
 import com.eldanior.system.TreasureChest.resources.TreasureChestTemplate;
@@ -98,6 +101,20 @@ public class TreasureChestRangeSystem extends EntityTickingSystem<EntityStore> {
 
                     if (!playerChestData.isDiscovered(x, y, z, worldName) && distSq < DISCOVERY_RADIUS_SQ) {
                         playerChestData.setDiscovered(x, y, z, worldName, true);
+
+                        // Incrementer le compteur de coffres decouverts + check titres
+                        PlayerLevelData levelData = deferredStore.getComponent(player.getReference(),
+                                EldaniorSystem.get().getPlayerLevelDataType());
+                        if (levelData != null) {
+                            levelData.addChestDiscovered();
+                            java.util.List<TitleModel> newTitles = TitleManager.checkTitleUnlocks(levelData);
+                            for (TitleModel title : newTitles) {
+                                levelData.addTitle(title.getId());
+                            }
+                            deferredStore.putComponent(player.getReference(),
+                                    EldaniorSystem.get().getPlayerLevelDataType(), levelData);
+                        }
+
                         if (config.isMessageAppear()) {
                             EventTitleUtil.showEventTitleToPlayer(playerRef,
                                     Message.raw("Coffre au trésor découvert !"),

@@ -12,10 +12,16 @@ import com.eldanior.system.TreasureChest.systems.TreasureContainerMonitoringSyst
 import com.eldanior.system.classes.ClassManager;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.titles.TitleManager;
+import com.eldanior.system.guild.GuildManager;
+import com.eldanior.system.party.PartyHudUpdateSystem;
+import com.eldanior.system.party.PartyManager;
+import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
 import com.eldanior.system.titles.church.ChurchManager;
 import com.eldanior.system.titles.nobility.NobilityManager;
 import com.eldanior.system.titles.nobility.family.FamilyManager;
 import com.eldanior.system.titles.nobility.PlayerNameplateSystem;
+import com.eldanior.system.titles.nobility.systems.DignityAuraSystem;
+// import com.eldanior.system.titles.nobility.systems.DignityAuraMobSystem;
 import com.eldanior.system.config.Player.PlayerPositionTracker;
 import com.eldanior.system.config.configs.Mobs.*;
 import com.eldanior.system.config.configs.system.MasterySystem;
@@ -79,6 +85,8 @@ public class EldaniorSystem extends JavaPlugin {
             NobilityManager.init();
             FamilyManager.init();
             ChurchManager.init();
+            GuildManager.init();
+            PartyManager.init();
             LOGGER.atInfo().log("[OK] Managers et Registres initialisés.");
         } catch (Exception e) {
             LOGGER.atSevere().withCause(e).log("[ERREUR] Échec init Managers/Registres");
@@ -157,6 +165,14 @@ public class EldaniorSystem extends JavaPlugin {
             this.getEntityStoreRegistry().registerSystem(new TreasureChestInteractEvent());
             this.getEntityStoreRegistry().registerSystem(new TreasureChestPlaceBlockEvent());
             this.getEventRegistry().registerGlobal(StartWorldEvent.class, TreasureStartWorldEventListener::onStartWorldEvent);
+            this.getEventRegistry().registerGlobal(PlayerDisconnectEvent.class, event -> {
+                try {
+                    java.lang.reflect.Field uuidField = com.hypixel.hytale.server.core.universe.PlayerRef.class.getDeclaredField("uuid");
+                    uuidField.setAccessible(true);
+                    java.util.UUID uuid = (java.util.UUID) uuidField.get(event.getPlayerRef());
+                    PartyManager.handleDisconnect(uuid);
+                } catch (Exception ignored) {}
+            });
             this.getEntityStoreRegistry().registerSystem(new TreasureChestBreakBlockEvent());
             this.getEntityStoreRegistry().registerSystem(new TreasureChestDamageBlockEvent());
             this.getEntityStoreRegistry().registerSystem(new TreasureChestRangeSystem());
@@ -165,6 +181,9 @@ public class EldaniorSystem extends JavaPlugin {
             this.getEntityStoreRegistry().registerSystem(new FlySystem());
             this.getEntityStoreRegistry().registerSystem(new MorphFlightSystem());
             this.getEntityStoreRegistry().registerSystem(new PlayerNameplateSystem());
+            this.getEntityStoreRegistry().registerSystem(new PartyHudUpdateSystem());
+            this.getEntityStoreRegistry().registerSystem(new DignityAuraSystem());
+            // this.getEntityStoreRegistry().registerSystem(new DignityAuraMobSystem());
 
             LOGGER.atInfo().log("[OK] Systèmes ECS activés.");
         } catch (Exception e) {

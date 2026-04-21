@@ -7,7 +7,13 @@ import com.eldanior.system.classes.models.ClassModel;
 import com.eldanior.system.config.configs.Mobs.MobLevelData;
 import com.eldanior.system.config.configs.StatConfig;
 import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
+import com.eldanior.system.config.Player.PlayerPositionTracker;
+import com.eldanior.system.titles.TitleManager;
+import com.eldanior.system.titles.models.TitleEffect;
+import com.eldanior.system.titles.models.TitleModel;
+import com.eldanior.system.titles.nobility.systems.DignityAuraSystem;
 import com.eldanior.system.Leveling.utils.NotificationHelper;
+import com.hypixel.hytale.server.npc.entities.NPCEntity;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.logger.HytaleLogger;
@@ -175,6 +181,36 @@ public class CombatStatsSystem extends DamageEventSystem {
         if (manaConsumed) {
             commandBuffer.putComponent(attackerRef, EldaniorSystem.get().getPlayerLevelDataType(), manaTracker);
         }
+
+        // --- TITLE EFFECTS (bonus degats vs mob type) ---
+        if (!damage.isCancelled()) {
+            String currentTitleId = attackerData.getCurrentTitle();
+            if (currentTitleId != null && !currentTitleId.isEmpty()) {
+                TitleModel title = TitleManager.get(currentTitleId);
+                if (title != null && !title.getEffects().isEmpty()) {
+                    // Identifier le type de mob victime
+                    String victimMobType = null;
+                    if (victimRef != null) {
+                        NPCEntity npc = store.getComponent(victimRef, NPCEntity.getComponentType());
+                        if (npc != null) {
+                            victimMobType = npc.getNPCTypeId().toLowerCase();
+                        }
+                    }
+
+                    for (TitleEffect effect : title.getEffects()) {
+                        if (effect.type() == TitleEffect.TitleEffectType.DAMAGE_BONUS_VS_MOB) {
+                            String target = effect.target();
+                            // "all" = bonus contre tout, sinon on verifie si le mob match
+                            if ("all".equals(target) || (victimMobType != null && victimMobType.contains(target))) {
+                                damage.setAmount(damage.getAmount() * (1.0f + (float) effect.value()));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Bonus de degats de l'aura retire — l'aura ralentit/paralyse les mobs via DignityAuraMobSystem
     }
 
     private void applyEnduranceDefense(Ref<EntityStore> victimRef, Store<EntityStore> store, Damage damage) {
@@ -197,6 +233,32 @@ public class CombatStatsSystem extends DamageEventSystem {
         for (PassiveSkill skill : victimData.getActivePassives()) {
             if (skill.getLogic() != null) {
                 skill.getLogic().onDefend(damage, victimData, store, attackerRef, victimRef);
+            }
+        }
+
+        // --- TITLE EFFECTS (reduction degats from mob type) ---
+        if (!damage.isCancelled()) {
+            String currentTitleId = victimData.getCurrentTitle();
+            if (currentTitleId != null && !currentTitleId.isEmpty()) {
+                TitleModel title = TitleManager.get(currentTitleId);
+                if (title != null && !title.getEffects().isEmpty()) {
+                    String attackerMobType = null;
+                    if (attackerRef != null) {
+                        NPCEntity npc = store.getComponent(attackerRef, NPCEntity.getComponentType());
+                        if (npc != null) {
+                            attackerMobType = npc.getNPCTypeId().toLowerCase();
+                        }
+                    }
+
+                    for (TitleEffect effect : title.getEffects()) {
+                        if (effect.type() == TitleEffect.TitleEffectType.DAMAGE_REDUCTION_FROM_MOB) {
+                            String target = effect.target();
+                            if ("all".equals(target) || (attackerMobType != null && attackerMobType.contains(target))) {
+                                damage.setAmount(damage.getAmount() * (1.0f - (float) effect.value()));
+                            }
+                        }
+                    }
+                }
             }
         }
 

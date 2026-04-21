@@ -24,10 +24,6 @@ import java.lang.reflect.Field;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-/**
- * /es rank <action> <joueur>
- * Actions: setking, demote, knight, info, status
- */
 public class RankCommand extends AbstractAsyncCommand {
 
     private final RequiredArg<String> actionArg;
