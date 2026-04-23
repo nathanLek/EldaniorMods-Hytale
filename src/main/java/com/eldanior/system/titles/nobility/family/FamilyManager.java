@@ -14,6 +14,49 @@ public class FamilyManager {
     // Familles prises (familyId -> UUID du patriarche sous forme de String)
     private static final Set<String> takenFamilies = new HashSet<>();
 
+    // Donnees runtime par famille (tresorerie + contribution)
+    private static final Map<String, FamilyRuntimeData> runtimeData = new HashMap<>();
+
+    public static FamilyRuntimeData getRuntimeData(String familyId) {
+        return runtimeData.computeIfAbsent(familyId, k -> {
+            FamilyRuntimeData data = new FamilyRuntimeData();
+            // Tresorerie de depart selon le rang minimum de la famille
+            NobleFamilyModel family = families.get(familyId);
+            if (family != null) {
+                switch (family.getMinimumRank()) {
+                    case ROI -> data.addTreasury(1_500_000);
+                    case MARQUIS -> data.addTreasury(1_000_000);
+                    case DUC -> data.addTreasury(500_000);
+                    default -> {}
+                }
+            }
+            return data;
+        });
+    }
+
+    /** Charge directement les donnees runtime (appele par PersistenceManager) */
+    public static void setRuntimeData(String familyId, long treasury, long contribution) {
+        FamilyRuntimeData data = new FamilyRuntimeData();
+        data.addTreasury(treasury);
+        data.addContribution(contribution);
+        runtimeData.put(familyId, data);
+    }
+
+    public static class FamilyRuntimeData {
+        private long treasury = 0;
+        private long contribution = 0;
+
+        public long getTreasury() { return treasury; }
+        public void addTreasury(long amount) { this.treasury += amount; }
+        public boolean withdrawTreasury(long amount) {
+            if (treasury < amount) return false;
+            treasury -= amount;
+            return true;
+        }
+        public long getContribution() { return contribution; }
+        public void addContribution(long points) { this.contribution += points; }
+    }
+
     public static void init() {
         // Famille royale
         register(new Eldanior());
@@ -73,6 +116,8 @@ public class FamilyManager {
 
     public static void releaseFamily(String familyId) {
         takenFamilies.remove(familyId);
+        // Reset runtime data (tresorerie + contribution reviennent aux valeurs par defaut)
+        runtimeData.remove(familyId);
     }
 
     /**

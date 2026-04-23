@@ -1,0 +1,57 @@
+$C = "../Common.ui";
+
+$C.@PageOverlay {}
+
+Group {
+    LayoutMode: Center;
+
+    Group {
+        Anchor: (Width: 500, Height: 180);
+        Background: #0a0e16(0.95);
+        LayoutMode: Top;
+
+        // Header
+        Group {
+            Anchor: (Height: 44);
+            Background: #1c1408(0.9);
+            LayoutMode: Left;
+            Padding: (Horizontal: 20, Vertical: 8);
+
+            Label #NpcMsgSpeaker {
+                Text: "";
+                Style: (FontSize: 20, TextColor: #FFD700, VerticalAlignment: Center);
+                FlexWeight: 1;
+            }
+        }
+
+        // Contenu
+        Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Horizontal: 24, Vertical: 16);
+
+            Label #NpcMsgText {
+                Text: "";
+                Style: (FontSize: 14, TextColor: #ddeeff, Wrap: true);
+                FlexWeight: 1;
+            }
+        }
+
+        // Footer
+        Group {
+            Anchor: (Height: 48);
+            Background: #080c12(0.6);
+            LayoutMode: Left;
+            Padding: (Horizontal: 20, Vertical: 8);
+
+            Group { FlexWeight: 1; }
+
+            TextButton #NpcMsgBtnOk {
+                Text: "COMPRIS";
+                Anchor: (Width: 120, Height: 32);
+                Style: (Default: (LabelStyle: (FontSize: 14, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center)), Hovered: (LabelStyle: (FontSize: 14, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center)));
+                Background: #1a1208(0.8);
+            }
+        }
+    }
+}

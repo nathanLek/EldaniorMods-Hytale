@@ -54,6 +54,18 @@ public class PlayerLevelData implements Component<EntityStore> {
     private int killStreak = 0;
     private int bestKillStreak = 0;
 
+    // Duel
+    private int duelWins = 0;
+    private int duelLosses = 0;
+    private int duelStreak = 0;
+    private int duelBestStreak = 0;
+    private boolean forcePK = false;
+    private long bounty = 0; // Prime sur la tete du criminel
+    private String questData = ""; // Serialized quest data
+    private String cooldownData = ""; // Serialized cooldowns: questId=timestamp|...
+    private transient long lastPvPKillTime = 0; // Pour le timer de redemption
+    private transient List<String> duelHistory = new ArrayList<>();
+
     // Guilde
     private String guildId = "";
     private String guildRole = "";  // CHEF, OFFICER, MEMBER
@@ -65,7 +77,7 @@ public class PlayerLevelData implements Component<EntityStore> {
     private int vitality = 1;
     private int intelligence = 1;
     private int luck = 1;
-    private long money = 1000;
+    private long money = 0;
     private UUID lastVictimUUID;
     private int hauntingThrustStacks;
     private transient long lastDamageTakenTime = 0;
@@ -208,6 +220,14 @@ public class PlayerLevelData implements Component<EntityStore> {
                 }
                 return sb.toString();
             }).add()
+            .append(new KeyedCodec<>("DuelWins", Codec.INTEGER), (data, v) -> data.duelWins = v, data -> data.duelWins).add()
+            .append(new KeyedCodec<>("DuelLosses", Codec.INTEGER), (data, v) -> data.duelLosses = v, data -> data.duelLosses).add()
+            .append(new KeyedCodec<>("ForcePK", Codec.BOOLEAN), (data, v) -> data.forcePK = v, data -> data.forcePK).add()
+            .append(new KeyedCodec<>("Bounty", Codec.LONG), (data, v) -> data.bounty = v, data -> data.bounty).add()
+            .append(new KeyedCodec<>("Quests", Codec.STRING), (data, v) -> data.questData = v, data -> data.questData).add()
+            .append(new KeyedCodec<>("Cooldowns", Codec.STRING), (data, v) -> data.cooldownData = v, data -> data.cooldownData).add()
+            .append(new KeyedCodec<>("DuelStreak", Codec.INTEGER), (data, v) -> data.duelStreak = v, data -> data.duelStreak).add()
+            .append(new KeyedCodec<>("DuelBestStreak", Codec.INTEGER), (data, v) -> data.duelBestStreak = v, data -> data.duelBestStreak).add()
             .build();
 
     // --- Méthode CLONE ---
@@ -233,6 +253,15 @@ public class PlayerLevelData implements Component<EntityStore> {
         copy.playerDeaths = this.playerDeaths;
         copy.killStreak = this.killStreak;
         copy.bestKillStreak = this.bestKillStreak;
+        copy.forcePK = this.forcePK;
+        copy.bounty = this.bounty;
+        copy.questData = this.questData;
+        copy.cooldownData = this.cooldownData;
+        copy.duelWins = this.duelWins;
+        copy.duelLosses = this.duelLosses;
+        copy.duelStreak = this.duelStreak;
+        copy.duelBestStreak = this.duelBestStreak;
+        copy.duelHistory = new ArrayList<>(this.getDuelHistory());
         copy.guildId = this.guildId;
         copy.guildRole = this.guildRole;
         copy.strength = this.strength;
@@ -372,14 +401,48 @@ public class PlayerLevelData implements Component<EntityStore> {
     public void setBestKillStreak(int v) { this.bestKillStreak = v; }
     public void setChestsDiscovered(int v) { this.chestsDiscovered = v; }
 
+    // Duel
+    public int getDuelWins() { return duelWins; }
+    public int getDuelLosses() { return duelLosses; }
+    public int getDuelTotal() { return duelWins + duelLosses; }
+    public int getDuelStreak() { return duelStreak; }
+    public int getDuelBestStreak() { return duelBestStreak; }
+    public void addDuelWin() {
+        this.duelWins++;
+        this.duelStreak++;
+        if (this.duelStreak > this.duelBestStreak) this.duelBestStreak = this.duelStreak;
+    }
+    public void addDuelLoss() {
+        this.duelLosses++;
+        this.duelStreak = 0;
+    }
+    public List<String> getDuelHistory() { return duelHistory != null ? duelHistory : new ArrayList<>(); }
+    public void addDuelHistory(String opponentName, boolean won, float myHPPercent, float opHPPercent) {
+        if (duelHistory == null) duelHistory = new ArrayList<>();
+        String entry = (won ? "V" : "D") + "|" + opponentName + "|" + (int)(myHPPercent * 100) + "%|" + (int)(opHPPercent * 100) + "%";
+        duelHistory.add(0, entry); // Plus recent en premier
+        if (duelHistory.size() > 10) duelHistory.remove(duelHistory.size() - 1); // Max 10
+    }
+
     public double getKDR() {
         if (playerDeaths == 0) return playerKills;
         return (double) playerKills / playerDeaths;
     }
 
     public boolean isPK() {
-        return playerKills >= 10 && getKDR() >= 2.0;
+        return forcePK || (playerKills >= 10 && getKDR() >= 2.0);
     }
+    public boolean isForcePK() { return forcePK; }
+    public void setForcePK(boolean v) { this.forcePK = v; }
+    public String getQuestData() { return questData; }
+    public void setQuestData(String v) { this.questData = v; }
+    public String getCooldownData() { return cooldownData; }
+    public void setCooldownData(String v) { this.cooldownData = v; }
+    public long getBounty() { return bounty; }
+    public void addBounty(long amount) { this.bounty += amount; }
+    public long collectBounty() { long b = bounty; bounty = 0; return b; }
+    public long getLastPvPKillTime() { return lastPvPKillTime; }
+    public void setLastPvPKillTime(long t) { this.lastPvPKillTime = t; }
 
     public void addPlayerKill() {
         this.playerKills++;

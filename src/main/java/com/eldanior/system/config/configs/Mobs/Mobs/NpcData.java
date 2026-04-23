@@ -17,7 +17,11 @@ public enum NpcData implements IMobConfig {
 
     MARCHANT1_NPC("Marchant1_Npc", "Marchant", true),
     MARCHANT2_NPC("Marchant2_Npc", "Marchant", true),
-    MARCHANT3_NPC("Marchant3_Npc", "Marchant", true);
+    MARCHANT3_NPC("Marchant3_Npc", "Marchant", true),
+
+    // PNJ de quetes
+    ANCIEN_CONSEILLER_NPC("AncienConseiller_Npc", "Ancien Conseiller", true),
+    TAVERNIER_QUEST_NPC("TavernierQuest_Npc", "Alex Silford", true);
 
     private final String keyword;
     private final int xp;

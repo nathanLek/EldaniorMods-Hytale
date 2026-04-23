@@ -55,6 +55,10 @@ public class GuildeTab {
         String roleDisplay = "CHEF".equals(role) ? "Chef" : "OFFICER".equals(role) ? "Officier" : "Membre";
         ui.set("#GuildeRole.Text", "Role : " + roleDisplay);
 
+        // Tresorerie & Contribution
+        ui.set("#GuildeTreasury.Text", String.valueOf(guild.getTreasury()) + " Or");
+        ui.set("#GuildeContribution.Text", String.valueOf(guild.getContribution()));
+
         // Stats
         ui.set("#GuildeStatMobs.Text", String.valueOf(guild.getTotalMobKills()));
         ui.set("#GuildeStatPvP.Text", String.valueOf(guild.getTotalPlayerKills()));
@@ -62,6 +66,7 @@ public class GuildeTab {
 
         // Chef actions
         ui.set("#GuildeChefActions.Visible", isChef);
+        ui.set("#GuildeBtnWithdraw.Visible", isChef);
         ui.set("#GuildeInviteSection.Visible", isChef || isOfficer);
 
         // Invite list (chef + officer)
@@ -136,6 +141,42 @@ public class GuildeTab {
         }
 
         GuildManager.disbandGuild(guild.getId());
+        return true;
+    }
+
+    public static boolean handleWithdraw(Ref<EntityStore> ref, Store<EntityStore> store) {
+        ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
+        PlayerLevelData data = store.getComponent(ref, type);
+        if (data == null || !data.isGuildChef()) return false;
+
+        UUID uuid = getPlayerUUID(ref, store);
+        Guild guild = GuildManager.getPlayerGuild(uuid);
+        if (guild == null || !guild.withdrawTreasury(1000)) return false;
+
+        data.addMoney(1000);
+        store.putComponent(ref, type, data);
+
+        Player player = store.getComponent(ref, Player.getComponentType());
+        if (player != null) player.sendMessage(Message.raw("§e-1000 Or retire de la tresorerie !"));
+        return true;
+    }
+
+    public static boolean handleDeposit(Ref<EntityStore> ref, Store<EntityStore> store) {
+        ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
+        PlayerLevelData data = store.getComponent(ref, type);
+        if (data == null || !data.hasGuild()) return false;
+        if (data.getMoney() < 1000) return false;
+
+        UUID uuid = getPlayerUUID(ref, store);
+        Guild guild = GuildManager.getPlayerGuild(uuid);
+        if (guild == null) return false;
+
+        data.removeMoney(1000);
+        store.putComponent(ref, type, data);
+        guild.addTreasury(1000);
+
+        Player player = store.getComponent(ref, Player.getComponentType());
+        if (player != null) player.sendMessage(Message.raw("§a+1000 Or depose dans la tresorerie !"));
         return true;
     }
 

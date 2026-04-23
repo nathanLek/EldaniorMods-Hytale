@@ -2,6 +2,7 @@ package com.eldanior.system.Leveling.systems;
 
 import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.Leveling.utils.StatCalculator;
+import com.eldanior.system.classement.ClassementManager;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.hypixel.hytale.component.ArchetypeChunk;
 import com.hypixel.hytale.component.CommandBuffer;
@@ -53,8 +54,9 @@ public class PlayerLoginSystem extends EntityTickingSystem<EntityStore> {
 
         if (data == null) {
             data = new PlayerLevelData();
+            data.setMoney(1000); // Or de depart pour les nouveaux joueurs
             commandBuffer.putComponent(playerRef, type, data);
-            LOGGER.atInfo().log("[PlayerLogin] Nouveau joueur initialisé : " + uuid);
+            LOGGER.atInfo().log("[PlayerLogin] Nouveau joueur initialisé : " + uuid + " (+1000 Or)");
         }
 
         final PlayerLevelData finalData = data;
@@ -70,6 +72,76 @@ public class PlayerLoginSystem extends EntityTickingSystem<EntityStore> {
                     " / " + statMap.get(DefaultEntityStatTypes.getMana()).getMax());
             LOGGER.atInfo().log("[PlayerLogin] Stats appliquées pour : " + uuid + " Lv." + finalData.getLevel());
         });
+
+        // Nettoyer guilde dissoute : si le joueur a une guilde qui n'existe plus
+        if (data.hasGuild()) {
+            com.eldanior.system.guild.Guild loginGuild = com.eldanior.system.guild.GuildManager.get(data.getGuildId());
+            if (loginGuild == null) {
+                final PlayerLevelData guildCleanData = data;
+                commandBuffer.run(deferredStore -> {
+                    guildCleanData.setGuildId("");
+                    guildCleanData.setGuildRole("");
+                    deferredStore.putComponent(playerRef, type, guildCleanData);
+                });
+                System.out.println("[PlayerLogin] Guilde dissoute, joueur nettoye: " + uuid);
+            }
+        }
+
+        // Restaurer famille : si le joueur a une famille, la marquer comme prise
+        String loginFamId = data.getNobleFamilyId();
+        if (loginFamId != null && !loginFamId.isEmpty()) {
+            com.eldanior.system.titles.nobility.family.NobleFamilyModel famModel =
+                    com.eldanior.system.titles.nobility.family.FamilyManager.get(loginFamId);
+            if (famModel != null) {
+                // Reclaim la famille si pas encore prise
+                if (!com.eldanior.system.titles.nobility.family.FamilyManager.isFamilyTaken(loginFamId)) {
+                    com.eldanior.system.titles.nobility.family.FamilyManager.claimFamily(loginFamId);
+                    System.out.println("[PlayerLogin] Famille " + loginFamId + " restauree pour " + uuid);
+                }
+            } else {
+                // Famille inconnue -> nettoyer
+                final PlayerLevelData cleanData = data;
+                commandBuffer.run(deferredStore -> {
+                    cleanData.setNobleFamilyId("");
+                    cleanData.setStatus("");
+                    deferredStore.putComponent(playerRef, type, cleanData);
+                });
+                System.out.println("[PlayerLogin] Famille inconnue " + loginFamId + ", joueur nettoye: " + uuid);
+            }
+        }
+
+        // Collecter les gains du shop en attente
+        long pendingGold = com.eldanior.system.shop.ShopManager.collectPendingEarnings(uuid);
+        if (pendingGold > 0) {
+            final long gold = pendingGold;
+            final PlayerLevelData shopData = data;
+            commandBuffer.run(deferredStore -> {
+                shopData.addMoney(gold);
+                deferredStore.putComponent(playerRef, type, shopData);
+            });
+            com.hypixel.hytale.server.core.universe.PlayerRef pRefShop = store.getComponent(playerRef, com.hypixel.hytale.server.core.universe.PlayerRef.getComponentType());
+            if (pRefShop != null) {
+                pRefShop.sendMessage(com.hypixel.hytale.server.core.Message.raw("§a+" + pendingGold + " Or recu de ventes au marche !"));
+            }
+        }
+
+        // Charger les quetes du joueur
+        String questData = data.getQuestData();
+        if (questData != null && !questData.isEmpty()) {
+            com.eldanior.system.quest.QuestManager.deserializePlayerQuests(uuid, questData);
+        }
+        // Charger les cooldowns de quetes
+        String cooldownData = data.getCooldownData();
+        if (cooldownData != null && !cooldownData.isEmpty()) {
+            com.eldanior.system.quest.QuestManager.deserializeCooldowns(uuid, cooldownData);
+        }
+        com.eldanior.system.quest.QuestManager.checkDailyReset();
+
+        // Charger les scores dans le classement persistant
+        String playerName = player.getDisplayName();
+        ClassementManager.updateMobKills(playerName, data.getTotalMobKills());
+        ClassementManager.updatePvPKills(playerName, data.getPlayerKills());
+        ClassementManager.updateDuelWins(playerName, data.getDuelWins());
 
         initializedPlayers.add(uuid);
     }

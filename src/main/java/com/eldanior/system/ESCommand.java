@@ -18,6 +18,8 @@ import com.eldanior.system.titles.nobility.commands.*;
 import com.eldanior.system.titles.church.commands.ChurchCommand;
 import com.eldanior.system.titles.church.commands.ChurchPromoteCommand;
 import com.eldanior.system.gui.SystemCommand;
+import com.eldanior.system.duel.DuelCommand;
+import com.eldanior.system.shop.SellCommand;
 import com.eldanior.system.party.commands.PartyCommand;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractCommandCollection;
 
@@ -64,6 +66,12 @@ public class ESCommand extends AbstractCommandCollection {
         // Famille
         this.addSubCommand(new FamilyCommand());
         this.addSubCommand(new FamilySetCommand());
+
+        // Duel
+        this.addSubCommand(new DuelCommand());
+
+        // Shop
+        this.addSubCommand(new SellCommand());
 
         // Interface unifiee
         this.addSubCommand(new SystemCommand());

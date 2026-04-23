@@ -108,6 +108,17 @@ public class TreasureChestInteractEvent extends EntityEventSystem<EntityStore, U
                     playerData.setLastLootTime(target.getX(), target.getY(), target.getZ(), worldName, currentTime);
                     commandBuffer.replaceComponent(playerRef, EldaniorSystem.get().getPlayerChestDataType(), playerData);
 
+                    // Progression quete exploration
+                    try {
+                        java.lang.reflect.Field uuidF = com.hypixel.hytale.server.core.universe.PlayerRef.class.getDeclaredField("uuid");
+                        uuidF.setAccessible(true);
+                        com.hypixel.hytale.server.core.universe.PlayerRef pRefQ = store.getComponent(playerRef, com.hypixel.hytale.server.core.universe.PlayerRef.getComponentType());
+                        if (pRefQ != null) {
+                            java.util.UUID pUUID = (java.util.UUID) uuidF.get(pRefQ);
+                            com.eldanior.system.quest.QuestManager.onChestDiscovered(pUUID);
+                        }
+                    } catch (Exception ignored) {}
+
                     // Incrementer le compteur de coffres du profil
                     if (levelData != null) {
                         levelData.addChestDiscovered();

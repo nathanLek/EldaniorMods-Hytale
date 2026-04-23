@@ -106,7 +106,8 @@ public class SetLevelCommand extends AbstractAsyncCommand {
 
                     // Reset noblesse + famille
                     String oldFamilyId = data.getNobleFamilyId();
-                    if (oldFamilyId != null && !oldFamilyId.isEmpty() && data.isPatriarch()) {
+                    if (oldFamilyId != null && !oldFamilyId.isEmpty()) {
+                        // Release la famille (reset tresorerie + contribution)
                         com.eldanior.system.titles.nobility.family.FamilyManager.releaseFamily(oldFamilyId);
                     }
                     data.setNobilityRank("ROTURIER");
@@ -121,6 +122,14 @@ public class SetLevelCommand extends AbstractAsyncCommand {
                     // Reset guilde
                     data.setGuildId("");
                     data.setGuildRole("");
+
+                    // Reset argent
+                    data.setMoney(0);
+
+                    // Reset quetes + cooldowns
+                    data.setQuestData("");
+                    data.setCooldownData("");
+                    com.eldanior.system.quest.QuestManager.getPlayerQuests(targetUUID).clear();
 
                 } else {
                     // --- GESTION DES POINTS SI ON LE MONTÉ DE NIVEAU ---

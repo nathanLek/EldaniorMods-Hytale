@@ -70,6 +70,12 @@ public class EldaniorSystem extends JavaPlugin {
     }
 
     @Override
+    protected void shutdown() {
+        LOGGER.atInfo().log(">>> ELDANIOR SYSTEM : SAUVEGARDE AVANT ARRET <<<");
+        com.eldanior.system.persistence.PersistenceManager.saveAll();
+    }
+
+    @Override
 
     protected void setup() {
         LOGGER.atInfo().log(">>> ELDANIOR SYSTEM : DÉMARRAGE DU SETUP <<<");
@@ -87,6 +93,12 @@ public class EldaniorSystem extends JavaPlugin {
             ChurchManager.init();
             GuildManager.init();
             PartyManager.init();
+            com.eldanior.system.classement.ClassementManager.init();
+            com.eldanior.system.duel.DuelManager.init();
+            com.eldanior.system.quest.QuestManager.init();
+
+            com.eldanior.system.shop.ShopManager.init();
+            com.eldanior.system.persistence.PersistenceManager.init(this.getDataDirectory());
             LOGGER.atInfo().log("[OK] Managers et Registres initialisés.");
         } catch (Exception e) {
             LOGGER.atSevere().withCause(e).log("[ERREUR] Échec init Managers/Registres");
@@ -165,12 +177,17 @@ public class EldaniorSystem extends JavaPlugin {
             this.getEntityStoreRegistry().registerSystem(new TreasureChestInteractEvent());
             this.getEntityStoreRegistry().registerSystem(new TreasureChestPlaceBlockEvent());
             this.getEventRegistry().registerGlobal(StartWorldEvent.class, TreasureStartWorldEventListener::onStartWorldEvent);
+            // Detection interaction NPC de quetes (systeme ECS)
+            this.getEntityStoreRegistry().registerSystem(
+                    new com.eldanior.system.quest.interaction.NpcQuestDetectionSystem());
+
             this.getEventRegistry().registerGlobal(PlayerDisconnectEvent.class, event -> {
                 try {
                     java.lang.reflect.Field uuidField = com.hypixel.hytale.server.core.universe.PlayerRef.class.getDeclaredField("uuid");
                     uuidField.setAccessible(true);
                     java.util.UUID uuid = (java.util.UUID) uuidField.get(event.getPlayerRef());
                     PartyManager.handleDisconnect(uuid);
+                    com.eldanior.system.gui.tabs.QuestTab.cleanupPlayer(uuid);
                 } catch (Exception ignored) {}
             });
             this.getEntityStoreRegistry().registerSystem(new TreasureChestBreakBlockEvent());
@@ -182,6 +199,8 @@ public class EldaniorSystem extends JavaPlugin {
             this.getEntityStoreRegistry().registerSystem(new MorphFlightSystem());
             this.getEntityStoreRegistry().registerSystem(new PlayerNameplateSystem());
             this.getEntityStoreRegistry().registerSystem(new PartyHudUpdateSystem());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.duel.DuelProtectionSystem());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.quest.QuestHudUpdateSystem());
             this.getEntityStoreRegistry().registerSystem(new DignityAuraSystem());
             // this.getEntityStoreRegistry().registerSystem(new DignityAuraMobSystem());
 

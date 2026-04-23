@@ -1,0 +1,117 @@
+$C = "../Common.ui";
+
+$C.@PageOverlay {}
+
+Group {
+    LayoutMode: Center;
+
+    Group {
+        Anchor: (Width: 720, Height: 480);
+        Background: #0a0e16(0.97);
+        LayoutMode: Top;
+
+        // === HEADER ===
+        Group {
+            Anchor: (Height: 54);
+            Background: #1c1408(0.9);
+            LayoutMode: Left;
+            Padding: (Horizontal: 24, Vertical: 10);
+
+            Label #DlgSpeaker {
+                Text: "";
+                Style: (FontSize: 22, TextColor: #FFD700, VerticalAlignment: Center);
+                FlexWeight: 1;
+            }
+
+            Label #DlgPageNum {
+                Text: "";
+                Style: (FontSize: 12, TextColor: #556677, VerticalAlignment: Center, HorizontalAlignment: End);
+                Anchor: (Width: 80);
+            }
+        }
+
+        // === CONTENU ===
+        Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Horizontal: 30, Vertical: 18);
+
+            Label #DlgImageHint {
+                Text: "";
+                Style: (FontSize: 11, TextColor: #8899aa, HorizontalAlignment: Center);
+                Anchor: (Height: 18);
+            }
+
+            Group { Anchor: (Height: 8); }
+
+            Label #DlgText {
+                Text: "";
+                Style: (FontSize: 15, TextColor: #ddeeff, Wrap: true);
+                Anchor: (Height: 200);
+            }
+        }
+
+        // === OBJECTIFS (derniere page) ===
+        Group {
+            Anchor: (Height: 28);
+            Background: #0d1520(0.6);
+            LayoutMode: Left;
+            Padding: (Horizontal: 24, Vertical: 4);
+
+            Label #DlgObjectives {
+                Text: "";
+                Style: (FontSize: 12, TextColor: #ff9944, VerticalAlignment: Center);
+                FlexWeight: 1;
+                Visible: false;
+            }
+        }
+
+        // === RECOMPENSES (derniere page) ===
+        Group {
+            Anchor: (Height: 28);
+            Background: #0d1520(0.4);
+            LayoutMode: Left;
+            Padding: (Horizontal: 24, Vertical: 4);
+
+            Label #DlgRewards {
+                Text: "";
+                Style: (FontSize: 12, TextColor: #D4AF37, VerticalAlignment: Center);
+                FlexWeight: 1;
+                Visible: false;
+            }
+        }
+
+        // === FOOTER ===
+        Group {
+            Anchor: (Height: 60);
+            Background: #080c12(0.6);
+            LayoutMode: Left;
+            Padding: (Horizontal: 20, Vertical: 10);
+
+            TextButton #DlgBtnClose {
+                Text: "FERMER";
+                Anchor: (Width: 110, Height: 38);
+                Visible: false;
+                Style: (Default: (LabelStyle: (FontSize: 13, TextColor: #aa3333, HorizontalAlignment: Center, VerticalAlignment: Center)), Hovered: (LabelStyle: (FontSize: 13, TextColor: #ff5555, HorizontalAlignment: Center, VerticalAlignment: Center)));
+                Background: #1a0a0a(0.7);
+            }
+
+            Group { FlexWeight: 1; }
+
+            TextButton #DlgBtnNext {
+                Text: "SUIVANT  >";
+                Anchor: (Width: 150, Height: 40);
+                Style: (Default: (LabelStyle: (FontSize: 15, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center)), Hovered: (LabelStyle: (FontSize: 15, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center)));
+                Background: #1a1208(0.8);
+            }
+
+            TextButton #DlgBtnAccept {
+                Text: "ACCEPTER LA QUETE";
+                Anchor: (Width: 200, Height: 40);
+                Visible: false;
+                Style: (Default: (LabelStyle: (FontSize: 15, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center)), Hovered: (LabelStyle: (FontSize: 15, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center)));
+                Background: #0a1a0a(0.8);
+            }
+        }
+    }
+}

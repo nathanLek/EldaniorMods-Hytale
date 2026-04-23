@@ -37,6 +37,38 @@ public class PartyHud extends CustomUIHud {
         super.update(firstUpdate, ui);
     }
 
+    /** Methode statique pour le CombinedHud - delegue a l'instance existante */
+    public static void renderPartyStatic(UICommandBuilder ui, UUID uuid) {
+        Party party = PartyManager.getParty(uuid);
+        if (party == null) {
+            ui.set("#PartyPanel.Visible", false);
+            return;
+        }
+        ui.set("#PartyPanel.Visible", true);
+        ui.set("#PartyTitle.Text", "Groupe (" + party.getSize() + "/" + Party.MAX_MEMBERS + ")");
+
+        List<Map.Entry<UUID, String>> memberList = new ArrayList<>(party.getMembers().entrySet());
+        for (int i = 0; i < 5; i++) {
+            int slot = i + 1;
+            String card = "#Member" + slot + "Card";
+            if (i < memberList.size()) {
+                Map.Entry<UUID, String> entry = memberList.get(i);
+                String name = entry.getValue();
+                boolean isCaptain = party.isCaptain(entry.getKey());
+
+                ui.set(card + ".Visible", true);
+                ui.set("#Member" + slot + "Badge.Text", isCaptain ? "CAP" : "---");
+                ui.set("#Member" + slot + "Badge.Style.TextColor", isCaptain ? "#FFD700" : "#667788");
+                ui.set("#Member" + slot + "Name.Text", name);
+                ui.set("#Member" + slot + "Level.Text", "");
+                ui.set("#Member" + slot + "Class.Text", "");
+                ui.set("#Member" + slot + "Bar.Value", 1.0f);
+            } else {
+                ui.set(card + ".Visible", false);
+            }
+        }
+    }
+
     private void renderMembers(UICommandBuilder ui) {
         Party party = PartyManager.getParty(ownerUUID);
         if (party == null) return;

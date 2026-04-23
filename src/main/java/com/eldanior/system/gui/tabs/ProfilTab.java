@@ -60,16 +60,27 @@ public class ProfilTab {
         String rankStr = data.getNobilityRank();
         ui.set("#ProfilRank.Text", (rankStr != null && !rankStr.isEmpty() && !"ROTURIER".equals(rankStr)) ? rankStr : "Roturier");
 
-        // Status
+        // Status (Patriarch/Vice/Membre/Chef de Guilde/etc - jamais PK ici)
         String status = data.getStatus();
-        ui.set("#ProfilStatus.Text", (status != null && !status.isEmpty()) ? status : "-");
-
-        // Eglise
-        String churchRank = data.getChurchRank();
-        if (churchRank != null && !churchRank.isEmpty() && !"LAIQUE".equals(churchRank)) {
-            ui.set("#ProfilChurch.Text", "Eglise : " + churchRank);
+        if (status != null && !status.isEmpty()) {
+            ui.set("#ProfilStatus.Text", status);
+        } else if (data.hasGuild()) {
+            ui.set("#ProfilStatus.Text", data.getGuildRole());
         } else {
-            ui.set("#ProfilChurch.Text", "Laique");
+            ui.set("#ProfilStatus.Text", "-");
+        }
+
+        // Eglise / PK
+        if (data.isPK()) {
+            String bountyText = data.getBounty() > 0 ? " | Prime: " + data.getBounty() + " Or" : "";
+            ui.set("#ProfilChurch.Text", "CRIMINEL - EXCOMMUNIE" + bountyText);
+        } else {
+            String churchRank = data.getChurchRank();
+            if (churchRank != null && !churchRank.isEmpty() && !"LAIQUE".equals(churchRank)) {
+                ui.set("#ProfilChurch.Text", "Eglise : " + churchRank);
+            } else {
+                ui.set("#ProfilChurch.Text", "Laique");
+            }
         }
 
         // Titre

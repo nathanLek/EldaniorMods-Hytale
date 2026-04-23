@@ -21,5 +21,10 @@ public class InteractionManager {
                 .register("OpenClassSelectionInteraction",
                         OpenClassSelectionInteraction.class, OpenClassSelectionInteraction.CODEC);
 
+        // INTERACTION QUETE NPC
+        plugin.getCodecRegistry(Interaction.CODEC)
+                .register("QuestNpcInteraction",
+                        com.eldanior.system.quest.interaction.QuestNpcInteraction.class,
+                        com.eldanior.system.quest.interaction.QuestNpcInteraction.CODEC);
     }
 }

@@ -106,6 +106,9 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>static final int</code></div>
 <div class="col-second even-row-color"><code><a href="#MAX_FAMILY_SLOTS" class="member-name-link">MAX_FAMILY_SLOTS</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final int</code></div>
+<div class="col-second odd-row-color"><code><a href="#MAX_INVITE_SLOTS" class="member-name-link">MAX_INVITE_SLOTS</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -136,6 +139,23 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#handleChoose(java.lang.String,com.hypixel.hytale.component.Ref,com.hypixel.hytale.component.Store)" class="member-name-link">handleChoose</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;slotIndex,
  com.hypixel.hytale.component.Ref&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;ref,
+ com.hypixel.hytale.component.Store&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;store)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#handleDeposit(com.hypixel.hytale.component.Ref,com.hypixel.hytale.component.Store)" class="member-name-link">handleDeposit</a><wbr>(com.hypixel.hytale.component.Ref&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;ref,
+ com.hypixel.hytale.component.Store&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;store)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#handleInviteByIndex(java.lang.String,com.hypixel.hytale.component.Ref,com.hypixel.hytale.component.Store)" class="member-name-link">handleInviteByIndex</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;slotIndex,
+ com.hypixel.hytale.component.Ref&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;ref,
+ com.hypixel.hytale.component.Store&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;store)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#handleLeave(com.hypixel.hytale.component.Ref,com.hypixel.hytale.component.Store)" class="member-name-link">handleLeave</a><wbr>(com.hypixel.hytale.component.Ref&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;ref,
+ com.hypixel.hytale.component.Store&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;store)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#handleWithdraw(com.hypixel.hytale.component.Ref,com.hypixel.hytale.component.Store)" class="member-name-link">handleWithdraw</a><wbr>(com.hypixel.hytale.component.Ref&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;ref,
  com.hypixel.hytale.component.Store&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;store)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
@@ -174,6 +194,20 @@ loadScripts(document, 'script');</script>
 </dl>
 </section>
 </li>
+<li>
+<section class="detail" id="MAX_INVITE_SLOTS">
+<h3>MAX_INVITE_SLOTS</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">MAX_INVITE_SLOTS</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list">
+<li><a href="../../../../../constant-values.html#com.eldanior.system.gui.tabs.FamilleTab.MAX_INVITE_SLOTS">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
 </ul>
 </section>
 </li>
@@ -200,6 +234,35 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="populate(com.hypixel.hytale.server.core.ui.builder.UICommandBuilder,com.hypixel.hytale.component.Ref,com.hypixel.hytale.component.Store)">
 <h3>populate</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">populate</span><wbr><span class="parameters">(com.hypixel.hytale.server.core.ui.builder.UICommandBuilder&nbsp;ui,
+ com.hypixel.hytale.component.Ref&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;ref,
+ com.hypixel.hytale.component.Store&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;store)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="handleWithdraw(com.hypixel.hytale.component.Ref,com.hypixel.hytale.component.Store)">
+<h3>handleWithdraw</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">handleWithdraw</span><wbr><span class="parameters">(com.hypixel.hytale.component.Ref&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;ref,
+ com.hypixel.hytale.component.Store&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;store)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="handleDeposit(com.hypixel.hytale.component.Ref,com.hypixel.hytale.component.Store)">
+<h3>handleDeposit</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">handleDeposit</span><wbr><span class="parameters">(com.hypixel.hytale.component.Ref&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;ref,
+ com.hypixel.hytale.component.Store&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;store)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="handleLeave(com.hypixel.hytale.component.Ref,com.hypixel.hytale.component.Store)">
+<h3>handleLeave</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">handleLeave</span><wbr><span class="parameters">(com.hypixel.hytale.component.Ref&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;ref,
+ com.hypixel.hytale.component.Store&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;store)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="handleInviteByIndex(java.lang.String,com.hypixel.hytale.component.Ref,com.hypixel.hytale.component.Store)">
+<h3>handleInviteByIndex</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">handleInviteByIndex</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;slotIndex,
  com.hypixel.hytale.component.Ref&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;ref,
  com.hypixel.hytale.component.Store&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;store)</span></div>
 </section>

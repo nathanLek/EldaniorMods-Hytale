@@ -9,6 +9,10 @@ import com.eldanior.system.guild.Guild;
 import com.eldanior.system.guild.GuildManager;
 import com.eldanior.system.party.Party;
 import com.eldanior.system.party.PartyManager;
+import com.eldanior.system.classement.ClassementManager;
+import com.eldanior.system.duel.DuelManager;
+import com.eldanior.system.quest.QuestManager;
+import com.eldanior.system.titles.nobility.family.FamilyManager;
 import com.eldanior.system.titles.TitleManager;
 import com.eldanior.system.titles.models.TitleModel;
 import com.hypixel.hytale.component.AddReason;
@@ -62,12 +66,17 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
             if (processedDeaths.containsKey(victimUUID)) return;
             processedDeaths.put(victimUUID, true);
 
+            // Skip tout si la victime ou le tueur est en duel (gere par DuelManager)
+            if (DuelManager.isInDuel(victimUUID)) return;
+
+            UUID killerUUID = EldaniorSystem.get().getLastAttackers().remove(victimUUID);
+            if (killerUUID != null && DuelManager.isInDuel(killerUUID)) return;
+
             // --- PÉNALITÉ DE MORT : -10% XP si la victime est un joueur ---
             if (store.getComponent(entityRef, Player.getComponentType()) != null) {
                 applyDeathPenalty(victimUUID, entityRef, store, commandBuffer);
             }
 
-            UUID killerUUID = EldaniorSystem.get().getLastAttackers().remove(victimUUID);
             if (killerUUID != null) {
                 processKillRewards(killerUUID, victimUUID, entityRef, store, commandBuffer);
             }
@@ -135,6 +144,16 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
 
             // On applique le multiplicateur et on empêche l'XP de tomber sous 1 point
             xpAmount = (int) Math.max(1, Math.round(xpAmount * multiplier));
+
+            // --- PK MODIFIERS ---
+            boolean killerIsPK = killerDataRead != null && killerDataRead.isPK();
+            if (killerIsPK) {
+                if (isMob) {
+                    xpAmount = (int) (xpAmount * 0.70); // -30% XP mobs
+                } else if (isPvP) {
+                    xpAmount = (int) (xpAmount * 1.20); // +20% XP PvP
+                }
+            }
             // ----------------------------------------
 
             PlayerLevelData dataToWrite = (killerDataRead != null)
@@ -151,7 +170,43 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
             // --- PVP KILL TRACKING ---
             if (isPvP) {
                 dataToWrite.addPlayerKill();
-                if (killerGuild != null) killerGuild.addPlayerKill();
+                int pvpContrib = Math.max(1, xpAmount / 5); // PvP = XP/5 (double du PvE)
+                if (killerGuild != null) {
+                    killerGuild.addPlayerKill();
+                    killerGuild.addContribution(pvpContrib);
+                }
+                String pvpFamilyId = dataToWrite.getNobleFamilyId();
+                if (pvpFamilyId != null && !pvpFamilyId.isEmpty()) {
+                    FamilyManager.getRuntimeData(pvpFamilyId).addContribution(pvpContrib);
+                }
+
+                // Classement persistant
+                ClassementManager.updatePvPKills(killerRefObj.getUsername(), dataToWrite.getPlayerKills());
+
+                // --- BOUNTY : si le tueur est PK, augmenter sa prime ---
+                if (killerIsPK) {
+                    long bountyIncrease = 500 + (dataToWrite.getPlayerKills() * 100L);
+                    dataToWrite.addBounty(bountyIncrease);
+                    dataToWrite.setLastPvPKillTime(System.currentTimeMillis());
+                }
+
+                // --- RECOMPENSE : si la victime etait PK, le tueur recoit la prime ---
+                PlayerLevelData victimDataPK = store.getComponent(victimRef, lvlType);
+                if (victimDataPK != null && victimDataPK.isPK()) {
+                    long bountyReward = victimDataPK.collectBounty();
+                    long bonusXP = xpAmount * 2; // Double XP pour tuer un PK
+                    long bonusGold = Math.max(1000, bountyReward);
+
+                    dataToWrite.addExperience((int) bonusXP);
+                    dataToWrite.addMoney(bonusGold);
+
+                    // Sauvegarder la victime PK (bounty a 0)
+                    commandBuffer.putComponent(victimRef, lvlType, victimDataPK);
+
+                    NotificationHelper.sendNotification(killerRefObj,
+                            "<color:gold>PRIME RECLAMEE !</color> <color:green>+" + bonusGold + " Or +" + bonusXP + " XP</color>",
+                            NotificationStyle.Success);
+                }
 
                 // Verifier titres PvP
                 java.util.List<TitleModel> pvpTitles = TitleManager.checkTitleUnlocks(dataToWrite);
@@ -169,7 +224,23 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
                 if (npcForKill != null) {
                     String mobTypeId = npcForKill.getNPCTypeId().toLowerCase();
                     dataToWrite.addMobKill(mobTypeId);
-                    if (killerGuild != null) killerGuild.addMobKill();
+                    int contribPoints = Math.max(1, xpAmount / 10);
+                    if (killerGuild != null) {
+                        killerGuild.addMobKill();
+                        killerGuild.addContribution(contribPoints);
+                    }
+
+                    // Contribution famille
+                    String killerFamilyId = dataToWrite.getNobleFamilyId();
+                    if (killerFamilyId != null && !killerFamilyId.isEmpty()) {
+                        FamilyManager.getRuntimeData(killerFamilyId).addContribution(contribPoints);
+                    }
+
+                    // Classement persistant
+                    ClassementManager.updateMobKills(killerRefObj.getUsername(), dataToWrite.getTotalMobKills());
+
+                    // Progression quete
+                    QuestManager.onMobKill(killerUUID, mobTypeId);
 
                     // Verifier si de nouveaux titres sont debloques
                     java.util.List<TitleModel> newTitles = TitleManager.checkTitleUnlocks(dataToWrite);
@@ -273,13 +344,16 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
             dataToWrite.addPlayerDeath();
             Guild victimGuild = GuildManager.getPlayerGuild(playerUUID);
             if (victimGuild != null) victimGuild.addDeath();
-            int xpLost = dataToWrite.removeExperiencePercent(0.10);
+            // PK perd 20% d'XP a la mort, non-PK perd 10%
+            double deathPenalty = dataToWrite.isPK() ? 0.20 : 0.10;
+            int xpLost = dataToWrite.removeExperiencePercent(deathPenalty);
             commandBuffer.putComponent(playerEntityRef, lvlType, dataToWrite);
 
+            String penaltyText = dataToWrite.isPK()
+                    ? "<color:red>☠ Mort criminelle : -" + xpLost + " XP (-20%)</color>"
+                    : "<color:red>☠ Mort : -" + xpLost + " XP (-10%)</color>";
             if (xpLost > 0) {
-                NotificationHelper.sendNotification(playerRefObj,
-                        "<color:red>☠ Mort : -" + xpLost + " XP (-10%)</color>",
-                        NotificationStyle.Danger);
+                NotificationHelper.sendNotification(playerRefObj, penaltyText, NotificationStyle.Danger);
             }
         } catch (Exception e) {
             LOGGER.atSevere().withCause(e).log("ERREUR lors de la pénalité de mort");

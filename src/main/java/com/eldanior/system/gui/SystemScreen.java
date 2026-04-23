@@ -3,6 +3,11 @@ package com.eldanior.system.gui;
 import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.gui.tabs.AdminTab;
+import com.eldanior.system.gui.tabs.BlackMarketTab;
+import com.eldanior.system.gui.tabs.QuestTab;
+import com.eldanior.system.gui.tabs.DuelTab;
+import com.eldanior.system.gui.tabs.ShopTab;
+import com.eldanior.system.gui.tabs.ClassementsTab;
 import com.eldanior.system.gui.tabs.FamilleTab;
 import com.eldanior.system.gui.tabs.CompetencesTab;
 import com.eldanior.system.gui.tabs.GuildeTab;
@@ -31,7 +36,7 @@ import javax.annotation.Nonnull;
 public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEventData> {
 
     private static final String[] TAB_IDS = {
-            "Profil", "Inventaire", "Competences", "Guilde", "Groupe", "Famille", "Titres", "Admin"
+            "Profil", "Inventaire", "Competences", "Guilde", "Groupe", "Famille", "Titres", "Quetes", "Classements", "Duel", "Shop", "BlackMarket", "Admin"
     };
 
     public SystemScreen(@Nonnull PlayerRef playerRef) {
@@ -126,33 +131,129 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
                     EventData.of("Action", "title_equip").append("Param", String.valueOf(i)));
         }
 
+        // Famille/Guilde deposit buttons
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#GuildeBtnDeposit", EventData.of("Action", "guild_deposit"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#GuildeBtnWithdraw", EventData.of("Action", "guild_withdraw"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#FamBtnDeposit", EventData.of("Action", "fam_deposit"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#FamBtnWithdraw", EventData.of("Action", "fam_withdraw"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#FamBtnLeave", EventData.of("Action", "fam_leave"));
+
         // Famille choose buttons
         for (int i = 0; i < FamilleTab.MAX_FAMILY_SLOTS; i++) {
             events.addEventBinding(CustomUIEventBindingType.Activating, "#FamBtn" + i,
                     EventData.of("Action", "fam_choose").append("Param", String.valueOf(i)));
         }
-
-        // Admin events
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#AdminBtnKingdom", EventData.of("Action", "admin_kingdom"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#AdminBtnChurchStatus", EventData.of("Action", "admin_church"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#AdminBtnTreasure", EventData.of("Action", "admin_treasure"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#AdminBtnRelic", EventData.of("Action", "admin_relic"));
-        for (int i = 0; i < AdminTab.MAX_PLAYER_SLOTS; i++) {
-            events.addEventBinding(CustomUIEventBindingType.Activating, "#AdminReset" + i, EventData.of("Action", "admin_reset").append("Param", String.valueOf(i)));
-            events.addEventBinding(CustomUIEventBindingType.Activating, "#AdminXP" + i, EventData.of("Action", "admin_xp").append("Param", String.valueOf(i)));
-            // Nobility
-            events.addEventBinding(CustomUIEventBindingType.Activating, "#NobChev" + i, EventData.of("Action", "admin_nob").append("Param", i + ":CHEVALIER"));
-            events.addEventBinding(CustomUIEventBindingType.Activating, "#NobBaron" + i, EventData.of("Action", "admin_nob").append("Param", i + ":BARON"));
-            events.addEventBinding(CustomUIEventBindingType.Activating, "#NobComte" + i, EventData.of("Action", "admin_nob").append("Param", i + ":COMTE"));
-            events.addEventBinding(CustomUIEventBindingType.Activating, "#NobDuc" + i, EventData.of("Action", "admin_nob").append("Param", i + ":DUC"));
-            events.addEventBinding(CustomUIEventBindingType.Activating, "#NobMarq" + i, EventData.of("Action", "admin_nob").append("Param", i + ":MARQUIS"));
-            events.addEventBinding(CustomUIEventBindingType.Activating, "#NobKing" + i, EventData.of("Action", "admin_nob").append("Param", i + ":ROI"));
-            // Church
-            events.addEventBinding(CustomUIEventBindingType.Activating, "#ChPret" + i, EventData.of("Action", "admin_ch").append("Param", i + ":PRETRE"));
-            events.addEventBinding(CustomUIEventBindingType.Activating, "#ChArch" + i, EventData.of("Action", "admin_ch").append("Param", i + ":ARCHEVEQUE"));
-            events.addEventBinding(CustomUIEventBindingType.Activating, "#ChCard" + i, EventData.of("Action", "admin_ch").append("Param", i + ":CARDINAL"));
-            events.addEventBinding(CustomUIEventBindingType.Activating, "#ChPope" + i, EventData.of("Action", "admin_ch").append("Param", i + ":PAPE"));
+        // Famille invite buttons
+        for (int i = 0; i < FamilleTab.MAX_INVITE_SLOTS; i++) {
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#FamInvBtn" + i,
+                    EventData.of("Action", "fam_invite").append("Param", String.valueOf(i)));
         }
+
+        // Populate quest tab
+        QuestTab.populate(ui, ref, store);
+        for (int i = 0; i < QuestTab.MAX_QUEST_SLOTS; i++) {
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#QSlotBtnAccept" + i, EventData.of("Action", "quest_accept").append("Param", String.valueOf(i)));
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#QSlotBtnActivate" + i, EventData.of("Action", "quest_activate").append("Param", String.valueOf(i)));
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#QSlotBtnClaim" + i, EventData.of("Action", "quest_claim").append("Param", String.valueOf(i)));
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#QSlotBtnAbandon" + i, EventData.of("Action", "quest_abandon").append("Param", String.valueOf(i)));
+        }
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#QActiveBtnAbandon", EventData.of("Action", "quest_abandon_active"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnQuetes", EventData.of("Action", "tab_quetes"));
+
+        // Populate shop tab (PK ne voient pas le shop normal)
+        boolean isPK = data.isPK();
+        if (isPK) {
+            ui.set("#TabBtnShop.Visible", false);
+        } else {
+            ShopTab.populate(ui, ref, store);
+        }
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#ShopBtnPrev", EventData.of("Action", "shop_prev"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#ShopBtnNext", EventData.of("Action", "shop_next"));
+        for (int i = 0; i < ShopTab.MAX_SHOP_SLOTS; i++) {
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#ShopBtnBuy" + i,
+                    EventData.of("Action", "shop_buy").append("Param", String.valueOf(i)));
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#ShopBtnCancel" + i,
+                    EventData.of("Action", "shop_cancel").append("Param", String.valueOf(i)));
+        }
+
+        // Populate black market (visible si PK ou admin)
+        boolean showBM = data.isPK() || (playerCheck != null && playerCheck.hasPermission("eldanior.command.setlevel"));
+        ui.set("#TabBtnBlackMarket.Visible", showBM);
+        if (showBM) {
+            BlackMarketTab.populate(ui, ref, store);
+        }
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnBlackMarket", EventData.of("Action", "tab_blackmarket"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#BMBtnPrev", EventData.of("Action", "bm_prev"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#BMBtnNext", EventData.of("Action", "bm_next"));
+        for (int i = 0; i < BlackMarketTab.MAX_SLOTS; i++) {
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#BMBtnBuy" + i, EventData.of("Action", "bm_buy").append("Param", String.valueOf(i)));
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#BMBtnCancel" + i, EventData.of("Action", "bm_cancel").append("Param", String.valueOf(i)));
+        }
+
+        // Populate duel tab
+        DuelTab.populate(ui, ref, store);
+        for (int i = 0; i < DuelTab.MAX_INVITE_SLOTS; i++) {
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#DuelChallenge" + i,
+                    EventData.of("Action", "duel_challenge").append("Param", String.valueOf(i)));
+        }
+
+        // Populate classements
+        ClassementsTab.populate(ui, ref, store);
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#RkBtnMobs", EventData.of("Action", "rk_mobs"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#RkBtnPvP", EventData.of("Action", "rk_pvp"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#RkBtnGuildFam", EventData.of("Action", "rk_guildfam"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#RkBtnDuel", EventData.of("Action", "rk_duel"));
+
+        // Admin events - player selector
+        for (int i = 0; i < AdminTab.MAX_PLAYER_SLOTS; i++) {
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#ASelPlayer" + i, EventData.of("Action", "admin_sel").append("Param", String.valueOf(i)));
+        }
+        // Admin action buttons
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#AResetLv", EventData.of("Action", "admin_reset"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#AXP1k", EventData.of("Action", "admin_xp").append("Param", "1000"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#AXP10k", EventData.of("Action", "admin_xp").append("Param", "10000"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#AXP100k", EventData.of("Action", "admin_xp").append("Param", "100000"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#ALv50", EventData.of("Action", "admin_setlv").append("Param", "50"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#ALv100", EventData.of("Action", "admin_setlv").append("Param", "100"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#ALv200", EventData.of("Action", "admin_setlv").append("Param", "200"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#AGold10k", EventData.of("Action", "admin_gold").append("Param", "10000"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#AGold100k", EventData.of("Action", "admin_gold").append("Param", "100000"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#AGold1m", EventData.of("Action", "admin_gold").append("Param", "1000000"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#ACWar", EventData.of("Action", "admin_class").append("Param", "warrior"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#ACMag", EventData.of("Action", "admin_class").append("Param", "mage"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#ACArc", EventData.of("Action", "admin_class").append("Param", "archer"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#ACAss", EventData.of("Action", "admin_class").append("Param", "assassin"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#ACDra", EventData.of("Action", "admin_class").append("Param", "dragon"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#ANChev", EventData.of("Action", "admin_nob").append("Param", "CHEVALIER"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#ANBaron", EventData.of("Action", "admin_nob").append("Param", "BARON"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#ANComte", EventData.of("Action", "admin_nob").append("Param", "COMTE"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#ANDuc", EventData.of("Action", "admin_nob").append("Param", "DUC"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#ANMarq", EventData.of("Action", "admin_nob").append("Param", "MARQUIS"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#ANRoi", EventData.of("Action", "admin_nob").append("Param", "ROI"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#ACPret", EventData.of("Action", "admin_ch").append("Param", "PRETRE"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#ACArch", EventData.of("Action", "admin_ch").append("Param", "ARCHEVEQUE"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#ACCard", EventData.of("Action", "admin_ch").append("Param", "CARDINAL"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#ACPope", EventData.of("Action", "admin_ch").append("Param", "PAPE"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#APK", EventData.of("Action", "admin_pk"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#ATitleRst", EventData.of("Action", "admin_titlerst"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#ARelic", EventData.of("Action", "admin_relic"));
+        // (command exec removed - prefill sends to chat directly)
+        // Prefill buttons
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillTitleGrant", EventData.of("Action", "admin_prefill").append("Param", "titleadmin grant <player> <titleId>"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillTitleRemove", EventData.of("Action", "admin_prefill").append("Param", "titleadmin remove <player> <titleId>"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillFamilySet", EventData.of("Action", "admin_prefill").append("Param", "familyset <player> <familyId>"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillGuildCreate", EventData.of("Action", "admin_prefill").append("Param", "guildcreate <nom> <tag>"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillSetLevel", EventData.of("Action", "admin_prefill").append("Param", "setlevel <player> <level>"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillAddXP", EventData.of("Action", "admin_prefill").append("Param", "addxp <player> <amount>"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillGuildDisband", EventData.of("Action", "admin_prefill").append("Param", "guilddisband"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillKingdom", EventData.of("Action", "admin_prefill").append("Param", "kingdom _"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillChurchStatus", EventData.of("Action", "admin_prefill").append("Param", "church status _"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillBankGive", EventData.of("Action", "admin_prefill").append("Param", "bankGive <amount>"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillSetClass", EventData.of("Action", "admin_prefill").append("Param", "setclass <player> <warrior|mage|archer|assassin|dragon>"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillRankDemote", EventData.of("Action", "admin_prefill").append("Param", "rank demote <player>"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillChurchDemote", EventData.of("Action", "admin_prefill").append("Param", "church demote <player>"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillSetVice", EventData.of("Action", "admin_prefill").append("Param", "nstatus setvice <player>"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillClassInfo", EventData.of("Action", "admin_prefill").append("Param", "classinfo <player>"));
 
         // === EVENT BINDINGS ===
 
@@ -164,6 +265,9 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnGroupe",      EventData.of("Action", "tab_groupe"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnFamille",     EventData.of("Action", "tab_famille"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnTitres",      EventData.of("Action", "tab_titres"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnClassements", EventData.of("Action", "tab_classements"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnDuel",        EventData.of("Action", "tab_duel"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnShop",        EventData.of("Action", "tab_shop"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnAdmin",      EventData.of("Action", "tab_admin"));
 
         // Attribute buttons (+1)
@@ -216,6 +320,53 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             return;
         }
 
+        // Deposits
+        if ("guild_deposit".equals(eventData.action)) {
+            if (GuildeTab.handleDeposit(ref, store)) {
+                refreshGuildeTab(ref, store);
+                refreshProfilTab(ref, store); // update money in sidebar
+            }
+            return;
+        }
+        if ("guild_withdraw".equals(eventData.action)) {
+            if (GuildeTab.handleWithdraw(ref, store)) {
+                refreshGuildeTab(ref, store);
+                refreshProfilTab(ref, store);
+            }
+            return;
+        }
+        if ("fam_deposit".equals(eventData.action)) {
+            if (FamilleTab.handleDeposit(ref, store)) {
+                refreshFamilleTab(ref, store);
+                refreshProfilTab(ref, store);
+            }
+            return;
+        }
+        if ("fam_withdraw".equals(eventData.action)) {
+            if (FamilleTab.handleWithdraw(ref, store)) {
+                refreshFamilleTab(ref, store);
+                refreshProfilTab(ref, store);
+            }
+            return;
+        }
+
+        // Famille leave
+        if ("fam_leave".equals(eventData.action)) {
+            if (FamilleTab.handleLeave(ref, store)) {
+                refreshFamilleTab(ref, store);
+                refreshProfilTab(ref, store);
+            }
+            return;
+        }
+
+        // Famille invite
+        if ("fam_invite".equals(eventData.action) && eventData.param != null) {
+            if (FamilleTab.handleInviteByIndex(eventData.param, ref, store)) {
+                refreshFamilleTab(ref, store);
+            }
+            return;
+        }
+
         // Famille choose
         if ("fam_choose".equals(eventData.action) && eventData.param != null) {
             if (FamilleTab.handleChoose(eventData.param, ref, store)) {
@@ -225,9 +376,82 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             return;
         }
 
+        // Quest actions
+        if ("quest_accept".equals(eventData.action) && eventData.param != null) {
+            if (QuestTab.handleAccept(eventData.param, ref, store)) refreshQuestTab(ref, store);
+            return;
+        }
+        if ("quest_activate".equals(eventData.action) && eventData.param != null) {
+            if (QuestTab.handleActivate(eventData.param, ref, store)) {
+                refreshQuestTab(ref, store);
+                // Set le QuestHud
+                setQuestHud(ref, store);
+            }
+            return;
+        }
+        if ("quest_claim".equals(eventData.action) && eventData.param != null) {
+            if (QuestTab.handleClaim(eventData.param, ref, store)) refreshQuestTab(ref, store);
+            return;
+        }
+        if ("quest_abandon".equals(eventData.action) && eventData.param != null) {
+            if (QuestTab.handleAbandon(eventData.param, ref, store)) refreshQuestTab(ref, store);
+            return;
+        }
+        if ("quest_abandon_active".equals(eventData.action)) {
+            if (QuestTab.handleAbandonActive(ref, store)) refreshQuestTab(ref, store);
+            return;
+        }
+
+        // Shop pagination
+        if ("shop_prev".equals(eventData.action)) {
+            ShopTab.prevPage();
+            refreshShopTab(ref, store);
+            return;
+        }
+        if ("shop_next".equals(eventData.action)) {
+            ShopTab.nextPage();
+            refreshShopTab(ref, store);
+            return;
+        }
+
+        // Shop
+        if ("shop_buy".equals(eventData.action) && eventData.param != null) {
+            if (ShopTab.handleBuy(eventData.param, ref, store)) refreshShopTab(ref, store);
+            return;
+        }
+        if ("shop_cancel".equals(eventData.action) && eventData.param != null) {
+            if (ShopTab.handleCancel(eventData.param, ref, store)) refreshShopTab(ref, store);
+            return;
+        }
+
+        // Black Market
+        if ("bm_prev".equals(eventData.action)) { BlackMarketTab.prevPage(); refreshBlackMarketTab(ref, store); return; }
+        if ("bm_next".equals(eventData.action)) { BlackMarketTab.nextPage(); refreshBlackMarketTab(ref, store); return; }
+        if ("bm_buy".equals(eventData.action) && eventData.param != null) {
+            if (BlackMarketTab.handleBuy(eventData.param, ref, store)) refreshBlackMarketTab(ref, store); return;
+        }
+        if ("bm_cancel".equals(eventData.action) && eventData.param != null) {
+            if (BlackMarketTab.handleCancel(eventData.param, ref, store)) refreshBlackMarketTab(ref, store); return;
+        }
+
+        // Duel challenge
+        if ("duel_challenge".equals(eventData.action) && eventData.param != null) {
+            DuelTab.handleChallenge(eventData.param, ref, store);
+            return;
+        }
+
+        // Ranking category switch
+        if (eventData.action.startsWith("rk_")) {
+            String cat = eventData.action.substring(3);
+            UICommandBuilder update = new UICommandBuilder();
+            ClassementsTab.switchCategory(cat, update);
+            this.sendUpdate(update);
+            return;
+        }
+
         // Admin actions
         if (eventData.action.startsWith("admin_")) {
-            handleAdminAction(eventData.action, eventData.param, ref, store);
+            handleAdminAction(eventData.action, eventData.param, eventData, ref, store);
             return;
         }
 
@@ -298,47 +522,79 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         }
     }
 
-    private void handleAdminAction(String action, String param, Ref<EntityStore> ref, Store<EntityStore> store) {
+    private void handleAdminAction(String action, String param, SystemEventData eventData, Ref<EntityStore> ref, Store<EntityStore> store) {
         com.hypixel.hytale.server.core.entity.entities.Player player = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
 
         switch (action) {
-            case "admin_kingdom" -> {
-                if (player != null) player.sendMessage(Message.raw("§eTapez : /es kingdom _"));
-            }
-            case "admin_church" -> {
-                if (player != null) player.sendMessage(Message.raw("§eTapez : /es church status _"));
-            }
-            case "admin_treasure" -> {
-                if (player != null) player.sendMessage(Message.raw("§eTapez : /es treasureconfig"));
-            }
-            case "admin_relic" -> {
-                if (player != null) player.sendMessage(Message.raw("§eTapez : /es getrelic"));
+            case "admin_sel" -> {
+                if (param != null) {
+                    AdminTab.selectPlayer(Integer.parseInt(param));
+                    refreshAdminTab(ref, store);
+                }
             }
             case "admin_reset" -> {
-                if (param != null && AdminTab.handleResetLevel(param, ref, store)) {
+                if (AdminTab.handleResetLevel(ref, store)) {
                     if (player != null) player.sendMessage(Message.raw("§aJoueur reset !"));
                     refreshAdminTab(ref, store);
                 }
             }
             case "admin_xp" -> {
-                if (param != null && AdminTab.handleAddXP(param, ref, store)) {
-                    if (player != null) player.sendMessage(Message.raw("§a+10,000 XP ajoute !"));
+                if (param != null && AdminTab.handleAddXP(Integer.parseInt(param), ref, store)) {
+                    if (player != null) player.sendMessage(Message.raw("§a+" + param + " XP !"));
+                    refreshAdminTab(ref, store);
+                }
+            }
+            case "admin_setlv" -> {
+                if (param != null && AdminTab.handleSetLevel(Integer.parseInt(param), ref, store)) {
+                    if (player != null) player.sendMessage(Message.raw("§aNiveau defini a " + param));
+                    refreshAdminTab(ref, store);
+                }
+            }
+            case "admin_gold" -> {
+                if (param != null && AdminTab.handleGiveGold(Long.parseLong(param), ref, store)) {
+                    if (player != null) player.sendMessage(Message.raw("§a+" + param + " Or !"));
+                    refreshAdminTab(ref, store);
+                }
+            }
+            case "admin_class" -> {
+                if (param != null && AdminTab.handleSetClass(param, ref, store)) {
+                    if (player != null) player.sendMessage(Message.raw("§aClasse: " + param));
+                    refreshAdminTab(ref, store);
                 }
             }
             case "admin_nob" -> {
-                if (param != null && param.contains(":")) {
-                    String[] parts = param.split(":");
-                    if (AdminTab.handleNobilityPromote(parts[0], parts[1], ref, store)) {
-                        if (player != null) player.sendMessage(Message.raw("§aPromu en " + parts[1]));
-                    }
+                if (param != null && AdminTab.handleNobilityPromote(param, ref, store)) {
+                    if (player != null) player.sendMessage(Message.raw("§aRang: " + param));
+                    refreshAdminTab(ref, store);
                 }
             }
             case "admin_ch" -> {
-                if (param != null && param.contains(":")) {
-                    String[] parts = param.split(":");
-                    if (AdminTab.handleChurchPromote(parts[0], parts[1], ref, store)) {
-                        if (player != null) player.sendMessage(Message.raw("§aPromu en " + parts[1]));
-                    }
+                if (param != null && AdminTab.handleChurchPromote(param, ref, store)) {
+                    if (player != null) player.sendMessage(Message.raw("§aEglise: " + param));
+                    refreshAdminTab(ref, store);
+                }
+            }
+            case "admin_pk" -> {
+                if (AdminTab.handleSetPK(ref, store)) {
+                    if (player != null) player.sendMessage(Message.raw("§ePK toggle !"));
+                    refreshAdminTab(ref, store);
+                }
+            }
+            case "admin_titlerst" -> {
+                if (AdminTab.handleResetTitles(ref, store)) {
+                    if (player != null) player.sendMessage(Message.raw("§aTitres reset !"));
+                    refreshAdminTab(ref, store);
+                }
+            }
+            case "admin_relic" -> {
+                if (player != null) player.sendMessage(Message.raw("§eTapez : /es getrelic"));
+            }
+            case "admin_prefill" -> {
+                if (param != null && player != null) {
+                    String name = AdminTab.getSelectedPlayerName();
+                    String cmd = param.replace("<player>", name != null ? name : "<player>");
+                    player.sendMessage(Message.raw("§6Tapez dans le chat :"));
+                    player.sendMessage(Message.raw("§f/es " + cmd));
                 }
             }
         }
@@ -350,9 +606,79 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         this.sendUpdate(update);
     }
 
+    private void refreshQuestTab(Ref<EntityStore> ref, Store<EntityStore> store) {
+        UICommandBuilder update = new UICommandBuilder();
+        QuestTab.populate(update, ref, store);
+        appendProfilRefresh(update, ref, store);
+        this.sendUpdate(update);
+    }
+
+    private void setQuestHud(Ref<EntityStore> ref, Store<EntityStore> store) {
+        try {
+            com.hypixel.hytale.server.core.entity.entities.Player player = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
+            PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
+            if (player == null || pRef == null) return;
+            java.lang.reflect.Field f = PlayerRef.class.getDeclaredField("uuid");
+            f.setAccessible(true);
+            java.util.UUID uuid = (java.util.UUID) f.get(pRef);
+
+            var currentHud = player.getHudManager().getCustomHud();
+            if (currentHud instanceof com.eldanior.system.hud.CombinedHud) {
+                currentHud.show(); // Refresh
+            } else {
+                var data = store.getComponent(ref, com.eldanior.system.EldaniorSystem.get().getPlayerLevelDataType());
+                com.eldanior.system.hud.CombinedHud hud = new com.eldanior.system.hud.CombinedHud(pRef, uuid);
+                hud.setCachedData(data, player);
+                player.getHudManager().setCustomHud(pRef, hud);
+            }
+        } catch (Exception e) { e.printStackTrace(); }
+    }
+
+    /** Rafraichit la sidebar + le profil dans un UICommandBuilder existant */
+    private void appendProfilRefresh(UICommandBuilder update, Ref<EntityStore> ref, Store<EntityStore> store) {
+        ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
+        PlayerLevelData data = store.getComponent(ref, type);
+        if (data == null) return;
+
+        String playerName = getPlayerName(ref, store);
+
+        // Sidebar
+        update.set("#SidebarPlayerName.Text", playerName);
+        update.set("#SidebarPlayerInfo.Text", data.getPlayerClass() + " - Niv." + data.getLevel());
+        update.set("#SidebarMoney.Text", data.getMoney() + " Or");
+        update.set("#SidebarLevel.Text", "Niveau " + data.getLevel());
+
+        // Famille visible si Duc, Marquis ou Roi
+        String rankStr = data.getNobilityRank();
+        String familyId = data.getNobleFamilyId();
+        boolean showFamille = (familyId != null && !familyId.isEmpty());
+        if (!showFamille && rankStr != null) {
+            showFamille = "DUC".equals(rankStr) || "MARQUIS".equals(rankStr) || "ROI".equals(rankStr);
+        }
+        update.set("#TabBtnFamille.Visible", showFamille);
+
+        // Profil tab
+        ProfilTab.populate(update, ref, store, data, playerName);
+    }
+
+    private void refreshBlackMarketTab(Ref<EntityStore> ref, Store<EntityStore> store) {
+        UICommandBuilder update = new UICommandBuilder();
+        BlackMarketTab.populate(update, ref, store);
+        appendProfilRefresh(update, ref, store);
+        this.sendUpdate(update);
+    }
+
+    private void refreshShopTab(Ref<EntityStore> ref, Store<EntityStore> store) {
+        UICommandBuilder update = new UICommandBuilder();
+        ShopTab.populate(update, ref, store);
+        appendProfilRefresh(update, ref, store);
+        this.sendUpdate(update);
+    }
+
     private void refreshAdminTab(Ref<EntityStore> ref, Store<EntityStore> store) {
         UICommandBuilder update = new UICommandBuilder();
         AdminTab.populate(update, ref, store);
+        appendProfilRefresh(update, ref, store);
         this.sendUpdate(update);
     }
 
@@ -365,6 +691,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
     private void refreshGuildeTab(Ref<EntityStore> ref, Store<EntityStore> store) {
         UICommandBuilder update = new UICommandBuilder();
         GuildeTab.populate(update, ref, store);
+        appendProfilRefresh(update, ref, store);
         this.sendUpdate(update);
     }
 
@@ -377,6 +704,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
     private void refreshTitresTab(Ref<EntityStore> ref, Store<EntityStore> store) {
         UICommandBuilder update = new UICommandBuilder();
         TitresTab.populate(update, ref, store);
+        appendProfilRefresh(update, ref, store);
         this.sendUpdate(update);
     }
 
@@ -394,13 +722,31 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             update.set("#Tab" + tab + ".Visible", false);
         }
 
-        // Show target tab
+        // Show target tab (find matching TAB_ID case-insensitive)
         String targetId = tabName.substring(0, 1).toUpperCase() + tabName.substring(1);
+        for (String tab : TAB_IDS) {
+            if (tab.equalsIgnoreCase(tabName)) { targetId = tab; break; }
+        }
         update.set("#Tab" + targetId + ".Visible", true);
 
         // Refresh tab data
         if ("inventaire".equals(tabName)) {
             InventaireTab.refreshOnly(update, ref, store);
+        }
+        if ("blackmarket".equals(tabName)) {
+            BlackMarketTab.populate(update, ref, store);
+        }
+        if ("quetes".equals(tabName)) {
+            QuestTab.populate(update, ref, store);
+        }
+        if ("shop".equals(tabName)) {
+            ShopTab.populate(update, ref, store);
+        }
+        if ("duel".equals(tabName)) {
+            DuelTab.populate(update, ref, store);
+        }
+        if ("classements".equals(tabName)) {
+            ClassementsTab.populate(update, ref, store);
         }
         if ("admin".equals(tabName)) {
             AdminTab.populate(update, ref, store);
@@ -457,8 +803,10 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         public static final BuilderCodec<SystemEventData> CODEC = BuilderCodec.builder(SystemEventData.class, SystemEventData::new)
                 .append(new KeyedCodec<>("Action", Codec.STRING), (d, v) -> d.action = v, d -> d.action).add()
                 .append(new KeyedCodec<>("Param", Codec.STRING), (d, v) -> d.param = v, d -> d.param).add()
+                .append(new KeyedCodec<>("InputText", Codec.STRING), (d, v) -> d.inputText = v, d -> d.inputText).add()
                 .build();
         public String action;
         public String param;
+        public String inputText;
     }
 }

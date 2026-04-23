@@ -39,6 +39,22 @@ public class Guild {
     public void addPlayerKill() { this.totalPlayerKills++; }
     public void addDeath() { this.totalDeaths++; }
 
+    // Tresorerie & Contribution
+    private long treasury = 0;
+    private long contribution = 0;
+
+    public long getTreasury() { return treasury; }
+    public void addTreasury(long amount) { this.treasury += amount; }
+    public boolean withdrawTreasury(long amount) {
+        if (treasury < amount) return false;
+        treasury -= amount;
+        return true;
+    }
+    public long getContribution() { return contribution; }
+    public void addContribution(long points) { this.contribution += points; }
+    public void setTreasury(long v) { this.treasury = v; }
+    public void setContribution(long v) { this.contribution = v; }
+
     // Membres
     public Set<UUID> getMembers() { return members; }
     public int getMemberCount() { return members.size(); }

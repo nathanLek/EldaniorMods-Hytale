@@ -1,5 +1,6 @@
 package com.eldanior.system.party;
 
+import com.eldanior.system.hud.CombinedHud;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
@@ -12,15 +13,23 @@ import javax.annotation.Nonnull;
 import java.lang.reflect.Field;
 import java.util.UUID;
 
+/**
+ * Rafraichit le party HUD toutes les ~0.5s.
+ * Delegue au CombinedHud qui gere quetes + groupe.
+ */
 public class PartyHudUpdateSystem extends EntityTickingSystem<EntityStore> {
 
     private int tickCounter = 0;
+    private static Field uuidField;
+    static {
+        try { uuidField = PlayerRef.class.getDeclaredField("uuid"); uuidField.setAccessible(true); }
+        catch (Exception ignored) {}
+    }
 
     @Override
     public void tick(float dt, int index, @Nonnull ArchetypeChunk<EntityStore> archetypeChunk,
                      @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
 
-        // Rafraichir toutes les 10 ticks (~0.5s) pour ne pas spammer
         tickCounter++;
         if (tickCounter % 10 != 0) return;
 
@@ -34,24 +43,19 @@ public class PartyHudUpdateSystem extends EntityTickingSystem<EntityStore> {
         if (playerRef == null) return;
 
         UUID playerUUID = extractUUID(playerRef);
-        if (playerUUID == null) return;
+        if (playerUUID == null || !PartyManager.hasParty(playerUUID)) return;
 
-        if (!PartyManager.hasParty(playerUUID)) return;
-
+        // Le CombinedHud gere tout. S'il n'existe pas encore, QuestHudUpdateSystem le creera.
         CustomUIHud hud = player.getHudManager().getCustomHud();
-        if (hud instanceof PartyHud) {
-            hud.show();
+        if (hud instanceof CombinedHud) {
+            hud.show(); // Force refresh
         }
     }
 
     private UUID extractUUID(PlayerRef playerRef) {
-        try {
-            Field uuidField = PlayerRef.class.getDeclaredField("uuid");
-            uuidField.setAccessible(true);
-            return (UUID) uuidField.get(playerRef);
-        } catch (Exception e) {
-            return null;
-        }
+        if (uuidField == null) return null;
+        try { return (UUID) uuidField.get(playerRef); }
+        catch (Exception e) { return null; }
     }
 
     @Nonnull

@@ -178,7 +178,7 @@ public class InventaireTab {
         return formatItemName(stack.getItemId());
     }
 
-    private static String translate(String key) {
+    public static String translate(String key) {
         if (key == null || key.isEmpty()) return null;
         try {
             String result = I18nModule.get().getMessage("en_us", key);
@@ -187,7 +187,7 @@ public class InventaireTab {
         return null;
     }
 
-    private static String formatItemName(String itemId) {
+    public static String formatItemName(String itemId) {
         // "Hytale:iron_sword" -> "Iron Sword"
         String id = itemId;
         int colon = id.indexOf(':');

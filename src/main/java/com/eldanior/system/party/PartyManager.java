@@ -124,9 +124,13 @@ public class PartyManager {
                 return;
             }
 
-            PartyHud hud = new PartyHud(playerRef, playerUUID);
-            hudManager.setCustomHud(playerRef, hud);
-            System.out.println("[Party] HUD affiche pour " + player.getDisplayName());
+            // Le CombinedHud sera cree/mis a jour par QuestHudUpdateSystem au prochain tick
+            // Force un show pour trigger le refresh
+            var currentHud = hudManager.getCustomHud();
+            if (currentHud instanceof com.eldanior.system.hud.CombinedHud) {
+                currentHud.show();
+            }
+            System.out.println("[Party] Groupe rejoint pour " + player.getDisplayName() + " (HUD gere par CombinedHud)");
         } catch (Exception e) {
             System.out.println("[Party] Erreur HUD: " + e.getMessage());
             e.printStackTrace();
@@ -144,7 +148,12 @@ public class PartyManager {
             var hudManager = player.getHudManager();
             if (hudManager == null) return;
 
-            hudManager.setCustomHud(playerRef, null);
+            // Ne pas supprimer le HUD - le CombinedHud gere tout
+            // Il masquera le panel groupe automatiquement au prochain tick
+            var currentHud = hudManager.getCustomHud();
+            if (currentHud instanceof com.eldanior.system.hud.CombinedHud) {
+                currentHud.show(); // Force refresh
+            }
         } catch (Exception ignored) {}
     }
 
