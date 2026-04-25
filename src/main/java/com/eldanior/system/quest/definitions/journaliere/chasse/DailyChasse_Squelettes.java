@@ -7,8 +7,8 @@ public class DailyChasse_Squelettes extends QuestModel {
         super("daily_chasse_1", "Chasse aux Squelettes",
                 "Eliminez des squelettes.",
                 QuestType.CHASSE, QuestCategory.JOURNALIERE, QuestDifficulty.F,
-                "skeleton", 20,
-                500, 1000, null,
+                "skeleton", 15,
+                100, 50, null,
                 null, null, 1440);
     }
 }

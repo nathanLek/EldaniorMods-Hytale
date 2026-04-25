@@ -124,12 +124,14 @@ public class SetLevelCommand extends AbstractAsyncCommand {
                     data.setGuildRole("");
 
                     // Reset argent
-                    data.setMoney(0);
+                    data.setMoney(1000);
 
                     // Reset quetes + cooldowns
                     data.setQuestData("");
                     data.setCooldownData("");
                     com.eldanior.system.quest.QuestManager.getPlayerQuests(targetUUID).clear();
+
+                    System.out.println("[RESET] Money=" + data.getMoney() + " QuestData='" + data.getQuestData() + "' Cooldowns='" + data.getCooldownData() + "'");
 
                 } else {
                     // --- GESTION DES POINTS SI ON LE MONTÉ DE NIVEAU ---

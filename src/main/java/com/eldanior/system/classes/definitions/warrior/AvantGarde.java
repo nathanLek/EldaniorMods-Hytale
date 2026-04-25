@@ -4,6 +4,7 @@ import com.eldanior.system.classes.models.ClassModel;
 import com.eldanior.system.config.configs.ClassType;
 import com.eldanior.system.config.configs.Rarity;
 import com.eldanior.system.config.configs.WeaponMastery;
+import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
 
 import java.util.List;
 
@@ -13,15 +14,15 @@ public class AvantGarde extends ClassModel {
         super(
                 "avant_garde",
                 "Avant-Garde",
-                "Un combattant d'elite formant la premiere ligne de defense. Son armure est sa meilleure arme.",
+                "L'Avant-Garde est une muraille vivante. Il avance en premiere ligne et ne recule jamais.",
                 Rarity.RARE,
                 ClassType.WARRIOR,
-                List.of(),
+                List.of(PassiveSkill.IRON_BODY, PassiveSkill.STEEL_CONSTITUTION, PassiveSkill.UNYIELDING),
                 List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD),
                 List.of(),
                 250,
                 false,
-                15, 40, 5, 35, 10, 5
+                30, 80, 10, 70, 20, 10
         );
     }
 }

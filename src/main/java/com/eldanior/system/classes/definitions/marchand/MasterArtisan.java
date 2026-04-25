@@ -13,15 +13,15 @@ public class MasterArtisan extends ClassModel {
         super(
                 "master_artisan",
                 "Maître Artisan",
-                "Un travailleur acharné dont le corps s'est endurci à la tâche.",
+                "Le Maitre Artisan forge des armes et armures d'une qualite inegalee. Ses creations sont recherchees dans tout le royaume.",
                 Rarity.RARE,
                 ClassType.MERCHANT,
-                List.of(PassiveSkill.ARTISANAT),
+                List.of(PassiveSkill.ARTISANAT, PassiveSkill.IRON_RESOLVE, PassiveSkill.TREASURE_HUNTER),
                 List.of(WeaponMastery.ANY),
                 List.of("guild_master"),
                 500,
                 false,
-                6, 2, 8, 7, 3, 12
+                12, 4, 16, 14, 6, 24
         );
     }
 }

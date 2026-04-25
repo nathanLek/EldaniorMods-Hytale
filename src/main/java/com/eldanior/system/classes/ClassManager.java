@@ -29,6 +29,90 @@ public class ClassManager {
         register(new Fantassin());
         register(new Brute());
         register(new Mercenaire());
+        register(new com.eldanior.system.classes.definitions.warrior.Protecteur());
+        register(new com.eldanior.system.classes.definitions.warrior.Berserker());
+        register(new com.eldanior.system.classes.definitions.warrior.Duelliste());
+        register(new com.eldanior.system.classes.definitions.warrior.Paladin());
+        register(new com.eldanior.system.classes.definitions.warrior.Gladiateur());
+        register(new com.eldanior.system.classes.definitions.warrior.Samourai());
+        register(new com.eldanior.system.classes.definitions.warrior.Warlord());
+        register(new com.eldanior.system.classes.definitions.warrior.ChevalierNoir());
+        register(new com.eldanior.system.classes.definitions.warrior.Croise());
+
+        // Mage evolutions (27)
+        register(new com.eldanior.system.classes.definitions.mage.Elementaliste());
+        register(new com.eldanior.system.classes.definitions.mage.Enchanteur());
+        register(new com.eldanior.system.classes.definitions.mage.Necromancien());
+        register(new com.eldanior.system.classes.definitions.mage.Invocateur());
+        register(new com.eldanior.system.classes.definitions.mage.Guerisseur());
+        register(new com.eldanior.system.classes.definitions.mage.Pyromancien());
+        register(new com.eldanior.system.classes.definitions.mage.Cryomancien());
+        register(new com.eldanior.system.classes.definitions.mage.Archimage());
+        register(new com.eldanior.system.classes.definitions.mage.Sorcier());
+        register(new com.eldanior.system.classes.definitions.mage.Druide());
+        register(new com.eldanior.system.classes.definitions.mage.Illusionniste());
+        register(new com.eldanior.system.classes.definitions.mage.Mystique());
+        register(new com.eldanior.system.classes.definitions.mage.Thaumaturge());
+        register(new com.eldanior.system.classes.definitions.mage.Alchimiste());
+        register(new com.eldanior.system.classes.definitions.mage.Sage());
+        register(new com.eldanior.system.classes.definitions.mage.Magus());
+        register(new com.eldanior.system.classes.definitions.mage.Liche());
+        register(new com.eldanior.system.classes.definitions.mage.Oracle());
+        register(new com.eldanior.system.classes.definitions.mage.MaitreElementaire());
+        register(new com.eldanior.system.classes.definitions.mage.Chronoturge());
+        register(new com.eldanior.system.classes.definitions.mage.Archonte());
+        register(new com.eldanior.system.classes.definitions.mage.MageVoid());
+        register(new com.eldanior.system.classes.definitions.mage.Primordial());
+        register(new com.eldanior.system.classes.definitions.mage.Demiurge());
+        register(new com.eldanior.system.classes.definitions.mage.Prophete());
+        register(new com.eldanior.system.classes.definitions.mage.AvatarArcanique());
+        register(new com.eldanior.system.classes.definitions.mage.DieuDesArcanes());
+
+        // Assassin evolutions (27)
+        register(new com.eldanior.system.classes.definitions.assassin.Voleur());
+        register(new com.eldanior.system.classes.definitions.assassin.Rodeur());
+        register(new com.eldanior.system.classes.definitions.assassin.Sicaire());
+        register(new com.eldanior.system.classes.definitions.assassin.Eclaireur());
+        register(new com.eldanior.system.classes.definitions.assassin.Empoisonneur());
+        register(new com.eldanior.system.classes.definitions.assassin.Saboteur());
+        register(new com.eldanior.system.classes.definitions.assassin.Acrobate());
+        register(new com.eldanior.system.classes.definitions.assassin.MaitreLame());
+        register(new com.eldanior.system.classes.definitions.assassin.OmbreFurtive());
+        register(new com.eldanior.system.classes.definitions.assassin.Chasseur());
+        register(new com.eldanior.system.classes.definitions.assassin.Ninja());
+        register(new com.eldanior.system.classes.definitions.assassin.Espion());
+        register(new com.eldanior.system.classes.definitions.assassin.Corsaire());
+        register(new com.eldanior.system.classes.definitions.assassin.Traqueur());
+        register(new com.eldanior.system.classes.definitions.assassin.LameNoire());
+        register(new com.eldanior.system.classes.definitions.assassin.MaitreOmbre());
+        register(new com.eldanior.system.classes.definitions.assassin.Faucheur());
+        register(new com.eldanior.system.classes.definitions.assassin.PhantomBlade());
+        register(new com.eldanior.system.classes.definitions.assassin.GrandMaitrePoison());
+        register(new com.eldanior.system.classes.definitions.assassin.AngeDechu());
+        register(new com.eldanior.system.classes.definitions.assassin.Spectre());
+        register(new com.eldanior.system.classes.definitions.assassin.SeigneurPoison());
+        register(new com.eldanior.system.classes.definitions.assassin.LameEternelle());
+        register(new com.eldanior.system.classes.definitions.assassin.OmbreSupreme());
+        register(new com.eldanior.system.classes.definitions.assassin.EmpereurDesOmbres());
+        register(new com.eldanior.system.classes.definitions.assassin.AvatarDuNeant());
+        register(new com.eldanior.system.classes.definitions.assassin.DieuDesOmbres());
+
+        // Archer evolutions (15)
+        register(new com.eldanior.system.classes.definitions.archer.Tireur());
+        register(new com.eldanior.system.classes.definitions.archer.Chasseur());
+        register(new com.eldanior.system.classes.definitions.archer.Arbaletrier());
+        register(new com.eldanior.system.classes.definitions.archer.Eclaireur());
+        register(new com.eldanior.system.classes.definitions.archer.Franc_Tireur());
+        register(new com.eldanior.system.classes.definitions.archer.RangerElite());
+        register(new com.eldanior.system.classes.definitions.archer.ArcMystique());
+        register(new com.eldanior.system.classes.definitions.archer.MaitreChasse());
+        register(new com.eldanior.system.classes.definitions.archer.SniperDivin());
+        register(new com.eldanior.system.classes.definitions.archer.TireurElementaire());
+        register(new com.eldanior.system.classes.definitions.archer.GeneralArcher());
+        register(new com.eldanior.system.classes.definitions.archer.OeilDeFaucon());
+        register(new com.eldanior.system.classes.definitions.archer.ArcAncien());
+        register(new com.eldanior.system.classes.definitions.archer.AvatarDeLArc());
+        register(new com.eldanior.system.classes.definitions.archer.DieuDeLArc());
         register(new AvantGarde());
         register(new Ravageur());
         register(new Bretteur());
@@ -52,6 +136,12 @@ public class ClassManager {
         register(new Smuggler());
         register(new WorldForger());
         register(new UnderworldKing());
+        register(new com.eldanior.system.classes.definitions.marchand.Negociant());
+        register(new com.eldanior.system.classes.definitions.marchand.Caravanier());
+        register(new com.eldanior.system.classes.definitions.marchand.Prospecteur());
+        register(new com.eldanior.system.classes.definitions.marchand.Banquier());
+        register(new com.eldanior.system.classes.definitions.marchand.MarchandDivin());
+        register(new com.eldanior.system.classes.definitions.marchand.RoiDuCommerce());
 
 
         for (ClassModel model : classes.values()) {

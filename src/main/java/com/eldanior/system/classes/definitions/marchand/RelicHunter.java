@@ -13,15 +13,15 @@ public class RelicHunter extends ClassModel {
         super(
                 "relic_hunter",
                 "Chasseur de Reliques",
-                "Son flair pour les trésors anciens défie toute logique.",
+                "Le Chasseur de Reliques parcourt le monde a la recherche d'artefacts oublies. Chaque decouverte est une fortune.",
                 Rarity.RARE,
                 ClassType.MERCHANT,
-                List.of(PassiveSkill.ARTISANAT),
+                List.of(PassiveSkill.ARTISANAT, PassiveSkill.TREASURE_HUNTER, PassiveSkill.EAGLE_EYE),
                 List.of(WeaponMastery.ANY),
                 List.of("gold_baron"),
                 500,
                 false,
-                10, 6, 10, 8, 12, 35
+                20, 12, 20, 16, 24, 70
         );
     }
 }

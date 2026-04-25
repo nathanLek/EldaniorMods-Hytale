@@ -28,6 +28,15 @@ public class AdminTab {
     private static String pendingCommand = "";
 
     public static void populate(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store) {
+        // Stats serveur
+        ui.set("#AdminStatMobs.Text", String.valueOf(com.eldanior.system.config.configs.MobXP.getTotalMobCount()));
+        ui.set("#AdminStatNpcs.Text", String.valueOf(com.eldanior.system.config.configs.MobXP.getTotalNpcCount()));
+        ui.set("#AdminStatClasses.Text", String.valueOf(com.eldanior.system.classes.ClassManager.getAll().size()));
+        ui.set("#AdminStatTitres.Text", String.valueOf(com.eldanior.system.titles.TitleManager.getAll().size()));
+        ui.set("#AdminStatSkills.Text", String.valueOf(com.eldanior.system.skills.SkillManager.getAllSkills().size()));
+        ui.set("#AdminStatQuetes.Text", String.valueOf(com.eldanior.system.quest.QuestManager.getAllQuests().size()));
+        ui.set("#AdminStatPlayers.Text", String.valueOf(Universe.get().getPlayers().size()));
+
         cachedPlayerNames.clear();
         for (PlayerRef pRef : Universe.get().getPlayers()) {
             if (cachedPlayerNames.size() >= MAX_PLAYER_SLOTS) break;
@@ -205,6 +214,20 @@ public class AdminTab {
             data.setGuildId(""); data.setGuildRole("");
             data.setPlayerKills(0); data.setPlayerDeaths(0); data.setKillStreak(0); data.setBestKillStreak(0);
             data.setChestsDiscovered(0); data.setForcePK(false);
+
+            // Reset argent
+            data.setMoney(1000);
+
+            // Reset quetes + cooldowns
+            data.setQuestData("");
+            data.setCooldownData("");
+            try {
+                java.lang.reflect.Field f = PlayerRef.class.getDeclaredField("uuid");
+                f.setAccessible(true);
+                java.util.UUID resetUUID = (java.util.UUID) f.get(targetRef);
+                com.eldanior.system.quest.QuestManager.getPlayerQuests(resetUUID).clear();
+            } catch (Exception ignored) {}
+
             targetRef.sendMessage(Message.raw("§cPersonnage reinitialise (Niveau 1)."));
         });
     }

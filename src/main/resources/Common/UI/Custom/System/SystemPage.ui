@@ -192,12 +192,39 @@ Group {
                 Visible: true;
 
                 // ========================================
-                // PSEUDO centre en haut
+                // PSEUDO + RANG AVENTURIER
                 // ========================================
-                Label #ProfilName {
-                    Text: "";
-                    Style: (FontSize: 24, TextColor: #FFD700, RenderBold: true, HorizontalAlignment: Center, LetterSpacing: 1);
-                    Anchor: (Height: 32);
+                Group {
+                    LayoutMode: Left;
+                    Anchor: (Height: 36);
+
+                    Group { FlexWeight: 1; }
+
+                    Label #ProfilName {
+                        Text: "";
+                        Style: (FontSize: 24, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center, LetterSpacing: 1);
+                    }
+
+                    Group { Anchor: (Width: 10); }
+
+                    Group { FlexWeight: 1; }
+
+                    Group #ProfilRankBox {
+                        Anchor: (Width: 50, Height: 36);
+                        Background: #1a1a2e(0.9);
+                        LayoutMode: Top;
+
+                        Label {
+                            Text: "RANK";
+                            Style: (FontSize: 8, TextColor: #667788, HorizontalAlignment: Center);
+                            Anchor: (Height: 12);
+                        }
+                        Label #ProfilAdvRank {
+                            Text: "F";
+                            Style: (FontSize: 18, TextColor: #8899aa, HorizontalAlignment: Center, RenderBold: true);
+                            FlexWeight: 1;
+                        }
+                    }
                 }
 
                 Group { Anchor: (Height: 6); }
@@ -2730,6 +2757,28 @@ Group {
                 }
 
                 Group { Anchor: (Height: 6); }
+
+                // === STATS SERVEUR ===
+                Group {
+                    LayoutMode: Left;
+                    Anchor: (Height: 28);
+
+                    Group { FlexWeight: 1; Anchor: (Height: 28); Background: #1a1a2e(0.7); LayoutMode: Left; Padding: (Horizontal: 8); Label { Text: "Mobs"; Style: (FontSize: 9, TextColor: #8899aa, VerticalAlignment: Center); FlexWeight: 1; } Label #AdminStatMobs { Text: "0"; Style: (FontSize: 13, TextColor: #ffffff, VerticalAlignment: Center, HorizontalAlignment: End, RenderBold: true); Anchor: (Width: 40); } }
+                    Group { Anchor: (Width: 4); }
+                    Group { FlexWeight: 1; Anchor: (Height: 28); Background: #1a1a2e(0.7); LayoutMode: Left; Padding: (Horizontal: 8); Label { Text: "NPCs"; Style: (FontSize: 9, TextColor: #8899aa, VerticalAlignment: Center); FlexWeight: 1; } Label #AdminStatNpcs { Text: "0"; Style: (FontSize: 13, TextColor: #ffffff, VerticalAlignment: Center, HorizontalAlignment: End, RenderBold: true); Anchor: (Width: 40); } }
+                    Group { Anchor: (Width: 4); }
+                    Group { FlexWeight: 1; Anchor: (Height: 28); Background: #1a1a2e(0.7); LayoutMode: Left; Padding: (Horizontal: 8); Label { Text: "Classes"; Style: (FontSize: 9, TextColor: #8899aa, VerticalAlignment: Center); FlexWeight: 1; } Label #AdminStatClasses { Text: "0"; Style: (FontSize: 13, TextColor: #ffffff, VerticalAlignment: Center, HorizontalAlignment: End, RenderBold: true); Anchor: (Width: 40); } }
+                    Group { Anchor: (Width: 4); }
+                    Group { FlexWeight: 1; Anchor: (Height: 28); Background: #1a1a2e(0.7); LayoutMode: Left; Padding: (Horizontal: 8); Label { Text: "Titres"; Style: (FontSize: 9, TextColor: #8899aa, VerticalAlignment: Center); FlexWeight: 1; } Label #AdminStatTitres { Text: "0"; Style: (FontSize: 13, TextColor: #ffffff, VerticalAlignment: Center, HorizontalAlignment: End, RenderBold: true); Anchor: (Width: 40); } }
+                    Group { Anchor: (Width: 4); }
+                    Group { FlexWeight: 1; Anchor: (Height: 28); Background: #1a1a2e(0.7); LayoutMode: Left; Padding: (Horizontal: 8); Label { Text: "Skills"; Style: (FontSize: 9, TextColor: #8899aa, VerticalAlignment: Center); FlexWeight: 1; } Label #AdminStatSkills { Text: "0"; Style: (FontSize: 13, TextColor: #ffffff, VerticalAlignment: Center, HorizontalAlignment: End, RenderBold: true); Anchor: (Width: 40); } }
+                    Group { Anchor: (Width: 4); }
+                    Group { FlexWeight: 1; Anchor: (Height: 28); Background: #1a1a2e(0.7); LayoutMode: Left; Padding: (Horizontal: 8); Label { Text: "Quetes"; Style: (FontSize: 9, TextColor: #8899aa, VerticalAlignment: Center); FlexWeight: 1; } Label #AdminStatQuetes { Text: "0"; Style: (FontSize: 13, TextColor: #ffffff, VerticalAlignment: Center, HorizontalAlignment: End, RenderBold: true); Anchor: (Width: 40); } }
+                    Group { Anchor: (Width: 4); }
+                    Group { FlexWeight: 1; Anchor: (Height: 28); Background: #1a1a2e(0.7); LayoutMode: Left; Padding: (Horizontal: 8); Label { Text: "Joueurs"; Style: (FontSize: 9, TextColor: #8899aa, VerticalAlignment: Center); FlexWeight: 1; } Label #AdminStatPlayers { Text: "0"; Style: (FontSize: 13, TextColor: #ffffff, VerticalAlignment: Center, HorizontalAlignment: End, RenderBold: true); Anchor: (Width: 40); } }
+                }
+
+                Group { Anchor: (Height: 8); }
 
                 // === SELECTEUR DE JOUEUR ===
                 Label {

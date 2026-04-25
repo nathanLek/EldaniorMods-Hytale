@@ -74,6 +74,7 @@ public class QuestModel {
     public int getCooldownMinutes() { return cooldownMinutes; }
     public boolean isDaily() { return category == QuestCategory.JOURNALIERE; }
     public boolean isMainStory() { return category == QuestCategory.PRINCIPAL; }
+    public boolean isPKOnly() { return id != null && id.startsWith("daily_pk_"); }
 
     public String getRewardText() {
         StringBuilder sb = new StringBuilder();

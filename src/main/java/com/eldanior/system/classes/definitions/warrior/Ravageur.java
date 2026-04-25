@@ -4,6 +4,7 @@ import com.eldanior.system.classes.models.ClassModel;
 import com.eldanior.system.config.configs.ClassType;
 import com.eldanior.system.config.configs.Rarity;
 import com.eldanior.system.config.configs.WeaponMastery;
+import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
 
 import java.util.List;
 
@@ -13,15 +14,15 @@ public class Ravageur extends ClassModel {
         super(
                 "ravageur",
                 "Ravageur",
-                "Un guerrier redoutable maniant des armes lourdes pour briser les lignes ennemies.",
+                "Le Ravageur est une force de destruction pure. Sa puissance d'attaque est inegalee sur le champ de bataille.",
                 Rarity.RARE,
                 ClassType.WARRIOR,
-                List.of(),
+                List.of(PassiveSkill.SHARP_BLADE, PassiveSkill.RELENTLESS_HUNT, PassiveSkill.BATTLE_FRENZY),
                 List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD),
-                List.of(), // Évoluera au niveau 250 en (Ex: Berserker, Seigneur de Guerre)
+                List.of(),
                 250,
                 false,
-                45, 20, 2, 20, 15, 8 // Force massive, bonne résistance
+                90, 40, 4, 40, 30, 16
         );
     }
 }

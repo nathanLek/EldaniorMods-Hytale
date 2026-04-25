@@ -4,6 +4,7 @@ import com.eldanior.system.classes.models.ClassModel;
 import com.eldanior.system.config.configs.ClassType;
 import com.eldanior.system.config.configs.Rarity;
 import com.eldanior.system.config.configs.WeaponMastery;
+import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
 
 import java.util.List;
 
@@ -13,15 +14,15 @@ public class LameMage extends ClassModel {
         super(
                 "lame_mage",
                 "Lame-Mage",
-                "Un initié capable de lier l'essence magique a son acier pour des frappes elementaires.",
+                "La Lame-Mage fusionne l'art de l'epee et la puissance arcanique. Ses attaques sont impregnees de magie devastatrice.",
                 Rarity.RARE,
                 ClassType.WARRIOR,
-                List.of(),
+                List.of(PassiveSkill.EXPANDED_MIND, PassiveSkill.SPELLBLADE, PassiveSkill.MANA_STREAM),
                 List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD),
-                List.of(), // Évoluera au niveau 250 en (Ex: Chevalier Runique, Mage-Guerrier)
+                List.of(),
                 250,
                 false,
-                20, 20, 30, 15, 15, 10 // Intelligence élevée pour un guerrier
+                40, 40, 60, 30, 30, 20
         );
     }
 }

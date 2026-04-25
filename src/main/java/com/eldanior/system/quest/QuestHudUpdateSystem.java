@@ -34,6 +34,33 @@ public class QuestHudUpdateSystem extends EntityTickingSystem<EntityStore> {
                      @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
 
         tickCounter++;
+
+        // Verifier le reset journalier toutes les ~60s (sur le premier joueur seulement)
+        if (tickCounter % 1200 == 0 && index == 0) {
+            QuestManager.checkDailyReset();
+        }
+
+        // Sauvegarde periodique des quetes toutes les ~30s par joueur
+        if (tickCounter % 600 == 0) {
+            Ref<EntityStore> saveRef = archetypeChunk.getReferenceTo(index);
+            if (saveRef.isValid()) {
+                PlayerRef savePRef = store.getComponent(saveRef, PlayerRef.getComponentType());
+                UUID saveUUID = savePRef != null ? extractUUID(savePRef) : null;
+                if (saveUUID != null) {
+                    PlayerLevelData saveData = store.getComponent(saveRef, EldaniorSystem.get().getPlayerLevelDataType());
+                    if (saveData != null) {
+                        String serialized = QuestManager.serializePlayerQuests(saveUUID);
+                        String cooldowns = QuestManager.serializeCooldowns(saveUUID);
+                        if (!serialized.equals(saveData.getQuestData()) || !cooldowns.equals(saveData.getCooldownData())) {
+                            saveData.setQuestData(serialized);
+                            saveData.setCooldownData(cooldowns);
+                            commandBuffer.replaceComponent(saveRef, EldaniorSystem.get().getPlayerLevelDataType(), saveData);
+                        }
+                    }
+                }
+            }
+        }
+
         if (tickCounter % 15 != 0) return; // ~0.75s
 
         Ref<EntityStore> entityRef = archetypeChunk.getReferenceTo(index);

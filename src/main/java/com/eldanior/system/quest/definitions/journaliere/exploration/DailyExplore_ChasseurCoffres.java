@@ -8,7 +8,7 @@ public class DailyExplore_ChasseurCoffres extends QuestModel {
                 "Decouvrez 3 coffres.",
                 QuestType.EXPLORATION, QuestCategory.JOURNALIERE, QuestDifficulty.F,
                 null, 3,
-                400, 800, null,
+                100, 50, null,
                 null, null, 1440);
     }
 }

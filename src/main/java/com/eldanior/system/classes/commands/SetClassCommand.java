@@ -88,8 +88,6 @@ public class SetClassCommand extends AbstractAsyncCommand {
 
                 data.setPlayerClass(model.getDisplayName());
                 data.setPlayerClassId(model.getId());
-                data.forgetAllSkills();
-
                 // Persiste d'abord, calcule ensuite
                 store.putComponent(ref, type, data);
                 StatCalculator.updatePlayerStats(ref, store, data);

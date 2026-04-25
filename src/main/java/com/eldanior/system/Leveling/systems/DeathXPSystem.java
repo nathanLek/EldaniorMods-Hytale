@@ -170,6 +170,8 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
             // --- PVP KILL TRACKING ---
             if (isPvP) {
                 dataToWrite.addPlayerKill();
+                // Hook quete PK (EXECUTION = kill joueurs)
+                QuestManager.onPKKilled(killerUUID, null);
                 int pvpContrib = Math.max(1, xpAmount / 5); // PvP = XP/5 (double du PvE)
                 if (killerGuild != null) {
                     killerGuild.addPlayerKill();
@@ -199,6 +201,7 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
 
                     dataToWrite.addExperience((int) bonusXP);
                     dataToWrite.addMoney(bonusGold);
+                    QuestManager.onGoldGained(killerUUID, bonusGold);
 
                     // Sauvegarder la victime PK (bounty a 0)
                     commandBuffer.putComponent(victimRef, lvlType, victimDataPK);
@@ -212,9 +215,8 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
                 java.util.List<TitleModel> pvpTitles = TitleManager.checkTitleUnlocks(dataToWrite);
                 for (TitleModel title : pvpTitles) {
                     dataToWrite.addTitle(title.getId());
-                    NotificationHelper.sendNotification(killerRefObj,
-                            "<color:gold>★ Titre debloque : " + title.getDisplayName() + " !</color>",
-                            NotificationStyle.Success);
+                    NotificationHelper.showEventTitle(killerRefObj,
+                            "TITRE DEBLOQUE", title.getDisplayName(), true);
                 }
             }
 

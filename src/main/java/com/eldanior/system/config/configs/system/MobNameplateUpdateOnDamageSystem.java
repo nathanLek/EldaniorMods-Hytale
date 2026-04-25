@@ -76,20 +76,18 @@ public class MobNameplateUpdateOnDamageSystem extends DamageEventSystem {
         Vector3d mobPos = mobTransform.getPosition();
         int mobLevel = mobData.getLevel();
 
-        String hpText = getHPText(mobRef, mobData, store);
-
         UUID nearestPlayerUUID = getPlayerUUID(mobPos);
 
         String nameplateText;
         if (nearestPlayerUUID != null) {
             Integer playerLevel = PlayerPositionTracker.PLAYER_LEVELS.get(nearestPlayerUUID);
             if (playerLevel != null) {
-                nameplateText = getSymbolNameplate(playerLevel, mobLevel) + hpText;
+                nameplateText = getSymbolNameplate(playerLevel, mobLevel);
             } else {
-                nameplateText = "Lv." + mobLevel + hpText;
+                nameplateText = "Lv." + mobLevel;
             }
         } else {
-            nameplateText = "Lv." + mobLevel + hpText;
+            nameplateText = "Lv." + mobLevel;
         }
 
         Nameplate nameplate = new Nameplate(nameplateText);

@@ -91,7 +91,8 @@ public class ChurchPromoteCommand extends AbstractAsyncCommand {
                 ChurchManager.recordPopePromotion(newRank);
 
                 sender.sendMessage(Message.raw("§a" + targetName + " promu au rang de " + newRank.getFormattedName()));
-                targetPlayer.sendMessage(Message.raw("§eVous avez ete promu au rang de " + newRank.getFormattedName() + " §e!"));
+                com.eldanior.system.Leveling.utils.NotificationHelper.showEventTitle(targetPlayer,
+                        "PROMOTION EGLISE", newRank.getFormattedName(), true);
             } catch (Exception e) { e.printStackTrace(); }
         }, sender.getWorld());
     }

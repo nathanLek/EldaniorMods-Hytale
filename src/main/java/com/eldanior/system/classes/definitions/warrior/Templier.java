@@ -4,6 +4,7 @@ import com.eldanior.system.classes.models.ClassModel;
 import com.eldanior.system.config.configs.ClassType;
 import com.eldanior.system.config.configs.Rarity;
 import com.eldanior.system.config.configs.WeaponMastery;
+import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
 
 import java.util.List;
 
@@ -13,15 +14,15 @@ public class Templier extends ClassModel {
         super(
                 "templier",
                 "Templier",
-                "Un Templier robuste specialise dans le corps a corps.",
+                "Le Templier est un guerrier sacre dont la foi renforce chaque coup. Equilibre parfait entre attaque et defense.",
                 Rarity.RARE,
                 ClassType.WARRIOR,
-                List.of(),
+                List.of(PassiveSkill.STEEL_RESOLVE, PassiveSkill.MARATHON_RUNNER, PassiveSkill.OVERFLOWING_LIFE),
                 List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD),
                 List.of(),
                 250,
                 false,
-                25, 25, 2, 25, 30, 30
+                50, 50, 4, 50, 60, 60
         );
     }
 }

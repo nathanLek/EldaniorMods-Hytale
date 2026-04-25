@@ -13,15 +13,15 @@ public class GoldBaron extends ClassModel {
         super(
                 "gold_baron",
                 "Baron de l'Or",
-                "La chance incarnée. Les dieux de la fortune veillent personnellement sur lui.",
+                "Le Baron de l'Or possede une fortune inimaginable. Chaque piece qu'il touche se multiplie comme par magie.",
                 Rarity.EPIC,
                 ClassType.MERCHANT,
-                List.of(PassiveSkill.ARTISANAT),
+                List.of(PassiveSkill.ARTISANAT, PassiveSkill.GOLDEN_TOUCH, PassiveSkill.CRITICAL_LUCK),
                 List.of(WeaponMastery.ANY),
                 List.of("prosperity_avatar"),
                 800,
                 false,
-                6, 6, 8, 6, 10, 45 // La Chance crève le plafond !
+                12, 12, 16, 12, 20, 90
         );
     }
 }

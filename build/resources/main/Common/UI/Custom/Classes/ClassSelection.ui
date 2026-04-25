@@ -3,113 +3,125 @@ $C = "../Common.ui";
 SceneBlur {}
 
 Group {
-  Background: #000000(0.70);
+  Background: #000000(0.75);
 }
 
 Group {
-  LayoutMode: Middle;
+  LayoutMode: Center;
 
   Group {
+    Anchor: (Width: 960, Height: 560);
     LayoutMode: Top;
-    Anchor: (Width: 700);
 
     Label {
       Text: "CHOIX DE CLASSE";
-      Anchor: (Height: 50);
-      Style: (FontName: "Secondary", FontSize: 26, RenderBold: true, RenderUppercase: true, TextColor: #b6cfee, HorizontalAlignment: Center);
+      Anchor: (Height: 38);
+      Style: (FontSize: 26, RenderBold: true, RenderUppercase: true, TextColor: #FFD700, HorizontalAlignment: Center);
     }
 
-    Group { Anchor: (Height: 12); }
+    Group { Anchor: (Height: 8); }
 
     Group {
       LayoutMode: Left;
-      Anchor: (Height: 200);
+      FlexWeight: 1;
 
-      Button #ClassTile0 {
-        Anchor: (Width: 160, Height: 190);
-        Padding: (Full: 6);
-        Style: (Default: (Background: #0d1b2a), Hovered: (Background: #1a3a5c), Pressed: (Background: #0a2a4a));
-        Group #RarityBorderTop    { Anchor: (Full: 0, Top: 2);    Background: #FFFFFF; }
-        Group #RarityBorderBottom { Anchor: (Full: 0, Bottom: 2); Background: #FFFFFF; }
-        Group #RarityBorderLeft   { Anchor: (Left: 2, Full: 0);   Background: #FFFFFF; }
-        Group #RarityBorderRight  { Anchor: (Right: 2, Full: 0);  Background: #FFFFFF; }
-        ItemIcon #CategoryIcon { Anchor: (Width: 100, Height: 100); Visible: true; }
-        Label #ClassLabel { Text: ""; Style: (FontName: "Secondary", FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #b4c8c9, HorizontalAlignment: Center, VerticalAlignment: End, Wrap: true); Anchor: (Bottom: 8, Full: 0); }
+      Group #ClassCard0 { FlexWeight: 1; Background: #0d1b2a(0.95); LayoutMode: Top; Padding: (Horizontal: 10, Vertical: 8); Visible: false;
+        Group { LayoutMode: Left; Anchor: (Height: 22); Label #CName0 { Text: ""; Style: (FontSize: 16, TextColor: #FFD700, RenderBold: true); FlexWeight: 1; } Label #CRarity0 { Text: ""; Style: (FontSize: 13, TextColor: #8899aa, HorizontalAlignment: End, RenderBold: true); Anchor: (Width: 70); } }
+        Label #CType0 { Text: ""; Style: (FontSize: 12, TextColor: #ff9800, RenderBold: true); Anchor: (Height: 16); }
+        Group { Anchor: (Height: 2); Background: #FFD700(0.3); }
+        Group { Anchor: (Height: 4); }
+        Label #CDesc0 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, Wrap: true); Anchor: (Height: 110); }
+        Group { Anchor: (Height: 6); }
+        Label { Text: "BONUS STATS"; Style: (FontSize: 10, TextColor: #667788, RenderUppercase: true); Anchor: (Height: 14); }
+        Group { LayoutMode: Left; Anchor: (Height: 18); Label #CStat0a { Text: ""; Style: (FontSize: 12, TextColor: #ddeeff); FlexWeight: 1; } Label #CStat0b { Text: ""; Style: (FontSize: 12, TextColor: #ddeeff); FlexWeight: 1; } Label #CStat0c { Text: ""; Style: (FontSize: 12, TextColor: #ddeeff); FlexWeight: 1; } }
+        Group { LayoutMode: Left; Anchor: (Height: 18); Label #CStat0d { Text: ""; Style: (FontSize: 12, TextColor: #ddeeff); FlexWeight: 1; } Label #CStat0e { Text: ""; Style: (FontSize: 12, TextColor: #ddeeff); FlexWeight: 1; } Label #CStat0f { Text: ""; Style: (FontSize: 12, TextColor: #ddeeff); FlexWeight: 1; } }
+        Group { Anchor: (Height: 6); }
+        Label { Text: "COMPETENCES"; Style: (FontSize: 10, TextColor: #667788, RenderUppercase: true); Anchor: (Height: 14); }
+        Label #CSkill0a { Text: ""; Style: (FontSize: 12, TextColor: #4CAF50); Anchor: (Height: 16); }
+        Label #CSkill0b { Text: ""; Style: (FontSize: 12, TextColor: #4CAF50); Anchor: (Height: 16); }
+        Label #CSkill0c { Text: ""; Style: (FontSize: 12, TextColor: #4CAF50); Anchor: (Height: 16); }
+        Group { FlexWeight: 1; }
+        TextButton #CBtn0 { Text: "CHOISIR"; Anchor: (Height: 30); Style: (Default: (LabelStyle: (FontSize: 14, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 14, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1208(0.8); }
       }
+      Group { Anchor: (Width: 5); }
 
-      Group { Anchor: (Width: 8); }
-
-      Button #ClassTile1 {
-        Anchor: (Width: 160, Height: 190);
-        Padding: (Full: 6);
-        Style: (Default: (Background: #0d1b2a), Hovered: (Background: #1a3a5c), Pressed: (Background: #0a2a4a));
-        Group #RarityBorderTop    { Anchor: (Full: 0, Top: 2);    Background: #FFFFFF; }
-        Group #RarityBorderBottom { Anchor: (Full: 0, Bottom: 2); Background: #FFFFFF; }
-        Group #RarityBorderLeft   { Anchor: (Left: 2, Full: 0);   Background: #FFFFFF; }
-        Group #RarityBorderRight  { Anchor: (Right: 2, Full: 0);  Background: #FFFFFF; }
-        ItemIcon #CategoryIcon { Anchor: (Width: 100, Height: 100); Visible: true; }
-        Label #ClassLabel { Text: ""; Style: (FontName: "Secondary", FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #b4c8c9, HorizontalAlignment: Center, VerticalAlignment: End, Wrap: true); Anchor: (Bottom: 8, Full: 0); }
+      Group #ClassCard1 { FlexWeight: 1; Background: #0d1b2a(0.95); LayoutMode: Top; Padding: (Horizontal: 10, Vertical: 8); Visible: false;
+        Group { LayoutMode: Left; Anchor: (Height: 22); Label #CName1 { Text: ""; Style: (FontSize: 16, TextColor: #FFD700, RenderBold: true); FlexWeight: 1; } Label #CRarity1 { Text: ""; Style: (FontSize: 13, TextColor: #8899aa, HorizontalAlignment: End, RenderBold: true); Anchor: (Width: 70); } }
+        Label #CType1 { Text: ""; Style: (FontSize: 12, TextColor: #ff9800, RenderBold: true); Anchor: (Height: 16); }
+        Group { Anchor: (Height: 2); Background: #FFD700(0.3); }
+        Group { Anchor: (Height: 4); }
+        Label #CDesc1 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, Wrap: true); Anchor: (Height: 110); }
+        Group { Anchor: (Height: 6); }
+        Label { Text: "BONUS STATS"; Style: (FontSize: 10, TextColor: #667788, RenderUppercase: true); Anchor: (Height: 14); }
+        Group { LayoutMode: Left; Anchor: (Height: 18); Label #CStat1a { Text: ""; Style: (FontSize: 12, TextColor: #ddeeff); FlexWeight: 1; } Label #CStat1b { Text: ""; Style: (FontSize: 12, TextColor: #ddeeff); FlexWeight: 1; } Label #CStat1c { Text: ""; Style: (FontSize: 12, TextColor: #ddeeff); FlexWeight: 1; } }
+        Group { LayoutMode: Left; Anchor: (Height: 18); Label #CStat1d { Text: ""; Style: (FontSize: 12, TextColor: #ddeeff); FlexWeight: 1; } Label #CStat1e { Text: ""; Style: (FontSize: 12, TextColor: #ddeeff); FlexWeight: 1; } Label #CStat1f { Text: ""; Style: (FontSize: 12, TextColor: #ddeeff); FlexWeight: 1; } }
+        Group { Anchor: (Height: 6); }
+        Label { Text: "COMPETENCES"; Style: (FontSize: 10, TextColor: #667788, RenderUppercase: true); Anchor: (Height: 14); }
+        Label #CSkill1a { Text: ""; Style: (FontSize: 12, TextColor: #4CAF50); Anchor: (Height: 16); }
+        Label #CSkill1b { Text: ""; Style: (FontSize: 12, TextColor: #4CAF50); Anchor: (Height: 16); }
+        Label #CSkill1c { Text: ""; Style: (FontSize: 12, TextColor: #4CAF50); Anchor: (Height: 16); }
+        Group { FlexWeight: 1; }
+        TextButton #CBtn1 { Text: "CHOISIR"; Anchor: (Height: 30); Style: (Default: (LabelStyle: (FontSize: 14, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 14, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1208(0.8); }
       }
+      Group { Anchor: (Width: 5); }
 
-      Group { Anchor: (Width: 8); }
-
-      Button #ClassTile2 {
-        Anchor: (Width: 160, Height: 190);
-        Padding: (Full: 6);
-        Style: (Default: (Background: #0d1b2a), Hovered: (Background: #1a3a5c), Pressed: (Background: #0a2a4a));
-        Group #RarityBorderTop    { Anchor: (Full: 0, Top: 2);    Background: #FFFFFF; }
-        Group #RarityBorderBottom { Anchor: (Full: 0, Bottom: 2); Background: #FFFFFF; }
-        Group #RarityBorderLeft   { Anchor: (Left: 2, Full: 0);   Background: #FFFFFF; }
-        Group #RarityBorderRight  { Anchor: (Right: 2, Full: 0);  Background: #FFFFFF; }
-        ItemIcon #CategoryIcon { Anchor: (Width: 100, Height: 100); Visible: true; }
-        Label #ClassLabel { Text: ""; Style: (FontName: "Secondary", FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #b4c8c9, HorizontalAlignment: Center, VerticalAlignment: End, Wrap: true); Anchor: (Bottom: 8, Full: 0); }
+      Group #ClassCard2 { FlexWeight: 1; Background: #0d1b2a(0.95); LayoutMode: Top; Padding: (Horizontal: 10, Vertical: 8); Visible: false;
+        Group { LayoutMode: Left; Anchor: (Height: 22); Label #CName2 { Text: ""; Style: (FontSize: 16, TextColor: #FFD700, RenderBold: true); FlexWeight: 1; } Label #CRarity2 { Text: ""; Style: (FontSize: 13, TextColor: #8899aa, HorizontalAlignment: End, RenderBold: true); Anchor: (Width: 70); } }
+        Label #CType2 { Text: ""; Style: (FontSize: 12, TextColor: #ff9800, RenderBold: true); Anchor: (Height: 16); }
+        Group { Anchor: (Height: 2); Background: #FFD700(0.3); }
+        Group { Anchor: (Height: 4); }
+        Label #CDesc2 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, Wrap: true); Anchor: (Height: 110); }
+        Group { Anchor: (Height: 6); }
+        Label { Text: "BONUS STATS"; Style: (FontSize: 10, TextColor: #667788, RenderUppercase: true); Anchor: (Height: 14); }
+        Group { LayoutMode: Left; Anchor: (Height: 18); Label #CStat2a { Text: ""; Style: (FontSize: 12, TextColor: #ddeeff); FlexWeight: 1; } Label #CStat2b { Text: ""; Style: (FontSize: 12, TextColor: #ddeeff); FlexWeight: 1; } Label #CStat2c { Text: ""; Style: (FontSize: 12, TextColor: #ddeeff); FlexWeight: 1; } }
+        Group { LayoutMode: Left; Anchor: (Height: 18); Label #CStat2d { Text: ""; Style: (FontSize: 12, TextColor: #ddeeff); FlexWeight: 1; } Label #CStat2e { Text: ""; Style: (FontSize: 12, TextColor: #ddeeff); FlexWeight: 1; } Label #CStat2f { Text: ""; Style: (FontSize: 12, TextColor: #ddeeff); FlexWeight: 1; } }
+        Group { Anchor: (Height: 6); }
+        Label { Text: "COMPETENCES"; Style: (FontSize: 10, TextColor: #667788, RenderUppercase: true); Anchor: (Height: 14); }
+        Label #CSkill2a { Text: ""; Style: (FontSize: 12, TextColor: #4CAF50); Anchor: (Height: 16); }
+        Label #CSkill2b { Text: ""; Style: (FontSize: 12, TextColor: #4CAF50); Anchor: (Height: 16); }
+        Label #CSkill2c { Text: ""; Style: (FontSize: 12, TextColor: #4CAF50); Anchor: (Height: 16); }
+        Group { FlexWeight: 1; }
+        TextButton #CBtn2 { Text: "CHOISIR"; Anchor: (Height: 30); Style: (Default: (LabelStyle: (FontSize: 14, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 14, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1208(0.8); }
       }
+      Group { Anchor: (Width: 5); }
 
-      Group { Anchor: (Width: 8); }
-
-      Button #ClassTile3 {
-        Anchor: (Width: 160, Height: 190);
-        Padding: (Full: 6);
-        Style: (Default: (Background: #0d1b2a), Hovered: (Background: #1a3a5c), Pressed: (Background: #0a2a4a));
-        Group #RarityBorderTop    { Anchor: (Full: 0, Top: 2);    Background: #FFFFFF; }
-        Group #RarityBorderBottom { Anchor: (Full: 0, Bottom: 2); Background: #FFFFFF; }
-        Group #RarityBorderLeft   { Anchor: (Left: 2, Full: 0);   Background: #FFFFFF; }
-        Group #RarityBorderRight  { Anchor: (Right: 2, Full: 0);  Background: #FFFFFF; }
-        ItemIcon #CategoryIcon { Anchor: (Width: 100, Height: 100); Visible: true; }
-        Label #ClassLabel { Text: ""; Style: (FontName: "Secondary", FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #b4c8c9, HorizontalAlignment: Center, VerticalAlignment: End, Wrap: true); Anchor: (Bottom: 8, Full: 0); }
+      Group #ClassCard3 { FlexWeight: 1; Background: #0d1b2a(0.95); LayoutMode: Top; Padding: (Horizontal: 10, Vertical: 8); Visible: false;
+        Group { LayoutMode: Left; Anchor: (Height: 22); Label #CName3 { Text: ""; Style: (FontSize: 16, TextColor: #FFD700, RenderBold: true); FlexWeight: 1; } Label #CRarity3 { Text: ""; Style: (FontSize: 13, TextColor: #8899aa, HorizontalAlignment: End, RenderBold: true); Anchor: (Width: 70); } }
+        Label #CType3 { Text: ""; Style: (FontSize: 12, TextColor: #ff9800, RenderBold: true); Anchor: (Height: 16); }
+        Group { Anchor: (Height: 2); Background: #FFD700(0.3); }
+        Group { Anchor: (Height: 4); }
+        Label #CDesc3 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, Wrap: true); Anchor: (Height: 110); }
+        Group { Anchor: (Height: 6); }
+        Label { Text: "BONUS STATS"; Style: (FontSize: 10, TextColor: #667788, RenderUppercase: true); Anchor: (Height: 14); }
+        Group { LayoutMode: Left; Anchor: (Height: 18); Label #CStat3a { Text: ""; Style: (FontSize: 12, TextColor: #ddeeff); FlexWeight: 1; } Label #CStat3b { Text: ""; Style: (FontSize: 12, TextColor: #ddeeff); FlexWeight: 1; } Label #CStat3c { Text: ""; Style: (FontSize: 12, TextColor: #ddeeff); FlexWeight: 1; } }
+        Group { LayoutMode: Left; Anchor: (Height: 18); Label #CStat3d { Text: ""; Style: (FontSize: 12, TextColor: #ddeeff); FlexWeight: 1; } Label #CStat3e { Text: ""; Style: (FontSize: 12, TextColor: #ddeeff); FlexWeight: 1; } Label #CStat3f { Text: ""; Style: (FontSize: 12, TextColor: #ddeeff); FlexWeight: 1; } }
+        Group { Anchor: (Height: 6); }
+        Label { Text: "COMPETENCES"; Style: (FontSize: 10, TextColor: #667788, RenderUppercase: true); Anchor: (Height: 14); }
+        Label #CSkill3a { Text: ""; Style: (FontSize: 12, TextColor: #4CAF50); Anchor: (Height: 16); }
+        Label #CSkill3b { Text: ""; Style: (FontSize: 12, TextColor: #4CAF50); Anchor: (Height: 16); }
+        Label #CSkill3c { Text: ""; Style: (FontSize: 12, TextColor: #4CAF50); Anchor: (Height: 16); }
+        Group { FlexWeight: 1; }
+        TextButton #CBtn3 { Text: "CHOISIR"; Anchor: (Height: 30); Style: (Default: (LabelStyle: (FontSize: 14, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 14, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1208(0.8); }
       }
-    }
+      Group { Anchor: (Width: 5); }
 
-    Group { Anchor: (Height: 10); }
-
-    Group {
-      LayoutMode: Left;
-      Anchor: (Height: 200);
-
-      Button #ClassTile4 {
-        Anchor: (Width: 160, Height: 190);
-        Padding: (Full: 6);
-        Style: (Default: (Background: #0d1b2a), Hovered: (Background: #1a3a5c), Pressed: (Background: #0a2a4a));
-        Group #RarityBorderTop    { Anchor: (Full: 0, Top: 2);    Background: #FFFFFF; }
-        Group #RarityBorderBottom { Anchor: (Full: 0, Bottom: 2); Background: #FFFFFF; }
-        Group #RarityBorderLeft   { Anchor: (Left: 2, Full: 0);   Background: #FFFFFF; }
-        Group #RarityBorderRight  { Anchor: (Right: 2, Full: 0);  Background: #FFFFFF; }
-        ItemIcon #CategoryIcon { Anchor: (Width: 100, Height: 100); Visible: true; }
-        Label #ClassLabel { Text: ""; Style: (FontName: "Secondary", FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #b4c8c9, HorizontalAlignment: Center, VerticalAlignment: End, Wrap: true); Anchor: (Bottom: 8, Full: 0); }
-      }
-
-      Group { Anchor: (Width: 8); }
-
-      Button #ClassTile5 {
-        Anchor: (Width: 160, Height: 190);
-        Padding: (Full: 6);
-        Style: (Default: (Background: #0d1b2a), Hovered: (Background: #1a3a5c), Pressed: (Background: #0a2a4a));
-        Group #RarityBorderTop    { Anchor: (Full: 0, Top: 2);    Background: #FFFFFF; }
-        Group #RarityBorderBottom { Anchor: (Full: 0, Bottom: 2); Background: #FFFFFF; }
-        Group #RarityBorderLeft   { Anchor: (Left: 2, Full: 0);   Background: #FFFFFF; }
-        Group #RarityBorderRight  { Anchor: (Right: 2, Full: 0);  Background: #FFFFFF; }
-        ItemIcon #CategoryIcon { Anchor: (Width: 100, Height: 100); Visible: true; }
-        Label #ClassLabel { Text: ""; Style: (FontName: "Secondary", FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #b4c8c9, HorizontalAlignment: Center, VerticalAlignment: End, Wrap: true); Anchor: (Bottom: 8, Full: 0); }
+      Group #ClassCard4 { FlexWeight: 1; Background: #0d1b2a(0.95); LayoutMode: Top; Padding: (Horizontal: 10, Vertical: 8); Visible: false;
+        Group { LayoutMode: Left; Anchor: (Height: 22); Label #CName4 { Text: ""; Style: (FontSize: 16, TextColor: #FFD700, RenderBold: true); FlexWeight: 1; } Label #CRarity4 { Text: ""; Style: (FontSize: 13, TextColor: #8899aa, HorizontalAlignment: End, RenderBold: true); Anchor: (Width: 70); } }
+        Label #CType4 { Text: ""; Style: (FontSize: 12, TextColor: #ff9800, RenderBold: true); Anchor: (Height: 16); }
+        Group { Anchor: (Height: 2); Background: #FFD700(0.3); }
+        Group { Anchor: (Height: 4); }
+        Label #CDesc4 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, Wrap: true); Anchor: (Height: 110); }
+        Group { Anchor: (Height: 6); }
+        Label { Text: "BONUS STATS"; Style: (FontSize: 10, TextColor: #667788, RenderUppercase: true); Anchor: (Height: 14); }
+        Group { LayoutMode: Left; Anchor: (Height: 18); Label #CStat4a { Text: ""; Style: (FontSize: 12, TextColor: #ddeeff); FlexWeight: 1; } Label #CStat4b { Text: ""; Style: (FontSize: 12, TextColor: #ddeeff); FlexWeight: 1; } Label #CStat4c { Text: ""; Style: (FontSize: 12, TextColor: #ddeeff); FlexWeight: 1; } }
+        Group { LayoutMode: Left; Anchor: (Height: 18); Label #CStat4d { Text: ""; Style: (FontSize: 12, TextColor: #ddeeff); FlexWeight: 1; } Label #CStat4e { Text: ""; Style: (FontSize: 12, TextColor: #ddeeff); FlexWeight: 1; } Label #CStat4f { Text: ""; Style: (FontSize: 12, TextColor: #ddeeff); FlexWeight: 1; } }
+        Group { Anchor: (Height: 6); }
+        Label { Text: "COMPETENCES"; Style: (FontSize: 10, TextColor: #667788, RenderUppercase: true); Anchor: (Height: 14); }
+        Label #CSkill4a { Text: ""; Style: (FontSize: 12, TextColor: #4CAF50); Anchor: (Height: 16); }
+        Label #CSkill4b { Text: ""; Style: (FontSize: 12, TextColor: #4CAF50); Anchor: (Height: 16); }
+        Label #CSkill4c { Text: ""; Style: (FontSize: 12, TextColor: #4CAF50); Anchor: (Height: 16); }
+        Group { FlexWeight: 1; }
+        TextButton #CBtn4 { Text: "CHOISIR"; Anchor: (Height: 30); Style: (Default: (LabelStyle: (FontSize: 14, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 14, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1208(0.8); }
       }
     }
   }

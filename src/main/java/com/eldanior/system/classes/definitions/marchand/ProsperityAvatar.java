@@ -13,15 +13,15 @@ public class ProsperityAvatar extends ClassModel {
         super(
                 "prosperity_avatar",
                 "Avatar de la Prospérité",
-                "Béni par les dieux, il plie les lois des probabilités à sa simple volonté. L'or coule dans ses veines.",
+                "L'Avatar de la Prosperite incarne la richesse absolue. Sa simple presence fait fleurir le commerce et la fortune.",
                 Rarity.LEGENDARY,
                 ClassType.MERCHANT,
-                List.of(PassiveSkill.ARTISANAT),
+                List.of(PassiveSkill.ARTISANAT, PassiveSkill.MYTH_HUNTER, PassiveSkill.COSMIC_CONSTITUTION),
                 List.of(WeaponMastery.ANY),
                 null,
                 999,
                 false,
-                100, 100, 120, 100, 150, 800
+                200, 200, 240, 200, 300, 1600
         );
     }
 }

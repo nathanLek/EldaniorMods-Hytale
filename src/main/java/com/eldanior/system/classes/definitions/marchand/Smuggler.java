@@ -13,15 +13,15 @@ public class Smuggler extends ClassModel {
         super(
                 "smuggler",
                 "Contrebandier",
-                "Il sait se faufiler partout avec des marchandises illégales. Rapide et discret.",
+                "Le Contrebandier connait les routes secretes et les marches noirs. Rien ne lui echappe quand il s'agit de profit.",
                 Rarity.RARE,
                 ClassType.MERCHANT,
-                List.of(PassiveSkill.ARTISANAT),
+                List.of(PassiveSkill.ARTISANAT, PassiveSkill.WIND_STEP, PassiveSkill.LUCKY_STRIKE),
                 List.of(WeaponMastery.ANY),
                 List.of("black_market_prince"),
                 500,
                 false,
-                6, 4, 12, 8, 22, 25
+                12, 8, 24, 16, 44, 50
         );
     }
 }

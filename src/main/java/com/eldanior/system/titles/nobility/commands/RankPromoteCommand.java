@@ -91,7 +91,8 @@ public class RankPromoteCommand extends AbstractAsyncCommand {
                 NobilityManager.recordKingPromotion(newRank);
 
                 sender.sendMessage(Message.raw("§a" + targetName + " promu au rang de " + newRank.getFormattedName()));
-                targetPlayer.sendMessage(Message.raw("§eVous avez ete promu au rang de " + newRank.getFormattedName() + " §e!"));
+                com.eldanior.system.Leveling.utils.NotificationHelper.showEventTitle(targetPlayer,
+                        "PROMOTION NOBLESSE", newRank.getFormattedName(), true);
 
                 if (newRank == NobilityRank.MARQUIS || newRank == NobilityRank.DUC) {
                     String available = FamilyManager.getAvailableFamilyIdsForRank(newRank);

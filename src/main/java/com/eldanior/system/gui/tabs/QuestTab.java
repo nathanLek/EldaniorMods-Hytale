@@ -29,6 +29,11 @@ public class QuestTab {
         UUID myUUID = getPlayerUUID(ref, store);
         if (myUUID == null) return;
 
+        // Determiner si le joueur est PK
+        boolean isPK = false;
+        PlayerLevelData pkCheck = store.getComponent(ref, EldaniorSystem.get().getPlayerLevelDataType());
+        if (pkCheck != null) isPK = pkCheck.isPK();
+
         // Quete active
         PlayerQuest active = QuestManager.getActiveQuest(myUUID);
         if (active != null) {
@@ -88,7 +93,7 @@ public class QuestTab {
         int journalCount = 0;
 
         // Disponibles
-        List<QuestModel> available = QuestManager.getAvailableQuests(myUUID);
+        List<QuestModel> available = QuestManager.getAvailableQuests(myUUID, isPK);
         for (QuestModel quest : available) {
             if (slotIdx >= MAX_QUEST_SLOTS) break;
             if (!quest.isDaily()) continue;
@@ -297,6 +302,7 @@ public class QuestTab {
         PlayerLevelData data = store.getComponent(ref, type);
         if (data == null) return false;
 
+        int oldLevel = data.getLevel();
         data.addExperience(model.getRewardXP());
         data.addMoney(model.getRewardGold());
         if (model.getRewardTitleId() != null) data.addTitle(model.getRewardTitleId());
@@ -305,15 +311,28 @@ public class QuestTab {
             QuestManager.setCooldown(uuid, questId, model.getCooldownMinutes());
         }
 
+        // Level up ?
+        if (data.getLevel() > oldLevel) {
+            int gained = (data.getLevel() - oldLevel) * 3;
+            data.setAttributePoints(data.getAttributePoints() + gained);
+        }
+
         QuestManager.getPlayerQuests(uuid).removeIf(pq -> pq.getQuestId().equals(questId) && pq.isCompleted());
 
         data.setQuestData(QuestManager.serializePlayerQuests(uuid));
         data.setCooldownData(QuestManager.serializeCooldowns(uuid));
         store.putComponent(ref, type, data);
 
-        Player player = store.getComponent(ref, Player.getComponentType());
-        if (player != null) {
-            player.sendMessage(Message.raw("§aQuete terminee ! +" + model.getRewardXP() + " XP +" + model.getRewardGold() + " Or"));
+        // Mettre à jour les stats
+        com.eldanior.system.Leveling.utils.StatCalculator.updatePlayerStats(ref, store, data);
+
+        PlayerRef pRefClaim = store.getComponent(ref, PlayerRef.getComponentType());
+        if (pRefClaim != null) {
+            com.eldanior.system.Leveling.utils.NotificationHelper.sendSuccess(pRefClaim,
+                    "<color:green>+" + model.getRewardXP() + " XP</color> <color:gold>+" + model.getRewardGold() + " Or</color>");
+            if (data.getLevel() > oldLevel) {
+                com.eldanior.system.Leveling.utils.NotificationHelper.showLevelUpTitle(pRefClaim, data.getLevel());
+            }
         }
         return true;
     }
@@ -397,12 +416,13 @@ public class QuestTab {
         }
     }
 
-    /** Sauvegarde les quetes du joueur dans PlayerLevelData */
+    /** Sauvegarde les quetes + cooldowns du joueur dans PlayerLevelData */
     private static void saveQuestData(UUID uuid, Ref<EntityStore> ref, Store<EntityStore> store) {
         ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
         PlayerLevelData data = store.getComponent(ref, type);
         if (data != null) {
             data.setQuestData(QuestManager.serializePlayerQuests(uuid));
+            data.setCooldownData(QuestManager.serializeCooldowns(uuid));
             store.putComponent(ref, type, data);
         }
     }

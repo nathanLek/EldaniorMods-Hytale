@@ -54,6 +54,13 @@ public class ProfilTab {
         }
 
         ui.set("#ProfilName.Text", displayName);
+
+        // Rang aventurier basé sur le niveau
+        String rank = getAdventureRank(data.getLevel());
+        String rankColor = getAdventureRankColor(data.getLevel());
+        ui.set("#ProfilAdvRank.Text", rank);
+        ui.set("#ProfilAdvRank.Style.TextColor", rankColor);
+
         ui.set("#ProfilClass.Text", data.getPlayerClass());
 
         // Rang
@@ -203,5 +210,25 @@ public class ProfilTab {
 
         com.eldanior.system.Leveling.utils.StatCalculator.updatePlayerStats(ref, store, data);
         return true;
+    }
+
+    public static String getAdventureRank(int level) {
+        if (level >= 600) return "S";
+        if (level >= 400) return "A";
+        if (level >= 250) return "B";
+        if (level >= 150) return "C";
+        if (level >= 80) return "D";
+        if (level >= 30) return "E";
+        return "F";
+    }
+
+    public static String getAdventureRankColor(int level) {
+        if (level >= 600) return "#FFD700";
+        if (level >= 400) return "#cc4444";
+        if (level >= 250) return "#ff9800";
+        if (level >= 150) return "#9C27B0";
+        if (level >= 80) return "#2196F3";
+        if (level >= 30) return "#4CAF50";
+        return "#8899aa";
     }
 }

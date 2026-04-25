@@ -64,7 +64,6 @@ public class MobNameplateColorSystem extends EntityTickingSystem<EntityStore> {
         Vector3d mobPos = mobTransform.getPosition();
         int mobLevel = mobData.getLevel();
 
-        String hpText = getHPText(mobRef, store);
         UUID nearestPlayerUUID = getPlayerUUID(mobPos);
 
         String nameplateText;
@@ -73,12 +72,12 @@ public class MobNameplateColorSystem extends EntityTickingSystem<EntityStore> {
             Integer playerLevel = PlayerPositionTracker.PLAYER_LEVELS.get(nearestPlayerUUID);
 
             if (playerLevel != null) {
-                nameplateText = getSymbolNameplate(playerLevel, mobLevel) + hpText;
+                nameplateText = getSymbolNameplate(playerLevel, mobLevel);
             } else {
-                nameplateText = "Lv." + mobLevel + hpText;
+                nameplateText = "Lv." + mobLevel;
             }
         } else {
-            nameplateText = "Lv." + mobLevel + hpText;
+            nameplateText = "Lv." + mobLevel;
         }
 
         Nameplate nameplate = new Nameplate(nameplateText);

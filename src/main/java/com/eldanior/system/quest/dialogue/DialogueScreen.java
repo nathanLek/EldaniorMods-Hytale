@@ -161,8 +161,9 @@ public class DialogueScreen extends InteractiveCustomUIPage<DialogueScreen.Dialo
             data.setQuestData(QuestManager.serializePlayerQuests(playerUUID));
             store.putComponent(ref, type, data);
 
-            if (player != null) {
-                player.sendMessage(Message.raw("§a§lObjectif valide !"));
+            PlayerRef pRef3 = store.getComponent(ref, PlayerRef.getComponentType());
+            if (pRef3 != null) {
+                com.eldanior.system.Leveling.utils.NotificationHelper.sendSuccess(pRef3, "<color:green>Objectif valide !</color>");
             }
         } else {
             // Mode quete : verifier si deja acceptee
@@ -187,8 +188,11 @@ public class DialogueScreen extends InteractiveCustomUIPage<DialogueScreen.Dialo
             data.setQuestData(QuestManager.serializePlayerQuests(playerUUID));
             store.putComponent(ref, type, data);
 
-            if (player != null) {
-                player.sendMessage(Message.raw("§a§lQuete acceptee : " + quest.getName() + " !"));
+            // Event title pour quete acceptee
+            PlayerRef pRef2 = store.getComponent(ref, PlayerRef.getComponentType());
+            if (pRef2 != null) {
+                com.eldanior.system.Leveling.utils.NotificationHelper.showEventTitle(pRef2,
+                        "NOUVELLE QUETE", quest.getName(), true);
             }
         }
 

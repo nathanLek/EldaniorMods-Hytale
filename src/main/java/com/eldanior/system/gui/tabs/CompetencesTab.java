@@ -15,19 +15,17 @@ import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.ui.builder.UICommandBuilder;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
-import java.util.*;;
+import java.util.*;
 
 public class CompetencesTab {
 
     public static final int MAX_SKILL_SLOTS = 50;
-    private static final List<String> cachedSkillIds = new ArrayList<>();
 
-    public static void populate(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store) {
-        ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
-        PlayerLevelData data = store.getComponent(ref, type);
-        if (data == null) return;
-
-        cachedSkillIds.clear();
+    /**
+     * Build the ordered skill list for a given player from their data.
+     * This is computed fresh each time to avoid cross-player leakage.
+     */
+    private static List<String> buildSkillList(PlayerLevelData data) {
         Set<String> seen = new LinkedHashSet<>();
 
         // 1. Skills innes de la classe
@@ -53,13 +51,21 @@ public class CompetencesTab {
             seen.addAll(unlocked);
         }
 
-        cachedSkillIds.addAll(seen);
+        return new ArrayList<>(seen);
+    }
 
-        ui.set("#SkillCount.Text", "COMPETENCES (" + cachedSkillIds.size() + ")");
+    public static void populate(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store) {
+        ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
+        PlayerLevelData data = store.getComponent(ref, type);
+        if (data == null) return;
+
+        List<String> skillIds = buildSkillList(data);
+
+        ui.set("#SkillCount.Text", "COMPETENCES (" + skillIds.size() + ")");
 
         for (int i = 0; i < MAX_SKILL_SLOTS; i++) {
-            if (i < cachedSkillIds.size()) {
-                String skillId = cachedSkillIds.get(i);
+            if (i < skillIds.size()) {
+                String skillId = skillIds.get(i);
                 boolean enabled = data.isSkillEnabled(skillId);
 
                 // Try passive first
@@ -85,9 +91,15 @@ public class CompetencesTab {
     public static boolean handleToggle(String slotIndex, Ref<EntityStore> ref, Store<EntityStore> store) {
         int idx;
         try { idx = Integer.parseInt(slotIndex); } catch (NumberFormatException e) { return false; }
-        if (idx < 0 || idx >= cachedSkillIds.size()) return false;
 
-        String skillId = cachedSkillIds.get(idx);
+        ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
+        PlayerLevelData data = store.getComponent(ref, type);
+        if (data == null) return false;
+
+        List<String> skillIds = buildSkillList(data);
+        if (idx < 0 || idx >= skillIds.size()) return false;
+
+        String skillId = skillIds.get(idx);
 
         // Check if it's an active skill with catalystId -> give item
         var opt = SkillManager.getSkillFromId(skillId);
@@ -96,10 +108,6 @@ public class CompetencesTab {
         }
 
         // Passive toggle
-        ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
-        PlayerLevelData data = store.getComponent(ref, type);
-        if (data == null) return false;
-
         if (data.isSkillEnabled(skillId)) {
             data.disableSkill(skillId);
         } else {

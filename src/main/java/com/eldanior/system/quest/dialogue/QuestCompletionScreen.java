@@ -74,6 +74,7 @@ public class QuestCompletionScreen extends InteractiveCustomUIPage<QuestCompleti
         if (pData == null) { this.close(); return; }
 
         // Donner recompenses
+        int oldLevel = pData.getLevel();
         pData.addExperience(quest.getRewardXP());
         pData.addMoney(quest.getRewardGold());
         if (quest.getRewardTitleId() != null) pData.addTitle(quest.getRewardTitleId());
@@ -97,15 +98,32 @@ public class QuestCompletionScreen extends InteractiveCustomUIPage<QuestCompleti
         pData.setQuestData(QuestManager.serializePlayerQuests(playerUUID));
         store.putComponent(ref, type, pData);
 
-        if (player != null) {
-            player.sendMessage(Message.raw("§a§lQuete terminee : " + quest.getName() + " !"));
-            if (quest.getUnlocksQuestId() != null) {
-                var nextQuest = QuestManager.getQuest(quest.getUnlocksQuestId());
-                if (nextQuest != null) {
-                    player.sendMessage(Message.raw("§6Nouvelle quete : " + nextQuest.getName()));
-                }
+        // Notifications + level up check
+        PlayerRef pRef2 = store.getComponent(ref, PlayerRef.getComponentType());
+        if (pRef2 != null) {
+            com.eldanior.system.Leveling.utils.NotificationHelper.showEventTitle(pRef2,
+                    "QUETE TERMINEE", quest.getName(), true);
+            com.eldanior.system.Leveling.utils.NotificationHelper.sendSuccess(pRef2,
+                    "<color:green>+" + quest.getRewardXP() + " XP</color> <color:gold>+" + quest.getRewardGold() + " Or</color>");
+
+            // Level up ?
+            if (pData.getLevel() > oldLevel) {
+                com.eldanior.system.Leveling.utils.NotificationHelper.showLevelUpTitle(pRef2, pData.getLevel());
+                // Points d'attributs
+                int gained = (pData.getLevel() - oldLevel) * 3;
+                pData.setAttributePoints(pData.getAttributePoints() + gained);
+                store.putComponent(ref, type, pData);
+            }
+
+            // Titre débloqué ?
+            if (quest.getRewardTitleId() != null) {
+                com.eldanior.system.Leveling.utils.NotificationHelper.showEventTitle(pRef2,
+                        "TITRE DEBLOQUE", quest.getRewardTitleId(), true);
             }
         }
+
+        // Mettre à jour les stats en jeu
+        com.eldanior.system.Leveling.utils.StatCalculator.updatePlayerStats(ref, store, pData);
 
         this.close();
     }

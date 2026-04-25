@@ -4,6 +4,7 @@ import com.eldanior.system.classes.models.ClassModel;
 import com.eldanior.system.config.configs.ClassType;
 import com.eldanior.system.config.configs.Rarity;
 import com.eldanior.system.config.configs.WeaponMastery;
+import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
 
 import java.util.List;
 
@@ -13,15 +14,15 @@ public class Archer extends ClassModel {
         super(
                 "archer",
                 "Archer",
-                "Un expert du tir a distance.",
+                "L'Archer maitrise le combat a distance avec une precision chirurgicale. Son oeil de faucon et sa dexterite lui permettent d'atteindre n'importe quelle cible.",
                 Rarity.COMMON,
                 ClassType.ARCHER,
-                List.of(),
+                List.of(PassiveSkill.EAGLE_EYE, PassiveSkill.LIGHT_REFLEXES),
                 List.of(WeaponMastery.BOW, WeaponMastery.DAGGER),
-                List.of(),
+                List.of("tireur", "chasseur_archer", "arbaletrier", "eclaireur_archer", "franc_tireur", "ranger_elite", "arc_mystique", "maitre_chasse", "sniper_divin", "tireur_elementaire", "general_archer", "oeil_de_faucon", "arc_ancien", "avatar_arc", "dieu_arc"),
                 120,
                 false,
-                2, 2, 2, 0, 3, 7
+                4, 4, 4, 2, 12, 10
         );
     }
 }

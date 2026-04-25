@@ -4,6 +4,7 @@ import com.eldanior.system.classes.models.ClassModel;
 import com.eldanior.system.config.configs.ClassType;
 import com.eldanior.system.config.configs.Rarity;
 import com.eldanior.system.config.configs.WeaponMastery;
+import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
 
 import java.util.List;
 
@@ -13,15 +14,15 @@ public class Brute extends ClassModel {
         super(
                 "brute",
                 "Brute",
-                "Un combattant instinctif et sauvage qui compte uniquement sur sa force brute.",
+                "La Brute ne connait qu'un langage : la force. Chaque coup porte la puissance d'un tremblement de terre.",
                 Rarity.COMMON,
                 ClassType.WARRIOR,
-                List.of(),
+                List.of(PassiveSkill.DEEP_SLASH, PassiveSkill.STONE_SKIN, PassiveSkill.TIRELESS_BREATH),
                 List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD),
                 List.of(),
                 250,
                 false,
-                15, 10, 1, 4, 4, 2
+                30, 20, 2, 8, 8, 4
         );
     }
 }

@@ -13,15 +13,15 @@ public class GuildMaster extends ClassModel {
         super(
                 "guild_master",
                 "Chef de Guilde",
-                "Une figure d'autorité intouchable, véritable forteresse vivante.",
+                "Le Maitre de Guilde dirige un reseau commercial puissant. Son influence politique et economique est immense.",
                 Rarity.EPIC,
                 ClassType.MERCHANT,
-                List.of(PassiveSkill.ARTISANAT),
+                List.of(PassiveSkill.ARTISANAT, PassiveSkill.OVERFLOWING_LIFE, PassiveSkill.MARATHON_RUNNER),
                 List.of(WeaponMastery.ANY),
                 List.of("world_forger"),
                 800,
                 false,
-                14, 5, 15, 12, 4, 15
+                28, 10, 30, 24, 8, 30
         );
     }
 }

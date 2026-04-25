@@ -60,9 +60,15 @@ public class PartyHud extends CustomUIHud {
                 ui.set("#Member" + slot + "Badge.Text", isCaptain ? "CAP" : "---");
                 ui.set("#Member" + slot + "Badge.Style.TextColor", isCaptain ? "#FFD700" : "#667788");
                 ui.set("#Member" + slot + "Name.Text", name);
-                ui.set("#Member" + slot + "Level.Text", "");
-                ui.set("#Member" + slot + "Class.Text", "");
-                ui.set("#Member" + slot + "Bar.Value", 1.0f);
+
+                // Infos du membre via getMemberInfoStatic
+                MemberInfo info = getMemberInfoStatic(entry.getKey());
+                if (info.familyName != null) {
+                    ui.set("#Member" + slot + "Name.Text", name + " " + info.familyName);
+                }
+                ui.set("#Member" + slot + "Level.Text", "Lv." + info.level);
+                ui.set("#Member" + slot + "Class.Text", info.className);
+                ui.set("#Member" + slot + "Bar.Value", info.hpRatio);
             } else {
                 ui.set(card + ".Visible", false);
             }
@@ -153,6 +159,46 @@ public class PartyHud extends CustomUIHud {
         } catch (Exception e) {
             // silently fail
         }
+        return info;
+    }
+
+    private static MemberInfo getMemberInfoStatic(UUID playerUUID) {
+        MemberInfo info = new MemberInfo();
+        try {
+            PlayerRef playerRef = Universe.get().getPlayer(playerUUID);
+            if (playerRef == null) {
+                info.className = "Offline";
+                return info;
+            }
+            var ref = playerRef.getReference();
+            if (ref == null) return info;
+            var store = ref.getStore();
+
+            // HP
+            EntityStatMap statMap = store.getComponent(ref,
+                    EntityStatsModule.get().getEntityStatMapComponentType());
+            if (statMap != null) {
+                var healthStat = statMap.get(DefaultEntityStatTypes.getHealth());
+                if (healthStat != null) {
+                    float current = healthStat.get();
+                    float max = healthStat.getMax();
+                    info.hpRatio = max > 0 ? current / max : 0f;
+                }
+            }
+
+            // Level, classe et famille
+            ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
+            PlayerLevelData data = store.getComponent(ref, type);
+            if (data != null) {
+                info.level = data.getLevel();
+                info.className = data.getPlayerClass();
+                String familyId = data.getNobleFamilyId();
+                if (familyId != null && !familyId.isEmpty()) {
+                    NobleFamilyModel family = FamilyManager.get(familyId);
+                    if (family != null) info.familyName = "Von " + family.getDisplayName();
+                }
+            }
+        } catch (Exception ignored) {}
         return info;
     }
 

@@ -6,9 +6,9 @@ public class DailyDuel_PremierSang extends QuestModel {
     public DailyDuel_PremierSang() {
         super("daily_duel_1", "Premier Sang",
                 "Gagnez un duel.",
-                QuestType.DUEL, QuestCategory.JOURNALIERE, QuestDifficulty.F,
+                QuestType.DUEL, QuestCategory.JOURNALIERE, QuestDifficulty.E,
                 null, 1,
-                500, 1000, null,
+                330, 165, null,
                 null, null, 1440);
     }
 }

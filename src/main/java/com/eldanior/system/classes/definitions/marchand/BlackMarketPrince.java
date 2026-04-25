@@ -13,15 +13,15 @@ public class BlackMarketPrince extends ClassModel {
         super(
                 "black_market_prince",
                 "Prince du Marché Noir",
-                "Il contrôle les bas-fonds. Rapide comme l'ombre, et mortel s'il est acculé.",
+                "Le Prince du Marche Noir controle le commerce souterrain. Son reseau d'informateurs s'etend dans tout le continent.",
                 Rarity.EPIC,
                 ClassType.MERCHANT,
-                List.of(PassiveSkill.ARTISANAT),
+                List.of(PassiveSkill.ARTISANAT, PassiveSkill.GOLDEN_TOUCH, PassiveSkill.PHANTOM_DODGE),
                 List.of(WeaponMastery.ANY),
                 List.of("underworld_king"),
                 800,
                 false,
-                5, 4, 10, 8, 22, 20
+                10, 8, 20, 16, 44, 40
         );
     }
 }

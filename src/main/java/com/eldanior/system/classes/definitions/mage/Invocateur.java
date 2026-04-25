@@ -1,0 +1,20 @@
+package com.eldanior.system.classes.definitions.mage;
+
+import com.eldanior.system.classes.models.ClassModel;
+import com.eldanior.system.config.configs.ClassType;
+import com.eldanior.system.config.configs.Rarity;
+import com.eldanior.system.config.configs.WeaponMastery;
+import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
+
+import java.util.List;
+
+public class Invocateur extends ClassModel {
+    public Invocateur() {
+        super("invocateur", "Invocateur", "L'Invocateur fait appel aux esprits et aux creatures d'autres plans pour combattre a ses cotes.",
+                Rarity.COMMON, ClassType.MAGE,
+                List.of(PassiveSkill.MANA_FONT, PassiveSkill.AWAKENED_MIND, PassiveSkill.TIRELESS_BREATH),
+                List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
+                List.of(), 120, false,
+                2, 8, 24, 8, 4, 4);
+    }
+}

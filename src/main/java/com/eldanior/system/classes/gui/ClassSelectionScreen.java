@@ -7,6 +7,7 @@ import com.eldanior.system.classes.ClassManager;
 import com.eldanior.system.classes.models.ClassModel;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.config.configs.Rarity;
+import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
@@ -39,55 +40,64 @@ public class ClassSelectionScreen extends InteractiveCustomUIPage<ClassSelection
 
         for (String id : rolledClassIds) {
             ClassModel model = ClassManager.get(id);
-            if (model != null) {
+            if (model != null && !model.isAdminAccess()) {
                 this.baseClasses.add(model);
             }
         }
-
-        System.out.println("[DEBUG] Classes pour le choix trouvées : " + baseClasses.size());
     }
 
     @Override
-    public void build(@Nonnull Ref<EntityStore> ref, @Nonnull UICommandBuilder commands,
+    public void build(@Nonnull Ref<EntityStore> ref, @Nonnull UICommandBuilder ui,
                       @Nonnull UIEventBuilder events, @Nonnull Store<EntityStore> store) {
-        commands.append("Classes/ClassSelection.ui");
+        ui.append("Classes/ClassSelection.ui");
 
-        int index = 0;
+        for (int i = 0; i < 5; i++) {
+            if (i < baseClasses.size()) {
+                ClassModel model = baseClasses.get(i);
+                String p = "#ClassCard" + i;
+                String rarityColor = getRarityHexColor(model.getRarity());
 
-        for (ClassModel model : this.baseClasses) {
-            if (model.isAdminAccess()) continue;
-            if (index >= 6) break;
+                ui.set(p + ".Visible", true);
 
-            String tileId = "#ClassTile" + index;
+                // Nom + rareté
+                ui.set("#CName" + i + ".Text", model.getDisplayName());
+                ui.set("#CName" + i + ".Style.TextColor", rarityColor);
+                ui.set("#CRarity" + i + ".Text", model.getRarity().name());
+                ui.set("#CRarity" + i + ".Style.TextColor", rarityColor);
 
-            // 1. On garde un texte propre sans balises HTML/Couleur
-            String displayNameWithRarity = "[" + model.getRarity().name() + "] " + model.getDisplayName();
-            commands.set(tileId + " #ClassLabel.Text", displayNameWithRarity);
-            commands.set(tileId + " #CategoryIcon.ItemId", getIconForClass(model.getId()));
+                // Type
+                ui.set("#CType" + i + ".Text", model.getType().getLabel());
 
-            // --- 2. NOUVEAU : CHANGEMENT DE LA COULEUR DE FOND ---
-            // On récupère le code Hexadécimal
-            String hexColor = getRarityHexColor(model.getRarity());
+                // Description
+                ui.set("#CDesc" + i + ".Text", model.getDescription());
 
-            // On teinte la tuile entière avec cette couleur
-            // ⚠️ Note : Si ton UI a un fond spécifique à l'intérieur de la tuile (ex: "#Background"),
-            // tu devras peut-être écrire : commands.set(tileId + " #Background.Color", hexColor);
-            commands.set(tileId + " #RarityBorderTop.Background",    hexColor);
-            commands.set(tileId + " #RarityBorderBottom.Background", hexColor);
-            commands.set(tileId + " #RarityBorderLeft.Background",   hexColor);
-            commands.set(tileId + " #RarityBorderRight.Background",  hexColor);
+                // Stats bonus
+                ui.set("#CStat" + i + "a.Text", "STR +" + model.getBonusStr());
+                ui.set("#CStat" + i + "b.Text", "VIT +" + model.getBonusVit());
+                ui.set("#CStat" + i + "c.Text", "INT +" + model.getBonusInt());
+                ui.set("#CStat" + i + "d.Text", "END +" + model.getBonusEnd());
+                ui.set("#CStat" + i + "e.Text", "AGL +" + model.getBonusAgl());
+                ui.set("#CStat" + i + "f.Text", "LCK +" + model.getBonusLck());
 
-            events.addEventBinding(
-                    CustomUIEventBindingType.Activating,
-                    tileId,
-                    EventData.of("Action", "selectClass").append("ClassId", model.getId())
-            );
+                // Skills
+                List<PassiveSkill> skills = model.getSkillsPassiveIds();
+                if (skills != null) {
+                    for (int s = 0; s < 3; s++) {
+                        String skillLabel = "#CSkill" + i + (char)('a' + s);
+                        if (s < skills.size()) {
+                            ui.set(skillLabel + ".Text", "- " + skills.get(s).getDisplayName());
+                        } else {
+                            ui.set(skillLabel + ".Text", "");
+                        }
+                    }
+                }
 
-            index++;
-        }
-
-        for (int i = index; i < 6; i++) {
-            commands.set("#ClassTile" + i + ".Visible", false);
+                // Event binding
+                events.addEventBinding(CustomUIEventBindingType.Activating, "#CBtn" + i,
+                        EventData.of("Action", "selectClass").append("ClassId", model.getId()));
+            } else {
+                ui.set("#ClassCard" + i + ".Visible", false);
+            }
         }
     }
 
@@ -101,7 +111,6 @@ public class ClassSelectionScreen extends InteractiveCustomUIPage<ClassSelection
 
         ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
         PlayerLevelData playerData = store.getComponent(ref, type);
-
         if (playerData == null) playerData = new PlayerLevelData();
 
         PlayerRef playerRef = store.getComponent(ref, PlayerRef.getComponentType());
@@ -109,7 +118,7 @@ public class ClassSelectionScreen extends InteractiveCustomUIPage<ClassSelection
         if (!isEvolution && playerData.getPlayerClassId().equalsIgnoreCase(data.classId)) {
             if (playerRef != null) {
                 NotificationHelper.sendNotification(playerRef,
-                        "<color:yellow>Vous êtes déjà " + model.getDisplayName() + " !</color>",
+                        "<color:yellow>Vous etes deja " + model.getDisplayName() + " !</color>",
                         NotificationStyle.Warning);
             }
             return;
@@ -117,57 +126,25 @@ public class ClassSelectionScreen extends InteractiveCustomUIPage<ClassSelection
 
         playerData.setPlayerClass(model.getDisplayName());
         playerData.setPlayerClassId(model.getId());
-        playerData.forgetAllSkills();
-
         StatCalculator.updatePlayerStats(ref, store, playerData);
         store.putComponent(ref, type, playerData);
 
         if (playerRef != null) {
-            // Pour le tchat, on utilise ton ancienne méthode avec les balises HTML <color:...>
-            String chatColor = getChatColor(model.getRarity());
-            NotificationHelper.sendNotification(playerRef,
-                    "<color:green>Évolution : </color>" + chatColor + model.getDisplayName() + "</color>",
-                    NotificationStyle.Success);
+            NotificationHelper.showEventTitle(playerRef, "NOUVELLE CLASSE", model.getDisplayName(), true);
         }
 
         this.close();
     }
 
-    // --- NOUVELLE MÉTHODE : Codes couleurs UI (Hexadécimal) ---
     private String getRarityHexColor(Rarity rarity) {
         return switch (rarity) {
-            case COMMON -> "#E0E0E0";    // Gris clair / Blanc cassé
-            case RARE -> "#3498DB";      // Bleu vif
-            case EPIC -> "#9B59B6";      // Violet / Magenta
-            case UNIQUE -> "#E74C3C";    // Rouge intense
-            case LEGENDARY -> "#F1C40F"; // Or / Jaune éclatant
-            case DIVINE -> "#00FFFF";    // Cyan / Aqua brillant
+            case COMMON -> "#E0E0E0";
+            case RARE -> "#3498DB";
+            case EPIC -> "#9B59B6";
+            case UNIQUE -> "#E74C3C";
+            case LEGENDARY -> "#F1C40F";
+            case DIVINE -> "#00FFFF";
             default -> "#FFFFFF";
-        };
-    }
-
-    // --- ANCIENNE MÉTHODE : Codes couleurs Tchat (Balises) ---
-    private String getChatColor(Rarity rarity) {
-        return switch (rarity) {
-            case COMMON -> "<color:white>";
-            case RARE -> "<color:blue>";
-            case EPIC -> "<color:magenta>";
-            case UNIQUE -> "<color:red>";
-            case LEGENDARY -> "<color:gold>";
-            case DIVINE -> "<color:aqua>";
-            default -> "<color:gray>";
-        };
-    }
-
-    private String getIconForClass(String classId) {
-        return switch (classId) {
-            case "warrior", "epeiste", "fantassin", "brute", "mercenaire" -> "Weapon_Sword_Crude";
-            case "mage"     -> "Weapon_Spellbook_Fire";
-            case "assassin" -> "Weapon_Daggers_Crude";
-            case "archer"   -> "Weapon_Shortbow_Bomb";
-            case "merchant" -> "Deco_Treasure";
-            case "champion", "heros", "titan", "asura" -> "Weapon_Sword_Steel";
-            default         -> "Plant_Fruit_Apple";
         };
     }
 
@@ -177,7 +154,7 @@ public class ClassSelectionScreen extends InteractiveCustomUIPage<ClassSelection
 
         public static final BuilderCodec<ClassEventData> CODEC =
                 BuilderCodec.builder(ClassEventData.class, ClassEventData::new)
-                        .addField(new KeyedCodec<>("Action",  Codec.STRING), (d, v) -> d.action  = v, d -> d.action)
+                        .addField(new KeyedCodec<>("Action", Codec.STRING), (d, v) -> d.action = v, d -> d.action)
                         .addField(new KeyedCodec<>("ClassId", Codec.STRING), (d, v) -> d.classId = v, d -> d.classId)
                         .build();
     }

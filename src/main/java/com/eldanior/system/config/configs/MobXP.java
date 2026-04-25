@@ -61,6 +61,14 @@ public class MobXP {
         return DEFAULT.getXp();
     }
 
+    public static int getTotalMobCount() {
+        return (int) ALL_MOBS.stream().filter(m -> !m.isInvincible()).count();
+    }
+
+    public static int getTotalNpcCount() {
+        return (int) ALL_MOBS.stream().filter(IMobConfig::isInvincible).count();
+    }
+
     public static IMobConfig getMobDataForId(String typeId) {
         if (typeId == null) return DEFAULT;
         String cleanId = typeId.replace("_", " ").toLowerCase();

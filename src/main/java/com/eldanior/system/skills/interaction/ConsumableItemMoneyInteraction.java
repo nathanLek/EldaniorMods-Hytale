@@ -42,8 +42,19 @@ public class ConsumableItemMoneyInteraction extends SimpleInteraction {
         CoinItemRegistry.getValueFor(itemId).ifPresent(coinValue -> {
             data.addMoney(coinValue);
 
-            player.sendMessage(Message.raw("+" + coinValue + " Eldan  | Solde : " + data.getMoney())
-                    .color(Color.YELLOW).bold(true));
+            // Hook progression quete COLLECTION + notification or
+            try {
+                var pRefComp = playerRef.getStore().getComponent(playerRef, com.hypixel.hytale.server.core.universe.PlayerRef.getComponentType());
+                if (pRefComp != null) {
+                    java.lang.reflect.Field f = com.hypixel.hytale.server.core.universe.PlayerRef.class.getDeclaredField("uuid");
+                    f.setAccessible(true);
+                    java.util.UUID uuid = (java.util.UUID) f.get(pRefComp);
+                    com.eldanior.system.quest.QuestManager.onGoldGained(uuid, coinValue);
+                    com.eldanior.system.Leveling.utils.NotificationHelper.sendNotification(pRefComp,
+                            "<color:gold>+" + coinValue + " Or</color> <color:gray>| Solde : " + data.getMoney() + "</color>",
+                            com.hypixel.hytale.protocol.packets.interface_.NotificationStyle.Success);
+                }
+            } catch (Exception ignored) {}
 
             int slot = context.getHeldItemSlot();
             new Timer().schedule(new TimerTask() {

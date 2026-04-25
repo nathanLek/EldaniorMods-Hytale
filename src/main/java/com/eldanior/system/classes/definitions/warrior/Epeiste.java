@@ -4,6 +4,7 @@ import com.eldanior.system.classes.models.ClassModel;
 import com.eldanior.system.config.configs.ClassType;
 import com.eldanior.system.config.configs.Rarity;
 import com.eldanior.system.config.configs.WeaponMastery;
+import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
 
 import java.util.List;
 
@@ -13,15 +14,15 @@ public class Epeiste extends ClassModel {
         super(
                 "epeiste",
                 "Épéiste",
-                "Un guerrier qui affine sa technique a l'epee, alliant force et precision.",
+                "L'Epeiste maitrise l'art de l'escrime avec une elegance mortelle. Chaque mouvement est calcule.",
                 Rarity.COMMON,
                 ClassType.WARRIOR,
-                List.of(),
+                List.of(PassiveSkill.DUELIST_SWIFTNESS, PassiveSkill.INSTINCTIVE_STRIKE, PassiveSkill.WIND_STEP),
                 List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD),
                 List.of(),
                 250,
                 false,
-                12, 8, 2, 5, 8, 3
+                24, 16, 4, 10, 16, 6
         );
     }
 }

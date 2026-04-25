@@ -14,15 +14,15 @@ public class WorldForger extends ClassModel {
         super(
                 "world_forger",
                 "Forgeron des Mondes",
-                "Il ne travaille plus le simple métal, il façonne la réalité elle-même. Son corps est une enclume sur laquelle les armes divines sont forgées.",
+                "Le Forgeur de Mondes cree des artefacts si puissants qu'ils peuvent remodeler la realite. Sa forge brule du feu divin.",
                 Rarity.LEGENDARY,
                 ClassType.MERCHANT,
-                List.of(PassiveSkill.ARTISANAT),
+                List.of(PassiveSkill.ARTISANAT, PassiveSkill.COSMIC_MIND, PassiveSkill.ABYSS_BLADE),
                 List.of(WeaponMastery.ANY),
                 null,
                 999,
                 false,
-                250, 80, 300, 200, 50, 200
+                500, 160, 600, 400, 100, 400
         );
     }
 }
