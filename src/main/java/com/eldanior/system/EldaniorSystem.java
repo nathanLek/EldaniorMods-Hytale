@@ -100,6 +100,7 @@ public class EldaniorSystem extends JavaPlugin {
 
             com.eldanior.system.trade.TradeManager.init();
             com.eldanior.system.territory.ParcelManager.init(this.getDataDirectory());
+            com.eldanior.system.territory.ParcelEconomyManager.init();
             com.eldanior.system.shop.ShopManager.init();
             com.eldanior.system.persistence.PersistenceManager.init(this.getDataDirectory());
             LOGGER.atInfo().log("[OK] Managers et Registres initialisés.");

@@ -4,6 +4,7 @@ import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.config.Player.PlayerPositionTracker;
 import com.eldanior.system.territory.*;
+import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.component.Store;
@@ -46,14 +47,21 @@ public class ProprietesTab {
         cachedOwnedIds.clear();
         cachedAvailableIds.clear();
 
-        // === TOUTES LES PARCELLES (admin) ou MES BIENS ===
+        // === MES BIENS : seulement PLOT, HOUSING (pas territoires/villes/royaumes) ===
         List<ParcelData> owned;
         if (isAdmin) {
-            owned = new ArrayList<>(ParcelManager.getAll());
+            // Admin voit tous les plots/housing
+            owned = new ArrayList<>();
+            for (ParcelData p : ParcelManager.getAll()) {
+                if (p.getType() == ParcelType.PLOT || p.getType() == ParcelType.HOUSING) {
+                    owned.add(p);
+                }
+            }
         } else {
             owned = new ArrayList<>();
             UUID finalUUID = myUUID;
             for (ParcelData p : ParcelManager.getAll()) {
+                if (p.getType() != ParcelType.PLOT && p.getType() != ParcelType.HOUSING) continue;
                 if (finalUUID != null && (p.isOwner(finalUUID) || p.isMember(finalUUID)
                         || (p.getRenterUUID() != null && p.getRenterUUID().equals(finalUUID)))) {
                     owned.add(p);
@@ -72,8 +80,32 @@ public class ProprietesTab {
                 ui.set("#POwnType" + i + ".Text", "[" + p.getType().getLabel() + "]");
                 ui.set("#POwnType" + i + ".Style.TextColor", getTypeColor(p));
                 ui.set("#POwnName" + i + ".Text", p.getName());
-                ui.set("#POwnOwner" + i + ".Text", p.getOwnerName().isEmpty() ? "Libre" : p.getOwnerName());
-                ui.set("#POwnOwner" + i + ".Style.TextColor", p.getOwnerName().isEmpty() ? "#cc4444" : "#8899aa");
+                // Owner / locataire info
+                String ownerDisplay;
+                String ownerColor;
+                if (p.isRented() && p.getRenterUUID() != null) {
+                    String renterName = "???";
+                    try {
+                        PlayerRef rRef = Universe.get().getPlayer(p.getRenterUUID());
+                        if (rRef != null) renterName = rRef.getUsername();
+                    } catch (Exception ignored) {}
+                    ownerDisplay = "Loue a " + renterName;
+                    ownerColor = "#ff9800";
+                } else if (p.isForRent()) {
+                    ownerDisplay = "En location";
+                    ownerColor = "#ff9800";
+                } else if (p.isForSale()) {
+                    ownerDisplay = "En vente";
+                    ownerColor = "#4CAF50";
+                } else if (p.getOwnerName().isEmpty() || p.isFree()) {
+                    ownerDisplay = "Libre";
+                    ownerColor = "#cc4444";
+                } else {
+                    ownerDisplay = p.getOwnerName();
+                    ownerColor = "#8899aa";
+                }
+                ui.set("#POwnOwner" + i + ".Text", ownerDisplay);
+                ui.set("#POwnOwner" + i + ".Style.TextColor", ownerColor);
 
                 // Prix
                 String priceText = "";
@@ -92,7 +124,7 @@ public class ProprietesTab {
         }
 
         // === PANNEAU DETAIL ===
-        populateDetail(ui, isAdmin);
+        populateDetail(ui, isAdmin, myUUID);
 
         // === DISPONIBLES ===
         List<ParcelData> available = ParcelManager.getAvailable();
@@ -107,11 +139,33 @@ public class ProprietesTab {
                 ui.set("#PAvSlot" + i + ".Visible", true);
                 ui.set("#PAvType" + i + ".Text", "[" + p.getType().getLabel() + "]");
                 ui.set("#PAvType" + i + ".Style.TextColor", getTypeColor(p));
-                ui.set("#PAvName" + i + ".Text", p.getName());
-                ui.set("#PAvPrice" + i + ".Text", p.getPrice() > 0 ? p.getPrice() + " Or" : "-");
-                ui.set("#PAvRent" + i + ".Text", p.getRentPrice() > 0 ? p.getRentPrice() + " Or" : "-");
-                ui.set("#PAvBtnBuy" + i + ".Visible", p.isForSale() && p.getPrice() > 0);
-                ui.set("#PAvBtnRent" + i + ".Visible", p.isForRent() && p.getRentPrice() > 0);
+
+                // Nom + localisation (ville > territoire > royaume)
+                String location = p.getName();
+                ParcelData parentCity = ParcelEconomyManager.findParentOfType(p, ParcelType.CITY);
+                ParcelData parentTerr = ParcelEconomyManager.findParentOfType(p, ParcelType.TERRITORY);
+                ParcelData parentKing = ParcelEconomyManager.findParentOfType(p, ParcelType.KINGDOM);
+                if (parentCity != null) {
+                    location += " - " + parentCity.getName();
+                } else if (parentTerr != null) {
+                    location += " - " + parentTerr.getName();
+                } else if (parentKing != null) {
+                    location += " - " + parentKing.getName();
+                }
+                ui.set("#PAvName" + i + ".Text", location);
+
+                // Proprio actuel
+                String sellerName = p.getOwnerName().isEmpty() ? "Ville" : p.getOwnerName();
+                ui.set("#PAvOwner" + i + ".Text", sellerName);
+
+                // Prix fixes
+                ui.set("#PAvPrice" + i + ".Text", p.isForSale() && p.getPrice() > 0 ? p.getPrice() + " Or" : "-");
+                ui.set("#PAvRent" + i + ".Text", p.isForRent() && p.getRentPrice() > 0 ? p.getRentPrice() + " Or" : "-");
+
+                // Ne pas afficher acheter/louer si c'est le proprio
+                boolean isMyProperty = myUUID != null && p.getOwnerUUID() != null && p.getOwnerUUID().equals(myUUID);
+                ui.set("#PAvBtnBuy" + i + ".Visible", p.isForSale() && p.getPrice() > 0 && !isMyProperty);
+                ui.set("#PAvBtnRent" + i + ".Visible", p.isForRent() && p.getRentPrice() > 0 && !isMyProperty);
             } else {
                 cachedAvailableIds.add("");
                 ui.set("#PAvSlot" + i + ".Visible", false);
@@ -120,7 +174,7 @@ public class ProprietesTab {
     }
 
     // === PANNEAU DETAIL D'UNE PARCELLE SELECTIONNEE ===
-    private static void populateDetail(UICommandBuilder ui, boolean isAdmin) {
+    private static void populateDetail(UICommandBuilder ui, boolean isAdmin, UUID myUUID) {
         if (selectedParcelId == null) {
             ui.set("#PropDetail.Visible", false);
             return;
@@ -182,6 +236,14 @@ public class ProprietesTab {
         ui.set("#PDetProt.Text", p.isProtectedByDefault() ? "ZONE PROTEGEE" : "ZONE OUVERTE");
         ui.set("#PDetProt.Style.TextColor", p.isProtectedByDefault() ? "#4CAF50" : "#cc4444");
 
+        // Tresorerie (pour villes, territoires, royaumes)
+        if (p.getType() == ParcelType.CITY || p.getType() == ParcelType.TERRITORY || p.getType() == ParcelType.KINGDOM) {
+            ui.set("#PDetTreasury.Text", "Tresorerie : " + p.getTreasury() + " Or");
+            ui.set("#PDetTreasury.Visible", true);
+        } else {
+            ui.set("#PDetTreasury.Visible", false);
+        }
+
         String statusText = p.isBought() ? "Achete" : p.isRented() ? "En location" : p.isFree() ? "Libre" : "Attribue";
         String statusColor = p.isBought() ? "#4CAF50" : p.isRented() ? "#ff9800" : p.isFree() ? "#cc4444" : "#3498DB";
         ui.set("#PDetStatus.Text", "Statut : " + statusText);
@@ -215,24 +277,35 @@ public class ProprietesTab {
             }
         }
 
-        // Boutons admin
+        // Qui suis-je par rapport a cette parcelle ?
+        boolean iAmOwner = myUUID != null && p.getOwnerUUID() != null && p.getOwnerUUID().equals(myUUID);
+        boolean iAmRenter = myUUID != null && p.getRenterUUID() != null && p.getRenterUUID().equals(myUUID);
+        boolean hasRenter = p.getRenterUUID() != null;
+
+        // Boutons admin (toujours)
         ui.set("#PDetBtnPrice.Visible", isAdmin);
         ui.set("#PDetBtnRent.Visible", isAdmin);
-        ui.set("#PDetBtnFamily.Visible", isAdmin && p.getType() != ParcelType.PLOT);
+        ui.set("#PDetBtnFamily.Visible", isAdmin && p.getType() != ParcelType.PLOT && p.getType() != ParcelType.HOUSING);
         ui.set("#PDetBtnProt.Visible", isAdmin);
         ui.set("#PDetBtnDel.Visible", isAdmin);
 
-        // Bouton vendre (si bought par un joueur, pas en location)
-        ui.set("#PDetBtnSell.Visible", p.isBought() && p.getRenterUUID() == null);
-        // Bouton quitter location (si locataire)
-        ui.set("#PDetBtnQuit.Visible", p.isRented());
-        // Bouton prolonger location (si locataire, prix > 0)
-        ui.set("#PDetBtnRenew.Visible", p.isRented() && p.getRentPrice() > 0);
-        if (p.isRented() && p.getRentPrice() > 0) {
+        // Boutons PROPRIO
+        boolean canManage = iAmOwner || isAdmin;
+        // REVENDRE / ANNULER VENTE (toggle)
+        ui.set("#PDetBtnSell.Visible", canManage && !hasRenter && !p.isForRent());
+        if (canManage && !hasRenter && !p.isForRent()) {
+            ui.set("#PDetBtnSell.Text", p.isForSale() ? "ANNULER VENTE" : "REVENDRE");
+        }
+        // METTRE EN LOCATION / RETIRER LOCATION
+        ui.set("#PDetBtnRentOut.Visible", canManage && !hasRenter && !p.isForSale() && !p.isForRent());
+        ui.set("#PDetBtnCancelRent.Visible", canManage && p.isForRent() && !hasRenter);
+
+        // Boutons LOCATAIRE
+        ui.set("#PDetBtnQuit.Visible", iAmRenter); // Quitter location
+        ui.set("#PDetBtnRenew.Visible", iAmRenter && p.getRentPrice() > 0); // Prolonger
+        if (iAmRenter && p.getRentPrice() > 0) {
             ui.set("#PDetBtnRenew.Text", "PROLONGER (" + p.getRentPrice() + " Or)");
         }
-        // Bouton mettre en location (si bought et pas deja en location)
-        ui.set("#PDetBtnRentOut.Visible", p.isBought() && p.getRenterUUID() == null && !p.isForRent());
 
         // Joueurs a proximite invitables
         cachedInviteNames.clear();
@@ -298,8 +371,36 @@ public class ProprietesTab {
             PlayerLevelData data = store.getComponent(ref, EldaniorSystem.get().getPlayerLevelDataType());
             if (data == null || data.getMoney() < parcel.getPrice()) return false;
 
-            data.addMoney(-parcel.getPrice());
+            long totalPrice = parcel.getPrice();
+            long[] taxResult = ParcelEconomyManager.calculateTax(totalPrice);
+            long netAmount = taxResult[0];
+            long taxAmount = taxResult[1];
+
+            // Prelever le montant total au joueur
+            data.addMoney(-totalPrice);
             store.putComponent(ref, EldaniorSystem.get().getPlayerLevelDataType(), data);
+
+            // Si un proprio joueur existe, il recoit le net
+            if (parcel.getOwnerUUID() != null) {
+                try {
+                    PlayerRef ownerRef = Universe.get().getPlayer(parcel.getOwnerUUID());
+                    if (ownerRef != null) {
+                        var ownerEntRef = ownerRef.getReference();
+                        if (ownerEntRef != null) {
+                            PlayerLevelData ownerData = ownerEntRef.getStore().getComponent(ownerEntRef, EldaniorSystem.get().getPlayerLevelDataType());
+                            if (ownerData != null) {
+                                ownerData.addMoney(netAmount);
+                                ownerEntRef.getStore().putComponent(ownerEntRef, EldaniorSystem.get().getPlayerLevelDataType(), ownerData);
+                            }
+                        }
+                        ownerRef.sendMessage(Message.raw("§a+" + netAmount + " Or §7(vente de " + parcel.getName() + ", taxe " + taxAmount + " Or)"));
+                    }
+                } catch (Exception ignored) {}
+            }
+
+            // Taxe va a la ville
+            ParcelEconomyManager.distributeTax(id, taxAmount);
+
             return ParcelManager.buyParcel(id, buyerUUID, pRef.getUsername());
         } catch (Exception e) { return false; }
     }
@@ -322,8 +423,34 @@ public class ProprietesTab {
             PlayerLevelData data = store.getComponent(ref, EldaniorSystem.get().getPlayerLevelDataType());
             if (data == null || data.getMoney() < parcel.getRentPrice()) return false;
 
-            data.addMoney(-parcel.getRentPrice());
+            long totalRent = parcel.getRentPrice();
+            long[] taxResult = ParcelEconomyManager.calculateTax(totalRent);
+            long netAmount = taxResult[0];
+            long taxAmount = taxResult[1];
+
+            data.addMoney(-totalRent);
             store.putComponent(ref, EldaniorSystem.get().getPlayerLevelDataType(), data);
+
+            // Proprio joueur recoit le net
+            if (parcel.getOwnerUUID() != null) {
+                try {
+                    PlayerRef ownerRef = Universe.get().getPlayer(parcel.getOwnerUUID());
+                    if (ownerRef != null) {
+                        var ownerEntRef = ownerRef.getReference();
+                        if (ownerEntRef != null) {
+                            PlayerLevelData ownerData = ownerEntRef.getStore().getComponent(ownerEntRef, EldaniorSystem.get().getPlayerLevelDataType());
+                            if (ownerData != null) {
+                                ownerData.addMoney(netAmount);
+                                ownerEntRef.getStore().putComponent(ownerEntRef, EldaniorSystem.get().getPlayerLevelDataType(), ownerData);
+                            }
+                        }
+                        ownerRef.sendMessage(Message.raw("§a+" + netAmount + " Or §7(location de " + parcel.getName() + ", taxe " + taxAmount + " Or)"));
+                    }
+                } catch (Exception ignored) {}
+            }
+
+            ParcelEconomyManager.distributeTax(id, taxAmount);
+
             return ParcelManager.rentParcel(id, renterUUID, pRef.getUsername());
         } catch (Exception e) { return false; }
     }
@@ -336,8 +463,32 @@ public class ProprietesTab {
         try {
             PlayerLevelData data = store.getComponent(ref, EldaniorSystem.get().getPlayerLevelDataType());
             if (data == null || data.getMoney() < p.getRentPrice()) return false;
-            data.addMoney(-p.getRentPrice());
+
+            long totalRent = p.getRentPrice();
+            long[] taxResult = ParcelEconomyManager.calculateTax(totalRent);
+            long taxAmount = taxResult[1];
+
+            data.addMoney(-totalRent);
             store.putComponent(ref, EldaniorSystem.get().getPlayerLevelDataType(), data);
+
+            // Proprio recoit le net
+            if (p.getOwnerUUID() != null) {
+                try {
+                    PlayerRef ownerRef = Universe.get().getPlayer(p.getOwnerUUID());
+                    if (ownerRef != null) {
+                        var ownerEntRef = ownerRef.getReference();
+                        if (ownerEntRef != null) {
+                            PlayerLevelData ownerData = ownerEntRef.getStore().getComponent(ownerEntRef, EldaniorSystem.get().getPlayerLevelDataType());
+                            if (ownerData != null) {
+                                ownerData.addMoney(taxResult[0]);
+                                ownerEntRef.getStore().putComponent(ownerEntRef, EldaniorSystem.get().getPlayerLevelDataType(), ownerData);
+                            }
+                        }
+                    }
+                } catch (Exception ignored) {}
+            }
+
+            ParcelEconomyManager.distributeTax(selectedParcelId, taxAmount);
             ParcelManager.renewRent(selectedParcelId);
             return true;
         } catch (Exception e) { return false; }
@@ -346,11 +497,15 @@ public class ProprietesTab {
     public static boolean handleRentOut() {
         if (selectedParcelId == null) return false;
         ParcelData p = ParcelManager.get(selectedParcelId);
-        if (p == null || !p.isBought()) return false;
+        if (p == null) return false;
         // Met en location au prix actuel (ou 500 par defaut)
         long rentPrice = p.getRentPrice() > 0 ? p.getRentPrice() : 500;
         p.setRentPrice(rentPrice);
         p.setForRent(true);
+        // Le proprio reste OWNER dans les membres
+        if (p.getOwnerUUID() != null && p.getRole(p.getOwnerUUID()) == null) {
+            p.addMember(p.getOwnerUUID(), ParcelRole.OWNER);
+        }
         ParcelManager.save();
         return true;
     }
@@ -383,6 +538,15 @@ public class ProprietesTab {
         }
     }
 
+    public static boolean handleCancelRent() {
+        if (selectedParcelId == null) return false;
+        ParcelData p = ParcelManager.get(selectedParcelId);
+        if (p == null || !p.isForRent() || p.getRenterUUID() != null) return false;
+        p.setForRent(false);
+        ParcelManager.save();
+        return true;
+    }
+
     public static boolean handleQuitRental() {
         if (selectedParcelId == null) return false;
         ParcelData p = ParcelManager.get(selectedParcelId);
@@ -396,10 +560,16 @@ public class ProprietesTab {
     public static boolean handleSellSelected() {
         if (selectedParcelId == null) return false;
         ParcelData p = ParcelManager.get(selectedParcelId);
-        if (p == null || !p.isBought()) return false;
-        ParcelManager.releaseParcel(selectedParcelId);
-        selectedParcelId = null;
-        selectedIndex = -1;
+        if (p == null) return false;
+        // Toggle vente
+        if (p.isForSale()) {
+            p.setForSale(false); // Retirer de la vente
+        } else {
+            if (p.getPrice() <= 0) p.setPrice(1000); // Prix par defaut si pas configure
+            p.setForSale(true);
+            p.setForRent(false); // Pas vente ET location en meme temps
+        }
+        ParcelManager.save();
         return true;
     }
 
@@ -425,7 +595,7 @@ public class ProprietesTab {
         ParcelData p = ParcelManager.get(selectedParcelId);
         if (p == null) return false;
         p.setPrice(price);
-        p.setForSale(price > 0);
+        // Ne PAS mettre en vente automatiquement — juste configurer le prix
         ParcelManager.save();
         return true;
     }
@@ -435,7 +605,7 @@ public class ProprietesTab {
         ParcelData p = ParcelManager.get(selectedParcelId);
         if (p == null) return false;
         p.setRentPrice(rentPrice);
-        p.setForRent(rentPrice > 0);
+        // Ne PAS mettre en location automatiquement — juste configurer le prix
         ParcelManager.save();
         return true;
     }
@@ -471,6 +641,8 @@ public class ProprietesTab {
             case TERRITORY -> "#3498DB";
             case CITY -> "#2ECC71";
             case PLOT -> "#aabbcc";
+            case HOUSING -> "#9B59B6";
+            case ROOM -> "#E91E63";
             case FARM -> "#8B4513";
         };
     }

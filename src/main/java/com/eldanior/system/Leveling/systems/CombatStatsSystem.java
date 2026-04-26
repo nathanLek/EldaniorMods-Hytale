@@ -13,6 +13,7 @@ import com.eldanior.system.titles.models.TitleEffect;
 import com.eldanior.system.titles.models.TitleModel;
 import com.eldanior.system.titles.nobility.systems.DignityAuraSystem;
 import com.eldanior.system.Leveling.utils.NotificationHelper;
+import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.npc.entities.NPCEntity;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
@@ -44,6 +45,31 @@ public class CombatStatsSystem extends DamageEventSystem {
 
         Ref<EntityStore> victimRef = archetypeChunk.getReferenceTo(index);
         if (!victimRef.isValid()) return;
+
+        // 0. CHECK PVP ZONE — bloquer les degats entre joueurs si PvP desactive dans la zone
+        if (damage.getSource() instanceof Damage.EntitySource entitySource) {
+            Ref<EntityStore> attackerRef = entitySource.getRef();
+            if (attackerRef.isValid()) {
+                Player attackerPlayer = store.getComponent(attackerRef, Player.getComponentType());
+                Player victimPlayer = store.getComponent(victimRef, Player.getComponentType());
+                // Si les deux sont des joueurs -> check PvP zone
+                if (attackerPlayer != null && victimPlayer != null && victimPlayer.getWorld() != null) {
+                    try {
+                        var transform = store.getComponent(victimRef,
+                                com.hypixel.hytale.server.core.modules.entity.component.TransformComponent.getComponentType());
+                        if (transform != null) {
+                            String world = victimPlayer.getWorld().getName();
+                            com.eldanior.system.territory.ParcelData parcel = com.eldanior.system.territory.ParcelManager.getParcelAt(
+                                    world, transform.getPosition().x, transform.getPosition().y, transform.getPosition().z);
+                            if (parcel != null && !parcel.isPvpEnabled()) {
+                                damage.setCancelled(true);
+                                return;
+                            }
+                        }
+                    } catch (Exception ignored) {}
+                }
+            }
+        }
 
         // 1. GESTION DE L'ESQUIVE (Maintenant gérée par le StatConfig !)
         if (tryDodge(victimRef, store, damage)) {

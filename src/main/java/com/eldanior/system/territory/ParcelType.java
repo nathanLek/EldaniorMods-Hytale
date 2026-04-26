@@ -5,7 +5,9 @@ public enum ParcelType {
     TERRITORY("Territoire"),
     CITY("Ville"),
     PLOT("Parcelle"),
-    FARM("Zone de Recolte"); // TODO: blocs cassables par tous + regeneration
+    HOUSING("Logement"),
+    ROOM("Chambre"),
+    FARM("Zone de Recolte");
 
     private final String label;
 

@@ -31,11 +31,16 @@ public class ParcelData {
     private long treasury;
     private String purchaseType = ""; // "BOUGHT" ou "RENTED" ou "" (libre)
 
-    // Famille noble associee (pour Royaume/Territoire/Ville)
+    // Famille noble ou guilde associee (pour Royaume/Territoire/Ville)
     private String familyId = "";
+    private String guildId = ""; // Pour les villes gerees par une guilde
 
     // Protection par defaut
     private boolean protectedByDefault = true;
+    private boolean pvpEnabled = false;
+    private long lastTaxCollection = 0;
+    private long lastTaxAmount = 0;
+    private long lastTreasuryTransfer = 0;
 
     public ParcelData(String id, String name, ParcelType type, UUID ownerUUID, String ownerName,
                       String world, int x1, int y1, int z1, int x2, int y2, int z2) {
@@ -88,12 +93,26 @@ public class ParcelData {
     // ==================== PERMISSIONS ====================
 
     public boolean hasPermission(UUID playerUUID, ParcelPermission permission) {
+        // Si en location, seul le locataire (et ses invites) ont les permissions
+        // Le proprio original n'a PAS acces pendant la location
+        if (isRented() && renterUUID != null) {
+            // Le locataire a toutes les permissions d'OWNER
+            if (playerUUID.equals(renterUUID)) {
+                Set<ParcelPermission> ownerPerms = rolePermissions.get(ParcelRole.OWNER);
+                return ownerPerms != null && ownerPerms.contains(permission);
+            }
+
+            // Le proprio original n'a AUCUN acces pendant la location
+            if (ownerUUID != null && playerUUID.equals(ownerUUID)) {
+                return false;
+            }
+        }
+
         ParcelRole role = members.getOrDefault(playerUUID, null);
 
         // Non-membre
         if (role == null) {
             if (!protectedByDefault) return true; // Zone ouverte
-            // Les visiteurs peuvent entrer si ENTER est permis pour VISITOR
             if (permission == ParcelPermission.ENTER) {
                 Set<ParcelPermission> visitorPerms = rolePermissions.get(ParcelRole.VISITOR);
                 return visitorPerms != null && visitorPerms.contains(permission);
@@ -238,11 +257,35 @@ public class ParcelData {
     public void setPurchaseType(String purchaseType) { this.purchaseType = purchaseType; }
     public String getFamilyId() { return familyId != null ? familyId : ""; }
     public void setFamilyId(String familyId) { this.familyId = familyId; }
+    public String getGuildId() { return guildId != null ? guildId : ""; }
+    public void setGuildId(String guildId) { this.guildId = guildId; }
+    public void addTreasury(long amount) { this.treasury += amount; }
+
+    public boolean isPvpEnabled() { return pvpEnabled; }
+    public void setPvpEnabled(boolean pvpEnabled) { this.pvpEnabled = pvpEnabled; }
+    public long getLastTaxCollection() { return lastTaxCollection; }
+    public void setLastTaxCollection(long t) { this.lastTaxCollection = t; }
+    public long getLastTaxAmount() { return lastTaxAmount; }
+    public void setLastTaxAmount(long a) { this.lastTaxAmount = a; }
+    public long getLastTreasuryTransfer() { return lastTreasuryTransfer; }
+    public void setLastTreasuryTransfer(long t) { this.lastTreasuryTransfer = t; }
+
+    public boolean canCollectTax() {
+        return System.currentTimeMillis() - lastTaxCollection >= 7L * 24 * 60 * 60 * 1000;
+    }
+    public boolean canTransferTreasury() {
+        return System.currentTimeMillis() - lastTreasuryTransfer >= 7L * 24 * 60 * 60 * 1000;
+    }
 
     public boolean isBought() { return "BOUGHT".equals(purchaseType); }
     public boolean isRented() { return "RENTED".equals(purchaseType); }
     public boolean isFree() { return ownerUUID == null && (purchaseType == null || purchaseType.isEmpty()); }
-    public boolean isAvailable() { return isFree() && (forSale || forRent); }
+    public boolean isAvailable() {
+        // Disponible si en vente OU en location (sans locataire)
+        if (forSale) return true;
+        if (forRent && renterUUID == null) return true;
+        return false;
+    }
 
     public boolean isRentExpired() {
         return isRented() && rentEndTime > 0 && System.currentTimeMillis() > rentEndTime;

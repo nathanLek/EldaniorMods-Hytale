@@ -15,6 +15,7 @@ public class ParcelManager {
     public static void init(Path pluginDataDir) {
         dataDir = pluginDataDir;
         load();
+        assignDefaultOwners();
         System.out.println("[Eldanior] ParcelManager: " + parcels.size() + " parcelles chargees.");
     }
 
@@ -140,13 +141,20 @@ public class ParcelManager {
 
     public static boolean buyParcel(String parcelId, UUID buyerUUID, String buyerName) {
         ParcelData parcel = get(parcelId);
-        if (parcel == null || !parcel.isForSale() || !parcel.isFree()) return false;
+        if (parcel == null || !parcel.isForSale()) return false;
+        // Ne pas acheter son propre bien
+        if (parcel.getOwnerUUID() != null && parcel.getOwnerUUID().equals(buyerUUID)) return false;
+
+        // Nettoyer
+        parcel.getMembers().clear();
 
         parcel.setOwnerUUID(buyerUUID);
         parcel.setOwnerName(buyerName);
         parcel.setPurchaseType("BOUGHT");
         parcel.setForSale(false);
         parcel.setForRent(false);
+        parcel.setRenterUUID(null);
+        parcel.setRentEndTime(0);
         parcel.addMember(buyerUUID, ParcelRole.OWNER);
         save();
         return true;
@@ -184,8 +192,11 @@ public class ParcelManager {
         save();
     }
 
-    private static void assignCityAsOwner(ParcelData parcel) {
-        // Chercher la ville/territoire parent pour l'afficher comme proprio
+    public static void assignCityAsOwnerPublic(ParcelData parcel) { assignCityAsOwner(parcel); }
+
+    static void assignCityAsOwner(ParcelData parcel) {
+        // Remonter la hierarchie pour trouver le parent naturel
+        // Plot/Housing → Ville → Territoire → Royaume
         if (parcel.getParentId() != null) {
             ParcelData parent = get(parcel.getParentId());
             if (parent != null) {
@@ -194,6 +205,24 @@ public class ParcelManager {
             }
         }
         parcel.setOwnerName("[Libre]");
+    }
+
+    /**
+     * Assigne les proprios par defaut pour toute la hierarchie.
+     * Ville -> proprio = Territoire parent
+     * Territoire -> proprio = Royaume parent
+     */
+    public static void assignDefaultOwners() {
+        for (ParcelData p : parcels.values()) {
+            if (p.getOwnerUUID() != null) continue; // Deja un proprio joueur
+            if (p.getType() == ParcelType.PLOT || p.getType() == ParcelType.HOUSING
+                    || p.getType() == ParcelType.CITY || p.getType() == ParcelType.TERRITORY) {
+                if (p.getOwnerName() == null || p.getOwnerName().isEmpty() || "[Libre]".equals(p.getOwnerName())) {
+                    assignCityAsOwner(p);
+                }
+            }
+        }
+        save();
     }
 
     public static boolean renewRent(String parcelId) {
@@ -253,7 +282,8 @@ public class ParcelManager {
             case KINGDOM -> false;
             case TERRITORY -> parent.getType() == ParcelType.KINGDOM || parent.getType() == ParcelType.TERRITORY;
             case CITY -> parent.getType() == ParcelType.TERRITORY;
-            case PLOT -> parent.getType() == ParcelType.CITY;
+            case PLOT, HOUSING -> parent.getType() == ParcelType.CITY;
+            case ROOM -> parent.getType() == ParcelType.HOUSING;
             case FARM -> parent.getType() == ParcelType.CITY || parent.getType() == ParcelType.TERRITORY;
         };
     }
@@ -288,6 +318,11 @@ public class ParcelManager {
                 props.setProperty(prefix + "rentEndTime", String.valueOf(p.getRentEndTime()));
                 props.setProperty(prefix + "purchaseType", p.getPurchaseType());
                 props.setProperty(prefix + "familyId", p.getFamilyId());
+                props.setProperty(prefix + "guildId", p.getGuildId());
+                props.setProperty(prefix + "pvpEnabled", String.valueOf(p.isPvpEnabled()));
+                props.setProperty(prefix + "lastTaxCollection", String.valueOf(p.getLastTaxCollection()));
+                props.setProperty(prefix + "lastTaxAmount", String.valueOf(p.getLastTaxAmount()));
+                props.setProperty(prefix + "lastTreasuryTransfer", String.valueOf(p.getLastTreasuryTransfer()));
                 props.setProperty(prefix + "members", p.serializeMembers());
                 props.setProperty(prefix + "permissions", p.serializePermissions());
             }
@@ -356,6 +391,11 @@ public class ParcelManager {
                 p.setRentEndTime(Long.parseLong(props.getProperty(prefix + "rentEndTime", "0")));
                 p.setPurchaseType(props.getProperty(prefix + "purchaseType", ""));
                 p.setFamilyId(props.getProperty(prefix + "familyId", ""));
+                p.setGuildId(props.getProperty(prefix + "guildId", ""));
+                p.setPvpEnabled(Boolean.parseBoolean(props.getProperty(prefix + "pvpEnabled", "false")));
+                p.setLastTaxCollection(Long.parseLong(props.getProperty(prefix + "lastTaxCollection", "0")));
+                p.setLastTaxAmount(Long.parseLong(props.getProperty(prefix + "lastTaxAmount", "0")));
+                p.setLastTreasuryTransfer(Long.parseLong(props.getProperty(prefix + "lastTreasuryTransfer", "0")));
                 p.deserializeMembers(props.getProperty(prefix + "members", ""));
                 p.deserializePermissions(props.getProperty(prefix + "permissions", ""));
 

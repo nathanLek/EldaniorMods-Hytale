@@ -76,6 +76,7 @@ public class ParcelCommand extends AbstractAsyncCommand {
                     case "setprice" -> handleSetPrice(sender, senderUUID, ctx, isAdmin);
                     case "setrent" -> handleSetRent(sender, senderUUID, ctx, isAdmin);
                     case "assign" -> handleAssignFamily(sender, senderUUID, ctx, isAdmin);
+                    case "assignguild" -> handleAssignGuild(sender, senderUUID, ctx, isAdmin);
                     default -> sender.sendMessage(Message.raw("§cUsage: /es parcel <pos1|pos2|create|delete|info|invite|kick|setperm|list|sell|buy>"));
                 }
             } catch (Exception e) {
@@ -173,7 +174,7 @@ public class ParcelCommand extends AbstractAsyncCommand {
                 case KINGDOM -> "ROI".equals(rank);
                 case TERRITORY -> "MARQUIS".equals(rank) || "DUC".equals(rank);
                 case CITY -> "COMTE".equals(rank);
-                case PLOT, FARM -> false; // Seulement admin
+                case PLOT, HOUSING, ROOM, FARM -> false; // Seulement admin
             };
 
             if (!allowed) {
@@ -194,10 +195,18 @@ public class ParcelCommand extends AbstractAsyncCommand {
 
         String world = sender.getWorld().getName();
 
-        // Chercher le parent automatiquement
+        // Chercher le parent automatiquement (teste coin + centre de la selection)
         String parentId = null;
         if (type != ParcelType.KINGDOM) {
+            // Essayer au coin, puis au centre
+            int centerX = (sel[0] + sel[3]) / 2;
+            int centerY = (sel[1] + sel[4]) / 2;
+            int centerZ = (sel[2] + sel[5]) / 2;
+
             ParcelData parentParcel = ParcelManager.getParcelAt(world, sel[0], sel[1], sel[2]);
+            if (parentParcel == null) parentParcel = ParcelManager.getParcelAt(world, centerX, centerY, centerZ);
+            if (parentParcel == null) parentParcel = ParcelManager.getParcelAt(world, sel[3], sel[4], sel[5]);
+
             if (parentParcel != null) {
                 if (ParcelManager.isValidParent(parentParcel.getId(), type)) {
                     parentId = parentParcel.getId();
@@ -211,9 +220,16 @@ public class ParcelCommand extends AbstractAsyncCommand {
             }
         }
 
-        // Creation SANS proprietaire (admin cree, attribution apres)
+        // Creation — la ville/territoire parent est proprio par defaut pour PLOT/HOUSING
         String id = ParcelManager.createParcel(name, type, null, "", world,
                 sel[0], sel[1], sel[2], sel[3], sel[4], sel[5], parentId);
+
+        // Assigner la ville parente comme proprio si PLOT ou HOUSING
+        ParcelData created = ParcelManager.get(id);
+        if (created != null && (type == ParcelType.PLOT || type == ParcelType.HOUSING)) {
+            ParcelManager.assignCityAsOwnerPublic(created);
+            ParcelManager.save();
+        }
 
         ParcelManager.clearSelection(uuid);
 
@@ -558,6 +574,30 @@ public class ParcelCommand extends AbstractAsyncCommand {
 
         ParcelManager.assignToFamily(parcel.getId(), familyId);
         sender.sendMessage(Message.raw("§a" + parcel.getType().getLabel() + " §f" + parcel.getName() + " §aassigne a la famille §f" + familyId));
+    }
+
+    private void handleAssignGuild(Player sender, UUID uuid, CommandContext ctx, boolean isAdmin) {
+        if (!isAdmin) {
+            sender.sendMessage(Message.raw("§cCommande admin uniquement."));
+            return;
+        }
+
+        String guildIdOrName = this.arg1.get(ctx);
+
+        ParcelData parcel = getParcelAtPlayer(sender);
+        if (parcel == null) {
+            sender.sendMessage(Message.raw("§cVous n'etes dans aucune parcelle."));
+            return;
+        }
+
+        if (parcel.getType() != ParcelType.CITY) {
+            sender.sendMessage(Message.raw("§cSeules les villes peuvent etre assignees a une guilde."));
+            return;
+        }
+
+        parcel.setGuildId(guildIdOrName);
+        ParcelManager.save();
+        sender.sendMessage(Message.raw("§aVille §f" + parcel.getName() + " §aassignee a la guilde §f" + guildIdOrName));
     }
 
     private ParcelData getParcelAtPlayer(Player sender) {

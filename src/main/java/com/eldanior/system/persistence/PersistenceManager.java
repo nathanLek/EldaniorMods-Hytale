@@ -46,6 +46,9 @@ public class PersistenceManager {
             saveFamilies();
             saveClassements();
             saveShop();
+            // Verifier les impots hebdomadaires
+            com.eldanior.system.territory.ParcelEconomyManager.collectWeeklyTaxes();
+            com.eldanior.system.territory.ParcelManager.saveAll();
             System.out.println("[Persistence] Donnees sauvegardees !");
         } catch (Exception e) {
             System.err.println("[Persistence] Erreur de sauvegarde: " + e.getMessage());

@@ -228,6 +228,20 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
                     EventData.of("Action", "ech_force").append("Param", String.valueOf(i)));
         }
 
+        // Territoires - clic sur un territoire (selection)
+        for (int i = 0; i < TerritoiresTab.MAX_TERR_SLOTS; i++) {
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#TerrSlot" + i,
+                    EventData.of("Action", "terr_select").append("Param", String.valueOf(i)));
+        }
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnProt", EventData.of("Action", "terr_prot"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnFamily", EventData.of("Action", "terr_family"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnGuild", EventData.of("Action", "terr_guild"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnDel", EventData.of("Action", "terr_del"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnPvp", EventData.of("Action", "terr_pvp"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnTax", EventData.of("Action", "terr_tax"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnTransfer", EventData.of("Action", "terr_transfer"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnInvasion", EventData.of("Action", "terr_invasion"));
+
         // Proprietes - clic sur un bien (selection)
         for (int i = 0; i < ProprietesTab.MAX_OWNED_SLOTS; i++) {
             events.addEventBinding(CustomUIEventBindingType.Activating, "#POwnSlot" + i,
@@ -249,6 +263,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         events.addEventBinding(CustomUIEventBindingType.Activating, "#PDetBtnQuit", EventData.of("Action", "prop_quit"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#PDetBtnRenew", EventData.of("Action", "prop_renew"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#PDetBtnRentOut", EventData.of("Action", "prop_rentout"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#PDetBtnCancelRent", EventData.of("Action", "prop_cancelrent"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#PDetBtnDel", EventData.of("Action", "prop_del"));
         // Invite buttons dans le detail
         for (int i = 0; i < ProprietesTab.MAX_INVITE_SLOTS; i++) {
@@ -313,6 +328,12 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillChurchDemote", EventData.of("Action", "admin_prefill").append("Param", "church demote <player>"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillSetVice", EventData.of("Action", "admin_prefill").append("Param", "nstatus setvice <player>"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillClassInfo", EventData.of("Action", "admin_prefill").append("Param", "classinfo <player>"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#AResetAll", EventData.of("Action", "admin_resetall"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#AResetGuilds", EventData.of("Action", "admin_reset_guilds"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#AResetFamilies", EventData.of("Action", "admin_reset_families"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#AResetParcels", EventData.of("Action", "admin_reset_parcels"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#AResetShop", EventData.of("Action", "admin_reset_shop"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#AResetClassements", EventData.of("Action", "admin_reset_classements"));
 
         // === EVENT BINDINGS ===
 
@@ -516,6 +537,63 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             return;
         }
 
+        // Territoires - selection
+        if ("terr_select".equals(eventData.action) && eventData.param != null) {
+            if (TerritoiresTab.handleSelect(Integer.parseInt(eventData.param))) {
+                refreshTerritoiresTab(ref, store);
+            }
+            return;
+        }
+        if ("terr_prot".equals(eventData.action)) {
+            if (TerritoiresTab.handleToggleProtection()) refreshTerritoiresTab(ref, store);
+            return;
+        }
+        if ("terr_family".equals(eventData.action)) {
+            com.hypixel.hytale.server.core.entity.entities.Player p = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
+            if (p != null) {
+                p.sendMessage(com.hypixel.hytale.server.core.Message.raw("§6Tapez dans le chat :"));
+                p.sendMessage(com.hypixel.hytale.server.core.Message.raw("§f/es parcel assign <familyId> _"));
+            }
+            return;
+        }
+        if ("terr_guild".equals(eventData.action)) {
+            com.hypixel.hytale.server.core.entity.entities.Player p = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
+            if (p != null) {
+                p.sendMessage(com.hypixel.hytale.server.core.Message.raw("§6Tapez dans le chat :"));
+                p.sendMessage(com.hypixel.hytale.server.core.Message.raw("§f/es parcel assignguild <guildId> _"));
+            }
+            return;
+        }
+        if ("terr_del".equals(eventData.action)) {
+            if (TerritoiresTab.handleDelete()) refreshTerritoiresTab(ref, store);
+            return;
+        }
+        if ("terr_pvp".equals(eventData.action)) {
+            if (TerritoiresTab.handleTogglePvp()) refreshTerritoiresTab(ref, store);
+            return;
+        }
+        if ("terr_tax".equals(eventData.action)) {
+            if (TerritoiresTab.handleCollectTax()) {
+                refreshTerritoiresTab(ref, store);
+                com.hypixel.hytale.server.core.entity.entities.Player p = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
+                if (p != null) p.sendMessage(com.hypixel.hytale.server.core.Message.raw("§a§lImpots collectes !"));
+            }
+            return;
+        }
+        if ("terr_transfer".equals(eventData.action)) {
+            if (TerritoiresTab.handleTransferTreasury()) {
+                refreshTerritoiresTab(ref, store);
+                com.hypixel.hytale.server.core.entity.entities.Player p = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
+                if (p != null) p.sendMessage(com.hypixel.hytale.server.core.Message.raw("§a§lTresorerie transferee !"));
+            }
+            return;
+        }
+        if ("terr_invasion".equals(eventData.action)) {
+            com.hypixel.hytale.server.core.entity.entities.Player p = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
+            if (p != null) p.sendMessage(com.hypixel.hytale.server.core.Message.raw("§c§lINVASION LANCEE ! §7(fonctionnalite en cours de developpement)"));
+            return;
+        }
+
         // Proprietes - selection d'un bien
         if ("prop_select".equals(eventData.action) && eventData.param != null) {
             if (ProprietesTab.handleSelect(Integer.parseInt(eventData.param))) {
@@ -578,6 +656,12 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         }
         if ("prop_rentout".equals(eventData.action)) {
             if (ProprietesTab.handleRentOut()) {
+                refreshProprietesTab(ref, store);
+            }
+            return;
+        }
+        if ("prop_cancelrent".equals(eventData.action)) {
+            if (ProprietesTab.handleCancelRent()) {
                 refreshProprietesTab(ref, store);
             }
             return;
@@ -758,6 +842,73 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
                     player.sendMessage(Message.raw("§f/es " + cmd));
                 }
             }
+            case "admin_reset_guilds" -> {
+                if (player != null) {
+                    com.eldanior.system.guild.GuildManager.init();
+                    deleteDataFile("guilds.properties");
+                    player.sendMessage(Message.raw("§c§lGuildes reinitialises !"));
+                }
+            }
+            case "admin_reset_families" -> {
+                if (player != null) {
+                    com.eldanior.system.titles.nobility.family.FamilyManager.init();
+                    deleteDataFile("families.properties");
+                    player.sendMessage(Message.raw("§c§lFamilles reinitialises !"));
+                }
+            }
+            case "admin_reset_parcels" -> {
+                if (player != null) {
+                    try {
+                        java.io.File f = com.eldanior.system.EldaniorSystem.get().getDataDirectory()
+                                .resolve("parcels.properties").toFile();
+                        if (f.exists()) f.delete();
+                    } catch (Exception ignored) {}
+                    com.eldanior.system.territory.ParcelManager.init(com.eldanior.system.EldaniorSystem.get().getDataDirectory());
+                    player.sendMessage(Message.raw("§c§lParcelles reinitialises !"));
+                }
+            }
+            case "admin_reset_shop" -> {
+                if (player != null) {
+                    com.eldanior.system.shop.ShopManager.init();
+                    deleteDataFile("shop.properties");
+                    deleteDataFile("blackmarket.properties");
+                    player.sendMessage(Message.raw("§c§lShop et Marche Noir reinitialises !"));
+                }
+            }
+            case "admin_reset_classements" -> {
+                if (player != null) {
+                    com.eldanior.system.classement.ClassementManager.init();
+                    deleteDataFile("classements.properties");
+                    player.sendMessage(Message.raw("§c§lClassements reinitialises !"));
+                }
+            }
+            case "admin_resetall" -> {
+                if (player != null) {
+                    // Reset guildes
+                    com.eldanior.system.guild.GuildManager.init();
+                    // Reset familles
+                    com.eldanior.system.titles.nobility.family.FamilyManager.init();
+                    // Reset parcelles
+                    try {
+                        java.io.File parcelsFile = com.eldanior.system.EldaniorSystem.get().getDataDirectory()
+                                .resolve("parcels.properties").toFile();
+                        if (parcelsFile.exists()) parcelsFile.delete();
+                    } catch (Exception ignored) {}
+                    com.eldanior.system.territory.ParcelManager.init(com.eldanior.system.EldaniorSystem.get().getDataDirectory());
+                    // Reset persistence (guildes, familles, classements, shop)
+                    try {
+                        java.nio.file.Path dataDir = com.eldanior.system.EldaniorSystem.get().getDataDirectory().resolve("eldanior_data");
+                        if (java.nio.file.Files.exists(dataDir)) {
+                            for (java.io.File f : dataDir.toFile().listFiles()) {
+                                f.delete();
+                            }
+                        }
+                    } catch (Exception ignored) {}
+                    player.sendMessage(Message.raw("§c§l=== RESET COMPLET ==="));
+                    player.sendMessage(Message.raw("§cGuildes, Familles, Parcelles, Classements, Shop reinitialises !"));
+                    player.sendMessage(Message.raw("§7Redemarrez le serveur pour finaliser."));
+                }
+            }
         }
     }
 
@@ -894,6 +1045,12 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         this.sendUpdate(update);
     }
 
+    private void refreshTerritoiresTab(Ref<EntityStore> ref, Store<EntityStore> store) {
+        UICommandBuilder update = new UICommandBuilder();
+        TerritoiresTab.populate(update, ref, store);
+        this.sendUpdate(update);
+    }
+
     private void refreshProprietesTab(Ref<EntityStore> ref, Store<EntityStore> store) {
         UICommandBuilder update = new UICommandBuilder();
         ProprietesTab.populate(update, ref, store);
@@ -994,6 +1151,14 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
     private String getPlayerName(Ref<EntityStore> ref, Store<EntityStore> store) {
         PlayerRef info = store.getComponent(ref, PlayerRef.getComponentType());
         return info != null ? info.getUsername() : "Inconnu";
+    }
+
+    private void deleteDataFile(String filename) {
+        try {
+            java.nio.file.Path dataDir = com.eldanior.system.EldaniorSystem.get().getDataDirectory().resolve("eldanior_data");
+            java.io.File f = dataDir.resolve(filename).toFile();
+            if (f.exists()) f.delete();
+        } catch (Exception ignored) {}
     }
 
     private static final long[] PRICE_CYCLE = {0, 500, 1000, 5000, 10000, 50000};
