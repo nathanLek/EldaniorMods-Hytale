@@ -90,6 +90,10 @@ public class PlayerLevelData implements Component<EntityStore> {
     // Kill tracking par type de mob (ex: "goblin_scrapper" -> 150)
     private Map<String, Integer> mobKills = new HashMap<>();
 
+    // Evolution de classe : choix sauvegardés + rerolls
+    private String savedEvolutionChoices = ""; // IDs séparés par des virgules (ex: "templier,paladin,berserker")
+    private int evolutionRerolls = 0; // Nombre de relances utilisées (max 2 pour les joueurs normaux)
+
     public PlayerLevelData() {
         this.unlockedTitles.add("novice");
         this.currentTitle = "novice";
@@ -228,6 +232,8 @@ public class PlayerLevelData implements Component<EntityStore> {
             .append(new KeyedCodec<>("Cooldowns", Codec.STRING), (data, v) -> data.cooldownData = v, data -> data.cooldownData).add()
             .append(new KeyedCodec<>("DuelStreak", Codec.INTEGER), (data, v) -> data.duelStreak = v, data -> data.duelStreak).add()
             .append(new KeyedCodec<>("DuelBestStreak", Codec.INTEGER), (data, v) -> data.duelBestStreak = v, data -> data.duelBestStreak).add()
+            .append(new KeyedCodec<>("SavedEvolutionChoices", Codec.STRING), (data, v) -> data.savedEvolutionChoices = (v != null ? v : ""), data -> (data.savedEvolutionChoices != null ? data.savedEvolutionChoices : "")).add()
+            .append(new KeyedCodec<>("EvolutionRerolls", Codec.INTEGER), (data, v) -> data.evolutionRerolls = (v != null ? v : 0), data -> data.evolutionRerolls).add()
             .build();
 
     // --- Méthode CLONE ---
@@ -287,6 +293,8 @@ public class PlayerLevelData implements Component<EntityStore> {
 
         copy.cooldowns = new HashMap<>(this.cooldowns);
         copy.mobKills = new HashMap<>(this.mobKills);
+        copy.savedEvolutionChoices = this.savedEvolutionChoices;
+        copy.evolutionRerolls = this.evolutionRerolls;
 
         return copy;
     }
@@ -533,6 +541,20 @@ public class PlayerLevelData implements Component<EntityStore> {
     public void setAttributePoints(int points) { this.attributePoints = points; }
     public void setPlayerClass(String playerClass) { this.playerClass = playerClass; }
     public void setPlayerClassId(String classId) { this.classId = classId; }
+
+    // --- Evolution de classe : sauvegarde des choix ---
+    public List<String> getSavedEvolutionChoices() {
+        if (savedEvolutionChoices == null || savedEvolutionChoices.isEmpty()) return new ArrayList<>();
+        return new ArrayList<>(Arrays.asList(savedEvolutionChoices.split(",")));
+    }
+    public void setSavedEvolutionChoices(List<String> choices) {
+        this.savedEvolutionChoices = (choices == null || choices.isEmpty()) ? "" : String.join(",", choices);
+    }
+    public void clearSavedEvolutionChoices() { this.savedEvolutionChoices = ""; }
+    public int getEvolutionRerolls() { return evolutionRerolls; }
+    public void setEvolutionRerolls(int rerolls) { this.evolutionRerolls = rerolls; }
+    public void useReroll() { this.evolutionRerolls++; }
+
     public void setCurrentTitle(String title) { this.currentTitle = title; }
     public void setGuildRank(String guildRank) { this.guildRank = guildRank; }
     public void setNobilityRank(String rank) { this.nobilityRank = rank; }

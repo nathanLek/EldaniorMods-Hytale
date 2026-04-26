@@ -18,7 +18,7 @@ public class MasterArtisan extends ClassModel {
                 ClassType.MERCHANT,
                 List.of(PassiveSkill.ARTISANAT, PassiveSkill.IRON_RESOLVE, PassiveSkill.TREASURE_HUNTER),
                 List.of(WeaponMastery.ANY),
-                List.of("guild_master"),
+                List.of("artisan_legendaire"),
                 500,
                 false,
                 12, 4, 16, 14, 6, 24

@@ -18,8 +18,8 @@ public class Negociant extends ClassModel {
                 ClassType.MERCHANT,
                 List.of(PassiveSkill.ARTISANAT, PassiveSkill.FORTUNE_COINS, PassiveSkill.LUCKY_STRIKE),
                 List.of(WeaponMastery.ANY),
-                List.of(),
-                120,
+                List.of("maitre_negociant"),
+                400,
                 false,
                 4, 4, 6, 4, 6, 26
         );

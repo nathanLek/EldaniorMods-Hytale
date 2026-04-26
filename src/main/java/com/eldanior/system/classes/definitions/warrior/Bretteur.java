@@ -19,8 +19,8 @@ public class Bretteur extends ClassModel {
                 ClassType.WARRIOR,
                 List.of(PassiveSkill.GALE_STEP, PassiveSkill.THUNDER_REFLEXES, PassiveSkill.RAZOR_SENSES),
                 List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD),
-                List.of(),
-                250,
+                List.of("lame_fantome", "virtuose_du_sabre", "danseur_de_lames"),
+                400,
                 false,
                 40, 30, 10, 30, 70, 40
         );

@@ -19,8 +19,8 @@ public class ChevalierNoir extends ClassModel {
                 ClassType.WARRIOR,
                 List.of(PassiveSkill.BLOOD_HUNT, PassiveSkill.CRUSHING_PRESSURE, PassiveSkill.STORM_STEP),
                 List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD),
-                List.of(),
-                250,
+                List.of("seigneur_des_tenebres", "cavalier_de_l_ombre", "tyran_noir"),
+                400,
                 false,
                 120, 60, 20, 50, 80, 70
         );

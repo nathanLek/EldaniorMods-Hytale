@@ -19,8 +19,8 @@ public class Warlord extends ClassModel {
                 ClassType.WARRIOR,
                 List.of(PassiveSkill.CRIMSON_BLADE, PassiveSkill.TITAN_CONSTITUTION, PassiveSkill.LIGHTNING_REFLEXES),
                 List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD),
-                List.of(),
-                250,
+                List.of("empereur_de_guerre", "stratege_supreme", "conquerant_ultime"),
+                400,
                 false,
                 100, 80, 30, 80, 50, 60
         );

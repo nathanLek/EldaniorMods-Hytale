@@ -14,7 +14,7 @@ public class AngeDechu extends ClassModel {
                 Rarity.EPIC, ClassType.ASSASSIN,
                 List.of(PassiveSkill.STORM_STEP, PassiveSkill.LIGHTNING_REFLEXES, PassiveSkill.ACROBATIC_POISE),
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
-                List.of(), 250, false,
+                List.of("archange_noir", "chute_finale", "aile_brisee"), 400, false,
                 40, 30, 10, 20, 130, 60);
     }
 }

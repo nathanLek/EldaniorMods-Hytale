@@ -14,7 +14,7 @@ public class Alchimiste extends ClassModel {
                 Rarity.RARE, ClassType.MAGE,
                 List.of(PassiveSkill.GOLDEN_TOUCH, PassiveSkill.EXPANDED_MIND, PassiveSkill.TROLL_BLOOD),
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
-                List.of(), 250, false,
+                List.of("grand_alchimiste", "philosophe_mage", "transmutateur_divin"), 400, false,
                 6, 25, 45, 20, 15, 50);
     }
 }

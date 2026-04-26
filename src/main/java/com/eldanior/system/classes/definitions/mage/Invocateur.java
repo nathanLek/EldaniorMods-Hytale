@@ -14,7 +14,7 @@ public class Invocateur extends ClassModel {
                 Rarity.COMMON, ClassType.MAGE,
                 List.of(PassiveSkill.MANA_FONT, PassiveSkill.AWAKENED_MIND, PassiveSkill.TIRELESS_BREATH),
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
-                List.of(), 120, false,
+                List.of("invocateur_supreme", "conjurateur_maitre", "maitre_d_invocation"), 400, false,
                 2, 8, 24, 8, 4, 4);
     }
 }

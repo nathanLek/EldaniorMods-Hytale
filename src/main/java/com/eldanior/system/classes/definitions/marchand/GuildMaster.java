@@ -18,7 +18,7 @@ public class GuildMaster extends ClassModel {
                 ClassType.MERCHANT,
                 List.of(PassiveSkill.ARTISANAT, PassiveSkill.OVERFLOWING_LIFE, PassiveSkill.MARATHON_RUNNER),
                 List.of(WeaponMastery.ANY),
-                List.of("world_forger"),
+                List.of("grand_maitre_de_guilde"),
                 800,
                 false,
                 28, 10, 30, 24, 8, 30

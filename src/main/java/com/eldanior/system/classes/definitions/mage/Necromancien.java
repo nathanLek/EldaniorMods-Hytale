@@ -14,7 +14,7 @@ public class Necromancien extends ClassModel {
                 Rarity.COMMON, ClassType.MAGE,
                 List.of(PassiveSkill.SPIRITUAL_SIPHON, PassiveSkill.AWAKENED_MIND, PassiveSkill.LUCKY_STRIKE),
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
-                List.of(), 120, false,
+                List.of("necromancien_noir", "seigneur_des_morts", "invocateur_d_ames"), 400, false,
                 4, 6, 24, 4, 4, 8);
     }
 }

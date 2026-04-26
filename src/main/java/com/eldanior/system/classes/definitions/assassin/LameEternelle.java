@@ -14,7 +14,7 @@ public class LameEternelle extends ClassModel {
                 Rarity.UNIQUE, ClassType.ASSASSIN,
                 List.of(PassiveSkill.VOID_BLADE, PassiveSkill.BERSERKER_SWIFTNESS, PassiveSkill.ABSOLUTE_PRECISION),
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
-                List.of(), 250, false,
+                List.of("lame_infinie", "transcendance_lame", "lame_absolue"), 400, false,
                 100, 40, 10, 40, 180, 100);
     }
 }

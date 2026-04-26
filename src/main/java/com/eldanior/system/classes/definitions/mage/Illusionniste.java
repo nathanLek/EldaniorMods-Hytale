@@ -14,7 +14,7 @@ public class Illusionniste extends ClassModel {
                 Rarity.RARE, ClassType.MAGE,
                 List.of(PassiveSkill.PHANTOM_DODGE, PassiveSkill.GALE_STEP, PassiveSkill.ARCANE_SHIELD),
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
-                List.of(), 250, false,
+                List.of("grand_illusionniste", "maitre_du_mirage", "tisseur_d_illusions"), 400, false,
                 6, 20, 45, 15, 40, 35);
     }
 }

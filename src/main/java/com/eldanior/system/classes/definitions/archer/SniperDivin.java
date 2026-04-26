@@ -14,7 +14,7 @@ public class SniperDivin extends ClassModel {
                 Rarity.EPIC, ClassType.ARCHER,
                 List.of(PassiveSkill.DEADLY_PRECISION, PassiveSkill.CRIMSON_BLADE, PassiveSkill.EAGLE_VISION),
                 List.of(WeaponMastery.BOW),
-                List.of(), 250, false,
+                List.of("sniper_celeste", "oeil_absolu", "tir_fatal"), 400, false,
                 40, 30, 15, 20, 80, 100);
     }
 }

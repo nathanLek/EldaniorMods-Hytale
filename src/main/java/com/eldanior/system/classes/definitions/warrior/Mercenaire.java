@@ -19,8 +19,8 @@ public class Mercenaire extends ClassModel {
                 ClassType.WARRIOR,
                 List.of(PassiveSkill.KEEN_SENSES, PassiveSkill.LUCKY_STRIKE, PassiveSkill.PRESSURE_POINT),
                 List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD),
-                List.of(),
-                250,
+                List.of("capitaine_mercenaire", "chasseur_de_primes", "loup_de_guerre"),
+                400,
                 false,
                 20, 12, 4, 10, 20, 16
         );

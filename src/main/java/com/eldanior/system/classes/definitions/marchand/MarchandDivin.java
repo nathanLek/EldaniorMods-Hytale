@@ -18,8 +18,8 @@ public class MarchandDivin extends ClassModel {
                 ClassType.MERCHANT,
                 List.of(PassiveSkill.ARTISANAT, PassiveSkill.CREATOR_PRECISION, PassiveSkill.FATE_DODGE),
                 List.of(WeaponMastery.ANY),
-                List.of(),
-                250,
+                List.of("demi_marchand"),
+                400,
                 false,
                 200, 200, 300, 200, 300, 1200
         );

@@ -19,8 +19,8 @@ public class Protecteur extends ClassModel {
                 ClassType.WARRIOR,
                 List.of(PassiveSkill.STONE_SKIN, PassiveSkill.ROBUST_CONSTITUTION, PassiveSkill.NATURAL_RECOVERY),
                 List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD),
-                List.of(),
-                120,
+                List.of("gardien_sacre", "rempart_vivant", "sentinelle"),
+                400,
                 false,
                 12, 24, 2, 18, 6, 4
         );

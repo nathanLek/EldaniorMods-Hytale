@@ -14,7 +14,7 @@ public class AvatarArcanique extends ClassModel {
                 Rarity.DIVINE, ClassType.MAGE,
                 List.of(PassiveSkill.INFINITE_MIND, PassiveSkill.ARCANE_GENESIS, PassiveSkill.GENESIS_STRIKE),
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
-                List.of(), 250, false,
+                List.of("demi_arcane"), 400, false,
                 80, 200, 500, 150, 100, 200);
     }
 }

@@ -14,7 +14,7 @@ public class DieuDesArcanes extends ClassModel {
                 Rarity.DIVINE, ClassType.MAGE,
                 List.of(PassiveSkill.CREATOR_MIND, PassiveSkill.ARCANE_CREATION, PassiveSkill.CREATOR_BLOOD),
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
-                List.of(), 250, false,
+                List.of("demi_mage"), 400, false,
                 100, 250, 550, 200, 120, 250);
     }
 }

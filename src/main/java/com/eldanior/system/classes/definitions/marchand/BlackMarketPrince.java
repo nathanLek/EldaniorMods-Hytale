@@ -18,7 +18,7 @@ public class BlackMarketPrince extends ClassModel {
                 ClassType.MERCHANT,
                 List.of(PassiveSkill.ARTISANAT, PassiveSkill.GOLDEN_TOUCH, PassiveSkill.PHANTOM_DODGE),
                 List.of(WeaponMastery.ANY),
-                List.of("underworld_king"),
+                List.of("roi_du_marche_noir"),
                 800,
                 false,
                 10, 8, 20, 16, 44, 40

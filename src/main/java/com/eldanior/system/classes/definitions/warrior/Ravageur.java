@@ -19,8 +19,8 @@ public class Ravageur extends ClassModel {
                 ClassType.WARRIOR,
                 List.of(PassiveSkill.SHARP_BLADE, PassiveSkill.RELENTLESS_HUNT, PassiveSkill.BATTLE_FRENZY),
                 List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD),
-                List.of(),
-                250,
+                List.of("destructeur", "fleau_de_guerre", "annihilateur"),
+                400,
                 false,
                 90, 40, 4, 40, 30, 16
         );

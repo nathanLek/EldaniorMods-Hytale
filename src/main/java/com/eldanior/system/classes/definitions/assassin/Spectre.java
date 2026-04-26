@@ -14,7 +14,7 @@ public class Spectre extends ClassModel {
                 Rarity.UNIQUE, ClassType.ASSASSIN,
                 List.of(PassiveSkill.VOID_BLADE, PassiveSkill.FATAL_PRECISION, PassiveSkill.DIMENSIONAL_DODGE),
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
-                List.of(), 250, false,
+                List.of("spectre_originel", "revenant_absolu", "esprit_vengeur"), 400, false,
                 80, 50, 15, 40, 160, 120);
     }
 }

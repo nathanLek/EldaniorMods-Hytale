@@ -14,7 +14,7 @@ public class Acrobate extends ClassModel {
                 Rarity.COMMON, ClassType.ASSASSIN,
                 List.of(PassiveSkill.WIND_STEP, PassiveSkill.LIGHT_REFLEXES, PassiveSkill.ELDANIOR_SUPPLENESS),
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
-                List.of(), 120, false,
+                List.of("acrobate_virtuose", "danseur_mortel", "artiste_du_combat"), 400, false,
                 6, 6, 2, 4, 24, 8);
     }
 }

@@ -14,7 +14,7 @@ public class SeigneurPoison extends ClassModel {
                 Rarity.UNIQUE, ClassType.ASSASSIN,
                 List.of(PassiveSkill.DEATH_HUNT, PassiveSkill.PHOENIX_BLOOD, PassiveSkill.FATAL_PRECISION),
                 List.of(WeaponMastery.DAGGER),
-                List.of(), 250, false,
+                List.of("poison_primordial", "seigneur_des_venins", "toxine_eternelle"), 400, false,
                 60, 60, 40, 40, 120, 140);
     }
 }

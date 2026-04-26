@@ -19,8 +19,8 @@ public class Paladin extends ClassModel {
                 ClassType.WARRIOR,
                 List.of(PassiveSkill.STEEL_RESOLVE, PassiveSkill.OVERFLOWING_LIFE, PassiveSkill.VITAL_RECOVERY),
                 List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD, WeaponMastery.MACE),
-                List.of(),
-                250,
+                List.of("paladin_sacre", "croise_divin", "justicier"),
+                400,
                 false,
                 40, 50, 20, 40, 20, 30
         );

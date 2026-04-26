@@ -14,7 +14,7 @@ public class Archimage extends ClassModel {
                 Rarity.RARE, ClassType.MAGE,
                 List.of(PassiveSkill.EXPANDED_MIND, PassiveSkill.SPELLBLADE, PassiveSkill.MANA_STREAM),
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
-                List.of(), 250, false,
+                List.of("grand_archimage", "archimage_supreme", "archimage_royal"), 400, false,
                 10, 30, 60, 20, 20, 20);
     }
 }

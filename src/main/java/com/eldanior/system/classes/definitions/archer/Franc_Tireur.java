@@ -14,7 +14,7 @@ public class Franc_Tireur extends ClassModel {
                 Rarity.RARE, ClassType.ARCHER,
                 List.of(PassiveSkill.HAWK_EYE, PassiveSkill.RAZOR_SENSES, PassiveSkill.SHARP_BLADE),
                 List.of(WeaponMastery.BOW),
-                List.of(), 250, false,
+                List.of("tireur_legendaire", "oeil_de_lynx", "sniper_mystique"), 400, false,
                 20, 15, 10, 10, 50, 50);
     }
 }

@@ -19,8 +19,8 @@ public class Fantassin extends ClassModel {
                 ClassType.WARRIOR,
                 List.of(PassiveSkill.STONE_SKIN, PassiveSkill.ROBUST_CONSTITUTION, PassiveSkill.IRON_RESOLVE),
                 List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD),
-                List.of(),
-                250,
+                List.of("veteran", "centurion", "legionnaire"),
+                400,
                 false,
                 16, 30, 4, 20, 6, 4
         );

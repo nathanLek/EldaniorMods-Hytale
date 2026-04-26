@@ -14,7 +14,7 @@ public class Faucheur extends ClassModel {
                 Rarity.EPIC, ClassType.ASSASSIN,
                 List.of(PassiveSkill.CRIMSON_BLADE, PassiveSkill.BLOOD_HUNT, PassiveSkill.LIGHTNING_REFLEXES),
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
-                List.of(), 250, false,
+                List.of("faucheur_eternel", "moissonneur_d_ames", "ange_noir"), 400, false,
                 80, 30, 5, 30, 90, 60);
     }
 }

@@ -18,7 +18,7 @@ public class RelicHunter extends ClassModel {
                 ClassType.MERCHANT,
                 List.of(PassiveSkill.ARTISANAT, PassiveSkill.TREASURE_HUNTER, PassiveSkill.EAGLE_EYE),
                 List.of(WeaponMastery.ANY),
-                List.of("gold_baron"),
+                List.of("chasseur_de_reliques"),
                 500,
                 false,
                 20, 12, 20, 16, 24, 70

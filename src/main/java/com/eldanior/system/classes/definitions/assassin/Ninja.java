@@ -14,7 +14,7 @@ public class Ninja extends ClassModel {
                 Rarity.RARE, ClassType.ASSASSIN,
                 List.of(PassiveSkill.GALE_STEP, PassiveSkill.THUNDER_REFLEXES, PassiveSkill.CATLIKE_POISE),
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
-                List.of(), 250, false,
+                List.of("ninja_legendaire", "kage_maitre", "shinobi_supreme"), 400, false,
                 25, 15, 10, 10, 65, 30);
     }
 }

@@ -14,7 +14,7 @@ public class Rodeur extends ClassModel {
                 Rarity.COMMON, ClassType.ASSASSIN,
                 List.of(PassiveSkill.EAGLE_EYE, PassiveSkill.WIND_STEP, PassiveSkill.INSTINCTIVE_STRIKE),
                 List.of(WeaponMastery.DAGGER, WeaponMastery.BOW),
-                List.of(), 120, false,
+                List.of("rodeur_veteran", "chasseur_nocturne", "ombre_errante"), 400, false,
                 6, 6, 4, 4, 16, 12);
     }
 }

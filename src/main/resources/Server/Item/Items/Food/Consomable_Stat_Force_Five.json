@@ -1,0 +1,30 @@
+{
+  "Id": "Consomable_Stat_Force_Five",
+  "TranslationProperties": {
+    "Name": "Pillule De Force Superieure",
+    "Description": "[Clic F]: Consommer (+5 Force)"
+  },
+  "Icon": "Icons/ItemsGenerated/Food_Egg.png",
+  "Quality": "Epic",
+  "Categories": [
+    "Eldanior_System.Consommables"
+  ],
+  "Tags": {
+    "Type": [
+      "Item",
+      "Consumable"
+    ]
+  },
+  "MaxStack": 1,
+  "PlayerAnimationsId": "Item",
+  "Model": "Items/Consumables/Food/Egg.blockymodel",
+  "Texture": "Items/Consumables/Consomable_Stats_Force_One.png",
+  "IconProperties": {
+    "Scale": 0.76,
+    "Rotation": [ 135, 135, 0 ],
+    "Translation": [ -1, 5 ]
+  },
+  "Interactions": {
+    "Use": "Root_ConsumableItemStatsInteraction"
+  }
+}

@@ -14,7 +14,7 @@ public class DieuDesOmbres extends ClassModel {
                 Rarity.DIVINE, ClassType.ASSASSIN,
                 List.of(PassiveSkill.CREATOR_PRECISION, PassiveSkill.CREATOR_SWIFTNESS, PassiveSkill.CREATOR_BLOOD),
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
-                List.of(), 250, false,
+                List.of("demi_ombre"), 400, false,
                 200, 150, 50, 120, 450, 400);
     }
 }

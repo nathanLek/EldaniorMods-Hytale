@@ -14,7 +14,7 @@ public class Espion extends ClassModel {
                 Rarity.RARE, ClassType.ASSASSIN,
                 List.of(PassiveSkill.DANGER_SENSE, PassiveSkill.GOLDEN_TOUCH, PassiveSkill.PHANTOM_DODGE),
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
-                List.of(), 250, false,
+                List.of("maitre_espion", "agent_double", "infiltreur_supreme"), 400, false,
                 15, 20, 15, 10, 40, 55);
     }
 }

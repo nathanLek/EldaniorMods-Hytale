@@ -19,8 +19,8 @@ public class Duelliste extends ClassModel {
                 ClassType.WARRIOR,
                 List.of(PassiveSkill.DUELIST_SWIFTNESS, PassiveSkill.KEEN_SENSES, PassiveSkill.PRESSURE_POINT),
                 List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD),
-                List.of(),
-                120,
+                List.of("lame_virtuose", "maitre_d_armes", "fleurettiste"),
+                400,
                 false,
                 16, 12, 4, 8, 18, 10
         );

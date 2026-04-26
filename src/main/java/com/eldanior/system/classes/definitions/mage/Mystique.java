@@ -14,7 +14,7 @@ public class Mystique extends ClassModel {
                 Rarity.RARE, ClassType.MAGE,
                 List.of(PassiveSkill.EXPANDED_MIND, PassiveSkill.ASTRAL_CLOAK, PassiveSkill.CRITICAL_LUCK),
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
-                List.of(), 250, false,
+                List.of("mystique_superieur", "voyant_arcane", "devin_cosmique"), 400, false,
                 6, 25, 55, 20, 20, 35);
     }
 }

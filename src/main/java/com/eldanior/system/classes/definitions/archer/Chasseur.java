@@ -14,7 +14,7 @@ public class Chasseur extends ClassModel {
                 Rarity.COMMON, ClassType.ARCHER,
                 List.of(PassiveSkill.EAGLE_EYE, PassiveSkill.SURVIVAL_INSTINCT, PassiveSkill.WIND_STEP),
                 List.of(WeaponMastery.BOW, WeaponMastery.DAGGER),
-                List.of(), 120, false,
+                List.of("chasseur_veteran_archer", "pisteur_sauvage", "traqueur_de_fauves"), 400, false,
                 6, 8, 2, 6, 14, 12);
     }
 }

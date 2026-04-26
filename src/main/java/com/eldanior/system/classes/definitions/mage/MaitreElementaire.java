@@ -14,7 +14,7 @@ public class MaitreElementaire extends ClassModel {
                 Rarity.EPIC, ClassType.MAGE,
                 List.of(PassiveSkill.ARCANE_DEVASTATION, PassiveSkill.BRILLIANT_MIND, PassiveSkill.LIGHTNING_REFLEXES),
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
-                List.of(), 250, false,
+                List.of("seigneur_des_elements_mage", "elementaire_supreme", "force_naturelle"), 400, false,
                 25, 50, 120, 40, 50, 30);
     }
 }

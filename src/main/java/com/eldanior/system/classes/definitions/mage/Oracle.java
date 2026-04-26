@@ -14,7 +14,7 @@ public class Oracle extends ClassModel {
                 Rarity.EPIC, ClassType.MAGE,
                 List.of(PassiveSkill.EAGLE_VISION, PassiveSkill.DESTINY_STRIKE, PassiveSkill.PURE_MAGIC),
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
-                List.of(), 250, false,
+                List.of("oracle_absolu", "visionnaire_supreme", "prophete_du_destin"), 400, false,
                 10, 40, 100, 30, 40, 80);
     }
 }

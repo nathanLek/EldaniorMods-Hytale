@@ -18,8 +18,8 @@ public class Caravanier extends ClassModel {
                 ClassType.MERCHANT,
                 List.of(PassiveSkill.ARTISANAT, PassiveSkill.TIRELESS_BREATH, PassiveSkill.TREASURE_HUNTER),
                 List.of(WeaponMastery.ANY),
-                List.of(),
-                120,
+                List.of("grand_caravanier"),
+                400,
                 false,
                 6, 8, 4, 8, 8, 18
         );

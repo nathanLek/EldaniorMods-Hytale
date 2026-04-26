@@ -14,7 +14,7 @@ public class MageVoid extends ClassModel {
                 Rarity.UNIQUE, ClassType.MAGE,
                 List.of(PassiveSkill.VOID_BLADE, PassiveSkill.ARCANE_SUPREMACY, PassiveSkill.DIMENSIONAL_DODGE),
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
-                List.of(), 250, false,
+                List.of("mage_void_absolu", "void_primordial", "neant_mystique"), 400, false,
                 20, 60, 180, 50, 60, 80);
     }
 }

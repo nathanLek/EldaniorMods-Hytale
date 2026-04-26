@@ -14,7 +14,7 @@ public class Chasseur extends ClassModel {
                 Rarity.RARE, ClassType.ASSASSIN,
                 List.of(PassiveSkill.HAWK_EYE, PassiveSkill.RELENTLESS_HUNT, PassiveSkill.MARATHON_RUNNER),
                 List.of(WeaponMastery.DAGGER, WeaponMastery.BOW, WeaponMastery.SWORD),
-                List.of(), 250, false,
+                List.of("chasseur_d_elite", "predateur_supreme", "traqueur_absolu"), 400, false,
                 25, 20, 5, 15, 45, 45);
     }
 }

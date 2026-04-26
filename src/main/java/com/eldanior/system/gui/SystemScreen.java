@@ -13,6 +13,9 @@ import com.eldanior.system.gui.tabs.CompetencesTab;
 import com.eldanior.system.gui.tabs.GuildeTab;
 import com.eldanior.system.gui.tabs.GroupeTab;
 import com.eldanior.system.gui.tabs.InventaireTab;
+import com.eldanior.system.gui.tabs.TerritoiresTab;
+import com.eldanior.system.gui.tabs.ProprietesTab;
+import com.eldanior.system.gui.tabs.EchangesTab;
 import com.eldanior.system.gui.tabs.ProfilTab;
 import com.eldanior.system.gui.tabs.TitresTab;
 import com.hypixel.hytale.codec.Codec;
@@ -36,7 +39,7 @@ import javax.annotation.Nonnull;
 public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEventData> {
 
     private static final String[] TAB_IDS = {
-            "Profil", "Inventaire", "Competences", "Guilde", "Groupe", "Famille", "Titres", "Quetes", "Classements", "Duel", "Shop", "BlackMarket", "Admin"
+            "Profil", "Inventaire", "Competences", "Guilde", "Groupe", "Famille", "Titres", "Quetes", "Classements", "Duel", "Shop", "BlackMarket", "Territoires", "Proprietes", "Echanges", "Admin"
     };
 
     public SystemScreen(@Nonnull PlayerRef playerRef) {
@@ -81,6 +84,26 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         if (showFamille) {
             ui.set("#TabBtnFamille.Visible", true);
             FamilleTab.populate(ui, ref, store);
+        }
+
+        // Territoires visible si noblesse (Duc, Marquis, Roi) ou admin
+        boolean isAdmin = playerCheck != null && playerCheck.hasPermission("eldanior.command.setlevel");
+        boolean showTerritoires = isAdmin || (rankStr != null && ("DUC".equals(rankStr) || "MARQUIS".equals(rankStr) || "ROI".equals(rankStr)));
+        if (showTerritoires) {
+            ui.set("#TabBtnTerritoires.Visible", true);
+            TerritoiresTab.populate(ui, ref, store);
+        }
+
+        // Proprietes visible pour tous
+        ProprietesTab.populate(ui, ref, store);
+
+        // Echanges visible uniquement pour les Marchands ou admin
+        String classType = data.getPlayerClassId();
+        com.eldanior.system.classes.models.ClassModel classModel = com.eldanior.system.classes.ClassManager.get(classType);
+        boolean showEchanges = isAdmin || (classModel != null && classModel.getType() == com.eldanior.system.config.configs.ClassType.MERCHANT);
+        if (showEchanges) {
+            ui.set("#TabBtnEchanges.Visible", true);
+            EchangesTab.populate(ui, ref, store, isAdmin);
         }
 
         // Populate profil tab (default)
@@ -197,6 +220,42 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
                     EventData.of("Action", "duel_challenge").append("Param", String.valueOf(i)));
         }
 
+        // Echanges invite buttons
+        for (int i = 0; i < EchangesTab.MAX_TRADE_SLOTS; i++) {
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#EchBtn" + i,
+                    EventData.of("Action", "ech_invite").append("Param", String.valueOf(i)));
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#EchForceBtn" + i,
+                    EventData.of("Action", "ech_force").append("Param", String.valueOf(i)));
+        }
+
+        // Proprietes - clic sur un bien (selection)
+        for (int i = 0; i < ProprietesTab.MAX_OWNED_SLOTS; i++) {
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#POwnSlot" + i,
+                    EventData.of("Action", "prop_select").append("Param", String.valueOf(i)));
+        }
+        // Proprietes - disponibles
+        for (int i = 0; i < ProprietesTab.MAX_AVAILABLE_SLOTS; i++) {
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#PAvBtnBuy" + i,
+                    EventData.of("Action", "prop_buy").append("Param", String.valueOf(i)));
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#PAvBtnRent" + i,
+                    EventData.of("Action", "prop_rent").append("Param", String.valueOf(i)));
+        }
+        // Proprietes - detail actions
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#PDetBtnProt", EventData.of("Action", "prop_prot"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#PDetBtnPrice", EventData.of("Action", "prop_setprice"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#PDetBtnRent", EventData.of("Action", "prop_setrent"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#PDetBtnFamily", EventData.of("Action", "prop_family"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#PDetBtnSell", EventData.of("Action", "prop_sellback"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#PDetBtnQuit", EventData.of("Action", "prop_quit"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#PDetBtnRenew", EventData.of("Action", "prop_renew"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#PDetBtnRentOut", EventData.of("Action", "prop_rentout"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#PDetBtnDel", EventData.of("Action", "prop_del"));
+        // Invite buttons dans le detail
+        for (int i = 0; i < ProprietesTab.MAX_INVITE_SLOTS; i++) {
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#PDetInvBtn" + i,
+                    EventData.of("Action", "prop_invite").append("Param", String.valueOf(i)));
+        }
+
         // Populate classements
         ClassementsTab.populate(ui, ref, store);
         events.addEventBinding(CustomUIEventBindingType.Activating, "#RkBtnMobs", EventData.of("Action", "rk_mobs"));
@@ -268,6 +327,9 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnClassements", EventData.of("Action", "tab_classements"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnDuel",        EventData.of("Action", "tab_duel"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnShop",        EventData.of("Action", "tab_shop"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnTerritoires", EventData.of("Action", "tab_territoires"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnProprietes", EventData.of("Action", "tab_proprietes"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnEchanges",   EventData.of("Action", "tab_echanges"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnAdmin",      EventData.of("Action", "tab_admin"));
 
         // Attribute buttons (+1)
@@ -437,6 +499,105 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         // Duel challenge
         if ("duel_challenge".equals(eventData.action) && eventData.param != null) {
             DuelTab.handleChallenge(eventData.param, ref, store);
+            return;
+        }
+
+        // Echange invite
+        if ("ech_invite".equals(eventData.action) && eventData.param != null) {
+            if (EchangesTab.handleInvite(Integer.parseInt(eventData.param), ref, store)) {
+                refreshEchangesTab(ref, store);
+            }
+            return;
+        }
+
+        // Echange force (admin)
+        if ("ech_force".equals(eventData.action) && eventData.param != null) {
+            EchangesTab.handleForceOpen(Integer.parseInt(eventData.param), ref, store);
+            return;
+        }
+
+        // Proprietes - selection d'un bien
+        if ("prop_select".equals(eventData.action) && eventData.param != null) {
+            if (ProprietesTab.handleSelect(Integer.parseInt(eventData.param))) {
+                refreshProprietesTab(ref, store);
+            }
+            return;
+        }
+        // Proprietes - acheter/louer
+        if ("prop_buy".equals(eventData.action) && eventData.param != null) {
+            if (ProprietesTab.handleBuy(Integer.parseInt(eventData.param), ref, store)) {
+                refreshProprietesTab(ref, store);
+                refreshProfilTab(ref, store);
+            }
+            return;
+        }
+        if ("prop_rent".equals(eventData.action) && eventData.param != null) {
+            if (ProprietesTab.handleRent(Integer.parseInt(eventData.param), ref, store)) {
+                refreshProprietesTab(ref, store);
+                refreshProfilTab(ref, store);
+            }
+            return;
+        }
+        // Proprietes - detail actions
+        if ("prop_prot".equals(eventData.action)) {
+            if (ProprietesTab.handleToggleProtection()) refreshProprietesTab(ref, store);
+            return;
+        }
+        if ("prop_setprice".equals(eventData.action)) {
+            // Prix par defaut : 1000 Or (toggle: 0 → 1000 → 5000 → 10000 → 0)
+            ProprietesTab.handleSetPrice(cyclePrice(ProprietesTab.class));
+            refreshProprietesTab(ref, store);
+            return;
+        }
+        if ("prop_setrent".equals(eventData.action)) {
+            ProprietesTab.handleSetRentPrice(cycleRentPrice(ProprietesTab.class));
+            refreshProprietesTab(ref, store);
+            return;
+        }
+        if ("prop_family".equals(eventData.action)) {
+            // Prefill la commande dans le chat
+            com.hypixel.hytale.server.core.entity.entities.Player p = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
+            if (p != null) {
+                p.sendMessage(com.hypixel.hytale.server.core.Message.raw("§6Tapez dans le chat :"));
+                p.sendMessage(com.hypixel.hytale.server.core.Message.raw("§f/es parcel assign <familyId> _"));
+            }
+            return;
+        }
+        if ("prop_quit".equals(eventData.action)) {
+            if (ProprietesTab.handleQuitRental()) {
+                refreshProprietesTab(ref, store);
+            }
+            return;
+        }
+        if ("prop_renew".equals(eventData.action)) {
+            if (ProprietesTab.handleRenew(ref, store)) {
+                refreshProprietesTab(ref, store);
+                refreshProfilTab(ref, store);
+            }
+            return;
+        }
+        if ("prop_rentout".equals(eventData.action)) {
+            if (ProprietesTab.handleRentOut()) {
+                refreshProprietesTab(ref, store);
+            }
+            return;
+        }
+        if ("prop_sellback".equals(eventData.action)) {
+            if (ProprietesTab.handleSellSelected()) {
+                refreshProprietesTab(ref, store);
+            }
+            return;
+        }
+        if ("prop_invite".equals(eventData.action) && eventData.param != null) {
+            if (ProprietesTab.handleInvite(Integer.parseInt(eventData.param))) {
+                refreshProprietesTab(ref, store);
+            }
+            return;
+        }
+        if ("prop_del".equals(eventData.action)) {
+            if (ProprietesTab.handleDeleteSelected()) {
+                refreshProprietesTab(ref, store);
+            }
             return;
         }
 
@@ -657,6 +818,17 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         }
         update.set("#TabBtnFamille.Visible", showFamille);
 
+        // Territoires visible si noblesse ou admin
+        com.hypixel.hytale.server.core.entity.entities.Player playerCheck = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
+        boolean isAdmin = playerCheck != null && playerCheck.hasPermission("eldanior.command.setlevel");
+        boolean showTerritoires = isAdmin || (rankStr != null && ("DUC".equals(rankStr) || "MARQUIS".equals(rankStr) || "ROI".equals(rankStr)));
+        update.set("#TabBtnTerritoires.Visible", showTerritoires);
+
+        // Echanges visible si Marchand ou admin
+        com.eldanior.system.classes.models.ClassModel classModel = com.eldanior.system.classes.ClassManager.get(data.getPlayerClassId());
+        boolean showEchanges = isAdmin || (classModel != null && classModel.getType() == com.eldanior.system.config.configs.ClassType.MERCHANT);
+        update.set("#TabBtnEchanges.Visible", showEchanges);
+
         // Profil tab
         ProfilTab.populate(update, ref, store, data, playerName);
     }
@@ -714,6 +886,20 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         this.sendUpdate(update);
     }
 
+    private void refreshEchangesTab(Ref<EntityStore> ref, Store<EntityStore> store) {
+        UICommandBuilder update = new UICommandBuilder();
+        com.hypixel.hytale.server.core.entity.entities.Player p = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
+        boolean admin = p != null && p.hasPermission("eldanior.command.setlevel");
+        EchangesTab.populate(update, ref, store, admin);
+        this.sendUpdate(update);
+    }
+
+    private void refreshProprietesTab(Ref<EntityStore> ref, Store<EntityStore> store) {
+        UICommandBuilder update = new UICommandBuilder();
+        ProprietesTab.populate(update, ref, store);
+        this.sendUpdate(update);
+    }
+
     private void switchTab(String tabName, Ref<EntityStore> ref, Store<EntityStore> store) {
         UICommandBuilder update = new UICommandBuilder();
 
@@ -766,6 +952,17 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         if ("titres".equals(tabName)) {
             TitresTab.populate(update, ref, store);
         }
+        if ("territoires".equals(tabName)) {
+            TerritoiresTab.populate(update, ref, store);
+        }
+        if ("proprietes".equals(tabName)) {
+            ProprietesTab.populate(update, ref, store);
+        }
+        if ("echanges".equals(tabName)) {
+            com.hypixel.hytale.server.core.entity.entities.Player pc = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
+            boolean adm = pc != null && pc.hasPermission("eldanior.command.setlevel");
+            EchangesTab.populate(update, ref, store, adm);
+        }
         if ("profil".equals(tabName)) {
             ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
             PlayerLevelData data = store.getComponent(ref, type);
@@ -797,6 +994,21 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
     private String getPlayerName(Ref<EntityStore> ref, Store<EntityStore> store) {
         PlayerRef info = store.getComponent(ref, PlayerRef.getComponentType());
         return info != null ? info.getUsername() : "Inconnu";
+    }
+
+    private static final long[] PRICE_CYCLE = {0, 500, 1000, 5000, 10000, 50000};
+    private static final long[] RENT_CYCLE = {0, 100, 500, 1000, 5000};
+    private static int priceIdx = 0;
+    private static int rentIdx = 0;
+
+    private long cyclePrice(Class<?> ignored) {
+        priceIdx = (priceIdx + 1) % PRICE_CYCLE.length;
+        return PRICE_CYCLE[priceIdx];
+    }
+
+    private long cycleRentPrice(Class<?> ignored) {
+        rentIdx = (rentIdx + 1) % RENT_CYCLE.length;
+        return RENT_CYCLE[rentIdx];
     }
 
     public static class SystemEventData {

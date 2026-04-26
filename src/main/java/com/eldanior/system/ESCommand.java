@@ -1,7 +1,7 @@
 package com.eldanior.system;
 
-import com.eldanior.system.Inventory.commands.InventoryCommand;
-import com.eldanior.system.Leveling.commands.*;
+import com.eldanior.system.Leveling.commands.AddXPCommand;
+import com.eldanior.system.Leveling.commands.SetLevelCommand;
 import com.eldanior.system.TreasureChest.commands.DeleteTreasureCommand;
 import com.eldanior.system.TreasureChest.commands.TreasureConfigCommand;
 import com.eldanior.system.classes.commands.ClassInfoCommand;
@@ -27,13 +27,11 @@ public class ESCommand extends AbstractCommandCollection {
 
     public ESCommand() {
         super("es", "Commande principale Eldanior System");
-        this.addSubCommand(new StatusCommand());
         this.addSubCommand(new AddXPCommand());
         this.addSubCommand(new SetLevelCommand());
         this.addSubCommand(new ClassInfoCommand());
         this.addSubCommand(new SetClassCommand());
         this.addSubCommand(new GiveRelicCommand());
-        this.addSubCommand(new InventoryCommand());
         this.addSubCommand(new DeleteTreasureCommand());
         this.addSubCommand(new TreasureConfigCommand());
         this.addSubCommand(new WithdrawCommand());
@@ -72,6 +70,12 @@ public class ESCommand extends AbstractCommandCollection {
 
         // Shop
         this.addSubCommand(new SellCommand());
+
+        // Echange
+        this.addSubCommand(new com.eldanior.system.trade.TradeCommand());
+
+        // Parcelles / Territoires
+        this.addSubCommand(new com.eldanior.system.territory.commands.ParcelCommand());
 
         // Interface unifiee
         this.addSubCommand(new SystemCommand());

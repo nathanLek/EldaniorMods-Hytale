@@ -14,7 +14,7 @@ public class Eclaireur extends ClassModel {
                 Rarity.COMMON, ClassType.ARCHER,
                 List.of(PassiveSkill.WIND_STEP, PassiveSkill.LIGHT_REFLEXES, PassiveSkill.LUCKY_STRIKE),
                 List.of(WeaponMastery.BOW, WeaponMastery.DAGGER),
-                List.of(), 120, false,
+                List.of("eclaireur_fantome_archer", "ombre_des_vents", "coureur_d_aurore"), 400, false,
                 4, 4, 4, 4, 20, 14);
     }
 }

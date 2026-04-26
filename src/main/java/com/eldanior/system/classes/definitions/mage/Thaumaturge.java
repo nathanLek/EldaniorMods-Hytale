@@ -14,7 +14,7 @@ public class Thaumaturge extends ClassModel {
                 Rarity.RARE, ClassType.MAGE,
                 List.of(PassiveSkill.UNLEASHED_MAGIC, PassiveSkill.OVERFLOWING_LIFE, PassiveSkill.MANA_STREAM),
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
-                List.of(), 250, false,
+                List.of("grand_thaumaturge", "maitre_du_prodige", "thaumaturge_royal"), 400, false,
                 8, 35, 50, 25, 15, 25);
     }
 }

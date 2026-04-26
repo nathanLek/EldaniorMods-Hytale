@@ -14,7 +14,7 @@ public class OeilDeFaucon extends ClassModel {
                 Rarity.UNIQUE, ClassType.ARCHER,
                 List.of(PassiveSkill.FATAL_PRECISION, PassiveSkill.VOID_BLADE, PassiveSkill.BERSERKER_SWIFTNESS),
                 List.of(WeaponMastery.BOW),
-                List.of(), 250, false,
+                List.of("vision_absolue", "oeil_du_destin", "regard_percant"), 400, false,
                 60, 40, 20, 30, 120, 150);
     }
 }

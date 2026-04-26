@@ -14,7 +14,7 @@ public class Tireur extends ClassModel {
                 Rarity.COMMON, ClassType.ARCHER,
                 List.of(PassiveSkill.EAGLE_EYE, PassiveSkill.LIGHT_REFLEXES, PassiveSkill.KEEN_SENSES),
                 List.of(WeaponMastery.BOW, WeaponMastery.DAGGER),
-                List.of(), 120, false,
+                List.of("tireur_d_elite", "franc_tireur_royal", "arc_precis"), 400, false,
                 6, 6, 4, 4, 16, 14);
     }
 }

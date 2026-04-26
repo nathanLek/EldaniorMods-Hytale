@@ -14,7 +14,7 @@ public class Enchanteur extends ClassModel {
                 Rarity.COMMON, ClassType.MAGE,
                 List.of(PassiveSkill.MANA_BARRIER, PassiveSkill.MANA_FONT, PassiveSkill.ROBUST_CONSTITUTION),
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
-                List.of(), 120, false,
+                List.of("grand_enchanteur", "tisseur_de_runes", "enchanteur_royal"), 400, false,
                 2, 10, 22, 8, 4, 4);
     }
 }

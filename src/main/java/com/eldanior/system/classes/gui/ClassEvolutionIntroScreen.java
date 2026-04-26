@@ -20,13 +20,15 @@ import java.util.List;
 
 public class ClassEvolutionIntroScreen extends InteractiveCustomUIPage<ClassEvolutionIntroScreen.IntroEventData> {
 
-    // --- NOUVEAU : On stocke les classes tirées au sort spécifiquement pour ce joueur ---
     private final List<String> rolledClasses;
+    private final int rerollsUsed;
+    private final boolean isAdmin;
 
-    // On modifie le constructeur pour accepter cette liste
-    public ClassEvolutionIntroScreen(@Nonnull PlayerRef playerRef, List<String> rolledClasses) {
+    public ClassEvolutionIntroScreen(@Nonnull PlayerRef playerRef, List<String> rolledClasses, int rerollsUsed, boolean isAdmin) {
         super(playerRef, CustomPageLifetime.CanDismiss, IntroEventData.CODEC);
         this.rolledClasses = rolledClasses;
+        this.rerollsUsed = rerollsUsed;
+        this.isAdmin = isAdmin;
     }
 
     @Override
@@ -49,9 +51,9 @@ public class ClassEvolutionIntroScreen extends InteractiveCustomUIPage<ClassEvol
         PlayerRef playerRef = store.getComponent(ref, PlayerRef.getComponentType());
         if (player == null || playerRef == null) return;
 
-        // --- CORRECTION ICI : On utilise la liste personnelle du joueur ---
+        // Ouvre la selection avec le reroll integre
         player.getPageManager().openCustomPage(ref, store,
-                new ClassSelectionScreen(playerRef, this.rolledClasses, true));
+                new ClassSelectionScreen(playerRef, this.rolledClasses, true, this.rerollsUsed, this.isAdmin));
     }
 
     public static class IntroEventData {

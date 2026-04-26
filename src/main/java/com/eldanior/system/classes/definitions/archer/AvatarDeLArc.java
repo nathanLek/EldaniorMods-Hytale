@@ -14,7 +14,7 @@ public class AvatarDeLArc extends ClassModel {
                 Rarity.LEGENDARY, ClassType.ARCHER,
                 List.of(PassiveSkill.ABYSS_BLADE, PassiveSkill.ABSOLUTE_PRECISION, PassiveSkill.COSMIC_CONSTITUTION),
                 List.of(WeaponMastery.BOW, WeaponMastery.DAGGER),
-                List.of(), 250, false,
+                List.of("ascendant_de_l_arc", "arc_divin_leg", "legende_archere"), 400, false,
                 100, 80, 40, 60, 200, 200);
     }
 }

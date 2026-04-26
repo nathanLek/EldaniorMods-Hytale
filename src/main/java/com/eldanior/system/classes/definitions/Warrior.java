@@ -20,7 +20,7 @@ public class Warrior extends ClassModel {
                 List.of(PassiveSkill.INSTINCTIVE_STRIKE, PassiveSkill.IRON_RESOLVE),
                 List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD),
                 List.of("templier", "epeiste", "fantassin", "brute", "mercenaire", "avant_garde", "ravageur", "bretteur", "lame_mage", "champion", "colosse", "executeur", "gardien_runique", "titan", "heros", "fleau", "sang_dragon", "DivineApotre", "protecteur", "berserker", "duelliste", "paladin", "gladiateur", "samourai", "warlord", "chevalier_noir", "croise"),
-                120,
+                180,
                 false,
                 10, 10, 4, 4, 6, 2
         );

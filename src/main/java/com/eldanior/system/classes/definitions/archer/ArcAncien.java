@@ -14,7 +14,7 @@ public class ArcAncien extends ClassModel {
                 Rarity.UNIQUE, ClassType.ARCHER,
                 List.of(PassiveSkill.ARCANE_ANNIHILATION, PassiveSkill.GENIUS_MIND, PassiveSkill.MANA_OCEAN),
                 List.of(WeaponMastery.BOW, WeaponMastery.SPELLBOOK),
-                List.of(), 250, false,
+                List.of("arc_primordial", "gardien_des_arcs_anciens", "arcane_supreme"), 400, false,
                 40, 50, 80, 40, 80, 100);
     }
 }

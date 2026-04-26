@@ -14,7 +14,7 @@ public class Voleur extends ClassModel {
                 Rarity.COMMON, ClassType.ASSASSIN,
                 List.of(PassiveSkill.WIND_STEP, PassiveSkill.KEEN_SENSES, PassiveSkill.LUCKY_STRIKE),
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
-                List.of(), 120, false,
+                List.of("voleur_maitre", "prince_du_larcin", "main_d_argent"), 400, false,
                 8, 4, 2, 2, 20, 14);
     }
 }

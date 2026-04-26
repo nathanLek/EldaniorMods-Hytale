@@ -14,7 +14,7 @@ public class OmbreSupreme extends ClassModel {
                 Rarity.LEGENDARY, ClassType.ASSASSIN,
                 List.of(PassiveSkill.ABYSS_BLADE, PassiveSkill.DEMIGOD_SWIFTNESS, PassiveSkill.REALITY_DODGE),
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
-                List.of(), 250, false,
+                List.of("ombre_absolue", "nuit_eternelle", "void_supreme"), 400, false,
                 120, 60, 20, 60, 250, 180);
     }
 }

@@ -14,7 +14,7 @@ public class Empoisonneur extends ClassModel {
                 Rarity.COMMON, ClassType.ASSASSIN,
                 List.of(PassiveSkill.HAUNTING_THRUST, PassiveSkill.KEEN_SENSES, PassiveSkill.LUCKY_STRIKE),
                 List.of(WeaponMastery.DAGGER),
-                List.of(), 120, false,
+                List.of("maitre_des_poisons", "alchimiste_mortel", "vipere_noire"), 400, false,
                 6, 4, 6, 2, 16, 16);
     }
 }

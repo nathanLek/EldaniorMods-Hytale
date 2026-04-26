@@ -20,7 +20,7 @@ public class Assassin extends ClassModel {
                 List.of(PassiveSkill.WIND_STEP, PassiveSkill.KEEN_SENSES),
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
                 List.of("voleur", "rodeur", "sicaire", "eclaireur", "empoisonneur", "saboteur", "acrobate", "maitre_lame", "ombre_furtive", "chasseur", "ninja", "espion", "corsaire", "traqueur", "lame_noire", "maitre_ombre", "faucheur", "phantom_blade", "grand_maitre_poison", "ange_dechu", "spectre_assassin", "seigneur_poison", "lame_eternelle", "ombre_supreme", "empereur_ombres", "avatar_neant", "dieu_ombres"),
-                120,
+                180,
                 false,
                 6, 4, 2, 2, 14, 8
         );

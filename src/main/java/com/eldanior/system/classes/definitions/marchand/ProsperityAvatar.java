@@ -18,7 +18,7 @@ public class ProsperityAvatar extends ClassModel {
                 ClassType.MERCHANT,
                 List.of(PassiveSkill.ARTISANAT, PassiveSkill.MYTH_HUNTER, PassiveSkill.COSMIC_CONSTITUTION),
                 List.of(WeaponMastery.ANY),
-                null,
+                List.of("avatar_de_l_abondance"),
                 999,
                 false,
                 200, 200, 240, 200, 300, 1600

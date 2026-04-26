@@ -5,7 +5,6 @@ import com.eldanior.system.Leveling.utils.NotificationHelper;
 import com.eldanior.system.classes.ClassManager;
 import com.eldanior.system.classes.models.ClassModel;
 import com.eldanior.system.config.Player.PlayerLevelData;
-import com.eldanior.system.config.configs.ClassType;
 import com.eldanior.system.config.configs.Rarity;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.component.ComponentType;
@@ -97,11 +96,30 @@ public class OpenClassSelectionInteraction extends SimpleInteraction {
             return;
         }
 
-        // --- 3. SYSTÈME DE GACHA AVEC TAUX DE DROP ---
-        List<String> proposedIds = performGachaRoll(possibleEvolutions, 3);
+        // --- 3. SYSTÈME DE GACHA AVEC SAUVEGARDE ---
+        // Tier 2 (promotionLevel >= 400) : 1 seul choix proposé
+        // Tier 1 (promotionLevel < 400) : 3 choix proposés
+        int numChoices = currentClass.getPromotionLevel() >= 400 ? 1 : 3;
 
+        // Si le joueur a déjà des choix sauvegardés, on les repropose
+        List<String> savedChoices = playerData.getSavedEvolutionChoices();
+        List<String> proposedIds;
+
+        if (!savedChoices.isEmpty()) {
+            // Vérifier que les choix sauvegardés sont toujours valides
+            boolean allValid = true;
+            for (String id : savedChoices) {
+                if (ClassManager.get(id) == null) { allValid = false; break; }
+            }
+            proposedIds = allValid ? savedChoices : performGachaRoll(possibleEvolutions, numChoices);
+        } else {
+            proposedIds = performGachaRoll(possibleEvolutions, numChoices);
+        }
+
+        // La sauvegarde se fait dans ClassEvolutionIntroScreen.build()
+        boolean isAdmin = player.hasPermission("eldanior.command.setlevel");
         player.getPageManager().openCustomPage(entityRef, store,
-                new ClassEvolutionIntroScreen(playerRef, proposedIds));
+                new ClassEvolutionIntroScreen(playerRef, proposedIds, playerData.getEvolutionRerolls(), isAdmin));
     }
 
     // ==========================================================
@@ -111,7 +129,7 @@ public class OpenClassSelectionInteraction extends SimpleInteraction {
     /**
      * Effectue un tirage au sort pondéré pour choisir 'amount' classes uniques.
      */
-    private List<String> performGachaRoll(List<String> pool, int amount) {
+    public static List<String> performGachaRoll(List<String> pool, int amount) {
         List<String> result = new ArrayList<>();
         List<String> remainingPool = new ArrayList<>(pool);
 
@@ -154,7 +172,7 @@ public class OpenClassSelectionInteraction extends SimpleInteraction {
         return result;
     }
 
-    private int getRarityWeight(Rarity rarity) {
+    private static int getRarityWeight(Rarity rarity) {
         return switch (rarity) {
             case COMMON    -> 50000; // 1 chance sur 2 (50%)
             case RARE      -> 33333; // 1 chance sur 3 (~33.3%)

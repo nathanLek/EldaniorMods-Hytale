@@ -20,7 +20,7 @@ public class Archer extends ClassModel {
                 List.of(PassiveSkill.EAGLE_EYE, PassiveSkill.LIGHT_REFLEXES),
                 List.of(WeaponMastery.BOW, WeaponMastery.DAGGER),
                 List.of("tireur", "chasseur_archer", "arbaletrier", "eclaireur_archer", "franc_tireur", "ranger_elite", "arc_mystique", "maitre_chasse", "sniper_divin", "tireur_elementaire", "general_archer", "oeil_de_faucon", "arc_ancien", "avatar_arc", "dieu_arc"),
-                120,
+                180,
                 false,
                 4, 4, 4, 2, 12, 10
         );

@@ -14,7 +14,7 @@ public class RangerElite extends ClassModel {
                 Rarity.RARE, ClassType.ARCHER,
                 List.of(PassiveSkill.MARATHON_RUNNER, PassiveSkill.CRITICAL_LUCK, PassiveSkill.OVERFLOWING_LIFE),
                 List.of(WeaponMastery.BOW, WeaponMastery.DAGGER, WeaponMastery.SWORD),
-                List.of(), 250, false,
+                List.of("commandant_ranger", "garde_forestier", "sentinelle_d_elite"), 400, false,
                 25, 30, 10, 20, 40, 35);
     }
 }

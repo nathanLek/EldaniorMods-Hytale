@@ -19,7 +19,7 @@ public class WorldForger extends ClassModel {
                 ClassType.MERCHANT,
                 List.of(PassiveSkill.ARTISANAT, PassiveSkill.COSMIC_MIND, PassiveSkill.ABYSS_BLADE),
                 List.of(WeaponMastery.ANY),
-                null,
+                List.of("forgeur_des_mondes"),
                 999,
                 false,
                 500, 160, 600, 400, 100, 400

@@ -1,0 +1,30 @@
+{
+  "Id": "Benediction_Archeveque",
+  "TranslationProperties": {
+    "Name": "Benediction d'Archeveque",
+    "Description": "[Clic F]: Devenir Archeveque"
+  },
+  "Icon": "Icons/ItemsGenerated/Deco_Scroll.png",
+  "Quality": "Legendary",
+  "Categories": [
+    "Eldanior_System.Consommables"
+  ],
+  "Tags": {
+    "Type": [
+      "Item",
+      "Consumable"
+    ]
+  },
+  "MaxStack": 1,
+  "PlayerAnimationsId": "Item",
+  "Model": "Blocks/Miscellaneous/Scrolls.blockymodel",
+  "Texture": "Blocks/Miscellaneous/Scrolls_Texture.png",
+  "IconProperties": {
+    "Scale": 0.76,
+    "Rotation": [ 135, 135, 0 ],
+    "Translation": [ -1, 5 ]
+  },
+  "Interactions": {
+    "Use": "Root_ConsumableItemStatsInteraction"
+  }
+}

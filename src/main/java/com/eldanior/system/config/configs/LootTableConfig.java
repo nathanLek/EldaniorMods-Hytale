@@ -421,6 +421,32 @@ public enum LootTableConfig {
             new LootEntry("skill_page_heart_of_creation",            1, 1, 1, 0.01),
             new LootEntry("skill_page_true_immortality",             1, 1, 1, 0.01),
 
+            // --- Consommables stats ---
+            new LootEntry("Consomable_Stat_Force_One",         1, 1, 1, 2),
+            new LootEntry("Consomable_Stat_Vitalite_One",      1, 1, 1, 2),
+            new LootEntry("Consomable_Stat_Intelligence_One",  1, 1, 1, 2),
+            new LootEntry("Consomable_Stat_Endurance_One",     1, 1, 1, 2),
+            new LootEntry("Consomable_Stat_Agilite_One",       1, 1, 1, 2),
+            new LootEntry("Consomable_Stat_Chance_One",        1, 1, 1, 2),
+            new LootEntry("Consomable_Stat_Force_Five",        1, 1, 1, 0.3),
+            new LootEntry("Consomable_Stat_Vitalite_Five",     1, 1, 1, 0.3),
+            new LootEntry("Consomable_Stat_Intelligence_Five", 1, 1, 1, 0.3),
+            new LootEntry("Consomable_Stat_Endurance_Five",    1, 1, 1, 0.3),
+            new LootEntry("Consomable_Stat_Agilite_Five",      1, 1, 1, 0.3),
+            new LootEntry("Consomable_Stat_Chance_Five",       1, 1, 1, 0.3),
+            new LootEntry("Consomable_Stat_Force_Ten",         1, 1, 1, 0.05),
+            new LootEntry("Consomable_Stat_Vitalite_Ten",      1, 1, 1, 0.05),
+            new LootEntry("Consomable_Stat_Intelligence_Ten",  1, 1, 1, 0.05),
+            new LootEntry("Consomable_Stat_Endurance_Ten",     1, 1, 1, 0.05),
+            new LootEntry("Consomable_Stat_Agilite_Ten",       1, 1, 1, 0.05),
+            new LootEntry("Consomable_Stat_Chance_Ten",        1, 1, 1, 0.05),
+            new LootEntry("Elixir_Guerrier",                   1, 1, 1, 0.2),
+            new LootEntry("Elixir_Assassin",                   1, 1, 1, 0.2),
+            new LootEntry("Elixir_Mage",                       1, 1, 1, 0.2),
+            new LootEntry("Elixir_Archer",                     1, 1, 1, 0.2),
+            new LootEntry("Elixir_Complet",                    1, 1, 1, 0.05),
+            new LootEntry("Tome_Experience",                   1, 1, 1, 1),
+
             // --- Clé donjon (rare) ---
             new LootEntry("PortalKey_Dungeon_V1",            1, 1, 1, 5)
     ),
@@ -833,7 +859,22 @@ public enum LootTableConfig {
             new LootEntry("skill_page_creator_vision",               1, 1, 1, 0.01),
             new LootEntry("skill_page_fate_dodge",                   1, 1, 1, 0.01),
             new LootEntry("skill_page_heart_of_creation",            1, 1, 1, 0.01),
-            new LootEntry("skill_page_true_immortality",             1, 1, 1, 0.01)
+            new LootEntry("skill_page_true_immortality",             1, 1, 1, 0.01),
+
+            // --- Consommables stats ---
+            new LootEntry("Consomable_Stat_Force_One",         1, 1, 1, 3),
+            new LootEntry("Consomable_Stat_Vitalite_One",      1, 1, 1, 3),
+            new LootEntry("Consomable_Stat_Intelligence_One",  1, 1, 1, 3),
+            new LootEntry("Consomable_Stat_Endurance_One",     1, 1, 1, 3),
+            new LootEntry("Consomable_Stat_Agilite_One",       1, 1, 1, 3),
+            new LootEntry("Consomable_Stat_Chance_One",        1, 1, 1, 3),
+            new LootEntry("Consomable_Stat_Force_Five",        1, 1, 1, 0.5),
+            new LootEntry("Consomable_Stat_Vitalite_Five",     1, 1, 1, 0.5),
+            new LootEntry("Consomable_Stat_Intelligence_Five", 1, 1, 1, 0.5),
+            new LootEntry("Consomable_Stat_Endurance_Five",    1, 1, 1, 0.5),
+            new LootEntry("Consomable_Stat_Agilite_Five",      1, 1, 1, 0.5),
+            new LootEntry("Consomable_Stat_Chance_Five",       1, 1, 1, 0.5),
+            new LootEntry("Tome_Experience",                   1, 1, 1, 2)
     ),
 
     // ============================================================
@@ -1151,7 +1192,35 @@ public enum LootTableConfig {
             new LootEntry("skill_page_creator_vision",       1, 1, 1, 1),
             new LootEntry("skill_page_fate_dodge",           1, 1, 1, 1),
             new LootEntry("skill_page_heart_of_creation",    1, 1, 1, 1),
-            new LootEntry("skill_page_true_immortality",     1, 1, 1, 1)
+            new LootEntry("skill_page_true_immortality",     1, 1, 1, 1),
+
+            // --- Consommables stats ---
+            new LootEntry("Consomable_Stat_Force_One",         1, 1, 1, 5),
+            new LootEntry("Consomable_Stat_Vitalite_One",      1, 1, 1, 5),
+            new LootEntry("Consomable_Stat_Intelligence_One",  1, 1, 1, 5),
+            new LootEntry("Consomable_Stat_Endurance_One",     1, 1, 1, 5),
+            new LootEntry("Consomable_Stat_Agilite_One",       1, 1, 1, 5),
+            new LootEntry("Consomable_Stat_Chance_One",        1, 1, 1, 5),
+            new LootEntry("Consomable_Stat_Force_Five",        1, 1, 1, 1),
+            new LootEntry("Consomable_Stat_Vitalite_Five",     1, 1, 1, 1),
+            new LootEntry("Consomable_Stat_Intelligence_Five", 1, 1, 1, 1),
+            new LootEntry("Consomable_Stat_Endurance_Five",    1, 1, 1, 1),
+            new LootEntry("Consomable_Stat_Agilite_Five",      1, 1, 1, 1),
+            new LootEntry("Consomable_Stat_Chance_Five",       1, 1, 1, 1),
+            new LootEntry("Consomable_Stat_Force_Ten",         1, 1, 1, 0.2),
+            new LootEntry("Consomable_Stat_Vitalite_Ten",      1, 1, 1, 0.2),
+            new LootEntry("Consomable_Stat_Intelligence_Ten",  1, 1, 1, 0.2),
+            new LootEntry("Consomable_Stat_Endurance_Ten",     1, 1, 1, 0.2),
+            new LootEntry("Consomable_Stat_Agilite_Ten",       1, 1, 1, 0.2),
+            new LootEntry("Consomable_Stat_Chance_Ten",        1, 1, 1, 0.2),
+            new LootEntry("Elixir_Guerrier",                   1, 1, 1, 0.5),
+            new LootEntry("Elixir_Assassin",                   1, 1, 1, 0.5),
+            new LootEntry("Elixir_Mage",                       1, 1, 1, 0.5),
+            new LootEntry("Elixir_Archer",                     1, 1, 1, 0.5),
+            new LootEntry("Elixir_Complet",                    1, 1, 1, 0.1),
+            new LootEntry("Tome_Experience",                   1, 1, 1, 3),
+            new LootEntry("Tome_Niveau",                       1, 1, 1, 0.1),
+            new LootEntry("Essence_Dignite",                   1, 1, 1, 0.02)
     ),
 
     // ============================================================
@@ -1579,6 +1648,15 @@ public enum LootTableConfig {
             new LootEntry("skill_page_fate_dodge",                   1, 1, 1, 0.01),
             new LootEntry("skill_page_heart_of_creation",            1, 1, 1, 0.01),
             new LootEntry("skill_page_true_immortality",             1, 1, 1, 0.01),
+
+            // --- Consommables stats ---
+            new LootEntry("Consomable_Stat_Force_One",         1, 1, 1, 1),
+            new LootEntry("Consomable_Stat_Vitalite_One",      1, 1, 1, 1),
+            new LootEntry("Consomable_Stat_Intelligence_One",  1, 1, 1, 1),
+            new LootEntry("Consomable_Stat_Endurance_One",     1, 1, 1, 1),
+            new LootEntry("Consomable_Stat_Agilite_One",       1, 1, 1, 1),
+            new LootEntry("Consomable_Stat_Chance_One",        1, 1, 1, 1),
+            new LootEntry("Tome_Experience",                   1, 1, 1, 0.5),
 
             // --- Clé donjon (très rare) ---
             new LootEntry("PortalKey_Dungeon_V1", 1, 1, 1, 0.02)

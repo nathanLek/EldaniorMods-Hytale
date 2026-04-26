@@ -14,7 +14,7 @@ public class TireurElementaire extends ClassModel {
                 Rarity.EPIC, ClassType.ARCHER,
                 List.of(PassiveSkill.ARCANE_DEVASTATION, PassiveSkill.BRILLIANT_MIND, PassiveSkill.STORM_STEP),
                 List.of(WeaponMastery.BOW, WeaponMastery.SPELLBOOK),
-                List.of(), 250, false,
+                List.of("arcane_archer", "sagittaire_elemental", "fleche_cosmique"), 400, false,
                 30, 30, 50, 20, 70, 60);
     }
 }

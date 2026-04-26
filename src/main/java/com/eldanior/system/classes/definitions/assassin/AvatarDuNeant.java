@@ -14,7 +14,7 @@ public class AvatarDuNeant extends ClassModel {
                 Rarity.DIVINE, ClassType.ASSASSIN,
                 List.of(PassiveSkill.CREATOR_EDGE, PassiveSkill.CREATOR_STEP, PassiveSkill.FATE_DODGE),
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
-                List.of(), 250, false,
+                List.of("demi_neant"), 400, false,
                 180, 120, 40, 100, 400, 350);
     }
 }

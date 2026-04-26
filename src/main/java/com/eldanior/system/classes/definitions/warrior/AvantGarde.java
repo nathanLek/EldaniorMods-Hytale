@@ -19,8 +19,8 @@ public class AvantGarde extends ClassModel {
                 ClassType.WARRIOR,
                 List.of(PassiveSkill.IRON_BODY, PassiveSkill.STEEL_CONSTITUTION, PassiveSkill.UNYIELDING),
                 List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD),
-                List.of(),
-                250,
+                List.of("marechal", "avant_garde_supreme", "fer_de_lance"),
+                400,
                 false,
                 30, 80, 10, 70, 20, 10
         );

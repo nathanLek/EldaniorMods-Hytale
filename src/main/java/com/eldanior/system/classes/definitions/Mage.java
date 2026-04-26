@@ -20,7 +20,7 @@ public class Mage extends ClassModel {
                 List.of(PassiveSkill.MANA_FONT, PassiveSkill.AWAKENED_MIND),
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
                 List.of("elementaliste", "enchanteur", "necromancien", "invocateur", "guerisseur", "pyromancien", "cryomancien", "archimage", "sorcier", "druide", "illusionniste", "mystique", "thaumaturge", "alchimiste", "sage", "magus", "liche", "oracle", "maitre_elementaire", "chronoturge", "archonte", "mage_void", "primordial", "demiurge", "prophete", "avatar_arcanique", "dieu_des_arcanes"),
-                120,
+                180,
                 false,
                 2, 4, 20, 4, 4, 2
         );

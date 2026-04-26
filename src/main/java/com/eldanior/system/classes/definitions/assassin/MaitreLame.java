@@ -14,7 +14,7 @@ public class MaitreLame extends ClassModel {
                 Rarity.RARE, ClassType.ASSASSIN,
                 List.of(PassiveSkill.SHARP_BLADE, PassiveSkill.THUNDER_REFLEXES, PassiveSkill.RAZOR_SENSES),
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
-                List.of(), 250, false,
+                List.of("grand_maitre_lame", "lame_diamant", "duelliste_supreme"), 400, false,
                 30, 15, 5, 10, 55, 40);
     }
 }

@@ -19,8 +19,8 @@ public class Brute extends ClassModel {
                 ClassType.WARRIOR,
                 List.of(PassiveSkill.DEEP_SLASH, PassiveSkill.STONE_SKIN, PassiveSkill.TIRELESS_BREATH),
                 List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD),
-                List.of(),
-                250,
+                List.of("ecraseur", "boucher_de_guerre", "colosse_de_fer"),
+                400,
                 false,
                 30, 20, 2, 8, 8, 4
         );

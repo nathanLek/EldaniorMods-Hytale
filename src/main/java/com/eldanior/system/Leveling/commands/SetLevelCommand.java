@@ -126,9 +126,11 @@ public class SetLevelCommand extends AbstractAsyncCommand {
                     // Reset argent
                     data.setMoney(1000);
 
-                    // Reset quetes + cooldowns
+                    // Reset quetes + cooldowns + evolution
                     data.setQuestData("");
                     data.setCooldownData("");
+                    data.clearSavedEvolutionChoices();
+                    data.setEvolutionRerolls(0);
                     com.eldanior.system.quest.QuestManager.getPlayerQuests(targetUUID).clear();
 
                     System.out.println("[RESET] Money=" + data.getMoney() + " QuestData='" + data.getQuestData() + "' Cooldowns='" + data.getCooldownData() + "'");

@@ -1,0 +1,142 @@
+package com.eldanior.system.trade;
+
+import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.inventory.ItemStack;
+import com.hypixel.hytale.server.core.inventory.container.ItemContainer;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.server.core.universe.Universe;
+import com.hypixel.hytale.server.core.Message;
+
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+
+public class TradeManager {
+
+    private static final double MAX_DISTANCE = 15.0;
+
+    // target UUID -> sender UUID
+    private static final Map<UUID, UUID> pendingInvites = new ConcurrentHashMap<>();
+
+    // player UUID -> active session
+    private static final Map<UUID, TradeSession> activeSessions = new ConcurrentHashMap<>();
+
+    public static void init() {
+        pendingInvites.clear();
+        activeSessions.clear();
+        System.out.println("[Eldanior] TradeManager initialise.");
+    }
+
+    // ==================== INVITATIONS ====================
+
+    public static boolean sendInvite(UUID senderUUID, UUID targetUUID) {
+        if (senderUUID.equals(targetUUID)) return false;
+        if (isInTrade(senderUUID) || isInTrade(targetUUID)) return false;
+        if (pendingInvites.containsKey(targetUUID)) return false;
+
+        pendingInvites.put(targetUUID, senderUUID);
+        return true;
+    }
+
+    public static boolean hasPendingInvite(UUID targetUUID) {
+        return pendingInvites.containsKey(targetUUID);
+    }
+
+    public static UUID getPendingInviter(UUID targetUUID) {
+        return pendingInvites.get(targetUUID);
+    }
+
+    public static void cancelInvite(UUID senderUUID) {
+        pendingInvites.entrySet().removeIf(e -> e.getValue().equals(senderUUID));
+    }
+
+    public static void clearInvite(UUID targetUUID) {
+        pendingInvites.remove(targetUUID);
+    }
+
+    // ==================== SESSIONS ====================
+
+    public static TradeSession startTrade(UUID player1, UUID player2) {
+        TradeSession session = new TradeSession(player1, player2);
+        activeSessions.put(player1, session);
+        activeSessions.put(player2, session);
+        clearInvite(player2);
+        return session;
+    }
+
+    public static boolean isInTrade(UUID playerUUID) {
+        return activeSessions.containsKey(playerUUID);
+    }
+
+    public static TradeSession getSession(UUID playerUUID) {
+        return activeSessions.get(playerUUID);
+    }
+
+    public static void endTrade(TradeSession session, boolean execute) {
+        if (session == null) return;
+
+        UUID p1 = session.getPlayer1();
+        UUID p2 = session.getPlayer2();
+
+        if (execute && session.isBothValidated()) {
+            // Transferer les items
+            transferItems(p1, p2, session);
+        } else {
+            // Annulation : rendre les items à chaque joueur
+            returnItems(p1, session.getMyItems(p1));
+            returnItems(p2, session.getMyItems(p2));
+        }
+
+        activeSessions.remove(p1);
+        activeSessions.remove(p2);
+        session.cancel();
+    }
+
+    private static void transferItems(UUID from, UUID to, TradeSession session) {
+        ItemStack[] fromItems = session.getMyItems(from);
+        ItemStack[] toItems = session.getMyItems(to);
+
+        // Items de 'from' vont dans la hotbar de 'to'
+        giveItems(to, fromItems);
+        // Items de 'to' vont dans la hotbar de 'from'
+        giveItems(from, toItems);
+    }
+
+    private static void giveItems(UUID targetUUID, ItemStack[] items) {
+        try {
+            PlayerRef targetRef = Universe.get().getPlayer(targetUUID);
+            if (targetRef == null) return;
+            var ref = targetRef.getReference();
+            if (ref == null) return;
+            var store = ref.getStore();
+            Player player = store.getComponent(ref, Player.getComponentType());
+            if (player == null) return;
+
+            ItemContainer hotbar = player.getInventory().getHotbar();
+            for (ItemStack item : items) {
+                if (item != null && !item.isEmpty()) {
+                    hotbar.addItemStack(item);
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("[Trade] Erreur transfert items: " + e.getMessage());
+        }
+    }
+
+    private static void returnItems(UUID playerUUID, ItemStack[] items) {
+        giveItems(playerUUID, items);
+    }
+
+    // ==================== CLEANUP ====================
+
+    public static void handleDisconnect(UUID playerUUID) {
+        // Annuler les invitations
+        cancelInvite(playerUUID);
+        pendingInvites.remove(playerUUID);
+
+        // Annuler les trades actifs
+        TradeSession session = activeSessions.get(playerUUID);
+        if (session != null) {
+            endTrade(session, false);
+        }
+    }
+}

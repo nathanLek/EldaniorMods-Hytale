@@ -210,7 +210,7 @@ public class CombatStatsSystem extends DamageEventSystem {
             }
         }
 
-        // Bonus de degats de l'aura retire — l'aura ralentit/paralyse les mobs via DignityAuraMobSystem
+        // Bonus de degats de l'aura retire — l'aura ralentit/paralyse les mobs via DignityAuraSystem
     }
 
     private void applyEnduranceDefense(Ref<EntityStore> victimRef, Store<EntityStore> store, Damage damage) {

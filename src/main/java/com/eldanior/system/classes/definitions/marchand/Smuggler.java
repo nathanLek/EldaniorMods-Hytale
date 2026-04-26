@@ -18,7 +18,7 @@ public class Smuggler extends ClassModel {
                 ClassType.MERCHANT,
                 List.of(PassiveSkill.ARTISANAT, PassiveSkill.WIND_STEP, PassiveSkill.LUCKY_STRIKE),
                 List.of(WeaponMastery.ANY),
-                List.of("black_market_prince"),
+                List.of("contrebandier_royal"),
                 500,
                 false,
                 12, 8, 24, 16, 44, 50

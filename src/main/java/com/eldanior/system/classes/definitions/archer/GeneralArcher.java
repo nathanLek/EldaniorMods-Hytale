@@ -14,7 +14,7 @@ public class GeneralArcher extends ClassModel {
                 Rarity.EPIC, ClassType.ARCHER,
                 List.of(PassiveSkill.TITAN_CONSTITUTION, PassiveSkill.LIGHTNING_REFLEXES, PassiveSkill.DESTINY_STRIKE),
                 List.of(WeaponMastery.BOW, WeaponMastery.SWORD),
-                List.of(), 250, false,
+                List.of("marechal_des_arcs", "general_supreme", "commandeur_de_l_elite"), 400, false,
                 50, 60, 20, 50, 60, 60);
     }
 }

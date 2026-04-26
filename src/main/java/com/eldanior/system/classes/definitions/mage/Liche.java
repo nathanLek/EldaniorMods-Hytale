@@ -14,7 +14,7 @@ public class Liche extends ClassModel {
                 Rarity.EPIC, ClassType.MAGE,
                 List.of(PassiveSkill.SPIRIT_DRAIN, PassiveSkill.HYDRA_BLOOD, PassiveSkill.UNBREAKABLE),
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
-                List.of(), 250, false,
+                List.of("arche_liche", "liche_eternelle", "seigneur_non_mort"), 400, false,
                 15, 50, 110, 60, 20, 50);
     }
 }

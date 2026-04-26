@@ -14,7 +14,7 @@ public class LameNoire extends ClassModel {
                 Rarity.RARE, ClassType.ASSASSIN,
                 List.of(PassiveSkill.RELENTLESS_HUNT, PassiveSkill.SOUL_STEALER, PassiveSkill.RAZOR_SENSES),
                 List.of(WeaponMastery.DAGGER),
-                List.of(), 250, false,
+                List.of("lame_abyssale", "epee_des_ombres", "trancheur_noir"), 400, false,
                 35, 10, 5, 10, 55, 40);
     }
 }

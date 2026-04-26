@@ -18,7 +18,7 @@ public class GoldBaron extends ClassModel {
                 ClassType.MERCHANT,
                 List.of(PassiveSkill.ARTISANAT, PassiveSkill.GOLDEN_TOUCH, PassiveSkill.CRITICAL_LUCK),
                 List.of(WeaponMastery.ANY),
-                List.of("prosperity_avatar"),
+                List.of("empereur_d_or"),
                 800,
                 false,
                 12, 12, 16, 12, 20, 90

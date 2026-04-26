@@ -14,7 +14,7 @@ public class Arbaletrier extends ClassModel {
                 Rarity.COMMON, ClassType.ARCHER,
                 List.of(PassiveSkill.PRESSURE_POINT, PassiveSkill.INSTINCTIVE_STRIKE, PassiveSkill.STONE_SKIN),
                 List.of(WeaponMastery.BOW),
-                List.of(), 120, false,
+                List.of("arbaletrier_d_elite", "arbalete_lourd", "tireur_de_siege"), 400, false,
                 8, 8, 2, 6, 12, 12);
     }
 }

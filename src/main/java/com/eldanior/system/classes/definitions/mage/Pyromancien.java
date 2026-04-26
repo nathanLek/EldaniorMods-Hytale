@@ -14,7 +14,7 @@ public class Pyromancien extends ClassModel {
                 Rarity.COMMON, ClassType.MAGE,
                 List.of(PassiveSkill.ARCANE_STRIKE, PassiveSkill.INSTINCTIVE_STRIKE, PassiveSkill.KEEN_SENSES),
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
-                List.of(), 120, false,
+                List.of("maitre_des_flammes", "infernal_mage", "brasier_vivant"), 400, false,
                 4, 4, 26, 4, 6, 6);
     }
 }

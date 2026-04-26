@@ -82,7 +82,7 @@ public class DignityAuraSystem extends EntityTickingSystem<EntityStore> {
         int selfDignity = selfData.getDignity();
 
         // === EMETTEUR : TRACKER ARME EN MAIN ===
-        // Mettre a jour le tracker pour que DignityAuraMobSystem sache si l'aura est active
+        // Mettre a jour le tracker pour savoir si l'aura est active
         if (selfDignity >= 5) {
             Inventory inv = player.getInventory();
             ItemStack heldItem = (inv != null) ? inv.getItemInHand() : null;

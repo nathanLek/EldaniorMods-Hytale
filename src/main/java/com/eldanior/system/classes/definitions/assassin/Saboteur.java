@@ -14,7 +14,7 @@ public class Saboteur extends ClassModel {
                 Rarity.COMMON, ClassType.ASSASSIN,
                 List.of(PassiveSkill.PRESSURE_POINT, PassiveSkill.STONE_SKIN, PassiveSkill.TIRELESS_BREATH),
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
-                List.of(), 120, false,
+                List.of("saboteur_expert", "demolisseur_furtif", "piege_vivant"), 400, false,
                 8, 8, 4, 6, 14, 10);
     }
 }

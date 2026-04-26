@@ -18,8 +18,8 @@ public class Prospecteur extends ClassModel {
                 ClassType.MERCHANT,
                 List.of(PassiveSkill.ARTISANAT, PassiveSkill.TREASURE_HUNTER, PassiveSkill.SURVIVAL_INSTINCT),
                 List.of(WeaponMastery.ANY),
-                List.of(),
-                120,
+                List.of("prospecteur_royal"),
+                400,
                 false,
                 4, 6, 4, 6, 8, 22
         );

@@ -18,8 +18,8 @@ public class Banquier extends ClassModel {
                 ClassType.MERCHANT,
                 List.of(PassiveSkill.ARTISANAT, PassiveSkill.GOLDEN_TOUCH, PassiveSkill.STEEL_CONSTITUTION),
                 List.of(WeaponMastery.ANY),
-                List.of(),
-                250,
+                List.of("banquier_imperial"),
+                400,
                 false,
                 10, 20, 20, 20, 10, 60
         );

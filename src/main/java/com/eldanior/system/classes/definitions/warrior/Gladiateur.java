@@ -19,8 +19,8 @@ public class Gladiateur extends ClassModel {
                 ClassType.WARRIOR,
                 List.of(PassiveSkill.SHARP_BLADE, PassiveSkill.RAZOR_SENSES, PassiveSkill.BATTLE_FRENZY),
                 List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD),
-                List.of(),
-                250,
+                List.of("champion_de_l_arene", "roi_gladiateur", "spartiate"),
+                400,
                 false,
                 50, 30, 4, 30, 50, 30
         );

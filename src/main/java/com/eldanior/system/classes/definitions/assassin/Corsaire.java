@@ -14,7 +14,7 @@ public class Corsaire extends ClassModel {
                 Rarity.RARE, ClassType.ASSASSIN,
                 List.of(PassiveSkill.CRITICAL_LUCK, PassiveSkill.SHARP_BLADE, PassiveSkill.BATTLE_FRENZY),
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
-                List.of(), 250, false,
+                List.of("capitaine_corsaire", "flibustier_noir", "roi_des_pirates"), 400, false,
                 30, 20, 5, 15, 45, 40);
     }
 }

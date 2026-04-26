@@ -124,5 +124,27 @@ Group {
         TextButton #CBtn4 { Text: "CHOISIR"; Anchor: (Height: 30); Style: (Default: (LabelStyle: (FontSize: 14, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 14, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1208(0.8); }
       }
     }
+
+    Group { Anchor: (Height: 10); }
+
+    Group #RerollRow {
+      Visible: false;
+      LayoutMode: Left;
+      Anchor: (Height: 40);
+
+      Group { FlexWeight: 1; }
+
+      Button #RerollButton {
+        Anchor: (Width: 260, Height: 36);
+        Style: (Default: (Background: #2a1a0a), Hovered: (Background: #3d2a14), Pressed: (Background: #1a0f05));
+
+        Label #RerollLabel {
+          Style: (HorizontalAlignment: Center, VerticalAlignment: Center, FontSize: 15, TextColor: #f0a500, RenderBold: true);
+          Text: "Relancer (2 restants)";
+        }
+      }
+
+      Group { FlexWeight: 1; }
+    }
   }
 }

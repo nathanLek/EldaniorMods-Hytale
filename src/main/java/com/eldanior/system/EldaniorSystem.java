@@ -21,7 +21,6 @@ import com.eldanior.system.titles.nobility.NobilityManager;
 import com.eldanior.system.titles.nobility.family.FamilyManager;
 import com.eldanior.system.titles.nobility.PlayerNameplateSystem;
 import com.eldanior.system.titles.nobility.systems.DignityAuraSystem;
-// import com.eldanior.system.titles.nobility.systems.DignityAuraMobSystem;
 import com.eldanior.system.config.Player.PlayerPositionTracker;
 import com.eldanior.system.config.configs.Mobs.*;
 import com.eldanior.system.config.configs.system.MasterySystem;
@@ -73,6 +72,7 @@ public class EldaniorSystem extends JavaPlugin {
     protected void shutdown() {
         LOGGER.atInfo().log(">>> ELDANIOR SYSTEM : SAUVEGARDE AVANT ARRET <<<");
         com.eldanior.system.persistence.PersistenceManager.saveAll();
+        com.eldanior.system.territory.ParcelManager.saveAll();
     }
 
     @Override
@@ -87,6 +87,7 @@ public class EldaniorSystem extends JavaPlugin {
         try {
             SkillManager.init();
             ClassManager.init();
+            com.eldanior.system.skills.interaction.StatsItemRegistry.init();
             TitleManager.init();
             NobilityManager.init();
             FamilyManager.init();
@@ -97,6 +98,8 @@ public class EldaniorSystem extends JavaPlugin {
             com.eldanior.system.duel.DuelManager.init();
             com.eldanior.system.quest.QuestManager.init();
 
+            com.eldanior.system.trade.TradeManager.init();
+            com.eldanior.system.territory.ParcelManager.init(this.getDataDirectory());
             com.eldanior.system.shop.ShopManager.init();
             com.eldanior.system.persistence.PersistenceManager.init(this.getDataDirectory());
             LOGGER.atInfo().log("[OK] Managers et Registres initialisés.");
@@ -187,6 +190,8 @@ public class EldaniorSystem extends JavaPlugin {
                     uuidField.setAccessible(true);
                     java.util.UUID uuid = (java.util.UUID) uuidField.get(event.getPlayerRef());
                     PartyManager.handleDisconnect(uuid);
+                    com.eldanior.system.trade.TradeManager.handleDisconnect(uuid);
+                    com.eldanior.system.territory.systems.ParcelRangeSystem.handleDisconnect(uuid);
                     com.eldanior.system.gui.tabs.QuestTab.cleanupPlayer(uuid);
                 } catch (Exception ignored) {}
             });
@@ -202,7 +207,12 @@ public class EldaniorSystem extends JavaPlugin {
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.duel.DuelProtectionSystem());
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.quest.QuestHudUpdateSystem());
             this.getEntityStoreRegistry().registerSystem(new DignityAuraSystem());
-            // this.getEntityStoreRegistry().registerSystem(new DignityAuraMobSystem());
+
+            // Territoire / Parcelles
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.territory.events.ParcelBreakBlockEvent());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.territory.events.ParcelPlaceBlockEvent());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.territory.events.ParcelInteractEvent());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.territory.systems.ParcelRangeSystem());
 
             LOGGER.atInfo().log("[OK] Systèmes ECS activés.");
         } catch (Exception e) {
@@ -211,7 +221,6 @@ public class EldaniorSystem extends JavaPlugin {
 
         // 6. Commandes
         this.getCommandRegistry().registerCommand(new ESCommand());
-        this.getCommandRegistry().registerCommand(new com.eldanior.system.Inventory.commands.InventoryCommand());
 
         LOGGER.atInfo().log(">>> ELDANIOR SYSTEM : SETUP TERMINÉ <<<");
     }

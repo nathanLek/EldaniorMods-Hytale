@@ -14,7 +14,7 @@ public class MaitreChasse extends ClassModel {
                 Rarity.RARE, ClassType.ARCHER,
                 List.of(PassiveSkill.MASTER_TRACKER, PassiveSkill.RELENTLESS_HUNT, PassiveSkill.RAZOR_SENSES),
                 List.of(WeaponMastery.BOW, WeaponMastery.DAGGER),
-                List.of(), 250, false,
+                List.of("chasseur_supreme", "maitre_des_traques", "nemrod_legendaire"), 400, false,
                 20, 20, 5, 15, 55, 45);
     }
 }

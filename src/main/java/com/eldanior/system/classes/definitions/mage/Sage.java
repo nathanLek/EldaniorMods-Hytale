@@ -14,7 +14,7 @@ public class Sage extends ClassModel {
                 Rarity.RARE, ClassType.MAGE,
                 List.of(PassiveSkill.STEEL_CONSTITUTION, PassiveSkill.EXPANDED_MIND, PassiveSkill.MARATHON_RUNNER),
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
-                List.of(), 250, false,
+                List.of("grand_sage", "erudit_arcane", "mentorant_supreme"), 400, false,
                 20, 30, 50, 30, 20, 20);
     }
 }

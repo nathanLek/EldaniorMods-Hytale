@@ -14,7 +14,7 @@ public class DieuDeLArc extends ClassModel {
                 Rarity.DIVINE, ClassType.ARCHER,
                 List.of(PassiveSkill.CREATOR_EDGE, PassiveSkill.CREATOR_PRECISION, PassiveSkill.FATE_DODGE),
                 List.of(WeaponMastery.BOW, WeaponMastery.DAGGER),
-                List.of(), 250, false,
+                List.of("demi_dieu_archer"), 400, false,
                 150, 120, 60, 80, 350, 350);
     }
 }

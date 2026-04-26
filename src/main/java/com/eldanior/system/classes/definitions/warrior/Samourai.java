@@ -19,8 +19,8 @@ public class Samourai extends ClassModel {
                 ClassType.WARRIOR,
                 List.of(PassiveSkill.RELENTLESS_HUNT, PassiveSkill.THUNDER_REFLEXES, PassiveSkill.GALE_STEP),
                 List.of(WeaponMastery.SWORD, WeaponMastery.DAGGER),
-                List.of(),
-                250,
+                List.of("kensei", "shogun", "ronin_legendaire"),
+                400,
                 false,
                 45, 25, 10, 20, 60, 40
         );

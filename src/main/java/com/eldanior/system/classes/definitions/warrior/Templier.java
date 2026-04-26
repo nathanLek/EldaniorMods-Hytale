@@ -19,8 +19,8 @@ public class Templier extends ClassModel {
                 ClassType.WARRIOR,
                 List.of(PassiveSkill.STEEL_RESOLVE, PassiveSkill.MARATHON_RUNNER, PassiveSkill.OVERFLOWING_LIFE),
                 List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD),
-                List.of(),
-                250,
+                List.of("grand_templier", "commandeur", "inquisiteur"),
+                400,
                 false,
                 50, 50, 4, 50, 60, 60
         );

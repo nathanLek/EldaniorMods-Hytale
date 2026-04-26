@@ -19,8 +19,8 @@ public class Croise extends ClassModel {
                 ClassType.WARRIOR,
                 List.of(PassiveSkill.STEEL_BODY, PassiveSkill.BURSTING_LIFE, PassiveSkill.MONSTER_SLAYER_GUARD),
                 List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD, WeaponMastery.MACE),
-                List.of(),
-                250,
+                List.of("croise_eternel", "saint_guerrier", "marteau_divin"),
+                400,
                 false,
                 80, 100, 40, 100, 40, 40
         );

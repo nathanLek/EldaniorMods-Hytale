@@ -14,7 +14,7 @@ public class Druide extends ClassModel {
                 Rarity.RARE, ClassType.MAGE,
                 List.of(PassiveSkill.VITAL_RECOVERY, PassiveSkill.ENRICHED_BLOOD, PassiveSkill.MANA_STREAM),
                 List.of(WeaponMastery.STAFF),
-                List.of(), 250, false,
+                List.of("arche_druide", "gardien_de_la_nature", "druide_primordial"), 400, false,
                 8, 40, 45, 30, 15, 20);
     }
 }

@@ -14,7 +14,7 @@ public class Magus extends ClassModel {
                 Rarity.EPIC, ClassType.MAGE,
                 List.of(PassiveSkill.BRILLIANT_MIND, PassiveSkill.ARCANE_DEVASTATION, PassiveSkill.MANA_FORTRESS),
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
-                List.of(), 250, false,
+                List.of("magus_supreme", "archi_magus", "magus_eternel"), 400, false,
                 20, 60, 120, 50, 30, 40);
     }
 }

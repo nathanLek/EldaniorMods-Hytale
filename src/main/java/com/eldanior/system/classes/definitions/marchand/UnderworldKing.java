@@ -18,7 +18,7 @@ public class UnderworldKing extends ClassModel {
                 ClassType.MERCHANT,
                 List.of(PassiveSkill.ARTISANAT, PassiveSkill.REALITY_DODGE, PassiveSkill.DEMIGOD_SWIFTNESS),
                 List.of(WeaponMastery.ANY),
-                null,
+                List.of("empereur_souterrain"),
                 800,
                 false,
                 200, 160, 300, 240, 700, 600

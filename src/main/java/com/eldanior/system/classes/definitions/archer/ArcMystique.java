@@ -14,7 +14,7 @@ public class ArcMystique extends ClassModel {
                 Rarity.RARE, ClassType.ARCHER,
                 List.of(PassiveSkill.SPELLBLADE, PassiveSkill.EXPANDED_MIND, PassiveSkill.MANA_STREAM),
                 List.of(WeaponMastery.BOW, WeaponMastery.SPELLBOOK),
-                List.of(), 250, false,
+                List.of("arc_runique", "sagittaire_arcane", "arc_des_etoiles"), 400, false,
                 15, 15, 35, 10, 40, 40);
     }
 }

@@ -19,8 +19,8 @@ public class LameMage extends ClassModel {
                 ClassType.WARRIOR,
                 List.of(PassiveSkill.EXPANDED_MIND, PassiveSkill.SPELLBLADE, PassiveSkill.MANA_STREAM),
                 List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD),
-                List.of(),
-                250,
+                List.of("enchanteur_de_guerre", "lame_arcanique", "chevalier_mystique"),
+                400,
                 false,
                 40, 40, 60, 30, 30, 20
         );

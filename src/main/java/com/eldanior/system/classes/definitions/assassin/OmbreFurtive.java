@@ -14,7 +14,7 @@ public class OmbreFurtive extends ClassModel {
                 Rarity.RARE, ClassType.ASSASSIN,
                 List.of(PassiveSkill.PHANTOM_DODGE, PassiveSkill.GALE_STEP, PassiveSkill.RELENTLESS_HUNT),
                 List.of(WeaponMastery.DAGGER),
-                List.of(), 250, false,
+                List.of("ombre_insaisissable", "spectre_silencieux", "nuit_vivante"), 400, false,
                 20, 15, 5, 10, 60, 45);
     }
 }

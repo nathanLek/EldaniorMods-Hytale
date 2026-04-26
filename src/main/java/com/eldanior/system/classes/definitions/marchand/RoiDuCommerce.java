@@ -18,8 +18,8 @@ public class RoiDuCommerce extends ClassModel {
                 ClassType.MERCHANT,
                 List.of(PassiveSkill.ARTISANAT, PassiveSkill.CREATOR_CONSTITUTION, PassiveSkill.CREATOR_STRIKE),
                 List.of(WeaponMastery.ANY),
-                List.of(),
-                250,
+                List.of("demi_commercant"),
+                400,
                 false,
                 250, 250, 350, 250, 250, 1500
         );

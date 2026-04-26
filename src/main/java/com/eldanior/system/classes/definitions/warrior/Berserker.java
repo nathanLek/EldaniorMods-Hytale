@@ -19,8 +19,8 @@ public class Berserker extends ClassModel {
                 ClassType.WARRIOR,
                 List.of(PassiveSkill.DEEP_SLASH, PassiveSkill.INSTINCTIVE_STRIKE, PassiveSkill.TIRELESS_BREATH),
                 List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD),
-                List.of(),
-                120,
+                List.of("berserker_enrage", "fureur_sanglante", "devastateur"),
+                400,
                 false,
                 28, 10, 2, 8, 12, 6
         );

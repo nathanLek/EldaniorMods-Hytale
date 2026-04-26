@@ -14,7 +14,7 @@ public class MaitreOmbre extends ClassModel {
                 Rarity.EPIC, ClassType.ASSASSIN,
                 List.of(PassiveSkill.SHADOW_DODGE, PassiveSkill.STORM_STEP, PassiveSkill.DEADLY_PRECISION),
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
-                List.of(), 250, false,
+                List.of("souverain_des_ombres", "ombre_eternelle", "void_walker"), 400, false,
                 50, 30, 10, 30, 100, 80);
     }
 }

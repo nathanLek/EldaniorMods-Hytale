@@ -19,8 +19,8 @@ public class Epeiste extends ClassModel {
                 ClassType.WARRIOR,
                 List.of(PassiveSkill.DUELIST_SWIFTNESS, PassiveSkill.INSTINCTIVE_STRIKE, PassiveSkill.WIND_STEP),
                 List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD),
-                List.of(),
-                250,
+                List.of("lame_celeste", "trancheur", "escrimeur_royal"),
+                400,
                 false,
                 24, 16, 4, 10, 16, 6
         );

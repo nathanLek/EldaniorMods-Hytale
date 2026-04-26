@@ -14,7 +14,7 @@ public class Sicaire extends ClassModel {
                 Rarity.COMMON, ClassType.ASSASSIN,
                 List.of(PassiveSkill.PRESSURE_POINT, PassiveSkill.KEEN_SENSES, PassiveSkill.DUELIST_SWIFTNESS),
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
-                List.of(), 120, false,
+                List.of("sicaire_elite", "lame_rapide", "assassin_royal"), 400, false,
                 10, 4, 2, 2, 18, 12);
     }
 }
