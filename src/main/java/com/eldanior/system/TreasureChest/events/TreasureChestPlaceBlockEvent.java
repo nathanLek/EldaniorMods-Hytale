@@ -30,12 +30,24 @@ public class TreasureChestPlaceBlockEvent extends EntityEventSystem<EntityStore,
     // Associe un itemId de coffre à l'ID de sa loot table (null = coffre custom vide)
     // Pour ajouter un nouveau type de coffre : AUTO_REGISTER_CHESTS.put("MonCoffre", "ma_loot_table");
     private static final Map<String, String> AUTO_REGISTER_CHESTS = new HashMap<>();
+    private static final Map<String, Integer> chestCounts = new java.util.concurrent.ConcurrentHashMap<>();
+
     static {
         AUTO_REGISTER_CHESTS.put("ChestTreasureDefault", "default");
         AUTO_REGISTER_CHESTS.put("ChestTreasureDungeonDefault", "donjon_common");
         AUTO_REGISTER_CHESTS.put("ChestTreasureGold", "gold");
         AUTO_REGISTER_CHESTS.put("ChestTreasureDungeon", "donjon");
         AUTO_REGISTER_CHESTS.put("ChestTreasureLegendary", "legendary");
+    }
+
+    public static int getChestCount(String lootTableId) {
+        return chestCounts.getOrDefault(lootTableId, 0);
+    }
+
+    public static int getTotalChestCount() {
+        int total = 0;
+        for (int c : chestCounts.values()) total += c;
+        return total;
     }
 
     public TreasureChestPlaceBlockEvent() {
@@ -69,6 +81,11 @@ public class TreasureChestPlaceBlockEvent extends EntityEventSystem<EntityStore,
     }
 
     private void autoRegisterChest(Player player, World world, Vector3i pos, String lootTableId) {
+        // Incrementer le compteur de coffres
+        if (lootTableId != null) {
+            chestCounts.merge(lootTableId, 1, Integer::sum);
+        }
+
         TreasureChestTemplate template = world.getChunkStore().getStore().getResource(EldaniorSystem.CHEST_TEMPLATE_TYPE);
         if (template == null) return;
 

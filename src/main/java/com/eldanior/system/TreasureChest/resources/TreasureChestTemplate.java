@@ -1,5 +1,6 @@
 package com.eldanior.system.TreasureChest.resources;
 
+import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.ExtraInfo;
 import com.hypixel.hytale.codec.KeyedCodec;
@@ -286,7 +287,7 @@ public class TreasureChestTemplate implements Resource<ChunkStore> {
                                 doc.getDouble("md").getValue(),
                                 doc.containsKey("meta") ? doc.getDocument("meta") : null
                         ));
-                    } catch (Exception ignored) {}
+                    } catch (Exception e) { EldaniorLogger.error("TreasureChestTemplate", e); }
                 }
             }
             return items;

@@ -4,6 +4,7 @@ import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.Leveling.utils.StatCalculator;
 import com.eldanior.system.classement.ClassementManager;
 import com.eldanior.system.config.Player.PlayerLevelData;
+import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.component.ArchetypeChunk;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.ComponentType;
@@ -156,7 +157,7 @@ public class PlayerLoginSystem extends EntityTickingSystem<EntityStore> {
                     return (UUID) m.invoke(player);
                 }
             }
-        } catch (Exception ignored) {}
+        } catch (Exception e) { EldaniorLogger.error("PlayerLoginSystem", e); }
         return null;
     }
 

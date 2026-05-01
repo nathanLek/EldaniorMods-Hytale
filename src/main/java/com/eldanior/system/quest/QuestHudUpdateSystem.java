@@ -4,6 +4,7 @@ import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.hud.CombinedHud;
 import com.eldanior.system.party.PartyManager;
+import com.eldanior.system.config.UUIDExtractor;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
@@ -13,7 +14,6 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
-import java.lang.reflect.Field;
 import java.util.UUID;
 
 /**
@@ -23,12 +23,6 @@ import java.util.UUID;
 public class QuestHudUpdateSystem extends EntityTickingSystem<EntityStore> {
 
     private int tickCounter = 0;
-    private static Field uuidField;
-    static {
-        try { uuidField = PlayerRef.class.getDeclaredField("uuid"); uuidField.setAccessible(true); }
-        catch (Exception ignored) {}
-    }
-
     @Override
     public void tick(float dt, int index, @Nonnull ArchetypeChunk<EntityStore> archetypeChunk,
                      @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
@@ -111,8 +105,7 @@ public class QuestHudUpdateSystem extends EntityTickingSystem<EntityStore> {
     }
 
     private UUID extractUUID(PlayerRef playerRef) {
-        if (uuidField == null) return null;
-        try { return (UUID) uuidField.get(playerRef); }
+        try { return UUIDExtractor.getUUID(playerRef); }
         catch (Exception e) { return null; }
     }
 

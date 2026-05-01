@@ -7,6 +7,8 @@ import com.eldanior.system.titles.nobility.NobilityManager;
 import com.eldanior.system.titles.nobility.NobilityRank;
 import com.eldanior.system.titles.church.ChurchManager;
 import com.eldanior.system.titles.church.ChurchRank;
+import com.eldanior.system.config.UUIDExtractor;
+import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
@@ -17,7 +19,6 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
-import java.lang.reflect.Field;
 import java.util.*;
 
 public class AdminTab {
@@ -77,7 +78,7 @@ public class AdminTab {
                                 (tData.isPK() ? " | PK" : ""));
                         }
                     }
-                } catch (Exception ignored) {}
+                } catch (Exception e) { EldaniorLogger.error("AdminTab", e); }
             }
         }
 
@@ -85,6 +86,31 @@ public class AdminTab {
 
     public static void selectPlayer(int index) {
         selectedPlayer = index;
+        pendingCommand = "";
+    }
+
+    public static void selectPlayerByName(String name) {
+        // Refresh cache and find the player
+        cachedPlayerNames.clear();
+        for (com.hypixel.hytale.server.core.universe.PlayerRef pRef : com.hypixel.hytale.server.core.universe.Universe.get().getPlayers()) {
+            if (cachedPlayerNames.size() >= MAX_PLAYER_SLOTS) break;
+            cachedPlayerNames.add(pRef.getUsername());
+        }
+        for (int i = 0; i < cachedPlayerNames.size(); i++) {
+            if (cachedPlayerNames.get(i).equalsIgnoreCase(name)) {
+                selectedPlayer = i;
+                pendingCommand = "";
+                return;
+            }
+        }
+        // Player not in first 8 — add them manually
+        if (cachedPlayerNames.size() < MAX_PLAYER_SLOTS) {
+            cachedPlayerNames.add(name);
+            selectedPlayer = cachedPlayerNames.size() - 1;
+        } else {
+            cachedPlayerNames.set(MAX_PLAYER_SLOTS - 1, name);
+            selectedPlayer = MAX_PLAYER_SLOTS - 1;
+        }
         pendingCommand = "";
     }
 
@@ -102,9 +128,16 @@ public class AdminTab {
 
     /**
      * Execute la commande pendante directement cote serveur.
+     * Verifie la permission admin avant execution.
      */
     public static boolean executePendingCommand(Ref<EntityStore> ref, Store<EntityStore> store) {
         if (pendingCommand == null || pendingCommand.isEmpty()) return false;
+
+        // Verification permission admin
+        Player adminCheck = store.getComponent(ref, Player.getComponentType());
+        if (adminCheck == null || !adminCheck.hasPermission(EldaniorLogger.ADMIN_PERMISSION)) {
+            return false;
+        }
         if (pendingCommand.contains("<") || pendingCommand.contains(">")) return false; // Non rempli
 
         Player player = store.getComponent(ref, Player.getComponentType());
@@ -222,11 +255,9 @@ public class AdminTab {
             data.setQuestData("");
             data.setCooldownData("");
             try {
-                java.lang.reflect.Field f = PlayerRef.class.getDeclaredField("uuid");
-                f.setAccessible(true);
-                java.util.UUID resetUUID = (java.util.UUID) f.get(targetRef);
+                                java.util.UUID resetUUID = UUIDExtractor.getUUID(targetRef);
                 com.eldanior.system.quest.QuestManager.getPlayerQuests(resetUUID).clear();
-            } catch (Exception ignored) {}
+            } catch (Exception e) { EldaniorLogger.error("AdminTab", e); }
 
             targetRef.sendMessage(Message.raw("§cPersonnage reinitialise (Niveau 1)."));
         });

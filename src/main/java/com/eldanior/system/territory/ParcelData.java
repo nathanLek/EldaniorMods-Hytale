@@ -1,5 +1,6 @@
 package com.eldanior.system.territory;
 
+import com.eldanior.system.config.EldaniorLogger;
 import java.util.*;
 
 public class ParcelData {
@@ -93,6 +94,8 @@ public class ParcelData {
     // ==================== PERMISSIONS ====================
 
     public boolean hasPermission(UUID playerUUID, ParcelPermission permission) {
+        if (playerUUID == null) return false;
+
         // Si en location, seul le locataire (et ses invites) ont les permissions
         // Le proprio original n'a PAS acces pendant la location
         if (isRented() && renterUUID != null) {
@@ -113,6 +116,14 @@ public class ParcelData {
         // Non-membre
         if (role == null) {
             if (!protectedByDefault) return true; // Zone ouverte
+
+            // Villes et Territoires : INTERACT et ENTER autorisés pour tous
+            // Seuls BUILD et BREAK sont bloqués
+            if (type == ParcelType.KINGDOM || type == ParcelType.TERRITORY || type == ParcelType.CITY) {
+                return permission == ParcelPermission.INTERACT || permission == ParcelPermission.ENTER;
+            }
+
+            // Plots/Housing/Room/Farm : check les permissions du role VISITOR
             if (permission == ParcelPermission.ENTER) {
                 Set<ParcelPermission> visitorPerms = rolePermissions.get(ParcelRole.VISITOR);
                 return visitorPerms != null && visitorPerms.contains(permission);
@@ -171,7 +182,7 @@ public class ParcelData {
             if (parts.length == 2) {
                 try {
                     members.put(UUID.fromString(parts[0]), ParcelRole.valueOf(parts[1]));
-                } catch (Exception ignored) {}
+                } catch (Exception e) { EldaniorLogger.error("ParcelData", e); }
             }
         }
     }
@@ -201,7 +212,7 @@ public class ParcelData {
                         for (String p : parts[1].split(",")) perms.add(ParcelPermission.valueOf(p));
                     }
                     rolePermissions.put(role, perms);
-                } catch (Exception ignored) {}
+                } catch (Exception e) { EldaniorLogger.error("ParcelData", e); }
             }
         }
     }

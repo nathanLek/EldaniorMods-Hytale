@@ -3,6 +3,8 @@ package com.eldanior.system.skills.interaction;
 import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.config.configs.CoinItemRegistry;
+import com.eldanior.system.config.UUIDExtractor;
+import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.protocol.InteractionType;
 import com.hypixel.hytale.server.core.Message;
@@ -14,8 +16,6 @@ import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Sim
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 
 import java.awt.*;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class ConsumableItemMoneyInteraction extends SimpleInteraction {
 
@@ -46,25 +46,20 @@ public class ConsumableItemMoneyInteraction extends SimpleInteraction {
             try {
                 var pRefComp = playerRef.getStore().getComponent(playerRef, com.hypixel.hytale.server.core.universe.PlayerRef.getComponentType());
                 if (pRefComp != null) {
-                    java.lang.reflect.Field f = com.hypixel.hytale.server.core.universe.PlayerRef.class.getDeclaredField("uuid");
-                    f.setAccessible(true);
-                    java.util.UUID uuid = (java.util.UUID) f.get(pRefComp);
+                                        java.util.UUID uuid = UUIDExtractor.getUUID(pRefComp);
                     com.eldanior.system.quest.QuestManager.onGoldGained(uuid, coinValue);
                     com.eldanior.system.Leveling.utils.NotificationHelper.sendNotification(pRefComp,
                             "<color:gold>+" + coinValue + " Or</color> <color:gray>| Solde : " + data.getMoney() + "</color>",
                             com.hypixel.hytale.protocol.packets.interface_.NotificationStyle.Success);
                 }
-            } catch (Exception ignored) {}
+            } catch (Exception e) { EldaniorLogger.error("ConsumableItemMoneyInteraction", e); }
 
             int slot = context.getHeldItemSlot();
-            new Timer().schedule(new TimerTask() {
-                @Override
-                public void run() {
+            EldaniorLogger.SCHEDULER.schedule(() -> {
                     try {
                         player.getInventory().getHotbar().removeItemStackFromSlot((short) slot, 1, true, false);
-                    } catch (Exception ignored) {}
-                }
-            }, 50);
+                    } catch (Exception e) { EldaniorLogger.error("ConsumableItemMoneyInteraction", e); }
+                }, 50, java.util.concurrent.TimeUnit.MILLISECONDS);
         });
     }
 }

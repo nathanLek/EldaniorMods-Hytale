@@ -1,0 +1,1592 @@
+$C = "../Common.ui";
+
+$C.@PageOverlay {}
+
+Group {
+    LayoutMode: Center;
+
+    Group #MainPanel {
+        Anchor: (Width: 1050, Height: 700);
+        Background: #0c1018(0.92);
+        LayoutMode: Left;
+
+        // =============================================
+        // SIDEBAR GAUCHE
+        // =============================================
+        Group #NavBar {
+            Anchor: (Width: 180);
+            Background: #1a0a0a(0.95);
+            LayoutMode: Top;
+            Padding: (Vertical: 10, Horizontal: 8);
+
+            Label {
+                Text: "ADMIN";
+                Style: (FontSize: 18, TextColor: #cc4444, RenderBold: true, LetterSpacing: 3, HorizontalAlignment: Center);
+                Anchor: (Height: 26);
+            }
+            Label {
+                Text: "Eldanior System";
+                Style: (FontSize: 9, TextColor: #555555, HorizontalAlignment: Center);
+                Anchor: (Height: 14);
+            }
+
+            Group { Anchor: (Height: 6); }
+            Group { Anchor: (Height: 1); Background: #cc4444(0.3); }
+            Group { Anchor: (Height: 8); }
+
+            TextButton #TabBtnDashboard {
+                Text: "DASHBOARD";
+                Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #cc4444, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center)));
+                Anchor: (Height: 28);
+                Background: #2a1a1a(0.6);
+            }
+
+            Group { Anchor: (Height: 3); }
+
+            TextButton #TabBtnPlayers {
+                Text: "PLAYERS";
+                Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #4CAF50, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center)));
+                Anchor: (Height: 28);
+                Background: #1a2a1a(0.6);
+            }
+
+            Group { Anchor: (Height: 3); }
+
+            TextButton #TabBtnWorld {
+                Text: "WORLD";
+                Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #D4AF37, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center)));
+                Anchor: (Height: 28);
+                Background: #2a2a1a(0.6);
+            }
+
+            Group { Anchor: (Height: 3); }
+
+            TextButton #TabBtnEconomy {
+                Text: "ECONOMIE";
+                Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #2196F3, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center)));
+                Anchor: (Height: 28);
+                Background: #1a1a2a(0.6);
+            }
+
+            Group { Anchor: (Height: 3); }
+
+            TextButton #TabBtnData {
+                Text: "DATA RESET";
+                Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #ff4444, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center)));
+                Anchor: (Height: 28);
+                Background: #3a0a0a(0.6);
+            }
+
+            Group { FlexWeight: 1; }
+            Group { Anchor: (Height: 1); Background: #333333(0.3); }
+            Group { Anchor: (Height: 3); }
+            Label {
+                Text: "OP ONLY";
+                Style: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center);
+                Anchor: (Height: 12);
+            }
+        }
+
+        // =============================================
+        // CONTENU PRINCIPAL
+        // =============================================
+        Group #ContentArea {
+            FlexWeight: 1;
+            Padding: (Horizontal: 14, Vertical: 10);
+            LayoutMode: TopScrolling;
+
+            // ===== TAB DASHBOARD =====
+            Group #TabDashboard {
+                LayoutMode: Top;
+                Visible: true;
+
+                Label { Text: "DASHBOARD"; Style: (FontSize: 16, TextColor: #cc4444, RenderBold: true, LetterSpacing: 3, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                Group { Anchor: (Height: 4); }
+                Group { Anchor: (Height: 1); Background: #cc4444(0.2); }
+                Group { Anchor: (Height: 8); }
+
+                // === SECTION: SERVEUR ===
+                Label { Text: "SERVEUR"; Style: (FontSize: 10, TextColor: #4CAF50, RenderBold: true, LetterSpacing: 1); Anchor: (Height: 14); }
+                Group { Anchor: (Height: 4); }
+                Group { LayoutMode: Left; Anchor: (Height: 44);
+                    Group { FlexWeight: 1; Anchor: (Height: 44); Background: #0d2a0d(0.6); LayoutMode: Top; Padding: (Horizontal: 8, Vertical: 4);
+                        Label { Text: "Joueurs Online"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 12); }
+                        Label #AdminStatPlayers { Text: "0"; Style: (FontSize: 20, TextColor: #4CAF50, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 26); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 44); Background: #1a1a2e(0.6); LayoutMode: Top; Padding: (Horizontal: 8, Vertical: 4);
+                        Label { Text: "Mobs"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 12); }
+                        Label #AdminStatMobs { Text: "0"; Style: (FontSize: 20, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 26); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 44); Background: #1a1a2e(0.6); LayoutMode: Top; Padding: (Horizontal: 8, Vertical: 4);
+                        Label { Text: "NPCs"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 12); }
+                        Label #AdminStatNpcs { Text: "0"; Style: (FontSize: 20, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 26); }
+                    }
+                }
+
+                Group { Anchor: (Height: 8); }
+
+                // === SECTION: CONTENU ===
+                Label { Text: "CONTENU DU JEU"; Style: (FontSize: 10, TextColor: #2196F3, RenderBold: true, LetterSpacing: 1); Anchor: (Height: 14); }
+                Group { Anchor: (Height: 4); }
+                Group { LayoutMode: Left; Anchor: (Height: 38);
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #1a1a2e(0.5); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Classes"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #AdminStatClasses { Text: "0"; Style: (FontSize: 16, TextColor: #2196F3, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #1a1a2e(0.5); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Skills"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #AdminStatSkills { Text: "0"; Style: (FontSize: 16, TextColor: #9C27B0, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #1a1a2e(0.5); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Titres"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #AdminStatTitres { Text: "0"; Style: (FontSize: 16, TextColor: #C8A2C8, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #1a1a2e(0.5); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Quetes"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #AdminStatQuetes { Text: "0"; Style: (FontSize: 16, TextColor: #FF9800, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                }
+
+                Group { Anchor: (Height: 8); }
+
+                // === SECTION: TERRITOIRE ===
+                Label { Text: "TERRITOIRE"; Style: (FontSize: 10, TextColor: #D4AF37, RenderBold: true, LetterSpacing: 1); Anchor: (Height: 14); }
+                Group { Anchor: (Height: 4); }
+                Group { LayoutMode: Left; Anchor: (Height: 38);
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #2a2a1a(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Royaumes"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatKingdoms { Text: "0"; Style: (FontSize: 16, TextColor: #cc4444, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #2a2a1a(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Territoires"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatTerritories { Text: "0"; Style: (FontSize: 16, TextColor: #FFD700, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #2a2a1a(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Villes"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatCities { Text: "0"; Style: (FontSize: 16, TextColor: #2196F3, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #2a2a1a(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Parcelles"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatPlots { Text: "0"; Style: (FontSize: 16, TextColor: #4CAF50, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #2a2a1a(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Logements"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatHousing { Text: "0"; Style: (FontSize: 16, TextColor: #9C27B0, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #2a2a1a(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Fermes"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatFarms { Text: "0"; Style: (FontSize: 16, TextColor: #8BC34A, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                }
+
+                Group { Anchor: (Height: 8); }
+
+                // === SECTION: ECONOMIE & SOCIAL ===
+                Label { Text: "ECONOMIE & SOCIAL"; Style: (FontSize: 10, TextColor: #D4AF37, RenderBold: true, LetterSpacing: 1); Anchor: (Height: 14); }
+                Group { Anchor: (Height: 4); }
+                Group { LayoutMode: Left; Anchor: (Height: 38);
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #1a1a2e(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Guildes"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatGuilds { Text: "0"; Style: (FontSize: 16, TextColor: #4CAF50, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #1a1a2e(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Familles"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatFamilies { Text: "0/9"; Style: (FontSize: 16, TextColor: #C8A2C8, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #1a1a2e(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Shop"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatShop { Text: "0"; Style: (FontSize: 16, TextColor: #D4AF37, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #2a0d0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Black Market"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatBlackMarket { Text: "0"; Style: (FontSize: 16, TextColor: #cc4444, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #1a1a2e(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "PvP Zones"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatPvp { Text: "0"; Style: (FontSize: 16, TextColor: #cc4444, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                }
+
+                Group { Anchor: (Height: 8); }
+
+                // === SECTION: NOBLESSE ===
+                Label { Text: "NOBLESSE"; Style: (FontSize: 10, TextColor: #C8A2C8, RenderBold: true, LetterSpacing: 1); Anchor: (Height: 14); }
+                Group { Anchor: (Height: 4); }
+                Group { LayoutMode: Left; Anchor: (Height: 38);
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #1a0d1a(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Roi"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatKing { Text: "Aucun"; Style: (FontSize: 11, TextColor: #cc4444, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #1a0d1a(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Marquis"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatMarquis { Text: "0"; Style: (FontSize: 16, TextColor: #FFD700, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #1a0d1a(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Ducs"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatDucs { Text: "0"; Style: (FontSize: 16, TextColor: #9C27B0, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #1a0d1a(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Comtes"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatComtes { Text: "0"; Style: (FontSize: 16, TextColor: #2196F3, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #1a0d1a(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Barons"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatBarons { Text: "0"; Style: (FontSize: 16, TextColor: #4CAF50, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #1a0d1a(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Chevaliers"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatChevaliers { Text: "0"; Style: (FontSize: 16, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                }
+
+                Group { Anchor: (Height: 8); }
+
+                // === SECTION: EGLISE ===
+                Label { Text: "EGLISE"; Style: (FontSize: 10, TextColor: #7EB8DA, RenderBold: true, LetterSpacing: 1); Anchor: (Height: 14); }
+                Group { Anchor: (Height: 4); }
+                Group { LayoutMode: Left; Anchor: (Height: 38);
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #0d1a2a(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Pape"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatPope { Text: "Aucun"; Style: (FontSize: 11, TextColor: #FFD700, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #0d1a2a(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Cardinaux"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatCardinals { Text: "0"; Style: (FontSize: 16, TextColor: #cc4444, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #0d1a2a(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Archeveques"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatArcheveques { Text: "0"; Style: (FontSize: 16, TextColor: #2196F3, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #0d1a2a(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Pretres"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatPretres { Text: "0"; Style: (FontSize: 16, TextColor: #4CAF50, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                }
+
+                Group { Anchor: (Height: 8); }
+
+                // === SECTION: ARGENT EN CIRCULATION ===
+                Label { Text: "ARGENT EN CIRCULATION"; Style: (FontSize: 10, TextColor: #D4AF37, RenderBold: true, LetterSpacing: 1); Anchor: (Height: 14); }
+                Group { Anchor: (Height: 4); }
+                Group { LayoutMode: Left; Anchor: (Height: 44);
+                    Group { FlexWeight: 1; Anchor: (Height: 44); Background: #2a2a0d(0.5); LayoutMode: Top; Padding: (Horizontal: 8, Vertical: 4);
+                        Label { Text: "Total Serveur"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 12); }
+                        Label #DStatTotalMoney { Text: "0"; Style: (FontSize: 18, TextColor: #FFD700, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 26); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 44); Background: #1a1a0d(0.5); LayoutMode: Top; Padding: (Horizontal: 8, Vertical: 4);
+                        Label { Text: "Joueurs"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 12); }
+                        Label #DStatPlayerMoney { Text: "0"; Style: (FontSize: 16, TextColor: #D4AF37, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 26); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 44); Background: #1a1a0d(0.5); LayoutMode: Top; Padding: (Horizontal: 8, Vertical: 4);
+                        Label { Text: "Guildes"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 12); }
+                        Label #DStatGuildMoney { Text: "0"; Style: (FontSize: 16, TextColor: #4CAF50, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 26); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 44); Background: #1a1a0d(0.5); LayoutMode: Top; Padding: (Horizontal: 8, Vertical: 4);
+                        Label { Text: "Tresoreries"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 12); }
+                        Label #DStatParcelMoney { Text: "0"; Style: (FontSize: 16, TextColor: #2196F3, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 26); }
+                    }
+                }
+
+                Group { Anchor: (Height: 8); }
+
+                // === SECTION: MOBS & QUETES ===
+                Label { Text: "MOBS & QUETES"; Style: (FontSize: 10, TextColor: #FF9800, RenderBold: true, LetterSpacing: 1); Anchor: (Height: 14); }
+                Group { Anchor: (Height: 4); }
+                Group { LayoutMode: Left; Anchor: (Height: 34);
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #2a1a0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Familles Mobs"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatMobFamilies { Text: "22"; Style: (FontSize: 14, TextColor: #FF9800, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #2a1a0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Total Quetes"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatQuestsTotal { Text: "122"; Style: (FontSize: 14, TextColor: #FF9800, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #2a1a0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "HP/Lvl Mob"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatMobHp { Text: "+10"; Style: (FontSize: 14, TextColor: #4CAF50, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #2a1a0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Dmg/Lvl Mob"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatMobDmg { Text: "+0.5"; Style: (FontSize: 14, TextColor: #cc4444, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #2a1a0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Groupes actifs"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatParties { Text: "0"; Style: (FontSize: 14, TextColor: #2196F3, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #2a1a0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Max Groupe"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatMaxParty { Text: "5"; Style: (FontSize: 14, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #2a1a0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Max Rerolls"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatMaxRerolls { Text: "2"; Style: (FontSize: 14, TextColor: #C8A2C8, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                }
+
+                Group { Anchor: (Height: 8); }
+
+                // === SECTION: COMBAT & GAMEPLAY ===
+                Label { Text: "COMBAT & GAMEPLAY"; Style: (FontSize: 10, TextColor: #cc4444, RenderBold: true, LetterSpacing: 1); Anchor: (Height: 14); }
+                Group { Anchor: (Height: 4); }
+                Group { LayoutMode: Left; Anchor: (Height: 34);
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #2a1a1a(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Level Max"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatMaxLv { Text: "999"; Style: (FontSize: 14, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #2a1a1a(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Dodge Min"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatDodgeMin { Text: "2%"; Style: (FontSize: 14, TextColor: #4CAF50, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #2a1a1a(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Dodge Cap"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatDodgeCap { Text: "80%"; Style: (FontSize: 14, TextColor: #2196F3, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #2a1a1a(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Crit Cap"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatCritCap { Text: "80%"; Style: (FontSize: 14, TextColor: #FF9800, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #2a1a1a(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "XP Multi Cap"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatXpCap { Text: "2.0x"; Style: (FontSize: 14, TextColor: #D4AF37, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #2a1a1a(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Mort PvE"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatDeathPve { Text: "-10%"; Style: (FontSize: 14, TextColor: #cc4444, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #2a1a1a(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Mort PvP"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatDeathPvp { Text: "-20%"; Style: (FontSize: 14, TextColor: #cc4444, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                }
+
+                Group { Anchor: (Height: 8); }
+
+                // === SECTION: STATS JOUEUR ===
+                Label { Text: "STATS JOUEUR (RATIOS)"; Style: (FontSize: 10, TextColor: #4CAF50, RenderBold: true, LetterSpacing: 1); Anchor: (Height: 14); }
+                Group { Anchor: (Height: 4); }
+                Group { LayoutMode: Left; Anchor: (Height: 34);
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #0d2a0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Pts/Lvl"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatPtsLvl { Text: "+3"; Style: (FontSize: 14, TextColor: #4CAF50, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #0d2a0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "STR>Dmg"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatStrRatio { Text: "x0.072"; Style: (FontSize: 12, TextColor: #cc4444, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #0d2a0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "END>Def"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatEndRatio { Text: "x0.05"; Style: (FontSize: 12, TextColor: #2196F3, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #0d2a0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "INT>Mana"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatIntRatio { Text: "x3.33"; Style: (FontSize: 12, TextColor: #9C27B0, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #0d2a0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "AGL>Spd"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatAglSpd { Text: "x0.0005"; Style: (FontSize: 11, TextColor: #FF9800, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #0d2a0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "AGL>Dodge"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatAglDodge { Text: "x0.5%"; Style: (FontSize: 12, TextColor: #FF9800, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                }
+                Group { Anchor: (Height: 3); }
+                Group { LayoutMode: Left; Anchor: (Height: 34);
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #0d2a0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "LCK>Crit"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatLckCrit { Text: "x0.05%"; Style: (FontSize: 12, TextColor: #FFD700, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #0d2a0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "LCK>Loot"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatLckLoot { Text: "x0.005%"; Style: (FontSize: 11, TextColor: #FFD700, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #0d2a0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Regen HP"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatRegenHp { Text: "0.028%/s"; Style: (FontSize: 11, TextColor: #4CAF50, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #0d2a0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Regen Mana"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatRegenMana { Text: "0.019%/s"; Style: (FontSize: 11, TextColor: #9C27B0, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #0d2a0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Crit Multi"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatCritMulti { Text: "x2.0"; Style: (FontSize: 14, TextColor: #cc4444, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #0d2a0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Or de base"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatBaseGold { Text: "1000"; Style: (FontSize: 14, TextColor: #D4AF37, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                }
+
+                Group { Anchor: (Height: 8); }
+
+                // === SECTION: CLASSES & SKILLS ===
+                Label { Text: "CLASSES & SKILLS"; Style: (FontSize: 10, TextColor: #2196F3, RenderBold: true, LetterSpacing: 1); Anchor: (Height: 14); }
+                Group { Anchor: (Height: 4); }
+                Group { LayoutMode: Left; Anchor: (Height: 34);
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #1a1a2e(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Evo Tier 1"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatEvoT1 { Text: "Lv180"; Style: (FontSize: 14, TextColor: #4CAF50, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #1a1a2e(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Evo Tier 2"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatEvoT2 { Text: "Lv400"; Style: (FontSize: 14, TextColor: #FF9800, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #1a1a2e(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Effets Visuels"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatEffects { Text: "214"; Style: (FontSize: 14, TextColor: #9C27B0, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #1a1a2e(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Armes"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatWeapons { Text: "13"; Style: (FontSize: 14, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #1a1a2e(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Consommables"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatItems { Text: "35"; Style: (FontSize: 14, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                }
+
+                Group { Anchor: (Height: 8); }
+
+                // === SECTION: ECONOMIE PARAMETRES ===
+                Label { Text: "PARAMETRES ECONOMIE"; Style: (FontSize: 10, TextColor: #D4AF37, RenderBold: true, LetterSpacing: 1); Anchor: (Height: 14); }
+                Group { Anchor: (Height: 4); }
+                Group { LayoutMode: Left; Anchor: (Height: 34);
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #2a2a0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Taxe"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatTax { Text: "12%"; Style: (FontSize: 14, TextColor: #D4AF37, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #2a2a0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Or de depart"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatStartGold { Text: "1000"; Style: (FontSize: 14, TextColor: #D4AF37, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #2a2a0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Max listings"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatMaxList { Text: "3/j"; Style: (FontSize: 14, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #2a2a0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Dist. Trade"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatTradeDist { Text: "15 blocs"; Style: (FontSize: 12, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #2a2a0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Slots Trade"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatTradeSlots { Text: "12"; Style: (FontSize: 14, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                }
+
+                Group { Anchor: (Height: 8); }
+
+                // === SECTION: SYSTEME ===
+                Label { Text: "SYSTEME"; Style: (FontSize: 10, TextColor: #667788, RenderBold: true, LetterSpacing: 1); Anchor: (Height: 14); }
+                Group { Anchor: (Height: 4); }
+                Group { LayoutMode: Left; Anchor: (Height: 34);
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #1a1a1a(0.5); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Autosave"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatAutosave { Text: "5 min"; Style: (FontSize: 14, TextColor: #4CAF50, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #1a1a1a(0.5); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Daily Quetes"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatDailyQ { Text: "5/jour"; Style: (FontSize: 14, TextColor: #FF9800, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #1a1a1a(0.5); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Familles"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatFamilyTotal { Text: "9"; Style: (FontSize: 14, TextColor: #C8A2C8, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #1a1a1a(0.5); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Coffre Perso"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatChestSlots { Text: "45 slots"; Style: (FontSize: 12, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #1a1a1a(0.5); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Duree Location"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatRentDays { Text: "7 jours"; Style: (FontSize: 12, TextColor: #2196F3, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #1a1a1a(0.5); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Total Parcelles"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatTotalParcels { Text: "0"; Style: (FontSize: 14, TextColor: #D4AF37, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                }
+
+                Group { Anchor: (Height: 8); }
+
+                // === SECTION: COFFRES AU TRESOR ===
+                Label { Text: "COFFRES AU TRESOR"; Style: (FontSize: 10, TextColor: #FF9800, RenderBold: true, LetterSpacing: 1); Anchor: (Height: 14); }
+                Group { Anchor: (Height: 4); }
+                Group { LayoutMode: Left; Anchor: (Height: 38);
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #2a1a0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Total Coffres"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatChestsTotal { Text: "0"; Style: (FontSize: 16, TextColor: #FF9800, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #2a1a0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Donjon"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatChestsDonjon { Text: "0"; Style: (FontSize: 16, TextColor: #9C27B0, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #2a1a0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Default"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatChestsDefault { Text: "0"; Style: (FontSize: 16, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #2a1a0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Legendaire"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatChestsLegend { Text: "0"; Style: (FontSize: 16, TextColor: #FFD700, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #2a1a0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Or"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatChestsOr { Text: "0"; Style: (FontSize: 16, TextColor: #D4AF37, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                }
+
+                Group { Anchor: (Height: 8); }
+
+                // === SECTION: PVP ===
+                Label { Text: "PVP"; Style: (FontSize: 10, TextColor: #cc4444, RenderBold: true, LetterSpacing: 1); Anchor: (Height: 14); }
+                Group { Anchor: (Height: 4); }
+                Group { LayoutMode: Left; Anchor: (Height: 38);
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #2a0d0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Joueurs PK"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatPKCount { Text: "0"; Style: (FontSize: 16, TextColor: #cc4444, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #2a0d0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Villes PvP"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatPvpCities { Text: "0"; Style: (FontSize: 16, TextColor: #FF9800, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #2a0d0d(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Duels actifs"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatDuelsActive { Text: "0"; Style: (FontSize: 16, TextColor: #FF9800, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                }
+            }
+
+            // ===== TAB PLAYERS =====
+            Group #TabPlayers {
+                LayoutMode: Top;
+                Visible: false;
+
+                Label { Text: "GESTION JOUEURS"; Style: (FontSize: 14, TextColor: #4CAF50, RenderBold: true, LetterSpacing: 1, HorizontalAlignment: Center); Anchor: (Height: 20); }
+                Group { Anchor: (Height: 4); }
+                Group { Anchor: (Height: 1); Background: #4CAF50(0.2); }
+                Group { Anchor: (Height: 6); }
+
+                // Pagination
+                Group { LayoutMode: Left; Anchor: (Height: 26);
+                    Label { Text: "JOUEURS ONLINE"; Style: (FontSize: 10, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                    TextButton #PBtnPrev { Text: "< PREV"; Anchor: (Width: 65, Height: 22); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #aabbcc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.6); }
+                    Group { Anchor: (Width: 4); }
+                    Label #PPageInfo { Text: "Page 1/1"; Style: (FontSize: 10, TextColor: #8899aa, VerticalAlignment: Center, HorizontalAlignment: Center); Anchor: (Width: 70); }
+                    Group { Anchor: (Width: 4); }
+                    TextButton #PBtnNext { Text: "NEXT >"; Anchor: (Width: 65, Height: 22); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #aabbcc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.6); }
+                }
+                Group { Anchor: (Height: 4); }
+
+                Group #PSlot0 { Visible: false; LayoutMode: Top; Anchor: (Height: 90); Background: #151b28(0.5); Padding: (Horizontal: 10, Vertical: 6);
+                    // Ligne 1 : Nom + Info
+                    Group { LayoutMode: Left; Anchor: (Height: 22);
+                        Label #PName0 { Text: ""; Style: (FontSize: 14, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                        Label #PInfo0 { Text: ""; Style: (FontSize: 11, TextColor: #8899aa, VerticalAlignment: Center, HorizontalAlignment: End); Anchor: (Width: 200); }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 2 : Stats rapides
+                    Group { LayoutMode: Left; Anchor: (Height: 16);
+                        Label #PStat0 { Text: ""; Style: (FontSize: 10, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 3 : Boutons
+                    Group { LayoutMode: Left; Anchor: (Height: 28);
+                        TextButton #PPK0 { Text: "TOGGLE PK"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PRst0 { Text: "RESET"; Anchor: (Width: 60, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #FF9800, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a0d(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PXP0 { Text: "+10K XP"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PGold0 { Text: "+10K Or"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a2a1a(0.7); }
+                        Group { FlexWeight: 1; }
+                        TextButton #PManage0 { Text: "GERER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #2196F3, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1a2a(0.8); }
+                    }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #PSlot1 { Visible: false; LayoutMode: Top; Anchor: (Height: 90); Background: #121824(0.5); Padding: (Horizontal: 10, Vertical: 6);
+                    // Ligne 1 : Nom + Info
+                    Group { LayoutMode: Left; Anchor: (Height: 22);
+                        Label #PName1 { Text: ""; Style: (FontSize: 14, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                        Label #PInfo1 { Text: ""; Style: (FontSize: 11, TextColor: #8899aa, VerticalAlignment: Center, HorizontalAlignment: End); Anchor: (Width: 200); }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 2 : Stats rapides
+                    Group { LayoutMode: Left; Anchor: (Height: 16);
+                        Label #PStat1 { Text: ""; Style: (FontSize: 10, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 3 : Boutons
+                    Group { LayoutMode: Left; Anchor: (Height: 28);
+                        TextButton #PPK1 { Text: "TOGGLE PK"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PRst1 { Text: "RESET"; Anchor: (Width: 60, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #FF9800, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a0d(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PXP1 { Text: "+10K XP"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PGold1 { Text: "+10K Or"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a2a1a(0.7); }
+                        Group { FlexWeight: 1; }
+                        TextButton #PManage1 { Text: "GERER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #2196F3, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1a2a(0.8); }
+                    }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #PSlot2 { Visible: false; LayoutMode: Top; Anchor: (Height: 90); Background: #151b28(0.5); Padding: (Horizontal: 10, Vertical: 6);
+                    // Ligne 1 : Nom + Info
+                    Group { LayoutMode: Left; Anchor: (Height: 22);
+                        Label #PName2 { Text: ""; Style: (FontSize: 14, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                        Label #PInfo2 { Text: ""; Style: (FontSize: 11, TextColor: #8899aa, VerticalAlignment: Center, HorizontalAlignment: End); Anchor: (Width: 200); }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 2 : Stats rapides
+                    Group { LayoutMode: Left; Anchor: (Height: 16);
+                        Label #PStat2 { Text: ""; Style: (FontSize: 10, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 3 : Boutons
+                    Group { LayoutMode: Left; Anchor: (Height: 28);
+                        TextButton #PPK2 { Text: "TOGGLE PK"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PRst2 { Text: "RESET"; Anchor: (Width: 60, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #FF9800, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a0d(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PXP2 { Text: "+10K XP"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PGold2 { Text: "+10K Or"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a2a1a(0.7); }
+                        Group { FlexWeight: 1; }
+                        TextButton #PManage2 { Text: "GERER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #2196F3, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1a2a(0.8); }
+                    }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #PSlot3 { Visible: false; LayoutMode: Top; Anchor: (Height: 90); Background: #121824(0.5); Padding: (Horizontal: 10, Vertical: 6);
+                    // Ligne 1 : Nom + Info
+                    Group { LayoutMode: Left; Anchor: (Height: 22);
+                        Label #PName3 { Text: ""; Style: (FontSize: 14, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                        Label #PInfo3 { Text: ""; Style: (FontSize: 11, TextColor: #8899aa, VerticalAlignment: Center, HorizontalAlignment: End); Anchor: (Width: 200); }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 2 : Stats rapides
+                    Group { LayoutMode: Left; Anchor: (Height: 16);
+                        Label #PStat3 { Text: ""; Style: (FontSize: 10, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 3 : Boutons
+                    Group { LayoutMode: Left; Anchor: (Height: 28);
+                        TextButton #PPK3 { Text: "TOGGLE PK"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PRst3 { Text: "RESET"; Anchor: (Width: 60, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #FF9800, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a0d(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PXP3 { Text: "+10K XP"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PGold3 { Text: "+10K Or"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a2a1a(0.7); }
+                        Group { FlexWeight: 1; }
+                        TextButton #PManage3 { Text: "GERER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #2196F3, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1a2a(0.8); }
+                    }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #PSlot4 { Visible: false; LayoutMode: Top; Anchor: (Height: 90); Background: #151b28(0.5); Padding: (Horizontal: 10, Vertical: 6);
+                    // Ligne 1 : Nom + Info
+                    Group { LayoutMode: Left; Anchor: (Height: 22);
+                        Label #PName4 { Text: ""; Style: (FontSize: 14, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                        Label #PInfo4 { Text: ""; Style: (FontSize: 11, TextColor: #8899aa, VerticalAlignment: Center, HorizontalAlignment: End); Anchor: (Width: 200); }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 2 : Stats rapides
+                    Group { LayoutMode: Left; Anchor: (Height: 16);
+                        Label #PStat4 { Text: ""; Style: (FontSize: 10, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 3 : Boutons
+                    Group { LayoutMode: Left; Anchor: (Height: 28);
+                        TextButton #PPK4 { Text: "TOGGLE PK"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PRst4 { Text: "RESET"; Anchor: (Width: 60, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #FF9800, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a0d(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PXP4 { Text: "+10K XP"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PGold4 { Text: "+10K Or"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a2a1a(0.7); }
+                        Group { FlexWeight: 1; }
+                        TextButton #PManage4 { Text: "GERER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #2196F3, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1a2a(0.8); }
+                    }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #PSlot5 { Visible: false; LayoutMode: Top; Anchor: (Height: 90); Background: #121824(0.5); Padding: (Horizontal: 10, Vertical: 6);
+                    // Ligne 1 : Nom + Info
+                    Group { LayoutMode: Left; Anchor: (Height: 22);
+                        Label #PName5 { Text: ""; Style: (FontSize: 14, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                        Label #PInfo5 { Text: ""; Style: (FontSize: 11, TextColor: #8899aa, VerticalAlignment: Center, HorizontalAlignment: End); Anchor: (Width: 200); }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 2 : Stats rapides
+                    Group { LayoutMode: Left; Anchor: (Height: 16);
+                        Label #PStat5 { Text: ""; Style: (FontSize: 10, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 3 : Boutons
+                    Group { LayoutMode: Left; Anchor: (Height: 28);
+                        TextButton #PPK5 { Text: "TOGGLE PK"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PRst5 { Text: "RESET"; Anchor: (Width: 60, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #FF9800, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a0d(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PXP5 { Text: "+10K XP"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PGold5 { Text: "+10K Or"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a2a1a(0.7); }
+                        Group { FlexWeight: 1; }
+                        TextButton #PManage5 { Text: "GERER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #2196F3, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1a2a(0.8); }
+                    }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #PSlot6 { Visible: false; LayoutMode: Top; Anchor: (Height: 90); Background: #151b28(0.5); Padding: (Horizontal: 10, Vertical: 6);
+                    // Ligne 1 : Nom + Info
+                    Group { LayoutMode: Left; Anchor: (Height: 22);
+                        Label #PName6 { Text: ""; Style: (FontSize: 14, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                        Label #PInfo6 { Text: ""; Style: (FontSize: 11, TextColor: #8899aa, VerticalAlignment: Center, HorizontalAlignment: End); Anchor: (Width: 200); }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 2 : Stats rapides
+                    Group { LayoutMode: Left; Anchor: (Height: 16);
+                        Label #PStat6 { Text: ""; Style: (FontSize: 10, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 3 : Boutons
+                    Group { LayoutMode: Left; Anchor: (Height: 28);
+                        TextButton #PPK6 { Text: "TOGGLE PK"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PRst6 { Text: "RESET"; Anchor: (Width: 60, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #FF9800, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a0d(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PXP6 { Text: "+10K XP"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PGold6 { Text: "+10K Or"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a2a1a(0.7); }
+                        Group { FlexWeight: 1; }
+                        TextButton #PManage6 { Text: "GERER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #2196F3, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1a2a(0.8); }
+                    }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #PSlot7 { Visible: false; LayoutMode: Top; Anchor: (Height: 90); Background: #121824(0.5); Padding: (Horizontal: 10, Vertical: 6);
+                    // Ligne 1 : Nom + Info
+                    Group { LayoutMode: Left; Anchor: (Height: 22);
+                        Label #PName7 { Text: ""; Style: (FontSize: 14, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                        Label #PInfo7 { Text: ""; Style: (FontSize: 11, TextColor: #8899aa, VerticalAlignment: Center, HorizontalAlignment: End); Anchor: (Width: 200); }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 2 : Stats rapides
+                    Group { LayoutMode: Left; Anchor: (Height: 16);
+                        Label #PStat7 { Text: ""; Style: (FontSize: 10, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 3 : Boutons
+                    Group { LayoutMode: Left; Anchor: (Height: 28);
+                        TextButton #PPK7 { Text: "TOGGLE PK"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PRst7 { Text: "RESET"; Anchor: (Width: 60, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #FF9800, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a0d(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PXP7 { Text: "+10K XP"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PGold7 { Text: "+10K Or"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a2a1a(0.7); }
+                        Group { FlexWeight: 1; }
+                        TextButton #PManage7 { Text: "GERER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #2196F3, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1a2a(0.8); }
+                    }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #PSlot8 { Visible: false; LayoutMode: Top; Anchor: (Height: 90); Background: #151b28(0.5); Padding: (Horizontal: 10, Vertical: 6);
+                    // Ligne 1 : Nom + Info
+                    Group { LayoutMode: Left; Anchor: (Height: 22);
+                        Label #PName8 { Text: ""; Style: (FontSize: 14, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                        Label #PInfo8 { Text: ""; Style: (FontSize: 11, TextColor: #8899aa, VerticalAlignment: Center, HorizontalAlignment: End); Anchor: (Width: 200); }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 2 : Stats rapides
+                    Group { LayoutMode: Left; Anchor: (Height: 16);
+                        Label #PStat8 { Text: ""; Style: (FontSize: 10, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 3 : Boutons
+                    Group { LayoutMode: Left; Anchor: (Height: 28);
+                        TextButton #PPK8 { Text: "TOGGLE PK"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PRst8 { Text: "RESET"; Anchor: (Width: 60, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #FF9800, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a0d(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PXP8 { Text: "+10K XP"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PGold8 { Text: "+10K Or"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a2a1a(0.7); }
+                        Group { FlexWeight: 1; }
+                        TextButton #PManage8 { Text: "GERER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #2196F3, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1a2a(0.8); }
+                    }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #PSlot9 { Visible: false; LayoutMode: Top; Anchor: (Height: 90); Background: #121824(0.5); Padding: (Horizontal: 10, Vertical: 6);
+                    // Ligne 1 : Nom + Info
+                    Group { LayoutMode: Left; Anchor: (Height: 22);
+                        Label #PName9 { Text: ""; Style: (FontSize: 14, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                        Label #PInfo9 { Text: ""; Style: (FontSize: 11, TextColor: #8899aa, VerticalAlignment: Center, HorizontalAlignment: End); Anchor: (Width: 200); }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 2 : Stats rapides
+                    Group { LayoutMode: Left; Anchor: (Height: 16);
+                        Label #PStat9 { Text: ""; Style: (FontSize: 10, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 3 : Boutons
+                    Group { LayoutMode: Left; Anchor: (Height: 28);
+                        TextButton #PPK9 { Text: "TOGGLE PK"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PRst9 { Text: "RESET"; Anchor: (Width: 60, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #FF9800, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a0d(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PXP9 { Text: "+10K XP"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PGold9 { Text: "+10K Or"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a2a1a(0.7); }
+                        Group { FlexWeight: 1; }
+                        TextButton #PManage9 { Text: "GERER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #2196F3, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1a2a(0.8); }
+                    }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #PSlot10 { Visible: false; LayoutMode: Top; Anchor: (Height: 90); Background: #151b28(0.5); Padding: (Horizontal: 10, Vertical: 6);
+                    // Ligne 1 : Nom + Info
+                    Group { LayoutMode: Left; Anchor: (Height: 22);
+                        Label #PName10 { Text: ""; Style: (FontSize: 14, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                        Label #PInfo10 { Text: ""; Style: (FontSize: 11, TextColor: #8899aa, VerticalAlignment: Center, HorizontalAlignment: End); Anchor: (Width: 200); }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 2 : Stats rapides
+                    Group { LayoutMode: Left; Anchor: (Height: 16);
+                        Label #PStat10 { Text: ""; Style: (FontSize: 10, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 3 : Boutons
+                    Group { LayoutMode: Left; Anchor: (Height: 28);
+                        TextButton #PPK10 { Text: "TOGGLE PK"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PRst10 { Text: "RESET"; Anchor: (Width: 60, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #FF9800, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a0d(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PXP10 { Text: "+10K XP"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PGold10 { Text: "+10K Or"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a2a1a(0.7); }
+                        Group { FlexWeight: 1; }
+                        TextButton #PManage10 { Text: "GERER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #2196F3, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1a2a(0.8); }
+                    }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #PSlot11 { Visible: false; LayoutMode: Top; Anchor: (Height: 90); Background: #121824(0.5); Padding: (Horizontal: 10, Vertical: 6);
+                    // Ligne 1 : Nom + Info
+                    Group { LayoutMode: Left; Anchor: (Height: 22);
+                        Label #PName11 { Text: ""; Style: (FontSize: 14, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                        Label #PInfo11 { Text: ""; Style: (FontSize: 11, TextColor: #8899aa, VerticalAlignment: Center, HorizontalAlignment: End); Anchor: (Width: 200); }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 2 : Stats rapides
+                    Group { LayoutMode: Left; Anchor: (Height: 16);
+                        Label #PStat11 { Text: ""; Style: (FontSize: 10, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 3 : Boutons
+                    Group { LayoutMode: Left; Anchor: (Height: 28);
+                        TextButton #PPK11 { Text: "TOGGLE PK"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PRst11 { Text: "RESET"; Anchor: (Width: 60, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #FF9800, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a0d(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PXP11 { Text: "+10K XP"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PGold11 { Text: "+10K Or"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a2a1a(0.7); }
+                        Group { FlexWeight: 1; }
+                        TextButton #PManage11 { Text: "GERER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #2196F3, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1a2a(0.8); }
+                    }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #PSlot12 { Visible: false; LayoutMode: Top; Anchor: (Height: 90); Background: #151b28(0.5); Padding: (Horizontal: 10, Vertical: 6);
+                    // Ligne 1 : Nom + Info
+                    Group { LayoutMode: Left; Anchor: (Height: 22);
+                        Label #PName12 { Text: ""; Style: (FontSize: 14, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                        Label #PInfo12 { Text: ""; Style: (FontSize: 11, TextColor: #8899aa, VerticalAlignment: Center, HorizontalAlignment: End); Anchor: (Width: 200); }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 2 : Stats rapides
+                    Group { LayoutMode: Left; Anchor: (Height: 16);
+                        Label #PStat12 { Text: ""; Style: (FontSize: 10, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 3 : Boutons
+                    Group { LayoutMode: Left; Anchor: (Height: 28);
+                        TextButton #PPK12 { Text: "TOGGLE PK"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PRst12 { Text: "RESET"; Anchor: (Width: 60, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #FF9800, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a0d(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PXP12 { Text: "+10K XP"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PGold12 { Text: "+10K Or"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a2a1a(0.7); }
+                        Group { FlexWeight: 1; }
+                        TextButton #PManage12 { Text: "GERER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #2196F3, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1a2a(0.8); }
+                    }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #PSlot13 { Visible: false; LayoutMode: Top; Anchor: (Height: 90); Background: #121824(0.5); Padding: (Horizontal: 10, Vertical: 6);
+                    // Ligne 1 : Nom + Info
+                    Group { LayoutMode: Left; Anchor: (Height: 22);
+                        Label #PName13 { Text: ""; Style: (FontSize: 14, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                        Label #PInfo13 { Text: ""; Style: (FontSize: 11, TextColor: #8899aa, VerticalAlignment: Center, HorizontalAlignment: End); Anchor: (Width: 200); }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 2 : Stats rapides
+                    Group { LayoutMode: Left; Anchor: (Height: 16);
+                        Label #PStat13 { Text: ""; Style: (FontSize: 10, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 3 : Boutons
+                    Group { LayoutMode: Left; Anchor: (Height: 28);
+                        TextButton #PPK13 { Text: "TOGGLE PK"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PRst13 { Text: "RESET"; Anchor: (Width: 60, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #FF9800, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a0d(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PXP13 { Text: "+10K XP"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PGold13 { Text: "+10K Or"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a2a1a(0.7); }
+                        Group { FlexWeight: 1; }
+                        TextButton #PManage13 { Text: "GERER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #2196F3, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1a2a(0.8); }
+                    }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #PSlot14 { Visible: false; LayoutMode: Top; Anchor: (Height: 90); Background: #151b28(0.5); Padding: (Horizontal: 10, Vertical: 6);
+                    // Ligne 1 : Nom + Info
+                    Group { LayoutMode: Left; Anchor: (Height: 22);
+                        Label #PName14 { Text: ""; Style: (FontSize: 14, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                        Label #PInfo14 { Text: ""; Style: (FontSize: 11, TextColor: #8899aa, VerticalAlignment: Center, HorizontalAlignment: End); Anchor: (Width: 200); }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 2 : Stats rapides
+                    Group { LayoutMode: Left; Anchor: (Height: 16);
+                        Label #PStat14 { Text: ""; Style: (FontSize: 10, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 3 : Boutons
+                    Group { LayoutMode: Left; Anchor: (Height: 28);
+                        TextButton #PPK14 { Text: "TOGGLE PK"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PRst14 { Text: "RESET"; Anchor: (Width: 60, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #FF9800, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a0d(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PXP14 { Text: "+10K XP"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PGold14 { Text: "+10K Or"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a2a1a(0.7); }
+                        Group { FlexWeight: 1; }
+                        TextButton #PManage14 { Text: "GERER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #2196F3, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1a2a(0.8); }
+                    }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #PSlot15 { Visible: false; LayoutMode: Top; Anchor: (Height: 90); Background: #121824(0.5); Padding: (Horizontal: 10, Vertical: 6);
+                    // Ligne 1 : Nom + Info
+                    Group { LayoutMode: Left; Anchor: (Height: 22);
+                        Label #PName15 { Text: ""; Style: (FontSize: 14, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                        Label #PInfo15 { Text: ""; Style: (FontSize: 11, TextColor: #8899aa, VerticalAlignment: Center, HorizontalAlignment: End); Anchor: (Width: 200); }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 2 : Stats rapides
+                    Group { LayoutMode: Left; Anchor: (Height: 16);
+                        Label #PStat15 { Text: ""; Style: (FontSize: 10, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 3 : Boutons
+                    Group { LayoutMode: Left; Anchor: (Height: 28);
+                        TextButton #PPK15 { Text: "TOGGLE PK"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PRst15 { Text: "RESET"; Anchor: (Width: 60, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #FF9800, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a0d(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PXP15 { Text: "+10K XP"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PGold15 { Text: "+10K Or"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a2a1a(0.7); }
+                        Group { FlexWeight: 1; }
+                        TextButton #PManage15 { Text: "GERER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #2196F3, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1a2a(0.8); }
+                    }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #PSlot16 { Visible: false; LayoutMode: Top; Anchor: (Height: 90); Background: #151b28(0.5); Padding: (Horizontal: 10, Vertical: 6);
+                    // Ligne 1 : Nom + Info
+                    Group { LayoutMode: Left; Anchor: (Height: 22);
+                        Label #PName16 { Text: ""; Style: (FontSize: 14, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                        Label #PInfo16 { Text: ""; Style: (FontSize: 11, TextColor: #8899aa, VerticalAlignment: Center, HorizontalAlignment: End); Anchor: (Width: 200); }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 2 : Stats rapides
+                    Group { LayoutMode: Left; Anchor: (Height: 16);
+                        Label #PStat16 { Text: ""; Style: (FontSize: 10, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 3 : Boutons
+                    Group { LayoutMode: Left; Anchor: (Height: 28);
+                        TextButton #PPK16 { Text: "TOGGLE PK"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PRst16 { Text: "RESET"; Anchor: (Width: 60, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #FF9800, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a0d(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PXP16 { Text: "+10K XP"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PGold16 { Text: "+10K Or"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a2a1a(0.7); }
+                        Group { FlexWeight: 1; }
+                        TextButton #PManage16 { Text: "GERER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #2196F3, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1a2a(0.8); }
+                    }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #PSlot17 { Visible: false; LayoutMode: Top; Anchor: (Height: 90); Background: #121824(0.5); Padding: (Horizontal: 10, Vertical: 6);
+                    // Ligne 1 : Nom + Info
+                    Group { LayoutMode: Left; Anchor: (Height: 22);
+                        Label #PName17 { Text: ""; Style: (FontSize: 14, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                        Label #PInfo17 { Text: ""; Style: (FontSize: 11, TextColor: #8899aa, VerticalAlignment: Center, HorizontalAlignment: End); Anchor: (Width: 200); }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 2 : Stats rapides
+                    Group { LayoutMode: Left; Anchor: (Height: 16);
+                        Label #PStat17 { Text: ""; Style: (FontSize: 10, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 3 : Boutons
+                    Group { LayoutMode: Left; Anchor: (Height: 28);
+                        TextButton #PPK17 { Text: "TOGGLE PK"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PRst17 { Text: "RESET"; Anchor: (Width: 60, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #FF9800, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a0d(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PXP17 { Text: "+10K XP"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PGold17 { Text: "+10K Or"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a2a1a(0.7); }
+                        Group { FlexWeight: 1; }
+                        TextButton #PManage17 { Text: "GERER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #2196F3, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1a2a(0.8); }
+                    }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #PSlot18 { Visible: false; LayoutMode: Top; Anchor: (Height: 90); Background: #151b28(0.5); Padding: (Horizontal: 10, Vertical: 6);
+                    // Ligne 1 : Nom + Info
+                    Group { LayoutMode: Left; Anchor: (Height: 22);
+                        Label #PName18 { Text: ""; Style: (FontSize: 14, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                        Label #PInfo18 { Text: ""; Style: (FontSize: 11, TextColor: #8899aa, VerticalAlignment: Center, HorizontalAlignment: End); Anchor: (Width: 200); }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 2 : Stats rapides
+                    Group { LayoutMode: Left; Anchor: (Height: 16);
+                        Label #PStat18 { Text: ""; Style: (FontSize: 10, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 3 : Boutons
+                    Group { LayoutMode: Left; Anchor: (Height: 28);
+                        TextButton #PPK18 { Text: "TOGGLE PK"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PRst18 { Text: "RESET"; Anchor: (Width: 60, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #FF9800, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a0d(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PXP18 { Text: "+10K XP"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PGold18 { Text: "+10K Or"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a2a1a(0.7); }
+                        Group { FlexWeight: 1; }
+                        TextButton #PManage18 { Text: "GERER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #2196F3, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1a2a(0.8); }
+                    }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #PSlot19 { Visible: false; LayoutMode: Top; Anchor: (Height: 90); Background: #121824(0.5); Padding: (Horizontal: 10, Vertical: 6);
+                    // Ligne 1 : Nom + Info
+                    Group { LayoutMode: Left; Anchor: (Height: 22);
+                        Label #PName19 { Text: ""; Style: (FontSize: 14, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                        Label #PInfo19 { Text: ""; Style: (FontSize: 11, TextColor: #8899aa, VerticalAlignment: Center, HorizontalAlignment: End); Anchor: (Width: 200); }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 2 : Stats rapides
+                    Group { LayoutMode: Left; Anchor: (Height: 16);
+                        Label #PStat19 { Text: ""; Style: (FontSize: 10, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    // Ligne 3 : Boutons
+                    Group { LayoutMode: Left; Anchor: (Height: 28);
+                        TextButton #PPK19 { Text: "TOGGLE PK"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PRst19 { Text: "RESET"; Anchor: (Width: 60, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #FF9800, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a0d(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PXP19 { Text: "+10K XP"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a1a(0.7); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #PGold19 { Text: "+10K Or"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a2a1a(0.7); }
+                        Group { FlexWeight: 1; }
+                        TextButton #PManage19 { Text: "GERER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #2196F3, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1a2a(0.8); }
+                    }
+                }
+                Group { Anchor: (Height: 2); }
+
+                // Detail panel
+                Group #PDetailPanel { Visible: false; LayoutMode: Top; Background: #0a1020(0.8); Padding: (Horizontal: 10, Vertical: 8);
+                    Group { Anchor: (Height: 1); Background: #2196F3(0.3); }
+                    Group { Anchor: (Height: 4); }
+                    Group { LayoutMode: Left; Anchor: (Height: 18);
+                        Label #PDetailName { Text: ""; Style: (FontSize: 13, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                        TextButton #PDetailClose { Text: "FERMER"; Anchor: (Width: 58, Height: 16); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                    }
+                    Group { Anchor: (Height: 3); }
+                    Group { LayoutMode: Left; Anchor: (Height: 14);
+                        Label #PDetailLv { Text: "Lv.1"; Style: (FontSize: 10, TextColor: #4CAF50, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 50); }
+                        Label #PDetailClass { Text: "Novice"; Style: (FontSize: 10, TextColor: #2196F3, VerticalAlignment: Center); Anchor: (Width: 85); }
+                        Label #PDetailMoney { Text: "0 Or"; Style: (FontSize: 10, TextColor: #D4AF37, VerticalAlignment: Center); Anchor: (Width: 75); }
+                        Label #PDetailRank { Text: "Roturier"; Style: (FontSize: 10, TextColor: #C8A2C8, VerticalAlignment: Center); Anchor: (Width: 75); }
+                        Label #PDetailChurch { Text: "Laique"; Style: (FontSize: 10, TextColor: #7EB8DA, VerticalAlignment: Center); Anchor: (Width: 70); }
+                        Label #PDetailPK { Text: ""; Style: (FontSize: 10, TextColor: #cc4444, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 28); }
+                    }
+                    Group { LayoutMode: Left; Anchor: (Height: 14);
+                        Label #PDetailFamily { Text: "Famille: ---"; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); Anchor: (Width: 110); }
+                        Label #PDetailGuild { Text: "Guilde: ---"; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); Anchor: (Width: 110); }
+                        Label #PDetailKD { Text: "K/D: 0/0"; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); Anchor: (Width: 70); }
+                        Label #PDetailDuel { Text: "Duels: 0/0"; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); Anchor: (Width: 75); }
+                    }
+                    Group { Anchor: (Height: 4); }
+                    Group { Anchor: (Height: 1); Background: #2196F3(0.15); }
+                    Group { Anchor: (Height: 4); }
+                    Label { Text: "ACTIONS"; Style: (FontSize: 9, TextColor: #4CAF50, RenderBold: true, LetterSpacing: 1); Anchor: (Height: 11); }
+                    Group { Anchor: (Height: 2); }
+                    Group { LayoutMode: Left; Anchor: (Height: 22);
+                        TextButton #AResetLv { Text: "RESET"; Anchor: (Width: 50, Height: 26); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        Group { Anchor: (Width: 2); }
+                        TextButton #AXP1k { Text: "+1K"; Anchor: (Width: 38, Height: 20); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.7); }
+                        Group { Anchor: (Width: 2); }
+                        TextButton #AXP10k { Text: "+10K"; Anchor: (Width: 42, Height: 20); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.7); }
+                        Group { Anchor: (Width: 2); }
+                        TextButton #AXP100k { Text: "+100K"; Anchor: (Width: 48, Height: 20); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.7); }
+                        Group { Anchor: (Width: 2); }
+                        TextButton #ALv50 { Text: "LV50"; Anchor: (Width: 40, Height: 20); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #aabbcc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
+                        Group { Anchor: (Width: 2); }
+                        TextButton #ALv100 { Text: "LV100"; Anchor: (Width: 44, Height: 20); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #aabbcc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
+                        Group { Anchor: (Width: 2); }
+                        TextButton #ALv200 { Text: "LV200"; Anchor: (Width: 44, Height: 20); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #aabbcc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
+                        Group { Anchor: (Width: 2); }
+                        TextButton #AGold10k { Text: "+10K Or"; Anchor: (Width: 55, Height: 20); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a2a1a(0.7); }
+                        Group { Anchor: (Width: 2); }
+                        TextButton #AGold100k { Text: "+100K"; Anchor: (Width: 48, Height: 20); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a2a1a(0.7); }
+                        Group { Anchor: (Width: 2); }
+                        TextButton #AGold1m { Text: "+1M"; Anchor: (Width: 35, Height: 20); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a2a1a(0.7); }
+                        Group { Anchor: (Width: 2); }
+                    }
+                    Group { Anchor: (Height: 2); }
+                    Group { LayoutMode: Left; Anchor: (Height: 22);
+                        TextButton #ACWar { Text: "WAR"; Anchor: (Width: 34, Height: 26); Style: (Default: (LabelStyle: (FontSize: 7, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 7, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.6); }
+                        Group { Anchor: (Width: 1); }
+                        TextButton #ACMag { Text: "MAG"; Anchor: (Width: 34, Height: 26); Style: (Default: (LabelStyle: (FontSize: 7, TextColor: #2196F3, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 7, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.6); }
+                        Group { Anchor: (Width: 1); }
+                        TextButton #ACArc { Text: "ARC"; Anchor: (Width: 34, Height: 26); Style: (Default: (LabelStyle: (FontSize: 7, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 7, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.6); }
+                        Group { Anchor: (Width: 1); }
+                        TextButton #ACAss { Text: "ASS"; Anchor: (Width: 34, Height: 26); Style: (Default: (LabelStyle: (FontSize: 7, TextColor: #9C27B0, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 7, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.6); }
+                        Group { Anchor: (Width: 1); }
+                        TextButton #ACDra { Text: "DRA"; Anchor: (Width: 34, Height: 26); Style: (Default: (LabelStyle: (FontSize: 7, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 7, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.6); }
+                        Group { Anchor: (Width: 1); }
+                        TextButton #ANChev { Text: "CHV"; Anchor: (Width: 32, Height: 26); Style: (Default: (LabelStyle: (FontSize: 7, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 7, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.6); }
+                        Group { Anchor: (Width: 1); }
+                        TextButton #ANBaron { Text: "BAR"; Anchor: (Width: 32, Height: 26); Style: (Default: (LabelStyle: (FontSize: 7, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 7, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.6); }
+                        Group { Anchor: (Width: 1); }
+                        TextButton #ANComte { Text: "COM"; Anchor: (Width: 34, Height: 26); Style: (Default: (LabelStyle: (FontSize: 7, TextColor: #2196F3, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 7, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.6); }
+                        Group { Anchor: (Width: 1); }
+                        TextButton #ANDuc { Text: "DUC"; Anchor: (Width: 32, Height: 26); Style: (Default: (LabelStyle: (FontSize: 7, TextColor: #9C27B0, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 7, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.6); }
+                        Group { Anchor: (Width: 1); }
+                        TextButton #ANMarq { Text: "MRQ"; Anchor: (Width: 34, Height: 26); Style: (Default: (LabelStyle: (FontSize: 7, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 7, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.6); }
+                        Group { Anchor: (Width: 1); }
+                        TextButton #ANRoi { Text: "ROI"; Anchor: (Width: 30, Height: 26); Style: (Default: (LabelStyle: (FontSize: 7, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 7, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.6); }
+                        Group { Anchor: (Width: 1); }
+                        TextButton #ACPret { Text: "PRT"; Anchor: (Width: 30, Height: 26); Style: (Default: (LabelStyle: (FontSize: 7, TextColor: #aabbcc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 7, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.6); }
+                        Group { Anchor: (Width: 1); }
+                        TextButton #ACArch { Text: "ARC"; Anchor: (Width: 32, Height: 26); Style: (Default: (LabelStyle: (FontSize: 7, TextColor: #2196F3, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 7, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.6); }
+                        Group { Anchor: (Width: 1); }
+                        TextButton #ACCard { Text: "CRD"; Anchor: (Width: 32, Height: 26); Style: (Default: (LabelStyle: (FontSize: 7, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 7, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.6); }
+                        Group { Anchor: (Width: 1); }
+                        TextButton #ACPope { Text: "PPE"; Anchor: (Width: 30, Height: 26); Style: (Default: (LabelStyle: (FontSize: 7, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 7, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.6); }
+                        Group { Anchor: (Width: 1); }
+                    }
+                    Group { Anchor: (Height: 2); }
+                    Group { LayoutMode: Left; Anchor: (Height: 22);
+                        TextButton #APK { Text: "TOGGLE PK"; Anchor: (Width: 78, Height: 20); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        Group { Anchor: (Width: 2); }
+                        TextButton #ATitleRst { Text: "RST TITRES"; Anchor: (Width: 80, Height: 20); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #C8A2C8, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1a2a(0.7); }
+                        Group { Anchor: (Width: 2); }
+                        TextButton #ARelic { Text: "RELIC"; Anchor: (Width: 48, Height: 20); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #C8A2C8, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1a2a(0.7); }
+                    }
+                }
+                Label #AdminSelectedName { Text: ""; Visible: false; Anchor: (Height: 1); }
+                Label #AdminTargetInfo { Text: ""; Visible: false; Anchor: (Height: 1); }
+                Group #AdminActionPanel { Visible: false; Anchor: (Height: 1); }
+                TextButton #ASelPlayer0 { Text: ""; Visible: false; Anchor: (Height: 1); }
+                TextButton #ASelPlayer1 { Text: ""; Visible: false; Anchor: (Height: 1); }
+                TextButton #ASelPlayer2 { Text: ""; Visible: false; Anchor: (Height: 1); }
+                TextButton #ASelPlayer3 { Text: ""; Visible: false; Anchor: (Height: 1); }
+                TextButton #ASelPlayer4 { Text: ""; Visible: false; Anchor: (Height: 1); }
+                TextButton #ASelPlayer5 { Text: ""; Visible: false; Anchor: (Height: 1); }
+                TextButton #ASelPlayer6 { Text: ""; Visible: false; Anchor: (Height: 1); }
+                TextButton #ASelPlayer7 { Text: ""; Visible: false; Anchor: (Height: 1); }
+                TextButton #APrefillTitleGrant { Text: ""; Visible: false; Anchor: (Height: 1); }
+                TextButton #APrefillTitleRemove { Text: ""; Visible: false; Anchor: (Height: 1); }
+                TextButton #APrefillFamilySet { Text: ""; Visible: false; Anchor: (Height: 1); }
+                TextButton #APrefillGuildCreate { Text: ""; Visible: false; Anchor: (Height: 1); }
+                TextButton #APrefillSetLevel { Text: ""; Visible: false; Anchor: (Height: 1); }
+                TextButton #APrefillAddXP { Text: ""; Visible: false; Anchor: (Height: 1); }
+                TextButton #APrefillGuildDisband { Text: ""; Visible: false; Anchor: (Height: 1); }
+                TextButton #APrefillKingdom { Text: ""; Visible: false; Anchor: (Height: 1); }
+                TextButton #APrefillChurchStatus { Text: ""; Visible: false; Anchor: (Height: 1); }
+                TextButton #APrefillBankGive { Text: ""; Visible: false; Anchor: (Height: 1); }
+                TextButton #APrefillSetClass { Text: ""; Visible: false; Anchor: (Height: 1); }
+                TextButton #APrefillRankDemote { Text: ""; Visible: false; Anchor: (Height: 1); }
+                TextButton #APrefillChurchDemote { Text: ""; Visible: false; Anchor: (Height: 1); }
+                TextButton #APrefillSetVice { Text: ""; Visible: false; Anchor: (Height: 1); }
+                TextButton #APrefillClassInfo { Text: ""; Visible: false; Anchor: (Height: 1); }
+            }
+
+            Group #TabWorld {
+                LayoutMode: Top;
+                Visible: false;
+
+                Label { Text: "GESTION DU MONDE"; Style: (FontSize: 14, TextColor: #D4AF37, RenderBold: true, LetterSpacing: 1, HorizontalAlignment: Center); Anchor: (Height: 20); }
+                Group { Anchor: (Height: 4); }
+                Group { Anchor: (Height: 1); Background: #D4AF37(0.2); }
+                Group { Anchor: (Height: 6); }
+
+                // === COMPTEURS ===
+                Group { LayoutMode: Left; Anchor: (Height: 34);
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #2a2a1a(0.5); LayoutMode: Top; Padding: (Horizontal: 8, Vertical: 2);
+                        Label { Text: "Royaumes"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 12); }
+                        Label #WStatKingdoms { Text: "0"; Style: (FontSize: 14, TextColor: #cc4444, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #2a2a1a(0.5); LayoutMode: Top; Padding: (Horizontal: 8, Vertical: 2);
+                        Label { Text: "Territoires"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 12); }
+                        Label #WStatTerritories { Text: "0"; Style: (FontSize: 14, TextColor: #FFD700, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #2a2a1a(0.5); LayoutMode: Top; Padding: (Horizontal: 8, Vertical: 2);
+                        Label { Text: "Villes"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 12); }
+                        Label #WStatCities { Text: "0"; Style: (FontSize: 14, TextColor: #2196F3, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #2a2a1a(0.5); LayoutMode: Top; Padding: (Horizontal: 8, Vertical: 2);
+                        Label { Text: "Parcelles"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 12); }
+                        Label #WStatPlots { Text: "0"; Style: (FontSize: 14, TextColor: #4CAF50, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #2a2a1a(0.5); LayoutMode: Top; Padding: (Horizontal: 8, Vertical: 2);
+                        Label { Text: "Logements"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 12); }
+                        Label #WStatHousing { Text: "0"; Style: (FontSize: 14, TextColor: #9C27B0, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #2a2a1a(0.5); LayoutMode: Top; Padding: (Horizontal: 8, Vertical: 2);
+                        Label { Text: "Fermes"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 12); }
+                        Label #WStatFarms { Text: "0"; Style: (FontSize: 14, TextColor: #8BC34A, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #2a0d0d(0.5); LayoutMode: Top; Padding: (Horizontal: 8, Vertical: 2);
+                        Label { Text: "PvP Actif"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 12); }
+                        Label #WStatPvp { Text: "0"; Style: (FontSize: 14, TextColor: #cc4444, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                }
+
+                Group { Anchor: (Height: 8); }
+
+                // === SECTION: ROYAUMES / TERRITOIRES / VILLES ===
+                Label { Text: "ROYAUMES, TERRITOIRES & VILLES"; Style: (FontSize: 10, TextColor: #FFD700, RenderBold: true, LetterSpacing: 1); Anchor: (Height: 14); }
+                Group { Anchor: (Height: 4); }
+
+                // Pagination territoires
+                Group { LayoutMode: Left; Anchor: (Height: 22);
+                    Label { Text: ""; Style: (FontSize: 1); FlexWeight: 1; }
+                    TextButton #WBtnTPrev { Text: "< PREV"; Anchor: (Width: 60, Height: 20); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #aabbcc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.6); }
+                    Group { Anchor: (Width: 4); }
+                    Label #WTPageInfo { Text: "Page 1/1"; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center, HorizontalAlignment: Center); Anchor: (Width: 65); }
+                    Group { Anchor: (Width: 4); }
+                    TextButton #WBtnTNext { Text: "NEXT >"; Anchor: (Width: 60, Height: 20); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #aabbcc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.6); }
+                }
+                Group { Anchor: (Height: 3); }
+
+                // 10 slots territoires
+                Group #WTSlot0 { Visible: false; LayoutMode: Top; Anchor: (Height: 50); Background: #1a1a2e(0.4); Padding: (Horizontal: 8, Vertical: 4);
+                    Group { LayoutMode: Left; Anchor: (Height: 18);
+                        Label #WTName0 { Text: ""; Style: (FontSize: 12, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                        Label #WTType0 { Text: ""; Style: (FontSize: 10, TextColor: #D4AF37, VerticalAlignment: Center); Anchor: (Width: 80); }
+                        Label #WTOwner0 { Text: ""; Style: (FontSize: 10, TextColor: #8899aa, VerticalAlignment: Center); Anchor: (Width: 120); }
+                    }
+                    Group { Anchor: (Height: 2); }
+                    Group { LayoutMode: Left; Anchor: (Height: 20);
+                        Label #WTInfo0 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
+                        TextButton #WTPvp0 { Text: "PVP"; Anchor: (Width: 42, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        Group { Anchor: (Width: 2); }
+                        TextButton #WTDel0 { Text: "SUPPR"; Anchor: (Width: 50, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.7); }
+                    }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #WTSlot1 { Visible: false; LayoutMode: Top; Anchor: (Height: 50); Background: #151b28(0.4); Padding: (Horizontal: 8, Vertical: 4);
+                    Group { LayoutMode: Left; Anchor: (Height: 18);
+                        Label #WTName1 { Text: ""; Style: (FontSize: 12, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                        Label #WTType1 { Text: ""; Style: (FontSize: 10, TextColor: #D4AF37, VerticalAlignment: Center); Anchor: (Width: 80); }
+                        Label #WTOwner1 { Text: ""; Style: (FontSize: 10, TextColor: #8899aa, VerticalAlignment: Center); Anchor: (Width: 120); }
+                    }
+                    Group { Anchor: (Height: 2); }
+                    Group { LayoutMode: Left; Anchor: (Height: 20);
+                        Label #WTInfo1 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
+                        TextButton #WTPvp1 { Text: "PVP"; Anchor: (Width: 42, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        Group { Anchor: (Width: 2); }
+                        TextButton #WTDel1 { Text: "SUPPR"; Anchor: (Width: 50, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.7); }
+                    }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #WTSlot2 { Visible: false; LayoutMode: Top; Anchor: (Height: 50); Background: #1a1a2e(0.4); Padding: (Horizontal: 8, Vertical: 4);
+                    Group { LayoutMode: Left; Anchor: (Height: 18);
+                        Label #WTName2 { Text: ""; Style: (FontSize: 12, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                        Label #WTType2 { Text: ""; Style: (FontSize: 10, TextColor: #D4AF37, VerticalAlignment: Center); Anchor: (Width: 80); }
+                        Label #WTOwner2 { Text: ""; Style: (FontSize: 10, TextColor: #8899aa, VerticalAlignment: Center); Anchor: (Width: 120); }
+                    }
+                    Group { Anchor: (Height: 2); }
+                    Group { LayoutMode: Left; Anchor: (Height: 20);
+                        Label #WTInfo2 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
+                        TextButton #WTPvp2 { Text: "PVP"; Anchor: (Width: 42, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        Group { Anchor: (Width: 2); }
+                        TextButton #WTDel2 { Text: "SUPPR"; Anchor: (Width: 50, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.7); }
+                    }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #WTSlot3 { Visible: false; LayoutMode: Top; Anchor: (Height: 50); Background: #151b28(0.4); Padding: (Horizontal: 8, Vertical: 4);
+                    Group { LayoutMode: Left; Anchor: (Height: 18);
+                        Label #WTName3 { Text: ""; Style: (FontSize: 12, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                        Label #WTType3 { Text: ""; Style: (FontSize: 10, TextColor: #D4AF37, VerticalAlignment: Center); Anchor: (Width: 80); }
+                        Label #WTOwner3 { Text: ""; Style: (FontSize: 10, TextColor: #8899aa, VerticalAlignment: Center); Anchor: (Width: 120); }
+                    }
+                    Group { Anchor: (Height: 2); }
+                    Group { LayoutMode: Left; Anchor: (Height: 20);
+                        Label #WTInfo3 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
+                        TextButton #WTPvp3 { Text: "PVP"; Anchor: (Width: 42, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        Group { Anchor: (Width: 2); }
+                        TextButton #WTDel3 { Text: "SUPPR"; Anchor: (Width: 50, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.7); }
+                    }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #WTSlot4 { Visible: false; LayoutMode: Top; Anchor: (Height: 50); Background: #1a1a2e(0.4); Padding: (Horizontal: 8, Vertical: 4);
+                    Group { LayoutMode: Left; Anchor: (Height: 18);
+                        Label #WTName4 { Text: ""; Style: (FontSize: 12, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                        Label #WTType4 { Text: ""; Style: (FontSize: 10, TextColor: #D4AF37, VerticalAlignment: Center); Anchor: (Width: 80); }
+                        Label #WTOwner4 { Text: ""; Style: (FontSize: 10, TextColor: #8899aa, VerticalAlignment: Center); Anchor: (Width: 120); }
+                    }
+                    Group { Anchor: (Height: 2); }
+                    Group { LayoutMode: Left; Anchor: (Height: 20);
+                        Label #WTInfo4 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
+                        TextButton #WTPvp4 { Text: "PVP"; Anchor: (Width: 42, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        Group { Anchor: (Width: 2); }
+                        TextButton #WTDel4 { Text: "SUPPR"; Anchor: (Width: 50, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.7); }
+                    }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #WTSlot5 { Visible: false; LayoutMode: Top; Anchor: (Height: 50); Background: #151b28(0.4); Padding: (Horizontal: 8, Vertical: 4);
+                    Group { LayoutMode: Left; Anchor: (Height: 18);
+                        Label #WTName5 { Text: ""; Style: (FontSize: 12, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                        Label #WTType5 { Text: ""; Style: (FontSize: 10, TextColor: #D4AF37, VerticalAlignment: Center); Anchor: (Width: 80); }
+                        Label #WTOwner5 { Text: ""; Style: (FontSize: 10, TextColor: #8899aa, VerticalAlignment: Center); Anchor: (Width: 120); }
+                    }
+                    Group { Anchor: (Height: 2); }
+                    Group { LayoutMode: Left; Anchor: (Height: 20);
+                        Label #WTInfo5 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
+                        TextButton #WTPvp5 { Text: "PVP"; Anchor: (Width: 42, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        Group { Anchor: (Width: 2); }
+                        TextButton #WTDel5 { Text: "SUPPR"; Anchor: (Width: 50, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.7); }
+                    }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #WTSlot6 { Visible: false; LayoutMode: Top; Anchor: (Height: 50); Background: #1a1a2e(0.4); Padding: (Horizontal: 8, Vertical: 4);
+                    Group { LayoutMode: Left; Anchor: (Height: 18);
+                        Label #WTName6 { Text: ""; Style: (FontSize: 12, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                        Label #WTType6 { Text: ""; Style: (FontSize: 10, TextColor: #D4AF37, VerticalAlignment: Center); Anchor: (Width: 80); }
+                        Label #WTOwner6 { Text: ""; Style: (FontSize: 10, TextColor: #8899aa, VerticalAlignment: Center); Anchor: (Width: 120); }
+                    }
+                    Group { Anchor: (Height: 2); }
+                    Group { LayoutMode: Left; Anchor: (Height: 20);
+                        Label #WTInfo6 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
+                        TextButton #WTPvp6 { Text: "PVP"; Anchor: (Width: 42, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        Group { Anchor: (Width: 2); }
+                        TextButton #WTDel6 { Text: "SUPPR"; Anchor: (Width: 50, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.7); }
+                    }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #WTSlot7 { Visible: false; LayoutMode: Top; Anchor: (Height: 50); Background: #151b28(0.4); Padding: (Horizontal: 8, Vertical: 4);
+                    Group { LayoutMode: Left; Anchor: (Height: 18);
+                        Label #WTName7 { Text: ""; Style: (FontSize: 12, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                        Label #WTType7 { Text: ""; Style: (FontSize: 10, TextColor: #D4AF37, VerticalAlignment: Center); Anchor: (Width: 80); }
+                        Label #WTOwner7 { Text: ""; Style: (FontSize: 10, TextColor: #8899aa, VerticalAlignment: Center); Anchor: (Width: 120); }
+                    }
+                    Group { Anchor: (Height: 2); }
+                    Group { LayoutMode: Left; Anchor: (Height: 20);
+                        Label #WTInfo7 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
+                        TextButton #WTPvp7 { Text: "PVP"; Anchor: (Width: 42, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        Group { Anchor: (Width: 2); }
+                        TextButton #WTDel7 { Text: "SUPPR"; Anchor: (Width: 50, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.7); }
+                    }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #WTSlot8 { Visible: false; LayoutMode: Top; Anchor: (Height: 50); Background: #1a1a2e(0.4); Padding: (Horizontal: 8, Vertical: 4);
+                    Group { LayoutMode: Left; Anchor: (Height: 18);
+                        Label #WTName8 { Text: ""; Style: (FontSize: 12, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                        Label #WTType8 { Text: ""; Style: (FontSize: 10, TextColor: #D4AF37, VerticalAlignment: Center); Anchor: (Width: 80); }
+                        Label #WTOwner8 { Text: ""; Style: (FontSize: 10, TextColor: #8899aa, VerticalAlignment: Center); Anchor: (Width: 120); }
+                    }
+                    Group { Anchor: (Height: 2); }
+                    Group { LayoutMode: Left; Anchor: (Height: 20);
+                        Label #WTInfo8 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
+                        TextButton #WTPvp8 { Text: "PVP"; Anchor: (Width: 42, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        Group { Anchor: (Width: 2); }
+                        TextButton #WTDel8 { Text: "SUPPR"; Anchor: (Width: 50, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.7); }
+                    }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #WTSlot9 { Visible: false; LayoutMode: Top; Anchor: (Height: 50); Background: #151b28(0.4); Padding: (Horizontal: 8, Vertical: 4);
+                    Group { LayoutMode: Left; Anchor: (Height: 18);
+                        Label #WTName9 { Text: ""; Style: (FontSize: 12, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                        Label #WTType9 { Text: ""; Style: (FontSize: 10, TextColor: #D4AF37, VerticalAlignment: Center); Anchor: (Width: 80); }
+                        Label #WTOwner9 { Text: ""; Style: (FontSize: 10, TextColor: #8899aa, VerticalAlignment: Center); Anchor: (Width: 120); }
+                    }
+                    Group { Anchor: (Height: 2); }
+                    Group { LayoutMode: Left; Anchor: (Height: 20);
+                        Label #WTInfo9 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
+                        TextButton #WTPvp9 { Text: "PVP"; Anchor: (Width: 42, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        Group { Anchor: (Width: 2); }
+                        TextButton #WTDel9 { Text: "SUPPR"; Anchor: (Width: 50, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.7); }
+                    }
+                }
+
+                Group { Anchor: (Height: 10); }
+
+                // === COMMANDES UTILES ===
+                Label { Text: "COMMANDES UTILES"; Style: (FontSize: 9, TextColor: #D4AF37, RenderBold: true, LetterSpacing: 1); Anchor: (Height: 12); }
+                Group { Anchor: (Height: 3); }
+                Label { Text: "/es parcel create <nom> <type> — Creer une parcelle"; Style: (FontSize: 10, TextColor: #667788); Anchor: (Height: 14); }
+                Label { Text: "/es parcel pos1 / pos2 — Definir les limites"; Style: (FontSize: 10, TextColor: #667788); Anchor: (Height: 14); }
+                Label { Text: "/es parcel assignguild <parcelId> <guildId> — Assigner guilde"; Style: (FontSize: 10, TextColor: #667788); Anchor: (Height: 14); }
+                Label { Text: "/es parcel delete <parcelId> — Supprimer"; Style: (FontSize: 10, TextColor: #667788); Anchor: (Height: 14); }
+            }
+
+            // ===== TAB ECONOMY =====
+            Group #TabEconomy {
+                LayoutMode: Top;
+                Visible: false;
+
+                Label { Text: "GESTION ECONOMIE"; Style: (FontSize: 14, TextColor: #2196F3, RenderBold: true, LetterSpacing: 1, HorizontalAlignment: Center); Anchor: (Height: 20); }
+                Group { Anchor: (Height: 4); }
+                Group { Anchor: (Height: 1); Background: #2196F3(0.2); }
+                Group { Anchor: (Height: 8); }
+
+                // Stats eco
+                Group { LayoutMode: Left; Anchor: (Height: 34);
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #1a1a2e(0.5); LayoutMode: Top; Padding: (Horizontal: 8, Vertical: 2);
+                        Label { Text: "Shop listings"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 12); }
+                        Label #EStatShop { Text: "0"; Style: (FontSize: 14, TextColor: #4CAF50, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #1a1a2e(0.5); LayoutMode: Top; Padding: (Horizontal: 8, Vertical: 2);
+                        Label { Text: "Black Market"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 12); }
+                        Label #EStatBlackMarket { Text: "0"; Style: (FontSize: 14, TextColor: #cc4444, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #1a1a2e(0.5); LayoutMode: Top; Padding: (Horizontal: 8, Vertical: 2);
+                        Label { Text: "Guildes"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 12); }
+                        Label #EStatGuilds { Text: "0"; Style: (FontSize: 14, TextColor: #D4AF37, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #1a1a2e(0.5); LayoutMode: Top; Padding: (Horizontal: 8, Vertical: 2);
+                        Label { Text: "Familles"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 12); }
+                        Label #EStatFamilies { Text: "0"; Style: (FontSize: 14, TextColor: #C8A2C8, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                }
+
+                Group { Anchor: (Height: 8); }
+                Label { Text: "TAXE GLOBALE"; Style: (FontSize: 9, TextColor: #D4AF37, RenderBold: true, LetterSpacing: 1); Anchor: (Height: 12); }
+                Group { Anchor: (Height: 3); }
+                Label #EStatTaxRate { Text: "Taux : 12%"; Style: (FontSize: 11, TextColor: #8899aa); Anchor: (Height: 16); }
+
+                Group { Anchor: (Height: 8); }
+                Label { Text: "COMMANDES UTILES"; Style: (FontSize: 9, TextColor: #2196F3, RenderBold: true, LetterSpacing: 1); Anchor: (Height: 12); }
+                Group { Anchor: (Height: 3); }
+                Label { Text: "/es sell <prix> — Vendre item en main"; Style: (FontSize: 10, TextColor: #667788); Anchor: (Height: 14); }
+                Label { Text: "/es trade invite <joueur> — Inviter a echanger"; Style: (FontSize: 10, TextColor: #667788); Anchor: (Height: 14); }
+                Label { Text: "/es guild info <nom> — Info guilde + tresorerie"; Style: (FontSize: 10, TextColor: #667788); Anchor: (Height: 14); }
+            }
+
+            // ===== TAB DATA RESET =====
+            Group #TabData {
+                LayoutMode: Top;
+                Visible: false;
+
+                Label { Text: "RESET DES DONNEES"; Style: (FontSize: 14, TextColor: #cc4444, RenderBold: true, LetterSpacing: 1, HorizontalAlignment: Center); Anchor: (Height: 20); }
+                Group { Anchor: (Height: 4); }
+                Group { Anchor: (Height: 1); Background: #cc4444(0.3); }
+                Group { Anchor: (Height: 6); }
+                Label { Text: "ATTENTION : Ces actions sont irreversibles !"; Style: (FontSize: 11, TextColor: #ff4444, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 16); }
+                Group { Anchor: (Height: 8); }
+
+                Group { LayoutMode: Left; Anchor: (Height: 32);
+                    TextButton #AResetGuilds { Text: "RESET GUILDES"; Anchor: (Width: 115, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.8); }
+                    Group { Anchor: (Width: 4); }
+                    TextButton #AResetFamilies { Text: "RESET FAMILLES"; Anchor: (Width: 120, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.8); }
+                    Group { Anchor: (Width: 4); }
+                    TextButton #AResetParcels { Text: "RESET PARCELLES"; Anchor: (Width: 130, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.8); }
+                }
+                Group { Anchor: (Height: 4); }
+                Group { LayoutMode: Left; Anchor: (Height: 32);
+                    TextButton #AResetShop { Text: "RESET SHOP"; Anchor: (Width: 100, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.8); }
+                    Group { Anchor: (Width: 4); }
+                    TextButton #AResetClassements { Text: "RESET CLASSEMENTS"; Anchor: (Width: 145, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.8); }
+                }
+                Group { Anchor: (Height: 12); }
+                Group { Anchor: (Height: 1); Background: #ff0000(0.4); }
+                Group { Anchor: (Height: 6); }
+                TextButton #AResetAll { Text: "RESET COMPLET DU SERVEUR"; Anchor: (Height: 32); Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #cc2222(0.9); }
+            }
+
+            // Prefill buttons are now in TabPlayers above
+        }
+    }
+}

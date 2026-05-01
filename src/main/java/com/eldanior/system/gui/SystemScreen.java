@@ -2,7 +2,7 @@ package com.eldanior.system.gui;
 
 import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.config.Player.PlayerLevelData;
-import com.eldanior.system.gui.tabs.AdminTab;
+// AdminTab moved to AdminScreen
 import com.eldanior.system.gui.tabs.BlackMarketTab;
 import com.eldanior.system.gui.tabs.QuestTab;
 import com.eldanior.system.gui.tabs.DuelTab;
@@ -18,6 +18,8 @@ import com.eldanior.system.gui.tabs.ProprietesTab;
 import com.eldanior.system.gui.tabs.EchangesTab;
 import com.eldanior.system.gui.tabs.ProfilTab;
 import com.eldanior.system.gui.tabs.TitresTab;
+import com.eldanior.system.config.UUIDExtractor;
+import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
@@ -39,7 +41,7 @@ import javax.annotation.Nonnull;
 public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEventData> {
 
     private static final String[] TAB_IDS = {
-            "Profil", "Inventaire", "Competences", "Guilde", "Groupe", "Famille", "Titres", "Quetes", "Classements", "Duel", "Shop", "BlackMarket", "Territoires", "Proprietes", "Echanges", "Admin"
+            "Profil", "Inventaire", "Competences", "Guilde", "Groupe", "Famille", "Titres", "Quetes", "Classements", "Duel", "Shop", "BlackMarket", "Territoires", "Proprietes", "Echanges"
     };
 
     public SystemScreen(@Nonnull PlayerRef playerRef) {
@@ -66,13 +68,9 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         ui.set("#SidebarMoney.Text", data.getMoney() + " Or");
         ui.set("#SidebarLevel.Text", "Niveau " + data.getLevel());
 
-        // Admin visible si permission
+        // Admin separe — via /es admin
         PlayerRef pRefCheck = store.getComponent(ref, PlayerRef.getComponentType());
         com.hypixel.hytale.server.core.entity.entities.Player playerCheck = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
-        if (playerCheck != null && playerCheck.hasPermission("eldanior.command.setlevel")) {
-            ui.set("#TabBtnAdmin.Visible", true);
-            AdminTab.populate(ui, ref, store);
-        }
 
         // Famille visible si Duc, Marquis ou Roi (ou si a deja une famille)
         String rankStr = data.getNobilityRank();
@@ -87,8 +85,8 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         }
 
         // Territoires visible si noblesse (Duc, Marquis, Roi) ou admin
-        boolean isAdmin = playerCheck != null && playerCheck.hasPermission("eldanior.command.setlevel");
-        boolean showTerritoires = isAdmin || (rankStr != null && ("DUC".equals(rankStr) || "MARQUIS".equals(rankStr) || "ROI".equals(rankStr)));
+        // Territoires visible uniquement pour les nobles (admin separe via /es admin)
+        boolean showTerritoires = rankStr != null && ("DUC".equals(rankStr) || "MARQUIS".equals(rankStr) || "ROI".equals(rankStr));
         if (showTerritoires) {
             ui.set("#TabBtnTerritoires.Visible", true);
             TerritoiresTab.populate(ui, ref, store);
@@ -97,13 +95,13 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         // Proprietes visible pour tous
         ProprietesTab.populate(ui, ref, store);
 
-        // Echanges visible uniquement pour les Marchands ou admin
+        // Echanges visible uniquement pour les Marchands
         String classType = data.getPlayerClassId();
         com.eldanior.system.classes.models.ClassModel classModel = com.eldanior.system.classes.ClassManager.get(classType);
-        boolean showEchanges = isAdmin || (classModel != null && classModel.getType() == com.eldanior.system.config.configs.ClassType.MERCHANT);
+        boolean showEchanges = classModel != null && classModel.getType() == com.eldanior.system.config.configs.ClassType.MERCHANT;
         if (showEchanges) {
             ui.set("#TabBtnEchanges.Visible", true);
-            EchangesTab.populate(ui, ref, store, isAdmin);
+            EchangesTab.populate(ui, ref, store, false);
         }
 
         // Populate profil tab (default)
@@ -200,7 +198,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         }
 
         // Populate black market (visible si PK ou admin)
-        boolean showBM = data.isPK() || (playerCheck != null && playerCheck.hasPermission("eldanior.command.setlevel"));
+        boolean showBM = data.isPK() || (playerCheck != null && playerCheck.hasPermission(EldaniorLogger.ADMIN_PERMISSION));
         ui.set("#TabBtnBlackMarket.Visible", showBM);
         if (showBM) {
             BlackMarketTab.populate(ui, ref, store);
@@ -241,6 +239,10 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnTax", EventData.of("Action", "terr_tax"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnTransfer", EventData.of("Action", "terr_transfer"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnInvasion", EventData.of("Action", "terr_invasion"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnDecretMarquis", EventData.of("Action", "terr_decret").append("Param", "MARQUIS"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnDecretDuc", EventData.of("Action", "terr_decret").append("Param", "DUC"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnDecretComte", EventData.of("Action", "terr_decret").append("Param", "COMTE"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnDecretBaron", EventData.of("Action", "terr_decret").append("Param", "BARON"));
 
         // Proprietes - clic sur un bien (selection)
         for (int i = 0; i < ProprietesTab.MAX_OWNED_SLOTS; i++) {
@@ -278,62 +280,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         events.addEventBinding(CustomUIEventBindingType.Activating, "#RkBtnGuildFam", EventData.of("Action", "rk_guildfam"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#RkBtnDuel", EventData.of("Action", "rk_duel"));
 
-        // Admin events - player selector
-        for (int i = 0; i < AdminTab.MAX_PLAYER_SLOTS; i++) {
-            events.addEventBinding(CustomUIEventBindingType.Activating, "#ASelPlayer" + i, EventData.of("Action", "admin_sel").append("Param", String.valueOf(i)));
-        }
-        // Admin action buttons
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#AResetLv", EventData.of("Action", "admin_reset"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#AXP1k", EventData.of("Action", "admin_xp").append("Param", "1000"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#AXP10k", EventData.of("Action", "admin_xp").append("Param", "10000"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#AXP100k", EventData.of("Action", "admin_xp").append("Param", "100000"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#ALv50", EventData.of("Action", "admin_setlv").append("Param", "50"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#ALv100", EventData.of("Action", "admin_setlv").append("Param", "100"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#ALv200", EventData.of("Action", "admin_setlv").append("Param", "200"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#AGold10k", EventData.of("Action", "admin_gold").append("Param", "10000"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#AGold100k", EventData.of("Action", "admin_gold").append("Param", "100000"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#AGold1m", EventData.of("Action", "admin_gold").append("Param", "1000000"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#ACWar", EventData.of("Action", "admin_class").append("Param", "warrior"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#ACMag", EventData.of("Action", "admin_class").append("Param", "mage"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#ACArc", EventData.of("Action", "admin_class").append("Param", "archer"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#ACAss", EventData.of("Action", "admin_class").append("Param", "assassin"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#ACDra", EventData.of("Action", "admin_class").append("Param", "dragon"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#ANChev", EventData.of("Action", "admin_nob").append("Param", "CHEVALIER"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#ANBaron", EventData.of("Action", "admin_nob").append("Param", "BARON"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#ANComte", EventData.of("Action", "admin_nob").append("Param", "COMTE"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#ANDuc", EventData.of("Action", "admin_nob").append("Param", "DUC"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#ANMarq", EventData.of("Action", "admin_nob").append("Param", "MARQUIS"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#ANRoi", EventData.of("Action", "admin_nob").append("Param", "ROI"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#ACPret", EventData.of("Action", "admin_ch").append("Param", "PRETRE"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#ACArch", EventData.of("Action", "admin_ch").append("Param", "ARCHEVEQUE"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#ACCard", EventData.of("Action", "admin_ch").append("Param", "CARDINAL"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#ACPope", EventData.of("Action", "admin_ch").append("Param", "PAPE"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#APK", EventData.of("Action", "admin_pk"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#ATitleRst", EventData.of("Action", "admin_titlerst"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#ARelic", EventData.of("Action", "admin_relic"));
-        // (command exec removed - prefill sends to chat directly)
-        // Prefill buttons
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillTitleGrant", EventData.of("Action", "admin_prefill").append("Param", "titleadmin grant <player> <titleId>"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillTitleRemove", EventData.of("Action", "admin_prefill").append("Param", "titleadmin remove <player> <titleId>"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillFamilySet", EventData.of("Action", "admin_prefill").append("Param", "familyset <player> <familyId>"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillGuildCreate", EventData.of("Action", "admin_prefill").append("Param", "guildcreate <nom> <tag>"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillSetLevel", EventData.of("Action", "admin_prefill").append("Param", "setlevel <player> <level>"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillAddXP", EventData.of("Action", "admin_prefill").append("Param", "addxp <player> <amount>"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillGuildDisband", EventData.of("Action", "admin_prefill").append("Param", "guilddisband"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillKingdom", EventData.of("Action", "admin_prefill").append("Param", "kingdom _"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillChurchStatus", EventData.of("Action", "admin_prefill").append("Param", "church status _"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillBankGive", EventData.of("Action", "admin_prefill").append("Param", "bankGive <amount>"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillSetClass", EventData.of("Action", "admin_prefill").append("Param", "setclass <player> <warrior|mage|archer|assassin|dragon>"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillRankDemote", EventData.of("Action", "admin_prefill").append("Param", "rank demote <player>"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillChurchDemote", EventData.of("Action", "admin_prefill").append("Param", "church demote <player>"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillSetVice", EventData.of("Action", "admin_prefill").append("Param", "nstatus setvice <player>"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillClassInfo", EventData.of("Action", "admin_prefill").append("Param", "classinfo <player>"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#AResetAll", EventData.of("Action", "admin_resetall"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#AResetGuilds", EventData.of("Action", "admin_reset_guilds"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#AResetFamilies", EventData.of("Action", "admin_reset_families"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#AResetParcels", EventData.of("Action", "admin_reset_parcels"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#AResetShop", EventData.of("Action", "admin_reset_shop"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#AResetClassements", EventData.of("Action", "admin_reset_classements"));
+        // Admin separe — via /es admin
 
         // === EVENT BINDINGS ===
 
@@ -351,7 +298,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnTerritoires", EventData.of("Action", "tab_territoires"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnProprietes", EventData.of("Action", "tab_proprietes"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnEchanges",   EventData.of("Action", "tab_echanges"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnAdmin",      EventData.of("Action", "tab_admin"));
+        // Admin tab removed — /es admin
 
         // Attribute buttons (+1)
         events.addEventBinding(CustomUIEventBindingType.Activating, "#BtnStr1", EventData.of("Action", "attr_str_1"));
@@ -588,6 +535,12 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             }
             return;
         }
+        if ("terr_decret".equals(eventData.action) && eventData.param != null) {
+            if (TerritoiresTab.handleGiveDecret(eventData.param, ref, store)) {
+                refreshTerritoiresTab(ref, store);
+            }
+            return;
+        }
         if ("terr_invasion".equals(eventData.action)) {
             com.hypixel.hytale.server.core.entity.entities.Player p = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
             if (p != null) p.sendMessage(com.hypixel.hytale.server.core.Message.raw("§c§lINVASION LANCEE ! §7(fonctionnalite en cours de developpement)"));
@@ -621,17 +574,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             if (ProprietesTab.handleToggleProtection()) refreshProprietesTab(ref, store);
             return;
         }
-        if ("prop_setprice".equals(eventData.action)) {
-            // Prix par defaut : 1000 Or (toggle: 0 → 1000 → 5000 → 10000 → 0)
-            ProprietesTab.handleSetPrice(cyclePrice(ProprietesTab.class));
-            refreshProprietesTab(ref, store);
-            return;
-        }
-        if ("prop_setrent".equals(eventData.action)) {
-            ProprietesTab.handleSetRentPrice(cycleRentPrice(ProprietesTab.class));
-            refreshProprietesTab(ref, store);
-            return;
-        }
+        // prop_setprice and prop_setrent moved to AdminScreen
         if ("prop_family".equals(eventData.action)) {
             // Prefill la commande dans le chat
             com.hypixel.hytale.server.core.entity.entities.Player p = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
@@ -696,7 +639,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
 
         // Admin actions
         if (eventData.action.startsWith("admin_")) {
-            handleAdminAction(eventData.action, eventData.param, eventData, ref, store);
+            // Admin actions moved to AdminScreen (/es admin)
             return;
         }
 
@@ -767,150 +710,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         }
     }
 
-    private void handleAdminAction(String action, String param, SystemEventData eventData, Ref<EntityStore> ref, Store<EntityStore> store) {
-        com.hypixel.hytale.server.core.entity.entities.Player player = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
-
-        switch (action) {
-            case "admin_sel" -> {
-                if (param != null) {
-                    AdminTab.selectPlayer(Integer.parseInt(param));
-                    refreshAdminTab(ref, store);
-                }
-            }
-            case "admin_reset" -> {
-                if (AdminTab.handleResetLevel(ref, store)) {
-                    if (player != null) player.sendMessage(Message.raw("§aJoueur reset !"));
-                    refreshAdminTab(ref, store);
-                }
-            }
-            case "admin_xp" -> {
-                if (param != null && AdminTab.handleAddXP(Integer.parseInt(param), ref, store)) {
-                    if (player != null) player.sendMessage(Message.raw("§a+" + param + " XP !"));
-                    refreshAdminTab(ref, store);
-                }
-            }
-            case "admin_setlv" -> {
-                if (param != null && AdminTab.handleSetLevel(Integer.parseInt(param), ref, store)) {
-                    if (player != null) player.sendMessage(Message.raw("§aNiveau defini a " + param));
-                    refreshAdminTab(ref, store);
-                }
-            }
-            case "admin_gold" -> {
-                if (param != null && AdminTab.handleGiveGold(Long.parseLong(param), ref, store)) {
-                    if (player != null) player.sendMessage(Message.raw("§a+" + param + " Or !"));
-                    refreshAdminTab(ref, store);
-                }
-            }
-            case "admin_class" -> {
-                if (param != null && AdminTab.handleSetClass(param, ref, store)) {
-                    if (player != null) player.sendMessage(Message.raw("§aClasse: " + param));
-                    refreshAdminTab(ref, store);
-                }
-            }
-            case "admin_nob" -> {
-                if (param != null && AdminTab.handleNobilityPromote(param, ref, store)) {
-                    if (player != null) player.sendMessage(Message.raw("§aRang: " + param));
-                    refreshAdminTab(ref, store);
-                }
-            }
-            case "admin_ch" -> {
-                if (param != null && AdminTab.handleChurchPromote(param, ref, store)) {
-                    if (player != null) player.sendMessage(Message.raw("§aEglise: " + param));
-                    refreshAdminTab(ref, store);
-                }
-            }
-            case "admin_pk" -> {
-                if (AdminTab.handleSetPK(ref, store)) {
-                    if (player != null) player.sendMessage(Message.raw("§ePK toggle !"));
-                    refreshAdminTab(ref, store);
-                }
-            }
-            case "admin_titlerst" -> {
-                if (AdminTab.handleResetTitles(ref, store)) {
-                    if (player != null) player.sendMessage(Message.raw("§aTitres reset !"));
-                    refreshAdminTab(ref, store);
-                }
-            }
-            case "admin_relic" -> {
-                if (player != null) player.sendMessage(Message.raw("§eTapez : /es getrelic"));
-            }
-            case "admin_prefill" -> {
-                if (param != null && player != null) {
-                    String name = AdminTab.getSelectedPlayerName();
-                    String cmd = param.replace("<player>", name != null ? name : "<player>");
-                    player.sendMessage(Message.raw("§6Tapez dans le chat :"));
-                    player.sendMessage(Message.raw("§f/es " + cmd));
-                }
-            }
-            case "admin_reset_guilds" -> {
-                if (player != null) {
-                    com.eldanior.system.guild.GuildManager.init();
-                    deleteDataFile("guilds.properties");
-                    player.sendMessage(Message.raw("§c§lGuildes reinitialises !"));
-                }
-            }
-            case "admin_reset_families" -> {
-                if (player != null) {
-                    com.eldanior.system.titles.nobility.family.FamilyManager.init();
-                    deleteDataFile("families.properties");
-                    player.sendMessage(Message.raw("§c§lFamilles reinitialises !"));
-                }
-            }
-            case "admin_reset_parcels" -> {
-                if (player != null) {
-                    try {
-                        java.io.File f = com.eldanior.system.EldaniorSystem.get().getDataDirectory()
-                                .resolve("parcels.properties").toFile();
-                        if (f.exists()) f.delete();
-                    } catch (Exception ignored) {}
-                    com.eldanior.system.territory.ParcelManager.init(com.eldanior.system.EldaniorSystem.get().getDataDirectory());
-                    player.sendMessage(Message.raw("§c§lParcelles reinitialises !"));
-                }
-            }
-            case "admin_reset_shop" -> {
-                if (player != null) {
-                    com.eldanior.system.shop.ShopManager.init();
-                    deleteDataFile("shop.properties");
-                    deleteDataFile("blackmarket.properties");
-                    player.sendMessage(Message.raw("§c§lShop et Marche Noir reinitialises !"));
-                }
-            }
-            case "admin_reset_classements" -> {
-                if (player != null) {
-                    com.eldanior.system.classement.ClassementManager.init();
-                    deleteDataFile("classements.properties");
-                    player.sendMessage(Message.raw("§c§lClassements reinitialises !"));
-                }
-            }
-            case "admin_resetall" -> {
-                if (player != null) {
-                    // Reset guildes
-                    com.eldanior.system.guild.GuildManager.init();
-                    // Reset familles
-                    com.eldanior.system.titles.nobility.family.FamilyManager.init();
-                    // Reset parcelles
-                    try {
-                        java.io.File parcelsFile = com.eldanior.system.EldaniorSystem.get().getDataDirectory()
-                                .resolve("parcels.properties").toFile();
-                        if (parcelsFile.exists()) parcelsFile.delete();
-                    } catch (Exception ignored) {}
-                    com.eldanior.system.territory.ParcelManager.init(com.eldanior.system.EldaniorSystem.get().getDataDirectory());
-                    // Reset persistence (guildes, familles, classements, shop)
-                    try {
-                        java.nio.file.Path dataDir = com.eldanior.system.EldaniorSystem.get().getDataDirectory().resolve("eldanior_data");
-                        if (java.nio.file.Files.exists(dataDir)) {
-                            for (java.io.File f : dataDir.toFile().listFiles()) {
-                                f.delete();
-                            }
-                        }
-                    } catch (Exception ignored) {}
-                    player.sendMessage(Message.raw("§c§l=== RESET COMPLET ==="));
-                    player.sendMessage(Message.raw("§cGuildes, Familles, Parcelles, Classements, Shop reinitialises !"));
-                    player.sendMessage(Message.raw("§7Redemarrez le serveur pour finaliser."));
-                }
-            }
-        }
-    }
+    // handleAdminAction moved to AdminScreen.java
 
     private void refreshFamilleTab(Ref<EntityStore> ref, Store<EntityStore> store) {
         UICommandBuilder update = new UICommandBuilder();
@@ -930,9 +730,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             com.hypixel.hytale.server.core.entity.entities.Player player = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
             PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
             if (player == null || pRef == null) return;
-            java.lang.reflect.Field f = PlayerRef.class.getDeclaredField("uuid");
-            f.setAccessible(true);
-            java.util.UUID uuid = (java.util.UUID) f.get(pRef);
+                        java.util.UUID uuid = UUIDExtractor.getUUID(pRef);
 
             var currentHud = player.getHudManager().getCustomHud();
             if (currentHud instanceof com.eldanior.system.hud.CombinedHud) {
@@ -969,15 +767,13 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         }
         update.set("#TabBtnFamille.Visible", showFamille);
 
-        // Territoires visible si noblesse ou admin
-        com.hypixel.hytale.server.core.entity.entities.Player playerCheck = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
-        boolean isAdmin = playerCheck != null && playerCheck.hasPermission("eldanior.command.setlevel");
-        boolean showTerritoires = isAdmin || (rankStr != null && ("DUC".equals(rankStr) || "MARQUIS".equals(rankStr) || "ROI".equals(rankStr)));
+        // Territoires visible si noblesse uniquement
+        boolean showTerritoires = rankStr != null && ("DUC".equals(rankStr) || "MARQUIS".equals(rankStr) || "ROI".equals(rankStr));
         update.set("#TabBtnTerritoires.Visible", showTerritoires);
 
-        // Echanges visible si Marchand ou admin
+        // Echanges visible si Marchand uniquement
         com.eldanior.system.classes.models.ClassModel classModel = com.eldanior.system.classes.ClassManager.get(data.getPlayerClassId());
-        boolean showEchanges = isAdmin || (classModel != null && classModel.getType() == com.eldanior.system.config.configs.ClassType.MERCHANT);
+        boolean showEchanges = classModel != null && classModel.getType() == com.eldanior.system.config.configs.ClassType.MERCHANT;
         update.set("#TabBtnEchanges.Visible", showEchanges);
 
         // Profil tab
@@ -994,13 +790,6 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
     private void refreshShopTab(Ref<EntityStore> ref, Store<EntityStore> store) {
         UICommandBuilder update = new UICommandBuilder();
         ShopTab.populate(update, ref, store);
-        appendProfilRefresh(update, ref, store);
-        this.sendUpdate(update);
-    }
-
-    private void refreshAdminTab(Ref<EntityStore> ref, Store<EntityStore> store) {
-        UICommandBuilder update = new UICommandBuilder();
-        AdminTab.populate(update, ref, store);
         appendProfilRefresh(update, ref, store);
         this.sendUpdate(update);
     }
@@ -1039,9 +828,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
 
     private void refreshEchangesTab(Ref<EntityStore> ref, Store<EntityStore> store) {
         UICommandBuilder update = new UICommandBuilder();
-        com.hypixel.hytale.server.core.entity.entities.Player p = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
-        boolean admin = p != null && p.hasPermission("eldanior.command.setlevel");
-        EchangesTab.populate(update, ref, store, admin);
+        EchangesTab.populate(update, ref, store, false);
         this.sendUpdate(update);
     }
 
@@ -1091,9 +878,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         if ("classements".equals(tabName)) {
             ClassementsTab.populate(update, ref, store);
         }
-        if ("admin".equals(tabName)) {
-            AdminTab.populate(update, ref, store);
-        }
+        // admin tab removed — /es admin
         if ("competences".equals(tabName)) {
             CompetencesTab.populate(update, ref, store);
         }
@@ -1117,7 +902,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         }
         if ("echanges".equals(tabName)) {
             com.hypixel.hytale.server.core.entity.entities.Player pc = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
-            boolean adm = pc != null && pc.hasPermission("eldanior.command.setlevel");
+            boolean adm = pc != null && pc.hasPermission(EldaniorLogger.ADMIN_PERMISSION);
             EchangesTab.populate(update, ref, store, adm);
         }
         if ("profil".equals(tabName)) {
@@ -1153,28 +938,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         return info != null ? info.getUsername() : "Inconnu";
     }
 
-    private void deleteDataFile(String filename) {
-        try {
-            java.nio.file.Path dataDir = com.eldanior.system.EldaniorSystem.get().getDataDirectory().resolve("eldanior_data");
-            java.io.File f = dataDir.resolve(filename).toFile();
-            if (f.exists()) f.delete();
-        } catch (Exception ignored) {}
-    }
-
-    private static final long[] PRICE_CYCLE = {0, 500, 1000, 5000, 10000, 50000};
-    private static final long[] RENT_CYCLE = {0, 100, 500, 1000, 5000};
-    private static int priceIdx = 0;
-    private static int rentIdx = 0;
-
-    private long cyclePrice(Class<?> ignored) {
-        priceIdx = (priceIdx + 1) % PRICE_CYCLE.length;
-        return PRICE_CYCLE[priceIdx];
-    }
-
-    private long cycleRentPrice(Class<?> ignored) {
-        rentIdx = (rentIdx + 1) % RENT_CYCLE.length;
-        return RENT_CYCLE[rentIdx];
-    }
+    // deleteDataFile, cyclePrice, cycleRentPrice moved to AdminScreen.java
 
     public static class SystemEventData {
         public static final BuilderCodec<SystemEventData> CODEC = BuilderCodec.builder(SystemEventData.class, SystemEventData::new)

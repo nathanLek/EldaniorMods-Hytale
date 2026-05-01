@@ -4,6 +4,8 @@ import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.shop.ShopManager;
 import com.eldanior.system.shop.ShopManager.ShopListing;
+import com.eldanior.system.config.UUIDExtractor;
+import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
@@ -15,7 +17,6 @@ import com.hypixel.hytale.server.core.asset.type.item.config.ItemQuality;
 import com.hypixel.hytale.server.core.ui.builder.UICommandBuilder;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
-import java.lang.reflect.Field;
 import java.util.*;
 
 public class ShopTab {
@@ -26,7 +27,7 @@ public class ShopTab {
     public static void populate(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store) {
         UUID myUUID = getPlayerUUID(ref, store);
         Player playerCheck = store.getComponent(ref, Player.getComponentType());
-        boolean isAdmin = playerCheck != null && playerCheck.hasPermission("eldanior.command.setlevel");
+        boolean isAdmin = playerCheck != null && playerCheck.hasPermission(EldaniorLogger.ADMIN_PERMISSION);
         List<ShopListing> listings = ShopManager.getListings();
 
         int totalPages = Math.max(1, (int) Math.ceil((double) listings.size() / MAX_SHOP_SLOTS));
@@ -132,7 +133,7 @@ public class ShopTab {
                         sellerRef.sendMessage(Message.raw("§a" + buyer.getDisplayName() + " a achete votre objet pour " + listing.getPrice() + " Or !"));
                     }
                 }
-            } catch (Exception ignored) {}
+            } catch (Exception e) { EldaniorLogger.error("ShopTab", e); }
         } else {
             // Vendeur deconnecte -> gains en attente
             ShopManager.addPendingEarnings(listing.getSellerUUID(), listing.getPrice());
@@ -158,7 +159,7 @@ public class ShopTab {
         if (myUUID == null || me == null) return false;
 
         boolean isOwner = myUUID.equals(listing.getSellerUUID());
-        boolean isAdmin = me.hasPermission("eldanior.command.setlevel");
+        boolean isAdmin = me.hasPermission(EldaniorLogger.ADMIN_PERMISSION);
         if (!isOwner && !isAdmin) return false;
 
         if (isOwner) {
@@ -185,7 +186,7 @@ public class ShopTab {
                             sellerRef.sendMessage(Message.raw("§eUn admin a retire votre annonce. Objet restitue."));
                         }
                     }
-                } catch (Exception ignored) {}
+                } catch (Exception e) { EldaniorLogger.error("ShopTab", e); }
             }
             // Note: si vendeur deconnecte, l'item est perdu (pas de pending items system)
             // On pourrait ajouter un systeme de pending items plus tard
@@ -217,7 +218,7 @@ public class ShopTab {
                     }
                 }
             }
-        } catch (Exception ignored) {}
+        } catch (Exception e) { EldaniorLogger.error("ShopTab", e); }
         return "#8899aa"; // Common/default
     }
 
@@ -236,7 +237,7 @@ public class ShopTab {
                     }
                 }
             }
-        } catch (Exception ignored) {}
+        } catch (Exception e) { EldaniorLogger.error("ShopTab", e); }
         return "";
     }
 
@@ -248,7 +249,7 @@ public class ShopTab {
                 String translated = InventaireTab.translate(key);
                 if (translated != null) return translated;
             }
-        } catch (Exception ignored) {}
+        } catch (Exception e) { EldaniorLogger.error("ShopTab", e); }
         return InventaireTab.formatItemName(item.getItemId());
     }
 
@@ -259,10 +260,6 @@ public class ShopTab {
 
     private static UUID extractUUID(PlayerRef playerRef) {
         if (playerRef == null) return null;
-        try {
-            Field f = PlayerRef.class.getDeclaredField("uuid");
-            f.setAccessible(true);
-            return (UUID) f.get(playerRef);
-        } catch (Exception e) { return null; }
+        try { return UUIDExtractor.getUUID(playerRef); } catch (Exception e) { return null; }
     }
 }

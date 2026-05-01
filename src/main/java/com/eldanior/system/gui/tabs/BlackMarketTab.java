@@ -4,6 +4,8 @@ import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.shop.ShopManager;
 import com.eldanior.system.shop.ShopManager.ShopListing;
+import com.eldanior.system.config.UUIDExtractor;
+import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
@@ -15,7 +17,6 @@ import com.hypixel.hytale.server.core.ui.builder.UICommandBuilder;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
-import java.lang.reflect.Field;
 import java.util.*;
 
 public class BlackMarketTab {
@@ -26,7 +27,7 @@ public class BlackMarketTab {
     public static void populate(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store) {
         UUID myUUID = getPlayerUUID(ref, store);
         Player playerCheck = store.getComponent(ref, Player.getComponentType());
-        boolean isAdmin = playerCheck != null && playerCheck.hasPermission("eldanior.command.setlevel");
+        boolean isAdmin = playerCheck != null && playerCheck.hasPermission(EldaniorLogger.ADMIN_PERMISSION);
         List<ShopListing> listings = ShopManager.getBlackMarketListings();
 
         int totalPages = Math.max(1, (int) Math.ceil((double) listings.size() / MAX_SLOTS));
@@ -96,7 +97,7 @@ public class BlackMarketTab {
                 if (sData != null) { sData.addMoney(listing.getPrice()); sStore.putComponent(sRef, type, sData);
                     sellerRef.sendMessage(Message.raw("§a" + buyer.getDisplayName() + " a achete votre objet (Marche Noir) pour " + listing.getPrice() + " Or !"));
                 }
-            } catch (Exception ignored) {}
+            } catch (Exception e) { EldaniorLogger.error("BlackMarketTab", e); }
         } else {
             ShopManager.addPendingEarnings(listing.getSellerUUID(), listing.getPrice());
         }
@@ -119,7 +120,7 @@ public class BlackMarketTab {
         if (myUUID == null || me == null) return false;
 
         boolean isOwner = myUUID.equals(listing.getSellerUUID());
-        boolean isAdmin = me.hasPermission("eldanior.command.setlevel");
+        boolean isAdmin = me.hasPermission(EldaniorLogger.ADMIN_PERMISSION);
         if (!isOwner && !isAdmin) return false;
 
         if (isOwner) {
@@ -138,7 +139,7 @@ public class BlackMarketTab {
                             sellerRef.sendMessage(Message.raw("§eAdmin a retire votre annonce du Marche Noir."));
                         }
                     }
-                } catch (Exception ignored) {}
+                } catch (Exception e) { EldaniorLogger.error("BlackMarketTab", e); }
             }
             ShopManager.removeBlackMarketListing(idx);
             me.sendMessage(Message.raw("§eAnnonce retiree du Marche Noir (admin)."));
@@ -156,7 +157,7 @@ public class BlackMarketTab {
     private static UUID getPlayerUUID(Ref<EntityStore> ref, Store<EntityStore> store) {
         PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
         if (pRef == null) return null;
-        try { Field f = PlayerRef.class.getDeclaredField("uuid"); f.setAccessible(true); return (UUID) f.get(pRef); }
+        try { return UUIDExtractor.getUUID(pRef); }
         catch (Exception e) { return null; }
     }
 }

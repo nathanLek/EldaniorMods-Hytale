@@ -1,5 +1,6 @@
 package com.eldanior.system.duel;
 
+import com.eldanior.system.config.UUIDExtractor;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
@@ -12,7 +13,6 @@ import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
-import java.lang.reflect.Field;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
@@ -94,8 +94,6 @@ public class DuelCommand extends AbstractAsyncCommand {
         Store<EntityStore> store = ref.getStore();
         PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
         if (pRef == null) return null;
-        Field f = PlayerRef.class.getDeclaredField("uuid");
-        f.setAccessible(true);
-        return (UUID) f.get(pRef);
+        return UUIDExtractor.getUUID(pRef);
     }
 }

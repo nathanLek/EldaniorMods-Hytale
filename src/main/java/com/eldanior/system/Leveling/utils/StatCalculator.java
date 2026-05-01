@@ -4,6 +4,7 @@ import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.classes.ClassManager;
 import com.eldanior.system.classes.models.ClassModel;
 import com.eldanior.system.config.configs.StatConfig;
+import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.logger.HytaleLogger;
@@ -158,7 +159,7 @@ public class StatCalculator {
                     break;
                 }
             }
-        } catch (Exception ignored) {}
+        } catch (Exception e) { EldaniorLogger.error("StatCalculator", e); }
     }
 
     private static UUID getUUID(Store<EntityStore> store, Ref<EntityStore> entityRef) {
@@ -171,7 +172,7 @@ public class StatCalculator {
                     if (uuid != null) return uuid;
                 }
             }
-        } catch (Exception ignored) {}
+        } catch (Exception e) { EldaniorLogger.error("StatCalculator", e); }
         return null;
     }
 }

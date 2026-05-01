@@ -8,6 +8,7 @@ import com.eldanior.system.titles.models.TitleBonus;
 import com.eldanior.system.titles.models.TitleModel;
 import com.eldanior.system.titles.nobility.family.FamilyManager;
 import com.eldanior.system.titles.nobility.family.NobleFamilyModel;
+import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
@@ -64,6 +65,7 @@ public class PlayerLevelData implements Component<EntityStore> {
     private String questData = ""; // Serialized quest data
     private String cooldownData = ""; // Serialized cooldowns: questId=timestamp|...
     private transient long lastPvPKillTime = 0; // Pour le timer de redemption
+    private String duelHistoryData = ""; // Serialized duel history
     private transient List<String> duelHistory = new ArrayList<>();
 
     // Guilde
@@ -99,13 +101,16 @@ public class PlayerLevelData implements Component<EntityStore> {
         this.currentTitle = "novice";
     }
 
+    public static final int MAX_LEVEL = 999;
+
     public int getRequiredExperience() {
         return (int) (100 + 140 * (level - 1) + 5L * (level - 1) * (level - 1));
     }
 
     public void addExperience(int amount) {
+        if (this.level >= MAX_LEVEL) return;
         this.experience += amount;
-        while (this.experience >= getRequiredExperience()) {
+        while (this.experience >= getRequiredExperience() && this.level < MAX_LEVEL) {
             this.experience -= getRequiredExperience();
             this.level++;
             this.attributePoints += 3;
@@ -212,7 +217,7 @@ public class PlayerLevelData implements Component<EntityStore> {
                         if (parts.length == 2) {
                             try {
                                 data.mobKills.put(parts[0], Integer.parseInt(parts[1]));
-                            } catch (NumberFormatException ignored) {}
+                            } catch (NumberFormatException e) { /* format invalide */ }
                         }
                     }
                 }
@@ -234,6 +239,7 @@ public class PlayerLevelData implements Component<EntityStore> {
             .append(new KeyedCodec<>("DuelBestStreak", Codec.INTEGER), (data, v) -> data.duelBestStreak = v, data -> data.duelBestStreak).add()
             .append(new KeyedCodec<>("SavedEvolutionChoices", Codec.STRING), (data, v) -> data.savedEvolutionChoices = (v != null ? v : ""), data -> (data.savedEvolutionChoices != null ? data.savedEvolutionChoices : "")).add()
             .append(new KeyedCodec<>("EvolutionRerolls", Codec.INTEGER), (data, v) -> data.evolutionRerolls = (v != null ? v : 0), data -> data.evolutionRerolls).add()
+            .append(new KeyedCodec<>("DuelHistory", Codec.STRING), (data, v) -> { data.duelHistoryData = (v != null ? v : ""); data.deserializeDuelHistory(); }, data -> data.serializeDuelHistory()).add()
             .build();
 
     // --- Méthode CLONE ---
@@ -430,6 +436,20 @@ public class PlayerLevelData implements Component<EntityStore> {
         String entry = (won ? "V" : "D") + "|" + opponentName + "|" + (int)(myHPPercent * 100) + "%|" + (int)(opHPPercent * 100) + "%";
         duelHistory.add(0, entry); // Plus recent en premier
         if (duelHistory.size() > 10) duelHistory.remove(duelHistory.size() - 1); // Max 10
+    }
+
+    public String serializeDuelHistory() {
+        if (duelHistory == null || duelHistory.isEmpty()) return "";
+        return String.join(";;", duelHistory);
+    }
+
+    public void deserializeDuelHistory() {
+        if (duelHistoryData == null || duelHistoryData.isEmpty()) return;
+        if (duelHistory == null) duelHistory = new ArrayList<>();
+        duelHistory.clear();
+        for (String entry : duelHistoryData.split(";;")) {
+            if (!entry.isEmpty()) duelHistory.add(entry);
+        }
     }
 
     public double getKDR() {

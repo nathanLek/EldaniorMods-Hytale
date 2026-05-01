@@ -3,6 +3,8 @@ package com.eldanior.system.gui.tabs;
 import com.eldanior.system.config.Player.PlayerPositionTracker;
 import com.eldanior.system.trade.TradeManager;
 import com.eldanior.system.trade.TradeSession;
+import com.eldanior.system.config.UUIDExtractor;
+import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.math.vector.Vector3d;
@@ -11,7 +13,6 @@ import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.core.ui.builder.UICommandBuilder;
 
-import java.lang.reflect.Field;
 import java.util.*;
 
 public class EchangesTab {
@@ -26,11 +27,9 @@ public class EchangesTab {
         try {
             PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
             if (pRef != null) {
-                Field f = PlayerRef.class.getDeclaredField("uuid");
-                f.setAccessible(true);
-                myUUID = (UUID) f.get(pRef);
+                                myUUID = UUIDExtractor.getUUID(pRef);
             }
-        } catch (Exception ignored) {}
+        } catch (Exception e) { EldaniorLogger.error("EchangesTab", e); }
 
         // Recuperer la position du joueur
         Vector3d myPos = myUUID != null ? PlayerPositionTracker.PLAYER_POSITIONS.get(myUUID) : null;
@@ -91,14 +90,12 @@ public class EchangesTab {
             // UUID du marchand
             PlayerRef myPRef = store.getComponent(ref, PlayerRef.getComponentType());
             if (myPRef == null) return false;
-            Field f = PlayerRef.class.getDeclaredField("uuid");
-            f.setAccessible(true);
-            UUID myUUID = (UUID) f.get(myPRef);
+                        UUID myUUID = UUIDExtractor.getUUID(myPRef);
 
             // UUID de la cible
             PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, com.hypixel.hytale.server.core.NameMatching.EXACT_IGNORE_CASE);
             if (targetRef == null) return false;
-            UUID targetUUID = (UUID) f.get(targetRef);
+            UUID targetUUID = UUIDExtractor.getUUID(targetRef);
 
             if (TradeManager.isInTrade(myUUID) || TradeManager.isInTrade(targetUUID)) return false;
 
@@ -126,13 +123,11 @@ public class EchangesTab {
         try {
             PlayerRef myPRef = store.getComponent(ref, PlayerRef.getComponentType());
             if (myPRef == null) return false;
-            Field f = PlayerRef.class.getDeclaredField("uuid");
-            f.setAccessible(true);
-            UUID myUUID = (UUID) f.get(myPRef);
+                        UUID myUUID = UUIDExtractor.getUUID(myPRef);
 
             PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, com.hypixel.hytale.server.core.NameMatching.EXACT_IGNORE_CASE);
             if (targetRef == null) return false;
-            UUID targetUUID = (UUID) f.get(targetRef);
+            UUID targetUUID = UUIDExtractor.getUUID(targetRef);
 
             if (TradeManager.isInTrade(myUUID) || TradeManager.isInTrade(targetUUID)) return false;
 

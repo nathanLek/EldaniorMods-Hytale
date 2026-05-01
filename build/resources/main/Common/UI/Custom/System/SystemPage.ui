@@ -174,16 +174,6 @@ Group {
                 Visible: false;
             }
 
-            Group { Anchor: (Height: 4); }
-
-            TextButton #TabBtnAdmin {
-                Text: "ADMIN";
-                Style: (Default: (LabelStyle: (FontSize: 13, TextColor: #cc4444, RenderBold: true, RenderUppercase: true, HorizontalAlignment: Center, VerticalAlignment: Center)), Hovered: (LabelStyle: (FontSize: 13, TextColor: #ffffff, RenderBold: true, RenderUppercase: true, HorizontalAlignment: Center, VerticalAlignment: Center)));
-                Anchor: (Height: 32);
-                Background: #2a1a1a(0.6);
-                Visible: false;
-            }
-
             // --- Spacer ---
             Group { FlexWeight: 1; }
 
@@ -3004,7 +2994,7 @@ Group {
                     LayoutMode: Top;
                     Background: #0a1018(0.95);
                     Padding: (Horizontal: 14, Vertical: 10);
-                    Anchor: (Height: 380);
+                    Anchor: (Height: 420);
 
                     // Header
                     Group { LayoutMode: Left; Anchor: (Height: 28);
@@ -3104,6 +3094,17 @@ Group {
                         TextButton #TDetBtnInvasion { Visible: false; Text: "INVASION"; Anchor: (Width: 75, Height: 24); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #E74C3C, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.8); }
                         Group { FlexWeight: 1; }
                         TextButton #TDetBtnDel { Visible: false; Text: "SUPPRIMER"; Anchor: (Width: 80, Height: 24); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.8); }
+                    }
+                    Group { Anchor: (Height: 3); }
+                    // Ligne 3 : Decrets Royaux
+                    Group { LayoutMode: Left; Anchor: (Height: 28);
+                        TextButton #TDetBtnDecretMarquis { Visible: false; Text: "DECRET MARQUIS (4)"; Anchor: (Width: 130, Height: 24); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a2a0d(0.8); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #TDetBtnDecretDuc { Visible: false; Text: "DECRET DUC (3)"; Anchor: (Width: 110, Height: 24); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #9B59B6, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a0d2a(0.8); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #TDetBtnDecretComte { Visible: false; Text: "DECRET COMTE (2)"; Anchor: (Width: 120, Height: 24); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #3498DB, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #0d1a2a(0.8); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #TDetBtnDecretBaron { Visible: false; Text: "DECRET BARON (1)"; Anchor: (Width: 115, Height: 24); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #2ECC71, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #0d2a1a(0.8); }
                     }
                 }
 
@@ -3455,292 +3456,6 @@ Group {
                   TextButton #EchForceBtn7 { Text: "FORCER"; Visible: false; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
                   Group { Anchor: (Width: 4); }
                   TextButton #EchBtn7 { Text: "ECHANGER"; Anchor: (Width: 100, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                }
-            }
-
-            Group #TabAdmin {
-                LayoutMode: Top;
-                Visible: false;
-
-                Label {
-                    Text: "ADMINISTRATION";
-                    Style: (FontSize: 18, TextColor: #cc4444, RenderBold: true, RenderUppercase: true, LetterSpacing: 2, HorizontalAlignment: Center);
-                    Anchor: (Height: 26);
-                }
-
-                Group { Anchor: (Height: 6); }
-
-                // === STATS SERVEUR ===
-                Group {
-                    LayoutMode: Left;
-                    Anchor: (Height: 28);
-
-                    Group { FlexWeight: 1; Anchor: (Height: 28); Background: #1a1a2e(0.7); LayoutMode: Left; Padding: (Horizontal: 8); Label { Text: "Mobs"; Style: (FontSize: 9, TextColor: #8899aa, VerticalAlignment: Center); FlexWeight: 1; } Label #AdminStatMobs { Text: "0"; Style: (FontSize: 13, TextColor: #ffffff, VerticalAlignment: Center, HorizontalAlignment: End, RenderBold: true); Anchor: (Width: 40); } }
-                    Group { Anchor: (Width: 4); }
-                    Group { FlexWeight: 1; Anchor: (Height: 28); Background: #1a1a2e(0.7); LayoutMode: Left; Padding: (Horizontal: 8); Label { Text: "NPCs"; Style: (FontSize: 9, TextColor: #8899aa, VerticalAlignment: Center); FlexWeight: 1; } Label #AdminStatNpcs { Text: "0"; Style: (FontSize: 13, TextColor: #ffffff, VerticalAlignment: Center, HorizontalAlignment: End, RenderBold: true); Anchor: (Width: 40); } }
-                    Group { Anchor: (Width: 4); }
-                    Group { FlexWeight: 1; Anchor: (Height: 28); Background: #1a1a2e(0.7); LayoutMode: Left; Padding: (Horizontal: 8); Label { Text: "Classes"; Style: (FontSize: 9, TextColor: #8899aa, VerticalAlignment: Center); FlexWeight: 1; } Label #AdminStatClasses { Text: "0"; Style: (FontSize: 13, TextColor: #ffffff, VerticalAlignment: Center, HorizontalAlignment: End, RenderBold: true); Anchor: (Width: 40); } }
-                    Group { Anchor: (Width: 4); }
-                    Group { FlexWeight: 1; Anchor: (Height: 28); Background: #1a1a2e(0.7); LayoutMode: Left; Padding: (Horizontal: 8); Label { Text: "Titres"; Style: (FontSize: 9, TextColor: #8899aa, VerticalAlignment: Center); FlexWeight: 1; } Label #AdminStatTitres { Text: "0"; Style: (FontSize: 13, TextColor: #ffffff, VerticalAlignment: Center, HorizontalAlignment: End, RenderBold: true); Anchor: (Width: 40); } }
-                    Group { Anchor: (Width: 4); }
-                    Group { FlexWeight: 1; Anchor: (Height: 28); Background: #1a1a2e(0.7); LayoutMode: Left; Padding: (Horizontal: 8); Label { Text: "Skills"; Style: (FontSize: 9, TextColor: #8899aa, VerticalAlignment: Center); FlexWeight: 1; } Label #AdminStatSkills { Text: "0"; Style: (FontSize: 13, TextColor: #ffffff, VerticalAlignment: Center, HorizontalAlignment: End, RenderBold: true); Anchor: (Width: 40); } }
-                    Group { Anchor: (Width: 4); }
-                    Group { FlexWeight: 1; Anchor: (Height: 28); Background: #1a1a2e(0.7); LayoutMode: Left; Padding: (Horizontal: 8); Label { Text: "Quetes"; Style: (FontSize: 9, TextColor: #8899aa, VerticalAlignment: Center); FlexWeight: 1; } Label #AdminStatQuetes { Text: "0"; Style: (FontSize: 13, TextColor: #ffffff, VerticalAlignment: Center, HorizontalAlignment: End, RenderBold: true); Anchor: (Width: 40); } }
-                    Group { Anchor: (Width: 4); }
-                    Group { FlexWeight: 1; Anchor: (Height: 28); Background: #1a1a2e(0.7); LayoutMode: Left; Padding: (Horizontal: 8); Label { Text: "Joueurs"; Style: (FontSize: 9, TextColor: #8899aa, VerticalAlignment: Center); FlexWeight: 1; } Label #AdminStatPlayers { Text: "0"; Style: (FontSize: 13, TextColor: #ffffff, VerticalAlignment: Center, HorizontalAlignment: End, RenderBold: true); Anchor: (Width: 40); } }
-                }
-
-                Group { Anchor: (Height: 8); }
-
-                // === SELECTEUR DE JOUEUR ===
-                Label {
-                    Text: "SELECTIONNER UN JOUEUR";
-                    Style: (FontSize: 12, TextColor: #FFD700, RenderBold: true, RenderUppercase: true, LetterSpacing: 1, HorizontalAlignment: Center);
-                    Anchor: (Height: 18);
-                }
-                Group { Anchor: (Height: 4); }
-                Group {
-                    LayoutMode: Left;
-                    Anchor: (Height: 34);
-                    Background: #0a0e14(0.5);
-                    Padding: (Horizontal: 4, Vertical: 3);
-                    TextButton #ASelPlayer0 { Text: ""; Anchor: (Width: 95, Height: 28); Visible: false; Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #aabbcc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); }
-                    Group { Anchor: (Width: 3); }
-                    TextButton #ASelPlayer1 { Text: ""; Anchor: (Width: 95, Height: 28); Visible: false; Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #aabbcc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); }
-                    Group { Anchor: (Width: 3); }
-                    TextButton #ASelPlayer2 { Text: ""; Anchor: (Width: 95, Height: 28); Visible: false; Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #aabbcc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); }
-                    Group { Anchor: (Width: 3); }
-                    TextButton #ASelPlayer3 { Text: ""; Anchor: (Width: 95, Height: 28); Visible: false; Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #aabbcc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); }
-                    Group { Anchor: (Width: 3); }
-                    TextButton #ASelPlayer4 { Text: ""; Anchor: (Width: 95, Height: 28); Visible: false; Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #aabbcc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); }
-                    Group { Anchor: (Width: 3); }
-                    TextButton #ASelPlayer5 { Text: ""; Anchor: (Width: 95, Height: 28); Visible: false; Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #aabbcc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); }
-                    Group { Anchor: (Width: 3); }
-                    TextButton #ASelPlayer6 { Text: ""; Anchor: (Width: 95, Height: 28); Visible: false; Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #aabbcc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); }
-                    Group { Anchor: (Width: 3); }
-                    TextButton #ASelPlayer7 { Text: ""; Anchor: (Width: 95, Height: 28); Visible: false; Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #aabbcc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); }
-                }
-
-                Group { Anchor: (Height: 8); }
-
-                // Info joueur selectionne
-                Group {
-                    Anchor: (Height: 24);
-                    Background: #1a1208(0.6);
-                    LayoutMode: CenterMiddle;
-
-                    Label #AdminSelectedName {
-                        Text: "Aucun joueur selectionne";
-                        Style: (FontSize: 13, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true);
-                    }
-                }
-                Group {
-                    Anchor: (Height: 20);
-                    Background: #1a2030(0.4);
-                    LayoutMode: CenterMiddle;
-
-                    Label #AdminTargetInfo {
-                        Text: "";
-                        Style: (FontSize: 10, TextColor: #8899aa, HorizontalAlignment: Center, VerticalAlignment: Center);
-                    }
-                }
-
-
-
-                // === PANNEAU D'ACTIONS ===
-                Group #AdminActionPanel {
-                    LayoutMode: Top;
-                    Visible: false;
-
-                    Group { Anchor: (Height: 8); }
-                    Group { Anchor: (Height: 1); Background: #cc4444(0.3); }
-                    Group { Anchor: (Height: 8); }
-
-                    // --- LEVEL & XP ---
-                    Label { Text: "NIVEAU & EXPERIENCE"; Style: (FontSize: 10, TextColor: #4CAF50, RenderBold: true, RenderUppercase: true, LetterSpacing: 1); Anchor: (Height: 14); }
-                    Group { Anchor: (Height: 4); }
-                    Group {
-                        LayoutMode: Left;
-                        Anchor: (Height: 30);
-
-                        TextButton #AResetLv { Text: "RESET LV1"; Anchor: (Width: 90, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
-                        Group { Anchor: (Width: 4); }
-                        TextButton #AXP1k { Text: "+1K XP"; Anchor: (Width: 70, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.7); }
-                        Group { Anchor: (Width: 3); }
-                        TextButton #AXP10k { Text: "+10K XP"; Anchor: (Width: 75, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.7); }
-                        Group { Anchor: (Width: 3); }
-                        TextButton #AXP100k { Text: "+100K XP"; Anchor: (Width: 80, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.7); }
-                        Group { Anchor: (Width: 6); }
-                        TextButton #ALv50 { Text: "LV50"; Anchor: (Width: 55, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #aabbcc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                        Group { Anchor: (Width: 3); }
-                        TextButton #ALv100 { Text: "LV100"; Anchor: (Width: 60, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #aabbcc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                        Group { Anchor: (Width: 3); }
-                        TextButton #ALv200 { Text: "LV200"; Anchor: (Width: 60, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #aabbcc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                    }
-
-                    Group { Anchor: (Height: 8); }
-
-                    // --- OR ---
-                    Label { Text: "ARGENT"; Style: (FontSize: 10, TextColor: #D4AF37, RenderBold: true, RenderUppercase: true, LetterSpacing: 1); Anchor: (Height: 14); }
-                    Group { Anchor: (Height: 4); }
-                    Group {
-                        LayoutMode: Left;
-                        Anchor: (Height: 30);
-
-                        TextButton #AGold10k { Text: "+10K Or"; Anchor: (Width: 80, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a2a1a(0.7); }
-                        Group { Anchor: (Width: 3); }
-                        TextButton #AGold100k { Text: "+100K Or"; Anchor: (Width: 85, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a2a1a(0.7); }
-                        Group { Anchor: (Width: 3); }
-                        TextButton #AGold1m { Text: "+1M Or"; Anchor: (Width: 75, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a2a1a(0.7); }
-                    }
-
-                    Group { Anchor: (Height: 8); }
-
-                    // --- CLASSE ---
-                    Label { Text: "CLASSE"; Style: (FontSize: 10, TextColor: #2196F3, RenderBold: true, RenderUppercase: true, LetterSpacing: 1); Anchor: (Height: 14); }
-                    Group { Anchor: (Height: 4); }
-                    Group {
-                        LayoutMode: Left;
-                        Anchor: (Height: 30);
-
-                        TextButton #ACWar { Text: "GUERRIER"; Anchor: (Width: 90, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                        Group { Anchor: (Width: 3); }
-                        TextButton #ACMag { Text: "MAGE"; Anchor: (Width: 65, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #2196F3, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                        Group { Anchor: (Width: 3); }
-                        TextButton #ACArc { Text: "ARCHER"; Anchor: (Width: 75, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                        Group { Anchor: (Width: 3); }
-                        TextButton #ACAss { Text: "ASSASSIN"; Anchor: (Width: 85, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #9C27B0, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                        Group { Anchor: (Width: 3); }
-                        TextButton #ACDra { Text: "DRAGON"; Anchor: (Width: 80, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                    }
-
-                    Group { Anchor: (Height: 8); }
-
-                    // --- NOBLESSE ---
-                    Label { Text: "NOBLESSE"; Style: (FontSize: 10, TextColor: #C8A2C8, RenderBold: true, RenderUppercase: true, LetterSpacing: 1); Anchor: (Height: 14); }
-                    Group { Anchor: (Height: 4); }
-                    Group {
-                        LayoutMode: Left;
-                        Anchor: (Height: 30);
-
-                        TextButton #ANChev { Text: "CHEVALIER"; Anchor: (Width: 90, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #aabbcc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                        Group { Anchor: (Width: 3); }
-                        TextButton #ANBaron { Text: "BARON"; Anchor: (Width: 65, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                        Group { Anchor: (Width: 3); }
-                        TextButton #ANComte { Text: "COMTE"; Anchor: (Width: 65, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #2196F3, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                        Group { Anchor: (Width: 3); }
-                        TextButton #ANDuc { Text: "DUC"; Anchor: (Width: 50, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #9C27B0, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                        Group { Anchor: (Width: 3); }
-                        TextButton #ANMarq { Text: "MARQUIS"; Anchor: (Width: 75, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                        Group { Anchor: (Width: 3); }
-                        TextButton #ANRoi { Text: "ROI"; Anchor: (Width: 50, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                    }
-
-                    Group { Anchor: (Height: 8); }
-
-                    // --- EGLISE ---
-                    Label { Text: "EGLISE"; Style: (FontSize: 10, TextColor: #7EB8DA, RenderBold: true, RenderUppercase: true, LetterSpacing: 1); Anchor: (Height: 14); }
-                    Group { Anchor: (Height: 4); }
-                    Group {
-                        LayoutMode: Left;
-                        Anchor: (Height: 30);
-
-                        TextButton #ACPret { Text: "PRETRE"; Anchor: (Width: 75, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #aabbcc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                        Group { Anchor: (Width: 3); }
-                        TextButton #ACArch { Text: "ARCHEVEQUE"; Anchor: (Width: 100, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #2196F3, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                        Group { Anchor: (Width: 3); }
-                        TextButton #ACCard { Text: "CARDINAL"; Anchor: (Width: 85, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                        Group { Anchor: (Width: 3); }
-                        TextButton #ACPope { Text: "PAPE"; Anchor: (Width: 60, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                    }
-
-                    Group { Anchor: (Height: 8); }
-
-                    // --- AUTRES ---
-                    Label { Text: "AUTRES"; Style: (FontSize: 10, TextColor: #cc4444, RenderBold: true, RenderUppercase: true, LetterSpacing: 1); Anchor: (Height: 14); }
-                    Group { Anchor: (Height: 4); }
-                    Group {
-                        LayoutMode: Left;
-                        Anchor: (Height: 30);
-
-                        TextButton #APK { Text: "TOGGLE PK"; Anchor: (Width: 100, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
-                        Group { Anchor: (Width: 3); }
-                        TextButton #ATitleRst { Text: "RESET TITRES"; Anchor: (Width: 110, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #C8A2C8, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1a2a(0.7); }
-                        Group { Anchor: (Width: 3); }
-                        TextButton #ARelic { Text: "GIVE RELIC"; Anchor: (Width: 100, Height: 28); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #C8A2C8, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1a2a(0.7); }
-                    }
-
-                    Group { Anchor: (Height: 12); }
-                    Group { Anchor: (Height: 1); Background: #667788(0.2); }
-                    Group { Anchor: (Height: 8); }
-
-                    // --- RACCOURCIS COMMANDES ---
-                    Label { Text: "RACCOURCIS (pre-remplir le champ)"; Style: (FontSize: 10, TextColor: #FFD700, RenderBold: true, RenderUppercase: true, LetterSpacing: 1, HorizontalAlignment: Center); Anchor: (Height: 16); }
-                    Group { Anchor: (Height: 4); }
-                    Group {
-                        LayoutMode: Left;
-                        Anchor: (Height: 26);
-
-                        TextButton #APrefillTitleGrant { Text: "TITRE +"; Anchor: (Width: 75, Height: 24); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #C8A2C8, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                        Group { Anchor: (Width: 3); }
-                        TextButton #APrefillTitleRemove { Text: "TITRE -"; Anchor: (Width: 75, Height: 24); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                        Group { Anchor: (Width: 3); }
-                        TextButton #APrefillFamilySet { Text: "FAMILLE SET"; Anchor: (Width: 100, Height: 24); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                        Group { Anchor: (Width: 3); }
-                        TextButton #APrefillGuildCreate { Text: "GUILDE +"; Anchor: (Width: 80, Height: 24); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                        Group { Anchor: (Width: 3); }
-                        TextButton #APrefillSetLevel { Text: "SET LV"; Anchor: (Width: 65, Height: 24); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #aabbcc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                        Group { Anchor: (Width: 3); }
-                        TextButton #APrefillAddXP { Text: "ADD XP"; Anchor: (Width: 65, Height: 24); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                    }
-                    Group { Anchor: (Height: 3); }
-                    Group {
-                        LayoutMode: Left;
-                        Anchor: (Height: 26);
-
-                        TextButton #APrefillGuildDisband { Text: "GUILDE DISSOUDRE"; Anchor: (Width: 130, Height: 24); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                        Group { Anchor: (Width: 3); }
-                        TextButton #APrefillKingdom { Text: "ROYAUME"; Anchor: (Width: 80, Height: 24); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                        Group { Anchor: (Width: 3); }
-                        TextButton #APrefillChurchStatus { Text: "EGLISE STATUS"; Anchor: (Width: 110, Height: 24); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #7EB8DA, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                        Group { Anchor: (Width: 3); }
-                        TextButton #APrefillBankGive { Text: "BANK GIVE"; Anchor: (Width: 85, Height: 24); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                    }
-                    Group { Anchor: (Height: 3); }
-                    Group {
-                        LayoutMode: Left;
-                        Anchor: (Height: 26);
-
-                        TextButton #APrefillSetClass { Text: "SET CLASS"; Anchor: (Width: 85, Height: 24); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #2196F3, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                        Group { Anchor: (Width: 3); }
-                        TextButton #APrefillRankDemote { Text: "RANG -"; Anchor: (Width: 65, Height: 24); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                        Group { Anchor: (Width: 3); }
-                        TextButton #APrefillChurchDemote { Text: "EGLISE -"; Anchor: (Width: 75, Height: 24); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                        Group { Anchor: (Width: 3); }
-                        TextButton #APrefillSetVice { Text: "SET VICE"; Anchor: (Width: 75, Height: 24); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                        Group { Anchor: (Width: 3); }
-                        TextButton #APrefillClassInfo { Text: "CLASS INFO"; Anchor: (Width: 90, Height: 24); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #aabbcc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.7); }
-                    }
-
-                    Group { Anchor: (Height: 10); }
-                    Group { Anchor: (Height: 1); Background: #cc4444(0.3); }
-                    Group { Anchor: (Height: 4); }
-                    Label { Text: "RESET DONNEES"; Style: (FontSize: 10, TextColor: #cc4444, RenderBold: true, RenderUppercase: true, LetterSpacing: 1); Anchor: (Height: 16); }
-                    Group { Anchor: (Height: 4); }
-
-                    Group { LayoutMode: Left; Anchor: (Height: 28);
-                        TextButton #AResetGuilds { Text: "GUILDES"; Anchor: (Width: 80, Height: 24); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.8); }
-                        Group { Anchor: (Width: 4); }
-                        TextButton #AResetFamilies { Text: "FAMILLES"; Anchor: (Width: 80, Height: 24); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.8); }
-                        Group { Anchor: (Width: 4); }
-                        TextButton #AResetParcels { Text: "PARCELLES"; Anchor: (Width: 85, Height: 24); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.8); }
-                        Group { Anchor: (Width: 4); }
-                        TextButton #AResetShop { Text: "SHOP"; Anchor: (Width: 60, Height: 24); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.8); }
-                        Group { Anchor: (Width: 4); }
-                        TextButton #AResetClassements { Text: "CLASSEMENTS"; Anchor: (Width: 95, Height: 24); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.8); }
-                    }
-                    Group { Anchor: (Height: 4); }
-                    TextButton #AResetAll { Text: "RESET COMPLET"; Anchor: (Height: 28); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #cc2222(0.9); }
                 }
             }
         }

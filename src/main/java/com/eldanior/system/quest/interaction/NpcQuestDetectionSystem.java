@@ -9,6 +9,7 @@ import com.eldanior.system.quest.dialogue.NpcDialogueQuest;
 import com.eldanior.system.quest.dialogue.NpcMessageScreen;
 import com.eldanior.system.quest.dialogue.QuestCompletionScreen;
 import com.eldanior.system.quest.dialogue.QuestCondition;
+import com.eldanior.system.config.UUIDExtractor;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
@@ -22,7 +23,6 @@ import com.hypixel.hytale.server.npc.role.support.MarkedEntitySupport;
 import com.hypixel.hytale.server.npc.role.support.StateSupport;
 
 import javax.annotation.Nonnull;
-import java.lang.reflect.Field;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -44,14 +44,6 @@ public class NpcQuestDetectionSystem extends EntityTickingSystem<EntityStore> {
     private static final Map<Integer, Long> activeInteractions = new ConcurrentHashMap<>();
 
     // Reflection cache
-    private static Field uuidField;
-    static {
-        try {
-            uuidField = PlayerRef.class.getDeclaredField("uuid");
-            uuidField.setAccessible(true);
-        } catch (Exception ignored) {}
-    }
-
     private float cleanupTimer = 0;
 
     @Override
@@ -191,8 +183,7 @@ public class NpcQuestDetectionSystem extends EntityTickingSystem<EntityStore> {
     }
 
     private static UUID extractUUID(PlayerRef playerRef) {
-        if (uuidField == null) return null;
-        try { return (UUID) uuidField.get(playerRef); }
+        try { return UUIDExtractor.getUUID(playerRef); }
         catch (Exception e) { return null; }
     }
 }

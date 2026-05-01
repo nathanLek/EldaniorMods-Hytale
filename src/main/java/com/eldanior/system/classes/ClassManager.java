@@ -543,7 +543,12 @@ public class ClassManager {
     }
 
     public static ClassModel get(String id) {
-        return classes.get(id);
+        ClassModel cls = classes.get(id);
+        if (cls == null && id != null && !id.isEmpty()) {
+            System.err.println("[Eldanior] Classe introuvable: " + id + " — fallback vers novice");
+            cls = classes.get("novice");
+        }
+        return cls;
     }
 
     public static ClassModel getByDisplayName(String name) {

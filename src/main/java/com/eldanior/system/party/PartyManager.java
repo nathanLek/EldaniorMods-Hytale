@@ -1,5 +1,6 @@
 package com.eldanior.system.party;
 
+import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.protocol.packets.interface_.CustomHud;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
@@ -40,12 +41,15 @@ public class PartyManager {
 
     // ==================== MEMBERSHIP ====================
 
-    public static boolean joinParty(UUID playerUUID, String playerName, Party party) {
-        if (party.isFull() || playerParty.containsKey(playerUUID)) return false;
-        if (!party.addMember(playerUUID, playerName)) return false;
-        playerParty.put(playerUUID, party);
+    private static final Object PARTY_LOCK = new Object();
 
-        return true;
+    public static boolean joinParty(UUID playerUUID, String playerName, Party party) {
+        synchronized (PARTY_LOCK) {
+            if (party.isFull() || playerParty.containsKey(playerUUID)) return false;
+            if (!party.addMember(playerUUID, playerName)) return false;
+            playerParty.put(playerUUID, party);
+            return true;
+        }
     }
 
     public static void leaveParty(UUID playerUUID) {
@@ -154,7 +158,7 @@ public class PartyManager {
             if (currentHud instanceof com.eldanior.system.hud.CombinedHud) {
                 currentHud.show(); // Force refresh
             }
-        } catch (Exception ignored) {}
+        } catch (Exception e) { EldaniorLogger.error("PartyManager", e); }
     }
 
     public static void removeHudByUUID(UUID playerUUID) {
@@ -162,6 +166,6 @@ public class PartyManager {
             PlayerRef playerRef = Universe.get().getPlayer(playerUUID);
             if (playerRef == null) return;
             playerRef.getPacketHandler().writeNoCache(new CustomHud(true, null));
-        } catch (Exception ignored) {}
+        } catch (Exception e) { EldaniorLogger.error("PartyManager", e); }
     }
 }

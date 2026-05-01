@@ -26,15 +26,20 @@ public class TradeManager {
         System.out.println("[Eldanior] TradeManager initialise.");
     }
 
+    private static final Object TRADE_LOCK = new Object();
+
     // ==================== INVITATIONS ====================
 
     public static boolean sendInvite(UUID senderUUID, UUID targetUUID) {
-        if (senderUUID.equals(targetUUID)) return false;
-        if (isInTrade(senderUUID) || isInTrade(targetUUID)) return false;
-        if (pendingInvites.containsKey(targetUUID)) return false;
+        synchronized (TRADE_LOCK) {
+            if (senderUUID.equals(targetUUID)) return false;
+            if (!com.eldanior.system.config.RateLimiter.canExecute(senderUUID, "trade.invite", 3000)) return false;
+            if (isInTrade(senderUUID) || isInTrade(targetUUID)) return false;
+            if (pendingInvites.containsKey(targetUUID)) return false;
 
-        pendingInvites.put(targetUUID, senderUUID);
-        return true;
+            pendingInvites.put(targetUUID, senderUUID);
+            return true;
+        }
     }
 
     public static boolean hasPendingInvite(UUID targetUUID) {
@@ -56,11 +61,14 @@ public class TradeManager {
     // ==================== SESSIONS ====================
 
     public static TradeSession startTrade(UUID player1, UUID player2) {
-        TradeSession session = new TradeSession(player1, player2);
-        activeSessions.put(player1, session);
-        activeSessions.put(player2, session);
-        clearInvite(player2);
-        return session;
+        synchronized (TRADE_LOCK) {
+            if (isInTrade(player1) || isInTrade(player2)) return null;
+            TradeSession session = new TradeSession(player1, player2);
+            activeSessions.put(player1, session);
+            activeSessions.put(player2, session);
+            clearInvite(player2);
+            return session;
+        }
     }
 
     public static boolean isInTrade(UUID playerUUID) {
@@ -74,21 +82,26 @@ public class TradeManager {
     public static void endTrade(TradeSession session, boolean execute) {
         if (session == null) return;
 
-        UUID p1 = session.getPlayer1();
-        UUID p2 = session.getPlayer2();
+        synchronized (TRADE_LOCK) {
+            // Anti-duplication : si deja annule, ne rien faire
+            if (session.isCancelled()) return;
 
-        if (execute && session.isBothValidated()) {
-            // Transferer les items
-            transferItems(p1, p2, session);
-        } else {
-            // Annulation : rendre les items à chaque joueur
-            returnItems(p1, session.getMyItems(p1));
-            returnItems(p2, session.getMyItems(p2));
+            UUID p1 = session.getPlayer1();
+            UUID p2 = session.getPlayer2();
+
+            if (execute && session.isBothValidated()) {
+                // Transferer les items
+                transferItems(p1, p2, session);
+            } else {
+                // Annulation : rendre les items à chaque joueur
+                returnItems(p1, session.getMyItems(p1));
+                returnItems(p2, session.getMyItems(p2));
+            }
+
+            activeSessions.remove(p1);
+            activeSessions.remove(p2);
+            session.cancel();
         }
-
-        activeSessions.remove(p1);
-        activeSessions.remove(p2);
-        session.cancel();
     }
 
     private static void transferItems(UUID from, UUID to, TradeSession session) {
@@ -127,6 +140,17 @@ public class TradeManager {
     }
 
     // ==================== CLEANUP ====================
+
+    public static void cancelAllTrades() {
+        synchronized (TRADE_LOCK) {
+            for (TradeSession session : new HashSet<>(activeSessions.values())) {
+                if (!session.isCancelled()) {
+                    endTrade(session, false);
+                }
+            }
+            pendingInvites.clear();
+        }
+    }
 
     public static void handleDisconnect(UUID playerUUID) {
         // Annuler les invitations

@@ -6,19 +6,37 @@ import java.util.concurrent.ConcurrentHashMap;
 public class GuildManager {
 
     private static final Map<String, Guild> guilds = new ConcurrentHashMap<>();
+    private static final Map<String, Guild> tagIndex = new ConcurrentHashMap<>();
+    private static final Map<String, Guild> nameIndex = new ConcurrentHashMap<>();
     private static final Map<UUID, String> playerGuildMap = new ConcurrentHashMap<>();
     private static final Map<UUID, UUID> pendingInvites = new ConcurrentHashMap<>();
 
     public static void init() {
+        guilds.clear();
+        tagIndex.clear();
+        nameIndex.clear();
+        playerGuildMap.clear();
+        pendingInvites.clear();
         System.out.println("[Eldanior] Systeme de Guildes initialise.");
     }
 
     // ==================== CREATION ====================
 
     public static Guild createGuild(String name, String tag, UUID founderUUID, String founderName) {
+        // Validation des entrees
+        name = name.trim();
+        tag = tag.trim().toUpperCase();
+        if (name.length() < 3 || name.length() > 24) return null;
+        if (tag.length() < 2 || tag.length() > 5) return null;
+        if (!name.matches("[a-zA-Z0-9_ \\-]+")) return null;
+        if (!tag.matches("[A-Z0-9]+")) return null;
+        if (getByName(name) != null || getByTag(tag) != null) return null;
+
         String id = name.toLowerCase().replace(" ", "_");
         Guild guild = new Guild(id, name, tag, founderUUID, founderName);
         guilds.put(id, guild);
+        tagIndex.put(tag.toLowerCase(), guild);
+        nameIndex.put(name.toLowerCase(), guild);
         playerGuildMap.put(founderUUID, id);
         return guild;
     }
@@ -30,17 +48,11 @@ public class GuildManager {
     }
 
     public static Guild getByTag(String tag) {
-        for (Guild guild : guilds.values()) {
-            if (guild.getTag().equalsIgnoreCase(tag)) return guild;
-        }
-        return null;
+        return tagIndex.get(tag.toLowerCase());
     }
 
     public static Guild getByName(String name) {
-        for (Guild guild : guilds.values()) {
-            if (guild.getName().equalsIgnoreCase(name)) return guild;
-        }
-        return null;
+        return nameIndex.get(name.toLowerCase());
     }
 
     public static Guild getPlayerGuild(UUID playerUUID) {
@@ -77,7 +89,9 @@ public class GuildManager {
     public static void disbandGuild(String guildId) {
         Guild guild = guilds.remove(guildId);
         if (guild != null) {
-            for (UUID member : guild.getMembers()) {
+            tagIndex.remove(guild.getTag().toLowerCase());
+            nameIndex.remove(guild.getName().toLowerCase());
+            for (UUID member : new ArrayList<>(guild.getMembers())) {
                 playerGuildMap.remove(member);
             }
         }

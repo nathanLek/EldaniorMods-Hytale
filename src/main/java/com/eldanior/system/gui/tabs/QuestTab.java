@@ -5,6 +5,7 @@ import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.quest.*;
 import com.eldanior.system.quest.dialogue.NpcDialogueQuest;
 import com.eldanior.system.quest.dialogue.QuestCondition;
+import com.eldanior.system.config.UUIDExtractor;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
@@ -14,7 +15,6 @@ import com.hypixel.hytale.server.core.ui.builder.UICommandBuilder;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
-import java.lang.reflect.Field;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -328,8 +328,16 @@ public class QuestTab {
 
         PlayerRef pRefClaim = store.getComponent(ref, PlayerRef.getComponentType());
         if (pRefClaim != null) {
+            // Grand titre de completion
+            com.eldanior.system.Leveling.utils.NotificationHelper.showEventTitle(pRefClaim,
+                    "QUETE TERMINEE", model.getName(), true);
+            // Notification des recompenses
             com.eldanior.system.Leveling.utils.NotificationHelper.sendSuccess(pRefClaim,
                     "<color:green>+" + model.getRewardXP() + " XP</color> <color:gold>+" + model.getRewardGold() + " Or</color>");
+            if (model.getRewardTitleId() != null) {
+                com.eldanior.system.Leveling.utils.NotificationHelper.sendSuccess(pRefClaim,
+                        "<color:yellow>Titre debloque : " + model.getRewardTitleId() + "</color>");
+            }
             if (data.getLevel() > oldLevel) {
                 com.eldanior.system.Leveling.utils.NotificationHelper.showLevelUpTitle(pRefClaim, data.getLevel());
             }
@@ -434,7 +442,7 @@ public class QuestTab {
     private static UUID getPlayerUUID(Ref<EntityStore> ref, Store<EntityStore> store) {
         PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
         if (pRef == null) return null;
-        try { Field f = PlayerRef.class.getDeclaredField("uuid"); f.setAccessible(true); return (UUID) f.get(pRef); }
+        try { return UUIDExtractor.getUUID(pRef); }
         catch (Exception e) { return null; }
     }
 

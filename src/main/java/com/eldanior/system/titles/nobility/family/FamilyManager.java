@@ -58,6 +58,11 @@ public class FamilyManager {
     }
 
     public static void init() {
+        // Clear toutes les donnees
+        families.clear();
+        takenFamilies.clear();
+        runtimeData.clear();
+
         // Famille royale
         register(new Eldanior());
 

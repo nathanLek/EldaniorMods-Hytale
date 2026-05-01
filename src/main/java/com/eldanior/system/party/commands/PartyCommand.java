@@ -2,6 +2,7 @@ package com.eldanior.system.party.commands;
 
 import com.eldanior.system.party.Party;
 import com.eldanior.system.party.PartyManager;
+import com.eldanior.system.config.UUIDExtractor;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.NameMatching;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
@@ -14,7 +15,6 @@ import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
-import java.lang.reflect.Field;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
@@ -317,9 +317,7 @@ public class PartyCommand extends AbstractAsyncCommand {
 
     // ==================== UTILS ====================
     private UUID extractUUID(PlayerRef playerRef) throws Exception {
-        Field uuidField = PlayerRef.class.getDeclaredField("uuid");
-        uuidField.setAccessible(true);
-        return (UUID) uuidField.get(playerRef);
+        return UUIDExtractor.getUUID(playerRef);
     }
 
     private UUID getSenderUUID(Player sender) throws Exception {

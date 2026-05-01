@@ -2,6 +2,7 @@ package com.eldanior.system.titles.nobility.commands;
 
 import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.config.Player.PlayerLevelData;
+import com.eldanior.system.config.UUIDExtractor;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
@@ -16,7 +17,6 @@ import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
-import java.lang.reflect.Field;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
@@ -137,8 +137,6 @@ public class NobilityStatusCommand extends AbstractAsyncCommand {
     }
 
     private UUID extractUUID(PlayerRef playerRef) throws Exception {
-        Field uuidField = PlayerRef.class.getDeclaredField("uuid");
-        uuidField.setAccessible(true);
-        return (UUID) uuidField.get(playerRef);
+        return UUIDExtractor.getUUID(playerRef);
     }
 }

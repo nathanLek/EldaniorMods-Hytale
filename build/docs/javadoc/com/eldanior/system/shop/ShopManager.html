@@ -164,6 +164,16 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#addPendingEarnings(java.util.UUID,long)" class="member-name-link">addPendingEarnings</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;sellerUUID,
  long&nbsp;amount)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ShopManager.ShopListing.html" title="class in com.eldanior.system.shop">ShopManager.ShopListing</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buyBlackMarketListing(int)" class="member-name-link">buyBlackMarketListing</a><wbr>(int&nbsp;index)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Achat atomique Black Market.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ShopManager.ShopListing.html" title="class in com.eldanior.system.shop">ShopManager.ShopListing</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buyListing(int)" class="member-name-link">buyListing</a><wbr>(int&nbsp;index)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Achat atomique : retire et retourne le listing, ou null si deja achete.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static long</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#collectPendingEarnings(java.util.UUID)" class="member-name-link">collectPendingEarnings</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;playerUUID)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
@@ -275,6 +285,13 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="buyListing(int)">
+<h3>buyListing</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ShopManager.ShopListing.html" title="class in com.eldanior.system.shop">ShopManager.ShopListing</a></span>&nbsp;<span class="element-name">buyListing</span><wbr><span class="parameters">(int&nbsp;index)</span></div>
+<div class="block">Achat atomique : retire et retourne le listing, ou null si deja achete.</div>
+</section>
+</li>
+<li>
 <section class="detail" id="removeListing(int)">
 <h3>removeListing</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">removeListing</span><wbr><span class="parameters">(int&nbsp;index)</span></div>
@@ -305,6 +322,13 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="removeBlackMarketListing(int)">
 <h3>removeBlackMarketListing</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">removeBlackMarketListing</span><wbr><span class="parameters">(int&nbsp;index)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="buyBlackMarketListing(int)">
+<h3>buyBlackMarketListing</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ShopManager.ShopListing.html" title="class in com.eldanior.system.shop">ShopManager.ShopListing</a></span>&nbsp;<span class="element-name">buyBlackMarketListing</span><wbr><span class="parameters">(int&nbsp;index)</span></div>
+<div class="block">Achat atomique Black Market.</div>
 </section>
 </li>
 <li>

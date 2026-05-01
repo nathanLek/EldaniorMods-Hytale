@@ -15,6 +15,9 @@ public class ShopManager {
     private static final Map<UUID, Long> pendingEarnings = new ConcurrentHashMap<>();
 
     public static void init() {
+        listings.clear();
+        blackMarketListings.clear();
+        pendingEarnings.clear();
         System.out.println("[Eldanior] Systeme de Shop initialise.");
     }
 
@@ -27,6 +30,12 @@ public class ShopManager {
         return listings.get(index);
     }
 
+    /** Achat atomique : retire et retourne le listing, ou null si deja achete. */
+    public static synchronized ShopListing buyListing(int index) {
+        if (index < 0 || index >= listings.size()) return null;
+        return listings.remove(index);
+    }
+
     public static void removeListing(int index) {
         if (index >= 0 && index < listings.size()) {
             listings.remove(index);
@@ -34,7 +43,7 @@ public class ShopManager {
     }
 
     public static List<ShopListing> getListings() {
-        return listings;
+        return Collections.unmodifiableList(listings);
     }
 
     public static final int MAX_LISTINGS_PER_PLAYER = 3;
@@ -54,7 +63,13 @@ public class ShopManager {
         if (index >= 0 && index < blackMarketListings.size()) blackMarketListings.remove(index);
     }
 
-    public static List<ShopListing> getBlackMarketListings() { return blackMarketListings; }
+    /** Achat atomique Black Market. */
+    public static synchronized ShopListing buyBlackMarketListing(int index) {
+        if (index < 0 || index >= blackMarketListings.size()) return null;
+        return blackMarketListings.remove(index);
+    }
+
+    public static List<ShopListing> getBlackMarketListings() { return Collections.unmodifiableList(blackMarketListings); }
 
     public static int getBlackMarketPlayerListingCount(UUID playerUUID) {
         int count = 0;

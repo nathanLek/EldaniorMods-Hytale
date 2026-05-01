@@ -4,6 +4,8 @@ import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.config.Player.PlayerPositionTracker;
 import com.eldanior.system.territory.*;
+import com.eldanior.system.config.UUIDExtractor;
+import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.math.vector.Vector3d;
@@ -14,7 +16,6 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
-import java.lang.reflect.Field;
 import java.util.*;
 
 public class ProprietesTab {
@@ -36,13 +37,11 @@ public class ProprietesTab {
         try {
             PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
             if (pRef != null) {
-                Field f = PlayerRef.class.getDeclaredField("uuid");
-                f.setAccessible(true);
-                myUUID = (UUID) f.get(pRef);
+                                myUUID = UUIDExtractor.getUUID(pRef);
             }
             Player player = store.getComponent(ref, Player.getComponentType());
-            if (player != null) isAdmin = player.hasPermission("eldanior.command.setlevel");
-        } catch (Exception ignored) {}
+            if (player != null) isAdmin = player.hasPermission(EldaniorLogger.ADMIN_PERMISSION);
+        } catch (Exception e) { EldaniorLogger.error("ProprietesTab", e); }
 
         cachedOwnedIds.clear();
         cachedAvailableIds.clear();
@@ -88,7 +87,7 @@ public class ProprietesTab {
                     try {
                         PlayerRef rRef = Universe.get().getPlayer(p.getRenterUUID());
                         if (rRef != null) renterName = rRef.getUsername();
-                    } catch (Exception ignored) {}
+                    } catch (Exception e) { EldaniorLogger.error("ProprietesTab", e); }
                     ownerDisplay = "Loue a " + renterName;
                     ownerColor = "#ff9800";
                 } else if (p.isForRent()) {
@@ -206,7 +205,7 @@ public class ProprietesTab {
             try {
                 PlayerRef rRef = Universe.get().getPlayer(p.getRenterUUID());
                 renterName = rRef != null ? rRef.getUsername() : p.getRenterUUID().toString().substring(0, 8);
-            } catch (Exception ignored) { renterName = "???"; }
+            } catch (Exception e) { renterName = "???"; }
         }
         ui.set("#PDetRenter.Text", p.isRented() ? "Locataire : " + renterName : "");
         ui.set("#PDetRenter.Visible", p.isRented());
@@ -263,7 +262,7 @@ public class ProprietesTab {
                 try {
                     PlayerRef mRef = Universe.get().getPlayer(memberUUID);
                     if (mRef != null) memberName = mRef.getUsername();
-                } catch (Exception ignored) {}
+                } catch (Exception e) { EldaniorLogger.error("ProprietesTab", e); }
                 ui.set("#PDetMSlot" + i + ".Visible", true);
                 ui.set("#PDetMName" + i + ".Text", memberName);
                 // Afficher LOCATAIRE si c'est le renter
@@ -324,7 +323,7 @@ public class ProprietesTab {
                 try {
                     PlayerRef invRef = Universe.get().getPlayer(otherUUID);
                     if (invRef != null) invName = invRef.getUsername();
-                } catch (Exception ignored) {}
+                } catch (Exception e) { EldaniorLogger.error("ProprietesTab", e); }
                 cachedInviteNames.add(invName);
                 ui.set("#PDetInv" + i + ".Visible", true);
                 ui.set("#PDetInvName" + i + ".Text", invName);
@@ -364,9 +363,7 @@ public class ProprietesTab {
         try {
             PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
             if (pRef == null) return false;
-            Field f = PlayerRef.class.getDeclaredField("uuid");
-            f.setAccessible(true);
-            UUID buyerUUID = (UUID) f.get(pRef);
+                        UUID buyerUUID = UUIDExtractor.getUUID(pRef);
 
             PlayerLevelData data = store.getComponent(ref, EldaniorSystem.get().getPlayerLevelDataType());
             if (data == null || data.getMoney() < parcel.getPrice()) return false;
@@ -380,25 +377,10 @@ public class ProprietesTab {
             data.addMoney(-totalPrice);
             store.putComponent(ref, EldaniorSystem.get().getPlayerLevelDataType(), data);
 
-            // Si un proprio joueur existe, il recoit le net
-            if (parcel.getOwnerUUID() != null) {
-                try {
-                    PlayerRef ownerRef = Universe.get().getPlayer(parcel.getOwnerUUID());
-                    if (ownerRef != null) {
-                        var ownerEntRef = ownerRef.getReference();
-                        if (ownerEntRef != null) {
-                            PlayerLevelData ownerData = ownerEntRef.getStore().getComponent(ownerEntRef, EldaniorSystem.get().getPlayerLevelDataType());
-                            if (ownerData != null) {
-                                ownerData.addMoney(netAmount);
-                                ownerEntRef.getStore().putComponent(ownerEntRef, EldaniorSystem.get().getPlayerLevelDataType(), ownerData);
-                            }
-                        }
-                        ownerRef.sendMessage(Message.raw("§a+" + netAmount + " Or §7(vente de " + parcel.getName() + ", taxe " + taxAmount + " Or)"));
-                    }
-                } catch (Exception ignored) {}
-            }
+            // Le net va au proprio (joueur) ou a la ville (si pas de proprio joueur)
+            payOwnerOrCity(parcel, netAmount, "vente de " + parcel.getName());
 
-            // Taxe va a la ville
+            // Taxe va dans la hierarchie
             ParcelEconomyManager.distributeTax(id, taxAmount);
 
             return ParcelManager.buyParcel(id, buyerUUID, pRef.getUsername());
@@ -416,9 +398,7 @@ public class ProprietesTab {
         try {
             PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
             if (pRef == null) return false;
-            Field f = PlayerRef.class.getDeclaredField("uuid");
-            f.setAccessible(true);
-            UUID renterUUID = (UUID) f.get(pRef);
+                        UUID renterUUID = UUIDExtractor.getUUID(pRef);
 
             PlayerLevelData data = store.getComponent(ref, EldaniorSystem.get().getPlayerLevelDataType());
             if (data == null || data.getMoney() < parcel.getRentPrice()) return false;
@@ -431,23 +411,8 @@ public class ProprietesTab {
             data.addMoney(-totalRent);
             store.putComponent(ref, EldaniorSystem.get().getPlayerLevelDataType(), data);
 
-            // Proprio joueur recoit le net
-            if (parcel.getOwnerUUID() != null) {
-                try {
-                    PlayerRef ownerRef = Universe.get().getPlayer(parcel.getOwnerUUID());
-                    if (ownerRef != null) {
-                        var ownerEntRef = ownerRef.getReference();
-                        if (ownerEntRef != null) {
-                            PlayerLevelData ownerData = ownerEntRef.getStore().getComponent(ownerEntRef, EldaniorSystem.get().getPlayerLevelDataType());
-                            if (ownerData != null) {
-                                ownerData.addMoney(netAmount);
-                                ownerEntRef.getStore().putComponent(ownerEntRef, EldaniorSystem.get().getPlayerLevelDataType(), ownerData);
-                            }
-                        }
-                        ownerRef.sendMessage(Message.raw("§a+" + netAmount + " Or §7(location de " + parcel.getName() + ", taxe " + taxAmount + " Or)"));
-                    }
-                } catch (Exception ignored) {}
-            }
+            // Le net va au proprio (joueur) ou a la ville
+            payOwnerOrCity(parcel, netAmount, "location de " + parcel.getName());
 
             ParcelEconomyManager.distributeTax(id, taxAmount);
 
@@ -471,22 +436,8 @@ public class ProprietesTab {
             data.addMoney(-totalRent);
             store.putComponent(ref, EldaniorSystem.get().getPlayerLevelDataType(), data);
 
-            // Proprio recoit le net
-            if (p.getOwnerUUID() != null) {
-                try {
-                    PlayerRef ownerRef = Universe.get().getPlayer(p.getOwnerUUID());
-                    if (ownerRef != null) {
-                        var ownerEntRef = ownerRef.getReference();
-                        if (ownerEntRef != null) {
-                            PlayerLevelData ownerData = ownerEntRef.getStore().getComponent(ownerEntRef, EldaniorSystem.get().getPlayerLevelDataType());
-                            if (ownerData != null) {
-                                ownerData.addMoney(taxResult[0]);
-                                ownerEntRef.getStore().putComponent(ownerEntRef, EldaniorSystem.get().getPlayerLevelDataType(), ownerData);
-                            }
-                        }
-                    }
-                } catch (Exception ignored) {}
-            }
+            // Le net va au proprio (joueur) ou a la ville
+            payOwnerOrCity(p, taxResult[0], "prolongation location");
 
             ParcelEconomyManager.distributeTax(selectedParcelId, taxAmount);
             ParcelManager.renewRent(selectedParcelId);
@@ -522,9 +473,7 @@ public class ProprietesTab {
         try {
             PlayerRef targetRef = Universe.get().getPlayerByUsername(invName, com.hypixel.hytale.server.core.NameMatching.EXACT_IGNORE_CASE);
             if (targetRef == null) return false;
-            Field f = PlayerRef.class.getDeclaredField("uuid");
-            f.setAccessible(true);
-            UUID targetUUID = (UUID) f.get(targetRef);
+                        UUID targetUUID = UUIDExtractor.getUUID(targetRef);
 
             p.addMember(targetUUID, ParcelRole.MEMBER);
             ParcelManager.save();
@@ -633,6 +582,47 @@ public class ProprietesTab {
         if (p == null || !p.isBought()) return false;
         ParcelManager.releaseParcel(id);
         return true;
+    }
+
+    /**
+     * Envoie le montant net au proprio joueur, ou a la ville si pas de proprio joueur.
+     */
+    private static void payOwnerOrCity(ParcelData parcel, long netAmount, String reason) {
+        if (netAmount <= 0) return;
+
+        if (parcel.getOwnerUUID() != null) {
+            // Proprio joueur recoit l'argent
+            try {
+                PlayerRef ownerRef = Universe.get().getPlayer(parcel.getOwnerUUID());
+                if (ownerRef != null) {
+                    var ownerEntRef = ownerRef.getReference();
+                    if (ownerEntRef != null) {
+                        PlayerLevelData ownerData = ownerEntRef.getStore().getComponent(ownerEntRef, EldaniorSystem.get().getPlayerLevelDataType());
+                        if (ownerData != null) {
+                            ownerData.addMoney(netAmount);
+                            ownerEntRef.getStore().putComponent(ownerEntRef, EldaniorSystem.get().getPlayerLevelDataType(), ownerData);
+                        }
+                    }
+                    ownerRef.sendMessage(com.hypixel.hytale.server.core.Message.raw(
+                            "§a+" + netAmount + " Or §7(" + reason + ")"));
+                }
+            } catch (Exception e) { EldaniorLogger.error("ProprietesTab", e); }
+        } else {
+            // Pas de proprio joueur -> l'argent va dans la tresorerie de la ville parente
+            ParcelData city = ParcelEconomyManager.findParentOfType(parcel, ParcelType.CITY);
+            if (city != null) {
+                city.addTreasury(netAmount);
+                System.out.println("[Economy] " + netAmount + " Or -> Tresorerie Ville " + city.getName() + " (" + reason + ")");
+            } else {
+                // Pas de ville, chercher territoire ou royaume
+                ParcelData parent = parcel.getParentId() != null ? ParcelManager.get(parcel.getParentId()) : null;
+                if (parent != null) {
+                    parent.addTreasury(netAmount);
+                    System.out.println("[Economy] " + netAmount + " Or -> Tresorerie " + parent.getName() + " (" + reason + ")");
+                }
+            }
+            ParcelManager.save();
+        }
     }
 
     private static String getTypeColor(ParcelData p) {

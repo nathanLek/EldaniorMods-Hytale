@@ -3,6 +3,7 @@ package com.eldanior.system.Leveling.commands;
 import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.Leveling.utils.StatCalculator; // <-- L'import vital pour appliquer les stats
 import com.eldanior.system.config.Player.PlayerLevelData;
+import com.eldanior.system.config.UUIDExtractor;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
@@ -16,7 +17,6 @@ import com.hypixel.hytale.server.core.NameMatching;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.core.Message;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -59,9 +59,7 @@ public class SetLevelCommand extends AbstractAsyncCommand {
         assert sender.getWorld() != null;
         return CompletableFuture.runAsync(() -> {
             try {
-                Field uuidField = PlayerRef.class.getDeclaredField("uuid");
-                uuidField.setAccessible(true);
-                UUID targetUUID = (UUID) uuidField.get(targetRef);
+                                UUID targetUUID = UUIDExtractor.getUUID(targetRef);
 
                 PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
                 if (targetPlayer == null) {

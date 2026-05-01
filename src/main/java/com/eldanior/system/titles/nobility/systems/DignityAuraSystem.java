@@ -6,6 +6,7 @@ import com.eldanior.system.config.Player.PlayerPositionTracker;
 import com.eldanior.system.config.configs.StatConfig;
 import com.eldanior.system.classes.ClassManager;
 import com.eldanior.system.classes.models.ClassModel;
+import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
@@ -223,14 +224,14 @@ public class DignityAuraSystem extends EntityTickingSystem<EntityStore> {
                     break;
                 }
             }
-        } catch (Exception ignored) {}
+        } catch (Exception e) { EldaniorLogger.error("DignityAuraSystem", e); }
     }
 
     private UUID getUUIDFromRef(Store<EntityStore> store, Ref<EntityStore> entityRef) {
         try {
             var uuidComp = store.getComponent(entityRef, com.hypixel.hytale.server.core.entity.UUIDComponent.getComponentType());
             if (uuidComp != null) return uuidComp.getUuid();
-        } catch (Exception ignored) {}
+        } catch (Exception e) { EldaniorLogger.error("DignityAuraSystem", e); }
         return null;
     }
 
@@ -255,7 +256,7 @@ public class DignityAuraSystem extends EntityTickingSystem<EntityStore> {
                     return (UUID) m.invoke(player);
                 }
             }
-        } catch (Exception ignored) {}
+        } catch (Exception e) { EldaniorLogger.error("DignityAuraSystem", e); }
         return null;
     }
 

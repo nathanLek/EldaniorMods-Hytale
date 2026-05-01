@@ -1,6 +1,7 @@
 package com.eldanior.system.config.Player;
 
 import com.eldanior.system.EldaniorSystem;
+import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
@@ -55,8 +56,7 @@ public class PlayerPositionTracker extends EntityTickingSystem<EntityStore> {
                     return (UUID) m.invoke(player);
                 }
             }
-        } catch (Exception ignored) {
-        }
+        } catch (Exception e) { EldaniorLogger.error("PlayerPositionTracker", e); }
         return null;
     }
 

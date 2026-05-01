@@ -6,6 +6,7 @@ import com.eldanior.system.guild.GuildManager;
 import com.eldanior.system.shop.ShopManager;
 import com.eldanior.system.titles.nobility.family.FamilyManager;
 import com.eldanior.system.titles.nobility.family.NobleFamilyModel;
+import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 
 import java.io.*;
@@ -38,6 +39,13 @@ public class PersistenceManager {
         System.out.println("[Eldanior] Persistence initialisee (" + dataDir + ") - Autosave: 5min");
     }
 
+    public static void shutdown() {
+        if (autoSaveTimer != null) {
+            autoSaveTimer.cancel();
+            autoSaveTimer = null;
+        }
+    }
+
     // ==================== SAVE ====================
 
     public static void saveAll() {
@@ -46,6 +54,7 @@ public class PersistenceManager {
             saveFamilies();
             saveClassements();
             saveShop();
+            saveHierarchies();
             // Verifier les impots hebdomadaires
             com.eldanior.system.territory.ParcelEconomyManager.collectWeeklyTaxes();
             com.eldanior.system.territory.ParcelManager.saveAll();
@@ -94,6 +103,15 @@ public class PersistenceManager {
             props.setProperty(family.getId() + ".treasury", String.valueOf(runtime.getTreasury()));
             props.setProperty(family.getId() + ".contribution", String.valueOf(runtime.getContribution()));
         }
+        // Sauvegarder les familles prises
+        StringBuilder taken = new StringBuilder();
+        for (NobleFamilyModel family : FamilyManager.getAll()) {
+            if (FamilyManager.isFamilyTaken(family.getId())) {
+                if (taken.length() > 0) taken.append(",");
+                taken.append(family.getId());
+            }
+        }
+        props.setProperty("_takenFamilies", taken.toString());
         try (OutputStream out = Files.newOutputStream(dataDir.resolve("families.properties"))) {
             props.store(out, "Family treasury & contribution data");
         }
@@ -129,6 +147,9 @@ public class PersistenceManager {
         }
         try { loadClassements(); } catch (Exception e) {
             System.out.println("[Persistence] Classements: " + e.getMessage());
+        }
+        try { loadHierarchies(); } catch (Exception e) {
+            System.out.println("[Persistence] Hierarchies: " + e.getMessage());
         }
     }
 
@@ -180,7 +201,7 @@ public class PersistenceManager {
                         if (!memberUUID.equals(founderUUID)) {
                             GuildManager.joinGuild(memberUUID, guild);
                         }
-                    } catch (Exception ignored) {}
+                    } catch (Exception e) { EldaniorLogger.error("PersistenceManager", e); }
                 }
             }
 
@@ -215,6 +236,18 @@ public class PersistenceManager {
             FamilyManager.setRuntimeData(familyId, treasury, contribution);
             System.out.println("[Persistence] Famille restauree: " + familyId + " treasury=" + treasury + " contrib=" + contribution);
         }
+
+        // Restaurer les familles prises
+        String takenStr = props.getProperty("_takenFamilies", "");
+        if (!takenStr.isEmpty()) {
+            for (String familyId : takenStr.split(",")) {
+                familyId = familyId.trim();
+                if (!familyId.isEmpty() && FamilyManager.get(familyId) != null) {
+                    FamilyManager.claimFamily(familyId);
+                }
+            }
+            System.out.println("[Persistence] Familles prises restaurees: " + takenStr);
+        }
     }
 
     private static void loadClassements() throws IOException {
@@ -236,6 +269,29 @@ public class PersistenceManager {
                 ClassementManager.updateDuelWins(key.substring(5), val);
             }
         }
+    }
+
+    // ==================== HIERARCHIES (Noblesse + Eglise) ====================
+
+    private static void saveHierarchies() throws IOException {
+        Properties props = new Properties();
+        com.eldanior.system.titles.nobility.NobilityManager.saveTo(props);
+        com.eldanior.system.titles.church.ChurchManager.saveTo(props);
+        try (java.io.OutputStream out = java.nio.file.Files.newOutputStream(dataDir.resolve("hierarchies.properties"))) {
+            props.store(out, "Nobility & Church hierarchies");
+        }
+    }
+
+    private static void loadHierarchies() throws IOException {
+        java.nio.file.Path file = dataDir.resolve("hierarchies.properties");
+        if (!java.nio.file.Files.exists(file)) return;
+        Properties props = new Properties();
+        try (java.io.InputStream in = java.nio.file.Files.newInputStream(file)) {
+            props.load(in);
+        }
+        com.eldanior.system.titles.nobility.NobilityManager.loadFrom(props);
+        com.eldanior.system.titles.church.ChurchManager.loadFrom(props);
+        System.out.println("[Persistence] Hierarchies restaurees.");
     }
 
     // ==================== SHOP ====================
@@ -290,7 +346,7 @@ public class PersistenceManager {
                     UUID uuid = UUID.fromString(key);
                     long amount = Long.parseLong(pp.getProperty(key));
                     ShopManager.addPendingEarnings(uuid, amount);
-                } catch (Exception ignored) {}
+                } catch (Exception e) { EldaniorLogger.error("PersistenceManager", e); }
             }
         }
     }

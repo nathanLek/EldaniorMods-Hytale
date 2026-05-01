@@ -13,6 +13,7 @@ import com.eldanior.system.titles.models.TitleEffect;
 import com.eldanior.system.titles.models.TitleModel;
 import com.eldanior.system.titles.nobility.systems.DignityAuraSystem;
 import com.eldanior.system.Leveling.utils.NotificationHelper;
+import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.npc.entities.NPCEntity;
 import com.hypixel.hytale.component.*;
@@ -66,7 +67,7 @@ public class CombatStatsSystem extends DamageEventSystem {
                                 return;
                             }
                         }
-                    } catch (Exception ignored) {}
+                    } catch (Exception e) { EldaniorLogger.error("CombatStatsSystem", e); }
                 }
             }
         }
@@ -139,16 +140,21 @@ public class CombatStatsSystem extends DamageEventSystem {
             }
         }
 
+        // Plancher minimum : 2% d'esquive quoi qu'il arrive
+        if (dodgeChance > 0 && dodgeChance < 2.0f) {
+            dodgeChance = 2.0f;
+        }
+
         // --- 3. LANCEMENT DU DÉ ---
         if (Math.random() < (dodgeChance / 100.0f)) {
             damage.setCancelled(true);
-            UUIDComponent uuidComp = store.getComponent(victimRef, UUIDComponent.getComponentType());
-            if (uuidComp != null) {
-                PlayerRef playerRef = Universe.get().getPlayer(uuidComp.getUuid());
-                if (playerRef != null) {
-                    NotificationHelper.sendNotification(playerRef, "<color:aqua>Esquive !</color>", NotificationStyle.Success);
-                }
-            }
+
+            // Appliquer l'effet visuel Dodge_Left ou Dodge_Right aleatoirement
+            try {
+                String dodgeEffect = Math.random() < 0.5 ? "Dodge_Left" : "Dodge_Right";
+                com.eldanior.system.config.Effects.EffectsManager.applyEffect(victimRef, dodgeEffect, store);
+            } catch (Exception e) { EldaniorLogger.error("CombatStatsSystem", e); }
+
             return true;
         }
         return false;
@@ -200,6 +206,8 @@ public class CombatStatsSystem extends DamageEventSystem {
                     manaConsumed = true;
                 }
                 skill.getLogic().onAttack(damage, attackerData, store, attackerRef, victimRef);
+                // Effet visuel du skill
+                com.eldanior.system.config.Effects.SkillEffectConfig.applySkillEffects(skill, attackerRef, victimRef, store);
             }
         }
 
@@ -259,6 +267,8 @@ public class CombatStatsSystem extends DamageEventSystem {
         for (PassiveSkill skill : victimData.getActivePassives()) {
             if (skill.getLogic() != null) {
                 skill.getLogic().onDefend(damage, victimData, store, attackerRef, victimRef);
+                // Effet visuel du skill (pour la defense, l'attaquant et victime sont inverses)
+                com.eldanior.system.config.Effects.SkillEffectConfig.applySkillEffects(skill, victimRef, attackerRef, store);
             }
         }
 

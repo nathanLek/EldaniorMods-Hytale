@@ -1,5 +1,6 @@
 package com.eldanior.system.TreasureChest.components;
 
+import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.ExtraInfo;
 import com.hypixel.hytale.codec.KeyedCodec;
@@ -395,7 +396,7 @@ public class PlayerChestData implements Component<EntityStore> {
                                 doc.getDouble("md").getValue(),
                                 doc.containsKey("meta") ? doc.getDocument("meta") : null
                         ));
-                    } catch (Exception ignored) {}
+                    } catch (Exception e) { EldaniorLogger.error("PlayerChestData", e); }
                 }
             }
             return items;

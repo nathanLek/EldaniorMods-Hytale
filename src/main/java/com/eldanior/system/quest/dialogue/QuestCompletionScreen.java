@@ -4,6 +4,7 @@ import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.quest.PlayerQuest;
 import com.eldanior.system.quest.QuestManager;
+import com.eldanior.system.config.UUIDExtractor;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
@@ -21,7 +22,6 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
-import java.lang.reflect.Field;
 import java.util.UUID;
 
 /**
@@ -131,11 +131,7 @@ public class QuestCompletionScreen extends InteractiveCustomUIPage<QuestCompleti
     private UUID getPlayerUUID(Ref<EntityStore> ref, Store<EntityStore> store) {
         PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
         if (pRef == null) return null;
-        try {
-            Field f = PlayerRef.class.getDeclaredField("uuid");
-            f.setAccessible(true);
-            return (UUID) f.get(pRef);
-        } catch (Exception e) { return null; }
+        try { return UUIDExtractor.getUUID(pRef); } catch (Exception e) { return null; }
     }
 
     public static class CompletionEventData {

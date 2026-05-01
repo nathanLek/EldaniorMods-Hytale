@@ -7,6 +7,7 @@ import com.eldanior.system.titles.models.TitleModel;
 import com.eldanior.system.TreasureChest.components.PlayerChestData;
 import com.eldanior.system.TreasureChest.resources.TreasureChestConfig;
 import com.eldanior.system.TreasureChest.resources.TreasureChestTemplate;
+import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.component.ArchetypeChunk;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Store;
@@ -88,7 +89,7 @@ public class TreasureChestRangeSystem extends EntityTickingSystem<EntityStore> {
                         x = Integer.parseInt(parts[0]);
                         y = Integer.parseInt(parts[1]);
                         z = Integer.parseInt(parts[2]);
-                    } catch (NumberFormatException ignored) {
+                    } catch (NumberFormatException e) { /* format invalide */
                         continue;
                     }
 
@@ -149,7 +150,7 @@ public class TreasureChestRangeSystem extends EntityTickingSystem<EntityStore> {
                     (byte) Integer.parseInt(h.substring(2, 4), 16),
                     (byte) Integer.parseInt(h.substring(4, 6), 16)
             );
-        } catch (Exception ignored) {
+        } catch (Exception e) {
             return new Color((byte) 255, (byte) 255, (byte) 255);
         }
     }

@@ -4,6 +4,8 @@ import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.guild.Guild;
 import com.eldanior.system.guild.GuildManager;
+import com.eldanior.system.config.UUIDExtractor;
+import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
@@ -15,7 +17,6 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
-import java.lang.reflect.Field;
 import java.util.*;
 
 public class GuildeTab {
@@ -242,7 +243,7 @@ public class GuildeTab {
                     PlayerLevelData d = s.getComponent(eRef, EldaniorSystem.get().getPlayerLevelDataType());
                     if (d != null && !d.canJoinGuild()) continue;
                 }
-            } catch (Exception ignored) {}
+            } catch (Exception e) { EldaniorLogger.error("GuildeTab", e); }
 
             cachedInviteNames.add(pRef.getUsername());
         }
@@ -264,10 +265,6 @@ public class GuildeTab {
 
     private static UUID extractUUID(PlayerRef playerRef) {
         if (playerRef == null) return null;
-        try {
-            Field f = PlayerRef.class.getDeclaredField("uuid");
-            f.setAccessible(true);
-            return (UUID) f.get(playerRef);
-        } catch (Exception e) { return null; }
+        try { return UUIDExtractor.getUUID(playerRef); } catch (Exception e) { return null; }
     }
 }

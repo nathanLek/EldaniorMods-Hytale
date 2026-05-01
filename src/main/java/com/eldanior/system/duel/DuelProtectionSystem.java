@@ -1,5 +1,6 @@
 package com.eldanior.system.duel;
 
+import com.eldanior.system.config.UUIDExtractor;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
@@ -11,7 +12,6 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
-import java.lang.reflect.Field;
 import java.util.UUID;
 
 /**
@@ -64,11 +64,7 @@ public class DuelProtectionSystem extends EntityTickingSystem<EntityStore> {
     }
 
     private UUID extractUUID(PlayerRef playerRef) {
-        try {
-            Field f = PlayerRef.class.getDeclaredField("uuid");
-            f.setAccessible(true);
-            return (UUID) f.get(playerRef);
-        } catch (Exception e) { return null; }
+        try { return UUIDExtractor.getUUID(playerRef); } catch (Exception e) { return null; }
     }
 
     @Nonnull

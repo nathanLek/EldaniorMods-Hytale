@@ -1,5 +1,7 @@
 package com.eldanior.system.shop;
 
+import com.eldanior.system.config.UUIDExtractor;
+import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
@@ -12,7 +14,6 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
-import java.lang.reflect.Field;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
@@ -61,7 +62,7 @@ public class SellCommand extends AbstractAsyncCommand {
                 com.eldanior.system.config.Player.PlayerLevelData data = sStore.getComponent(sRef,
                         com.eldanior.system.EldaniorSystem.get().getPlayerLevelDataType());
                 boolean isPK = data != null && data.isPK();
-                boolean isAdmin = sender.hasPermission("eldanior.command.setlevel");
+                boolean isAdmin = sender.hasPermission(EldaniorLogger.ADMIN_PERMISSION);
 
                 // Check limite (3 max pour non-admin)
                 if (!isAdmin) {
@@ -93,7 +94,7 @@ public class SellCommand extends AbstractAsyncCommand {
                         String translated = com.eldanior.system.gui.tabs.InventaireTab.translate(key);
                         if (translated != null) itemName = translated;
                     }
-                } catch (Exception ignored) {}
+                } catch (Exception e) { EldaniorLogger.error("SellCommand", e); }
 
                 sender.sendMessage(Message.raw("§a" + itemName + " §amis en vente pour §e" + price + " Or §a!"));
                 sender.sendMessage(Message.raw("§7Les joueurs peuvent l'acheter via §f/es system §7> Shop"));
@@ -111,8 +112,6 @@ public class SellCommand extends AbstractAsyncCommand {
         Store<EntityStore> store = ref.getStore();
         PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
         if (pRef == null) return null;
-        Field f = PlayerRef.class.getDeclaredField("uuid");
-        f.setAccessible(true);
-        return (UUID) f.get(pRef);
+        return UUIDExtractor.getUUID(pRef);
     }
 }

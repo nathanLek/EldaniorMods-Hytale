@@ -25,6 +25,9 @@ public class ClassementManager {
     private static final Map<String, Long> duelWinsBoard = new ConcurrentHashMap<>();
 
     public static void init() {
+        mobKillsBoard.clear();
+        pvpKillsBoard.clear();
+        duelWinsBoard.clear();
         System.out.println("[Eldanior] Systeme de Classements initialise.");
     }
 

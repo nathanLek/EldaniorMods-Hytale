@@ -5,9 +5,9 @@ public enum NobilityRank {
     CHEVALIER("Chevalier", "§f", 5, 0, 0),
     BARON("Baron", "§a", 15, 1, 1),
     COMTE("Comte", "§9", 30, 2, 2),
-    DUC("Duc", "§5", 50, 3, 3),
-    MARQUIS("Marquis", "§6", 75, 4, 4),
-    ROI("Roi", "§c", 100, 10, 0);
+    DUC("Duc", "§5", 50, 1, 3),       // Duc peut nommer 1 Baron (maxKnights=1 utilise pour barons)
+    MARQUIS("Marquis", "§6", 75, 3, 4), // Marquis peut nommer 1 Comte + 2 Barons (maxKnights=3)
+    ROI("Roi", "§c", 100, 10, 0);      // Roi peut nommer 4 Marquis, 3 Ducs, 2 Comtes, 1 Baron
 
     private final String displayName;
     private final String colorCode;

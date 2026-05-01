@@ -6,6 +6,7 @@ import com.eldanior.system.classes.ClassManager;
 import com.eldanior.system.classes.models.ClassModel;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.config.configs.Rarity;
+import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.protocol.InteractionType;
@@ -117,7 +118,7 @@ public class OpenClassSelectionInteraction extends SimpleInteraction {
         }
 
         // La sauvegarde se fait dans ClassEvolutionIntroScreen.build()
-        boolean isAdmin = player.hasPermission("eldanior.command.setlevel");
+        boolean isAdmin = player.hasPermission(EldaniorLogger.ADMIN_PERMISSION);
         player.getPageManager().openCustomPage(entityRef, store,
                 new ClassEvolutionIntroScreen(playerRef, proposedIds, playerData.getEvolutionRerolls(), isAdmin));
     }

@@ -100,7 +100,7 @@ public class TinyMsg {
                             Integer.parseInt(hex.substring(4, 6), 16)
                     );
                 }
-            } catch (NumberFormatException ignored) {}
+            } catch (NumberFormatException e) { /* format invalide */ }
         }
         return null;
     }

@@ -140,7 +140,8 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
             int levelGap = victimLevel - killerLevel;
 
             // 1 niveau d'écart = 0.02 (2%) | Ex: +10 niveaux = 1.20 | -10 niveaux = 0.80
-            double multiplier = 1.0 + (levelGap * 0.02);
+            // Cap a 2.0x max (100% bonus) pour eviter le farm de hauts niveaux
+            double multiplier = Math.min(2.0, Math.max(0.2, 1.0 + (levelGap * 0.02)));
 
             // On applique le multiplicateur et on empêche l'XP de tomber sous 1 point
             xpAmount = (int) Math.max(1, Math.round(xpAmount * multiplier));

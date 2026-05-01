@@ -52,7 +52,7 @@ public class StatsItemRegistry {
         register("Tome_Experience", new StatsItemEffect("Tome d'Experience", StatType.XP, 5000));
         register("Tome_Niveau", new StatsItemEffect("Tome de Niveau", StatType.LEVEL, 1));
 
-        // ========== DECRETS DE NOBLESSE ==========
+        // ========== DECRETS DE NOBLESSE (items donnés par le Roi) ==========
         register("Decret_Chevalier", StatsItemEffect.rank("Decret de Chevalier", StatType.NOBILITY_RANK, "CHEVALIER"));
         register("Decret_Baron", StatsItemEffect.rank("Decret de Baron", StatType.NOBILITY_RANK, "BARON"));
         register("Decret_Comte", StatsItemEffect.rank("Decret de Comte", StatType.NOBILITY_RANK, "COMTE"));

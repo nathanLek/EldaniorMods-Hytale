@@ -8,6 +8,8 @@ import com.eldanior.system.TreasureChest.components.PlayerChestData;
 import com.eldanior.system.TreasureChest.resources.TreasureChestTemplate;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.config.configs.LootTableConfig;
+import com.eldanior.system.config.UUIDExtractor;
+import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.EntityEventSystem;
@@ -116,14 +118,12 @@ public class TreasureChestInteractEvent extends EntityEventSystem<EntityStore, U
 
                     // Progression quete exploration
                     try {
-                        java.lang.reflect.Field uuidF = com.hypixel.hytale.server.core.universe.PlayerRef.class.getDeclaredField("uuid");
-                        uuidF.setAccessible(true);
                         com.hypixel.hytale.server.core.universe.PlayerRef pRefQ = store.getComponent(playerRef, com.hypixel.hytale.server.core.universe.PlayerRef.getComponentType());
                         if (pRefQ != null) {
-                            java.util.UUID pUUID = (java.util.UUID) uuidF.get(pRefQ);
+                            java.util.UUID pUUID = com.eldanior.system.config.UUIDExtractor.getUUID(pRefQ);
                             com.eldanior.system.quest.QuestManager.onChestDiscovered(pUUID);
                         }
-                    } catch (Exception ignored) {}
+                    } catch (Exception e) { EldaniorLogger.error("TreasureChestInteractEvent", e); }
 
                     String msgSuccess = "<color:gold>Trésor découvert !</color> <color:gray>(+" + finalSelection.size() + " objets)</color>";
                     PlayerRef pRef = store.getComponent(playerRef, PlayerRef.getComponentType());
@@ -168,7 +168,7 @@ public class TreasureChestInteractEvent extends EntityEventSystem<EntityStore, U
         for (int idx = 0; idx < stacks.size() && idx < slots.size(); idx++) {
             if (stacks.get(idx) != null) {
                 itemContainer.setItemStackForSlot(slots.get(idx), stacks.get(idx));
-                System.out.println("[DEBUG ELDANIOR] Ajout item: " + stacks.get(idx).getItemId());
+                EldaniorLogger.debug("Ajout item: " + stacks.get(idx).getItemId());
             }
         }
     }

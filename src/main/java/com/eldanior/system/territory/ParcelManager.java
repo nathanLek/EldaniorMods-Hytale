@@ -55,8 +55,30 @@ public class ParcelManager {
         return id;
     }
 
+    /** Table de hierarchie valide : type parent → types enfants autorises */
+    private static final java.util.Map<ParcelType, java.util.Set<ParcelType>> VALID_CHILDREN = java.util.Map.of(
+        ParcelType.KINGDOM, java.util.Set.of(ParcelType.TERRITORY),
+        ParcelType.TERRITORY, java.util.Set.of(ParcelType.CITY),
+        ParcelType.CITY, java.util.Set.of(ParcelType.PLOT, ParcelType.HOUSING, ParcelType.FARM),
+        ParcelType.HOUSING, java.util.Set.of(ParcelType.ROOM)
+    );
+
     public static String createParcel(String name, ParcelType type, UUID ownerUUID, String ownerName,
                                       String world, int x1, int y1, int z1, int x2, int y2, int z2, String parentId) {
+        // Validation du parent
+        if (parentId != null && !parentId.isEmpty()) {
+            ParcelData parent = parcels.get(parentId);
+            if (parent == null) {
+                System.err.println("[Eldanior] Parent inexistant: " + parentId);
+                return null;
+            }
+            java.util.Set<ParcelType> allowed = VALID_CHILDREN.getOrDefault(parent.getType(), java.util.Set.of());
+            if (!allowed.contains(type)) {
+                System.err.println("[Eldanior] " + type + " ne peut pas etre enfant de " + parent.getType());
+                return null;
+            }
+        }
+
         String id = createParcel(name, type, ownerUUID, ownerName, world, x1, y1, z1, x2, y2, z2);
         ParcelData parcel = parcels.get(id);
         if (parcel != null && parentId != null) {
@@ -67,13 +89,16 @@ public class ParcelManager {
     }
 
     public static void deleteParcel(String id) {
-        // Supprimer aussi les enfants
+        deleteParcelRecursive(id);
+        save(); // Un seul save apres toutes les suppressions
+    }
+
+    private static void deleteParcelRecursive(String id) {
         List<String> children = getChildrenOf(id);
         for (String childId : children) {
-            deleteParcel(childId);
+            deleteParcelRecursive(childId);
         }
         parcels.remove(id);
-        save();
     }
 
     public static ParcelData get(String id) {

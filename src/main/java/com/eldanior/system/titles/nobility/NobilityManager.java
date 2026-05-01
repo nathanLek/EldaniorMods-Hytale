@@ -23,6 +23,11 @@ public class NobilityManager {
     private static final Map<UUID, List<UUID>> knightsOf = new HashMap<>();
 
     public static void init() {
+        currentKingUUID = null;
+        currentKingName = "";
+        kingdomCounts.clear();
+        lordOf.clear();
+        knightsOf.clear();
         for (NobilityRank rank : NobilityRank.values()) {
             kingdomCounts.put(rank, 0);
         }
@@ -138,6 +143,55 @@ public class NobilityManager {
         }
 
         return sb.toString();
+    }
+
+    // ==================== PERSISTENCE ====================
+
+    public static void saveTo(java.util.Properties props) {
+        if (currentKingUUID != null) {
+            props.setProperty("nobility.king.uuid", currentKingUUID.toString());
+            props.setProperty("nobility.king.name", currentKingName);
+        }
+        for (Map.Entry<NobilityRank, Integer> e : kingdomCounts.entrySet()) {
+            props.setProperty("nobility.count." + e.getKey().name(), String.valueOf(e.getValue()));
+        }
+        int lordIdx = 0;
+        for (Map.Entry<UUID, UUID> e : lordOf.entrySet()) {
+            props.setProperty("nobility.lord." + lordIdx + ".knight", e.getKey().toString());
+            props.setProperty("nobility.lord." + lordIdx + ".lord", e.getValue().toString());
+            lordIdx++;
+        }
+        props.setProperty("nobility.lord.count", String.valueOf(lordIdx));
+    }
+
+    public static void loadFrom(java.util.Properties props) {
+        String kingUUID = props.getProperty("nobility.king.uuid");
+        if (kingUUID != null && !kingUUID.isEmpty()) {
+            try {
+                currentKingUUID = UUID.fromString(kingUUID);
+                currentKingName = props.getProperty("nobility.king.name", "");
+            } catch (Exception e) { /* ignore invalid UUID */ }
+        }
+        for (NobilityRank rank : NobilityRank.values()) {
+            String val = props.getProperty("nobility.count." + rank.name());
+            if (val != null) {
+                try { kingdomCounts.put(rank, Integer.parseInt(val)); } catch (Exception e) { /* skip */ }
+            }
+        }
+        int lordCount = 0;
+        try { lordCount = Integer.parseInt(props.getProperty("nobility.lord.count", "0")); } catch (Exception e) { /* skip */ }
+        for (int i = 0; i < lordCount; i++) {
+            String knightStr = props.getProperty("nobility.lord." + i + ".knight");
+            String lordStr = props.getProperty("nobility.lord." + i + ".lord");
+            if (knightStr != null && lordStr != null) {
+                try {
+                    UUID knightUUID = UUID.fromString(knightStr);
+                    UUID lordUUID = UUID.fromString(lordStr);
+                    lordOf.put(knightUUID, lordUUID);
+                    knightsOf.computeIfAbsent(lordUUID, k -> new ArrayList<>()).add(knightUUID);
+                } catch (Exception e) { /* skip invalid */ }
+            }
+        }
     }
 
     // ==================== DIGNITY ====================

@@ -3,6 +3,8 @@ package com.eldanior.system.territory.commands;
 import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.territory.*;
+import com.eldanior.system.config.UUIDExtractor;
+import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.math.vector.Vector3i;
@@ -20,7 +22,6 @@ import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -54,7 +55,7 @@ public class ParcelCommand extends AbstractAsyncCommand {
             try {
                 UUID senderUUID = getSenderUUID(sender);
                 if (senderUUID == null) return;
-                boolean isAdmin = sender.hasPermission("eldanior.command.setlevel");
+                boolean isAdmin = sender.hasPermission(EldaniorLogger.ADMIN_PERMISSION);
 
                 switch (action.toLowerCase()) {
                     case "pos1" -> handlePos1(sender, senderUUID);
@@ -160,7 +161,7 @@ public class ParcelCommand extends AbstractAsyncCommand {
         ParcelType type;
         try { type = ParcelType.valueOf(typeStr.toUpperCase()); }
         catch (Exception e) {
-            sender.sendMessage(Message.raw("§cType invalide. Valides: KINGDOM, TERRITORY, CITY, PLOT, FARM"));
+            sender.sendMessage(Message.raw("§cType invalide. Valides: KINGDOM, TERRITORY, CITY, PLOT, HOUSING, ROOM, FARM"));
             return;
         }
 
@@ -295,7 +296,7 @@ public class ParcelCommand extends AbstractAsyncCommand {
         sender.sendMessage(Message.raw("§7Taille: §f" + sizeX + "x" + sizeY + "x" + sizeZ));
 
         if (parcel.isForSale()) sender.sendMessage(Message.raw("§eEn vente : " + parcel.getPrice() + " Or"));
-        if (parcel.isForRent()) sender.sendMessage(Message.raw("§eEn location : " + parcel.getTaxRate() + " Or/jour"));
+        if (parcel.isForRent()) sender.sendMessage(Message.raw("§eEn location : " + parcel.getRentPrice() + " Or/7j"));
 
         ParcelRole myRole = parcel.getRole(uuid);
         sender.sendMessage(Message.raw("§7Votre role: §f" + (myRole != null ? myRole.name() : "Aucun")));
@@ -324,9 +325,7 @@ public class ParcelCommand extends AbstractAsyncCommand {
         if (targetRef == null) { sender.sendMessage(Message.raw("§cJoueur introuvable.")); return; }
 
         try {
-            Field f = PlayerRef.class.getDeclaredField("uuid");
-            f.setAccessible(true);
-            UUID targetUUID = (UUID) f.get(targetRef);
+                        UUID targetUUID = UUIDExtractor.getUUID(targetRef);
 
             parcel.addMember(targetUUID, ParcelRole.MEMBER);
             ParcelManager.save();
@@ -360,9 +359,7 @@ public class ParcelCommand extends AbstractAsyncCommand {
         if (targetRef == null) { sender.sendMessage(Message.raw("§cJoueur introuvable.")); return; }
 
         try {
-            Field f = PlayerRef.class.getDeclaredField("uuid");
-            f.setAccessible(true);
-            UUID targetUUID = (UUID) f.get(targetRef);
+                        UUID targetUUID = UUIDExtractor.getUUID(targetRef);
 
             parcel.removeMember(targetUUID);
             ParcelManager.save();
@@ -504,7 +501,7 @@ public class ParcelCommand extends AbstractAsyncCommand {
                         }
                     }
                     oldRef.sendMessage(Message.raw("§a" + sender.getDisplayName() + " a achete votre parcelle " + parcel.getName() + " pour " + parcel.getPrice() + " Or !"));
-                } catch (Exception ignored) {}
+                } catch (Exception e) { EldaniorLogger.error("ParcelCommand", e); }
             }
         }
 
@@ -628,8 +625,6 @@ public class ParcelCommand extends AbstractAsyncCommand {
         Store<EntityStore> store = ref.getStore();
         PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
         if (pRef == null) return null;
-        Field f = PlayerRef.class.getDeclaredField("uuid");
-        f.setAccessible(true);
-        return (UUID) f.get(pRef);
+        return UUIDExtractor.getUUID(pRef);
     }
 }

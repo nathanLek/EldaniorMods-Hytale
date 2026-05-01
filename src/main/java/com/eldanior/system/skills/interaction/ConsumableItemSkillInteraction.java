@@ -5,6 +5,7 @@ import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.skills.SkillManager;
 import com.eldanior.system.classes.ClassManager;
 import com.eldanior.system.classes.models.ClassModel;
+import com.eldanior.system.config.EldaniorLogger;
 
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.protocol.InteractionType;
@@ -18,8 +19,6 @@ import com.hypixel.hytale.server.core.entity.InteractionContext;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 import java.awt.Color;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class ConsumableItemSkillInteraction extends SimpleInteraction {
 
@@ -114,14 +113,11 @@ public class ConsumableItemSkillInteraction extends SimpleInteraction {
 
             // Suppression du parchemin
             int slot = context.getHeldItemSlot();
-            new Timer().schedule(new TimerTask() {
-                @Override
-                public void run() {
+            EldaniorLogger.SCHEDULER.schedule(() -> {
                     try {
                         player.getInventory().getHotbar().removeItemStackFromSlot((short) slot, 1, true, false);
-                    } catch (Exception ignored) {}
-                }
-            }, 50);
+                    } catch (Exception e) { EldaniorLogger.error("ConsumableItemSkillInteraction", e); }
+                }, 50, java.util.concurrent.TimeUnit.MILLISECONDS);
 
         });
     }

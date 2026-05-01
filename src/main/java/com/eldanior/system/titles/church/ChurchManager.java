@@ -14,6 +14,11 @@ public class ChurchManager {
     private static final Map<UUID, UUID> masterOf = new HashMap<>();
 
     public static void init() {
+        currentPopeUUID = null;
+        currentPopeName = "";
+        churchCounts.clear();
+        acolytesOf.clear();
+        masterOf.clear();
         for (ChurchRank rank : ChurchRank.values()) {
             churchCounts.put(rank, 0);
         }
@@ -80,6 +85,55 @@ public class ChurchManager {
         ChurchRank rank = ChurchRank.fromString(data.getChurchRank());
         if (rank == null || !rank.isClergy()) return "";
         return rank.getColorCode() + "[" + rank.getDisplayName() + "] ";
+    }
+
+    // ==================== PERSISTENCE ====================
+
+    public static void saveTo(java.util.Properties props) {
+        if (currentPopeUUID != null) {
+            props.setProperty("church.pope.uuid", currentPopeUUID.toString());
+            props.setProperty("church.pope.name", currentPopeName);
+        }
+        for (Map.Entry<ChurchRank, Integer> e : churchCounts.entrySet()) {
+            props.setProperty("church.count." + e.getKey().name(), String.valueOf(e.getValue()));
+        }
+        int idx = 0;
+        for (Map.Entry<UUID, UUID> e : masterOf.entrySet()) {
+            props.setProperty("church.master." + idx + ".acolyte", e.getKey().toString());
+            props.setProperty("church.master." + idx + ".master", e.getValue().toString());
+            idx++;
+        }
+        props.setProperty("church.master.count", String.valueOf(idx));
+    }
+
+    public static void loadFrom(java.util.Properties props) {
+        String popeUUID = props.getProperty("church.pope.uuid");
+        if (popeUUID != null && !popeUUID.isEmpty()) {
+            try {
+                currentPopeUUID = UUID.fromString(popeUUID);
+                currentPopeName = props.getProperty("church.pope.name", "");
+            } catch (Exception e) { /* skip */ }
+        }
+        for (ChurchRank rank : ChurchRank.values()) {
+            String val = props.getProperty("church.count." + rank.name());
+            if (val != null) {
+                try { churchCounts.put(rank, Integer.parseInt(val)); } catch (Exception e) { /* skip */ }
+            }
+        }
+        int count = 0;
+        try { count = Integer.parseInt(props.getProperty("church.master.count", "0")); } catch (Exception e) { /* skip */ }
+        for (int i = 0; i < count; i++) {
+            String acolyteStr = props.getProperty("church.master." + i + ".acolyte");
+            String masterStr = props.getProperty("church.master." + i + ".master");
+            if (acolyteStr != null && masterStr != null) {
+                try {
+                    UUID acolyteUUID = UUID.fromString(acolyteStr);
+                    UUID masterUUID = UUID.fromString(masterStr);
+                    masterOf.put(acolyteUUID, masterUUID);
+                    acolytesOf.computeIfAbsent(masterUUID, k -> new ArrayList<>()).add(acolyteUUID);
+                } catch (Exception e) { /* skip */ }
+            }
+        }
     }
 
     // ==================== FAITH ====================

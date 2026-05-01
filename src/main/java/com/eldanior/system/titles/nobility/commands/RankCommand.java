@@ -6,6 +6,7 @@ import com.eldanior.system.titles.nobility.NobilityManager;
 import com.eldanior.system.titles.nobility.NobilityRank;
 import com.eldanior.system.titles.nobility.family.FamilyManager;
 import com.eldanior.system.titles.nobility.family.NobleFamilyModel;
+import com.eldanior.system.config.UUIDExtractor;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
@@ -20,7 +21,6 @@ import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
-import java.lang.reflect.Field;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
@@ -301,9 +301,7 @@ public class RankCommand extends AbstractAsyncCommand {
 
     // ==================== UTILS ====================
     private UUID extractUUID(PlayerRef playerRef) throws Exception {
-        Field uuidField = PlayerRef.class.getDeclaredField("uuid");
-        uuidField.setAccessible(true);
-        return (UUID) uuidField.get(playerRef);
+        return UUIDExtractor.getUUID(playerRef);
     }
 
     private UUID getSenderUUID(Player sender) throws Exception {

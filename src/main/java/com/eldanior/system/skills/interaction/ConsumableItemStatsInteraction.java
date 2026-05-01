@@ -4,6 +4,7 @@ import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.Leveling.utils.NotificationHelper;
 import com.eldanior.system.Leveling.utils.StatCalculator;
 import com.eldanior.system.config.Player.PlayerLevelData;
+import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.protocol.InteractionType;
 import com.hypixel.hytale.protocol.packets.interface_.NotificationStyle;
@@ -15,8 +16,6 @@ import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Sim
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class ConsumableItemStatsInteraction extends SimpleInteraction {
 
@@ -58,7 +57,7 @@ public class ConsumableItemStatsInteraction extends SimpleInteraction {
             // Recalculer les stats
             try {
                 StatCalculator.updatePlayerStats(playerRef, playerRef.getStore(), data);
-            } catch (Exception ignored) {}
+            } catch (Exception e) { EldaniorLogger.error("ConsumableItemStatsInteraction", e); }
 
             // Notification
             try {
@@ -67,18 +66,15 @@ public class ConsumableItemStatsInteraction extends SimpleInteraction {
                     String msg = "<color:gold>" + effect.getDisplayName() + "</color> <color:gray>| " + msgParts + "</color>";
                     NotificationHelper.sendNotification(pRefComp, msg, NotificationStyle.Success);
                 }
-            } catch (Exception ignored) {}
+            } catch (Exception e) { EldaniorLogger.error("ConsumableItemStatsInteraction", e); }
 
             // Consommer l'item
             int slot = context.getHeldItemSlot();
-            new Timer().schedule(new TimerTask() {
-                @Override
-                public void run() {
+            EldaniorLogger.SCHEDULER.schedule(() -> {
                     try {
                         player.getInventory().getHotbar().removeItemStackFromSlot((short) slot, 1, true, false);
-                    } catch (Exception ignored) {}
-                }
-            }, 50);
+                    } catch (Exception e) { EldaniorLogger.error("ConsumableItemStatsInteraction", e); }
+                }, 50, java.util.concurrent.TimeUnit.MILLISECONDS);
 
         } catch (Exception e) {
             System.err.println("[StatsItem] ERREUR: " + e.getMessage());

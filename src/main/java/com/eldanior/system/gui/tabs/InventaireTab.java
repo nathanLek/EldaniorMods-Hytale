@@ -2,6 +2,7 @@ package com.eldanior.system.gui.tabs;
 
 import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.Inventory.components.PlayerPersonalChestData;
+import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
@@ -96,7 +97,7 @@ public class InventaireTab {
                         sb.append("\n").append(rarityName);
                     }
                 }
-            } catch (Exception ignored) {}
+            } catch (Exception e) { EldaniorLogger.error("InventaireTab", e); }
 
             // === DESCRIPTION ===
             try {
@@ -106,7 +107,7 @@ public class InventaireTab {
                     sb.append("\n");
                     sb.append("\n\"").append(desc).append("\"");
                 }
-            } catch (Exception ignored) {}
+            } catch (Exception e) { EldaniorLogger.error("InventaireTab", e); }
 
             // === INFOS GENERALES ===
             boolean hasInfo = false;
@@ -161,7 +162,7 @@ public class InventaireTab {
                 sb.append("\n\nConsommable");
             }
 
-        } catch (Exception ignored) {}
+        } catch (Exception e) { EldaniorLogger.error("InventaireTab", e); }
 
         return sb.toString();
     }
@@ -174,7 +175,7 @@ public class InventaireTab {
                 String translated = translate(key);
                 if (translated != null) return translated;
             }
-        } catch (Exception ignored) {}
+        } catch (Exception e) { EldaniorLogger.error("InventaireTab", e); }
         return formatItemName(stack.getItemId());
     }
 
@@ -183,7 +184,7 @@ public class InventaireTab {
         try {
             String result = I18nModule.get().getMessage("en_us", key);
             if (result != null && !result.isEmpty() && !result.equals(key)) return result;
-        } catch (Exception ignored) {}
+        } catch (Exception e) { EldaniorLogger.error("InventaireTab", e); }
         return null;
     }
 

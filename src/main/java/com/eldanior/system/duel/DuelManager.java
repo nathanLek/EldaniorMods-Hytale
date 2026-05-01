@@ -4,6 +4,7 @@ import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.classement.ClassementManager;
 import com.eldanior.system.quest.QuestManager;
 import com.eldanior.system.config.Player.PlayerLevelData;
+import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
@@ -56,10 +57,15 @@ public class DuelManager {
         return activeDuels.get(playerUUID);
     }
 
+    private static final Object DUEL_LOCK = new Object();
+
     public static void startDuel(UUID player1, UUID player2) {
-        ActiveDuel duel = new ActiveDuel(player1, player2);
-        activeDuels.put(player1, duel);
-        activeDuels.put(player2, duel);
+        synchronized (DUEL_LOCK) {
+            if (isInDuel(player1) || isInDuel(player2)) return;
+            ActiveDuel duel = new ActiveDuel(player1, player2);
+            activeDuels.put(player1, duel);
+            activeDuels.put(player2, duel);
+        }
     }
 
     /**
@@ -181,7 +187,14 @@ public class DuelManager {
             if (mana != null) {
                 statMap.setStatValue(DefaultEntityStatTypes.getMana(), mana.getMax());
             }
-        } catch (Exception ignored) {}
+        } catch (Exception e) { EldaniorLogger.error("DuelManager", e); }
+    }
+
+    // ==================== CLEANUP ====================
+
+    public static void cancelAllDuels() {
+        activeDuels.clear();
+        pendingDuels.clear();
     }
 
     // ==================== INNER CLASS ====================

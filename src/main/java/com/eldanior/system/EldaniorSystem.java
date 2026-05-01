@@ -32,6 +32,8 @@ import com.eldanior.system.skills.SkillManager;
 import com.eldanior.system.skills.system.DetectionSystem;
 import com.eldanior.system.skills.system.FlySystem;
 import com.eldanior.system.skills.system.MorphFlightSystem;
+import com.eldanior.system.config.UUIDExtractor;
+import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.ResourceType; // Nouveau
 import com.hypixel.hytale.logger.HytaleLogger;
@@ -71,8 +73,18 @@ public class EldaniorSystem extends JavaPlugin {
     @Override
     protected void shutdown() {
         LOGGER.atInfo().log(">>> ELDANIOR SYSTEM : SAUVEGARDE AVANT ARRET <<<");
+
+        // Annuler les sessions actives (rendre les items)
+        com.eldanior.system.trade.TradeManager.cancelAllTrades();
+        com.eldanior.system.duel.DuelManager.cancelAllDuels();
+
+        // Sauvegarder toutes les donnees
         com.eldanior.system.persistence.PersistenceManager.saveAll();
         com.eldanior.system.territory.ParcelManager.saveAll();
+
+        // Annuler les timers et schedulers
+        com.eldanior.system.persistence.PersistenceManager.shutdown();
+        EldaniorLogger.SCHEDULER.shutdown();
     }
 
     @Override
@@ -187,14 +199,18 @@ public class EldaniorSystem extends JavaPlugin {
 
             this.getEventRegistry().registerGlobal(PlayerDisconnectEvent.class, event -> {
                 try {
-                    java.lang.reflect.Field uuidField = com.hypixel.hytale.server.core.universe.PlayerRef.class.getDeclaredField("uuid");
-                    uuidField.setAccessible(true);
-                    java.util.UUID uuid = (java.util.UUID) uuidField.get(event.getPlayerRef());
+                    java.util.UUID uuid = UUIDExtractor.getUUID(event.getPlayerRef());
                     PartyManager.handleDisconnect(uuid);
                     com.eldanior.system.trade.TradeManager.handleDisconnect(uuid);
                     com.eldanior.system.territory.systems.ParcelRangeSystem.handleDisconnect(uuid);
                     com.eldanior.system.gui.tabs.QuestTab.cleanupPlayer(uuid);
-                } catch (Exception ignored) {}
+
+                    // Memory leak cleanup
+                    com.eldanior.system.config.Player.PlayerPositionTracker.PLAYER_POSITIONS.remove(uuid);
+                    com.eldanior.system.config.Player.PlayerPositionTracker.PLAYER_LEVELS.remove(uuid);
+                    com.eldanior.system.config.Player.PlayerPositionTracker.PLAYER_DIGNITY.remove(uuid);
+                    com.eldanior.system.config.RateLimiter.cleanup(uuid);
+                } catch (Exception e) { EldaniorLogger.error("EldaniorSystem", e); }
             });
             this.getEntityStoreRegistry().registerSystem(new TreasureChestBreakBlockEvent());
             this.getEntityStoreRegistry().registerSystem(new TreasureChestDamageBlockEvent());

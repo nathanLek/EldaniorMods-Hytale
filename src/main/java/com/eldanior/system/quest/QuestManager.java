@@ -1,5 +1,7 @@
 package com.eldanior.system.quest;
 
+import com.eldanior.system.config.UUIDExtractor;
+import com.eldanior.system.config.EldaniorLogger;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -167,10 +169,8 @@ public class QuestManager {
     public static QuestModel getNextDialogueForNpc(com.hypixel.hytale.server.core.universe.PlayerRef playerRef, String npcId) {
         UUID playerUUID = null;
         try {
-            java.lang.reflect.Field f = com.hypixel.hytale.server.core.universe.PlayerRef.class.getDeclaredField("uuid");
-            f.setAccessible(true);
-            playerUUID = (UUID) f.get(playerRef);
-        } catch (Exception ignored) {}
+            playerUUID = UUIDExtractor.getUUID(playerRef);
+        } catch (Exception e) { EldaniorLogger.error("QuestManager", e); }
 
         List<PlayerQuest> owned = playerUUID != null ? getPlayerQuests(playerUUID) : List.of();
         Set<String> completedIds = new HashSet<>();
@@ -324,7 +324,7 @@ public class QuestManager {
                     if (end > now) { // Seulement si pas expiré
                         playerCooldowns.put(parts[0], end);
                     }
-                } catch (NumberFormatException ignored) {}
+                } catch (NumberFormatException e) { /* format invalide */ }
             }
         }
     }

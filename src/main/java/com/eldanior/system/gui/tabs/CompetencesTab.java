@@ -9,6 +9,7 @@ import com.eldanior.system.titles.nobility.family.NobleFamilyModel;
 import com.eldanior.system.skills.SkillManager;
 import com.eldanior.system.skills.models.SkillModel;
 import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
+import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
@@ -150,7 +151,7 @@ public class CompetencesTab {
             info.rarity = guessRarity(passive);
             info.stats = passive.getManaCost() > 0 ? "Mana: " + passive.getManaCost() : "";
             return info;
-        } catch (IllegalArgumentException ignored) {}
+        } catch (IllegalArgumentException e) { /* argument invalide */ }
 
         // Try SkillModel (active skills)
         var opt = SkillManager.getSkillFromId(skillId);
@@ -182,7 +183,7 @@ public class CompetencesTab {
                 if (className.contains("Common")) return "COMMUN";
                 if (className.contains("Family")) return "FAMILLE";
             }
-        } catch (Exception ignored) {}
+        } catch (Exception e) { EldaniorLogger.error("CompetencesTab", e); }
         return "";
     }
 

@@ -4,6 +4,7 @@ import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.titles.nobility.family.FamilyManager;
 import com.eldanior.system.titles.nobility.family.NobleFamilyModel;
+import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.server.core.entity.entities.player.hud.CustomUIHud;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
@@ -198,7 +199,7 @@ public class PartyHud extends CustomUIHud {
                     if (family != null) info.familyName = "Von " + family.getDisplayName();
                 }
             }
-        } catch (Exception ignored) {}
+        } catch (Exception e) { EldaniorLogger.error("PartyHud", e); }
         return info;
     }
 

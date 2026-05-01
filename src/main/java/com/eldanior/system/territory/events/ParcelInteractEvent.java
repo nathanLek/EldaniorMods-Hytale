@@ -4,6 +4,8 @@ import com.eldanior.system.Leveling.utils.NotificationHelper;
 import com.eldanior.system.territory.ParcelData;
 import com.eldanior.system.territory.ParcelManager;
 import com.eldanior.system.territory.ParcelPermission;
+import com.eldanior.system.config.UUIDExtractor;
+import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.EntityEventSystem;
@@ -15,7 +17,6 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 
-import java.lang.reflect.Field;
 import java.util.UUID;
 
 public class ParcelInteractEvent extends EntityEventSystem<EntityStore, UseBlockEvent.Pre> {
@@ -31,7 +32,7 @@ public class ParcelInteractEvent extends EntityEventSystem<EntityStore, UseBlock
         Player player = store.getComponent(playerRef, Player.getComponentType());
         if (player == null) return;
 
-        if (player.hasPermission("eldanior.command.setlevel")) return;
+        if (player.hasPermission(EldaniorLogger.ADMIN_PERMISSION)) return;
 
         Vector3i target = event.getTargetBlock();
         String world = player.getWorld() != null ? player.getWorld().getName() : "";
@@ -51,7 +52,7 @@ public class ParcelInteractEvent extends EntityEventSystem<EntityStore, UseBlock
                             "<color:red>Acces interdit !</color> <color:gray>(" + parcel.getName() + ")</color>",
                             NotificationStyle.Warning);
                 }
-            } catch (Exception ignored) {}
+            } catch (Exception e) { EldaniorLogger.error("ParcelInteractEvent", e); }
         }
     }
 
@@ -59,9 +60,7 @@ public class ParcelInteractEvent extends EntityEventSystem<EntityStore, UseBlock
         try {
             PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
             if (pRef == null) return null;
-            Field f = PlayerRef.class.getDeclaredField("uuid");
-            f.setAccessible(true);
-            return (UUID) f.get(pRef);
+            return UUIDExtractor.getUUID(pRef);
         } catch (Exception e) { return null; }
     }
 
