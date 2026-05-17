@@ -1,6 +1,7 @@
 package com.eldanior.system.territory.systems;
 
 import com.eldanior.system.Leveling.utils.NotificationHelper;
+import com.eldanior.system.territory.ArenaManager;
 import com.eldanior.system.territory.ParcelData;
 import com.eldanior.system.territory.ParcelManager;
 import com.eldanior.system.territory.ParcelType;
@@ -25,6 +26,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ParcelRangeSystem extends EntityTickingSystem<EntityStore> {
 
     private static final Map<UUID, String> playerCurrentParcel = new ConcurrentHashMap<>();
+    // Track si le joueur est dans un donjon (parcelId du donjon)
+    private static final Map<UUID, String> playerInDungeon = new ConcurrentHashMap<>();
     private int tickCounter = 0;
 
     @Override
@@ -49,31 +52,90 @@ public class ParcelRangeSystem extends EntityTickingSystem<EntityStore> {
         Vector3d pos = transform.getPosition();
         String world = player.getWorld().getName();
 
+        // === BARRIERE ROYAUME ===
+        // Si le joueur est hors de tout Royaume, le repousser vers l'interieur
+        checkKingdomBarrier(player, transform, pos, world, store, ref);
+
         ParcelData currentParcel = ParcelManager.getParcelAt(world, pos.x, pos.y, pos.z);
         String currentId = currentParcel != null ? currentParcel.getId() : null;
         String previousId = playerCurrentParcel.get(playerUUID);
 
+        // Verifier si le joueur est toujours dans les limites du donjon
+        String dungeonId = playerInDungeon.get(playerUUID);
+        if (dungeonId != null) {
+            ParcelData dungeon = ParcelManager.get(dungeonId);
+            if (dungeon != null && dungeon.contains(pos.x, pos.y, pos.z)) {
+                // Toujours dans le donjon — ignorer tous les changements de sous-parcelle
+                if (currentId != null) playerCurrentParcel.put(playerUUID, currentId);
+                else playerCurrentParcel.remove(playerUUID);
+                return;
+            } else {
+                // Sorti du donjon
+                playerInDungeon.remove(playerUUID);
+                try {
+                    PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
+                    if (pRef != null) {
+                        NotificationHelper.showEventTitle(pRef, "SORTIE DE DONJON", "Vous quittez le donjon", false);
+                    }
+                } catch (Exception e) { EldaniorLogger.error("ParcelRangeSystem", e); }
+            }
+        }
+
         if (!java.util.Objects.equals(currentId, previousId)) {
             try {
                 PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
+                ParcelData previousParcel = previousId != null ? ParcelManager.get(previousId) : null;
+
+                // Gestion sortie d'arene
+                if (previousParcel != null && previousParcel.getType() == ParcelType.ARENA) {
+                    if (currentParcel == null || currentParcel.getType() != ParcelType.ARENA) {
+                        ArenaManager.leaveArena(playerUUID);
+                        if (pRef != null) {
+                            NotificationHelper.showEventTitle(pRef, "SORTIE D'ARENE", "Vous quittez le combat", false);
+                        }
+                    }
+                }
+
                 if (pRef != null && currentParcel != null) {
-                    ParcelData previousParcel = previousId != null ? ParcelManager.get(previousId) : null;
+                    // === TRACKING DECOUVERTE ===
+                    trackDiscovery(currentParcel, player, playerUUID, pRef, store, ref);
 
-                    if (isBigZone(currentParcel.getType())) {
-                        // Royaume / Territoire / Ville → grand message titre
-                        // SAUF si on sort d'une zone enfant vers son parent (ville → territoire)
-                        boolean isParentOfPrevious = previousParcel != null
-                                && currentParcel.getId().equals(previousParcel.getParentId());
+                    if (currentParcel.getType() == ParcelType.ARENA) {
+                        // ARENE : message + inscription
+                        ArenaManager.enterArena(playerUUID, currentParcel.getId());
+                        NotificationHelper.showEventTitle(pRef, fmt(currentParcel.getName()), "ARENE — PvP Libre", false);
+                    } else if (currentParcel.getType() == ParcelType.DUNGEON) {
+                        // DONJON : message avec nom + rank — entrer en mode donjon
+                        String rank = currentParcel.getDungeonRank();
+                        String subtitle = "DONJON — Rank " + rank;
+                        NotificationHelper.showEventTitle(pRef, fmt(currentParcel.getName()), subtitle, false);
+                        playerInDungeon.put(playerUUID, currentParcel.getId());
+                    } else if (currentParcel.getType() == ParcelType.MINE) {
+                        NotificationHelper.showEventTitle(pRef, fmt(currentParcel.getName()), "MINE — Zone de Minage", false);
+                    } else if (currentParcel.getType() == ParcelType.FOREST) {
+                        NotificationHelper.showEventTitle(pRef, fmt(currentParcel.getName()), "FORET — Zone de Recolte", false);
+                    } else if (isBigZone(currentParcel.getType())) {
+                        // Verifier toute la hierarchie (parent, grand-parent, etc.)
+                        boolean isAncestorOfPrevious = false;
+                        if (previousParcel != null) {
+                            String pid = previousParcel.getParentId();
+                            while (pid != null) {
+                                if (currentParcel.getId().equals(pid)) {
+                                    isAncestorOfPrevious = true;
+                                    break;
+                                }
+                                ParcelData pp = ParcelManager.get(pid);
+                                pid = pp != null ? pp.getParentId() : null;
+                            }
+                        }
 
-                        if (!isParentOfPrevious) {
+                        if (!isAncestorOfPrevious) {
                             showZoneTitle(pRef, currentParcel);
                         }
                     } else {
-                        // Plot / Housing / Room / Farm → petite notification
                         showZoneNotification(pRef, currentParcel);
                     }
                 } else if (pRef != null && currentParcel == null && previousId != null) {
-                    // Sortie vers zone sauvage
                     NotificationHelper.showEventTitle(pRef, "ZONE SAUVAGE", "Territoire inexplore", false);
                 }
             } catch (Exception e) { EldaniorLogger.error("ParcelRangeSystem", e); }
@@ -83,12 +145,76 @@ public class ParcelRangeSystem extends EntityTickingSystem<EntityStore> {
         }
     }
 
+    // ==================== BARRIERE ROYAUME ====================
+
+    /**
+     * Verifie si le joueur est hors de tout Royaume.
+     * Si oui, le teleporte au bord le plus proche du Royaume le plus proche.
+     */
+    private void checkKingdomBarrier(Player player, TransformComponent transform,
+                                     Vector3d pos, String world,
+                                     Store<EntityStore> store, Ref<EntityStore> ref) {
+        // Verifier si le joueur est dans un Royaume
+        for (ParcelData p : ParcelManager.getAll()) {
+            if (p.getType() == ParcelType.KINGDOM && world.equals(p.getWorld())
+                    && p.contains(pos.x, pos.y, pos.z)) {
+                return; // Dans un Royaume, tout va bien
+            }
+        }
+
+        // Le joueur n'est dans aucun Royaume — trouver le plus proche
+        ParcelData closest = null;
+        double closestDist = Double.MAX_VALUE;
+
+        for (ParcelData p : ParcelManager.getAll()) {
+            if (p.getType() != ParcelType.KINGDOM || !world.equals(p.getWorld())) continue;
+
+            // Distance au centre du Royaume
+            double cx = (p.getMinX() + p.getMaxX()) / 2.0;
+            double cz = (p.getMinZ() + p.getMaxZ()) / 2.0;
+            double dist = (pos.x - cx) * (pos.x - cx) + (pos.z - cz) * (pos.z - cz);
+
+            if (dist < closestDist) {
+                closestDist = dist;
+                closest = p;
+            }
+        }
+
+        if (closest == null) return; // Pas de Royaume du tout, pas de barriere
+
+        // Calculer la position de repoussement (bord le plus proche du Royaume)
+        double newX = Math.max(closest.getMinX() + 2, Math.min(closest.getMaxX() - 2, pos.x));
+        double newZ = Math.max(closest.getMinZ() + 2, Math.min(closest.getMaxZ() - 2, pos.z));
+
+        try {
+            transform.teleportPosition(new Vector3d(newX, pos.y, newZ));
+
+            // Avertissement
+            UUID playerUUID = getUUID(store, ref);
+            if (playerUUID != null) {
+                PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
+                if (pRef != null) {
+                    NotificationHelper.sendNotification(pRef,
+                            "<color:red>Vous ne pouvez pas quitter le Royaume !</color>",
+                            com.hypixel.hytale.protocol.packets.interface_.NotificationStyle.Warning);
+                }
+            }
+        } catch (Exception e) {
+            EldaniorLogger.error("ParcelRangeSystem.barrier", e);
+        }
+    }
+
+    /** Formate un nom de parcelle pour l'affichage : remplace les _ par des espaces */
+    private static String fmt(String name) {
+        return name != null ? name.replace('_', ' ') : "";
+    }
+
     private boolean isBigZone(ParcelType type) {
-        return type == ParcelType.KINGDOM || type == ParcelType.TERRITORY || type == ParcelType.CITY;
+        return type == ParcelType.KINGDOM || type == ParcelType.GRAND_TERRITORY || type == ParcelType.TERRITORY || type == ParcelType.CITY;
     }
 
     private void showZoneTitle(PlayerRef pRef, ParcelData parcel) {
-        String title = parcel.getName();
+        String title = fmt(parcel.getName());
         String subtitle = parcel.getType().getLabel().toUpperCase();
 
         if (parcel.getType() == ParcelType.CITY) {
@@ -103,12 +229,14 @@ public class ParcelRangeSystem extends EntityTickingSystem<EntityStore> {
         String color = parcel.isProtectedByDefault() ? "gold" : "green";
 
         NotificationHelper.sendNotification(pRef,
-                "<color:" + color + ">[" + parcel.getType().getLabel() + "] " + parcel.getName() + "</color> <color:gray>(" + ownerInfo + ")</color>",
+                "<color:" + color + ">[" + parcel.getType().getLabel() + "] " + fmt(parcel.getName()) + "</color> <color:gray>(" + ownerInfo + ")</color>",
                 NotificationStyle.Default);
     }
 
     public static void handleDisconnect(UUID playerUUID) {
         playerCurrentParcel.remove(playerUUID);
+        playerInDungeon.remove(playerUUID);
+        ArenaManager.handleDisconnect(playerUUID);
     }
 
     private UUID getUUID(Store<EntityStore> store, Ref<EntityStore> ref) {
@@ -117,6 +245,39 @@ public class ParcelRangeSystem extends EntityTickingSystem<EntityStore> {
             if (pRef == null) return null;
             return UUIDExtractor.getUUID(pRef);
         } catch (Exception e) { return null; }
+    }
+
+    private void trackDiscovery(ParcelData parcel, Player player, UUID playerUUID,
+                                PlayerRef pRef, Store<EntityStore> store, Ref<EntityStore> ref) {
+        // Seuls certains types sont trackés
+        ParcelType type = parcel.getType();
+        if (type != ParcelType.DUNGEON && type != ParcelType.MINE
+                && type != ParcelType.FOREST && type != ParcelType.ARENA) return;
+
+        try {
+            var lvlType = com.eldanior.system.EldaniorSystem.get().getPlayerLevelDataType();
+            com.eldanior.system.config.Player.PlayerLevelData data = store.getComponent(ref, lvlType);
+            if (data == null) return;
+
+            boolean isDungeon = (type == ParcelType.DUNGEON);
+            // Modifie directement l'objet (pas de putComponent dans un tick ECS)
+            boolean isNew = data.discoverParcel(parcel.getId(), isDungeon);
+
+            if (isNew) {
+                // Notification de découverte
+                NotificationHelper.sendNotification(pRef,
+                        "<color:green>Zone decouverte : " + parcel.getName() + " !</color>",
+                        com.hypixel.hytale.protocol.packets.interface_.NotificationStyle.Success);
+
+                // Premier joueur à découvrir ?
+                boolean isFirstDiscoverer = parcel.setFirstDiscoverer(player.getDisplayName(), playerUUID.toString());
+                if (isFirstDiscoverer) {
+                    ParcelManager.save();
+                    NotificationHelper.showEventTitle(pRef,
+                            "PREMIER EXPLORATEUR", "Vous etes le premier a decouvrir " + parcel.getName() + " !", true);
+                }
+            }
+        } catch (Exception e) { EldaniorLogger.error("ParcelRangeSystem:discovery", e); }
     }
 
     @Nonnull

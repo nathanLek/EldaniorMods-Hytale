@@ -558,7 +558,26 @@ public enum PassiveSkill {
     FAMILY_FROST_RESILIENCE("FAMILY_FROST_RESILIENCE", "Resilience du Givre", "Reduction de degats evolutive (Famille Frostguard).", new FrostResilience()),
     FAMILY_IRON_WILL("FAMILY_IRON_WILL", "Volonte de Fer", "Bonus d'XP evolutif (Famille Ironveil).", new IronWillFamily()),
     FAMILY_SHADOW_STRIKE("FAMILY_SHADOW_STRIKE", "Frappe de l'Ombre", "Bonus de degats critiques evolutif (Famille Shadowmere).", new ShadowStrike()),
-    FAMILY_STORM_VIGOR("FAMILY_STORM_VIGOR", "Vigueur de la Tempete", "Bonus de dignite evolutif (Famille Stormcrest).", new StormVigor());
+    FAMILY_STORM_VIGOR("FAMILY_STORM_VIGOR", "Vigueur de la Tempete", "Bonus de dignite evolutif (Famille Stormcrest).", new StormVigor()),
+
+    // ===================== COMPETENCES DE CRAFT =====================
+    CRAFT_CUISINE("CRAFT_CUISINE", "Cuisine", "Permet d'utiliser le Bench Cooking.", new com.eldanior.system.skills.skills.passives.Craft.CraftCuisine()),
+    CRAFT_FONDERIE("CRAFT_FONDERIE", "Fonderie", "Permet d'utiliser le Bench Furnace.", new com.eldanior.system.skills.skills.passives.Craft.CraftFonderie()),
+    CRAFT_ARMURERIE("CRAFT_ARMURERIE", "Armurerie", "Permet d'utiliser le Bench Armour.", new com.eldanior.system.skills.skills.passives.Craft.CraftArmurerie()),
+    CRAFT_FORGE_ARMES("CRAFT_FORGE_ARMES", "Forge d'Armes", "Permet d'utiliser le Bench Weapon.", new com.eldanior.system.skills.skills.passives.Craft.CraftForgeArmes()),
+    CRAFT_TANNERIE("CRAFT_TANNERIE", "Tannerie", "Permet d'utiliser le Bench Tannery.", new com.eldanior.system.skills.skills.passives.Craft.CraftTannerie()),
+    CRAFT_ALCHIMIE("CRAFT_ALCHIMIE", "Alchimie", "Permet d'utiliser le Bench Alchemy.", new com.eldanior.system.skills.skills.passives.Craft.CraftAlchimie()),
+    CRAFT_SCIERIE("CRAFT_SCIERIE", "Scierie", "Permet d'utiliser le Bench Lumbermill.", new com.eldanior.system.skills.skills.passives.Craft.CraftScierie()),
+    CRAFT_AGRICULTURE("CRAFT_AGRICULTURE", "Agriculture", "Permet d'utiliser le Bench Farming.", new com.eldanior.system.skills.skills.passives.Craft.CraftAgriculture()),
+    CRAFT_RECYCLAGE("CRAFT_RECYCLAGE", "Recyclage", "Permet d'utiliser le Bench Salvage.", new com.eldanior.system.skills.skills.passives.Craft.CraftRecyclage()),
+    CRAFT_ARTISAN_BASE("CRAFT_ARTISAN_BASE", "Artisanat de Base", "Permet d'utiliser le Workbench.", new com.eldanior.system.skills.skills.passives.Craft.CraftArtisanBase()),
+
+    // ===================== AURA DE DIGNITE (5 niveaux) =====================
+    DIGNITY_AURA_1("DIGNITY_AURA_1", "Aura Mineure", "Une faible aura emane de vous, ralentissant legerement les ennemis proches.", new com.eldanior.system.skills.skills.passives.Dignity.DignityAuraPassive()),
+    DIGNITY_AURA_2("DIGNITY_AURA_2", "Aura de Dignite", "Votre aura s'intensifie, ralentissant les ennemis dans un rayon accru.", new com.eldanior.system.skills.skills.passives.Dignity.DignityAuraPassive()),
+    DIGNITY_AURA_3("DIGNITY_AURA_3", "Aura Imposante", "Votre presence impose le respect. Les ennemis proches sont fortement ralentis.", new com.eldanior.system.skills.skills.passives.Dignity.DignityAuraPassive()),
+    DIGNITY_AURA_4("DIGNITY_AURA_4", "Aura Absolue", "Une aura ecrasante vous entoure. Peu osent s'approcher de vous.", new com.eldanior.system.skills.skills.passives.Dignity.DignityAuraPassive()),
+    DIGNITY_AURA_5("DIGNITY_AURA_5", "Aura Draconique", "La puissance d'un dragon coule en vous. Votre aura terrorise tous ceux qui vous entourent.", new com.eldanior.system.skills.skills.passives.Dignity.DignityAuraPassive());
 
     private final String id;
     private final String displayName;
@@ -600,3 +619,4 @@ public enum PassiveSkill {
         return logic;
     }
 }
+

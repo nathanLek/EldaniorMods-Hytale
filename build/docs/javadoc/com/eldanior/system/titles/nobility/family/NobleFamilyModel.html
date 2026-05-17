@@ -90,7 +90,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="definitions/marquis/Ashford.html" title="class in com.eldanior.system.titles.nobility.family.definitions.marquis">Ashford</a></code>, <code><a href="definitions/marquis/Drakenhart.html" title="class in com.eldanior.system.titles.nobility.family.definitions.marquis">Drakenhart</a></code>, <code><a href="definitions/royal/Eldanior.html" title="class in com.eldanior.system.titles.nobility.family.definitions.royal">Eldanior</a></code>, <code><a href="definitions/duc/Frostguard.html" title="class in com.eldanior.system.titles.nobility.family.definitions.duc">Frostguard</a></code>, <code><a href="definitions/duc/Ironveil.html" title="class in com.eldanior.system.titles.nobility.family.definitions.duc">Ironveil</a></code>, <code><a href="definitions/marquis/Luminara.html" title="class in com.eldanior.system.titles.nobility.family.definitions.marquis">Luminara</a></code>, <code><a href="definitions/duc/Shadowmere.html" title="class in com.eldanior.system.titles.nobility.family.definitions.duc">Shadowmere</a></code>, <code><a href="definitions/duc/Stormcrest.html" title="class in com.eldanior.system.titles.nobility.family.definitions.duc">Stormcrest</a></code>, <code><a href="definitions/marquis/Valmontis.html" title="class in com.eldanior.system.titles.nobility.family.definitions.marquis">Valmontis</a></code></dd>
+<dd><code><a href="definitions/royal/Eldanior.html" title="class in com.eldanior.system.titles.nobility.family.definitions.royal">Eldanior</a></code>, <code><a href="definitions/duc/Frostguard.html" title="class in com.eldanior.system.titles.nobility.family.definitions.duc">Frostguard</a></code>, <code><a href="definitions/duc/Goldcrest.html" title="class in com.eldanior.system.titles.nobility.family.definitions.duc">Goldcrest</a></code>, <code><a href="definitions/duc/Ironveil.html" title="class in com.eldanior.system.titles.nobility.family.definitions.duc">Ironveil</a></code>, <code><a href="definitions/marquis/Luminara.html" title="class in com.eldanior.system.titles.nobility.family.definitions.marquis">Luminara</a></code>, <code><a href="definitions/duc/Nighthollow.html" title="class in com.eldanior.system.titles.nobility.family.definitions.duc">Nighthollow</a></code>, <code><a href="definitions/marquis/Runkandel.html" title="class in com.eldanior.system.titles.nobility.family.definitions.marquis">Runkandel</a></code>, <code><a href="definitions/duc/Silkroad.html" title="class in com.eldanior.system.titles.nobility.family.definitions.duc">Silkroad</a></code>, <code><a href="definitions/duc/Spellweave.html" title="class in com.eldanior.system.titles.nobility.family.definitions.duc">Spellweave</a></code>, <code><a href="definitions/duc/Swiftquiver.html" title="class in com.eldanior.system.titles.nobility.family.definitions.duc">Swiftquiver</a></code>, <code><a href="definitions/marquis/Valmontis.html" title="class in com.eldanior.system.titles.nobility.family.definitions.marquis">Valmontis</a></code>, <code><a href="definitions/duc/Warbane.html" title="class in com.eldanior.system.titles.nobility.family.definitions.duc">Warbane</a></code>, <code><a href="definitions/marquis/Zippel.html" title="class in com.eldanior.system.titles.nobility.family.definitions.marquis">Zippel</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">NobleFamilyModel</span>
@@ -106,9 +106,10 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.lang.String,java.lang.String,com.eldanior.system.config.configs.Rarity,com.eldanior.system.titles.nobility.NobilityRank,com.eldanior.system.skills.skillsInteraction.PassiveSkill)" class="member-name-link">NobleFamilyModel</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.lang.String,java.lang.String,java.lang.String,com.eldanior.system.config.configs.Rarity,com.eldanior.system.titles.nobility.NobilityRank,com.eldanior.system.skills.skillsInteraction.PassiveSkill)" class="member-name-link">NobleFamilyModel</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;displayName,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;motto,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;history,
  <a href="../../../config/configs/Rarity.html" title="enum class in com.eldanior.system.config.configs">Rarity</a>&nbsp;rarity,
  <a href="../NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a>&nbsp;minimumRank,
  <a href="../../../skills/skillsInteraction/PassiveSkill.html" title="enum class in com.eldanior.system.skills.skillsInteraction">PassiveSkill</a>&nbsp;familyPassive)</code></div>
@@ -137,17 +138,20 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFormattedName()" class="member-name-link">getFormattedName</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getId()" class="member-name-link">getId</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getHistory()" class="member-name-link">getHistory</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMinimumRank()" class="member-name-link">getMinimumRank</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getId()" class="member-name-link">getId</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMotto()" class="member-name-link">getMotto</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMinimumRank()" class="member-name-link">getMinimumRank</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../config/configs/Rarity.html" title="enum class in com.eldanior.system.config.configs">Rarity</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRarity()" class="member-name-link">getRarity</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMotto()" class="member-name-link">getMotto</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../config/configs/Rarity.html" title="enum class in com.eldanior.system.config.configs">Rarity</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRarity()" class="member-name-link">getRarity</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -166,11 +170,12 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(java.lang.String,java.lang.String,java.lang.String,com.eldanior.system.config.configs.Rarity,com.eldanior.system.titles.nobility.NobilityRank,com.eldanior.system.skills.skillsInteraction.PassiveSkill)">
+<section class="detail" id="&lt;init&gt;(java.lang.String,java.lang.String,java.lang.String,java.lang.String,com.eldanior.system.config.configs.Rarity,com.eldanior.system.titles.nobility.NobilityRank,com.eldanior.system.skills.skillsInteraction.PassiveSkill)">
 <h3>NobleFamilyModel</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">NobleFamilyModel</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;displayName,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;motto,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;history,
  <a href="../../../config/configs/Rarity.html" title="enum class in com.eldanior.system.config.configs">Rarity</a>&nbsp;rarity,
  <a href="../NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a>&nbsp;minimumRank,
  <a href="../../../skills/skillsInteraction/PassiveSkill.html" title="enum class in com.eldanior.system.skills.skillsInteraction">PassiveSkill</a>&nbsp;familyPassive)</span></div>
@@ -200,6 +205,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getMotto()">
 <h3>getMotto</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getMotto</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getHistory()">
+<h3>getHistory</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getHistory</span>()</div>
 </section>
 </li>
 <li>

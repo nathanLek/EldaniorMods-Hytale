@@ -11,6 +11,9 @@ public class ParcelManager {
     private static final Map<String, ParcelData> parcels = new ConcurrentHashMap<>();
     private static final Map<UUID, int[]> playerSelections = new ConcurrentHashMap<>(); // pos1[3] + pos2[3]
     private static Path dataDir;
+    private static volatile long version = 0;
+
+    public static long getVersion() { return version; }
 
     public static void init(Path pluginDataDir) {
         dataDir = pluginDataDir;
@@ -55,12 +58,60 @@ public class ParcelManager {
         return id;
     }
 
+    /**
+     * Prix pour choisir une famille (achat du territoire associe).
+     */
+    public static long getFamilyTerritoryPrice(String familyId) {
+        for (ParcelData p : parcels.values()) {
+            if (familyId.equalsIgnoreCase(p.getFamilyId())) {
+                return switch (p.getType()) {
+                    case GRAND_TERRITORY -> 100_000_000L;
+                    case TERRITORY -> 30_000_000L;
+                    default -> 0L;
+                };
+            }
+        }
+        return 0L;
+    }
+
+    /**
+     * Trouve la parcelle associee a une famille.
+     */
+    public static ParcelData getFamilyParcel(String familyId) {
+        for (ParcelData p : parcels.values()) {
+            if (familyId.equalsIgnoreCase(p.getFamilyId())) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Prix pour acheter une ville (Comte + Guilde).
+     */
+    public static final long CITY_PRICE = 5_000_000L;
+
+    /**
+     * Trouve les villes sans proprietaire joueur dans un territoire.
+     */
+    public static List<ParcelData> getAvailableCities() {
+        List<ParcelData> cities = new ArrayList<>();
+        for (ParcelData p : parcels.values()) {
+            if (p.getType() == ParcelType.CITY && p.getOwnerUUID() == null) {
+                cities.add(p);
+            }
+        }
+        return cities;
+    }
+
     /** Table de hierarchie valide : type parent → types enfants autorises */
     private static final java.util.Map<ParcelType, java.util.Set<ParcelType>> VALID_CHILDREN = java.util.Map.of(
-        ParcelType.KINGDOM, java.util.Set.of(ParcelType.TERRITORY),
-        ParcelType.TERRITORY, java.util.Set.of(ParcelType.CITY),
-        ParcelType.CITY, java.util.Set.of(ParcelType.PLOT, ParcelType.HOUSING, ParcelType.FARM),
-        ParcelType.HOUSING, java.util.Set.of(ParcelType.ROOM)
+        ParcelType.KINGDOM, java.util.Set.of(ParcelType.GRAND_TERRITORY, ParcelType.TERRITORY, ParcelType.CITY, ParcelType.ARENA, ParcelType.DUNGEON, ParcelType.MINE, ParcelType.FARM, ParcelType.FOREST, ParcelType.PLOT, ParcelType.HOUSING),
+        ParcelType.GRAND_TERRITORY, java.util.Set.of(ParcelType.TERRITORY, ParcelType.CITY, ParcelType.ARENA, ParcelType.DUNGEON, ParcelType.MINE, ParcelType.FARM, ParcelType.FOREST, ParcelType.PLOT, ParcelType.HOUSING),
+        ParcelType.TERRITORY, java.util.Set.of(ParcelType.CITY, ParcelType.ARENA, ParcelType.DUNGEON, ParcelType.MINE, ParcelType.FARM, ParcelType.FOREST, ParcelType.PLOT, ParcelType.HOUSING),
+        ParcelType.CITY, java.util.Set.of(ParcelType.PLOT, ParcelType.HOUSING, ParcelType.FARM, ParcelType.FOREST, ParcelType.ARENA, ParcelType.DUNGEON, ParcelType.MINE),
+        ParcelType.HOUSING, java.util.Set.of(ParcelType.ROOM),
+        ParcelType.MINE, java.util.Set.of(ParcelType.FARM)
     );
 
     public static String createParcel(String name, ParcelType type, UUID ownerUUID, String ownerName,
@@ -83,17 +134,141 @@ public class ParcelManager {
         ParcelData parcel = parcels.get(id);
         if (parcel != null && parentId != null) {
             parcel.setParentId(parentId);
-            save();
         }
+
+        // Si c'est un Royaume ou Territoire, adopter les parcelles orphelines a l'interieur
+        if (parcel != null && (type == ParcelType.KINGDOM || type == ParcelType.TERRITORY)) {
+            adoptOrphanParcels(parcel);
+        }
+
+        save();
         return id;
     }
 
-    public static void deleteParcel(String id) {
-        deleteParcelRecursive(id);
-        save(); // Un seul save apres toutes les suppressions
+    /**
+     * Adopte les parcelles orphelines (sans parent) qui sont physiquement
+     * a l'interieur de cette parcelle, si le type est compatible.
+     */
+    private static void adoptOrphanParcels(ParcelData newParent) {
+        int adopted = 0;
+        for (ParcelData p : parcels.values()) {
+            if (p.getId().equals(newParent.getId())) continue;
+            if (p.getParentId() != null && !p.getParentId().isEmpty()) continue;
+            if (p.getType() == ParcelType.KINGDOM) continue;
+
+            java.util.Set<ParcelType> allowed = VALID_CHILDREN.getOrDefault(newParent.getType(), java.util.Set.of());
+            if (!allowed.contains(p.getType())) continue;
+
+            if (newParent.getWorld() != null && newParent.getWorld().equals(p.getWorld())
+                    && newParent.contains(p.getMinX(), p.getMinY(), p.getMinZ())
+                    && newParent.contains(p.getMaxX(), p.getMaxY(), p.getMaxZ())) {
+                p.setParentId(newParent.getId());
+                adopted++;
+                System.out.println("[Eldanior] [Parcel] " + p.getName() + " (" + p.getType() +
+                        ") adopte par " + newParent.getName() + " (" + newParent.getType() + ")");
+            }
+        }
+        if (adopted > 0) {
+            System.out.println("[Eldanior] [Parcel] " + adopted + " parcelles orphelines adoptees par " + newParent.getName());
+        }
     }
 
-    private static void deleteParcelRecursive(String id) {
+    /**
+     * Re-optimise la hierarchie : chaque parcelle est rattachee au parent
+     * le plus precis (le plus petit) qui la contient et dont le type est compatible.
+     * A appeler apres la generation d'un royaume complet.
+     */
+    public static void optimizeHierarchy() {
+        int moved = 0;
+        for (ParcelData p : parcels.values()) {
+            if (p.getType() == ParcelType.KINGDOM) continue;
+
+            // Trouver le parent le plus precis (le plus petit qui contient entierement cette parcelle)
+            ParcelData bestParent = null;
+            long bestVolume = Long.MAX_VALUE;
+
+            for (ParcelData candidate : parcels.values()) {
+                if (candidate.getId().equals(p.getId())) continue;
+                if (candidate.getWorld() == null || !candidate.getWorld().equals(p.getWorld())) continue;
+
+                // Le candidat doit etre un type parent valide
+                java.util.Set<ParcelType> allowed = VALID_CHILDREN.getOrDefault(candidate.getType(), java.util.Set.of());
+                if (!allowed.contains(p.getType())) continue;
+
+                // Le candidat doit contenir entierement la parcelle
+                if (!candidate.contains(p.getMinX(), p.getMinY(), p.getMinZ())) continue;
+                if (!candidate.contains(p.getMaxX(), p.getMaxY(), p.getMaxZ())) continue;
+
+                long volume = (long)(candidate.getMaxX() - candidate.getMinX()) *
+                              (candidate.getMaxY() - candidate.getMinY()) *
+                              (candidate.getMaxZ() - candidate.getMinZ());
+
+                if (volume < bestVolume) {
+                    bestVolume = volume;
+                    bestParent = candidate;
+                }
+            }
+
+            if (bestParent != null) {
+                String oldParent = p.getParentId();
+                String newParentId = bestParent.getId();
+                if (!newParentId.equals(oldParent)) {
+                    p.setParentId(newParentId);
+                    // Heriter la famille du parent si la parcelle n'en a pas
+                    if ((p.getFamilyId() == null || p.getFamilyId().isEmpty())
+                            && bestParent.getFamilyId() != null && !bestParent.getFamilyId().isEmpty()) {
+                        p.setFamilyId(bestParent.getFamilyId());
+                        // Mettre le nom de famille comme proprietaire si pas de joueur
+                        if (p.getOwnerUUID() == null) {
+                            com.eldanior.system.titles.nobility.family.NobleFamilyModel fam =
+                                    com.eldanior.system.titles.nobility.family.FamilyManager.get(bestParent.getFamilyId());
+                            if (fam != null) p.setOwnerName("Famille " + fam.getDisplayName());
+                        }
+                        System.out.println("[Eldanior] [Hierarchy] " + p.getName() +
+                                " herite famille " + bestParent.getFamilyId());
+                    }
+                    moved++;
+                    System.out.println("[Eldanior] [Hierarchy] " + p.getName() +
+                            " -> " + bestParent.getName() + " (" + bestParent.getType() + ")");
+                }
+            }
+        }
+        if (moved > 0) {
+            System.out.println("[Eldanior] [Hierarchy] " + moved + " parcelles re-optimisees");
+            save();
+        }
+    }
+
+    /**
+     * Supprime une parcelle. Les enfants sont re-parentes au grand-parent
+     * (ex: supprimer un Territoire -> ses Villes passent sous le Royaume).
+     */
+    public static void deleteParcel(String id) {
+        ParcelData parcel = parcels.get(id);
+        if (parcel == null) return;
+
+        String grandParentId = parcel.getParentId(); // peut etre null (Royaume)
+
+        // Re-parenter les enfants au grand-parent
+        List<String> children = getChildrenOf(id);
+        for (String childId : children) {
+            ParcelData child = parcels.get(childId);
+            if (child != null) {
+                child.setParentId(grandParentId);
+                System.out.println("[Eldanior] [Parcel] " + child.getName() + " re-parente vers " +
+                        (grandParentId != null ? grandParentId : "aucun (top-level)"));
+            }
+        }
+
+        parcels.remove(id);
+        save();
+    }
+
+    /**
+     * Supprime une parcelle ET tous ses enfants recursivement.
+     * A utiliser pour un nettoyage complet (ex: reset).
+     */
+    public static void deleteParcelRecursive(String id) {
         List<String> children = getChildrenOf(id);
         for (String childId : children) {
             deleteParcelRecursive(childId);
@@ -107,6 +282,22 @@ public class ParcelManager {
 
     public static Collection<ParcelData> getAll() {
         return parcels.values();
+    }
+
+    public static int countOwnedParcels(UUID ownerUUID) {
+        int count = 0;
+        for (ParcelData p : parcels.values()) {
+            if (ownerUUID.equals(p.getOwnerUUID())) count++;
+        }
+        return count;
+    }
+
+    public static int countOwnedParcelsOfType(UUID ownerUUID, ParcelType type) {
+        int count = 0;
+        for (ParcelData p : parcels.values()) {
+            if (ownerUUID.equals(p.getOwnerUUID()) && p.getType() == type) count++;
+        }
+        return count;
     }
 
     // ==================== LOOKUP ====================
@@ -182,6 +373,10 @@ public class ParcelManager {
         parcel.setRentEndTime(0);
         parcel.addMember(buyerUUID, ParcelRole.OWNER);
         save();
+
+        // Check titres de propriete
+        checkOwnershipTitles(buyerUUID, parcel);
+
         return true;
     }
 
@@ -293,6 +488,15 @@ public class ParcelManager {
         ParcelData parcel = get(parcelId);
         if (parcel == null) return;
         parcel.setFamilyId(familyId);
+
+        // Mettre le nom de la famille comme proprietaire si pas de joueur proprio
+        if (parcel.getOwnerUUID() == null) {
+            com.eldanior.system.titles.nobility.family.NobleFamilyModel family =
+                    com.eldanior.system.titles.nobility.family.FamilyManager.get(familyId);
+            if (family != null) {
+                parcel.setOwnerName("Famille " + family.getDisplayName());
+            }
+        }
         save();
     }
 
@@ -303,19 +507,23 @@ public class ParcelManager {
         ParcelData parent = get(parentId);
         if (parent == null) return false;
 
+        ParcelType pt = parent.getType();
         return switch (childType) {
             case KINGDOM -> false;
-            case TERRITORY -> parent.getType() == ParcelType.KINGDOM || parent.getType() == ParcelType.TERRITORY;
-            case CITY -> parent.getType() == ParcelType.TERRITORY;
-            case PLOT, HOUSING -> parent.getType() == ParcelType.CITY;
-            case ROOM -> parent.getType() == ParcelType.HOUSING;
-            case FARM -> parent.getType() == ParcelType.CITY || parent.getType() == ParcelType.TERRITORY;
+            case GRAND_TERRITORY -> pt == ParcelType.KINGDOM;
+            case TERRITORY -> pt == ParcelType.KINGDOM || pt == ParcelType.GRAND_TERRITORY || pt == ParcelType.TERRITORY;
+            case CITY -> pt == ParcelType.TERRITORY || pt == ParcelType.GRAND_TERRITORY || pt == ParcelType.KINGDOM;
+            case PLOT, HOUSING -> pt == ParcelType.CITY || pt == ParcelType.KINGDOM || pt == ParcelType.TERRITORY || pt == ParcelType.GRAND_TERRITORY;
+            case ROOM -> pt == ParcelType.HOUSING;
+            case FARM, FOREST -> pt == ParcelType.CITY || pt == ParcelType.TERRITORY || pt == ParcelType.GRAND_TERRITORY || pt == ParcelType.MINE || pt == ParcelType.KINGDOM;
+            case ARENA, DUNGEON, MINE -> pt == ParcelType.KINGDOM || pt == ParcelType.GRAND_TERRITORY || pt == ParcelType.TERRITORY || pt == ParcelType.CITY;
         };
     }
 
     // ==================== PERSISTENCE ====================
 
     public static void save() {
+        version++;
         try {
             Properties props = new Properties();
             for (ParcelData p : parcels.values()) {
@@ -350,6 +558,10 @@ public class ParcelManager {
                 props.setProperty(prefix + "lastTreasuryTransfer", String.valueOf(p.getLastTreasuryTransfer()));
                 props.setProperty(prefix + "members", p.serializeMembers());
                 props.setProperty(prefix + "permissions", p.serializePermissions());
+                props.setProperty(prefix + "dungeonRank", p.getDungeonRank());
+                props.setProperty(prefix + "regenDelaySec", String.valueOf(p.getRegenDelaySec()));
+                props.setProperty(prefix + "firstDiscovererName", p.getFirstDiscovererName() != null ? p.getFirstDiscovererName() : "");
+                props.setProperty(prefix + "firstDiscovererUUID", p.getFirstDiscovererUUID() != null ? p.getFirstDiscovererUUID() : "");
             }
 
             File file = dataDir.resolve("parcels.properties").toFile();
@@ -423,6 +635,12 @@ public class ParcelManager {
                 p.setLastTreasuryTransfer(Long.parseLong(props.getProperty(prefix + "lastTreasuryTransfer", "0")));
                 p.deserializeMembers(props.getProperty(prefix + "members", ""));
                 p.deserializePermissions(props.getProperty(prefix + "permissions", ""));
+                p.setDungeonRank(props.getProperty(prefix + "dungeonRank", "E"));
+                p.setRegenDelaySec(Integer.parseInt(props.getProperty(prefix + "regenDelaySec", "300")));
+                p.setFirstDiscoverer(
+                        props.getProperty(prefix + "firstDiscovererName", ""),
+                        props.getProperty(prefix + "firstDiscovererUUID", ""));
+
 
                 // Fix: si location et proprio == locataire, enlever le proprio
                 if (p.isRented() && p.getOwnerUUID() != null && p.getRenterUUID() != null
@@ -449,4 +667,52 @@ public class ParcelManager {
     }
 
     public static void saveAll() { save(); }
+
+    private static void checkOwnershipTitles(UUID ownerUUID, ParcelData parcel) {
+        try {
+            com.hypixel.hytale.server.core.universe.PlayerRef playerRef =
+                    com.hypixel.hytale.server.core.universe.Universe.get().getPlayer(ownerUUID);
+            if (playerRef == null) return;
+
+            var sRef = playerRef.getReference();
+            if (sRef == null) return;
+            var sStore = sRef.getStore();
+
+            var lvlType = com.eldanior.system.EldaniorSystem.get().getPlayerLevelDataType();
+            var data = sStore.getComponent(sRef, lvlType);
+            if (data == null) return;
+
+            int totalOwned = countOwnedParcels(ownerUUID);
+
+            // Proprietaire (premiere parcelle)
+            grantTitle(data, "land_owner", playerRef);
+            // Baron Foncier (5 parcelles)
+            if (totalOwned >= 5) grantTitle(data, "land_baron", playerRef);
+            // Magnat Foncier (10 parcelles)
+            if (totalOwned >= 10) grantTitle(data, "land_mogul", playerRef);
+            // Empereur des Terres (25 parcelles)
+            if (totalOwned >= 25) grantTitle(data, "land_emperor", playerRef);
+            // Gouverneur (ville)
+            if (parcel.getType() == ParcelType.CITY) grantTitle(data, "city_owner", playerRef);
+            // Seigneur des Terres (territoire)
+            if (parcel.getType() == ParcelType.TERRITORY || parcel.getType() == ParcelType.GRAND_TERRITORY)
+                grantTitle(data, "territory_owner", playerRef);
+
+            sStore.putComponent(sRef, lvlType, data);
+        } catch (Exception e) {
+            com.eldanior.system.config.EldaniorLogger.error("ParcelManager:titles", e);
+        }
+    }
+
+    private static void grantTitle(com.eldanior.system.config.Player.PlayerLevelData data, String titleId,
+                                   com.hypixel.hytale.server.core.universe.PlayerRef playerRef) {
+        if (!data.getUnlockedTitles().contains(titleId)) {
+            data.addTitle(titleId);
+            com.eldanior.system.titles.models.TitleModel title = com.eldanior.system.titles.TitleManager.get(titleId);
+            if (title != null && playerRef != null) {
+                com.eldanior.system.Leveling.utils.NotificationHelper.showEventTitle(playerRef,
+                        "TITRE DEBLOQUE", title.getDisplayName(), true);
+            }
+        }
+    }
 }

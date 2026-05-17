@@ -45,6 +45,11 @@ public class FamilleTab {
                 ui.set("#FamRank.Text", "Rang minimum : " + family.getMinimumRank().getDisplayName());
                 ui.set("#FamPassive.Text", family.getFamilyPassive() != null ? family.getFamilyPassive().getDisplayName() + " - " + family.getFamilyPassive().getDescription() : "Aucun passif");
 
+                // Histoire
+                String history = family.getHistory();
+                ui.set("#FamHistory.Text", history != null && !history.isEmpty() ? history : "");
+                ui.set("#FamHistory.Visible", history != null && !history.isEmpty());
+
                 // Tresorerie & Contribution
                 FamilyManager.FamilyRuntimeData runtime = FamilyManager.getRuntimeData(familyId);
                 ui.set("#FamTreasury.Text", runtime.getTreasury() + " Or");
@@ -83,6 +88,28 @@ public class FamilleTab {
                     ui.set("#FamCMotto" + i + ".Text", "\"" + fam.getMotto() + "\"");
                     ui.set("#FamCRarity" + i + ".Text", fam.getRarity().name());
                     ui.set("#FamCPassive" + i + ".Text", fam.getFamilyPassive() != null ? fam.getFamilyPassive().getDisplayName() : "");
+                    String hist = fam.getHistory();
+                    ui.set("#FamCHistory" + i + ".Text", hist != null && !hist.isEmpty() ? hist : "");
+                    ui.set("#FamCHistory" + i + ".Visible", hist != null && !hist.isEmpty());
+
+                    // Prix et bouton
+                    long famPrice = com.eldanior.system.territory.ParcelManager.getFamilyTerritoryPrice(fam.getId());
+                    boolean canAfford = data.getMoney() >= famPrice;
+                    if (famPrice > 0) {
+                        ui.set("#FamCPriceLabel" + i + ".Text", formatPrice(famPrice));
+                        ui.set("#FamCPriceLabel" + i + ".Visible", true);
+                        if (canAfford) {
+                            ui.set("#FamBtn" + i + ".Text", "CHOISIR");
+                            ui.set("#FamBtn" + i + ".Background", "#1a1208");
+                        } else {
+                            ui.set("#FamBtn" + i + ".Text", "TROP CHER");
+                            ui.set("#FamBtn" + i + ".Background", "#2a1a1a");
+                        }
+                    } else {
+                        ui.set("#FamCPriceLabel" + i + ".Visible", false);
+                        ui.set("#FamBtn" + i + ".Text", "CHOISIR");
+                        ui.set("#FamBtn" + i + ".Background", "#1a1208");
+                    }
                 } else {
                     ui.set("#FamChoice" + i + ".Visible", false);
                 }
@@ -239,6 +266,13 @@ public class FamilleTab {
         }
     }
 
+    private static String formatPrice(long price) {
+        if (price >= 1_000_000_000L) return String.format("%.0fG", price / 1_000_000_000.0);
+        if (price >= 1_000_000L) return String.format("%.0fM", price / 1_000_000.0);
+        if (price >= 1_000L) return String.format("%.0fK", price / 1_000.0);
+        return price + " Or";
+    }
+
     public static boolean handleChoose(String slotIndex, Ref<EntityStore> ref, Store<EntityStore> store) {
         int idx;
         try { idx = Integer.parseInt(slotIndex); } catch (NumberFormatException e) { return false; }
@@ -259,7 +293,42 @@ public class FamilleTab {
         // Check not taken
         if (FamilyManager.isFamilyTaken(chosenId)) return false;
 
-        // Claim
+        // Verifier le prix du territoire associe a la famille
+        long price = com.eldanior.system.territory.ParcelManager.getFamilyTerritoryPrice(chosenId);
+        if (price > 0) {
+            if (data.getMoney() < price) {
+                // Pas assez d'argent
+                try {
+                    PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
+                    if (pRef != null) {
+                        pRef.sendMessage(Message.raw("§cPas assez d'Or ! Il faut " + String.format("%,d", price) + " Or pour acheter ce territoire."));
+                    }
+                } catch (Exception e) { EldaniorLogger.error("FamilleTab", e); }
+                return false;
+            }
+            // Deduire l'argent
+            data.removeMoney(price);
+
+            // Assigner le territoire au joueur
+            com.eldanior.system.territory.ParcelData parcel = com.eldanior.system.territory.ParcelManager.getFamilyParcel(chosenId);
+            if (parcel != null) {
+                try {
+                    PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
+                    UUID playerUUID = pRef != null ? com.eldanior.system.config.UUIDExtractor.getUUID(pRef) : null;
+                    com.hypixel.hytale.server.core.entity.entities.Player player = store.getComponent(ref,
+                            com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
+                    String playerName = player != null ? player.getDisplayName() : "";
+                    if (playerUUID != null) {
+                        parcel.setOwnerUUID(playerUUID);
+                        parcel.setOwnerName(playerName);
+                        parcel.addMember(playerUUID, com.eldanior.system.territory.ParcelRole.OWNER);
+                        com.eldanior.system.territory.ParcelManager.save();
+                    }
+                } catch (Exception e) { EldaniorLogger.error("FamilleTab", e); }
+            }
+        }
+
+        // Claim famille
         data.setNobleFamilyId(chosenId);
         data.setStatus("PATRIARCH");
         store.putComponent(ref, type, data);

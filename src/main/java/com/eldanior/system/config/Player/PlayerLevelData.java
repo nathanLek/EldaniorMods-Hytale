@@ -49,6 +49,11 @@ public class PlayerLevelData implements Component<EntityStore> {
     // Exploration
     private int chestsDiscovered = 0;
 
+    // Territoire
+    private int territoriesDiscovered = 0;
+    private int dungeonsDiscovered = 0;
+    private Set<String> discoveredParcelIds = new HashSet<>();
+
     // PvP
     private int playerKills = 0;
     private int playerDeaths = 0;
@@ -87,6 +92,7 @@ public class PlayerLevelData implements Component<EntityStore> {
 
     private List<String> unlockedSkills = new ArrayList<>();
     private Set<String> enabledSkills = new HashSet<>();
+    private Set<String> disabledSkills = new HashSet<>();
     private transient Map<String, Long> cooldowns = new HashMap<>();
 
     // Kill tracking par type de mob (ex: "goblin_scrapper" -> 150)
@@ -177,6 +183,14 @@ public class PlayerLevelData implements Component<EntityStore> {
             .append(new KeyedCodec<>("ChurchRank", Codec.STRING), (data, v) -> data.churchRank = v, data -> data.churchRank).add()
             .append(new KeyedCodec<>("Faith", Codec.INTEGER), (data, v) -> data.faith = v, data -> data.faith).add()
             .append(new KeyedCodec<>("ChestsDiscovered", Codec.INTEGER), (data, v) -> data.chestsDiscovered = v, data -> data.chestsDiscovered).add()
+            .append(new KeyedCodec<>("TerritoriesDiscovered", Codec.INTEGER), (data, v) -> data.territoriesDiscovered = v, data -> data.territoriesDiscovered).add()
+            .append(new KeyedCodec<>("DungeonsDiscovered", Codec.INTEGER), (data, v) -> data.dungeonsDiscovered = v, data -> data.dungeonsDiscovered).add()
+            .append(new KeyedCodec<>("DiscoveredParcelIds", Codec.STRING), (data, value) -> {
+                data.discoveredParcelIds = new HashSet<>();
+                if (value != null && !value.isEmpty()) {
+                    data.discoveredParcelIds.addAll(Arrays.asList(value.split(",")));
+                }
+            }, (data) -> String.join(",", data.discoveredParcelIds)).add()
             .append(new KeyedCodec<>("PlayerKills", Codec.INTEGER), (data, v) -> data.playerKills = v, data -> data.playerKills).add()
             .append(new KeyedCodec<>("PlayerDeaths", Codec.INTEGER), (data, v) -> data.playerDeaths = v, data -> data.playerDeaths).add()
             .append(new KeyedCodec<>("KillStreak", Codec.INTEGER), (data, v) -> data.killStreak = v, data -> data.killStreak).add()
@@ -203,6 +217,12 @@ public class PlayerLevelData implements Component<EntityStore> {
                     data.enabledSkills.addAll(Arrays.asList(value.split(",")));
                 }
             }, (data) -> String.join(",", data.enabledSkills)).add()
+            .append(new KeyedCodec<>("DisabledSkills", Codec.STRING), (data, value) -> {
+                data.disabledSkills = new HashSet<>();
+                if (value != null && !value.isEmpty()) {
+                    data.disabledSkills.addAll(Arrays.asList(value.split(",")));
+                }
+            }, (data) -> String.join(",", data.disabledSkills)).add()
             .append(new KeyedCodec<>("UnlockedTitles", Codec.STRING), (data, value) -> {
                 data.unlockedTitles = new ArrayList<>();
                 if (value != null && !value.isEmpty()) {
@@ -261,6 +281,9 @@ public class PlayerLevelData implements Component<EntityStore> {
         copy.churchRank = this.churchRank;
         copy.faith = this.faith;
         copy.chestsDiscovered = this.chestsDiscovered;
+        copy.territoriesDiscovered = this.territoriesDiscovered;
+        copy.dungeonsDiscovered = this.dungeonsDiscovered;
+        copy.discoveredParcelIds = new HashSet<>(this.discoveredParcelIds);
         copy.playerKills = this.playerKills;
         copy.playerDeaths = this.playerDeaths;
         copy.killStreak = this.killStreak;
@@ -290,6 +313,7 @@ public class PlayerLevelData implements Component<EntityStore> {
 
 
         copy.enabledSkills = new HashSet<>(this.enabledSkills);
+        copy.disabledSkills = new HashSet<>(this.disabledSkills);
         if (this.unlockedTitles != null) {
             copy.unlockedTitles = new ArrayList<>(this.unlockedTitles);
         }
@@ -309,42 +333,77 @@ public class PlayerLevelData implements Component<EntityStore> {
 
     public List<String> getUnlockedSkills() { return unlockedSkills; }
     public Set<String> getEnabledSkills() { return enabledSkills; }
-    public boolean isSkillEnabled(String skillId) { return enabledSkills.contains(skillId); }
-    public void enableSkill(String skillId) { enabledSkills.add(skillId); }
-    public void disableSkill(String skillId) { enabledSkills.remove(skillId); }
+    public Set<String> getDisabledSkills() { return disabledSkills; }
+
+    public boolean isSkillEnabled(String skillId) {
+        // Si explicitement désactivé → non
+        if (disabledSkills.contains(skillId)) return false;
+        // Si dans enabledSkills → oui
+        if (enabledSkills.contains(skillId)) return true;
+        // Skills de classe sont actives par défaut (pas dans enabledSkills)
+        ClassModel model = ClassManager.get(this.classId);
+        if (model != null && model.getSkillsPassiveIds() != null) {
+            for (PassiveSkill ps : model.getSkillsPassiveIds()) {
+                if (ps.name().equals(skillId)) return true;
+            }
+        }
+        // Skill familial actif par défaut
+        if (this.nobleFamilyId != null && !this.nobleFamilyId.isEmpty()) {
+            NobleFamilyModel family = FamilyManager.get(this.nobleFamilyId);
+            if (family != null && family.getFamilyPassive() != null
+                    && family.getFamilyPassive().name().equals(skillId)) return true;
+        }
+        return false;
+    }
+
+    public void enableSkill(String skillId) {
+        enabledSkills.add(skillId);
+        disabledSkills.remove(skillId);
+    }
+
+    public void disableSkill(String skillId) {
+        enabledSkills.remove(skillId);
+        disabledSkills.add(skillId);
+    }
     public void learnSkill(String skillId) {
         if (!unlockedSkills.contains(skillId)) unlockedSkills.add(skillId);
     }
     public void forgetAllSkills() {
         unlockedSkills.clear();
         enabledSkills.clear();
+        disabledSkills.clear();
     }
     public String getActiveSkillId() { return activeSkillId; }
     public void setActiveSkillId(String id) { this.activeSkillId = id; }
 
     // === NOUVEAU GETTER DYNAMIQUE DES PASSIFS ===
+    // Retourne uniquement les passifs qui ne sont PAS désactivés manuellement.
+    // Une compétence est considérée active si elle n'a pas été explicitement désactivée
+    // (c.à.d. si elle n'est pas dans disabledSkills).
     public List<PassiveSkill> getActivePassives() {
         List<PassiveSkill> activePassives = new ArrayList<>();
 
         // 1. Récupération des passifs "Innés" de la classe
         ClassModel model = ClassManager.get(this.classId);
         if (model != null && model.getSkillsPassiveIds() != null) {
-            activePassives.addAll(model.getSkillsPassiveIds());
+            for (PassiveSkill ps : model.getSkillsPassiveIds()) {
+                // Les skills de classe sont actives par défaut, sauf si désactivées manuellement
+                if (!disabledSkills.contains(ps.name())) {
+                    activePassives.add(ps);
+                }
+            }
         }
 
         // 2. Récupération des passifs "Appris" via les parchemins
         for (String skillId : this.unlockedSkills) {
             try {
-                // On essaie de convertir le String (ex: "IRON_SKIN") en Enum
                 PassiveSkill learnedPassive = PassiveSkill.valueOf(skillId.toUpperCase());
 
-                // On l'ajoute seulement s'il n'est pas déjà dans la liste
-                if (!activePassives.contains(learnedPassive)) {
+                if (!activePassives.contains(learnedPassive) && !disabledSkills.contains(skillId.toUpperCase())) {
                     activePassives.add(learnedPassive);
                 }
             } catch (IllegalArgumentException e) {
-                // Ce n'est pas grave ! Ça veut dire que ce skillId est un sort ACTIF (comme "fireball")
-                // et pas un passif. On l'ignore simplement pour le combat passif.
+                // Sort actif, pas un passif — on ignore
             }
         }
 
@@ -353,7 +412,7 @@ public class PlayerLevelData implements Component<EntityStore> {
             NobleFamilyModel family = FamilyManager.get(this.nobleFamilyId);
             if (family != null && family.getFamilyPassive() != null) {
                 PassiveSkill familySkill = family.getFamilyPassive();
-                if (!activePassives.contains(familySkill)) {
+                if (!activePassives.contains(familySkill) && !disabledSkills.contains(familySkill.name())) {
                     activePassives.add(familySkill);
                 }
             }
@@ -388,6 +447,17 @@ public class PlayerLevelData implements Component<EntityStore> {
     public int getFaith() { return faith; }
     public int getChestsDiscovered() { return chestsDiscovered; }
     public void addChestDiscovered() { this.chestsDiscovered++; }
+    public int getTerritoriesDiscovered() { return territoriesDiscovered; }
+    public int getDungeonsDiscovered() { return dungeonsDiscovered; }
+    public Set<String> getDiscoveredParcelIds() { return discoveredParcelIds; }
+    public boolean discoverParcel(String parcelId, boolean isDungeon) {
+        if (discoveredParcelIds.add(parcelId)) {
+            territoriesDiscovered++;
+            if (isDungeon) dungeonsDiscovered++;
+            return true;
+        }
+        return false;
+    }
 
     // Guilde
     public String getGuildId() { return guildId; }
@@ -619,6 +689,19 @@ public class PlayerLevelData implements Component<EntityStore> {
         this.unlockedTitles.add("novice");
         this.currentTitle = "novice";
         this.mobKills = new HashMap<>();
+        this.chestsDiscovered = 0;
+        this.territoriesDiscovered = 0;
+        this.dungeonsDiscovered = 0;
+        this.discoveredParcelIds = new HashSet<>();
+        this.playerKills = 0;
+        this.playerDeaths = 0;
+        this.killStreak = 0;
+        this.bestKillStreak = 0;
+        this.duelWins = 0;
+        this.duelLosses = 0;
+        this.duelStreak = 0;
+        this.duelBestStreak = 0;
+        this.bounty = 0;
     }
 
     // ================= KILL TRACKING =================

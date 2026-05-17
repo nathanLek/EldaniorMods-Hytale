@@ -2,12 +2,17 @@ package com.eldanior.system.territory;
 
 public enum ParcelType {
     KINGDOM("Royaume"),
+    GRAND_TERRITORY("Grand Territoire"),
     TERRITORY("Territoire"),
     CITY("Ville"),
     PLOT("Parcelle"),
     HOUSING("Logement"),
     ROOM("Chambre"),
-    FARM("Zone de Recolte");
+    FARM("Zone de Recolte"),
+    FOREST("Foret"),
+    ARENA("Arene"),
+    DUNGEON("Donjon"),
+    MINE("Mine");
 
     private final String label;
 

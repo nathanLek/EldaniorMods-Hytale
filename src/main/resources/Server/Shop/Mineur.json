@@ -1,0 +1,396 @@
+{
+  "DisplayNameKey": "Mineur",
+  "RefreshInterval": {
+    "Days": 1
+  },
+  "RestockHour": 6,
+  "TradeSlots": [
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Tool_Pickaxe_Crude", "Quantity": 1 },
+        "Input": [{ "ItemId": "Elda_Copper_Coins", "Quantity": 50 }],
+        "Stock": 10
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Tool_Pickaxe_Copper", "Quantity": 1 },
+        "Input": [{ "ItemId": "Elda_Silver_Coins", "Quantity": 120 }],
+        "Stock": 5
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Tool_Pickaxe_Iron", "Quantity": 1 },
+        "Input": [{ "ItemId": "Elda_Gold_Coins", "Quantity": 4 }],
+        "Stock": 3
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Tool_Pickaxe_Cobalt", "Quantity": 1 },
+        "Input": [{ "ItemId": "Elda_Gold_Coins", "Quantity": 15 }],
+        "Stock": 2
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Tool_Pickaxe_Thorium", "Quantity": 1 },
+        "Input": [{ "ItemId": "Elda_Diamond_Coins", "Quantity": 8 }],
+        "Stock": 1
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Tool_Shovel_Crude", "Quantity": 1 },
+        "Input": [{ "ItemId": "Elda_Copper_Coins", "Quantity": 40 }],
+        "Stock": 10
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Tool_Shovel_Copper", "Quantity": 1 },
+        "Input": [{ "ItemId": "Elda_Silver_Coins", "Quantity": 100 }],
+        "Stock": 5
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Tool_Shovel_Iron", "Quantity": 1 },
+        "Input": [{ "ItemId": "Elda_Gold_Coins", "Quantity": 3 }],
+        "Stock": 3
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Tool_Hammer_Crude", "Quantity": 1 },
+        "Input": [{ "ItemId": "Elda_Copper_Coins", "Quantity": 45 }],
+        "Stock": 10
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Tool_Hammer_Iron", "Quantity": 1 },
+        "Input": [{ "ItemId": "Elda_Gold_Coins", "Quantity": 4 }],
+        "Stock": 3
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Ore_Copper", "Quantity": 5 },
+        "Input": [{ "ItemId": "Elda_Copper_Coins", "Quantity": 30 }],
+        "Stock": 30
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Ore_Iron", "Quantity": 5 },
+        "Input": [{ "ItemId": "Elda_Silver_Coins", "Quantity": 25 }],
+        "Stock": 20
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Ore_Silver", "Quantity": 3 },
+        "Input": [{ "ItemId": "Elda_Silver_Coins", "Quantity": 60 }],
+        "Stock": 15
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Ore_Gold", "Quantity": 3 },
+        "Input": [{ "ItemId": "Elda_Silver_Coins", "Quantity": 120 }],
+        "Stock": 10
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Ore_Cobalt", "Quantity": 3 },
+        "Input": [{ "ItemId": "Elda_Gold_Coins", "Quantity": 3 }],
+        "Stock": 8
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Ore_Thorium", "Quantity": 2 },
+        "Input": [{ "ItemId": "Elda_Gold_Coins", "Quantity": 6 }],
+        "Stock": 5
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Ore_Mithril", "Quantity": 1 },
+        "Input": [{ "ItemId": "Elda_Gold_Coins", "Quantity": 12 }],
+        "Stock": 3
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Ingredient_Bar_Copper", "Quantity": 5 },
+        "Input": [{ "ItemId": "Elda_Silver_Coins", "Quantity": 40 }],
+        "Stock": 20
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Ingredient_Bar_Iron", "Quantity": 5 },
+        "Input": [{ "ItemId": "Elda_Silver_Coins", "Quantity": 100 }],
+        "Stock": 15
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Ingredient_Bar_Bronze", "Quantity": 3 },
+        "Input": [{ "ItemId": "Elda_Silver_Coins", "Quantity": 150 }],
+        "Stock": 10
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Ingredient_Bar_Cobalt", "Quantity": 3 },
+        "Input": [{ "ItemId": "Elda_Gold_Coins", "Quantity": 5 }],
+        "Stock": 5
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Ingredient_Bar_Thorium", "Quantity": 2 },
+        "Input": [{ "ItemId": "Elda_Gold_Coins", "Quantity": 10 }],
+        "Stock": 3
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Ingredient_Crystal_Red", "Quantity": 3 },
+        "Input": [{ "ItemId": "Elda_Silver_Coins", "Quantity": 80 }],
+        "Stock": 10
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Ingredient_Crystal_Blue", "Quantity": 3 },
+        "Input": [{ "ItemId": "Elda_Silver_Coins", "Quantity": 80 }],
+        "Stock": 10
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Ingredient_Crystal_Green", "Quantity": 3 },
+        "Input": [{ "ItemId": "Elda_Silver_Coins", "Quantity": 80 }],
+        "Stock": 10
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Ingredient_Crystal_Purple", "Quantity": 2 },
+        "Input": [{ "ItemId": "Elda_Gold_Coins", "Quantity": 2 }],
+        "Stock": 5
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Ingredient_Crystal_White", "Quantity": 2 },
+        "Input": [{ "ItemId": "Elda_Gold_Coins", "Quantity": 3 }],
+        "Stock": 3
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Ingredient_Powder_Boom", "Quantity": 5 },
+        "Input": [{ "ItemId": "Elda_Silver_Coins", "Quantity": 50 }],
+        "Stock": 10
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Tool_Repair_Kit_Crude", "Quantity": 1 },
+        "Input": [{ "ItemId": "Elda_Silver_Coins", "Quantity": 80 }],
+        "Stock": 10
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Tool_Repair_Kit_Iron", "Quantity": 1 },
+        "Input": [{ "ItemId": "Elda_Gold_Coins", "Quantity": 2 }],
+        "Stock": 5
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Elda_Copper_Coins", "Quantity": 8 },
+        "Input": [{ "ItemId": "Ore_Copper", "Quantity": 10 }]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Elda_Copper_Coins", "Quantity": 20 },
+        "Input": [{ "ItemId": "Ore_Iron", "Quantity": 10 }]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Elda_Copper_Coins", "Quantity": 35 },
+        "Input": [{ "ItemId": "Ore_Silver", "Quantity": 5 }]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Elda_Silver_Coins", "Quantity": 10 },
+        "Input": [{ "ItemId": "Ore_Gold", "Quantity": 5 }]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Elda_Silver_Coins", "Quantity": 30 },
+        "Input": [{ "ItemId": "Ore_Cobalt", "Quantity": 5 }]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Elda_Silver_Coins", "Quantity": 60 },
+        "Input": [{ "ItemId": "Ore_Thorium", "Quantity": 3 }]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Elda_Gold_Coins", "Quantity": 1 },
+        "Input": [{ "ItemId": "Ore_Mithril", "Quantity": 2 }]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Elda_Gold_Coins", "Quantity": 5 },
+        "Input": [{ "ItemId": "Ore_Onyxium", "Quantity": 2 }]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Elda_Diamond_Coins", "Quantity": 2 },
+        "Input": [{ "ItemId": "Ore_Adamantite", "Quantity": 1 }]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Elda_Copper_Coins", "Quantity": 15 },
+        "Input": [{ "ItemId": "Ingredient_Crystal_Red", "Quantity": 5 }]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Elda_Copper_Coins", "Quantity": 15 },
+        "Input": [{ "ItemId": "Ingredient_Crystal_Blue", "Quantity": 5 }]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Elda_Copper_Coins", "Quantity": 15 },
+        "Input": [{ "ItemId": "Ingredient_Crystal_Green", "Quantity": 5 }]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Elda_Silver_Coins", "Quantity": 8 },
+        "Input": [{ "ItemId": "Ingredient_Crystal_Purple", "Quantity": 3 }]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Elda_Silver_Coins", "Quantity": 15 },
+        "Input": [{ "ItemId": "Ingredient_Crystal_White", "Quantity": 3 }]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Elda_Silver_Coins", "Quantity": 50 },
+        "Input": [{ "ItemId": "Rock_Gem_Emerald", "Quantity": 1 }]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Elda_Silver_Coins", "Quantity": 25 },
+        "Input": [{ "ItemId": "Ingredient_Fire_Essence", "Quantity": 1 }]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Elda_Silver_Coins", "Quantity": 25 },
+        "Input": [{ "ItemId": "Ingredient_Ice_Essence", "Quantity": 1 }]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Elda_Silver_Coins", "Quantity": 25 },
+        "Input": [{ "ItemId": "Ingredient_Lightning_Essence", "Quantity": 1 }]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Elda_Gold_Coins", "Quantity": 1 },
+        "Input": [{ "ItemId": "Ingredient_Life_Essence", "Quantity": 1 }]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Elda_Gold_Coins", "Quantity": 3 },
+        "Input": [{ "ItemId": "Ingredient_Void_Essence", "Quantity": 1 }]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": { "ItemId": "Elda_Diamond_Coins", "Quantity": 5 },
+        "Input": [{ "ItemId": "Ingredient_Voidheart", "Quantity": 1 }]
+      }
+    }
+  ]
+}

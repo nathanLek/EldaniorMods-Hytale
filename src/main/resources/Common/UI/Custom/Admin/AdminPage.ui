@@ -70,6 +70,15 @@ Group {
 
             Group { Anchor: (Height: 3); }
 
+            TextButton #TabBtnHolograms {
+                Text: "HOLOGRAMMES";
+                Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #4CAF50, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center)));
+                Anchor: (Height: 28);
+                Background: #0d2a0d(0.6);
+            }
+
+            Group { Anchor: (Height: 3); }
+
             TextButton #TabBtnData {
                 Text: "DATA RESET";
                 Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #ff4444, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center)));
@@ -1329,178 +1338,199 @@ Group {
                         Label #WStatPvp { Text: "0"; Style: (FontSize: 14, TextColor: #cc4444, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
                     }
                 }
-
                 Group { Anchor: (Height: 8); }
 
-                // === SECTION: ROYAUMES / TERRITOIRES / VILLES ===
-                Label { Text: "ROYAUMES, TERRITOIRES & VILLES"; Style: (FontSize: 10, TextColor: #FFD700, RenderBold: true, LetterSpacing: 1); Anchor: (Height: 14); }
-                Group { Anchor: (Height: 4); }
-
-                // Pagination territoires
-                Group { LayoutMode: Left; Anchor: (Height: 22);
-                    Label { Text: ""; Style: (FontSize: 1); FlexWeight: 1; }
-                    TextButton #WBtnTPrev { Text: "< PREV"; Anchor: (Width: 60, Height: 20); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #aabbcc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.6); }
-                    Group { Anchor: (Width: 4); }
-                    Label #WTPageInfo { Text: "Page 1/1"; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center, HorizontalAlignment: Center); Anchor: (Width: 65); }
-                    Group { Anchor: (Width: 4); }
-                    TextButton #WBtnTNext { Text: "NEXT >"; Anchor: (Width: 60, Height: 20); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #aabbcc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.6); }
+                // ====================================================
+                // SECTION 1 : ROYAUMES / TERRITOIRES / VILLES
+                // ====================================================
+                Group { LayoutMode: Left; Anchor: (Height: 16);
+                    Label { Text: "ROYAUMES, TERRITOIRES & VILLES"; Style: (FontSize: 11, TextColor: #FFD700, RenderBold: true, LetterSpacing: 1, VerticalAlignment: Center); FlexWeight: 1; }
+                    TextButton #AWTBtnPrev { Text: "<"; Anchor: (Width: 24, Height: 16); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #aabbcc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.6); }
+                    Group { Anchor: (Width: 2); }
+                    Label #AWTPageInfo { Text: "1/1"; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center, HorizontalAlignment: Center); Anchor: (Width: 30); }
+                    Group { Anchor: (Width: 2); }
+                    TextButton #AWTBtnNext { Text: ">"; Anchor: (Width: 24, Height: 16); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #aabbcc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.6); }
                 }
                 Group { Anchor: (Height: 3); }
 
-                // 10 slots territoires
-                Group #WTSlot0 { Visible: false; LayoutMode: Top; Anchor: (Height: 50); Background: #1a1a2e(0.4); Padding: (Horizontal: 8, Vertical: 4);
-                    Group { LayoutMode: Left; Anchor: (Height: 18);
-                        Label #WTName0 { Text: ""; Style: (FontSize: 12, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
-                        Label #WTType0 { Text: ""; Style: (FontSize: 10, TextColor: #D4AF37, VerticalAlignment: Center); Anchor: (Width: 80); }
-                        Label #WTOwner0 { Text: ""; Style: (FontSize: 10, TextColor: #8899aa, VerticalAlignment: Center); Anchor: (Width: 120); }
-                    }
-                    Group { Anchor: (Height: 2); }
-                    Group { LayoutMode: Left; Anchor: (Height: 20);
-                        Label #WTInfo0 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
-                        TextButton #WTPvp0 { Text: "PVP"; Anchor: (Width: 42, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
-                        Group { Anchor: (Width: 2); }
-                        TextButton #WTDel0 { Text: "SUPPR"; Anchor: (Width: 50, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.7); }
-                    }
+                Button #AWTSlot0 { Visible: false; LayoutMode: Left; Anchor: (Height: 28); Style: (Default: (Background: #1a1a0d), Hovered: (Background: #2a2a1a)); Padding: (Horizontal: 8, Vertical: 2);
+                    Label #AWTType0 { Text: ""; Style: (FontSize: 10, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 85); }
+                    Label #AWTName0 { Text: ""; Style: (FontSize: 10, TextColor: #ddeeff, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                    Label #AWTOwner0 { Text: ""; Style: (FontSize: 9, TextColor: #8899aa, VerticalAlignment: Center); Anchor: (Width: 100); }
+                    Label #AWTInfo0 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); Anchor: (Width: 160); }
                 }
-                Group { Anchor: (Height: 2); }
-                Group #WTSlot1 { Visible: false; LayoutMode: Top; Anchor: (Height: 50); Background: #151b28(0.4); Padding: (Horizontal: 8, Vertical: 4);
-                    Group { LayoutMode: Left; Anchor: (Height: 18);
-                        Label #WTName1 { Text: ""; Style: (FontSize: 12, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
-                        Label #WTType1 { Text: ""; Style: (FontSize: 10, TextColor: #D4AF37, VerticalAlignment: Center); Anchor: (Width: 80); }
-                        Label #WTOwner1 { Text: ""; Style: (FontSize: 10, TextColor: #8899aa, VerticalAlignment: Center); Anchor: (Width: 120); }
-                    }
-                    Group { Anchor: (Height: 2); }
-                    Group { LayoutMode: Left; Anchor: (Height: 20);
-                        Label #WTInfo1 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
-                        TextButton #WTPvp1 { Text: "PVP"; Anchor: (Width: 42, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
-                        Group { Anchor: (Width: 2); }
-                        TextButton #WTDel1 { Text: "SUPPR"; Anchor: (Width: 50, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.7); }
-                    }
+                Group { Anchor: (Height: 1); }
+                Button #AWTSlot1 { Visible: false; LayoutMode: Left; Anchor: (Height: 28); Style: (Default: (Background: #15150a), Hovered: (Background: #2a2a1a)); Padding: (Horizontal: 8, Vertical: 2);
+                    Label #AWTType1 { Text: ""; Style: (FontSize: 10, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 85); }
+                    Label #AWTName1 { Text: ""; Style: (FontSize: 10, TextColor: #ddeeff, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                    Label #AWTOwner1 { Text: ""; Style: (FontSize: 9, TextColor: #8899aa, VerticalAlignment: Center); Anchor: (Width: 100); }
+                    Label #AWTInfo1 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); Anchor: (Width: 160); }
                 }
-                Group { Anchor: (Height: 2); }
-                Group #WTSlot2 { Visible: false; LayoutMode: Top; Anchor: (Height: 50); Background: #1a1a2e(0.4); Padding: (Horizontal: 8, Vertical: 4);
-                    Group { LayoutMode: Left; Anchor: (Height: 18);
-                        Label #WTName2 { Text: ""; Style: (FontSize: 12, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
-                        Label #WTType2 { Text: ""; Style: (FontSize: 10, TextColor: #D4AF37, VerticalAlignment: Center); Anchor: (Width: 80); }
-                        Label #WTOwner2 { Text: ""; Style: (FontSize: 10, TextColor: #8899aa, VerticalAlignment: Center); Anchor: (Width: 120); }
-                    }
-                    Group { Anchor: (Height: 2); }
-                    Group { LayoutMode: Left; Anchor: (Height: 20);
-                        Label #WTInfo2 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
-                        TextButton #WTPvp2 { Text: "PVP"; Anchor: (Width: 42, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
-                        Group { Anchor: (Width: 2); }
-                        TextButton #WTDel2 { Text: "SUPPR"; Anchor: (Width: 50, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.7); }
-                    }
+                Group { Anchor: (Height: 1); }
+                Button #AWTSlot2 { Visible: false; LayoutMode: Left; Anchor: (Height: 28); Style: (Default: (Background: #1a1a0d), Hovered: (Background: #2a2a1a)); Padding: (Horizontal: 8, Vertical: 2);
+                    Label #AWTType2 { Text: ""; Style: (FontSize: 10, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 85); }
+                    Label #AWTName2 { Text: ""; Style: (FontSize: 10, TextColor: #ddeeff, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                    Label #AWTOwner2 { Text: ""; Style: (FontSize: 9, TextColor: #8899aa, VerticalAlignment: Center); Anchor: (Width: 100); }
+                    Label #AWTInfo2 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); Anchor: (Width: 160); }
                 }
-                Group { Anchor: (Height: 2); }
-                Group #WTSlot3 { Visible: false; LayoutMode: Top; Anchor: (Height: 50); Background: #151b28(0.4); Padding: (Horizontal: 8, Vertical: 4);
-                    Group { LayoutMode: Left; Anchor: (Height: 18);
-                        Label #WTName3 { Text: ""; Style: (FontSize: 12, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
-                        Label #WTType3 { Text: ""; Style: (FontSize: 10, TextColor: #D4AF37, VerticalAlignment: Center); Anchor: (Width: 80); }
-                        Label #WTOwner3 { Text: ""; Style: (FontSize: 10, TextColor: #8899aa, VerticalAlignment: Center); Anchor: (Width: 120); }
-                    }
-                    Group { Anchor: (Height: 2); }
-                    Group { LayoutMode: Left; Anchor: (Height: 20);
-                        Label #WTInfo3 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
-                        TextButton #WTPvp3 { Text: "PVP"; Anchor: (Width: 42, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
-                        Group { Anchor: (Width: 2); }
-                        TextButton #WTDel3 { Text: "SUPPR"; Anchor: (Width: 50, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.7); }
-                    }
+                Group { Anchor: (Height: 1); }
+                Button #AWTSlot3 { Visible: false; LayoutMode: Left; Anchor: (Height: 28); Style: (Default: (Background: #15150a), Hovered: (Background: #2a2a1a)); Padding: (Horizontal: 8, Vertical: 2);
+                    Label #AWTType3 { Text: ""; Style: (FontSize: 10, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 85); }
+                    Label #AWTName3 { Text: ""; Style: (FontSize: 10, TextColor: #ddeeff, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                    Label #AWTOwner3 { Text: ""; Style: (FontSize: 9, TextColor: #8899aa, VerticalAlignment: Center); Anchor: (Width: 100); }
+                    Label #AWTInfo3 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); Anchor: (Width: 160); }
                 }
-                Group { Anchor: (Height: 2); }
-                Group #WTSlot4 { Visible: false; LayoutMode: Top; Anchor: (Height: 50); Background: #1a1a2e(0.4); Padding: (Horizontal: 8, Vertical: 4);
-                    Group { LayoutMode: Left; Anchor: (Height: 18);
-                        Label #WTName4 { Text: ""; Style: (FontSize: 12, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
-                        Label #WTType4 { Text: ""; Style: (FontSize: 10, TextColor: #D4AF37, VerticalAlignment: Center); Anchor: (Width: 80); }
-                        Label #WTOwner4 { Text: ""; Style: (FontSize: 10, TextColor: #8899aa, VerticalAlignment: Center); Anchor: (Width: 120); }
-                    }
-                    Group { Anchor: (Height: 2); }
-                    Group { LayoutMode: Left; Anchor: (Height: 20);
-                        Label #WTInfo4 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
-                        TextButton #WTPvp4 { Text: "PVP"; Anchor: (Width: 42, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
-                        Group { Anchor: (Width: 2); }
-                        TextButton #WTDel4 { Text: "SUPPR"; Anchor: (Width: 50, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.7); }
-                    }
+                Group { Anchor: (Height: 1); }
+                Button #AWTSlot4 { Visible: false; LayoutMode: Left; Anchor: (Height: 28); Style: (Default: (Background: #1a1a0d), Hovered: (Background: #2a2a1a)); Padding: (Horizontal: 8, Vertical: 2);
+                    Label #AWTType4 { Text: ""; Style: (FontSize: 10, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 85); }
+                    Label #AWTName4 { Text: ""; Style: (FontSize: 10, TextColor: #ddeeff, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                    Label #AWTOwner4 { Text: ""; Style: (FontSize: 9, TextColor: #8899aa, VerticalAlignment: Center); Anchor: (Width: 100); }
+                    Label #AWTInfo4 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); Anchor: (Width: 160); }
                 }
-                Group { Anchor: (Height: 2); }
-                Group #WTSlot5 { Visible: false; LayoutMode: Top; Anchor: (Height: 50); Background: #151b28(0.4); Padding: (Horizontal: 8, Vertical: 4);
-                    Group { LayoutMode: Left; Anchor: (Height: 18);
-                        Label #WTName5 { Text: ""; Style: (FontSize: 12, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
-                        Label #WTType5 { Text: ""; Style: (FontSize: 10, TextColor: #D4AF37, VerticalAlignment: Center); Anchor: (Width: 80); }
-                        Label #WTOwner5 { Text: ""; Style: (FontSize: 10, TextColor: #8899aa, VerticalAlignment: Center); Anchor: (Width: 120); }
-                    }
-                    Group { Anchor: (Height: 2); }
-                    Group { LayoutMode: Left; Anchor: (Height: 20);
-                        Label #WTInfo5 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
-                        TextButton #WTPvp5 { Text: "PVP"; Anchor: (Width: 42, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
-                        Group { Anchor: (Width: 2); }
-                        TextButton #WTDel5 { Text: "SUPPR"; Anchor: (Width: 50, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.7); }
-                    }
+
+                Group { Anchor: (Height: 10); }
+
+                // ====================================================
+                // SECTION 2 : PARCELLES / LOGEMENTS / FERMES
+                // ====================================================
+                Group { LayoutMode: Left; Anchor: (Height: 16);
+                    Label { Text: "PARCELLES, LOGEMENTS & FERMES"; Style: (FontSize: 11, TextColor: #4CAF50, RenderBold: true, LetterSpacing: 1, VerticalAlignment: Center); FlexWeight: 1; }
+                    TextButton #AWPBtnPrev { Text: "<"; Anchor: (Width: 24, Height: 16); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #aabbcc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.6); }
+                    Group { Anchor: (Width: 2); }
+                    Label #AWPPageInfo { Text: "1/1"; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center, HorizontalAlignment: Center); Anchor: (Width: 30); }
+                    Group { Anchor: (Width: 2); }
+                    TextButton #AWPBtnNext { Text: ">"; Anchor: (Width: 24, Height: 16); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #aabbcc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a3040(0.6); }
                 }
-                Group { Anchor: (Height: 2); }
-                Group #WTSlot6 { Visible: false; LayoutMode: Top; Anchor: (Height: 50); Background: #1a1a2e(0.4); Padding: (Horizontal: 8, Vertical: 4);
-                    Group { LayoutMode: Left; Anchor: (Height: 18);
-                        Label #WTName6 { Text: ""; Style: (FontSize: 12, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
-                        Label #WTType6 { Text: ""; Style: (FontSize: 10, TextColor: #D4AF37, VerticalAlignment: Center); Anchor: (Width: 80); }
-                        Label #WTOwner6 { Text: ""; Style: (FontSize: 10, TextColor: #8899aa, VerticalAlignment: Center); Anchor: (Width: 120); }
-                    }
-                    Group { Anchor: (Height: 2); }
-                    Group { LayoutMode: Left; Anchor: (Height: 20);
-                        Label #WTInfo6 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
-                        TextButton #WTPvp6 { Text: "PVP"; Anchor: (Width: 42, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
-                        Group { Anchor: (Width: 2); }
-                        TextButton #WTDel6 { Text: "SUPPR"; Anchor: (Width: 50, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.7); }
-                    }
+                Group { Anchor: (Height: 3); }
+
+                Button #AWPSlot0 { Visible: false; LayoutMode: Left; Anchor: (Height: 28); Style: (Default: (Background: #0d1a0d), Hovered: (Background: #1a2a1a)); Padding: (Horizontal: 8, Vertical: 2);
+                    Label #AWPType0 { Text: ""; Style: (FontSize: 10, TextColor: #4CAF50, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 85); }
+                    Label #AWPName0 { Text: ""; Style: (FontSize: 10, TextColor: #ddeeff, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                    Label #AWPOwner0 { Text: ""; Style: (FontSize: 9, TextColor: #8899aa, VerticalAlignment: Center); Anchor: (Width: 100); }
+                    Label #AWPInfo0 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); Anchor: (Width: 160); }
                 }
-                Group { Anchor: (Height: 2); }
-                Group #WTSlot7 { Visible: false; LayoutMode: Top; Anchor: (Height: 50); Background: #151b28(0.4); Padding: (Horizontal: 8, Vertical: 4);
-                    Group { LayoutMode: Left; Anchor: (Height: 18);
-                        Label #WTName7 { Text: ""; Style: (FontSize: 12, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
-                        Label #WTType7 { Text: ""; Style: (FontSize: 10, TextColor: #D4AF37, VerticalAlignment: Center); Anchor: (Width: 80); }
-                        Label #WTOwner7 { Text: ""; Style: (FontSize: 10, TextColor: #8899aa, VerticalAlignment: Center); Anchor: (Width: 120); }
-                    }
-                    Group { Anchor: (Height: 2); }
-                    Group { LayoutMode: Left; Anchor: (Height: 20);
-                        Label #WTInfo7 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
-                        TextButton #WTPvp7 { Text: "PVP"; Anchor: (Width: 42, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
-                        Group { Anchor: (Width: 2); }
-                        TextButton #WTDel7 { Text: "SUPPR"; Anchor: (Width: 50, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.7); }
-                    }
+                Group { Anchor: (Height: 1); }
+                Button #AWPSlot1 { Visible: false; LayoutMode: Left; Anchor: (Height: 28); Style: (Default: (Background: #0a150a), Hovered: (Background: #1a2a1a)); Padding: (Horizontal: 8, Vertical: 2);
+                    Label #AWPType1 { Text: ""; Style: (FontSize: 10, TextColor: #4CAF50, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 85); }
+                    Label #AWPName1 { Text: ""; Style: (FontSize: 10, TextColor: #ddeeff, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                    Label #AWPOwner1 { Text: ""; Style: (FontSize: 9, TextColor: #8899aa, VerticalAlignment: Center); Anchor: (Width: 100); }
+                    Label #AWPInfo1 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); Anchor: (Width: 160); }
                 }
-                Group { Anchor: (Height: 2); }
-                Group #WTSlot8 { Visible: false; LayoutMode: Top; Anchor: (Height: 50); Background: #1a1a2e(0.4); Padding: (Horizontal: 8, Vertical: 4);
-                    Group { LayoutMode: Left; Anchor: (Height: 18);
-                        Label #WTName8 { Text: ""; Style: (FontSize: 12, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
-                        Label #WTType8 { Text: ""; Style: (FontSize: 10, TextColor: #D4AF37, VerticalAlignment: Center); Anchor: (Width: 80); }
-                        Label #WTOwner8 { Text: ""; Style: (FontSize: 10, TextColor: #8899aa, VerticalAlignment: Center); Anchor: (Width: 120); }
-                    }
-                    Group { Anchor: (Height: 2); }
-                    Group { LayoutMode: Left; Anchor: (Height: 20);
-                        Label #WTInfo8 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
-                        TextButton #WTPvp8 { Text: "PVP"; Anchor: (Width: 42, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
-                        Group { Anchor: (Width: 2); }
-                        TextButton #WTDel8 { Text: "SUPPR"; Anchor: (Width: 50, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.7); }
-                    }
+                Group { Anchor: (Height: 1); }
+                Button #AWPSlot2 { Visible: false; LayoutMode: Left; Anchor: (Height: 28); Style: (Default: (Background: #0d1a0d), Hovered: (Background: #1a2a1a)); Padding: (Horizontal: 8, Vertical: 2);
+                    Label #AWPType2 { Text: ""; Style: (FontSize: 10, TextColor: #4CAF50, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 85); }
+                    Label #AWPName2 { Text: ""; Style: (FontSize: 10, TextColor: #ddeeff, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                    Label #AWPOwner2 { Text: ""; Style: (FontSize: 9, TextColor: #8899aa, VerticalAlignment: Center); Anchor: (Width: 100); }
+                    Label #AWPInfo2 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); Anchor: (Width: 160); }
                 }
-                Group { Anchor: (Height: 2); }
-                Group #WTSlot9 { Visible: false; LayoutMode: Top; Anchor: (Height: 50); Background: #151b28(0.4); Padding: (Horizontal: 8, Vertical: 4);
-                    Group { LayoutMode: Left; Anchor: (Height: 18);
-                        Label #WTName9 { Text: ""; Style: (FontSize: 12, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
-                        Label #WTType9 { Text: ""; Style: (FontSize: 10, TextColor: #D4AF37, VerticalAlignment: Center); Anchor: (Width: 80); }
-                        Label #WTOwner9 { Text: ""; Style: (FontSize: 10, TextColor: #8899aa, VerticalAlignment: Center); Anchor: (Width: 120); }
+                Group { Anchor: (Height: 1); }
+                Button #AWPSlot3 { Visible: false; LayoutMode: Left; Anchor: (Height: 28); Style: (Default: (Background: #0a150a), Hovered: (Background: #1a2a1a)); Padding: (Horizontal: 8, Vertical: 2);
+                    Label #AWPType3 { Text: ""; Style: (FontSize: 10, TextColor: #4CAF50, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 85); }
+                    Label #AWPName3 { Text: ""; Style: (FontSize: 10, TextColor: #ddeeff, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                    Label #AWPOwner3 { Text: ""; Style: (FontSize: 9, TextColor: #8899aa, VerticalAlignment: Center); Anchor: (Width: 100); }
+                    Label #AWPInfo3 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); Anchor: (Width: 160); }
+                }
+                Group { Anchor: (Height: 1); }
+                Button #AWPSlot4 { Visible: false; LayoutMode: Left; Anchor: (Height: 28); Style: (Default: (Background: #0d1a0d), Hovered: (Background: #1a2a1a)); Padding: (Horizontal: 8, Vertical: 2);
+                    Label #AWPType4 { Text: ""; Style: (FontSize: 10, TextColor: #4CAF50, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 85); }
+                    Label #AWPName4 { Text: ""; Style: (FontSize: 10, TextColor: #ddeeff, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                    Label #AWPOwner4 { Text: ""; Style: (FontSize: 9, TextColor: #8899aa, VerticalAlignment: Center); Anchor: (Width: 100); }
+                    Label #AWPInfo4 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); Anchor: (Width: 160); }
+                }
+
+                Group { Anchor: (Height: 8); }
+
+                // === DETAIL PANEL (shared, expandable) ===
+                Group #AWDetail {
+                    Visible: false;
+                    LayoutMode: Top;
+                    Background: #0a1018(0.95);
+                    Padding: (Horizontal: 14, Vertical: 10);
+
+                    // === HEADER ===
+                    Group { LayoutMode: Left; Anchor: (Height: 26);
+                        Label #AWDetName { Text: ""; Style: (FontSize: 16, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                        Label #AWDetType { Text: ""; Style: (FontSize: 11, TextColor: #8899aa, VerticalAlignment: Center, HorizontalAlignment: End); Anchor: (Width: 100); }
+                        Group { Anchor: (Width: 8); }
+                        TextButton #AWDetClose { Text: "X"; Anchor: (Width: 24, Height: 24); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.8); }
                     }
+                    Group { Anchor: (Height: 3); Background: #D4AF37(0.3); }
+                    Group { Anchor: (Height: 8); }
+
+                    // === 2 COLONNES : Infos gauche + Stats droite ===
+                    Group { LayoutMode: Left; Anchor: (Height: 90);
+
+                        // --- GAUCHE : Infos generales ---
+                        Group { FlexWeight: 1; LayoutMode: Top; Padding: (Right: 10);
+                            Label #AWDetOwner { Text: ""; Style: (FontSize: 12, TextColor: #ddeeff); Anchor: (Height: 18); }
+                            Label #AWDetCoords { Text: ""; Style: (FontSize: 10, TextColor: #8899aa); Anchor: (Height: 16); }
+                            Label #AWDetParent { Text: ""; Style: (FontSize: 10, TextColor: #8899aa); Anchor: (Height: 16); }
+                            Label #AWDetMembers { Text: ""; Style: (FontSize: 10, TextColor: #667788); Anchor: (Height: 16); }
+                        }
+
+                        // --- SEPARATEUR ---
+                        Group { Anchor: (Width: 1); Background: #2a3040(0.4); }
+
+                        // --- DROITE : Stats chiffrees ---
+                        Group { Anchor: (Width: 240); LayoutMode: Top; Padding: (Left: 10);
+                            Label #AWDetStatus { Text: ""; Style: (FontSize: 11, TextColor: #4CAF50, RenderBold: true); Anchor: (Height: 18); }
+                            Label #AWDetTreasury { Text: ""; Style: (FontSize: 11, TextColor: #D4AF37); Anchor: (Height: 18); }
+                            Label #AWDetTaxInfo { Text: ""; Style: (FontSize: 10, TextColor: #8899aa); Anchor: (Height: 16); }
+                            Label #AWDetPrices { Text: ""; Style: (FontSize: 10, TextColor: #667788); Anchor: (Height: 16); }
+                            Label #AWDetFlags { Text: ""; Style: (FontSize: 10, TextColor: #667788); Anchor: (Height: 16); }
+                            Label #AWDetPopulation { Text: ""; Style: (FontSize: 10, TextColor: #aabbcc); Anchor: (Height: 16); }
+                            Label #AWDetRenter { Text: ""; Visible: false; Style: (FontSize: 10, TextColor: #ff9800, RenderBold: true); Anchor: (Height: 16); }
+                        }
+                    }
+
+                    Group { Anchor: (Height: 6); }
+                    Label { Text: "SOUS-ZONES DIRECTES"; Style: (FontSize: 9, TextColor: #556677, RenderUppercase: true, LetterSpacing: 1, RenderBold: true); Anchor: (Height: 14); }
                     Group { Anchor: (Height: 2); }
-                    Group { LayoutMode: Left; Anchor: (Height: 20);
-                        Label #WTInfo9 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); FlexWeight: 1; }
-                        TextButton #WTPvp9 { Text: "PVP"; Anchor: (Width: 42, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
-                        Group { Anchor: (Width: 2); }
-                        TextButton #WTDel9 { Text: "SUPPR"; Anchor: (Width: 50, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.7); }
+                    Label #AWDetChild0 { Text: ""; Visible: false; Style: (FontSize: 9, TextColor: #8899aa); Anchor: (Height: 14); }
+                    Label #AWDetChild1 { Text: ""; Visible: false; Style: (FontSize: 9, TextColor: #8899aa); Anchor: (Height: 14); }
+                    Label #AWDetChild2 { Text: ""; Visible: false; Style: (FontSize: 9, TextColor: #8899aa); Anchor: (Height: 14); }
+                    Label #AWDetChild3 { Text: ""; Visible: false; Style: (FontSize: 9, TextColor: #8899aa); Anchor: (Height: 14); }
+                    Label #AWDetChild4 { Text: ""; Visible: false; Style: (FontSize: 9, TextColor: #8899aa); Anchor: (Height: 14); }
+                    Label #AWDetChild5 { Text: ""; Visible: false; Style: (FontSize: 9, TextColor: #8899aa); Anchor: (Height: 14); }
+                    Group { Anchor: (Height: 6); }
+                    Group { Anchor: (Height: 2); Background: #2a3040(0.3); }
+                    Group { Anchor: (Height: 6); }
+
+                    // === BOUTONS D'ACTION ===
+                    // Ligne 1 : Actions directes
+                    Group { LayoutMode: Left; Anchor: (Height: 28);
+                        TextButton #AWDetBtnPvp { Text: "PVP"; Anchor: (Width: 50, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.8); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #AWDetBtnProtect { Text: "PROTECT"; Anchor: (Width: 75, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a1a(0.8); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #AWDetBtnSale { Text: "VENTE"; Anchor: (Width: 60, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #2196F3, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1a2a(0.8); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #AWDetBtnClearOwner { Text: "RETIRER PROPRIO"; Anchor: (Width: 115, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #FF9800, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a0d(0.8); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #AWDetBtnTreasury { Text: "+10K OR"; Anchor: (Width: 70, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a2a1a(0.8); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #AWDetBtnTax { Text: "IMPOTS"; Anchor: (Width: 65, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #ff9800, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a0d(0.8); }
+                        Group { FlexWeight: 1; }
+                        TextButton #AWDetBtnDelete { Text: "SUPPRIMER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #ff4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.9); }
+                    }
+                    Group { Anchor: (Height: 3); }
+                    // Ligne 2 : Commandes prefill
+                    Group { LayoutMode: Left; Anchor: (Height: 28);
+                        TextButton #AWDetBtnGuild { Text: "ASSIGN GUILDE"; Anchor: (Width: 105, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a2a1a(0.8); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #AWDetBtnFamily { Text: "ASSIGN FAMILLE"; Anchor: (Width: 110, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #C8A2C8, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1a2a(0.8); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #AWDetBtnPrice { Text: "SET PRIX"; Anchor: (Width: 75, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #2196F3, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1a2a(0.8); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #AWDetBtnRentPrice { Text: "SET LOYER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #9C27B0, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1a2a(0.8); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #AWDetBtnTransfer { Text: "TRANSFERER"; Anchor: (Width: 90, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a1a(0.8); }
                     }
                 }
 
                 Group { Anchor: (Height: 10); }
 
-                // === COMMANDES UTILES ===
+                // === COMMANDES ===
                 Label { Text: "COMMANDES UTILES"; Style: (FontSize: 9, TextColor: #D4AF37, RenderBold: true, LetterSpacing: 1); Anchor: (Height: 12); }
                 Group { Anchor: (Height: 3); }
                 Label { Text: "/es parcel create <nom> <type> — Creer une parcelle"; Style: (FontSize: 10, TextColor: #667788); Anchor: (Height: 14); }
@@ -1509,7 +1539,6 @@ Group {
                 Label { Text: "/es parcel delete <parcelId> — Supprimer"; Style: (FontSize: 10, TextColor: #667788); Anchor: (Height: 14); }
             }
 
-            // ===== TAB ECONOMY =====
             Group #TabEconomy {
                 LayoutMode: Top;
                 Visible: false;
@@ -1543,16 +1572,136 @@ Group {
                 }
 
                 Group { Anchor: (Height: 8); }
+
+                // === ARGENT EN CIRCULATION ===
+                Label { Text: "ARGENT EN CIRCULATION"; Style: (FontSize: 10, TextColor: #D4AF37, RenderBold: true, LetterSpacing: 1); Anchor: (Height: 14); }
+                Group { Anchor: (Height: 4); }
+                Label #EMoneyTotal { Text: "Total: 0 Or"; Style: (FontSize: 11, TextColor: #D4AF37, RenderBold: true); Anchor: (Height: 16); }
+                Label #EMoneyBreakdown { Text: "Joueurs: 0 | Guildes: 0 | Familles: 0 | Parcelles: 0"; Style: (FontSize: 9, TextColor: #8899aa); Anchor: (Height: 14); }
+
+                Group { Anchor: (Height: 8); }
                 Label { Text: "TAXE GLOBALE"; Style: (FontSize: 9, TextColor: #D4AF37, RenderBold: true, LetterSpacing: 1); Anchor: (Height: 12); }
                 Group { Anchor: (Height: 3); }
                 Label #EStatTaxRate { Text: "Taux : 12%"; Style: (FontSize: 11, TextColor: #8899aa); Anchor: (Height: 16); }
 
                 Group { Anchor: (Height: 8); }
+
+                // === TOP GUILDES (compact) ===
+                Label { Text: "TOP GUILDES"; Style: (FontSize: 9, TextColor: #D4AF37, RenderBold: true, LetterSpacing: 1); Anchor: (Height: 12); }
+                Group { Anchor: (Height: 3); }
+                Label #EGuildLine0 { Text: ""; Visible: false; Style: (FontSize: 10, TextColor: #FFD700); Anchor: (Height: 16); }
+                Label #EGuildLine1 { Text: ""; Visible: false; Style: (FontSize: 10, TextColor: #aabbcc); Anchor: (Height: 16); }
+                Label #EGuildLine2 { Text: ""; Visible: false; Style: (FontSize: 10, TextColor: #8899aa); Anchor: (Height: 16); }
+                Label #EGuildLine3 { Text: ""; Visible: false; Style: (FontSize: 10, TextColor: #667788); Anchor: (Height: 16); }
+                Label #EGuildLine4 { Text: ""; Visible: false; Style: (FontSize: 10, TextColor: #667788); Anchor: (Height: 16); }
+
+                Group { Anchor: (Height: 8); }
+
+                // === FAMILLES ACTIVES (compact) ===
+                Label { Text: "FAMILLES NOBLES ACTIVES"; Style: (FontSize: 9, TextColor: #C8A2C8, RenderBold: true, LetterSpacing: 1); Anchor: (Height: 12); }
+                Group { Anchor: (Height: 3); }
+                Label #EFamilyLine0 { Text: ""; Visible: false; Style: (FontSize: 10, TextColor: #C8A2C8); Anchor: (Height: 16); }
+                Label #EFamilyLine1 { Text: ""; Visible: false; Style: (FontSize: 10, TextColor: #C8A2C8); Anchor: (Height: 16); }
+                Label #EFamilyLine2 { Text: ""; Visible: false; Style: (FontSize: 10, TextColor: #C8A2C8); Anchor: (Height: 16); }
+                Label #EFamilyLine3 { Text: ""; Visible: false; Style: (FontSize: 10, TextColor: #C8A2C8); Anchor: (Height: 16); }
+                Label #EFamilyLine4 { Text: ""; Visible: false; Style: (FontSize: 10, TextColor: #C8A2C8); Anchor: (Height: 16); }
+
+                Group { Anchor: (Height: 8); }
+
+                // === COMMANDES UTILES ===
                 Label { Text: "COMMANDES UTILES"; Style: (FontSize: 9, TextColor: #2196F3, RenderBold: true, LetterSpacing: 1); Anchor: (Height: 12); }
                 Group { Anchor: (Height: 3); }
                 Label { Text: "/es sell <prix> — Vendre item en main"; Style: (FontSize: 10, TextColor: #667788); Anchor: (Height: 14); }
                 Label { Text: "/es trade invite <joueur> — Inviter a echanger"; Style: (FontSize: 10, TextColor: #667788); Anchor: (Height: 14); }
                 Label { Text: "/es guild info <nom> — Info guilde + tresorerie"; Style: (FontSize: 10, TextColor: #667788); Anchor: (Height: 14); }
+            }
+
+            // ===== TAB HOLOGRAMMES =====
+            Group #TabHolograms {
+                LayoutMode: Top;
+                Visible: false;
+
+                Label { Text: "GESTION HOLOGRAMMES"; Style: (FontSize: 14, TextColor: #4CAF50, RenderBold: true, LetterSpacing: 1, HorizontalAlignment: Center); Anchor: (Height: 20); }
+                Group { Anchor: (Height: 4); }
+                Group { Anchor: (Height: 1); Background: #4CAF50(0.2); }
+                Group { Anchor: (Height: 8); }
+
+                Label #HoloCount { Text: "0 hologramme(s)"; Style: (FontSize: 11, TextColor: #4CAF50, RenderBold: true); Anchor: (Height: 16); }
+                Group { Anchor: (Height: 8); }
+
+                // 10 slots hologrammes
+                Group #HoloSlot0 { Visible: false; LayoutMode: Left; Anchor: (Height: 24); Background: #0d2a0d(0.4); Padding: (Horizontal: 6, Vertical: 2);
+                    Label #HoloId0 { Text: ""; Style: (FontSize: 9, TextColor: #4CAF50, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 60, Height: 20); }
+                    Label #HoloText0 { Text: ""; Style: (FontSize: 9, TextColor: #ddeeff, VerticalAlignment: Center); FlexWeight: 1; Anchor: (Height: 20); }
+                    Label #HoloPos0 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); Anchor: (Width: 120, Height: 20); }
+                    TextButton #HoloDel0 { Text: "SUPPR"; Anchor: (Width: 50, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.7); }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #HoloSlot1 { Visible: false; LayoutMode: Left; Anchor: (Height: 24); Background: #0a150a(0.4); Padding: (Horizontal: 6, Vertical: 2);
+                    Label #HoloId1 { Text: ""; Style: (FontSize: 9, TextColor: #4CAF50, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 60, Height: 20); }
+                    Label #HoloText1 { Text: ""; Style: (FontSize: 9, TextColor: #ddeeff, VerticalAlignment: Center); FlexWeight: 1; Anchor: (Height: 20); }
+                    Label #HoloPos1 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); Anchor: (Width: 120, Height: 20); }
+                    TextButton #HoloDel1 { Text: "SUPPR"; Anchor: (Width: 50, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.7); }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #HoloSlot2 { Visible: false; LayoutMode: Left; Anchor: (Height: 24); Background: #0d2a0d(0.4); Padding: (Horizontal: 6, Vertical: 2);
+                    Label #HoloId2 { Text: ""; Style: (FontSize: 9, TextColor: #4CAF50, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 60, Height: 20); }
+                    Label #HoloText2 { Text: ""; Style: (FontSize: 9, TextColor: #ddeeff, VerticalAlignment: Center); FlexWeight: 1; Anchor: (Height: 20); }
+                    Label #HoloPos2 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); Anchor: (Width: 120, Height: 20); }
+                    TextButton #HoloDel2 { Text: "SUPPR"; Anchor: (Width: 50, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.7); }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #HoloSlot3 { Visible: false; LayoutMode: Left; Anchor: (Height: 24); Background: #0a150a(0.4); Padding: (Horizontal: 6, Vertical: 2);
+                    Label #HoloId3 { Text: ""; Style: (FontSize: 9, TextColor: #4CAF50, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 60, Height: 20); }
+                    Label #HoloText3 { Text: ""; Style: (FontSize: 9, TextColor: #ddeeff, VerticalAlignment: Center); FlexWeight: 1; Anchor: (Height: 20); }
+                    Label #HoloPos3 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); Anchor: (Width: 120, Height: 20); }
+                    TextButton #HoloDel3 { Text: "SUPPR"; Anchor: (Width: 50, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.7); }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #HoloSlot4 { Visible: false; LayoutMode: Left; Anchor: (Height: 24); Background: #0d2a0d(0.4); Padding: (Horizontal: 6, Vertical: 2);
+                    Label #HoloId4 { Text: ""; Style: (FontSize: 9, TextColor: #4CAF50, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 60, Height: 20); }
+                    Label #HoloText4 { Text: ""; Style: (FontSize: 9, TextColor: #ddeeff, VerticalAlignment: Center); FlexWeight: 1; Anchor: (Height: 20); }
+                    Label #HoloPos4 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); Anchor: (Width: 120, Height: 20); }
+                    TextButton #HoloDel4 { Text: "SUPPR"; Anchor: (Width: 50, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.7); }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #HoloSlot5 { Visible: false; LayoutMode: Left; Anchor: (Height: 24); Background: #0a150a(0.4); Padding: (Horizontal: 6, Vertical: 2);
+                    Label #HoloId5 { Text: ""; Style: (FontSize: 9, TextColor: #4CAF50, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 60, Height: 20); }
+                    Label #HoloText5 { Text: ""; Style: (FontSize: 9, TextColor: #ddeeff, VerticalAlignment: Center); FlexWeight: 1; Anchor: (Height: 20); }
+                    Label #HoloPos5 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); Anchor: (Width: 120, Height: 20); }
+                    TextButton #HoloDel5 { Text: "SUPPR"; Anchor: (Width: 50, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.7); }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #HoloSlot6 { Visible: false; LayoutMode: Left; Anchor: (Height: 24); Background: #0d2a0d(0.4); Padding: (Horizontal: 6, Vertical: 2);
+                    Label #HoloId6 { Text: ""; Style: (FontSize: 9, TextColor: #4CAF50, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 60, Height: 20); }
+                    Label #HoloText6 { Text: ""; Style: (FontSize: 9, TextColor: #ddeeff, VerticalAlignment: Center); FlexWeight: 1; Anchor: (Height: 20); }
+                    Label #HoloPos6 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); Anchor: (Width: 120, Height: 20); }
+                    TextButton #HoloDel6 { Text: "SUPPR"; Anchor: (Width: 50, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.7); }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #HoloSlot7 { Visible: false; LayoutMode: Left; Anchor: (Height: 24); Background: #0a150a(0.4); Padding: (Horizontal: 6, Vertical: 2);
+                    Label #HoloId7 { Text: ""; Style: (FontSize: 9, TextColor: #4CAF50, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 60, Height: 20); }
+                    Label #HoloText7 { Text: ""; Style: (FontSize: 9, TextColor: #ddeeff, VerticalAlignment: Center); FlexWeight: 1; Anchor: (Height: 20); }
+                    Label #HoloPos7 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); Anchor: (Width: 120, Height: 20); }
+                    TextButton #HoloDel7 { Text: "SUPPR"; Anchor: (Width: 50, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.7); }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #HoloSlot8 { Visible: false; LayoutMode: Left; Anchor: (Height: 24); Background: #0d2a0d(0.4); Padding: (Horizontal: 6, Vertical: 2);
+                    Label #HoloId8 { Text: ""; Style: (FontSize: 9, TextColor: #4CAF50, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 60, Height: 20); }
+                    Label #HoloText8 { Text: ""; Style: (FontSize: 9, TextColor: #ddeeff, VerticalAlignment: Center); FlexWeight: 1; Anchor: (Height: 20); }
+                    Label #HoloPos8 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); Anchor: (Width: 120, Height: 20); }
+                    TextButton #HoloDel8 { Text: "SUPPR"; Anchor: (Width: 50, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.7); }
+                }
+                Group { Anchor: (Height: 2); }
+                Group #HoloSlot9 { Visible: false; LayoutMode: Left; Anchor: (Height: 24); Background: #0a150a(0.4); Padding: (Horizontal: 6, Vertical: 2);
+                    Label #HoloId9 { Text: ""; Style: (FontSize: 9, TextColor: #4CAF50, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 60, Height: 20); }
+                    Label #HoloText9 { Text: ""; Style: (FontSize: 9, TextColor: #ddeeff, VerticalAlignment: Center); FlexWeight: 1; Anchor: (Height: 20); }
+                    Label #HoloPos9 { Text: ""; Style: (FontSize: 9, TextColor: #667788, VerticalAlignment: Center); Anchor: (Width: 120, Height: 20); }
+                    TextButton #HoloDel9 { Text: "SUPPR"; Anchor: (Width: 50, Height: 18); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a0d0d(0.7); }
+                }
+
+                Group { Anchor: (Height: 12); }
+                Label { Text: "Commandes : /es hologram create <texte> | delete <id> | list _"; Style: (FontSize: 9, TextColor: #667788); Anchor: (Height: 14); }
             }
 
             // ===== TAB DATA RESET =====

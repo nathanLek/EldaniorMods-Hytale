@@ -17,72 +17,161 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 
-// Alertes redondantes supprimées
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * Restriction d'acces aux benchs d'artisanat.
+ *
+ * - Bench_Furniture et Bench_Builders : LIBRE pour tous
+ * - Autres benchs : necessite la competence specifique OU la competence "Artisanat" (passe-partout)
+ */
 public class CraftingRestrictionSystem extends EntityEventSystem<EntityStore, UseBlockEvent.Pre> {
+
+    // Benchs accessibles a tous sans competence
+    private static final Set<String> FREE_BENCHES = Set.of(
+            "bench_furniture", "bench_builders", "bench_campfire"
+    );
+
+    // Benchs bloques pour tout le monde (meme avec Artisanat)
+    private static final Set<String> BLOCKED_BENCHES = Set.of(
+            "bench_arcane", "bench_workbench"
+    );
+
+    // Mapping : nom du bench (lowercase) -> competence requise
+    private static final Map<String, PassiveSkill> BENCH_SKILLS = Map.of(
+            "bench_cooking", PassiveSkill.CRAFT_CUISINE,
+            "bench_furnace", PassiveSkill.CRAFT_FONDERIE,
+            "bench_armour", PassiveSkill.CRAFT_ARMURERIE,
+            "bench_weapon", PassiveSkill.CRAFT_FORGE_ARMES,
+            "bench_tannery", PassiveSkill.CRAFT_TANNERIE,
+            "bench_alchemy", PassiveSkill.CRAFT_ALCHIMIE,
+            "bench_lumbermill", PassiveSkill.CRAFT_SCIERIE,
+            "bench_farming", PassiveSkill.CRAFT_AGRICULTURE,
+            "bench_salvage", PassiveSkill.CRAFT_RECYCLAGE
+    );
 
     public CraftingRestrictionSystem() {
         super(UseBlockEvent.Pre.class);
     }
 
     @Override
-    public void handle(int index, @NonNullDecl ArchetypeChunk<EntityStore> archetypeChunk, @NonNullDecl Store<EntityStore> store, @NonNullDecl CommandBuffer<EntityStore> commandBuffer, @NonNullDecl UseBlockEvent.Pre event) {
+    public void handle(int index, @NonNullDecl ArchetypeChunk<EntityStore> archetypeChunk,
+                       @NonNullDecl Store<EntityStore> store,
+                       @NonNullDecl CommandBuffer<EntityStore> commandBuffer,
+                       @NonNullDecl UseBlockEvent.Pre event) {
 
         Ref<EntityStore> playerEntityRef = event.getContext().getEntity();
         Player player = store.getComponent(playerEntityRef, Player.getComponentType());
         PlayerRef netRef = store.getComponent(playerEntityRef, PlayerRef.getComponentType());
 
         if (player == null || netRef == null) return;
-
-        // On s'assure que c'est bien une interaction de type "Use" (clic droit)
         if (!event.getInteractionType().toString().equals("Use")) return;
 
-        // 1. Récupération des coordonnées du bloc cliqué
         Vector3i target = event.getTargetBlock();
 
-        // ✅ 2. FIX UPDATE 4 : On récupère le composant BenchBlock au lieu du BlockState mort
         assert player.getWorld() != null;
         BenchBlock benchComponent = BlockModule.getComponent(
                 BenchBlock.getComponentType(),
                 player.getWorld(), target.getX(), target.getY(), target.getZ()
         );
 
-        // 3. Vérification si c'est un outil d'artisanat
-        if (benchComponent != null) {
+        if (benchComponent == null) return;
 
-            // NOTE: L'Update 4 ne permet plus de faire des .contains() sur le nom du bloc ici.
-            // Si tu as besoin d'exclure 'bench_builders', il faudra utiliser une méthode de 'benchComponent'
-            // que ton IDE te proposera (ex: benchComponent.getType() ou .getAssetId()).
+        // Recuperer le nom du bench via le BlockType
+        String benchName = "";
+        try {
+            benchName = player.getWorld().getBlockType(target.getX(), target.getY(), target.getZ())
+                    .getId().toLowerCase();
+        } catch (Exception ignored) {}
 
-            // 4. On récupère les données du joueur
-            PlayerLevelData playerData = store.getComponent(playerEntityRef, EldaniorSystem.get().getPlayerLevelDataType());
-            boolean hasArtisanat = false;
+        com.eldanior.system.config.EldaniorLogger.debug("[Craft] Bench detecte: '" + benchName + "'");
 
-            // 5. On vérifie s'il possède la compétence Artisanat
-            if (playerData != null && playerData.getActivePassives() != null) {
-                for (PassiveSkill skill : playerData.getActivePassives()) {
-                    if (skill == PassiveSkill.ARTISANAT) {
-                        hasArtisanat = true;
-                        break;
-                    }
+        // Verifier si c'est un bench bloque pour tout le monde
+        for (String blocked : BLOCKED_BENCHES) {
+            if (benchName.contains(blocked)) {
+                event.setCancelled(true);
+                NotificationHelper.sendNotification(netRef,
+                        "<color:red>Cet etabli est interdit !</color>",
+                        NotificationStyle.Warning);
+                return;
+            }
+        }
+
+        // Verifier si c'est un bench libre
+        for (String freeBench : FREE_BENCHES) {
+            if (benchName.contains(freeBench)) return; // Libre pour tous
+        }
+
+        // Recuperer les donnees du joueur
+        PlayerLevelData playerData = store.getComponent(playerEntityRef, EldaniorSystem.get().getPlayerLevelDataType());
+        if (playerData == null) {
+            event.setCancelled(true);
+            NotificationHelper.sendNotification(netRef,
+                    "<color:red>Vous devez apprendre un metier pour utiliser ceci !</color>",
+                    NotificationStyle.Warning);
+            return;
+        }
+
+        // Verifier si le joueur a la competence "Artisanat" (passe-partout)
+        boolean hasArtisanat = false;
+        if (playerData.getActivePassives() != null) {
+            for (PassiveSkill skill : playerData.getActivePassives()) {
+                if (skill == PassiveSkill.ARTISANAT) {
+                    hasArtisanat = true;
+                    break;
                 }
             }
+        }
+        if (hasArtisanat) return; // Artisanat = acces a tout
 
-            // 6. S'il n'a pas la compétence, on bloque tout !
-            if (!hasArtisanat) {
-                // On annule l'événement (empêche l'ouverture de l'interface)
-                event.setCancelled(true);
-
-                // On envoie la notification
-                NotificationHelper.sendNotification(netRef,
-                        "<color:red>Vous devez apprendre l'Artisanat pour utiliser ceci !</color>",
-                        NotificationStyle.Warning);
+        // Chercher la competence specifique pour ce bench
+        PassiveSkill requiredSkill = null;
+        String skillName = "";
+        for (Map.Entry<String, PassiveSkill> entry : BENCH_SKILLS.entrySet()) {
+            if (benchName.contains(entry.getKey())) {
+                requiredSkill = entry.getValue();
+                skillName = entry.getValue().getDisplayName();
+                break;
             }
+        }
+
+        if (requiredSkill == null) {
+            // Bench inconnu, pas dans la liste → bloquer par defaut (securite)
+            event.setCancelled(true);
+            NotificationHelper.sendNotification(netRef,
+                    "<color:red>Competence requise pour utiliser cet etabli !</color>",
+                    NotificationStyle.Warning);
+            return;
+        }
+
+        // Verifier si le joueur a la competence specifique
+        boolean hasSpecificSkill = false;
+        if (playerData.getActivePassives() != null) {
+            for (PassiveSkill skill : playerData.getActivePassives()) {
+                if (skill == requiredSkill) {
+                    hasSpecificSkill = true;
+                    break;
+                }
+            }
+        }
+
+        // Verifier aussi dans enabledSkills
+        if (!hasSpecificSkill) {
+            hasSpecificSkill = playerData.isSkillEnabled(requiredSkill.name());
+        }
+
+        if (!hasSpecificSkill) {
+            event.setCancelled(true);
+            NotificationHelper.sendNotification(netRef,
+                    "<color:red>Vous devez apprendre </color><color:gold>" + skillName +
+                            "</color><color:red> pour utiliser cet etabli !</color>",
+                    NotificationStyle.Warning);
         }
     }
 
     @Override
     public Query<EntityStore> getQuery() {
-        // ✅ Remis exactement comme tu le souhaitais
         return Archetype.empty();
     }
 }

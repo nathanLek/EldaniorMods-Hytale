@@ -130,26 +130,36 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#canKingPromote(com.eldanior.system.titles.nobility.NobilityRank)" class="member-name-link">canKingPromote</a><wbr>(<a href="NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a>&nbsp;rank)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#canPromoteKnight(java.util.UUID,com.eldanior.system.titles.nobility.NobilityRank)" class="member-name-link">canPromoteKnight</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;lordUUID,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#canPromote(com.eldanior.system.titles.nobility.NobilityRank,com.eldanior.system.titles.nobility.NobilityRank)" class="member-name-link">canPromote</a><wbr>(<a href="NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a>&nbsp;promoterRank,
+ <a href="NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a>&nbsp;targetRank)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Verifie si un noble de ce rang peut encore promouvoir au rang cible.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#canPromoteKnight(java.util.UUID,com.eldanior.system.titles.nobility.NobilityRank)" class="member-name-link">canPromoteKnight</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;lordUUID,
  <a href="NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a>&nbsp;lordRank)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getCurrentKingName()" class="member-name-link">getCurrentKingName</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getCurrentKingUUID()" class="member-name-link">getCurrentKingUUID</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getDignity(com.eldanior.system.config.Player.PlayerLevelData)" class="member-name-link">getDignity</a><wbr>(<a href="../../config/Player/PlayerLevelData.html" title="class in com.eldanior.system.config.Player">PlayerLevelData</a>&nbsp;data)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getKnightsOf(java.util.UUID)" class="member-name-link">getKnightsOf</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;lordUUID)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getCurrentKingName()" class="member-name-link">getCurrentKingName</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getLordOf(java.util.UUID)" class="member-name-link">getLordOf</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;knightUUID)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getCurrentKingUUID()" class="member-name-link">getCurrentKingUUID</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getRemainingSlots(com.eldanior.system.titles.nobility.NobilityRank)" class="member-name-link">getRemainingSlots</a><wbr>(<a href="NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a>&nbsp;rank)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getDignity(com.eldanior.system.config.Player.PlayerLevelData)" class="member-name-link">getDignity</a><wbr>(<a href="../../config/Player/PlayerLevelData.html" title="class in com.eldanior.system.config.Player">PlayerLevelData</a>&nbsp;data)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getKnightsOf(java.util.UUID)" class="member-name-link">getKnightsOf</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;lordUUID)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getLordOf(java.util.UUID)" class="member-name-link">getLordOf</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;knightUUID)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getRemainingSlots(com.eldanior.system.titles.nobility.NobilityRank)" class="member-name-link">getRemainingSlots</a><wbr>(<a href="NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a>&nbsp;rank)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getRemainingSlots(com.eldanior.system.titles.nobility.NobilityRank,com.eldanior.system.titles.nobility.NobilityRank)" class="member-name-link">getRemainingSlots</a><wbr>(<a href="NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a>&nbsp;promoterRank,
+ <a href="NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a>&nbsp;targetRank)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#init()" class="member-name-link">init</a>()</code></div>
@@ -161,14 +171,21 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#recordKingPromotion(com.eldanior.system.titles.nobility.NobilityRank)" class="member-name-link">recordKingPromotion</a><wbr>(<a href="NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a>&nbsp;rank)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#removeKnight(java.util.UUID)" class="member-name-link">removeKnight</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;knightUUID)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#recordPromotion(com.eldanior.system.titles.nobility.NobilityRank,com.eldanior.system.titles.nobility.NobilityRank)" class="member-name-link">recordPromotion</a><wbr>(<a href="NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a>&nbsp;promoterRank,
+ <a href="NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a>&nbsp;targetRank)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#saveTo(java.util.Properties)" class="member-name-link">saveTo</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Properties.html" title="class or interface in java.util" class="external-link">Properties</a>&nbsp;props)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#removeKnight(java.util.UUID)" class="member-name-link">removeKnight</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;knightUUID)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#setKing(java.util.UUID,java.lang.String)" class="member-name-link">setKing</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;uuid,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#saveTo(java.util.Properties)" class="member-name-link">saveTo</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Properties.html" title="class or interface in java.util" class="external-link">Properties</a>&nbsp;props)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#setKing(java.util.UUID,java.lang.String)" class="member-name-link">setKing</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;uuid,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#unrecordKingPromotion(com.eldanior.system.titles.nobility.NobilityRank)" class="member-name-link">unrecordKingPromotion</a><wbr>(<a href="NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a>&nbsp;rank)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
@@ -227,6 +244,28 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="canPromote(com.eldanior.system.titles.nobility.NobilityRank,com.eldanior.system.titles.nobility.NobilityRank)">
+<h3>canPromote</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">canPromote</span><wbr><span class="parameters">(<a href="NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a>&nbsp;promoterRank,
+ <a href="NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a>&nbsp;targetRank)</span></div>
+<div class="block">Verifie si un noble de ce rang peut encore promouvoir au rang cible.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="recordPromotion(com.eldanior.system.titles.nobility.NobilityRank,com.eldanior.system.titles.nobility.NobilityRank)">
+<h3>recordPromotion</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">recordPromotion</span><wbr><span class="parameters">(<a href="NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a>&nbsp;promoterRank,
+ <a href="NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a>&nbsp;targetRank)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getRemainingSlots(com.eldanior.system.titles.nobility.NobilityRank,com.eldanior.system.titles.nobility.NobilityRank)">
+<h3>getRemainingSlots</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getRemainingSlots</span><wbr><span class="parameters">(<a href="NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a>&nbsp;promoterRank,
+ <a href="NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a>&nbsp;targetRank)</span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="canKingPromote(com.eldanior.system.titles.nobility.NobilityRank)">
 <h3>canKingPromote</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">canKingPromote</span><wbr><span class="parameters">(<a href="NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a>&nbsp;rank)</span></div>
@@ -236,6 +275,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="recordKingPromotion(com.eldanior.system.titles.nobility.NobilityRank)">
 <h3>recordKingPromotion</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">recordKingPromotion</span><wbr><span class="parameters">(<a href="NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a>&nbsp;rank)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="unrecordKingPromotion(com.eldanior.system.titles.nobility.NobilityRank)">
+<h3>unrecordKingPromotion</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">unrecordKingPromotion</span><wbr><span class="parameters">(<a href="NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a>&nbsp;rank)</span></div>
 </section>
 </li>
 <li>

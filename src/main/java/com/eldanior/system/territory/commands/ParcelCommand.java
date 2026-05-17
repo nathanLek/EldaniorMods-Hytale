@@ -78,7 +78,9 @@ public class ParcelCommand extends AbstractAsyncCommand {
                     case "setrent" -> handleSetRent(sender, senderUUID, ctx, isAdmin);
                     case "assign" -> handleAssignFamily(sender, senderUUID, ctx, isAdmin);
                     case "assignguild" -> handleAssignGuild(sender, senderUUID, ctx, isAdmin);
-                    default -> sender.sendMessage(Message.raw("§cUsage: /es parcel <pos1|pos2|create|delete|info|invite|kick|setperm|list|sell|buy>"));
+                    case "setrank" -> handleSetRank(sender, senderUUID, ctx, isAdmin);
+                    case "setregen" -> handleSetRegen(sender, senderUUID, ctx, isAdmin);
+                    default -> sender.sendMessage(Message.raw("§cUsage: /es parcel <pos1|pos2|create|delete|info|invite|kick|setperm|list|sell|buy|setrank|setregen>"));
                 }
             } catch (Exception e) {
                 sender.sendMessage(Message.raw("§cErreur: " + e.getMessage()));
@@ -173,9 +175,11 @@ public class ParcelCommand extends AbstractAsyncCommand {
 
             boolean allowed = switch (type) {
                 case KINGDOM -> "ROI".equals(rank);
+                case GRAND_TERRITORY -> "MARQUIS".equals(rank);
                 case TERRITORY -> "MARQUIS".equals(rank) || "DUC".equals(rank);
                 case CITY -> "COMTE".equals(rank);
-                case PLOT, HOUSING, ROOM, FARM -> false; // Seulement admin
+                case PLOT, HOUSING, ROOM, FARM, FOREST -> false;
+                case ARENA, DUNGEON, MINE -> false;
             };
 
             if (!allowed) {
@@ -184,7 +188,27 @@ public class ParcelCommand extends AbstractAsyncCommand {
             }
         }
 
-        // La selection EditorTool a ete stockee dans pos1/pos2 par le callback async
+        String world = sender.getWorld().getName();
+
+        // KINGDOM : auto-generation complete (royaume + domaine royal + 4 marquisats + 8 duches)
+        if (type == ParcelType.KINGDOM) {
+            var ref2 = sender.getReference();
+            if (ref2 == null) return;
+            var transform2 = ref2.getStore().getComponent(ref2,
+                    com.hypixel.hytale.server.core.modules.entity.component.TransformComponent.getComponentType());
+            if (transform2 == null) return;
+
+            Vector3d playerPos = transform2.getPosition();
+            int cx = (int) Math.floor(playerPos.x);
+            int cz = (int) Math.floor(playerPos.z);
+
+            generateKingdom(sender, name, world, cx, cz);
+
+            ParcelManager.clearSelection(uuid);
+            return;
+        }
+
+        // Autres types : selection manuelle requise
         if (!ParcelManager.hasFullSelection(uuid)) {
             sender.sendMessage(Message.raw("§cAucune selection detectee !"));
             sender.sendMessage(Message.raw("§7Utilisez le §fSelection Tool §7dans le jeu, ou :"));
@@ -193,8 +217,6 @@ public class ParcelCommand extends AbstractAsyncCommand {
         }
 
         int[] sel = ParcelManager.getSelection(uuid);
-
-        String world = sender.getWorld().getName();
 
         // Chercher le parent automatiquement (teste coin + centre de la selection)
         String parentId = null;
@@ -215,7 +237,7 @@ public class ParcelCommand extends AbstractAsyncCommand {
                     sender.sendMessage(Message.raw("§cUn " + type.getLabel() + " ne peut pas etre cree dans un " + parentParcel.getType().getLabel() + "."));
                     return;
                 }
-            } else if (type != ParcelType.TERRITORY) {
+            } else if (type != ParcelType.TERRITORY && type != ParcelType.CITY) {
                 sender.sendMessage(Message.raw("§cUn " + type.getLabel() + " doit etre cree dans une zone existante."));
                 return;
             }
@@ -617,6 +639,194 @@ public class ParcelCommand extends AbstractAsyncCommand {
             if (parcel.getName().equalsIgnoreCase(idOrName)) return parcel;
         }
         return null;
+    }
+
+    // ==================== SETRANK (donjon) ====================
+
+    private void handleSetRank(Player sender, UUID senderUUID, CommandContext ctx, boolean isAdmin) {
+        if (!isAdmin) {
+            sender.sendMessage(Message.raw("§cCommande admin uniquement."));
+            return;
+        }
+        String rankStr = this.arg1.get(ctx);
+        if (rankStr == null || !java.util.Set.of("E", "D", "C", "B", "A", "S").contains(rankStr.toUpperCase())) {
+            sender.sendMessage(Message.raw("§cUsage: /es parcel setrank <E|D|C|B|A|S>"));
+            return;
+        }
+        var ref = sender.getReference();
+        if (ref == null) return;
+        var transform = ref.getStore().getComponent(ref, com.hypixel.hytale.server.core.modules.entity.component.TransformComponent.getComponentType());
+        if (transform == null) return;
+        Vector3d pos = transform.getPosition();
+        ParcelData parcel = ParcelManager.getParcelAt(sender.getWorld().getName(), pos.x, pos.y, pos.z);
+        if (parcel == null || parcel.getType() != ParcelType.DUNGEON) {
+            sender.sendMessage(Message.raw("§cVous devez etre dans un donjon."));
+            return;
+        }
+        parcel.setDungeonRank(rankStr.toUpperCase());
+        ParcelManager.save();
+        sender.sendMessage(Message.raw("§aRank du donjon §e" + parcel.getName() + "§a defini a §6" + rankStr.toUpperCase()));
+    }
+
+    // ==================== SETREGEN (mine/farm/forest) ====================
+
+    private void handleSetRegen(Player sender, UUID senderUUID, CommandContext ctx, boolean isAdmin) {
+        if (!isAdmin) {
+            sender.sendMessage(Message.raw("§cCommande admin uniquement."));
+            return;
+        }
+        String delayStr = this.arg1.get(ctx);
+        int delaySec;
+        try { delaySec = Integer.parseInt(delayStr); }
+        catch (NumberFormatException e) {
+            sender.sendMessage(Message.raw("§cUsage: /es parcel setregen <secondes>"));
+            return;
+        }
+        var ref = sender.getReference();
+        if (ref == null) return;
+        var transform = ref.getStore().getComponent(ref, com.hypixel.hytale.server.core.modules.entity.component.TransformComponent.getComponentType());
+        if (transform == null) return;
+        Vector3d pos = transform.getPosition();
+        ParcelData parcel = ParcelManager.getParcelAt(sender.getWorld().getName(), pos.x, pos.y, pos.z);
+        if (parcel == null || (parcel.getType() != ParcelType.FARM && parcel.getType() != ParcelType.MINE && parcel.getType() != ParcelType.FOREST)) {
+            sender.sendMessage(Message.raw("§cVous devez etre dans une mine, farm ou foret."));
+            return;
+        }
+        parcel.setRegenDelaySec(delaySec);
+        ParcelManager.save();
+        sender.sendMessage(Message.raw("§aDelai de regeneration de §e" + parcel.getName() + "§a defini a §6" + delaySec + "s"));
+    }
+
+    // ==================== GENERATION AUTO ROYAUME ====================
+
+    /**
+     * Genere un Royaume complet avec :
+     * - 1 Royaume (10000x10000)
+     * - 1 Domaine Royal au centre (2000x2000)
+     * - 4 Marquisats dans les coins (4000x4000)
+     * - 8 Duches (2 par Marquisat, 2000x4000 chacun)
+     * - 4 zones neutres (bras de la croix) rattachees au Royaume
+     *
+     * Layout (vue du dessus, 10000x10000) :
+     *  +----------+------+----------+
+     *  | Marq NO  |Neutre| Marq NE  |
+     *  | (2 ducs) | Nord | (2 ducs) |
+     *  +----------+------+----------+
+     *  |Neutre Ou.|Royal |Neutre Est|
+     *  +----------+------+----------+
+     *  | Marq SO  |Neutre| Marq SE  |
+     *  | (2 ducs) | Sud  | (2 ducs) |
+     *  +----------+------+----------+
+     */
+    private void generateKingdom(Player sender, String kingdomName, String world, int cx, int cz) {
+        int H = 5000;   // demi-taille royaume (10000/2)
+        int M = 4000;    // taille marquisat
+        int N = 1000;    // demi-taille zone neutre/royale (2000/2)
+        int yMin = 0;
+        int yMax = 319;
+
+        // Bornes du Royaume
+        int kx1 = cx - H, kz1 = cz - H;
+        int kx2 = cx + H, kz2 = cz + H;
+
+        // 1. Creer le Royaume + assigner famille royale
+        String kingdomId = ParcelManager.createParcel(kingdomName, ParcelType.KINGDOM,
+                null, "", world, kx1, yMin, kz1, kx2, yMax, kz2, null);
+        ParcelManager.assignToFamily(kingdomId, "eldanior");
+
+        sender.sendMessage(Message.raw("§6§l=== CREATION DU ROYAUME ==="));
+        sender.sendMessage(Message.raw("§a§lRoyaume §f" + kingdomName + " §a§lcree ! §7(Famille Eldanior)"));
+        sender.sendMessage(Message.raw("§7Centre: " + cx + ", " + cz + " | 10000x10000"));
+
+        // 2. Domaine Royal au centre (2000x2000) — famille royale
+        String royalId = ParcelManager.createParcel("Domaine_Royal", ParcelType.TERRITORY,
+                null, "", world,
+                cx - N, yMin, cz - N, cx + N, yMax, cz + N, kingdomId);
+        ParcelManager.assignToFamily(royalId, "eldanior");
+        sender.sendMessage(Message.raw("§e  Domaine Royal §7(Famille Eldanior)"));
+
+        // 3. Quatre Marquisats (coins) — chacun 4000x4000
+        // NO = Zippel (Mages), NE = Runkandel (Guerriers), SO = Luminara (Saints), SE = Valmontis (Marchands)
+
+        String marqNO = ParcelManager.createParcel("Marquisat_Zippel", ParcelType.GRAND_TERRITORY,
+                null, "", world,
+                kx1, yMin, kz1, kx1 + M, yMax, kz1 + M, kingdomId);
+        ParcelManager.assignToFamily(marqNO, "zippel");
+
+        String marqNE = ParcelManager.createParcel("Marquisat_Runkandel", ParcelType.GRAND_TERRITORY,
+                null, "", world,
+                kx2 - M, yMin, kz1, kx2, yMax, kz1 + M, kingdomId);
+        ParcelManager.assignToFamily(marqNE, "runkandel");
+
+        String marqSO = ParcelManager.createParcel("Marquisat_Luminara", ParcelType.GRAND_TERRITORY,
+                null, "", world,
+                kx1, yMin, kz2 - M, kx1 + M, yMax, kz2, kingdomId);
+        ParcelManager.assignToFamily(marqSO, "luminara");
+
+        String marqSE = ParcelManager.createParcel("Marquisat_Valmontis", ParcelType.GRAND_TERRITORY,
+                null, "", world,
+                kx2 - M, yMin, kz2 - M, kx2, yMax, kz2, kingdomId);
+        ParcelManager.assignToFamily(marqSE, "valmontis");
+
+        sender.sendMessage(Message.raw("§e  4 Marquisats §7(Zippel, Runkandel, Luminara, Valmontis)"));
+
+        // 4. Duches (2 par Marquisat, avec espace central pour le Marquisat)
+        // Marquisat = 4000 large, Duche = 1500, Espace central = 1000
+        int duchW = 1500;   // largeur d'un duche
+        int gap = 1000;     // espace central (terres du Marquis)
+
+        // Zippel (NO) -> Mages : Frostguard (gauche) + Spellweave (droite)
+        String dNO1 = ParcelManager.createParcel("Duche_Frostguard", ParcelType.TERRITORY,
+                null, "", world,
+                kx1, yMin, kz1, kx1 + duchW, yMax, kz1 + M, marqNO);
+        ParcelManager.assignToFamily(dNO1, "frostguard");
+
+        String dNO2 = ParcelManager.createParcel("Duche_Spellweave", ParcelType.TERRITORY,
+                null, "", world,
+                kx1 + duchW + gap, yMin, kz1, kx1 + M, yMax, kz1 + M, marqNO);
+        ParcelManager.assignToFamily(dNO2, "spellweave");
+
+        // Runkandel (NE) -> Guerriers : Ironveil (gauche) + Warbane (droite)
+        String dNE1 = ParcelManager.createParcel("Duche_Ironveil", ParcelType.TERRITORY,
+                null, "", world,
+                kx2 - M, yMin, kz1, kx2 - M + duchW, yMax, kz1 + M, marqNE);
+        ParcelManager.assignToFamily(dNE1, "ironveil");
+
+        String dNE2 = ParcelManager.createParcel("Duche_Warbane", ParcelType.TERRITORY,
+                null, "", world,
+                kx2 - duchW, yMin, kz1, kx2, yMax, kz1 + M, marqNE);
+        ParcelManager.assignToFamily(dNE2, "warbane");
+
+        // Luminara (SO) -> Assassin + Archer : Nighthollow (gauche) + Swiftquiver (droite)
+        String dSO1 = ParcelManager.createParcel("Duche_Nighthollow", ParcelType.TERRITORY,
+                null, "", world,
+                kx1, yMin, kz2 - M, kx1 + duchW, yMax, kz2, marqSO);
+        ParcelManager.assignToFamily(dSO1, "nighthollow");
+
+        String dSO2 = ParcelManager.createParcel("Duche_Swiftquiver", ParcelType.TERRITORY,
+                null, "", world,
+                kx1 + duchW + gap, yMin, kz2 - M, kx1 + M, yMax, kz2, marqSO);
+        ParcelManager.assignToFamily(dSO2, "swiftquiver");
+
+        // Valmontis (SE) -> Marchands : Goldcrest (gauche) + Silkroad (droite)
+        String dSE1 = ParcelManager.createParcel("Duche_Goldcrest", ParcelType.TERRITORY,
+                null, "", world,
+                kx2 - M, yMin, kz2 - M, kx2 - M + duchW, yMax, kz2, marqSE);
+        ParcelManager.assignToFamily(dSE1, "goldcrest");
+
+        String dSE2 = ParcelManager.createParcel("Duche_Silkroad", ParcelType.TERRITORY,
+                null, "", world,
+                kx2 - duchW, yMin, kz2 - M, kx2, yMax, kz2, marqSE);
+        ParcelManager.assignToFamily(dSE2, "silkroad");
+
+        sender.sendMessage(Message.raw("§e  8 Duches §7(familles assignees automatiquement)"));
+        sender.sendMessage(Message.raw("§e  4 Zones Neutres §7(bras de la croix, terres de la couronne)"));
+        sender.sendMessage(Message.raw("§e  1 Domaine Royal §7(Famille Eldanior)"));
+        sender.sendMessage(Message.raw("§6§l=== " + (1 + 1 + 4 + 8) + " parcelles creees ! ==="));
+
+        // Re-optimiser la hierarchie pour rattacher les parcelles existantes
+        // (villes orphelines, etc.) au parent le plus precis
+        ParcelManager.optimizeHierarchy();
     }
 
     private UUID getSenderUUID(Player sender) throws Exception {

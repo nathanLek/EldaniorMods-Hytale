@@ -80,6 +80,9 @@ public class ESCommand extends AbstractCommandCollection {
         // Interface unifiee
         this.addSubCommand(new SystemCommand());
 
+        // Hologrammes
+        this.addSubCommand(new com.eldanior.system.hologram.HologramCommand());
+
         // Interface admin (OP uniquement)
         this.addSubCommand(new com.eldanior.system.gui.AdminCommand());
     }

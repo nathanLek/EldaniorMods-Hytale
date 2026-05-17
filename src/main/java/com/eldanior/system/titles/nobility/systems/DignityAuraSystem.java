@@ -39,7 +39,35 @@ public class DignityAuraSystem extends EntityTickingSystem<EntityStore> {
     private final Map<String, Long> paralysisCD = new HashMap<>();
     private static final long PARALYSIS_COOLDOWN_MS = 30000;
 
+    // Aura levels: DIGNITY_AURA_1 to DIGNITY_AURA_5
+    private static final String[] AURA_IDS = {
+            "DIGNITY_AURA_1", "DIGNITY_AURA_2", "DIGNITY_AURA_3", "DIGNITY_AURA_4", "DIGNITY_AURA_5"
+    };
+    private static final int[] AURA_THRESHOLDS = { 5, 20, 50, 100, 1000 };
+    private static final String[] AURA_NAMES = {
+            "AURA MINEURE", "AURA DE DIGNITE", "AURA IMPOSANTE", "AURA ABSOLUE", "AURA DRACONIQUE"
+    };
+    private static final String[] AURA_DESCS = {
+            "Une faible aura emane de vous...",
+            "Votre aura s'intensifie !",
+            "Votre presence impose le respect !",
+            "Une aura ecrasante vous entoure !",
+            "La puissance d'un dragon coule en vous !"
+    };
+
+    private static int getAuraLevel(int dignity) {
+        for (int i = AURA_THRESHOLDS.length - 1; i >= 0; i--) {
+            if (dignity >= AURA_THRESHOLDS[i]) return i + 1;
+        }
+        return 0;
+    }
+
+    private static String getAuraId(int level) {
+        return level > 0 && level <= AURA_IDS.length ? AURA_IDS[level - 1] : null;
+    }
+
     private static int getAuraRadius(int dignity) {
+        if (dignity >= 1000) return 30;
         if (dignity >= 100) return 25;
         if (dignity >= 75) return 20;
         if (dignity >= 50) return 15;
@@ -82,9 +110,80 @@ public class DignityAuraSystem extends EntityTickingSystem<EntityStore> {
         if (selfData == null) return;
         int selfDignity = selfData.getDignity();
 
+        // === MIGRATION : Nettoyer l'ancien DIGNITY_AURA ===
+        if (selfData.getUnlockedSkills().contains("DIGNITY_AURA")) {
+            selfData.removeSkill("DIGNITY_AURA");
+        }
+
+        // === Classe Dragon : dignité minimum 1000 ===
+        if ("dragon".equalsIgnoreCase(selfData.getPlayerClassId()) && selfDignity < 1000) {
+            selfData.setDignity(1000);
+            selfDignity = 1000;
+        }
+
+        // === AUTO-UNLOCK : Aura de Dignite (5 niveaux) ===
+        int newAuraLevel = getAuraLevel(selfDignity);
+        String newAuraId = getAuraId(newAuraLevel);
+
+        // Trouver l'aura actuelle du joueur
+        String currentAuraId = null;
+        int currentAuraLevel = 0;
+        for (int i = AURA_IDS.length - 1; i >= 0; i--) {
+            if (selfData.getUnlockedSkills().contains(AURA_IDS[i]) || selfData.isSkillEnabled(AURA_IDS[i])) {
+                currentAuraId = AURA_IDS[i];
+                currentAuraLevel = i + 1;
+                break;
+            }
+        }
+
+        boolean hasAnyAura = currentAuraId != null;
+        boolean auraEnabled = currentAuraId != null && selfData.isSkillEnabled(currentAuraId);
+
+        if (newAuraLevel > 0 && newAuraLevel != currentAuraLevel) {
+            // Retirer l'ancienne aura si elle existe
+            if (currentAuraId != null) {
+                selfData.removeSkill(currentAuraId);
+            }
+            // Ajouter la nouvelle aura
+            selfData.learnSkill(newAuraId);
+            // Activer par défaut sauf si l'ancienne était désactivée manuellement
+            boolean wasDisabled = currentAuraId != null && selfData.getDisabledSkills().contains(currentAuraId);
+            if (!wasDisabled) {
+                selfData.enableSkill(newAuraId);
+            }
+            // Nettoyer l'ancien disabled si on change de niveau
+            if (currentAuraId != null) {
+                selfData.getDisabledSkills().remove(currentAuraId);
+            }
+            try {
+                PlayerRef pRef = store.getComponent(playerRef, PlayerRef.getComponentType());
+                if (pRef != null) {
+                    com.eldanior.system.Leveling.utils.NotificationHelper.showEventTitle(pRef,
+                            AURA_NAMES[newAuraLevel - 1], AURA_DESCS[newAuraLevel - 1], true);
+                }
+            } catch (Exception ignored) {}
+            auraEnabled = selfData.isSkillEnabled(newAuraId);
+        } else if (newAuraLevel == 0 && hasAnyAura) {
+            // Dignité trop basse : retirer toute aura
+            if (currentAuraId != null) {
+                selfData.removeSkill(currentAuraId);
+            }
+            try {
+                PlayerRef pRef = store.getComponent(playerRef, PlayerRef.getComponentType());
+                if (pRef != null) {
+                    com.eldanior.system.Leveling.utils.NotificationHelper.showEventTitle(pRef,
+                            "AURA DISSIPEE", "Votre dignite est trop faible...", false);
+                }
+            } catch (Exception ignored) {}
+            auraEnabled = false;
+        } else if (newAuraLevel > 0 && newAuraId != null) {
+            // Même niveau, vérifier juste si activée
+            auraEnabled = selfData.isSkillEnabled(newAuraId);
+        }
+
         // === EMETTEUR : TRACKER ARME EN MAIN ===
-        // Mettre a jour le tracker pour savoir si l'aura est active
-        if (selfDignity >= 5) {
+        // L'aura ne fonctionne que si elle est activée
+        if (selfDignity >= 5 && auraEnabled) {
             Inventory inv = player.getInventory();
             ItemStack heldItem = (inv != null) ? inv.getItemInHand() : null;
 
@@ -149,41 +248,10 @@ public class DignityAuraSystem extends EntityTickingSystem<EntityStore> {
             maxSlowReceived = Math.max(maxSlowReceived, slowFromThisEmitter);
         }
 
-        // === APPLIQUER OU RESTAURER LA VITESSE ===
-        Float currentSlow = slowedPlayers.get(selfUUID);
-        if (currentSlow == null) currentSlow = 0f;
+        // === SPEED MODIFIER DESACTIVE — cause des bugs de vol (Jump in location) ===
+        // TODO: reimplementer avec un systeme compatible tick (sans putComponent/syncMovement)
 
-        // Seulement si le slow a change de plus de 1%
-        if (Math.abs(maxSlowReceived - currentSlow) > 0.01f) {
-            applySpeedModifier(playerRef, store, selfData, maxSlowReceived);
-            if (maxSlowReceived > 0.01f) {
-                slowedPlayers.put(selfUUID, maxSlowReceived);
-            } else {
-                slowedPlayers.remove(selfUUID);
-            }
-        }
-
-        // === PARALYSIE (pas de particules pour le moment) ===
-        if (maxSlowReceived >= 0.60f) {
-            UUID strongestEmitter = null;
-            int strongestDignity = 0;
-            for (Map.Entry<UUID, Integer> dEntry : PlayerPositionTracker.PLAYER_DIGNITY.entrySet()) {
-                if (!dEntry.getKey().equals(selfUUID) && dEntry.getValue() > strongestDignity && dEntry.getValue() > selfDignity) {
-                    strongestDignity = dEntry.getValue();
-                    strongestEmitter = dEntry.getKey();
-                }
-            }
-
-            if (strongestEmitter != null && isEmitterActive(strongestEmitter)) {
-                String cdKey = strongestEmitter + ":" + selfUUID;
-                long now = System.currentTimeMillis();
-                Long lastP = paralysisCD.get(cdKey);
-                if (lastP == null || (now - lastP) > PARALYSIS_COOLDOWN_MS) {
-                    paralysisCD.put(cdKey, now);
-                    applySpeedModifier(playerRef, store, selfData, 0.99f);
-                }
-            }
-        }
+        // === PARALYSIE DESACTIVEE (meme raison que speed modifier) ===
     }
 
     private void applySpeedModifier(Ref<EntityStore> playerRef, Store<EntityStore> store,
@@ -203,9 +271,6 @@ public class DignityAuraSystem extends EntityTickingSystem<EntityStore> {
 
         settings.forwardSprintSpeedMultiplier = slowedSpeed;
         settings.strafeRunSpeedMultiplier = slowedSpeed;
-
-        store.putComponent(playerRef, MovementManager.getComponentType(), manager);
-        syncMovement(store, playerRef, manager);
     }
 
     private void syncMovement(Store<EntityStore> store, Ref<EntityStore> entityRef, MovementManager manager) {

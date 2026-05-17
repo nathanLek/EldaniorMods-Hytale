@@ -14,6 +14,8 @@ public enum NpcData implements IMobConfig {
     FORESTIER_NPC("Forestier_Npc", "Forestier", true),
     GUILDE_NPC("Guild_Npc", "Guilde", true),
     ELEVEUR_NPC("Eleveur_Npc", "Eleveuse", true),
+    MENUISIER_NPC("Menuisier_Npc", "Menuisier", true),
+    POISSONNIER_NPC("Poissonnier_Npc", "Poissonier", true),
 
     MARCHANT1_NPC("Marchant1_Npc", "Marchant", true),
     MARCHANT2_NPC("Marchant2_Npc", "Marchant", true),

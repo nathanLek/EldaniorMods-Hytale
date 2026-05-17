@@ -26,8 +26,6 @@ public class ShopTab {
 
     public static void populate(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store) {
         UUID myUUID = getPlayerUUID(ref, store);
-        Player playerCheck = store.getComponent(ref, Player.getComponentType());
-        boolean isAdmin = playerCheck != null && playerCheck.hasPermission(EldaniorLogger.ADMIN_PERMISSION);
         List<ShopListing> listings = ShopManager.getListings();
 
         int totalPages = Math.max(1, (int) Math.ceil((double) listings.size() / MAX_SHOP_SLOTS));
@@ -69,7 +67,7 @@ public class ShopTab {
 
                 // Buttons: owner/admin voit retirer, non-owner voit acheter
                 ui.set("#ShopBtnBuy" + i + ".Visible", !isOwner);
-                ui.set("#ShopBtnCancel" + i + ".Visible", isOwner || isAdmin);
+                ui.set("#ShopBtnCancel" + i + ".Visible", isOwner);
             } else {
                 ui.set("#ShopRow" + i + ".Visible", false);
             }

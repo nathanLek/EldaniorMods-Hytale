@@ -242,6 +242,13 @@ public class AdminTab {
             data.setAttributePoints(0);
             data.setPlayerClass("Novice"); data.setPlayerClassId("novice");
             data.forgetAllSkills(); data.resetTitles();
+            // Liberer le slot de decret si le joueur avait un rang noble
+            String oldRank = data.getNobilityRank();
+            if (oldRank != null && !"ROTURIER".equals(oldRank) && !"CHEVALIER".equals(oldRank) && !"ROI".equals(oldRank)) {
+                com.eldanior.system.titles.nobility.NobilityRank nRank =
+                    com.eldanior.system.titles.nobility.NobilityRank.fromString(oldRank);
+                if (nRank != null) com.eldanior.system.titles.nobility.NobilityManager.unrecordKingPromotion(nRank);
+            }
             data.setNobilityRank("ROTURIER"); data.setNobleFamilyId(""); data.setStatus(""); data.setDignity(0);
             data.setChurchRank("LAIQUE"); data.setFaith(0);
             data.setGuildId(""); data.setGuildRole("");

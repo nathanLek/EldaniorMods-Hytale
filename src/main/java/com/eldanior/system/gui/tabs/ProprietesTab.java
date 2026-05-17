@@ -10,7 +10,6 @@ import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.ui.builder.UICommandBuilder;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
@@ -24,56 +23,59 @@ public class ProprietesTab {
     public static final int MAX_AVAILABLE_SLOTS = 5;
     public static final int MAX_DETAIL_MEMBERS = 6;
     public static final int MAX_INVITE_SLOTS = 4;
+    public static final int MAX_CITY_SLOTS = 5;
 
     private static final List<String> cachedOwnedIds = new ArrayList<>();
     private static final List<String> cachedAvailableIds = new ArrayList<>();
+    private static final List<String> cachedCityIds = new ArrayList<>();
     private static final List<String> cachedInviteNames = new ArrayList<>();
     private static int selectedIndex = -1;
     private static String selectedParcelId = null;
 
+    // Pagination
+    private static int ownedPage = 0;
+    private static int availablePage = 0;
+    private static List<ParcelData> allOwned = new ArrayList<>();
+    private static List<ParcelData> allAvailable = new ArrayList<>();
+
     public static void populate(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store) {
         UUID myUUID = null;
-        boolean isAdmin = false;
         try {
             PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
             if (pRef != null) {
                                 myUUID = UUIDExtractor.getUUID(pRef);
             }
-            Player player = store.getComponent(ref, Player.getComponentType());
-            if (player != null) isAdmin = player.hasPermission(EldaniorLogger.ADMIN_PERMISSION);
         } catch (Exception e) { EldaniorLogger.error("ProprietesTab", e); }
 
         cachedOwnedIds.clear();
         cachedAvailableIds.clear();
 
-        // === MES BIENS : seulement PLOT, HOUSING (pas territoires/villes/royaumes) ===
-        List<ParcelData> owned;
-        if (isAdmin) {
-            // Admin voit tous les plots/housing
-            owned = new ArrayList<>();
-            for (ParcelData p : ParcelManager.getAll()) {
-                if (p.getType() == ParcelType.PLOT || p.getType() == ParcelType.HOUSING) {
-                    owned.add(p);
-                }
-            }
-        } else {
-            owned = new ArrayList<>();
-            UUID finalUUID = myUUID;
-            for (ParcelData p : ParcelManager.getAll()) {
-                if (p.getType() != ParcelType.PLOT && p.getType() != ParcelType.HOUSING) continue;
-                if (finalUUID != null && (p.isOwner(finalUUID) || p.isMember(finalUUID)
-                        || (p.getRenterUUID() != null && p.getRenterUUID().equals(finalUUID)))) {
-                    owned.add(p);
-                }
+        // === MES BIENS : seulement PLOT, HOUSING ===
+        List<ParcelData> owned = new ArrayList<>();
+        UUID finalUUID = myUUID;
+        for (ParcelData p : ParcelManager.getAll()) {
+            if (p.getType() != ParcelType.PLOT && p.getType() != ParcelType.HOUSING) continue;
+            if (finalUUID != null && (p.isOwner(finalUUID) || p.isMember(finalUUID)
+                    || (p.getRenterUUID() != null && p.getRenterUUID().equals(finalUUID)))) {
+                owned.add(p);
             }
         }
         owned.sort(Comparator.comparingInt(p -> p.getType().ordinal()));
+        allOwned = owned;
 
-        ui.set("#PropInfoLabel.Text", "MES BIENS (" + owned.size() + ")" + (isAdmin ? " - Admin" : ""));
+        int ownedTotalPages = Math.max(1, (int) Math.ceil((double) owned.size() / MAX_OWNED_SLOTS));
+        if (ownedPage >= ownedTotalPages) ownedPage = ownedTotalPages - 1;
+        if (ownedPage < 0) ownedPage = 0;
+        int ownedStart = ownedPage * MAX_OWNED_SLOTS;
+
+        ui.set("#PropInfoLabel.Text", "MES BIENS (" + owned.size() + ") — Page " + (ownedPage + 1) + "/" + ownedTotalPages);
+        ui.set("#POwnPrev.Visible", ownedPage > 0);
+        ui.set("#POwnNext.Visible", ownedPage < ownedTotalPages - 1);
 
         for (int i = 0; i < MAX_OWNED_SLOTS; i++) {
-            if (i < owned.size()) {
-                ParcelData p = owned.get(i);
+            int dataIdx = ownedStart + i;
+            if (dataIdx < owned.size()) {
+                ParcelData p = owned.get(dataIdx);
                 cachedOwnedIds.add(p.getId());
                 ui.set("#POwnSlot" + i + ".Visible", true);
                 ui.set("#POwnType" + i + ".Text", "[" + p.getType().getLabel() + "]");
@@ -123,17 +125,26 @@ public class ProprietesTab {
         }
 
         // === PANNEAU DETAIL ===
-        populateDetail(ui, isAdmin, myUUID);
+        populateDetail(ui, myUUID);
 
         // === DISPONIBLES ===
         List<ParcelData> available = ParcelManager.getAvailable();
         available.sort(Comparator.comparingLong(ParcelData::getPrice));
+        allAvailable = available;
 
-        ui.set("#PropAvailLabel.Text", "MARCHE IMMOBILIER (" + available.size() + ")");
+        int availTotalPages = Math.max(1, (int) Math.ceil((double) available.size() / MAX_AVAILABLE_SLOTS));
+        if (availablePage >= availTotalPages) availablePage = availTotalPages - 1;
+        if (availablePage < 0) availablePage = 0;
+        int availStart = availablePage * MAX_AVAILABLE_SLOTS;
+
+        ui.set("#PropAvailLabel.Text", "MARCHE IMMOBILIER (" + available.size() + ") — Page " + (availablePage + 1) + "/" + availTotalPages);
+        ui.set("#PAvPrev.Visible", availablePage > 0);
+        ui.set("#PAvNext.Visible", availablePage < availTotalPages - 1);
 
         for (int i = 0; i < MAX_AVAILABLE_SLOTS; i++) {
-            if (i < available.size()) {
-                ParcelData p = available.get(i);
+            int dataIdx = availStart + i;
+            if (dataIdx < available.size()) {
+                ParcelData p = available.get(dataIdx);
                 cachedAvailableIds.add(p.getId());
                 ui.set("#PAvSlot" + i + ".Visible", true);
                 ui.set("#PAvType" + i + ".Text", "[" + p.getType().getLabel() + "]");
@@ -162,7 +173,8 @@ public class ProprietesTab {
                 ui.set("#PAvRent" + i + ".Text", p.isForRent() && p.getRentPrice() > 0 ? p.getRentPrice() + " Or" : "-");
 
                 // Ne pas afficher acheter/louer si c'est le proprio
-                boolean isMyProperty = myUUID != null && p.getOwnerUUID() != null && p.getOwnerUUID().equals(myUUID);
+                UUID finalMyUUID = myUUID;
+                boolean isMyProperty = finalMyUUID != null && p.getOwnerUUID() != null && p.getOwnerUUID().equals(finalMyUUID);
                 ui.set("#PAvBtnBuy" + i + ".Visible", p.isForSale() && p.getPrice() > 0 && !isMyProperty);
                 ui.set("#PAvBtnRent" + i + ".Visible", p.isForRent() && p.getRentPrice() > 0 && !isMyProperty);
             } else {
@@ -170,10 +182,47 @@ public class ProprietesTab {
                 ui.set("#PAvSlot" + i + ".Visible", false);
             }
         }
+
+        // === VILLES DISPONIBLES (Comte + Chef de guilde uniquement) ===
+        PlayerLevelData playerData = store.getComponent(ref, EldaniorSystem.get().getPlayerLevelDataType());
+        com.eldanior.system.titles.nobility.NobilityRank playerRank = playerData != null
+                ? com.eldanior.system.titles.nobility.NobilityRank.fromString(playerData.getNobilityRank()) : null;
+        boolean isComteOrHigher = playerRank != null && playerRank.ordinal() >= com.eldanior.system.titles.nobility.NobilityRank.COMTE.ordinal();
+        boolean isGuildLeader = playerData != null && "CHEF".equalsIgnoreCase(playerData.getGuildRole());
+        boolean canBuyCity = isComteOrHigher && isGuildLeader;
+
+        ui.set("#CitySection.Visible", canBuyCity);
+        cachedCityIds.clear();
+
+        if (canBuyCity) {
+            List<ParcelData> cities = ParcelManager.getAvailableCities();
+            ui.set("#CityLabel.Text", "VILLES DISPONIBLES (" + cities.size() + ") — " + String.format("%,d", ParcelManager.CITY_PRICE) + " Or");
+
+            for (int i = 0; i < MAX_CITY_SLOTS; i++) {
+                if (i < cities.size()) {
+                    ParcelData city = cities.get(i);
+                    cachedCityIds.add(city.getId());
+                    ui.set("#CitySlot" + i + ".Visible", true);
+                    ui.set("#CityName" + i + ".Text", city.getName());
+
+                    // Localisation (territoire parent)
+                    ParcelData parentTerr = ParcelEconomyManager.findParentOfType(city, ParcelType.TERRITORY);
+                    ParcelData parentGrand = ParcelEconomyManager.findParentOfType(city, ParcelType.GRAND_TERRITORY);
+                    String loc = "";
+                    if (parentTerr != null) loc = parentTerr.getName();
+                    else if (parentGrand != null) loc = parentGrand.getName();
+                    ui.set("#CityLoc" + i + ".Text", loc.isEmpty() ? "" : loc);
+                    ui.set("#CityPrice" + i + ".Text", String.format("%,d", ParcelManager.CITY_PRICE) + " Or");
+                } else {
+                    cachedCityIds.add("");
+                    ui.set("#CitySlot" + i + ".Visible", false);
+                }
+            }
+        }
     }
 
     // === PANNEAU DETAIL D'UNE PARCELLE SELECTIONNEE ===
-    private static void populateDetail(UICommandBuilder ui, boolean isAdmin, UUID myUUID) {
+    private static void populateDetail(UICommandBuilder ui, UUID myUUID) {
         if (selectedParcelId == null) {
             ui.set("#PropDetail.Visible", false);
             return;
@@ -281,15 +330,15 @@ public class ProprietesTab {
         boolean iAmRenter = myUUID != null && p.getRenterUUID() != null && p.getRenterUUID().equals(myUUID);
         boolean hasRenter = p.getRenterUUID() != null;
 
-        // Boutons admin (toujours)
-        ui.set("#PDetBtnPrice.Visible", isAdmin);
-        ui.set("#PDetBtnRent.Visible", isAdmin);
-        ui.set("#PDetBtnFamily.Visible", isAdmin && p.getType() != ParcelType.PLOT && p.getType() != ParcelType.HOUSING);
-        ui.set("#PDetBtnProt.Visible", isAdmin);
-        ui.set("#PDetBtnDel.Visible", isAdmin);
+        // Boutons admin (caches — admin utilise /es admin)
+        ui.set("#PDetBtnPrice.Visible", false);
+        ui.set("#PDetBtnRent.Visible", false);
+        ui.set("#PDetBtnFamily.Visible", false);
+        ui.set("#PDetBtnProt.Visible", false);
+        ui.set("#PDetBtnDel.Visible", false);
 
         // Boutons PROPRIO
-        boolean canManage = iAmOwner || isAdmin;
+        boolean canManage = iAmOwner;
         // REVENDRE / ANNULER VENTE (toggle)
         ui.set("#PDetBtnSell.Visible", canManage && !hasRenter && !p.isForRent());
         if (canManage && !hasRenter && !p.isForRent()) {
@@ -334,6 +383,30 @@ public class ProprietesTab {
         }
     }
 
+    // === PAGINATION ===
+
+    public static boolean handleOwnedPrev() {
+        if (ownedPage > 0) { ownedPage--; selectedIndex = -1; selectedParcelId = null; return true; }
+        return false;
+    }
+
+    public static boolean handleOwnedNext() {
+        int totalPages = Math.max(1, (int) Math.ceil((double) allOwned.size() / MAX_OWNED_SLOTS));
+        if (ownedPage < totalPages - 1) { ownedPage++; selectedIndex = -1; selectedParcelId = null; return true; }
+        return false;
+    }
+
+    public static boolean handleAvailablePrev() {
+        if (availablePage > 0) { availablePage--; return true; }
+        return false;
+    }
+
+    public static boolean handleAvailableNext() {
+        int totalPages = Math.max(1, (int) Math.ceil((double) allAvailable.size() / MAX_AVAILABLE_SLOTS));
+        if (availablePage < totalPages - 1) { availablePage++; return true; }
+        return false;
+    }
+
     // === HANDLERS ===
 
     public static boolean handleSelect(int index) {
@@ -342,7 +415,6 @@ public class ProprietesTab {
         if (id == null || id.isEmpty()) return false;
 
         if (selectedIndex == index) {
-            // Deselectionner
             selectedIndex = -1;
             selectedParcelId = null;
         } else {
@@ -625,15 +697,73 @@ public class ProprietesTab {
         }
     }
 
+    public static boolean handleBuyCity(int index, Ref<EntityStore> ref, Store<EntityStore> store) {
+        if (index < 0 || index >= cachedCityIds.size()) return false;
+        String id = cachedCityIds.get(index);
+        if (id == null || id.isEmpty()) return false;
+
+        ParcelData city = ParcelManager.get(id);
+        if (city == null || city.getType() != ParcelType.CITY || city.getOwnerUUID() != null) return false;
+
+        try {
+            PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
+            if (pRef == null) return false;
+            UUID buyerUUID = UUIDExtractor.getUUID(pRef);
+
+            PlayerLevelData data = store.getComponent(ref, EldaniorSystem.get().getPlayerLevelDataType());
+            if (data == null) return false;
+
+            // Verifier Comte + Chef de guilde
+            com.eldanior.system.titles.nobility.NobilityRank rank =
+                    com.eldanior.system.titles.nobility.NobilityRank.fromString(data.getNobilityRank());
+            if (rank == null || rank.ordinal() < com.eldanior.system.titles.nobility.NobilityRank.COMTE.ordinal()) return false;
+            if (!"CHEF".equalsIgnoreCase(data.getGuildRole())) return false;
+
+            // Verifier argent
+            if (data.getMoney() < ParcelManager.CITY_PRICE) {
+                pRef.sendMessage(Message.raw("§cPas assez d'Or ! Il faut " + String.format("%,d", ParcelManager.CITY_PRICE) + " Or."));
+                return false;
+            }
+
+            // Deduire l'argent
+            data.removeMoney(ParcelManager.CITY_PRICE);
+            store.putComponent(ref, EldaniorSystem.get().getPlayerLevelDataType(), data);
+
+            // Assigner la ville au joueur
+            com.hypixel.hytale.server.core.entity.entities.Player player = store.getComponent(ref,
+                    com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
+            String playerName = player != null ? player.getDisplayName() : "";
+            city.setOwnerUUID(buyerUUID);
+            city.setOwnerName(playerName);
+            city.addMember(buyerUUID, ParcelRole.OWNER);
+
+            // Associer la guilde a la ville
+            city.setGuildId(data.getGuildId());
+
+            ParcelManager.save();
+
+            pRef.sendMessage(Message.raw("§a§lVille achetee : §f" + city.getName() + " §a§l! Associee a votre guilde."));
+            return true;
+        } catch (Exception e) {
+            EldaniorLogger.error("ProprietesTab:buyCity", e);
+            return false;
+        }
+    }
+
     private static String getTypeColor(ParcelData p) {
         return switch (p.getType()) {
             case KINGDOM -> "#FFD700";
+            case GRAND_TERRITORY -> "#1E90FF";
             case TERRITORY -> "#3498DB";
             case CITY -> "#2ECC71";
             case PLOT -> "#aabbcc";
             case HOUSING -> "#9B59B6";
             case ROOM -> "#E91E63";
             case FARM -> "#8B4513";
+            case FOREST -> "#228B22";
+            case ARENA -> "#E74C3C";
+            case DUNGEON -> "#8E44AD";
+            case MINE -> "#F39C12";
         };
     }
 }

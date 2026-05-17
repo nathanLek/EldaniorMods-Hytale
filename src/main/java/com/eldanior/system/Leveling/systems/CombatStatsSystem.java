@@ -189,6 +189,10 @@ public class CombatStatsSystem extends DamageEventSystem {
         if (LuckSystem.isCriticalHit(attackerData)) {
             currentDamage *= CRIT_MULTIPLIER;
             LOGGER.atSevere().log("Coup Critique Donné ===> " + currentDamage);
+            // Effet visuel Red_Flash sur la victime lors d'un coup critique
+            try {
+                com.eldanior.system.config.Effects.EffectsManager.applyEffect(victimRef, "Red_Flash", store);
+            } catch (Exception e) { /* skip */ }
         }
 
         damage.setAmount(currentDamage);

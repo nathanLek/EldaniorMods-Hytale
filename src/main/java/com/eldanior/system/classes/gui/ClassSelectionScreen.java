@@ -171,6 +171,18 @@ public class ClassSelectionScreen extends InteractiveCustomUIPage<ClassSelection
         playerData.setPlayerClass(model.getDisplayName());
         playerData.setPlayerClassId(model.getId());
         playerData.clearSavedEvolutionChoices();
+        // Classe Dragon : dignité de base à 1000 + Aura Draconique
+        if ("dragon".equalsIgnoreCase(model.getId())) {
+            playerData.setDignity(1000);
+            // Nettoyer les anciennes auras
+            for (int i = 1; i <= 5; i++) {
+                playerData.removeSkill("DIGNITY_AURA_" + i);
+            }
+            playerData.removeSkill("DIGNITY_AURA");
+            // Assigner directement l'Aura Draconique (niveau 5)
+            playerData.learnSkill("DIGNITY_AURA_5");
+            playerData.enableSkill("DIGNITY_AURA_5");
+        }
         StatCalculator.updatePlayerStats(ref, store, playerData);
         store.putComponent(ref, type, playerData);
 

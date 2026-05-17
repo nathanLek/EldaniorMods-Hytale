@@ -53,22 +53,60 @@ public class NobilityManager {
         }
     }
 
-    // ==================== PROMOTION PAR LE ROI ====================
+    // ==================== PROMOTIONS ====================
 
-    public static boolean canKingPromote(NobilityRank rank) {
-        if (rank == NobilityRank.ROI || rank == NobilityRank.ROTURIER || rank == NobilityRank.CHEVALIER) {
-            return false;
+    // Compteurs de promotions par rang du promoteur
+    // Cle: "ROI:MARQUIS" = combien de Marquis le Roi a nommes
+    private static final Map<String, Integer> promotionCounts = new HashMap<>();
+
+    private static String promoKey(NobilityRank promoterRank, NobilityRank targetRank) {
+        return promoterRank.name() + ":" + targetRank.name();
+    }
+
+    /**
+     * Verifie si un noble de ce rang peut encore promouvoir au rang cible.
+     */
+    public static boolean canPromote(NobilityRank promoterRank, NobilityRank targetRank) {
+        int max = promoterRank.getMaxPromotions(targetRank);
+        if (max <= 0) return false;
+        int current = promotionCounts.getOrDefault(promoKey(promoterRank, targetRank), 0);
+        return current < max;
+    }
+
+    public static void recordPromotion(NobilityRank promoterRank, NobilityRank targetRank) {
+        String key = promoKey(promoterRank, targetRank);
+        promotionCounts.put(key, promotionCounts.getOrDefault(key, 0) + 1);
+        // Backwards compat: aussi dans kingdomCounts si c'est le Roi
+        if (promoterRank == NobilityRank.ROI) {
+            kingdomCounts.put(targetRank, kingdomCounts.getOrDefault(targetRank, 0) + 1);
         }
-        int current = kingdomCounts.getOrDefault(rank, 0);
-        return current < rank.getMaxPerKingdom();
+    }
+
+    public static int getRemainingSlots(NobilityRank promoterRank, NobilityRank targetRank) {
+        int max = promoterRank.getMaxPromotions(targetRank);
+        int current = promotionCounts.getOrDefault(promoKey(promoterRank, targetRank), 0);
+        return Math.max(0, max - current);
+    }
+
+    // Backwards compat pour le systeme existant
+    public static boolean canKingPromote(NobilityRank rank) {
+        return canPromote(NobilityRank.ROI, rank);
     }
 
     public static void recordKingPromotion(NobilityRank rank) {
-        kingdomCounts.put(rank, kingdomCounts.getOrDefault(rank, 0) + 1);
+        recordPromotion(NobilityRank.ROI, rank);
+    }
+
+    public static void unrecordKingPromotion(NobilityRank rank) {
+        String key = promoKey(NobilityRank.ROI, rank);
+        int current = promotionCounts.getOrDefault(key, 0);
+        if (current > 0) promotionCounts.put(key, current - 1);
+        int kc = kingdomCounts.getOrDefault(rank, 0);
+        if (kc > 0) kingdomCounts.put(rank, kc - 1);
     }
 
     public static int getRemainingSlots(NobilityRank rank) {
-        return rank.getMaxPerKingdom() - kingdomCounts.getOrDefault(rank, 0);
+        return getRemainingSlots(NobilityRank.ROI, rank);
     }
 
     // ==================== CHEVALIERS ====================

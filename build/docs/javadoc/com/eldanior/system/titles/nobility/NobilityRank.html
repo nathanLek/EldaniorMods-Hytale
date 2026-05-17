@@ -166,19 +166,25 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMaxPerKingdom()" class="member-name-link">getMaxPerKingdom</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMaxPromotions(com.eldanior.system.titles.nobility.NobilityRank)" class="member-name-link">getMaxPromotions</a><wbr>(<a href="NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a>&nbsp;targetRank)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Nombre max de promotions de ce type que ce rang peut donner.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPromotionQuotas()" class="member-name-link">getPromotionQuotas</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Retourne tous les quotas de promotion pour ce rang.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isNoble()" class="member-name-link">isNoble</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#next()" class="member-name-link">next</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Retourne le rang superieur, ou null si deja Roi.</div>
-</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#previous()" class="member-name-link">previous</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Retourne le rang inferieur, ou ROTURIER si deja au minimum.</div>
-</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#valueOf(java.lang.String)" class="member-name-link">valueOf</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
@@ -316,6 +322,20 @@ not permitted.)</div>
 </section>
 </li>
 <li>
+<section class="detail" id="getMaxPromotions(com.eldanior.system.titles.nobility.NobilityRank)">
+<h3>getMaxPromotions</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getMaxPromotions</span><wbr><span class="parameters">(<a href="NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a>&nbsp;targetRank)</span></div>
+<div class="block">Nombre max de promotions de ce type que ce rang peut donner.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getPromotionQuotas()">
+<h3>getPromotionQuotas</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</span>&nbsp;<span class="element-name">getPromotionQuotas</span>()</div>
+<div class="block">Retourne tous les quotas de promotion pour ce rang.</div>
+</section>
+</li>
+<li>
 <section class="detail" id="getMaxKnights()">
 <h3>getMaxKnights</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getMaxKnights</span>()</div>
@@ -337,14 +357,12 @@ not permitted.)</div>
 <section class="detail" id="next()">
 <h3>next</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a></span>&nbsp;<span class="element-name">next</span>()</div>
-<div class="block">Retourne le rang superieur, ou null si deja Roi.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="previous()">
 <h3>previous</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="NobilityRank.html" title="enum class in com.eldanior.system.titles.nobility">NobilityRank</a></span>&nbsp;<span class="element-name">previous</span>()</div>
-<div class="block">Retourne le rang inferieur, ou ROTURIER si deja au minimum.</div>
 </section>
 </li>
 <li>

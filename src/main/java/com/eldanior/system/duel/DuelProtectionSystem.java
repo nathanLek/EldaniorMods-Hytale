@@ -1,6 +1,9 @@
 package com.eldanior.system.duel;
 
+import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.config.UUIDExtractor;
+import com.eldanior.system.territory.ArenaManager;
+import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
@@ -42,7 +45,9 @@ public class DuelProtectionSystem extends EntityTickingSystem<EntityStore> {
         UUID playerUUID = extractUUID(playerRef);
         if (playerUUID == null) return;
 
-        if (!DuelManager.isInDuel(playerUUID)) return;
+        boolean inDuel = DuelManager.isInDuel(playerUUID);
+        boolean inArena = ArenaManager.isInArena(playerUUID);
+        if (!inDuel && !inArena) return;
 
         // Verifier les HP
         EntityStatMap statMap = store.getComponent(entityRef, EntityStatsModule.get().getEntityStatMapComponentType());
@@ -54,12 +59,31 @@ public class DuelProtectionSystem extends EntityTickingSystem<EntityStore> {
         float currentHP = healthStat.get();
         float maxHP = healthStat.getMax();
 
-        // Si HP <= 5% du max -> fin du duel, ce joueur a perdu
+        // Si HP <= 5% du max -> protection
         if (currentHP <= maxHP * 0.05f) {
-            // Remettre a 1 HP pour ne pas mourir
-            statMap.setStatValue(DefaultEntityStatTypes.getHealth(), 1.0f);
-            // Terminer le duel
-            DuelManager.endDuel(playerUUID);
+            // Remettre a pleine vie
+            statMap.setStatValue(DefaultEntityStatTypes.getHealth(), maxHP);
+
+            if (inDuel) {
+                // Duel classique : terminer le duel
+                DuelManager.scheduleEndDuel(playerUUID);
+            } else if (inArena) {
+                // Arene : enregistrer death + kill via lastAttackers
+                String arenaId = ArenaManager.getArenaId(playerUUID);
+                if (arenaId != null) {
+                    String victimName = playerRef.getUsername();
+                    ArenaManager.recordDeath(arenaId, victimName);
+
+                    // Trouver le killer
+                    UUID killerUUID = EldaniorSystem.get().getLastAttackers().remove(playerUUID);
+                    if (killerUUID != null) {
+                        PlayerRef killerRef = Universe.get().getPlayer(killerUUID);
+                        if (killerRef != null) {
+                            ArenaManager.recordKill(arenaId, killerRef.getUsername());
+                        }
+                    }
+                }
+            }
         }
     }
 

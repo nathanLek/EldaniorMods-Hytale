@@ -86,6 +86,10 @@ public class SetClassCommand extends AbstractAsyncCommand {
 
                 data.setPlayerClass(model.getDisplayName());
                 data.setPlayerClassId(model.getId());
+                // Classe Dragon : dignité de base à 1000
+                if ("dragon".equalsIgnoreCase(model.getId())) {
+                    data.setDignity(1000);
+                }
                 // Persiste d'abord, calcule ensuite
                 store.putComponent(ref, type, data);
                 StatCalculator.updatePlayerStats(ref, store, data);

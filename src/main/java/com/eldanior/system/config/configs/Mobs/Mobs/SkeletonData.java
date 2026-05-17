@@ -22,6 +22,7 @@ public enum SkeletonData implements IMobConfig {
     SKELETON_PIRATE_GUNNER("skeleton pirate gunner", 30, 15, 50),
     SKELETON_PIRATE_STRIKER("skeleton pirate striker", 38, 25, 55),
     SKELETON_PIRATE_CAPTAIN("skeleton pirate captain", 50, 30, 60),
+    SKELETON_BURNT_PRAETORIAN_PATROL("skeleton burnt praetorian patrol", 1000, 60, 100),
 
     // ===========================================================
     // === FROST (glace) (Lv150-230) — Tier 4 ennemi

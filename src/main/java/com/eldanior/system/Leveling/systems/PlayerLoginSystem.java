@@ -111,6 +111,20 @@ public class PlayerLoginSystem extends EntityTickingSystem<EntityStore> {
             }
         }
 
+        // Nettoyer les doublons de catalyst de competence active
+        commandBuffer.run(deferredStore -> {
+            try {
+                com.hypixel.hytale.server.core.entity.entities.Player loginPlayer =
+                        deferredStore.getComponent(playerRef, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
+                if (loginPlayer != null) {
+                    for (var skill : com.eldanior.system.skills.SkillManager.getAllSkills()) {
+                        if (skill.catalystId() == null) continue;
+                        removeDuplicateCatalyst(loginPlayer, skill.catalystId());
+                    }
+                }
+            } catch (Exception e) { /* skip */ }
+        });
+
         // Collecter les gains du shop en attente
         long pendingGold = com.eldanior.system.shop.ShopManager.collectPendingEarnings(uuid);
         if (pendingGold > 0) {
@@ -166,6 +180,38 @@ public class PlayerLoginSystem extends EntityTickingSystem<EntityStore> {
     }
 
     @Nonnull
+    private static void removeDuplicateCatalyst(com.hypixel.hytale.server.core.entity.entities.Player player, String catalystId) {
+        try {
+            var inv = player.getInventory();
+            int count = 0;
+
+            // Compter dans la hotbar
+            for (short i = 0; i < 9; i++) {
+                var item = inv.getHotbar().getItemStack(i);
+                if (item != null && !item.isEmpty() && catalystId.equals(item.getItemId())) {
+                    count++;
+                    if (count > 1) inv.getHotbar().removeItemStackFromSlot(i);
+                }
+            }
+            // Compter dans le storage
+            for (short i = 0; i < 27; i++) {
+                var item = inv.getStorage().getItemStack(i);
+                if (item != null && !item.isEmpty() && catalystId.equals(item.getItemId())) {
+                    count++;
+                    if (count > 1) inv.getStorage().removeItemStackFromSlot(i);
+                }
+            }
+            // Compter dans le backpack
+            for (short i = 0; i < 8; i++) {
+                var item = inv.getBackpack().getItemStack(i);
+                if (item != null && !item.isEmpty() && catalystId.equals(item.getItemId())) {
+                    count++;
+                    if (count > 1) inv.getBackpack().removeItemStackFromSlot(i);
+                }
+            }
+        } catch (Exception e) { /* skip */ }
+    }
+
     @Override
     public Query<EntityStore> getQuery() {
         return Player.getComponentType();

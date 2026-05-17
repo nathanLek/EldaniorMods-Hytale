@@ -9,6 +9,7 @@ public abstract class NobleFamilyModel {
     private final String id;
     private final String displayName;
     private final String motto;
+    private final String history;
     private final Rarity rarity;
     private final NobilityRank minimumRank;
     private final PassiveSkill familyPassive;
@@ -17,6 +18,7 @@ public abstract class NobleFamilyModel {
             String id,
             String displayName,
             String motto,
+            String history,
             Rarity rarity,
             NobilityRank minimumRank,
             PassiveSkill familyPassive
@@ -24,6 +26,7 @@ public abstract class NobleFamilyModel {
         this.id = id;
         this.displayName = displayName;
         this.motto = motto;
+        this.history = history;
         this.rarity = rarity;
         this.minimumRank = minimumRank;
         this.familyPassive = familyPassive;
@@ -32,6 +35,7 @@ public abstract class NobleFamilyModel {
     public String getId() { return id; }
     public String getDisplayName() { return displayName; }
     public String getMotto() { return motto; }
+    public String getHistory() { return history; }
     public Rarity getRarity() { return rarity; }
     public NobilityRank getMinimumRank() { return minimumRank; }
     public PassiveSkill getFamilyPassive() { return familyPassive; }

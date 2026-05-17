@@ -11,7 +11,7 @@ public enum LootTableConfig {
     // ============================================================
     //  DONJON — Armures/armes haut tier + skills (Common 1% → Epic 3%)
     // ============================================================
-    DUNGEON_CHEST("donjon", 300,
+    DUNGEON_CHEST("donjon", 3600,
 
             // --- Armures hautes (Cobalt / Thorium) ---
             new LootEntry("Armor_Cobalt_Head",          1, 1, 1, 25),
@@ -247,6 +247,15 @@ public enum LootTableConfig {
             new LootEntry("skill_page_arcane_devastation",          1, 1, 1, 0.3),
             new LootEntry("skill_page_artifact_hunter",             1, 1, 1, 0.3),
             new LootEntry("skill_page_artisanat",                   1, 1, 1, 0.3),
+            new LootEntry("skill_page_craft_cuisine",              1, 1, 1, 0.8),
+            new LootEntry("skill_page_craft_fonderie",             1, 1, 1, 0.8),
+            new LootEntry("skill_page_craft_armurerie",            1, 1, 1, 0.5),
+            new LootEntry("skill_page_craft_forge_armes",          1, 1, 1, 0.5),
+            new LootEntry("skill_page_craft_tannerie",             1, 1, 1, 0.8),
+            new LootEntry("skill_page_craft_alchimie",             1, 1, 1, 0.5),
+            new LootEntry("skill_page_craft_scierie",              1, 1, 1, 0.8),
+            new LootEntry("skill_page_craft_agriculture",          1, 1, 1, 0.8),
+            new LootEntry("skill_page_craft_recyclage",            1, 1, 1, 0.8),
             new LootEntry("skill_page_blood_hunt",                  1, 1, 1, 0.3),
             new LootEntry("skill_page_brilliant_mind",              1, 1, 1, 0.3),
             new LootEntry("skill_page_bursting_life",               1, 1, 1, 0.3),
@@ -447,6 +456,65 @@ public enum LootTableConfig {
             new LootEntry("Elixir_Complet",                    1, 1, 1, 0.05),
             new LootEntry("Tome_Experience",                   1, 1, 1, 1),
 
+            // --- Armes avancees manquantes ---
+            new LootEntry("Weapon_Wand_Stoneskin",         1, 1, 1, 12),
+            new LootEntry("Weapon_Wand_Tribal",            1, 1, 1, 12),
+            new LootEntry("Weapon_Shield_Doomed",          1, 1, 1, 10),
+
+            // --- Armure Diving ---
+            new LootEntry("Armor_Diving_Crude_Head",       1, 1, 1, 10),
+            new LootEntry("Armor_Diving_Crude_Chest",      1, 1, 1, 10),
+            new LootEntry("Armor_Diving_Crude_Hands",      1, 1, 1, 10),
+            new LootEntry("Armor_Diving_Crude_Legs",       1, 1, 1, 10),
+
+            // --- Bombes avancees ---
+            new LootEntry("Weapon_Bomb_Continuous",        3, 1, 2, 15),
+            new LootEntry("Weapon_Bomb_Large_Fire",        3, 1, 2, 12),
+            new LootEntry("Weapon_Grenade_Frag",           3, 1, 2, 10),
+
+            // --- Fleches speciales ---
+            new LootEntry("Weapon_Arrow_Trueshot",         5, 1, 3, 15),
+
+            // --- Outils avances ---
+            new LootEntry("Tool_Repair_Kit_Iron",          1, 1, 1, 12),
+            new LootEntry("Tool_Repair_Kit_Rare",          1, 1, 1, 5),
+            new LootEntry("Tool_Hatchet_Iron",             1, 1, 1, 10),
+            new LootEntry("Tool_Pickaxe_Iron",             1, 1, 1, 10),
+            new LootEntry("Tool_Hatchet_Cobalt",           1, 1, 1, 6),
+            new LootEntry("Tool_Pickaxe_Cobalt",           1, 1, 1, 6),
+
+            // --- Plantes tier 2-3 ---
+            new LootEntry("Plant_Crop_Health2",            3, 1, 2, 15),
+            new LootEntry("Plant_Crop_Health3",            3, 1, 1, 8),
+            new LootEntry("Plant_Crop_Mana2",              3, 1, 2, 15),
+            new LootEntry("Plant_Crop_Mana3",              3, 1, 1, 8),
+            new LootEntry("Plant_Crop_Stamina2",           3, 1, 2, 15),
+            new LootEntry("Plant_Crop_Stamina3",           3, 1, 1, 8),
+
+            // --- Healing Totem ---
+            new LootEntry("Weapon_Deployable_Healing_Totem", 1, 1, 1, 3),
+
+            // --- Potions avancees ---
+            new LootEntry("Potion_Health_Greater",         3, 1, 2, 20),
+            new LootEntry("Potion_Health_Large",           3, 1, 2, 12),
+            new LootEntry("Potion_Mana",                   3, 1, 2, 18),
+            new LootEntry("Potion_Mana_Large",             3, 1, 1, 10),
+            new LootEntry("Potion_Stamina_Greater",        3, 1, 2, 15),
+            new LootEntry("Potion_Regen_Health_Large",     3, 1, 1, 12),
+            new LootEntry("Potion_Regen_Mana_Large",       3, 1, 1, 10),
+            new LootEntry("Potion_Regen_Stamina_Large",    3, 1, 1, 10),
+            new LootEntry("Potion_Antidote",               3, 1, 2, 15),
+            new LootEntry("Potion_Purify",                 3, 1, 1, 10),
+
+            // --- Nourriture cuisinee ---
+            new LootEntry("Food_Kebab_Meat",               3, 1, 2, 20),
+            new LootEntry("Food_Kebab_Fruit",              3, 1, 2, 18),
+            new LootEntry("Food_Pie_Meat",                 3, 1, 1, 12),
+            new LootEntry("Food_Pie_Apple",                3, 1, 1, 12),
+            new LootEntry("Food_Salad_Caesar",             3, 1, 1, 10),
+            new LootEntry("Food_Fish_Grilled",             3, 1, 2, 15),
+            new LootEntry("Food_Wildmeat_Cooked",          3, 1, 2, 15),
+
             // --- Clé donjon (rare) ---
             new LootEntry("PortalKey_Dungeon_V1",            1, 1, 1, 5)
     ),
@@ -454,7 +522,7 @@ public enum LootTableConfig {
     // ============================================================
     //  DONJON COMMON — Armures/armes bas tier + skills (Common 5% → Rare 1%)
     // ============================================================
-    DUNGEON_COMMON_CHEST("donjon_common", 300,
+    DUNGEON_COMMON_CHEST("donjon_common", 2880,
 
             // --- Armures bois / cuivre / bronze ---
             new LootEntry("Armor_Wood_Head",            1, 1, 1, 30),
@@ -687,6 +755,15 @@ public enum LootTableConfig {
             new LootEntry("skill_page_arcane_devastation",          1, 1, 1, 0.2),
             new LootEntry("skill_page_artifact_hunter",             1, 1, 1, 0.2),
             new LootEntry("skill_page_artisanat",                   1, 1, 1, 0.2),
+            new LootEntry("skill_page_craft_cuisine",              1, 1, 1, 0.6),
+            new LootEntry("skill_page_craft_fonderie",             1, 1, 1, 0.6),
+            new LootEntry("skill_page_craft_armurerie",            1, 1, 1, 0.4),
+            new LootEntry("skill_page_craft_forge_armes",          1, 1, 1, 0.4),
+            new LootEntry("skill_page_craft_tannerie",             1, 1, 1, 0.6),
+            new LootEntry("skill_page_craft_alchimie",             1, 1, 1, 0.4),
+            new LootEntry("skill_page_craft_scierie",              1, 1, 1, 0.6),
+            new LootEntry("skill_page_craft_agriculture",          1, 1, 1, 0.6),
+            new LootEntry("skill_page_craft_recyclage",            1, 1, 1, 0.6),
             new LootEntry("skill_page_blood_hunt",                  1, 1, 1, 0.2),
             new LootEntry("skill_page_brilliant_mind",              1, 1, 1, 0.2),
             new LootEntry("skill_page_bursting_life",               1, 1, 1, 0.2),
@@ -874,13 +951,86 @@ public enum LootTableConfig {
             new LootEntry("Consomable_Stat_Endurance_Five",    1, 1, 1, 0.5),
             new LootEntry("Consomable_Stat_Agilite_Five",      1, 1, 1, 0.5),
             new LootEntry("Consomable_Stat_Chance_Five",       1, 1, 1, 0.5),
-            new LootEntry("Tome_Experience",                   1, 1, 1, 2)
+            new LootEntry("Tome_Experience",                   1, 1, 1, 2),
+
+            // --- Wands basiques ---
+            new LootEntry("Weapon_Wand_Wood",              1, 1, 1, 20),
+            new LootEntry("Weapon_Wand_Wood_Rotten",       1, 1, 1, 18),
+            new LootEntry("Weapon_Wand_Root",              1, 1, 1, 15),
+
+            // --- Armes os ---
+            new LootEntry("Weapon_Axe_Bone",               1, 1, 1, 18),
+            new LootEntry("Weapon_Spear_Bone",             1, 1, 1, 18),
+            new LootEntry("Weapon_Staff_Bone",             1, 1, 1, 15),
+
+            // --- Armes Scrap/Rusty ---
+            new LootEntry("Weapon_Club_Iron_Rusty",        1, 1, 1, 22),
+            new LootEntry("Weapon_Club_Scrap",             1, 1, 1, 25),
+            new LootEntry("Weapon_Spear_Scrap",            1, 1, 1, 22),
+
+            // --- Copper manquant ---
+            new LootEntry("Weapon_Battleaxe_Copper",       1, 1, 1, 18),
+
+            // --- Armure Wool ---
+            new LootEntry("Armor_Wool_Head",               1, 1, 1, 25),
+            new LootEntry("Armor_Wool_Chest",              1, 1, 1, 25),
+            new LootEntry("Armor_Wool_Hands",              1, 1, 1, 25),
+            new LootEntry("Armor_Wool_Legs",               1, 1, 1, 25),
+
+            // --- Bombes basiques ---
+            new LootEntry("Weapon_Bomb",                   3, 1, 2, 18),
+            new LootEntry("Weapon_Bomb_Stun",              3, 1, 2, 12),
+
+            // --- Fleches ---
+            new LootEntry("Weapon_Arrow_Deadeye",          5, 1, 3, 15),
+
+            // --- Outils basiques ---
+            new LootEntry("Tool_Repair_Kit_Crude",         1, 1, 1, 18),
+            new LootEntry("Tool_Hatchet_Crude",            1, 1, 1, 15),
+            new LootEntry("Tool_Hatchet_Copper",           1, 1, 1, 12),
+            new LootEntry("Tool_Pickaxe_Crude",            1, 1, 1, 15),
+            new LootEntry("Tool_Pickaxe_Copper",           1, 1, 1, 12),
+            new LootEntry("Tool_Shovel_Crude",             1, 1, 1, 12),
+            new LootEntry("Tool_Shovel_Copper",            1, 1, 1, 10),
+
+            // --- Plantes tier 1 ---
+            new LootEntry("Plant_Crop_Health1",            3, 1, 3, 20),
+            new LootEntry("Plant_Crop_Mana1",              3, 1, 3, 20),
+            new LootEntry("Plant_Crop_Stamina1",           3, 1, 3, 20),
+
+            // --- Potions basiques ---
+            new LootEntry("Potion_Health",                 3, 1, 2, 25),
+            new LootEntry("Potion_Health_Lesser",          3, 1, 2, 30),
+            new LootEntry("Potion_Health_Small",           3, 1, 3, 35),
+            new LootEntry("Potion_Stamina",                3, 1, 2, 20),
+            new LootEntry("Potion_Stamina_Small",          3, 1, 3, 25),
+            new LootEntry("Potion_Regen_Health",           3, 1, 2, 18),
+            new LootEntry("Potion_Regen_Health_Small",     3, 1, 2, 22),
+            new LootEntry("Potion_Regen_Stamina",          3, 1, 2, 18),
+            new LootEntry("Potion_Regen_Stamina_Small",    3, 1, 2, 22),
+            new LootEntry("Potion_Regen_Mana_Small",       3, 1, 2, 15),
+            new LootEntry("Potion_Mana_Small",             3, 1, 2, 15),
+
+            // --- Nourriture basique ---
+            new LootEntry("Food_Bread",                    3, 1, 3, 30),
+            new LootEntry("Food_Egg",                      3, 1, 3, 28),
+            new LootEntry("Food_Cheese",                   3, 1, 2, 22),
+            new LootEntry("Food_Chicken_Raw",              3, 1, 2, 25),
+            new LootEntry("Food_Beef_Raw",                 3, 1, 2, 20),
+            new LootEntry("Food_Pork_Raw",                 3, 1, 2, 20),
+            new LootEntry("Food_Fish_Raw",                 3, 1, 2, 22),
+            new LootEntry("Food_Wildmeat_Raw",             3, 1, 2, 18),
+            new LootEntry("Food_Vegetable_Cooked",         3, 1, 2, 15),
+            new LootEntry("Food_Kebab_Vegetable",          3, 1, 1, 12),
+            new LootEntry("Food_Kebab_Mushroom",           3, 1, 1, 12),
+            new LootEntry("Food_Salad_Berry",              3, 1, 1, 10),
+            new LootEntry("Food_Salad_Mushroom",           3, 1, 1, 10)
     ),
 
     // ============================================================
     //  LEGENDARY — Toutes raretés de compétences
     // ============================================================
-    LEGENDARY_CHEST("legendary", 300,
+    LEGENDARY_CHEST("legendary", 43200,
 
             // --- Compétences Common (35%) ---
             new LootEntry("skill_page_active_breathing",     1, 1, 1, 35),
@@ -1001,6 +1151,15 @@ public enum LootTableConfig {
             new LootEntry("skill_page_arcane_devastation",          1, 1, 1, 15),
             new LootEntry("skill_page_artifact_hunter",             1, 1, 1, 15),
             new LootEntry("skill_page_artisanat",                   1, 1, 1, 15),
+            new LootEntry("skill_page_craft_cuisine",              1, 1, 1, 30),
+            new LootEntry("skill_page_craft_fonderie",             1, 1, 1, 30),
+            new LootEntry("skill_page_craft_armurerie",            1, 1, 1, 20),
+            new LootEntry("skill_page_craft_forge_armes",          1, 1, 1, 20),
+            new LootEntry("skill_page_craft_tannerie",             1, 1, 1, 30),
+            new LootEntry("skill_page_craft_alchimie",             1, 1, 1, 20),
+            new LootEntry("skill_page_craft_scierie",              1, 1, 1, 30),
+            new LootEntry("skill_page_craft_agriculture",          1, 1, 1, 30),
+            new LootEntry("skill_page_craft_recyclage",            1, 1, 1, 30),
             new LootEntry("skill_page_blood_hunt",                  1, 1, 1, 15),
             new LootEntry("skill_page_brilliant_mind",              1, 1, 1, 15),
             new LootEntry("skill_page_bursting_life",               1, 1, 1, 15),
@@ -1099,63 +1258,63 @@ public enum LootTableConfig {
             new LootEntry("skill_page_tono_squive",          1, 1, 1, 0.2),
 
             // --- Compétences Unique (5%) ---
-            new LootEntry("skill_page_abyss_blade",                  1, 1, 1, 5),
-            new LootEntry("skill_page_absolute_precision",           1, 1, 1, 5),
-            new LootEntry("skill_page_absolute_supremacy",           1, 1, 1, 5),
-            new LootEntry("skill_page_all_seeing_eye",               1, 1, 1, 5),
-            new LootEntry("skill_page_arcane_oblivion",              1, 1, 1, 5),
-            new LootEntry("skill_page_cosmic_body",                  1, 1, 1, 5),
-            new LootEntry("skill_page_cosmic_bulwark",               1, 1, 1, 5),
-            new LootEntry("skill_page_cosmic_constitution",          1, 1, 1, 5),
-            new LootEntry("skill_page_cosmic_lungs",                 1, 1, 1, 5),
-            new LootEntry("skill_page_cosmic_mind",                  1, 1, 1, 5),
-            new LootEntry("skill_page_cosmic_reflexes",              1, 1, 1, 5),
-            new LootEntry("skill_page_cosmic_strike",                1, 1, 1, 5),
-            new LootEntry("skill_page_cosmic_vampirism",             1, 1, 1, 5),
-            new LootEntry("skill_page_demigod_swiftness",            1, 1, 1, 5),
-            new LootEntry("skill_page_dimensional_step",             1, 1, 1, 5),
-            new LootEntry("skill_page_divine_fortress",              1, 1, 1, 5),
-            new LootEntry("skill_page_divine_parry",                 1, 1, 1, 5),
-            new LootEntry("skill_page_eternal_blood",                1, 1, 1, 5),
-            new LootEntry("skill_page_eternal_fortification",        1, 1, 1, 5),
-            new LootEntry("skill_page_fate_vision",                  1, 1, 1, 5),
-            new LootEntry("skill_page_heart_of_eternity",            1, 1, 1, 5),
-            new LootEntry("skill_page_immortal_absolute",            1, 1, 1, 5),
-            new LootEntry("skill_page_immortal_resolve",             1, 1, 1, 5),
-            new LootEntry("skill_page_infinite_life",                1, 1, 1, 5),
-            new LootEntry("skill_page_legendary_axe_mastery",        1, 1, 1, 5),
-            new LootEntry("skill_page_legendary_dagger_mastery",     1, 1, 1, 5),
-            new LootEntry("skill_page_legendary_sniper_mastery",     1, 1, 1, 5),
-            new LootEntry("skill_page_mana_infinity",                1, 1, 1, 5),
-            new LootEntry("skill_page_myth_hunter",                  1, 1, 1, 5),
-            new LootEntry("skill_page_rage_frenzy",                  1, 1, 1, 5),
-            new LootEntry("skill_page_reality_dodge",                1, 1, 1, 5),
-            new LootEntry("skill_page_soul_crushing_pressure",       1, 1, 1, 5),
-            new LootEntry("skill_page_true_sight",                   1, 1, 1, 5),
+            new LootEntry("skill_page_abyss_blade",                  1, 1, 1, 0.2),
+            new LootEntry("skill_page_absolute_precision",           1, 1, 1, 0.2),
+            new LootEntry("skill_page_absolute_supremacy",           1, 1, 1, 0.2),
+            new LootEntry("skill_page_all_seeing_eye",               1, 1, 1, 0.2),
+            new LootEntry("skill_page_arcane_oblivion",              1, 1, 1, 0.2),
+            new LootEntry("skill_page_cosmic_body",                  1, 1, 1, 0.2),
+            new LootEntry("skill_page_cosmic_bulwark",               1, 1, 1, 0.2),
+            new LootEntry("skill_page_cosmic_constitution",          1, 1, 1, 0.2),
+            new LootEntry("skill_page_cosmic_lungs",                 1, 1, 1, 0.2),
+            new LootEntry("skill_page_cosmic_mind",                  1, 1, 1, 0.2),
+            new LootEntry("skill_page_cosmic_reflexes",              1, 1, 1, 0.2),
+            new LootEntry("skill_page_cosmic_strike",                1, 1, 1, 0.2),
+            new LootEntry("skill_page_cosmic_vampirism",             1, 1, 1, 0.2),
+            new LootEntry("skill_page_demigod_swiftness",            1, 1, 1, 0.2),
+            new LootEntry("skill_page_dimensional_step",             1, 1, 1, 0.2),
+            new LootEntry("skill_page_divine_fortress",              1, 1, 1, 0.2),
+            new LootEntry("skill_page_divine_parry",                 1, 1, 1, 0.2),
+            new LootEntry("skill_page_eternal_blood",                1, 1, 1, 0.2),
+            new LootEntry("skill_page_eternal_fortification",        1, 1, 1, 0.2),
+            new LootEntry("skill_page_fate_vision",                  1, 1, 1, 0.2),
+            new LootEntry("skill_page_heart_of_eternity",            1, 1, 1, 0.2),
+            new LootEntry("skill_page_immortal_absolute",            1, 1, 1, 0.2),
+            new LootEntry("skill_page_immortal_resolve",             1, 1, 1, 0.2),
+            new LootEntry("skill_page_infinite_life",                1, 1, 1, 0.2),
+            new LootEntry("skill_page_legendary_axe_mastery",        1, 1, 1, 0.2),
+            new LootEntry("skill_page_legendary_dagger_mastery",     1, 1, 1, 0.2),
+            new LootEntry("skill_page_legendary_sniper_mastery",     1, 1, 1, 0.2),
+            new LootEntry("skill_page_mana_infinity",                1, 1, 1, 0.2),
+            new LootEntry("skill_page_myth_hunter",                  1, 1, 1, 0.2),
+            new LootEntry("skill_page_rage_frenzy",                  1, 1, 1, 0.2),
+            new LootEntry("skill_page_reality_dodge",                1, 1, 1, 0.2),
+            new LootEntry("skill_page_soul_crushing_pressure",       1, 1, 1, 0.2),
+            new LootEntry("skill_page_true_sight",                   1, 1, 1, 0.2),
 
             // --- Compétences Légendaire (3%) ---
-            new LootEntry("skill_page_arcane_genesis",               1, 1, 1, 3),
-            new LootEntry("skill_page_celestial_constitution",       1, 1, 1, 3),
-            new LootEntry("skill_page_celestial_fortress",           1, 1, 1, 3),
-            new LootEntry("skill_page_celestial_immortality",        1, 1, 1, 3),
-            new LootEntry("skill_page_celestial_lungs",              1, 1, 1, 3),
-            new LootEntry("skill_page_celestial_parry",              1, 1, 1, 3),
-            new LootEntry("skill_page_celestial_step",               1, 1, 1, 3),
-            new LootEntry("skill_page_divin_axe_mastery",            1, 1, 1, 3),
-            new LootEntry("skill_page_divin_dagger_mastery",         1, 1, 1, 3),
-            new LootEntry("skill_page_eternity_resolve",             1, 1, 1, 3),
-            new LootEntry("skill_page_genesis_blood",                1, 1, 1, 3),
-            new LootEntry("skill_page_genesis_bulwark",              1, 1, 1, 3),
-            new LootEntry("skill_page_genesis_edge",                 1, 1, 1, 3),
-            new LootEntry("skill_page_genesis_strike",               1, 1, 1, 3),
-            new LootEntry("skill_page_genesis_vision",               1, 1, 1, 3),
-            new LootEntry("skill_page_god_slayer_swiftness",         1, 1, 1, 3),
-            new LootEntry("skill_page_heart_of_genesis",             1, 1, 1, 3),
-            new LootEntry("skill_page_infinite_mind",                1, 1, 1, 3),
-            new LootEntry("skill_page_infinite_vampirism",           1, 1, 1, 3),
-            new LootEntry("skill_page_omni_sight",                   1, 1, 1, 3),
-            new LootEntry("skill_page_omniscient_precision",         1, 1, 1, 3),
-            new LootEntry("skill_page_time_dodge",                   1, 1, 1, 3),
+            new LootEntry("skill_page_arcane_genesis",               1, 1, 1, 0.05),
+            new LootEntry("skill_page_celestial_constitution",       1, 1, 1, 0.05),
+            new LootEntry("skill_page_celestial_fortress",           1, 1, 1, 0.05),
+            new LootEntry("skill_page_celestial_immortality",        1, 1, 1, 0.05),
+            new LootEntry("skill_page_celestial_lungs",              1, 1, 1, 0.05),
+            new LootEntry("skill_page_celestial_parry",              1, 1, 1, 0.05),
+            new LootEntry("skill_page_celestial_step",               1, 1, 1, 0.05),
+            new LootEntry("skill_page_divin_axe_mastery",            1, 1, 1, 0.05),
+            new LootEntry("skill_page_divin_dagger_mastery",         1, 1, 1, 0.05),
+            new LootEntry("skill_page_eternity_resolve",             1, 1, 1, 0.05),
+            new LootEntry("skill_page_genesis_blood",                1, 1, 1, 0.05),
+            new LootEntry("skill_page_genesis_bulwark",              1, 1, 1, 0.05),
+            new LootEntry("skill_page_genesis_edge",                 1, 1, 1, 0.05),
+            new LootEntry("skill_page_genesis_strike",               1, 1, 1, 0.05),
+            new LootEntry("skill_page_genesis_vision",               1, 1, 1, 0.05),
+            new LootEntry("skill_page_god_slayer_swiftness",         1, 1, 1, 0.05),
+            new LootEntry("skill_page_heart_of_genesis",             1, 1, 1, 0.05),
+            new LootEntry("skill_page_infinite_mind",                1, 1, 1, 0.05),
+            new LootEntry("skill_page_infinite_vampirism",           1, 1, 1, 0.05),
+            new LootEntry("skill_page_omni_sight",                   1, 1, 1, 0.05),
+            new LootEntry("skill_page_omniscient_precision",         1, 1, 1, 0.05),
+            new LootEntry("skill_page_time_dodge",                   1, 1, 1, 0.05),
 
             // --- Compétences Légendaires (0.05% ≈ 1/2000) ---
             new LootEntry("skill_page_annihilator_strike",   1, 1, 1, 0.05),
@@ -1170,29 +1329,29 @@ public enum LootTableConfig {
             new LootEntry("skill_page_judgment_of_genesis",  1, 1, 1, 0.01),
             new LootEntry("skill_page_mana_heart",           1, 1, 1, 0.01),
 
-            // --- Compétences Divin (1%) ---
-            new LootEntry("skill_page_absolute_resolve",     1, 1, 1, 1),
-            new LootEntry("skill_page_absolute_sight",       1, 1, 1, 1),
-            new LootEntry("skill_page_arcane_creation",      1, 1, 1, 1),
-            new LootEntry("skill_page_creator_axe_mastery",  1, 1, 1, 1),
-            new LootEntry("skill_page_creator_blood",        1, 1, 1, 1),
-            new LootEntry("skill_page_creator_bulwark",      1, 1, 1, 1),
-            new LootEntry("skill_page_creator_constitution", 1, 1, 1, 1),
-            new LootEntry("skill_page_creator_dagger_mastery",1, 1, 1, 1),
-            new LootEntry("skill_page_creator_edge",         1, 1, 1, 1),
-            new LootEntry("skill_page_creator_fortress",     1, 1, 1, 1),
-            new LootEntry("skill_page_creator_lungs",        1, 1, 1, 1),
-            new LootEntry("skill_page_creator_mind",         1, 1, 1, 1),
-            new LootEntry("skill_page_creator_parry",        1, 1, 1, 1),
-            new LootEntry("skill_page_creator_precision",    1, 1, 1, 1),
-            new LootEntry("skill_page_creator_step",         1, 1, 1, 1),
-            new LootEntry("skill_page_creator_strike",       1, 1, 1, 1),
-            new LootEntry("skill_page_creator_swiftness",    1, 1, 1, 1),
-            new LootEntry("skill_page_creator_vampirism",    1, 1, 1, 1),
-            new LootEntry("skill_page_creator_vision",       1, 1, 1, 1),
-            new LootEntry("skill_page_fate_dodge",           1, 1, 1, 1),
-            new LootEntry("skill_page_heart_of_creation",    1, 1, 1, 1),
-            new LootEntry("skill_page_true_immortality",     1, 1, 1, 1),
+            // --- Compétences Divin (0.01%) ---
+            new LootEntry("skill_page_absolute_resolve",     1, 1, 1, 0.01),
+            new LootEntry("skill_page_absolute_sight",       1, 1, 1, 0.01),
+            new LootEntry("skill_page_arcane_creation",      1, 1, 1, 0.01),
+            new LootEntry("skill_page_creator_axe_mastery",  1, 1, 1, 0.01),
+            new LootEntry("skill_page_creator_blood",        1, 1, 1, 0.01),
+            new LootEntry("skill_page_creator_bulwark",      1, 1, 1, 0.01),
+            new LootEntry("skill_page_creator_constitution", 1, 1, 1, 0.01),
+            new LootEntry("skill_page_creator_dagger_mastery",1, 1, 1, 0.01),
+            new LootEntry("skill_page_creator_edge",         1, 1, 1, 0.01),
+            new LootEntry("skill_page_creator_fortress",     1, 1, 1, 0.01),
+            new LootEntry("skill_page_creator_lungs",        1, 1, 1, 0.01),
+            new LootEntry("skill_page_creator_mind",         1, 1, 1, 0.01),
+            new LootEntry("skill_page_creator_parry",        1, 1, 1, 0.01),
+            new LootEntry("skill_page_creator_precision",    1, 1, 1, 0.01),
+            new LootEntry("skill_page_creator_step",         1, 1, 1, 0.01),
+            new LootEntry("skill_page_creator_strike",       1, 1, 1, 0.01),
+            new LootEntry("skill_page_creator_swiftness",    1, 1, 1, 0.01),
+            new LootEntry("skill_page_creator_vampirism",    1, 1, 1, 0.01),
+            new LootEntry("skill_page_creator_vision",       1, 1, 1, 0.01),
+            new LootEntry("skill_page_fate_dodge",           1, 1, 1, 0.01),
+            new LootEntry("skill_page_heart_of_creation",    1, 1, 1, 0.01),
+            new LootEntry("skill_page_true_immortality",     1, 1, 1, 0.01),
 
             // --- Consommables stats ---
             new LootEntry("Consomable_Stat_Force_One",         1, 1, 1, 5),
@@ -1226,7 +1385,7 @@ public enum LootTableConfig {
     // ============================================================
     //  GOLD — Coffre monnaie
     // ============================================================
-    GOLD_CHEST("gold", 300,
+    GOLD_CHEST("gold", 1800,
             new LootEntry("Elda_Copper_Coins",  10, 1, 10, 100),
             new LootEntry("Elda_Silver_Coins",  10, 1, 10,  20),
             new LootEntry("Elda_Gold_Coins",     5, 1,  5,   1),
@@ -1237,7 +1396,7 @@ public enum LootTableConfig {
     // ============================================================
     //  DEFAULT — Ingrédients + Ores + skills (Common 2%, Uncommon 1%)
     // ============================================================
-    DEFAULT("default", 300,
+    DEFAULT("default", 900,
 
             // --- Nourriture / plantes de base ---
             new LootEntry("Plant_Fruit_Apple",      5, 1, 10, 75),
@@ -1355,6 +1514,47 @@ public enum LootTableConfig {
             new LootEntry("Ore_Adamantite", 1, 1, 1,  1),
             new LootEntry("Ore_Prisma",     1, 1, 1,  0.5),
             new LootEntry("Rock_Gem_Emerald",1, 1, 1, 0.5),
+
+            // --- Nourriture ---
+            new LootEntry("Food_Bread",                    3, 1, 3, 45),
+            new LootEntry("Food_Egg",                      3, 1, 3, 40),
+            new LootEntry("Food_Cheese",                   3, 1, 2, 35),
+            new LootEntry("Food_Beef_Raw",                 3, 1, 2, 30),
+            new LootEntry("Food_Pork_Raw",                 3, 1, 2, 30),
+            new LootEntry("Food_Fish_Raw",                 3, 1, 2, 35),
+            new LootEntry("Food_Wildmeat_Raw",             3, 1, 2, 25),
+            new LootEntry("Food_Vegetable_Cooked",         3, 1, 2, 20),
+            new LootEntry("Food_Popcorn",                  3, 1, 2, 15),
+
+            // --- Potions basiques ---
+            new LootEntry("Potion_Health_Small",           3, 1, 2, 30),
+            new LootEntry("Potion_Health_Lesser",          3, 1, 1, 20),
+            new LootEntry("Potion_Regen_Health_Small",     3, 1, 1, 18),
+            new LootEntry("Potion_Regen_Stamina_Small",    3, 1, 1, 25),
+            new LootEntry("Potion_Stamina_Small",          3, 1, 1, 20),
+
+            // --- Outils basiques ---
+            new LootEntry("Tool_Hatchet_Crude",            1, 1, 1, 20),
+            new LootEntry("Tool_Hatchet_Copper",           1, 1, 1, 12),
+            new LootEntry("Tool_Pickaxe_Crude",            1, 1, 1, 20),
+            new LootEntry("Tool_Pickaxe_Copper",           1, 1, 1, 12),
+            new LootEntry("Tool_Shovel_Crude",             1, 1, 1, 15),
+            new LootEntry("Tool_Hoe_Crude",                1, 1, 1, 12),
+            new LootEntry("Tool_Repair_Kit_Crude",         1, 1, 1, 10),
+
+            // --- Plantes tier 1 ---
+            new LootEntry("Plant_Crop_Health1",            3, 1, 2, 15),
+            new LootEntry("Plant_Crop_Mana1",              3, 1, 2, 12),
+            new LootEntry("Plant_Crop_Stamina1",           3, 1, 2, 12),
+
+            // --- Legumes ---
+            new LootEntry("Plant_Crop_Carrot_Item",        5, 1, 3, 30),
+            new LootEntry("Plant_Crop_Potato_Item",        5, 1, 3, 28),
+            new LootEntry("Plant_Crop_Onion_Item",         5, 1, 3, 25),
+            new LootEntry("Plant_Crop_Tomato_Item",        5, 1, 3, 22),
+            new LootEntry("Plant_Crop_Turnip_Item",        5, 1, 3, 20),
+            new LootEntry("Plant_Crop_Lettuce_Item",       5, 1, 3, 18),
+            new LootEntry("Plant_Crop_Pumpkin_Item",       5, 1, 2, 15),
 
             // --- Compétences Common (1%) ---
             new LootEntry("skill_page_active_breathing",     1, 1, 1, 1),
@@ -1475,6 +1675,15 @@ public enum LootTableConfig {
             new LootEntry("skill_page_arcane_devastation",          1, 1, 1, 0.3),
             new LootEntry("skill_page_artifact_hunter",             1, 1, 1, 0.3),
             new LootEntry("skill_page_artisanat",                   1, 1, 1, 0.3),
+            new LootEntry("skill_page_craft_cuisine",              1, 1, 1, 0.8),
+            new LootEntry("skill_page_craft_fonderie",             1, 1, 1, 0.8),
+            new LootEntry("skill_page_craft_armurerie",            1, 1, 1, 0.5),
+            new LootEntry("skill_page_craft_forge_armes",          1, 1, 1, 0.5),
+            new LootEntry("skill_page_craft_tannerie",             1, 1, 1, 0.8),
+            new LootEntry("skill_page_craft_alchimie",             1, 1, 1, 0.5),
+            new LootEntry("skill_page_craft_scierie",              1, 1, 1, 0.8),
+            new LootEntry("skill_page_craft_agriculture",          1, 1, 1, 0.8),
+            new LootEntry("skill_page_craft_recyclage",            1, 1, 1, 0.8),
             new LootEntry("skill_page_blood_hunt",                  1, 1, 1, 0.3),
             new LootEntry("skill_page_brilliant_mind",              1, 1, 1, 0.3),
             new LootEntry("skill_page_bursting_life",               1, 1, 1, 0.3),

@@ -46,13 +46,26 @@ public class MasterySystem extends EntityTickingSystem<EntityStore> {
         if (heldItem != null && !heldItem.isEmpty()) {
             WeaponMastery required = getWeaponMastery(heldItem);
 
+            PlayerLevelData playerData = store.getComponent(playerRef, EldaniorSystem.get().getPlayerLevelDataType());
+            if (playerData == null) return;
+
+            // Verifier les items catalyst de competence active en premier
+            if (isCatalystWithoutSkill(heldItem, playerData)) {
+                int fallbackSlotInt = lastValidSlot.getOrDefault(playerRef, -1);
+                short fallbackSlot = (fallbackSlotInt == -1 || fallbackSlotInt == currentSlot) ? findSafeSlot(inv) : (short) fallbackSlotInt;
+
+                inv.setActiveHotbarSlot(playerRef, (byte) fallbackSlot, store);
+
+                NotificationHelper.sendNotification(netRef,
+                        "<color:red>Vous n'avez pas appris cette competence !</color>",
+                        NotificationStyle.Warning);
+                return;
+            }
+
             if (required == WeaponMastery.ANY) {
                 lastValidSlot.put(playerRef, (int) currentSlot);
                 return;
             }
-
-            PlayerLevelData playerData = store.getComponent(playerRef, EldaniorSystem.get().getPlayerLevelDataType());
-            if (playerData == null) return;
 
             ClassModel classModel = ClassManager.get(playerData.getPlayerClassId());
             if (classModel == null) return;
@@ -61,7 +74,6 @@ public class MasterySystem extends EntityTickingSystem<EntityStore> {
                 int fallbackSlotInt = lastValidSlot.getOrDefault(playerRef, -1);
                 short fallbackSlot = (fallbackSlotInt == -1 || fallbackSlotInt == currentSlot) ? findSafeSlot(inv) : (short) fallbackSlotInt;
 
-                // ✅ LA CORRECTION EST ICI : On passe la référence du joueur, le slot, et le store (qui agit comme ComponentAccessor)
                 inv.setActiveHotbarSlot(playerRef, (byte) fallbackSlot, store);
 
                 NotificationHelper.sendNotification(netRef,
@@ -79,6 +91,17 @@ public class MasterySystem extends EntityTickingSystem<EntityStore> {
     @Override
     public Query<EntityStore> getQuery() {
         return Query.and(Player.getComponentType(), PlayerRef.getComponentType());
+    }
+
+    private boolean isCatalystWithoutSkill(ItemStack item, PlayerLevelData data) {
+        if (item == null || item.isEmpty() || data == null) return false;
+        String itemId = item.getItemId();
+        for (var skill : com.eldanior.system.skills.SkillManager.getAllSkills()) {
+            if (itemId.equals(skill.catalystId())) {
+                return !data.getUnlockedSkills().contains(skill.skillId());
+            }
+        }
+        return false;
     }
 
     public WeaponMastery getWeaponMastery(ItemStack item) {

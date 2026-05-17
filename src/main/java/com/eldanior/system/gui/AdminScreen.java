@@ -28,15 +28,21 @@ import javax.annotation.Nonnull;
 public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventData> {
 
     private static final String[] ADMIN_TAB_IDS = {
-        "Dashboard", "Players", "World", "Economy", "Data"
+        "Dashboard", "Players", "World", "Economy", "Holograms", "Data"
     };
+    private static final int HOLO_SLOTS = 10;
 
     private static final int PLAYERS_PER_PAGE = 20;
     private static int playerPage = 0;
     private static final java.util.List<String> allPlayerNames = new java.util.ArrayList<>();
     private static String managedPlayerName = null;
+    private static final int WORLD_SLOTS = 5;
     private static int worldTerrPage = 0;
+    private static int worldParcelPage = 0;
     private static final java.util.List<com.eldanior.system.territory.ParcelData> worldTerrList = new java.util.ArrayList<>();
+    private static final java.util.List<com.eldanior.system.territory.ParcelData> worldParcelList = new java.util.ArrayList<>();
+    private static String worldSelectedId = null;
+    private static boolean worldSelectedIsTerr = false;
 
     public AdminScreen(@Nonnull PlayerRef playerRef) {
         super(playerRef, CustomPageLifetime.CanDismiss, AdminEventData.CODEC);
@@ -62,6 +68,12 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnWorld", EventData.of("Action", "tab_world"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnEconomy", EventData.of("Action", "tab_economy"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnData", EventData.of("Action", "tab_data"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnHolograms", EventData.of("Action", "tab_holograms"));
+
+        // === HOLOGRAMMES — Delete buttons ===
+        for (int i = 0; i < HOLO_SLOTS; i++) {
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#HoloDel" + i, EventData.of("Action", "holo_delete").append("Param", String.valueOf(i)));
+        }
 
         // === DASHBOARD — Player selector ===
         for (int i = 0; i < AdminTab.MAX_PLAYER_SLOTS; i++) {
@@ -129,13 +141,32 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
             events.addEventBinding(CustomUIEventBindingType.Activating, "#PGold" + i, EventData.of("Action", "player_qgold").append("Param", String.valueOf(i)));
         }
 
-        // === WORLD — Pagination + actions territoires ===
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#WBtnTPrev", EventData.of("Action", "world_tprev"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#WBtnTNext", EventData.of("Action", "world_tnext"));
-        for (int i = 0; i < 10; i++) {
-            events.addEventBinding(CustomUIEventBindingType.Activating, "#WTPvp" + i, EventData.of("Action", "world_pvp").append("Param", String.valueOf(i)));
-            events.addEventBinding(CustomUIEventBindingType.Activating, "#WTDel" + i, EventData.of("Action", "world_del").append("Param", String.valueOf(i)));
+        // === WORLD — Territories section ===
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#AWTBtnPrev", EventData.of("Action", "world_tprev"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#AWTBtnNext", EventData.of("Action", "world_tnext"));
+        for (int i = 0; i < WORLD_SLOTS; i++) {
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#AWTSlot" + i, EventData.of("Action", "world_tselect").append("Param", String.valueOf(i)));
         }
+        // === WORLD — Parcels section ===
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#AWPBtnPrev", EventData.of("Action", "world_pprev"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#AWPBtnNext", EventData.of("Action", "world_pnext"));
+        for (int i = 0; i < WORLD_SLOTS; i++) {
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#AWPSlot" + i, EventData.of("Action", "world_pselect").append("Param", String.valueOf(i)));
+        }
+        // === WORLD DETAIL PANEL ===
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#AWDetClose", EventData.of("Action", "world_dclose"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#AWDetBtnPvp", EventData.of("Action", "world_dpvp"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#AWDetBtnProtect", EventData.of("Action", "world_dprotect"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#AWDetBtnSale", EventData.of("Action", "world_dsale"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#AWDetBtnClearOwner", EventData.of("Action", "world_dclearowner"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#AWDetBtnGuild", EventData.of("Action", "world_dguild"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#AWDetBtnFamily", EventData.of("Action", "world_dfamily"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#AWDetBtnPrice", EventData.of("Action", "world_dprice"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#AWDetBtnRentPrice", EventData.of("Action", "world_drentprice"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#AWDetBtnTreasury", EventData.of("Action", "world_dtreasury"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#AWDetBtnDelete", EventData.of("Action", "world_ddelete"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#AWDetBtnTax", EventData.of("Action", "world_dtax"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#AWDetBtnTransfer", EventData.of("Action", "world_dtransfer"));
 
         // === RESETS ===
         events.addEventBinding(CustomUIEventBindingType.Activating, "#AResetAll", EventData.of("Action", "admin_resetall"));
@@ -170,6 +201,12 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
         // Player management actions
         if (action.startsWith("player_")) {
             handlePlayerAction(action, param, ref, store);
+            return;
+        }
+
+        // Hologram actions
+        if (action.startsWith("holo_")) {
+            handleHologramAction(action, param, ref, store);
             return;
         }
 
@@ -267,8 +304,10 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
             case "admin_reset_families" -> {
                 if (player != null) {
                     com.eldanior.system.titles.nobility.family.FamilyManager.init();
+                    com.eldanior.system.titles.nobility.NobilityManager.init();
                     deleteDataFile("families.properties");
-                    player.sendMessage(Message.raw("§c§lFamilles reinitialises !"));
+                    deleteDataFile("hierarchies.properties");
+                    player.sendMessage(Message.raw("§c§lFamilles et Noblesse reinitialises !"));
                 }
             }
             case "admin_reset_parcels" -> {
@@ -279,6 +318,7 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
                         if (f.exists()) f.delete();
                     } catch (Exception e) { EldaniorLogger.error("AdminScreen", e); }
                     com.eldanior.system.territory.ParcelManager.init(com.eldanior.system.EldaniorSystem.get().getDataDirectory());
+                    com.eldanior.system.territory.systems.ParcelMapSystem.refreshMap(player.getWorld());
                     player.sendMessage(Message.raw("§c§lParcelles reinitialises !"));
                 }
             }
@@ -339,6 +379,7 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
             case "players" -> "Players";
             case "world" -> "World";
             case "economy" -> "Economy";
+            case "holograms" -> "Holograms";
             case "data" -> "Data";
             default -> "Dashboard";
         };
@@ -353,11 +394,16 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
             populatePlayerList(update, ref, store);
         }
         if ("World".equals(targetId)) {
-            populateWorldTab(update);
-            populateWorldList(update);
+            worldSelectedId = null;
+            update.set("#AWDetail.Visible", false);
+            buildWorldLists();
+            populateWorldSlots(update);
         }
         if ("Economy".equals(targetId)) {
             populateEconomyTab(update);
+        }
+        if ("Holograms".equals(targetId)) {
+            populateHologramsTab(update);
         }
 
         this.sendUpdate(update);
@@ -374,76 +420,455 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
     // ==================== WORLD MANAGEMENT ====================
 
     private void handleWorldAction(String action, String param, Ref<EntityStore> ref, Store<EntityStore> store) {
+        Player player = store.getComponent(ref, Player.getComponentType());
         switch (action) {
-            case "world_tprev" -> {
-                if (worldTerrPage > 0) { worldTerrPage--; refreshWorldList(ref, store); }
-            }
-            case "world_tnext" -> {
-                int maxPage = Math.max(0, (worldTerrList.size() - 1) / 10);
-                if (worldTerrPage < maxPage) { worldTerrPage++; refreshWorldList(ref, store); }
-            }
-            case "world_pvp" -> {
+            case "world_tprev" -> { if (worldTerrPage > 0) { worldTerrPage--; worldSelectedId = null; refreshWorldAll(); } }
+            case "world_tnext" -> { int mp = Math.max(0, (worldTerrList.size() - 1) / WORLD_SLOTS); if (worldTerrPage < mp) { worldTerrPage++; worldSelectedId = null; refreshWorldAll(); } }
+            case "world_pprev" -> { if (worldParcelPage > 0) { worldParcelPage--; worldSelectedId = null; refreshWorldAll(); } }
+            case "world_pnext" -> { int mp = Math.max(0, (worldParcelList.size() - 1) / WORLD_SLOTS); if (worldParcelPage < mp) { worldParcelPage++; worldSelectedId = null; refreshWorldAll(); } }
+            case "world_tselect" -> {
                 if (param != null) {
-                    int idx = Integer.parseInt(param) + (worldTerrPage * 10);
+                    int idx = Integer.parseInt(param) + (worldTerrPage * WORLD_SLOTS);
                     if (idx < worldTerrList.size()) {
-                        com.eldanior.system.territory.ParcelData p = worldTerrList.get(idx);
-                        p.setPvpEnabled(!p.isPvpEnabled());
-                        com.eldanior.system.territory.ParcelManager.saveAll();
-                        refreshWorldList(ref, store);
+                        String id = worldTerrList.get(idx).getId();
+                        if (id.equals(worldSelectedId)) { worldSelectedId = null; } else { worldSelectedId = id; worldSelectedIsTerr = true; }
+                        refreshWorldAll();
                     }
                 }
             }
-            case "world_del" -> {
+            case "world_pselect" -> {
                 if (param != null) {
-                    int idx = Integer.parseInt(param) + (worldTerrPage * 10);
-                    if (idx < worldTerrList.size()) {
-                        com.eldanior.system.territory.ParcelManager.deleteParcel(worldTerrList.get(idx).getId());
-                        refreshWorldList(ref, store);
+                    int idx = Integer.parseInt(param) + (worldParcelPage * WORLD_SLOTS);
+                    if (idx < worldParcelList.size()) {
+                        String id = worldParcelList.get(idx).getId();
+                        if (id.equals(worldSelectedId)) { worldSelectedId = null; } else { worldSelectedId = id; worldSelectedIsTerr = false; }
+                        refreshWorldAll();
+                    }
+                }
+            }
+            case "world_dclose" -> { worldSelectedId = null; refreshWorldAll(); }
+            case "world_dpvp" -> {
+                com.eldanior.system.territory.ParcelData p = getSelectedParcel();
+                if (p != null) { p.setPvpEnabled(!p.isPvpEnabled()); com.eldanior.system.territory.ParcelManager.saveAll();
+                    if (player != null) player.sendMessage(Message.raw("§ePVP " + (p.isPvpEnabled() ? "active" : "desactive") + " pour " + p.getName()));
+                    refreshWorldAll(); }
+            }
+            case "world_dprotect" -> {
+                com.eldanior.system.territory.ParcelData p = getSelectedParcel();
+                if (p != null) { p.setProtectedByDefault(!p.isProtectedByDefault()); com.eldanior.system.territory.ParcelManager.saveAll();
+                    if (player != null) player.sendMessage(Message.raw("§eProtection " + (p.isProtectedByDefault() ? "activee" : "desactivee") + " pour " + p.getName()));
+                    refreshWorldAll(); }
+            }
+            case "world_dsale" -> {
+                com.eldanior.system.territory.ParcelData p = getSelectedParcel();
+                if (p != null) { p.setForSale(!p.isForSale()); com.eldanior.system.territory.ParcelManager.saveAll();
+                    if (player != null) player.sendMessage(Message.raw("§eVente " + (p.isForSale() ? "activee" : "desactivee") + " pour " + p.getName()));
+                    refreshWorldAll(); }
+            }
+            case "world_dclearowner" -> {
+                com.eldanior.system.territory.ParcelData p = getSelectedParcel();
+                if (p != null) { p.clearOwnership(); com.eldanior.system.territory.ParcelManager.saveAll();
+                    if (player != null) player.sendMessage(Message.raw("§eProprietaire retire pour " + p.getName()));
+                    refreshWorldAll(); }
+            }
+            case "world_dguild" -> {
+                com.eldanior.system.territory.ParcelData p = getSelectedParcel();
+                if (p != null && player != null) { player.sendMessage(Message.raw("§6Tapez : §f/es parcel assignguild " + p.getId() + " <guildId>")); }
+            }
+            case "world_dfamily" -> {
+                com.eldanior.system.territory.ParcelData p = getSelectedParcel();
+                if (p != null && player != null) {
+                    player.sendMessage(Message.raw("§6Familles : §f" + com.eldanior.system.titles.nobility.family.FamilyManager.getAvailableIds()));
+                    player.sendMessage(Message.raw("§6Tapez : §f/es parcel assignfamily " + p.getId() + " <familyId>"));
+                }
+            }
+            case "world_dprice" -> {
+                com.eldanior.system.territory.ParcelData p = getSelectedParcel();
+                if (p != null && player != null) { player.sendMessage(Message.raw("§6Tapez : §f/es parcel setprice " + p.getId() + " <montant>")); }
+            }
+            case "world_drentprice" -> {
+                com.eldanior.system.territory.ParcelData p = getSelectedParcel();
+                if (p != null && player != null) { player.sendMessage(Message.raw("§6Tapez : §f/es parcel setrent " + p.getId() + " <montant>")); }
+            }
+            case "world_dtreasury" -> {
+                com.eldanior.system.territory.ParcelData p = getSelectedParcel();
+                if (p != null) { p.addTreasury(10000); com.eldanior.system.territory.ParcelManager.saveAll();
+                    if (player != null) player.sendMessage(Message.raw("§a+10,000 Or au tresor de " + p.getName()));
+                    refreshWorldAll(); }
+            }
+            case "world_ddelete" -> {
+                com.eldanior.system.territory.ParcelData p = getSelectedParcel();
+                if (p != null) { String name = p.getName(); com.eldanior.system.territory.ParcelManager.deleteParcel(p.getId());
+                    worldSelectedId = null; if (player != null) player.sendMessage(Message.raw("§c" + name + " supprime !"));
+                    buildWorldLists(); refreshWorldAll(); }
+            }
+            case "world_dtax" -> {
+                com.eldanior.system.territory.ParcelData p = getSelectedParcel();
+                if (p != null && p.canCollectTax() && !p.getChildIds().isEmpty()) {
+                    double taxRate = switch (p.getType()) {
+                        case KINGDOM -> 0.57;
+                        case TERRITORY -> {
+                            com.eldanior.system.territory.ParcelData parent = p.getParentId() != null ? com.eldanior.system.territory.ParcelManager.get(p.getParentId()) : null;
+                            yield (parent != null && parent.getType() == com.eldanior.system.territory.ParcelType.KINGDOM) ? 0.80 : 0.875;
+                        }
+                        default -> 0.0;
+                    };
+                    if (taxRate > 0) {
+                        long totalCollected = 0;
+                        for (String childId : p.getChildIds()) {
+                            com.eldanior.system.territory.ParcelData child = com.eldanior.system.territory.ParcelManager.get(childId);
+                            if (child == null || child.getTreasury() <= 0) continue;
+                            long amount = (long)(child.getTreasury() * taxRate);
+                            child.addTreasury(-amount);
+                            totalCollected += amount;
+                        }
+                        p.addTreasury(totalCollected);
+                        p.setLastTaxCollection(System.currentTimeMillis());
+                        p.setLastTaxAmount(totalCollected);
+                        com.eldanior.system.territory.ParcelManager.saveAll();
+                        if (player != null) player.sendMessage(Message.raw("§a" + formatMoney(totalCollected) + " Or d'impots collectes pour " + p.getName()));
+                        refreshWorldAll();
+                    }
+                }
+            }
+            case "world_dtransfer" -> {
+                com.eldanior.system.territory.ParcelData p = getSelectedParcel();
+                if (p != null && p.canTransferTreasury() && p.getTreasury() > 0) {
+                    long transferAmount = p.getTreasury() / 2;
+                    boolean transferred = false;
+                    String gId = p.getGuildId(); String fId = p.getFamilyId();
+                    if (gId != null && !gId.isEmpty()) {
+                        com.eldanior.system.guild.Guild guild = com.eldanior.system.guild.GuildManager.get(gId);
+                        if (guild != null) { guild.addTreasury(transferAmount); p.addTreasury(-transferAmount); transferred = true; }
+                    }
+                    if (!transferred && fId != null && !fId.isEmpty()) {
+                        var rd = com.eldanior.system.titles.nobility.family.FamilyManager.getRuntimeData(fId);
+                        if (rd != null) { rd.addTreasury(transferAmount); p.addTreasury(-transferAmount); transferred = true; }
+                    }
+                    if (transferred) {
+                        p.setLastTreasuryTransfer(System.currentTimeMillis());
+                        com.eldanior.system.territory.ParcelManager.saveAll();
+                        if (player != null) player.sendMessage(Message.raw("§a" + formatMoney(transferAmount) + " Or transferes depuis " + p.getName()));
+                        refreshWorldAll();
                     }
                 }
             }
         }
     }
 
-    private void refreshWorldList(Ref<EntityStore> ref, Store<EntityStore> store) {
+    private com.eldanior.system.territory.ParcelData getSelectedParcel() {
+        if (worldSelectedId == null) return null;
+        return com.eldanior.system.territory.ParcelManager.get(worldSelectedId);
+    }
+
+    private void buildWorldLists() {
+        worldTerrList.clear();
+        worldParcelList.clear();
+        for (com.eldanior.system.territory.ParcelData p : com.eldanior.system.territory.ParcelManager.getAll()) {
+            switch (p.getType()) {
+                case KINGDOM, GRAND_TERRITORY, TERRITORY, CITY -> worldTerrList.add(p);
+                default -> worldParcelList.add(p);
+            }
+        }
+        worldTerrList.sort(java.util.Comparator.comparingInt(a -> a.getType().ordinal()));
+        worldParcelList.sort(java.util.Comparator.comparingInt(a -> a.getType().ordinal()));
+    }
+
+    private void refreshWorldAll() {
         UICommandBuilder update = new UICommandBuilder();
-        populateWorldTab(update);
-        populateWorldList(update);
+        buildWorldLists();
+        populateWorldSlots(update);
+        populateWorldDetail(update);
         this.sendUpdate(update);
     }
 
-    private void populateWorldList(UICommandBuilder update) {
-        worldTerrList.clear();
+    private void populateWorldSlots(UICommandBuilder update) {
+        // Counters
+        int k = 0, t = 0, c = 0, pl = 0, h = 0, f = 0, pvpCount = 0;
         for (com.eldanior.system.territory.ParcelData p : com.eldanior.system.territory.ParcelManager.getAll()) {
-            worldTerrList.add(p);
+            switch (p.getType()) { case KINGDOM -> k++; case GRAND_TERRITORY, TERRITORY -> t++; case CITY -> { c++; if (p.isPvpEnabled()) pvpCount++; } case PLOT -> pl++; case HOUSING -> h++; case FARM -> f++; default -> {} }
         }
-        // Trier : KINGDOM d'abord, puis TERRITORY, puis CITY, puis le reste
-        worldTerrList.sort((a, b) -> a.getType().ordinal() - b.getType().ordinal());
+        update.set("#WStatKingdoms.Text", String.valueOf(k));
+        update.set("#WStatTerritories.Text", String.valueOf(t));
+        update.set("#WStatCities.Text", String.valueOf(c));
+        update.set("#WStatPlots.Text", String.valueOf(pl));
+        update.set("#WStatHousing.Text", String.valueOf(h));
+        update.set("#WStatFarms.Text", String.valueOf(f));
+        update.set("#WStatPvp.Text", String.valueOf(pvpCount));
 
-        int totalPages = Math.max(1, (worldTerrList.size() + 9) / 10);
-        if (worldTerrPage >= totalPages) worldTerrPage = totalPages - 1;
-        update.set("#WTPageInfo.Text", "Page " + (worldTerrPage + 1) + "/" + totalPages);
+        // Territories section
+        int ttPages = Math.max(1, (worldTerrList.size() + WORLD_SLOTS - 1) / WORLD_SLOTS);
+        if (worldTerrPage >= ttPages) worldTerrPage = ttPages - 1;
+        update.set("#AWTPageInfo.Text", (worldTerrPage + 1) + "/" + ttPages);
+        fillSlots(update, "AWT", worldTerrList, worldTerrPage);
 
-        int startIdx = worldTerrPage * 10;
-        for (int i = 0; i < 10; i++) {
-            int idx = startIdx + i;
-            if (idx < worldTerrList.size()) {
-                com.eldanior.system.territory.ParcelData p = worldTerrList.get(idx);
-                update.set("#WTSlot" + i + ".Visible", true);
-                update.set("#WTName" + i + ".Text", p.getName());
-                update.set("#WTType" + i + ".Text", p.getType().name());
+        // Parcels section
+        int tpPages = Math.max(1, (worldParcelList.size() + WORLD_SLOTS - 1) / WORLD_SLOTS);
+        if (worldParcelPage >= tpPages) worldParcelPage = tpPages - 1;
+        update.set("#AWPPageInfo.Text", (worldParcelPage + 1) + "/" + tpPages);
+        fillSlots(update, "AWP", worldParcelList, worldParcelPage);
+    }
 
-                String ownerName = p.getOwnerName();
-                update.set("#WTOwner" + i + ".Text", ownerName != null && !ownerName.isEmpty() ? ownerName : "Sans proprio");
+    private void fillSlots(UICommandBuilder update, String prefix, java.util.List<com.eldanior.system.territory.ParcelData> list, int page) {
+        int start = page * WORLD_SLOTS;
+        for (int i = 0; i < WORLD_SLOTS; i++) {
+            int idx = start + i;
+            if (idx < list.size()) {
+                com.eldanior.system.territory.ParcelData p = list.get(idx);
+                update.set("#" + prefix + "Slot" + i + ".Visible", true);
+                update.set("#" + prefix + "Type" + i + ".Text", "[" + p.getType().getLabel() + "]");
+                String typeColor = switch (p.getType()) {
+                    case KINGDOM -> "#FFD700"; case GRAND_TERRITORY -> "#1E90FF"; case TERRITORY -> "#3498DB"; case CITY -> "#2ECC71";
+                    case PLOT -> "#aabbcc"; case HOUSING -> "#9B59B6"; case FARM -> "#8B4513";
+                    default -> "#8899aa";
+                };
+                update.set("#" + prefix + "Type" + i + ".Style.TextColor", typeColor);
+                update.set("#" + prefix + "Name" + i + ".Text", p.getName());
+                String owner = p.getOwnerName() != null && !p.getOwnerName().isEmpty() ? p.getOwnerName() : "---";
+                update.set("#" + prefix + "Owner" + i + ".Text", owner);
 
-                String info = "Tresor: " + formatMoney(p.getTreasury());
-                if (p.isPvpEnabled()) info += " | PVP ON";
-                if (p.isRented()) info += " | Loue";
-                if (p.getPrice() > 0) info += " | " + formatMoney(p.getPrice()) + " Or";
-                update.set("#WTInfo" + i + ".Text", info);
+                // Status with color
+                String status;
+                String statusColor;
+                boolean hasOwner = p.getOwnerName() != null && !p.getOwnerName().isEmpty();
+                boolean hasFamily = p.getFamilyId() != null && !p.getFamilyId().isEmpty();
+                boolean hasGuild = p.getGuildId() != null && !p.getGuildId().isEmpty();
+                boolean isTerritoryType = (p.getType() == com.eldanior.system.territory.ParcelType.KINGDOM
+                    || p.getType() == com.eldanior.system.territory.ParcelType.TERRITORY
+                    || p.getType() == com.eldanior.system.territory.ParcelType.CITY);
+
+                if (isTerritoryType) {
+                    boolean needsGuild = p.getType() == com.eldanior.system.territory.ParcelType.CITY;
+                    boolean isConfigured = needsGuild ? hasGuild : hasFamily;
+                    if (isConfigured) {
+                        status = "Configure";
+                        statusColor = "#4CAF50";
+                    } else {
+                        status = needsGuild ? "A configurer (Guilde)" : "A configurer (Famille)";
+                        statusColor = "#cc4444";
+                    }
+                } else {
+                    if (p.isRented()) {
+                        status = p.isRentExpired() ? "Location EXPIREE" : "En location";
+                        statusColor = p.isRentExpired() ? "#cc4444" : "#ff9800";
+                    } else if (p.isBought()) {
+                        status = "Achete";
+                        statusColor = "#4CAF50";
+                    } else if (p.isForSale() && p.isForRent()) {
+                        status = "Vente + Location";
+                        statusColor = "#2196F3";
+                    } else if (p.isForSale()) {
+                        status = "En vente";
+                        statusColor = "#2196F3";
+                    } else if (p.isForRent()) {
+                        status = "A louer";
+                        statusColor = "#ff9800";
+                    } else if (p.getPrice() <= 0 && p.getRentPrice() <= 0 && !hasOwner) {
+                        status = "A configurer";
+                        statusColor = "#cc4444";
+                    } else {
+                        status = "Libre";
+                        statusColor = "#8BC34A";
+                    }
+                }
+                if (p.isPvpEnabled()) status += " | PVP";
+
+                if (prefix.equals("AWT")) {
+                    String locText = formatMoney(p.getTreasury()) + " Or";
+                    if (p.getType() == com.eldanior.system.territory.ParcelType.CITY) {
+                        com.eldanior.system.territory.ParcelData pt = com.eldanior.system.territory.ParcelEconomyManager.findParentOfType(p, com.eldanior.system.territory.ParcelType.TERRITORY);
+                        if (pt != null) locText = "Dans: " + pt.getName() + " | " + locText;
+                    } else if (p.getType() == com.eldanior.system.territory.ParcelType.TERRITORY) {
+                        com.eldanior.system.territory.ParcelData pk = com.eldanior.system.territory.ParcelEconomyManager.findParentOfType(p, com.eldanior.system.territory.ParcelType.KINGDOM);
+                        if (pk != null) locText = "Dans: " + pk.getName() + " | " + locText;
+                    }
+                    if (p.isPvpEnabled()) locText += " | PVP";
+                    update.set("#" + prefix + "Info" + i + ".Text", locText);
+                    update.set("#" + prefix + "Info" + i + ".Style.TextColor", "#8899aa");
+                } else {
+                    update.set("#" + prefix + "Info" + i + ".Text", status);
+                    update.set("#" + prefix + "Info" + i + ".Style.TextColor", statusColor);
+                }
+
+                // Highlight selected
+                boolean sel = p.getId().equals(worldSelectedId);
+                update.set("#" + prefix + "Slot" + i + ".Style.Default.Background", sel ? "#1a2a3a" : (i % 2 == 0 ? (prefix.equals("AWT") ? "#1a1a0d" : "#0d1a0d") : (prefix.equals("AWT") ? "#15150a" : "#0a150a")));
             } else {
-                update.set("#WTSlot" + i + ".Visible", false);
+                update.set("#" + prefix + "Slot" + i + ".Visible", false);
             }
+        }
+    }
+
+    private void populateWorldDetail(UICommandBuilder update) {
+        com.eldanior.system.territory.ParcelData p = getSelectedParcel();
+        if (p == null) { update.set("#AWDetail.Visible", false); return; }
+        update.set("#AWDetail.Visible", true);
+        boolean isTerr = (p.getType() == com.eldanior.system.territory.ParcelType.KINGDOM
+            || p.getType() == com.eldanior.system.territory.ParcelType.TERRITORY
+            || p.getType() == com.eldanior.system.territory.ParcelType.CITY);
+
+        // Header
+        update.set("#AWDetName.Text", p.getName());
+        update.set("#AWDetType.Text", p.getType().name());
+        String typeColor = switch (p.getType()) {
+            case KINGDOM -> "#FFD700"; case GRAND_TERRITORY -> "#1E90FF"; case TERRITORY -> "#3498DB"; case CITY -> "#2ECC71";
+            case PLOT -> "#aabbcc"; case HOUSING -> "#9B59B6"; default -> "#8899aa";
+        };
+        update.set("#AWDetName.Style.TextColor", typeColor);
+
+        // === COLONNE GAUCHE ===
+        String owner = p.getOwnerName() != null && !p.getOwnerName().isEmpty() ? p.getOwnerName() : "Aucun";
+        update.set("#AWDetOwner.Text", "Proprietaire : " + owner + "   —   ID : " + p.getId());
+
+        int sX = Math.abs(p.getMaxX() - p.getMinX()) + 1;
+        int sY = Math.abs(p.getMaxY() - p.getMinY()) + 1;
+        int sZ = Math.abs(p.getMaxZ() - p.getMinZ()) + 1;
+        update.set("#AWDetCoords.Text", "Taille : " + sX + " x " + sZ + " (" + (sX * sZ) + " blocs)  |  Hauteur : " + sY);
+
+        String parentText = "Parent : ";
+        if (p.getParentId() != null && !p.getParentId().isEmpty()) {
+            com.eldanior.system.territory.ParcelData parentParcel = com.eldanior.system.territory.ParcelManager.get(p.getParentId());
+            parentText += parentParcel != null ? parentParcel.getName() + " (" + parentParcel.getType().name() + ")" : p.getParentId();
+        } else {
+            parentText += "aucun";
+        }
+        java.util.List<String> children = com.eldanior.system.territory.ParcelManager.getChildrenOf(p.getId());
+        parentText += "   |   " + children.size() + " enfant(s)";
+        update.set("#AWDetParent.Text", parentText);
+
+        String gId = p.getGuildId(); String fId = p.getFamilyId();
+        String assocText = "";
+        if (fId != null && !fId.isEmpty()) {
+            var family = com.eldanior.system.titles.nobility.family.FamilyManager.get(fId);
+            assocText += "Famille : " + (family != null ? family.getDisplayName() : fId);
+        } else {
+            assocText += "Famille : ---";
+        }
+        assocText += "   |   Guilde : " + (gId != null && !gId.isEmpty() ? gId : "---");
+        assocText += "   |   " + p.getMembers().size() + " membre(s)";
+        update.set("#AWDetMembers.Text", assocText);
+
+        // === COLONNE DROITE ===
+        String statusText;
+        if (isTerr) {
+            boolean hasFamily = fId != null && !fId.isEmpty();
+            boolean hasGuild = gId != null && !gId.isEmpty();
+            if (p.getType() == com.eldanior.system.territory.ParcelType.CITY) {
+                statusText = hasGuild ? "Configure (Guilde)" : "A CONFIGURER (Guilde)";
+            } else {
+                statusText = hasFamily ? "Configure (Famille)" : "A CONFIGURER (Famille)";
+            }
+        } else {
+            if (p.isRented()) statusText = "EN LOCATION";
+            else if (p.isBought()) statusText = "ACHETE";
+            else if (p.isForSale() || p.isForRent()) statusText = "DISPONIBLE";
+            else if (p.isFree()) statusText = "LIBRE";
+            else statusText = "---";
+        }
+        String pvp = p.isPvpEnabled() ? "PVP ON" : "PVP OFF";
+        String prot = p.isProtectedByDefault() ? "Protege" : "Ouvert";
+        update.set("#AWDetStatus.Text", statusText + "   |   " + pvp + "   |   " + prot);
+
+        if (isTerr) {
+            String taxInfo = "Taxe : " + (int)(p.getTaxRate() * 100) + "%";
+            if (p.canCollectTax()) taxInfo += "  (collecte dispo)";
+            update.set("#AWDetTreasury.Text", "Tresorerie : " + formatMoney(p.getTreasury()) + " Or   |   " + taxInfo);
+        } else {
+            update.set("#AWDetTreasury.Text", "Tresorerie : " + formatMoney(p.getTreasury()) + " Or");
+        }
+
+        if (isTerr) {
+            String taxText = "";
+            if (p.getLastTaxCollection() > 0) {
+                long nextTax = (p.getLastTaxCollection() + 7L * 24 * 60 * 60 * 1000) - System.currentTimeMillis();
+                if (nextTax > 0) {
+                    long days = nextTax / (24 * 60 * 60 * 1000);
+                    long hours = (nextTax % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000);
+                    taxText = "Prochain impot : " + days + "j " + hours + "h";
+                } else {
+                    taxText = "Impots reclamables !";
+                }
+            } else {
+                taxText = "Aucun impot collecte";
+            }
+            if (p.getLastTaxAmount() > 0) taxText += "   |   Dernier : " + formatMoney(p.getLastTaxAmount()) + " Or";
+            update.set("#AWDetTaxInfo.Text", taxText);
+            update.set("#AWDetTaxInfo.Visible", true);
+        } else {
+            update.set("#AWDetTaxInfo.Visible", false);
+        }
+
+        String priceText = "Prix vente : " + (p.getPrice() > 0 ? formatMoney(p.getPrice()) + " Or" : "Non defini");
+        priceText += "   |   Loyer : " + (p.getRentPrice() > 0 ? formatMoney(p.getRentPrice()) + " Or/7j" : "Non defini");
+        update.set("#AWDetPrices.Text", priceText);
+
+        String flags = p.isForSale() ? "En vente" : "Pas en vente";
+        flags += "   |   " + (p.isForRent() ? "A louer" : "Pas a louer");
+        if (p.isRented()) flags += "   |   LOUEE";
+        if (p.isRentExpired()) flags += " (EXPIREE)";
+        else if (p.isInGracePeriod()) flags += " (GRACE 24h)";
+        update.set("#AWDetFlags.Text", flags);
+
+        if (p.getRenterUUID() != null) {
+            update.set("#AWDetRenter.Visible", true);
+            String renterName = "Inconnu";
+            try {
+                com.hypixel.hytale.server.core.universe.PlayerRef rRef = com.hypixel.hytale.server.core.universe.Universe.get()
+                    .getPlayer(p.getRenterUUID());
+                if (rRef != null) renterName = rRef.getUsername();
+            } catch (Exception e) { /* skip */ }
+            String renterText = "Locataire : " + renterName;
+            if (p.getRentEndTime() > 0) {
+                long remaining = p.getRentEndTime() - System.currentTimeMillis();
+                if (remaining > 0) {
+                    long days = remaining / (24 * 60 * 60 * 1000);
+                    long hours = (remaining % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000);
+                    renterText += "   —   Expire dans " + days + "j " + hours + "h";
+                } else {
+                    renterText += "   —   EXPIRE";
+                }
+            }
+            update.set("#AWDetRenter.Text", renterText);
+        } else {
+            update.set("#AWDetRenter.Visible", false);
+        }
+
+        if (isTerr) {
+            java.util.Set<java.util.UUID> inhabitants = new java.util.HashSet<>();
+            countInhabitants(p.getId(), inhabitants, 0);
+            update.set("#AWDetPopulation.Text", "Population : " + inhabitants.size() + " habitant(s)");
+            update.set("#AWDetPopulation.Visible", true);
+        } else {
+            update.set("#AWDetPopulation.Visible", false);
+        }
+
+        java.util.List<String> childIds = p.getChildIds();
+        for (int i = 0; i < 6; i++) {
+            if (i < childIds.size()) {
+                com.eldanior.system.territory.ParcelData child = com.eldanior.system.territory.ParcelManager.get(childIds.get(i));
+                if (child != null) {
+                    update.set("#AWDetChild" + i + ".Visible", true);
+                    String childOwner = child.getOwnerName() != null && !child.getOwnerName().isEmpty() ? child.getOwnerName() : "-";
+                    String childText = "[" + child.getType().getLabel() + "] " + child.getName() + "   —   " + childOwner;
+                    if (child.getTreasury() > 0) childText += "   —   " + formatMoney(child.getTreasury()) + " Or";
+                    update.set("#AWDetChild" + i + ".Text", childText);
+                } else {
+                    update.set("#AWDetChild" + i + ".Visible", false);
+                }
+            } else {
+                update.set("#AWDetChild" + i + ".Visible", false);
+            }
+        }
+    }
+
+    private static void countInhabitants(String parentId, java.util.Set<java.util.UUID> inhabitants, int depth) {
+        if (depth > 5) return;
+        for (String childId : com.eldanior.system.territory.ParcelManager.getChildrenOf(parentId)) {
+            com.eldanior.system.territory.ParcelData child = com.eldanior.system.territory.ParcelManager.get(childId);
+            if (child == null) continue;
+            if (child.getOwnerUUID() != null) inhabitants.add(child.getOwnerUUID());
+            if (child.getRenterUUID() != null) inhabitants.add(child.getRenterUUID());
+            countInhabitants(childId, inhabitants, depth + 1);
         }
     }
 
@@ -615,14 +1040,13 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
         }
         update.set("#DStatFamilies.Text", familyCount + "/9");
 
-        // Noblesse & Eglise — compter les joueurs par rang
+        // Noblesse & Eglise
         String kingName = com.eldanior.system.titles.nobility.NobilityManager.getCurrentKingName();
         update.set("#DStatKing.Text", (kingName != null && !kingName.isEmpty()) ? kingName : "Aucun");
 
         String popeName = com.eldanior.system.titles.church.ChurchManager.getCurrentPopeName();
         update.set("#DStatPope.Text", (popeName != null && !popeName.isEmpty()) ? popeName : "Aucun");
 
-        // Compter les rangs via les joueurs online
         int marquis = 0, ducs = 0, comtes = 0, barons = 0, chevaliers = 0;
         int pretres = 0, archeveques = 0, cardinaux = 0;
         long totalMoney = 0;
@@ -634,10 +1058,8 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
                 com.eldanior.system.config.Player.PlayerLevelData data = tStore.getComponent(tRef, com.eldanior.system.EldaniorSystem.get().getPlayerLevelDataType());
                 if (data == null) continue;
 
-                // Argent joueur
                 totalMoney += data.getMoney();
 
-                // Noblesse
                 String rank = data.getNobilityRank();
                 if (rank != null) {
                     switch (rank) {
@@ -649,7 +1071,6 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
                     }
                 }
 
-                // Eglise
                 String church = data.getChurchRank();
                 if (church != null) {
                     switch (church) {
@@ -670,7 +1091,6 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
         update.set("#DStatArcheveques.Text", String.valueOf(archeveques));
         update.set("#DStatPretres.Text", String.valueOf(pretres));
 
-        // Argent total = joueurs + guildes + familles + tresoreries parcelles
         long guildMoney = 0;
         for (var g : com.eldanior.system.guild.GuildManager.getAll()) {
             guildMoney += g.getTreasury();
@@ -691,7 +1111,6 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
         update.set("#DStatGuildMoney.Text", formatMoney(guildMoney));
         update.set("#DStatParcelMoney.Text", formatMoney(parcelMoney));
 
-        // PK & PvP
         int pkCount = 0;
         for (com.hypixel.hytale.server.core.universe.PlayerRef pRef2 : com.hypixel.hytale.server.core.universe.Universe.get().getPlayers()) {
             try {
@@ -705,26 +1124,19 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
         update.set("#DStatPKCount.Text", String.valueOf(pkCount));
         update.set("#DStatPvpCities.Text", String.valueOf(pvpCities));
 
-        // Duels actifs — approximation via DuelManager
-        // Les duels sont stockes dans une map statique, on ne peut pas compter facilement sans getter
-
-        // Parametres
         update.set("#DStatTax.Text", (int)(com.eldanior.system.territory.ParcelEconomyManager.TAX_RATE * 100) + "%");
         update.set("#DStatMaxLv.Text", String.valueOf(com.eldanior.system.config.Player.PlayerLevelData.MAX_LEVEL));
 
-        // Groupes actifs
         int activeParties = 0;
         for (com.hypixel.hytale.server.core.universe.PlayerRef pRef3 : com.hypixel.hytale.server.core.universe.Universe.get().getPlayers()) {
             if (com.eldanior.system.party.PartyManager.hasParty(com.eldanior.system.config.UUIDExtractor.getUUID(pRef3))) {
                 activeParties++;
             }
         }
-        update.set("#DStatParties.Text", String.valueOf(activeParties / 2)); // /2 car chaque membre est compté
+        update.set("#DStatParties.Text", String.valueOf(activeParties / 2));
 
-        // Duels actifs
         update.set("#DStatDuelsActive.Text", "0");
 
-        // Coffres au tresor — lire depuis le TreasureChestTemplate du ChunkStore
         int chestsTotal = 0, chestsDonjon = 0, chestsDefault = 0, chestsLegend = 0, chestsOr = 0;
         try {
             Player playerForWorld = store.getComponent(ref, Player.getComponentType());
@@ -759,6 +1171,7 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
         update.set("#DStatChestsDefault.Text", String.valueOf(chestsDefault));
         update.set("#DStatChestsLegend.Text", String.valueOf(chestsLegend));
         update.set("#DStatChestsOr.Text", String.valueOf(chestsOr));
+
     }
 
     private static String formatMoney(long amount) {
@@ -767,27 +1180,44 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
         return String.valueOf(amount);
     }
 
-    private void populateWorldTab(UICommandBuilder update) {
-        var parcels = com.eldanior.system.territory.ParcelManager.getAll();
-        int kingdoms = 0, territories = 0, cities = 0, plots = 0, housing = 0, farms = 0, pvpCities = 0;
-        for (com.eldanior.system.territory.ParcelData p : parcels) {
-            switch (p.getType()) {
-                case KINGDOM -> kingdoms++;
-                case TERRITORY -> territories++;
-                case CITY -> { cities++; if (p.isPvpEnabled()) pvpCities++; }
-                case PLOT -> plots++;
-                case HOUSING -> housing++;
-                case FARM -> farms++;
-                default -> {}
+    // ==================== HOLOGRAMMES ====================
+
+    private static final java.util.List<String> cachedHoloIds = new java.util.ArrayList<>();
+
+    private void handleHologramAction(String action, String param, Ref<EntityStore> ref, Store<EntityStore> store) {
+        if ("holo_delete".equals(action) && param != null) {
+            int idx = Integer.parseInt(param);
+            if (idx >= 0 && idx < cachedHoloIds.size()) {
+                String holoId = cachedHoloIds.get(idx);
+                com.eldanior.system.hologram.HologramManager.delete(holoId);
+                Player player = store.getComponent(ref, Player.getComponentType());
+                if (player != null) player.sendMessage(Message.raw("§aHologramme " + holoId + " supprime !"));
+                // Refresh
+                UICommandBuilder update = new UICommandBuilder();
+                populateHologramsTab(update);
+                this.sendUpdate(update);
             }
         }
-        update.set("#WStatKingdoms.Text", String.valueOf(kingdoms));
-        update.set("#WStatTerritories.Text", String.valueOf(territories));
-        update.set("#WStatCities.Text", String.valueOf(cities));
-        update.set("#WStatPlots.Text", String.valueOf(plots));
-        update.set("#WStatHousing.Text", String.valueOf(housing));
-        update.set("#WStatFarms.Text", String.valueOf(farms));
-        update.set("#WStatPvp.Text", pvpCities + " ville(s) PvP actif sur " + cities);
+    }
+
+    private void populateHologramsTab(UICommandBuilder update) {
+        var all = new java.util.ArrayList<>(com.eldanior.system.hologram.HologramManager.getAll());
+        cachedHoloIds.clear();
+        for (var h : all) cachedHoloIds.add(h.getId());
+
+        update.set("#HoloCount.Text", all.size() + " hologramme(s)");
+
+        for (int i = 0; i < HOLO_SLOTS; i++) {
+            if (i < all.size()) {
+                var h = all.get(i);
+                update.set("#HoloSlot" + i + ".Visible", true);
+                update.set("#HoloId" + i + ".Text", h.getId());
+                update.set("#HoloText" + i + ".Text", h.getText());
+                update.set("#HoloPos" + i + ".Text", h.getLocationString());
+            } else {
+                update.set("#HoloSlot" + i + ".Visible", false);
+            }
+        }
     }
 
     private void populateEconomyTab(UICommandBuilder update) {
@@ -800,6 +1230,62 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
         }
         update.set("#EStatFamilies.Text", familyCount + "/" + com.eldanior.system.titles.nobility.family.FamilyManager.getAll().size());
         update.set("#EStatTaxRate.Text", "Taux de taxe : " + (int)(com.eldanior.system.territory.ParcelEconomyManager.TAX_RATE * 100) + "%");
+
+        // === ARGENT EN CIRCULATION ===
+        long playerMoney = 0;
+        for (com.hypixel.hytale.server.core.universe.PlayerRef pRef : com.hypixel.hytale.server.core.universe.Universe.get().getPlayers()) {
+            try {
+                var tRef = pRef.getReference();
+                if (tRef == null) continue;
+                com.eldanior.system.config.Player.PlayerLevelData data = tRef.getStore().getComponent(tRef, com.eldanior.system.EldaniorSystem.get().getPlayerLevelDataType());
+                if (data != null) playerMoney += data.getMoney();
+            } catch (Exception e) { /* skip */ }
+        }
+        long guildMoney = 0;
+        for (var g : com.eldanior.system.guild.GuildManager.getAll()) {
+            guildMoney += g.getTreasury();
+        }
+        long familyMoney = 0;
+        for (var f : com.eldanior.system.titles.nobility.family.FamilyManager.getAll()) {
+            if (com.eldanior.system.titles.nobility.family.FamilyManager.isFamilyTaken(f.getId())) {
+                familyMoney += com.eldanior.system.titles.nobility.family.FamilyManager.getRuntimeData(f.getId()).getTreasury();
+            }
+        }
+        long parcelMoney = 0;
+        for (com.eldanior.system.territory.ParcelData p : com.eldanior.system.territory.ParcelManager.getAll()) {
+            parcelMoney += p.getTreasury();
+        }
+        update.set("#EMoneyTotal.Text", "Total: " + formatMoney(playerMoney + guildMoney + familyMoney + parcelMoney) + " Or");
+        update.set("#EMoneyBreakdown.Text", "Joueurs: " + formatMoney(playerMoney) + " | Guildes: " + formatMoney(guildMoney)
+            + " | Familles: " + formatMoney(familyMoney) + " | Parcelles: " + formatMoney(parcelMoney));
+
+        // === TOP 5 GUILDES PAR TRESORERIE (compact) ===
+        java.util.List<com.eldanior.system.guild.Guild> guilds = new java.util.ArrayList<>(com.eldanior.system.guild.GuildManager.getAll());
+        guilds.sort((a, b) -> Long.compare(b.getTreasury(), a.getTreasury()));
+        for (int i = 0; i < 5; i++) {
+            if (i < guilds.size()) {
+                var g = guilds.get(i);
+                update.set("#EGuildLine" + i + ".Visible", true);
+                update.set("#EGuildLine" + i + ".Text", (i + 1) + ". " + g.getName() + " [" + g.getTag() + "] — " + g.getMemberCount() + " mbr — " + formatMoney(g.getTreasury()) + " Or");
+            } else {
+                update.set("#EGuildLine" + i + ".Visible", false);
+            }
+        }
+
+        // === FAMILLES ACTIVES (compact) ===
+        int fi = 0;
+        for (var f : com.eldanior.system.titles.nobility.family.FamilyManager.getAll()) {
+            if (fi >= 5) break;
+            if (com.eldanior.system.titles.nobility.family.FamilyManager.isFamilyTaken(f.getId())) {
+                var rd = com.eldanior.system.titles.nobility.family.FamilyManager.getRuntimeData(f.getId());
+                update.set("#EFamilyLine" + fi + ".Visible", true);
+                update.set("#EFamilyLine" + fi + ".Text", f.getDisplayName() + " — Tresor: " + formatMoney(rd.getTreasury()) + " Or | Contrib: " + formatMoney(rd.getContribution()));
+                fi++;
+            }
+        }
+        for (int i = fi; i < 5; i++) {
+            update.set("#EFamilyLine" + i + ".Visible", false);
+        }
     }
 
     // ==================== UTILITIES ====================

@@ -41,6 +41,17 @@ public class ConsumableItemStatsInteraction extends SimpleInteraction {
 
             String itemId = heldItem.getItemId();
 
+            // Bloquer l'utilisation si l'item est un catalyst de competence active non apprise
+            var skillOpt = com.eldanior.system.skills.SkillManager.getAllSkills().stream()
+                    .filter(s -> itemId.equals(s.catalystId()))
+                    .findFirst();
+            if (skillOpt.isPresent()) {
+                if (!data.getUnlockedSkills().contains(skillOpt.get().skillId())) {
+                    player.sendMessage(com.hypixel.hytale.server.core.Message.raw("§cVous n'avez pas appris cette competence !"));
+                    return;
+                }
+            }
+
             StatsItemEffect effect = StatsItemRegistry.getEffect(itemId).orElse(null);
             if (effect == null) return;
 

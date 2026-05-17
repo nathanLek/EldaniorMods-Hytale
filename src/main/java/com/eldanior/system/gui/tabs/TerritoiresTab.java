@@ -23,11 +23,12 @@ public class TerritoiresTab {
     private static final List<String> cachedTerrIds = new ArrayList<>();
     private static int selectedIndex = -1;
     private static String selectedTerrId = null;
+    private static int terrPage = 0;
+    private static List<ParcelData> allTerritories = new ArrayList<>();
 
     public static void populate(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store) {
         String familyId = "";
         String guildId = "";
-        boolean isAdmin = false;
 
         try {
             PlayerLevelData data = store.getComponent(ref, EldaniorSystem.get().getPlayerLevelDataType());
@@ -35,48 +36,48 @@ public class TerritoiresTab {
                 familyId = data.getNobleFamilyId() != null ? data.getNobleFamilyId() : "";
                 guildId = data.getGuildId() != null ? data.getGuildId() : "";
             }
-            Player player = store.getComponent(ref, Player.getComponentType());
-            if (player != null) isAdmin = player.hasPermission(EldaniorLogger.ADMIN_PERMISSION);
         } catch (Exception e) { EldaniorLogger.error("TerritoiresTab", e); }
 
         List<ParcelData> territories = new ArrayList<>();
 
-        if (isAdmin) {
-            for (ParcelData p : ParcelManager.getAll()) {
-                if (p.getType() == ParcelType.KINGDOM || p.getType() == ParcelType.TERRITORY || p.getType() == ParcelType.CITY) {
+        if (!familyId.isEmpty()) {
+            for (ParcelData p : ParcelManager.getByFamily(familyId)) {
+                if (p.getType() == ParcelType.KINGDOM || p.getType() == ParcelType.GRAND_TERRITORY || p.getType() == ParcelType.TERRITORY || p.getType() == ParcelType.CITY) {
                     territories.add(p);
                 }
             }
-        } else {
-            if (!familyId.isEmpty()) {
-                for (ParcelData p : ParcelManager.getByFamily(familyId)) {
-                    if (p.getType() == ParcelType.KINGDOM || p.getType() == ParcelType.TERRITORY || p.getType() == ParcelType.CITY) {
-                        territories.add(p);
-                    }
-                }
-            }
-            if (!guildId.isEmpty()) {
-                for (ParcelData p : ParcelManager.getAll()) {
-                    if (guildId.equals(p.getGuildId()) && !territories.contains(p)) {
-                        territories.add(p);
-                    }
+        }
+        if (!guildId.isEmpty()) {
+            for (ParcelData p : ParcelManager.getAll()) {
+                if (guildId.equals(p.getGuildId()) && !territories.contains(p)) {
+                    territories.add(p);
                 }
             }
         }
 
         territories.sort(Comparator.comparingInt(p -> p.getType().ordinal()));
+        allTerritories = territories;
+
+        int totalPages = Math.max(1, (int) Math.ceil((double) territories.size() / MAX_TERR_SLOTS));
+        if (terrPage >= totalPages) terrPage = totalPages - 1;
+        if (terrPage < 0) terrPage = 0;
+        int start = terrPage * MAX_TERR_SLOTS;
 
         cachedTerrIds.clear();
-        ui.set("#TerrCount.Text", territories.size() + " TERRITOIRE(S)" + (isAdmin ? " - Admin" : ""));
+        ui.set("#TerrCount.Text", territories.size() + " TERRITOIRE(S) — Page " + (terrPage + 1) + "/" + totalPages);
+        ui.set("#TerrBtnPrev.Visible", terrPage > 0);
+        ui.set("#TerrBtnNext.Visible", terrPage < totalPages - 1);
 
         for (int i = 0; i < MAX_TERR_SLOTS; i++) {
-            if (i < territories.size()) {
-                ParcelData p = territories.get(i);
+            int dataIdx = start + i;
+            if (dataIdx < territories.size()) {
+                ParcelData p = territories.get(dataIdx);
                 cachedTerrIds.add(p.getId());
                 ui.set("#TerrSlot" + i + ".Visible", true);
 
                 String typeColor = switch (p.getType()) {
                     case KINGDOM -> "#FFD700";
+                    case GRAND_TERRITORY -> "#1E90FF";
                     case TERRITORY -> "#3498DB";
                     case CITY -> "#2ECC71";
                     default -> "#8899aa";
@@ -121,13 +122,13 @@ public class TerritoiresTab {
         }
 
         // Detail panel
-        populateDetail(ui, isAdmin, ref, store);
+        populateDetail(ui, ref, store);
 
         ui.set("#TerrInfoLabel.Text", territories.isEmpty() ? "Aucun territoire sous votre gestion." : "");
     }
 
     // === PANNEAU DETAIL ===
-    private static void populateDetail(UICommandBuilder ui, boolean isAdmin, Ref<EntityStore> ref, Store<EntityStore> store) {
+    private static void populateDetail(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store) {
         if (selectedTerrId == null) {
             ui.set("#TerrDetail.Visible", false);
             return;
@@ -142,6 +143,12 @@ public class TerritoiresTab {
         }
 
         ui.set("#TerrDetail.Visible", true);
+
+        UUID myUUID = null;
+        try {
+            PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
+            if (pRef != null) myUUID = com.eldanior.system.config.UUIDExtractor.getUUID(pRef);
+        } catch (Exception e) { EldaniorLogger.error("TerritoiresTab", e); }
 
         // Header
         ui.set("#TDetName.Text", p.getName());
@@ -202,6 +209,7 @@ public class TerritoiresTab {
                 ui.set("#TDetChild" + i + ".Visible", true);
                 ui.set("#TDetChildType" + i + ".Text", "[" + child.getType().getLabel() + "]");
                 String childColor = switch (child.getType()) {
+                    case GRAND_TERRITORY -> "#1E90FF";
                     case TERRITORY -> "#3498DB";
                     case CITY -> "#2ECC71";
                     case PLOT -> "#aabbcc";
@@ -218,7 +226,7 @@ public class TerritoiresTab {
         }
 
         // Boutons gestion (proprio + admin)
-        ui.set("#TDetBtnPvp.Visible", p.getType() == ParcelType.CITY || isAdmin);
+        ui.set("#TDetBtnPvp.Visible", p.getType() == ParcelType.CITY);
         ui.set("#TDetBtnPvp.Text", p.isPvpEnabled() ? "DESACTIVER PVP" : "ACTIVER PVP");
         ui.set("#TDetBtnTax.Visible", p.getType() != ParcelType.CITY && p.canCollectTax() && !p.getChildIds().isEmpty());
         ui.set("#TDetBtnTransfer.Visible", p.canTransferTreasury() && p.getTreasury() > 0
@@ -227,72 +235,77 @@ public class TerritoiresTab {
             ui.set("#TDetBtnTransfer.Text", "TRANSFERER " + (p.getTreasury() / 2) + " Or");
         }
 
-        // Boutons admin
-        ui.set("#TDetBtnProt.Visible", isAdmin);
-        ui.set("#TDetBtnFamily.Visible", isAdmin);
-        ui.set("#TDetBtnGuild.Visible", isAdmin && p.getType() == ParcelType.CITY);
-        ui.set("#TDetBtnInvasion.Visible", isAdmin);
-        ui.set("#TDetBtnDel.Visible", isAdmin);
+        // Revendre ville (uniquement CITY + proprio)
+        boolean canSellCity = p.getType() == ParcelType.CITY && myUUID != null
+                && p.getOwnerUUID() != null && p.getOwnerUUID().equals(myUUID);
+        ui.set("#TDetBtnSellCity.Visible", canSellCity);
 
-        // Boutons DECRETS (Roi donne des decrets depuis le Royaume)
-        // Marquis: depuis son territoire → 1 Comte + 2 Barons
-        // Duc: depuis son territoire → 1 Baron
-        boolean isKingdom = p.getType() == ParcelType.KINGDOM;
-        boolean isTerritory = p.getType() == ParcelType.TERRITORY;
+        // Boutons admin (caches — admin utilise /es admin)
+        ui.set("#TDetBtnProt.Visible", false);
+        ui.set("#TDetBtnFamily.Visible", false);
+        ui.set("#TDetBtnGuild.Visible", false);
+        ui.set("#TDetBtnInvasion.Visible", false);
+        ui.set("#TDetBtnDel.Visible", false);
 
-        // Determiner le rang du joueur qui gere ce territoire
-        String playerRank = "";
+        // Boutons DECRETS — chaque rang a ses propres quotas de promotions
+        // Roi: 1 marquis, 2 ducs, 3 comtes, 4 barons, 10 chevaliers
+        // Marquis: 2 comtes, 1 baron, 4 chevaliers
+        // Duc: 1 baron, 3 chevaliers
+        // Comte: 2 chevaliers
+
+        com.eldanior.system.titles.nobility.NobilityRank playerNRank = null;
         try {
             PlayerLevelData playerData = store.getComponent(ref, EldaniorSystem.get().getPlayerLevelDataType());
-            if (playerData != null) playerRank = playerData.getNobilityRank() != null ? playerData.getNobilityRank() : "";
+            if (playerData != null && playerData.getNobilityRank() != null) {
+                playerNRank = com.eldanior.system.titles.nobility.NobilityRank.fromString(playerData.getNobilityRank());
+            }
         } catch (Exception e) { EldaniorLogger.error("TerritoiresTab", e); }
 
-        boolean isRoi = "ROI".equals(playerRank) || isAdmin;
-        boolean isMarquis = "MARQUIS".equals(playerRank);
-        boolean isDuc = "DUC".equals(playerRank);
+        if (playerNRank == null) playerNRank = com.eldanior.system.titles.nobility.NobilityRank.ROTURIER;
 
-        // Roi → decrets depuis le Royaume
-        ui.set("#TDetBtnDecretMarquis.Visible", isKingdom && isRoi);
-        ui.set("#TDetBtnDecretDuc.Visible", isKingdom && isRoi);
-        ui.set("#TDetBtnDecretComte.Visible", isKingdom && isRoi);
-        ui.set("#TDetBtnDecretBaron.Visible", isKingdom && isRoi);
+        // Cacher tous les boutons par defaut
+        ui.set("#TDetBtnDecretMarquis.Visible", false);
+        ui.set("#TDetBtnDecretDuc.Visible", false);
+        ui.set("#TDetBtnDecretComte.Visible", false);
+        ui.set("#TDetBtnDecretBaron.Visible", false);
+        ui.set("#TDetBtnDecretChevalier.Visible", false);
 
-        // Marquis → decrets depuis son Territoire
-        if (isTerritory && isMarquis) {
-            ui.set("#TDetBtnDecretComte.Visible", true);
-            ui.set("#TDetBtnDecretBaron.Visible", true);
+        // Afficher les boutons selon les quotas du rang du joueur
+        Map<com.eldanior.system.titles.nobility.NobilityRank, Integer> quotas = playerNRank.getPromotionQuotas();
+
+        for (Map.Entry<com.eldanior.system.titles.nobility.NobilityRank, Integer> entry : quotas.entrySet()) {
+            com.eldanior.system.titles.nobility.NobilityRank targetRank = entry.getKey();
+            int maxSlots = entry.getValue();
+            int remaining = com.eldanior.system.titles.nobility.NobilityManager.getRemainingSlots(
+                    playerNRank, targetRank);
+
+            String btnId = switch (targetRank) {
+                case MARQUIS -> "#TDetBtnDecretMarquis";
+                case DUC -> "#TDetBtnDecretDuc";
+                case COMTE -> "#TDetBtnDecretComte";
+                case BARON -> "#TDetBtnDecretBaron";
+                case CHEVALIER -> "#TDetBtnDecretChevalier";
+                default -> null;
+            };
+
+            if (btnId != null && remaining > 0) {
+                ui.set(btnId + ".Visible", true);
+                ui.set(btnId + ".Text", "DECRET " + targetRank.getDisplayName().toUpperCase() + " (" + remaining + ")");
+            }
         }
+    }
 
-        // Duc → decret Baron depuis son Territoire
-        if (isTerritory && isDuc) {
-            ui.set("#TDetBtnDecretBaron.Visible", true);
-        }
+    // === PAGINATION ===
 
-        // Afficher les slots restants et desactiver si limite atteinte
-        var NM = com.eldanior.system.titles.nobility.NobilityManager.class;
-        var NR = com.eldanior.system.titles.nobility.NobilityRank.class;
+    public static boolean handlePrev() {
+        if (terrPage > 0) { terrPage--; selectedIndex = -1; selectedTerrId = null; return true; }
+        return false;
+    }
 
-        int remMarquis = com.eldanior.system.titles.nobility.NobilityManager.getRemainingSlots(
-                com.eldanior.system.titles.nobility.NobilityRank.MARQUIS);
-        int remDuc = com.eldanior.system.titles.nobility.NobilityManager.getRemainingSlots(
-                com.eldanior.system.titles.nobility.NobilityRank.DUC);
-        int remComte = com.eldanior.system.titles.nobility.NobilityManager.getRemainingSlots(
-                com.eldanior.system.titles.nobility.NobilityRank.COMTE);
-        int remBaron = com.eldanior.system.titles.nobility.NobilityManager.getRemainingSlots(
-                com.eldanior.system.titles.nobility.NobilityRank.BARON);
-
-        ui.set("#TDetBtnDecretMarquis.Text", "DECRET MARQUIS (" + remMarquis + ")");
-        ui.set("#TDetBtnDecretDuc.Text", "DECRET DUC (" + remDuc + ")");
-        ui.set("#TDetBtnDecretComte.Text", "DECRET COMTE (" + remComte + ")");
-        ui.set("#TDetBtnDecretBaron.Text", "DECRET BARON (" + remBaron + ")");
-
-        // Desactiver si limite atteinte (sauf admin)
-        if (!isAdmin) {
-            if (remMarquis <= 0) ui.set("#TDetBtnDecretMarquis.Visible", false);
-            if (remDuc <= 0) ui.set("#TDetBtnDecretDuc.Visible", false);
-            if (remComte <= 0) ui.set("#TDetBtnDecretComte.Visible", false);
-            if (remBaron <= 0) ui.set("#TDetBtnDecretBaron.Visible", false);
-        }
+    public static boolean handleNext() {
+        int totalPages = Math.max(1, (int) Math.ceil((double) allTerritories.size() / MAX_TERR_SLOTS));
+        if (terrPage < totalPages - 1) { terrPage++; selectedIndex = -1; selectedTerrId = null; return true; }
+        return false;
     }
 
     // === HANDLERS ===
@@ -337,12 +350,9 @@ public class TerritoiresTab {
         if (p.getType() == ParcelType.CITY) return false;
 
         double taxRate = switch (p.getType()) {
-            case KINGDOM -> 0.57;   // Royaume prend 57% du Marquis → ~8000 sur 20000 de base
-            case TERRITORY -> {
-                ParcelData parent = p.getParentId() != null ? ParcelManager.get(p.getParentId()) : null;
-                yield (parent != null && parent.getType() == ParcelType.KINGDOM) ? 0.80 : 0.875;
-                // Marquis prend 80% du Duc, Duc prend 87.5% de la ville
-            }
+            case KINGDOM -> 0.57;
+            case GRAND_TERRITORY -> 0.80;   // Marquisat prend 80% du Duche
+            case TERRITORY -> 0.875;        // Duche prend 87.5% de la ville
             default -> 0.0;
         };
 
@@ -411,17 +421,13 @@ public class TerritoiresTab {
             Player player = store.getComponent(ref, Player.getComponentType());
             if (player == null) return false;
 
-            boolean isAdmin = player.hasPermission(EldaniorLogger.ADMIN_PERMISSION);
-
-            // Verifier la limite (sauf admin)
-            if (!isAdmin) {
-                com.eldanior.system.titles.nobility.NobilityRank nRank =
-                        com.eldanior.system.titles.nobility.NobilityRank.fromString(rank);
-                if (nRank != null && !com.eldanior.system.titles.nobility.NobilityManager.canKingPromote(nRank)) {
-                    player.sendMessage(com.hypixel.hytale.server.core.Message.raw(
-                            "§cLimite atteinte pour le rang " + rank + " !"));
-                    return false;
-                }
+            // Verifier la limite
+            com.eldanior.system.titles.nobility.NobilityRank nRank =
+                    com.eldanior.system.titles.nobility.NobilityRank.fromString(rank);
+            if (nRank != null && !com.eldanior.system.titles.nobility.NobilityManager.canKingPromote(nRank)) {
+                player.sendMessage(com.hypixel.hytale.server.core.Message.raw(
+                        "§cLimite atteinte pour le rang " + rank + " !"));
+                return false;
             }
 
             String itemId = switch (rank) {
@@ -437,13 +443,9 @@ public class TerritoiresTab {
             var result = player.getInventory().getHotbar().addItemStack(
                     new ItemStack(itemId, 1));
             if (result.succeeded()) {
-                // Comptabiliser la promotion (sauf admin)
-                if (!isAdmin) {
-                    com.eldanior.system.titles.nobility.NobilityRank nRank =
-                            com.eldanior.system.titles.nobility.NobilityRank.fromString(rank);
-                    if (nRank != null) {
-                        com.eldanior.system.titles.nobility.NobilityManager.recordKingPromotion(nRank);
-                    }
+                // Comptabiliser la promotion
+                if (nRank != null) {
+                    com.eldanior.system.titles.nobility.NobilityManager.recordKingPromotion(nRank);
                 }
                 player.sendMessage(com.hypixel.hytale.server.core.Message.raw(
                         "§6§lDecret Royal recu ! §7Donnez-le a un joueur pour le nommer §e" + rank));
@@ -455,6 +457,44 @@ public class TerritoiresTab {
             System.err.println("[Territoire] Erreur decret: " + e.getMessage());
         }
         return false;
+    }
+
+    public static boolean handleSellCity(Ref<EntityStore> ref, Store<EntityStore> store) {
+        if (selectedTerrId == null) return false;
+        ParcelData p = ParcelManager.get(selectedTerrId);
+        if (p == null || p.getType() != ParcelType.CITY) return false;
+
+        try {
+            PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
+            if (pRef == null) return false;
+            UUID myUUID = com.eldanior.system.config.UUIDExtractor.getUUID(pRef);
+            if (myUUID == null || !myUUID.equals(p.getOwnerUUID())) return false;
+
+            // Rembourser 50% du prix
+            long refund = ParcelManager.CITY_PRICE / 2;
+            PlayerLevelData data = store.getComponent(ref, EldaniorSystem.get().getPlayerLevelDataType());
+            if (data != null) {
+                data.addMoney(refund);
+                store.putComponent(ref, EldaniorSystem.get().getPlayerLevelDataType(), data);
+            }
+
+            // Libérer la ville
+            p.setOwnerUUID(null);
+            p.setOwnerName("");
+            p.setGuildId("");
+            p.getMembers().clear();
+            ParcelManager.save();
+
+            pRef.sendMessage(com.hypixel.hytale.server.core.Message.raw(
+                    "§eVille revendue ! +" + String.format("%,d", refund) + " Or (50% du prix)."));
+
+            selectedTerrId = null;
+            selectedIndex = -1;
+            return true;
+        } catch (Exception e) {
+            EldaniorLogger.error("TerritoiresTab:sellCity", e);
+            return false;
+        }
     }
 
     public static boolean handleToggleProtection() {
@@ -498,7 +538,7 @@ public class TerritoiresTab {
             ParcelData child = ParcelManager.get(childId);
             if (child == null) continue;
             switch (child.getType()) {
-                case TERRITORY -> counts[0]++;
+                case GRAND_TERRITORY, TERRITORY -> counts[0]++;
                 case CITY -> counts[1]++;
                 case HOUSING, ROOM -> counts[2]++;
                 case PLOT, FARM -> counts[3]++;

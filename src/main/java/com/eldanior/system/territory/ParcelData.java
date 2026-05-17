@@ -39,6 +39,14 @@ public class ParcelData {
     // Protection par defaut
     private boolean protectedByDefault = true;
     private boolean pvpEnabled = false;
+
+    // Donjon: rank (E, D, C, B, A, S)
+    private String dungeonRank = "E";
+    // Premier joueur a decouvrir cette parcelle
+    private String firstDiscovererName = "";
+    private String firstDiscovererUUID = "";
+    // Mine/Farm: delai de regeneration des blocs (en secondes)
+    private int regenDelaySec = 300; // 5 min par defaut
     private long lastTaxCollection = 0;
     private long lastTaxAmount = 0;
     private long lastTreasuryTransfer = 0;
@@ -117,9 +125,19 @@ public class ParcelData {
         if (role == null) {
             if (!protectedByDefault) return true; // Zone ouverte
 
+            // Zones speciales : tout le monde peut entrer et interagir
+            if (type == ParcelType.ARENA || type == ParcelType.DUNGEON || type == ParcelType.MINE) {
+                return permission == ParcelPermission.INTERACT || permission == ParcelPermission.ENTER;
+            }
+            // Farm / Forest : tout le monde peut casser/entrer/interagir (zone de recolte)
+            if (type == ParcelType.FARM || type == ParcelType.FOREST) {
+                return permission == ParcelPermission.INTERACT || permission == ParcelPermission.ENTER
+                        || permission == ParcelPermission.BREAK;
+            }
+
             // Villes et Territoires : INTERACT et ENTER autorisés pour tous
             // Seuls BUILD et BREAK sont bloqués
-            if (type == ParcelType.KINGDOM || type == ParcelType.TERRITORY || type == ParcelType.CITY) {
+            if (type == ParcelType.KINGDOM || type == ParcelType.GRAND_TERRITORY || type == ParcelType.TERRITORY || type == ParcelType.CITY) {
                 return permission == ParcelPermission.INTERACT || permission == ParcelPermission.ENTER;
             }
 
@@ -317,6 +335,23 @@ public class ParcelData {
         this.members.clear();
         initDefaultPermissions();
     }
+
+    // ==================== DONJON / MINE ====================
+
+    public String getDungeonRank() { return dungeonRank != null ? dungeonRank : "E"; }
+    public void setDungeonRank(String dungeonRank) { this.dungeonRank = dungeonRank; }
+    public String getFirstDiscovererName() { return firstDiscovererName; }
+    public String getFirstDiscovererUUID() { return firstDiscovererUUID; }
+    public boolean setFirstDiscoverer(String name, String uuid) {
+        if (firstDiscovererName == null || firstDiscovererName.isEmpty()) {
+            this.firstDiscovererName = name;
+            this.firstDiscovererUUID = uuid;
+            return true;
+        }
+        return false;
+    }
+    public int getRegenDelaySec() { return regenDelaySec; }
+    public void setRegenDelaySec(int regenDelaySec) { this.regenDelaySec = regenDelaySec; }
 
     public List<String> getChildIds() {
         return ParcelManager.getChildrenOf(this.id);

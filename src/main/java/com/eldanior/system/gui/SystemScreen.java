@@ -9,6 +9,7 @@ import com.eldanior.system.gui.tabs.DuelTab;
 import com.eldanior.system.gui.tabs.ShopTab;
 import com.eldanior.system.gui.tabs.ClassementsTab;
 import com.eldanior.system.gui.tabs.FamilleTab;
+import com.eldanior.system.gui.tabs.WikiTab;
 import com.eldanior.system.gui.tabs.CompetencesTab;
 import com.eldanior.system.gui.tabs.GuildeTab;
 import com.eldanior.system.gui.tabs.GroupeTab;
@@ -41,7 +42,7 @@ import javax.annotation.Nonnull;
 public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEventData> {
 
     private static final String[] TAB_IDS = {
-            "Profil", "Inventaire", "Competences", "Guilde", "Groupe", "Famille", "Titres", "Quetes", "Classements", "Duel", "Shop", "BlackMarket", "Territoires", "Proprietes", "Echanges"
+            "Profil", "Inventaire", "Competences", "Guilde", "Groupe", "Famille", "Titres", "Quetes", "Classements", "Duel", "Shop", "BlackMarket", "Territoires", "Proprietes", "Echanges", "Wiki"
     };
 
     public SystemScreen(@Nonnull PlayerRef playerRef) {
@@ -84,9 +85,8 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             FamilleTab.populate(ui, ref, store);
         }
 
-        // Territoires visible si noblesse (Duc, Marquis, Roi) ou admin
-        // Territoires visible uniquement pour les nobles (admin separe via /es admin)
-        boolean showTerritoires = rankStr != null && ("DUC".equals(rankStr) || "MARQUIS".equals(rankStr) || "ROI".equals(rankStr));
+        // Territoires visible si Comte+ (Comte, Duc, Marquis, Roi)
+        boolean showTerritoires = rankStr != null && ("COMTE".equals(rankStr) || "DUC".equals(rankStr) || "MARQUIS".equals(rankStr) || "ROI".equals(rankStr));
         if (showTerritoires) {
             ui.set("#TabBtnTerritoires.Visible", true);
             TerritoiresTab.populate(ui, ref, store);
@@ -95,10 +95,12 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         // Proprietes visible pour tous
         ProprietesTab.populate(ui, ref, store);
 
-        // Echanges visible uniquement pour les Marchands
+        // Echanges visible pour Marchands, Dragons et Admins
         String classType = data.getPlayerClassId();
         com.eldanior.system.classes.models.ClassModel classModel = com.eldanior.system.classes.ClassManager.get(classType);
-        boolean showEchanges = classModel != null && classModel.getType() == com.eldanior.system.config.configs.ClassType.MERCHANT;
+        boolean showEchanges = classModel != null && (classModel.getType() == com.eldanior.system.config.configs.ClassType.MERCHANT
+            || classModel.getType() == com.eldanior.system.config.configs.ClassType.DRAGON);
+        if (!showEchanges && playerCheck != null && playerCheck.hasPermission(EldaniorLogger.ADMIN_PERMISSION)) showEchanges = true;
         if (showEchanges) {
             ui.set("#TabBtnEchanges.Visible", true);
             EchangesTab.populate(ui, ref, store, false);
@@ -119,6 +121,10 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             events.addEventBinding(CustomUIEventBindingType.Activating, "#SkillToggle" + i,
                     EventData.of("Action", "skill_toggle").append("Param", String.valueOf(i)));
         }
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#SkillBtnPrev", EventData.of("Action", "skill_prev"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#SkillBtnNext", EventData.of("Action", "skill_next"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#SkillTabPassive", EventData.of("Action", "skill_tab_passive"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#SkillTabActive", EventData.of("Action", "skill_tab_active"));
 
         // Populate guilde tab
         GuildeTab.populate(ui, ref, store);
@@ -226,6 +232,9 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
                     EventData.of("Action", "ech_force").append("Param", String.valueOf(i)));
         }
 
+        // Territoires - pagination
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#TerrBtnPrev", EventData.of("Action", "terr_prev"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#TerrBtnNext", EventData.of("Action", "terr_next"));
         // Territoires - clic sur un territoire (selection)
         for (int i = 0; i < TerritoiresTab.MAX_TERR_SLOTS; i++) {
             events.addEventBinding(CustomUIEventBindingType.Activating, "#TerrSlot" + i,
@@ -237,13 +246,20 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnDel", EventData.of("Action", "terr_del"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnPvp", EventData.of("Action", "terr_pvp"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnTax", EventData.of("Action", "terr_tax"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnSellCity", EventData.of("Action", "terr_sell_city"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnTransfer", EventData.of("Action", "terr_transfer"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnInvasion", EventData.of("Action", "terr_invasion"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnDecretMarquis", EventData.of("Action", "terr_decret").append("Param", "MARQUIS"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnDecretDuc", EventData.of("Action", "terr_decret").append("Param", "DUC"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnDecretComte", EventData.of("Action", "terr_decret").append("Param", "COMTE"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnDecretBaron", EventData.of("Action", "terr_decret").append("Param", "BARON"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnDecretChevalier", EventData.of("Action", "terr_decret").append("Param", "CHEVALIER"));
 
+        // Proprietes - pagination
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#POwnPrev", EventData.of("Action", "prop_owned_prev"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#POwnNext", EventData.of("Action", "prop_owned_next"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#PAvPrev", EventData.of("Action", "prop_avail_prev"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#PAvNext", EventData.of("Action", "prop_avail_next"));
         // Proprietes - clic sur un bien (selection)
         for (int i = 0; i < ProprietesTab.MAX_OWNED_SLOTS; i++) {
             events.addEventBinding(CustomUIEventBindingType.Activating, "#POwnSlot" + i,
@@ -255,6 +271,11 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
                     EventData.of("Action", "prop_buy").append("Param", String.valueOf(i)));
             events.addEventBinding(CustomUIEventBindingType.Activating, "#PAvBtnRent" + i,
                     EventData.of("Action", "prop_rent").append("Param", String.valueOf(i)));
+        }
+        // Proprietes - villes (Comte + Guilde)
+        for (int i = 0; i < ProprietesTab.MAX_CITY_SLOTS; i++) {
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#CityBtnBuy" + i,
+                    EventData.of("Action", "prop_buy_city").append("Param", String.valueOf(i)));
         }
         // Proprietes - detail actions
         events.addEventBinding(CustomUIEventBindingType.Activating, "#PDetBtnProt", EventData.of("Action", "prop_prot"));
@@ -298,6 +319,9 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnTerritoires", EventData.of("Action", "tab_territoires"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnProprietes", EventData.of("Action", "tab_proprietes"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnEchanges",   EventData.of("Action", "tab_echanges"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnWiki",       EventData.of("Action", "tab_wiki"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#WikiBtnPrev",      EventData.of("Action", "wiki_prev"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#WikiBtnNext",      EventData.of("Action", "wiki_next"));
         // Admin tab removed — /es admin
 
         // Attribute buttons (+1)
@@ -484,6 +508,15 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             return;
         }
 
+        // Territoires - pagination
+        if ("terr_prev".equals(eventData.action)) {
+            if (TerritoiresTab.handlePrev()) refreshTerritoiresTab(ref, store);
+            return;
+        }
+        if ("terr_next".equals(eventData.action)) {
+            if (TerritoiresTab.handleNext()) refreshTerritoiresTab(ref, store);
+            return;
+        }
         // Territoires - selection
         if ("terr_select".equals(eventData.action) && eventData.param != null) {
             if (TerritoiresTab.handleSelect(Integer.parseInt(eventData.param))) {
@@ -513,6 +546,13 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         }
         if ("terr_del".equals(eventData.action)) {
             if (TerritoiresTab.handleDelete()) refreshTerritoiresTab(ref, store);
+            return;
+        }
+        if ("terr_sell_city".equals(eventData.action)) {
+            if (TerritoiresTab.handleSellCity(ref, store)) {
+                refreshTerritoiresTab(ref, store);
+                refreshProfilTab(ref, store);
+            }
             return;
         }
         if ("terr_pvp".equals(eventData.action)) {
@@ -547,10 +587,46 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             return;
         }
 
+        // Wiki - pagination
+        if ("wiki_prev".equals(eventData.action)) {
+            if (WikiTab.handlePrev()) { switchTab("wiki", ref, store); }
+            return;
+        }
+        if ("wiki_next".equals(eventData.action)) {
+            if (WikiTab.handleNext()) { switchTab("wiki", ref, store); }
+            return;
+        }
+
+        // Proprietes - pagination
+        if ("prop_owned_prev".equals(eventData.action)) {
+            if (ProprietesTab.handleOwnedPrev()) refreshProprietesTab(ref, store);
+            return;
+        }
+        if ("prop_owned_next".equals(eventData.action)) {
+            if (ProprietesTab.handleOwnedNext()) refreshProprietesTab(ref, store);
+            return;
+        }
+        if ("prop_avail_prev".equals(eventData.action)) {
+            if (ProprietesTab.handleAvailablePrev()) refreshProprietesTab(ref, store);
+            return;
+        }
+        if ("prop_avail_next".equals(eventData.action)) {
+            if (ProprietesTab.handleAvailableNext()) refreshProprietesTab(ref, store);
+            return;
+        }
+
         // Proprietes - selection d'un bien
         if ("prop_select".equals(eventData.action) && eventData.param != null) {
             if (ProprietesTab.handleSelect(Integer.parseInt(eventData.param))) {
                 refreshProprietesTab(ref, store);
+            }
+            return;
+        }
+        // Proprietes - acheter ville
+        if ("prop_buy_city".equals(eventData.action) && eventData.param != null) {
+            if (ProprietesTab.handleBuyCity(Integer.parseInt(eventData.param), ref, store)) {
+                refreshProprietesTab(ref, store);
+                refreshProfilTab(ref, store);
             }
             return;
         }
@@ -643,6 +719,28 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             return;
         }
 
+        // Skill pagination
+        if ("skill_prev".equals(eventData.action)) {
+            CompetencesTab.prevPage();
+            refreshCompetencesTab(ref, store);
+            return;
+        }
+        if ("skill_next".equals(eventData.action)) {
+            CompetencesTab.nextPage();
+            refreshCompetencesTab(ref, store);
+            return;
+        }
+        // Skill tab switch (passive / active)
+        if ("skill_tab_passive".equals(eventData.action)) {
+            CompetencesTab.switchToPassives();
+            refreshCompetencesTab(ref, store);
+            return;
+        }
+        if ("skill_tab_active".equals(eventData.action)) {
+            CompetencesTab.switchToActives();
+            refreshCompetencesTab(ref, store);
+            return;
+        }
         // Skill toggle
         if ("skill_toggle".equals(eventData.action) && eventData.param != null) {
             if (CompetencesTab.handleToggle(eventData.param, ref, store)) {
@@ -767,13 +865,18 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         }
         update.set("#TabBtnFamille.Visible", showFamille);
 
-        // Territoires visible si noblesse uniquement
-        boolean showTerritoires = rankStr != null && ("DUC".equals(rankStr) || "MARQUIS".equals(rankStr) || "ROI".equals(rankStr));
+        // Territoires visible si Comte+ ou si possede une ville/territoire via guilde
+        boolean showTerritoires = rankStr != null && ("COMTE".equals(rankStr) || "DUC".equals(rankStr) || "MARQUIS".equals(rankStr) || "ROI".equals(rankStr));
         update.set("#TabBtnTerritoires.Visible", showTerritoires);
 
-        // Echanges visible si Marchand uniquement
+        // Echanges visible pour Marchands, Dragons et Admins
         com.eldanior.system.classes.models.ClassModel classModel = com.eldanior.system.classes.ClassManager.get(data.getPlayerClassId());
-        boolean showEchanges = classModel != null && classModel.getType() == com.eldanior.system.config.configs.ClassType.MERCHANT;
+        boolean showEchanges = classModel != null && (classModel.getType() == com.eldanior.system.config.configs.ClassType.MERCHANT
+            || classModel.getType() == com.eldanior.system.config.configs.ClassType.DRAGON);
+        if (!showEchanges) {
+            com.hypixel.hytale.server.core.entity.entities.Player pCheck = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
+            if (pCheck != null && pCheck.hasPermission(EldaniorLogger.ADMIN_PERMISSION)) showEchanges = true;
+        }
         update.set("#TabBtnEchanges.Visible", showEchanges);
 
         // Profil tab
@@ -899,6 +1002,9 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         }
         if ("proprietes".equals(tabName)) {
             ProprietesTab.populate(update, ref, store);
+        }
+        if ("wiki".equals(tabName)) {
+            WikiTab.populate(update, ref, store);
         }
         if ("echanges".equals(tabName)) {
             com.hypixel.hytale.server.core.entity.entities.Player pc = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());

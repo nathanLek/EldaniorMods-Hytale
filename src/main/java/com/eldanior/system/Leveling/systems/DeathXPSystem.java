@@ -249,9 +249,8 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
                     java.util.List<TitleModel> newTitles = TitleManager.checkTitleUnlocks(dataToWrite);
                     for (TitleModel title : newTitles) {
                         dataToWrite.addTitle(title.getId());
-                        NotificationHelper.sendNotification(killerRefObj,
-                                "<color:gold>★ Titre debloque : " + title.getDisplayName() + " !</color>",
-                                NotificationStyle.Success);
+                        NotificationHelper.showEventTitle(killerRefObj,
+                                "TITRE DEBLOQUE", title.getDisplayName(), true);
                     }
                 }
             }

@@ -1,49 +1,91 @@
 package com.eldanior.system.titles.nobility;
 
+import java.util.Map;
+import java.util.EnumMap;
+
 public enum NobilityRank {
-    ROTURIER("Roturier", "§7", 0, 0, 0),
-    CHEVALIER("Chevalier", "§f", 5, 0, 0),
-    BARON("Baron", "§a", 15, 1, 1),
-    COMTE("Comte", "§9", 30, 2, 2),
-    DUC("Duc", "§5", 50, 1, 3),       // Duc peut nommer 1 Baron (maxKnights=1 utilise pour barons)
-    MARQUIS("Marquis", "§6", 75, 3, 4), // Marquis peut nommer 1 Comte + 2 Barons (maxKnights=3)
-    ROI("Roi", "§c", 100, 10, 0);      // Roi peut nommer 4 Marquis, 3 Ducs, 2 Comtes, 1 Baron
+    ROTURIER("Roturier", "§7", 0),
+    CHEVALIER("Chevalier", "§f", 5),
+    BARON("Baron", "§a", 15),
+    COMTE("Comte", "§9", 30),
+    DUC("Duc", "§5", 50),
+    MARQUIS("Marquis", "§6", 75),
+    ROI("Roi", "§c", 100);
 
     private final String displayName;
     private final String colorCode;
     private final int baseDignity;
-    private final int maxKnights;       // Nombre de chevaliers que ce rang peut promouvoir
-    private final int maxPerKingdom;    // Nombre max de ce rang que le Roi peut attribuer
 
-    NobilityRank(String displayName, String colorCode, int baseDignity, int maxKnights, int maxPerKingdom) {
+    // Quotas de promotion par rang (initialises dans le bloc static)
+    private Map<NobilityRank, Integer> promotionQuotas;
+
+    NobilityRank(String displayName, String colorCode, int baseDignity) {
         this.displayName = displayName;
         this.colorCode = colorCode;
         this.baseDignity = baseDignity;
-        this.maxKnights = maxKnights;
-        this.maxPerKingdom = maxPerKingdom;
+    }
+
+    static {
+        // ROI : 1 marquis, 2 ducs, 3 comtes, 4 barons, 10 chevaliers
+        ROI.promotionQuotas = Map.of(
+                MARQUIS, 1, DUC, 2, COMTE, 3, BARON, 4, CHEVALIER, 10
+        );
+
+        // MARQUIS : 2 comtes, 1 baron, 4 chevaliers
+        MARQUIS.promotionQuotas = Map.of(
+                COMTE, 2, BARON, 1, CHEVALIER, 4
+        );
+
+        // DUC : 1 baron, 3 chevaliers
+        DUC.promotionQuotas = Map.of(
+                BARON, 1, CHEVALIER, 3
+        );
+
+        // COMTE : 2 chevaliers
+        COMTE.promotionQuotas = Map.of(
+                CHEVALIER, 2
+        );
+
+        // Les autres ne peuvent rien promouvoir
+        BARON.promotionQuotas = Map.of();
+        CHEVALIER.promotionQuotas = Map.of();
+        ROTURIER.promotionQuotas = Map.of();
     }
 
     public String getDisplayName() { return displayName; }
     public String getColorCode() { return colorCode; }
     public String getFormattedName() { return colorCode + displayName; }
     public int getBaseDignity() { return baseDignity; }
-    public int getMaxKnights() { return maxKnights; }
-    public int getMaxPerKingdom() { return maxPerKingdom; }
+
+    /**
+     * Nombre max de promotions de ce type que ce rang peut donner.
+     */
+    public int getMaxPromotions(NobilityRank targetRank) {
+        return promotionQuotas.getOrDefault(targetRank, 0);
+    }
+
+    /**
+     * Retourne tous les quotas de promotion pour ce rang.
+     */
+    public Map<NobilityRank, Integer> getPromotionQuotas() {
+        return promotionQuotas;
+    }
+
+    // Backwards compat
+    public int getMaxKnights() { return getMaxPromotions(CHEVALIER); }
+    public int getMaxPerKingdom() {
+        // Utilise par le systeme de decrets du Roi
+        return ROI.getMaxPromotions(this);
+    }
 
     public boolean isNoble() { return this != ROTURIER; }
 
-    /**
-     * Retourne le rang superieur, ou null si deja Roi.
-     */
     public NobilityRank next() {
         NobilityRank[] ranks = values();
         int idx = this.ordinal();
         return (idx + 1 < ranks.length) ? ranks[idx + 1] : null;
     }
 
-    /**
-     * Retourne le rang inferieur, ou ROTURIER si deja au minimum.
-     */
     public NobilityRank previous() {
         int idx = this.ordinal();
         return (idx > 0) ? values()[idx - 1] : ROTURIER;

@@ -25,7 +25,34 @@ public class DuelManager {
     // Invitations: cible UUID -> challenger UUID
     private static final Map<UUID, UUID> pendingDuels = new ConcurrentHashMap<>();
 
+    // File d'attente de duels a terminer (pour eviter Store is currently processing)
+    private static final Queue<UUID> pendingEndDuels = new java.util.concurrent.ConcurrentLinkedQueue<>();
+
+    /** Appele depuis le tick pour marquer un duel a terminer plus tard */
+    public static void scheduleEndDuel(UUID loserUUID) {
+        pendingEndDuels.add(loserUUID);
+    }
+
+    /** Appele depuis un endroit sur (pas un tick) pour traiter les fins de duel */
+    public static void processPendingEndDuels() {
+        UUID loser;
+        while ((loser = pendingEndDuels.poll()) != null) {
+            endDuel(loser);
+        }
+    }
+
+    private static java.util.Timer duelTimer;
+
     public static void init() {
+        // Timer pour traiter les fins de duel hors du tick (toutes les 200ms)
+        if (duelTimer != null) duelTimer.cancel();
+        duelTimer = new java.util.Timer("EldaniorDuelProcessor", true);
+        duelTimer.scheduleAtFixedRate(new java.util.TimerTask() {
+            @Override
+            public void run() {
+                try { processPendingEndDuels(); } catch (Exception e) { e.printStackTrace(); }
+            }
+        }, 200L, 200L);
         System.out.println("[Eldanior] Systeme de Duels initialise.");
     }
 

@@ -111,6 +111,8 @@ public class TreasureChestRangeSystem extends EntityTickingSystem<EntityStore> {
                             java.util.List<TitleModel> newTitles = TitleManager.checkTitleUnlocks(levelData);
                             for (TitleModel title : newTitles) {
                                 levelData.addTitle(title.getId());
+                                com.eldanior.system.Leveling.utils.NotificationHelper.showEventTitle(
+                                        playerRef, "TITRE DEBLOQUE", title.getDisplayName(), true);
                             }
                             deferredStore.putComponent(player.getReference(),
                                     EldaniorSystem.get().getPlayerLevelDataType(), levelData);

@@ -81,6 +81,10 @@ public class EldaniorSystem extends JavaPlugin {
         // Sauvegarder toutes les donnees
         com.eldanior.system.persistence.PersistenceManager.saveAll();
         com.eldanior.system.territory.ParcelManager.saveAll();
+        com.eldanior.system.territory.ArenaManager.saveAll();
+
+        // Cleanup farm/mine regen
+        com.eldanior.system.territory.systems.FarmRegenSystem.cleanup();
 
         // Annuler les timers et schedulers
         com.eldanior.system.persistence.PersistenceManager.shutdown();
@@ -113,8 +117,10 @@ public class EldaniorSystem extends JavaPlugin {
             com.eldanior.system.trade.TradeManager.init();
             com.eldanior.system.territory.ParcelManager.init(this.getDataDirectory());
             com.eldanior.system.territory.ParcelEconomyManager.init();
+            com.eldanior.system.territory.ArenaManager.init(this.getDataDirectory());
             com.eldanior.system.shop.ShopManager.init();
             com.eldanior.system.persistence.PersistenceManager.init(this.getDataDirectory());
+            com.eldanior.system.hologram.HologramManager.init(this.getDataDirectory());
             LOGGER.atInfo().log("[OK] Managers et Registres initialisés.");
         } catch (Exception e) {
             LOGGER.atSevere().withCause(e).log("[ERREUR] Échec init Managers/Registres");
@@ -224,12 +230,28 @@ public class EldaniorSystem extends JavaPlugin {
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.duel.DuelProtectionSystem());
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.quest.QuestHudUpdateSystem());
             this.getEntityStoreRegistry().registerSystem(new DignityAuraSystem());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.titles.systems.TitleCheckSystem());
 
             // Territoire / Parcelles
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.territory.events.ParcelBreakBlockEvent());
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.territory.events.ParcelPlaceBlockEvent());
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.territory.events.ParcelInteractEvent());
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.territory.systems.ParcelRangeSystem());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.territory.systems.FarmRegenSystem());
+
+            // Carte du monde : zones colorees
+            this.getEventRegistry().registerGlobal(StartWorldEvent.class,
+                    com.eldanior.system.territory.systems.ParcelMapSystem::onWorldStart);
+
+            // Donjon : init snapshots et timers 24h au demarrage du monde
+            this.getEventRegistry().registerGlobal(StartWorldEvent.class, event -> {
+                if (event.getWorld() != null) {
+                    // Delai de 5s pour laisser les chunks se charger
+                    EldaniorLogger.SCHEDULER.schedule(() -> {
+                        com.eldanior.system.territory.systems.FarmRegenSystem.initDungeonTimers(event.getWorld());
+                    }, 5, java.util.concurrent.TimeUnit.SECONDS);
+                }
+            });
 
             LOGGER.atInfo().log("[OK] Systèmes ECS activés.");
         } catch (Exception e) {
@@ -238,6 +260,29 @@ public class EldaniorSystem extends JavaPlugin {
 
         // 6. Commandes
         this.getCommandRegistry().registerCommand(new ESCommand());
+
+        // Spawn hologrammes (delai pour attendre que les mondes soient prets)
+        new java.util.Timer("EldaniorHologramSpawn", true).schedule(new java.util.TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    // Attendre que le monde default soit disponible
+                    for (int attempt = 0; attempt < 30; attempt++) {
+                        var world = com.hypixel.hytale.server.core.universe.Universe.get().getWorld("default");
+                        if (world != null) {
+                            com.eldanior.system.hologram.HologramManager.spawnAll();
+                            // Demarrer les hologrammes dynamiques (classements arene)
+                            com.eldanior.system.hologram.DynamicHologramManager.startUpdateTimer();
+                            return;
+                        }
+                        Thread.sleep(1000);
+                    }
+                    System.err.println("[Hologram] World 'default' jamais trouve apres 30 tentatives.");
+                } catch (Exception e) {
+                    System.err.println("[Hologram] Erreur spawn au demarrage: " + e.getMessage());
+                }
+            }
+        }, 3000L);
 
         LOGGER.atInfo().log(">>> ELDANIOR SYSTEM : SETUP TERMINÉ <<<");
     }

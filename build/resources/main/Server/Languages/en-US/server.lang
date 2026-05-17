@@ -814,7 +814,25 @@ items.skill_page_sturdy_body.name=Corps Robuste
 items.skill_page_sturdy_body.description=<b>Rareté : Commun</b>\n<i>L'entraînement physique intensif porte enfin ses fruits.</i>\n\n<b>Effet :</b> Augmente passivement votre Endurance de 15 points.\n\n<b>[Clic F]</b> pour apprendre.
 # 1. Artisanat (Rare)
 items.skill_page_artisanat.name=Artisanat
-items.skill_page_artisanat.description=<b>Rareté : Rare</b>\n<i>Le savoir-faire manuel pour transformer des matières brutes en équipement.</i>\n\n<b>Effet :</b> Débloque l'utilisation des établis, des forges et autres stations de confection.\n<color:gray>• Sans cette compétence, il est impossible de crafter.</color>\n\n<b>[Clic F]</b> pour apprendre.
+items.skill_page_artisanat.description=<b>Rareté : Rare</b>\n<i>Le savoir-faire manuel pour transformer des matières brutes en équipement.</i>\n\n<b>Effet :</b> Débloque l'utilisation de TOUS les établis et stations de confection.\n<color:gray>• Passe-partout : remplace toutes les compétences de craft individuelles.</color>\n\n<b>[Clic F]</b> pour apprendre.
+items.skill_page_craft_cuisine.name=Cuisine
+items.skill_page_craft_cuisine.description=<b>Rareté : Commun</b>\n<i>L'art de preparer des plats nourrissants.</i>\n\n<b>Effet :</b> Débloque l'utilisation du Bench Cooking.\n\n<b>[Clic F]</b> pour apprendre.
+items.skill_page_craft_fonderie.name=Fonderie
+items.skill_page_craft_fonderie.description=<b>Rareté : Commun</b>\n<i>Maîtrisez le feu pour fondre les minerais.</i>\n\n<b>Effet :</b> Débloque l'utilisation du Bench Furnace.\n\n<b>[Clic F]</b> pour apprendre.
+items.skill_page_craft_armurerie.name=Armurerie
+items.skill_page_craft_armurerie.description=<b>Rareté : Peu Commun</b>\n<i>Forgez des armures solides pour vous protéger.</i>\n\n<b>Effet :</b> Débloque l'utilisation du Bench Armour.\n\n<b>[Clic F]</b> pour apprendre.
+items.skill_page_craft_forge_armes.name=Forge d'Armes
+items.skill_page_craft_forge_armes.description=<b>Rareté : Peu Commun</b>\n<i>L'art de forger des lames et des armes mortelles.</i>\n\n<b>Effet :</b> Débloque l'utilisation du Bench Weapon.\n\n<b>[Clic F]</b> pour apprendre.
+items.skill_page_craft_tannerie.name=Tannerie
+items.skill_page_craft_tannerie.description=<b>Rareté : Commun</b>\n<i>Transformez les peaux en cuir résistant.</i>\n\n<b>Effet :</b> Débloque l'utilisation du Bench Tannery.\n\n<b>[Clic F]</b> pour apprendre.
+items.skill_page_craft_alchimie.name=Alchimie
+items.skill_page_craft_alchimie.description=<b>Rareté : Peu Commun</b>\n<i>Mélangez les ingrédients pour créer des potions.</i>\n\n<b>Effet :</b> Débloque l'utilisation du Bench Alchemy.\n\n<b>[Clic F]</b> pour apprendre.
+items.skill_page_craft_scierie.name=Scierie
+items.skill_page_craft_scierie.description=<b>Rareté : Commun</b>\n<i>Découpez le bois pour en faire des planches.</i>\n\n<b>Effet :</b> Débloque l'utilisation du Bench Lumbermill.\n\n<b>[Clic F]</b> pour apprendre.
+items.skill_page_craft_agriculture.name=Agriculture
+items.skill_page_craft_agriculture.description=<b>Rareté : Commun</b>\n<i>Cultivez la terre et récoltez ses fruits.</i>\n\n<b>Effet :</b> Débloque l'utilisation du Bench Farming.\n\n<b>[Clic F]</b> pour apprendre.
+items.skill_page_craft_recyclage.name=Recyclage
+items.skill_page_craft_recyclage.description=<b>Rareté : Commun</b>\n<i>Récupérez des matériaux à partir d'objets usés.</i>\n\n<b>Effet :</b> Débloque l'utilisation du Bench Salvage.\n\n<b>[Clic F]</b> pour apprendre.
 
 # --- ENDURANCE ---
 # 1. Souffle Inépuisable (Commun)
@@ -902,3 +920,7 @@ portals.dungeon_v1.tip2= Pensez à fouiller les tonneaux,\nles donjons de <b>Ran
 portals.dungeon_v1.tip3= </b> Si vous survivez et tuez le Boss ici, \nvous serez bientôt prêt pour le Rank D !
 
 # Categorie - EldaniorSystem
+
+# Parchemin Forme du Dragon Ancien
+items.skill_page_morph_dragon.name=Forme du Dragon Ancien
+items.skill_page_morph_dragon.description=<b>Rarete : Legendaire</b>\n<i>Un parchemin ancien, impregnee de la puissance des dragons ancestraux.</i>\n\n<b>[Clic F]</b> pour apprendre la competence.\n<b>[Competence Active]</b> Donne un item de transformation.

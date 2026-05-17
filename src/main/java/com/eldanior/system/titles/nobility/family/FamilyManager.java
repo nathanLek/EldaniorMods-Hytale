@@ -67,16 +67,25 @@ public class FamilyManager {
         register(new Eldanior());
 
         // Familles Marquis
-        register(new Ashford());
-        register(new Drakenhart());
+        register(new Zippel());
+        register(new Runkandel());
         register(new Luminara());
         register(new Valmontis());
 
-        // Familles Duc
-        register(new Frostguard());
-        register(new Ironveil());
-        register(new Shadowmere());
-        register(new Stormcrest());
+        // Familles Duc (8 familles — 2 par Marquisat)
+        // Guerriers
+        register(new Ironveil());       // Guerrier — volonte de fer
+        register(new Warbane());        // Guerrier — heritage de guerre
+        // Mages
+        register(new Frostguard());     // Mage — resilience du givre
+        register(new Spellweave());     // Mage — maitrise arcanique
+        // Assassin
+        register(new Nighthollow());    // Assassin — frappe de l'ombre
+        // Archer
+        register(new Swiftquiver());    // Archer — precision mortelle
+        // Marchands
+        register(new Goldcrest());      // Marchand — fortune doree
+        register(new Silkroad());       // Marchand — routes du commerce
 
         System.out.println("[Eldanior] " + families.size() + " familles nobles chargees.");
     }

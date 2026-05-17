@@ -112,6 +112,14 @@ public class SkillManager {
                 List.of("INSTINCTIVE_STRIKE", "PREDATORY_STRIKE", "FURY_STRIKE", "SEISMIC_STRIKE", "PHANTOM_STRIKE", "ANNIHILATOR_STRIKE")
         ));
 
+        // --- ACTIVE : TRANSFORMATION ---
+        register("skill_page_morph_dragon", new SkillModel(
+                "MORPH_DRAGON", "Morph_Of_The_Ancient_Dragon", "Forme du Dragon Ancien", "dragon",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+                List.of(),
+                List.of()
+        ));
+
         // --- DEFENSE ---
         register("skill_page_dyna_aegis", new SkillModel(
                 "DYNA_AEGIS", null, "Égide de Dyna", "warrior, dragon",
@@ -316,12 +324,48 @@ public class SkillManager {
                 List.of()
         ));
 
-        // --- CHANCE ---
+        // --- ARTISANAT / CRAFT ---
         register("skill_page_artisanat", new SkillModel(
                 "ARTISANAT", null, "Artisanat", "merchant, dragon",
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(),
                 List.of()
+        ));
+        register("skill_page_craft_cuisine", new SkillModel(
+                "CRAFT_CUISINE", null, "Cuisine", "merchant, all",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, List.of(), List.of()
+        ));
+        register("skill_page_craft_fonderie", new SkillModel(
+                "CRAFT_FONDERIE", null, "Fonderie", "merchant, warrior",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, List.of(), List.of()
+        ));
+        register("skill_page_craft_armurerie", new SkillModel(
+                "CRAFT_ARMURERIE", null, "Armurerie", "merchant, warrior",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, List.of(), List.of()
+        ));
+        register("skill_page_craft_forge_armes", new SkillModel(
+                "CRAFT_FORGE_ARMES", null, "Forge d'Armes", "merchant, warrior",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, List.of(), List.of()
+        ));
+        register("skill_page_craft_tannerie", new SkillModel(
+                "CRAFT_TANNERIE", null, "Tannerie", "merchant, archer",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, List.of(), List.of()
+        ));
+        register("skill_page_craft_alchimie", new SkillModel(
+                "CRAFT_ALCHIMIE", null, "Alchimie", "merchant, mage",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, List.of(), List.of()
+        ));
+        register("skill_page_craft_scierie", new SkillModel(
+                "CRAFT_SCIERIE", null, "Scierie", "merchant, all",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, List.of(), List.of()
+        ));
+        register("skill_page_craft_agriculture", new SkillModel(
+                "CRAFT_AGRICULTURE", null, "Agriculture", "merchant, all",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, List.of(), List.of()
+        ));
+        register("skill_page_craft_recyclage", new SkillModel(
+                "CRAFT_RECYCLAGE", null, "Recyclage", "merchant, all",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, List.of(), List.of()
         ));
         register("skill_page_detection_of_vital_points", new SkillModel(
                 "DETECTIONOFVITALPOINTS", null, "Maîtrise de l'Épée", "warrior, assassin, archer, dragon",

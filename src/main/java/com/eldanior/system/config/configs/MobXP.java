@@ -43,10 +43,18 @@ public class MobXP {
         register(TrorkData.values());
         register(VoidData.values());
         register(ZombieData.values());
+
+        // Trier pour que les keywords les plus longs matchent en premier
+        sortBySpecificity();
     }
 
     private static void register(IMobConfig[] categoryMobs) {
         ALL_MOBS.addAll(Arrays.asList(categoryMobs));
+    }
+
+    // Trier par longueur de keyword decroissante (plus specifique en premier)
+    private static void sortBySpecificity() {
+        ALL_MOBS.sort((a, b) -> Integer.compare(b.getKeyword().length(), a.getKeyword().length()));
     }
 
     public static int getXpForId(String typeId) {
