@@ -335,6 +335,13 @@ public class DignityAuraSystem extends EntityTickingSystem<EntityStore> {
     public static void setEmitterActive(UUID uuid) { activeEmitters.add(uuid); }
     public static void setEmitterInactive(UUID uuid) { activeEmitters.remove(uuid); }
 
+    /** Nettoie les caches d'un joueur qui se deconnecte. */
+    public static void handleDisconnect(UUID uuid) {
+        if (uuid == null) return;
+        slowedPlayers.remove(uuid);
+        activeEmitters.remove(uuid);
+    }
+
     @Nonnull
     @Override
     public Query<EntityStore> getQuery() {

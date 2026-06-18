@@ -66,4 +66,10 @@ public class InvisibilityManager {
     public static boolean isTotallyInvisible(UUID uuid) {
         return invisiblePlayers.getOrDefault(uuid, InvisType.NONE) == InvisType.TOTAL;
     }
+
+    /** Nettoie les donnees d'invisibilite d'un joueur qui se deconnecte. */
+    public static void handleDisconnect(UUID uuid) {
+        if (uuid == null) return;
+        invisiblePlayers.remove(uuid);
+    }
 }

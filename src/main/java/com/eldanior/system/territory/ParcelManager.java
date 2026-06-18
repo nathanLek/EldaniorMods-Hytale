@@ -65,6 +65,12 @@ public class ParcelManager {
         playerSelections.remove(playerUUID);
     }
 
+    /** Nettoie les selections temporaires d'un joueur qui se deconnecte. */
+    public static void handleDisconnect(UUID playerUUID) {
+        if (playerUUID == null) return;
+        playerSelections.remove(playerUUID);
+    }
+
     // ==================== CRUD ====================
 
     public static String createParcel(String name, ParcelType type, UUID ownerUUID, String ownerName,
