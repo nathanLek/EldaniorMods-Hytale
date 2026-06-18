@@ -14,15 +14,23 @@ import javax.annotation.Nonnull;
 public class PlayerNameplateSystem extends EntityTickingSystem<EntityStore> {
 
     private float updateTimer = 0;
+    private boolean shouldUpdate = false;
 
     @Override
     public void tick(float dt, int index, @Nonnull ArchetypeChunk<EntityStore> chunk,
                      @Nonnull Store<EntityStore> store,
                      @Nonnull CommandBuffer<EntityStore> commandBuffer) {
 
-        updateTimer += dt;
-        if (updateTimer < 2.0f) return;  // Update toutes les 2 secondes
-        if (index == 0) updateTimer = 0;
+        if (index == 0) {
+            updateTimer += dt;
+            if (updateTimer >= 2.0f) {
+                shouldUpdate = true;
+                updateTimer = 0;
+            } else {
+                shouldUpdate = false;
+            }
+        }
+        if (!shouldUpdate) return;
 
         Ref<EntityStore> playerRef = chunk.getReferenceTo(index);
         if (!playerRef.isValid()) return;

@@ -27,7 +27,7 @@ public class QuestHudUpdateSystem extends EntityTickingSystem<EntityStore> {
     public void tick(float dt, int index, @Nonnull ArchetypeChunk<EntityStore> archetypeChunk,
                      @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
 
-        tickCounter++;
+        if (index == 0) tickCounter++;
 
         // Verifier le reset journalier toutes les ~60s (sur le premier joueur seulement)
         if (tickCounter % 1200 == 0 && index == 0) {
