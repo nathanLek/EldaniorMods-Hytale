@@ -7,6 +7,7 @@ import com.eldanior.system.shop.ShopManager;
 import com.eldanior.system.titles.nobility.family.FamilyManager;
 import com.eldanior.system.titles.nobility.family.NobleFamilyModel;
 import com.eldanior.system.config.EldaniorLogger;
+import com.eldanior.system.config.PersistenceUtils;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 
 import java.io.*;
@@ -91,9 +92,7 @@ public class PersistenceManager {
         }
         props.setProperty("_count", String.valueOf(count));
 
-        try (OutputStream out = Files.newOutputStream(dataDir.resolve("guilds.properties"))) {
-            props.store(out, "Guild data (full persistence)");
-        }
+        PersistenceUtils.writeAtomicWithBackup(dataDir.resolve("guilds.properties"), props, "Guild data (full persistence)");
     }
 
     private static void saveFamilies() throws IOException {
@@ -112,9 +111,7 @@ public class PersistenceManager {
             }
         }
         props.setProperty("_takenFamilies", taken.toString());
-        try (OutputStream out = Files.newOutputStream(dataDir.resolve("families.properties"))) {
-            props.store(out, "Family treasury & contribution data");
-        }
+        PersistenceUtils.writeAtomicWithBackup(dataDir.resolve("families.properties"), props, "Family treasury & contribution data");
     }
 
     private static void saveClassements() throws IOException {
@@ -128,9 +125,7 @@ public class PersistenceManager {
         for (var entry : ClassementManager.getDuelRanking(200)) {
             props.setProperty("duel." + entry.name(), String.valueOf(entry.value()));
         }
-        try (OutputStream out = Files.newOutputStream(dataDir.resolve("classements.properties"))) {
-            props.store(out, "Classement data");
-        }
+        PersistenceUtils.writeAtomicWithBackup(dataDir.resolve("classements.properties"), props, "Classement data");
     }
 
     // ==================== LOAD ====================
@@ -277,9 +272,7 @@ public class PersistenceManager {
         Properties props = new Properties();
         com.eldanior.system.titles.nobility.NobilityManager.saveTo(props);
         com.eldanior.system.titles.church.ChurchManager.saveTo(props);
-        try (java.io.OutputStream out = java.nio.file.Files.newOutputStream(dataDir.resolve("hierarchies.properties"))) {
-            props.store(out, "Nobility & Church hierarchies");
-        }
+        PersistenceUtils.writeAtomicWithBackup(dataDir.resolve("hierarchies.properties"), props, "Nobility & Church hierarchies");
     }
 
     private static void loadHierarchies() throws IOException {
@@ -306,9 +299,7 @@ public class PersistenceManager {
         for (var entry : ShopManager.getPendingEarningsMap().entrySet()) {
             pendingProps.setProperty(entry.getKey().toString(), String.valueOf(entry.getValue()));
         }
-        try (OutputStream out = Files.newOutputStream(dataDir.resolve("pending_earnings.properties"))) {
-            pendingProps.store(out, "Pending shop earnings");
-        }
+        PersistenceUtils.writeAtomicWithBackup(dataDir.resolve("pending_earnings.properties"), pendingProps, "Pending shop earnings");
     }
 
     private static void saveMarketListings(String filename, List<ShopManager.ShopListing> listings) throws IOException {
@@ -327,9 +318,7 @@ public class PersistenceManager {
             props.setProperty(prefix + ".price", String.valueOf(listing.getPrice()));
         }
 
-        try (OutputStream out = Files.newOutputStream(dataDir.resolve(filename))) {
-            props.store(out, "Market listings data");
-        }
+        PersistenceUtils.writeAtomicWithBackup(dataDir.resolve(filename), props, "Market listings data");
     }
 
     private static void loadShop() throws IOException {

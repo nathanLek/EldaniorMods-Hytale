@@ -1,5 +1,7 @@
 package com.eldanior.system.territory;
 
+import com.eldanior.system.config.PersistenceUtils;
+
 import java.io.*;
 import java.nio.file.Path;
 import java.util.*;
@@ -94,11 +96,7 @@ public class ArenaManager {
                 }
             }
 
-            File file = dataDir.resolve("arena_stats.properties").toFile();
-            file.getParentFile().mkdirs();
-            try (FileOutputStream fos = new FileOutputStream(file)) {
-                props.store(fos, "Eldanior Arena Stats");
-            }
+            PersistenceUtils.writeAtomicWithBackup(dataDir.resolve("arena_stats.properties"), props, "Eldanior Arena Stats");
         } catch (Exception e) {
             System.err.println("[ArenaManager] Erreur sauvegarde: " + e.getMessage());
         }

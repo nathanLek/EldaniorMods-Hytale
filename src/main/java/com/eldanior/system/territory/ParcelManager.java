@@ -1,5 +1,7 @@
 package com.eldanior.system.territory;
 
+import com.eldanior.system.config.PersistenceUtils;
+
 import java.io.*;
 import java.nio.file.Path;
 import java.util.*;
@@ -564,11 +566,7 @@ public class ParcelManager {
                 props.setProperty(prefix + "firstDiscovererUUID", p.getFirstDiscovererUUID() != null ? p.getFirstDiscovererUUID() : "");
             }
 
-            File file = dataDir.resolve("parcels.properties").toFile();
-            file.getParentFile().mkdirs();
-            try (FileOutputStream fos = new FileOutputStream(file)) {
-                props.store(fos, "Eldanior Parcels");
-            }
+            PersistenceUtils.writeAtomicWithBackup(dataDir.resolve("parcels.properties"), props, "Eldanior Parcels");
         } catch (Exception e) {
             System.err.println("[ParcelManager] Erreur sauvegarde: " + e.getMessage());
         }
