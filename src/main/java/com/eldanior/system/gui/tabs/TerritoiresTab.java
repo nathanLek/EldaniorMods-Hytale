@@ -4,6 +4,7 @@ import com.eldanior.system.territory.*;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.config.EldaniorLogger;
+import com.eldanior.system.config.TaxConfig;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.entity.entities.Player;
@@ -180,7 +181,7 @@ public class TerritoiresTab {
         ui.set("#TDetPvp.Style.TextColor", p.isPvpEnabled() ? "#cc4444" : "#4CAF50");
 
         // Infos economiques
-        ui.set("#TDetTaxRate.Text", "Taxe : 12% sur transactions");
+        ui.set("#TDetTaxRate.Text", "Taxe : " + (int)(TaxConfig.TRANSACTION_TAX_RATE * 100) + "% sur transactions");
         if (p.getLastTaxCollection() > 0) {
             long nextTax = (p.getLastTaxCollection() + 7L * 24 * 60 * 60 * 1000) - System.currentTimeMillis();
             if (nextTax > 0) {
@@ -349,12 +350,7 @@ public class TerritoiresTab {
         // = Royaume 12240 > Marquis 3060 > Duc 2700 > Ville 2000 ✓
         if (p.getType() == ParcelType.CITY) return false;
 
-        double taxRate = switch (p.getType()) {
-            case KINGDOM -> 0.57;
-            case GRAND_TERRITORY -> 0.80;   // Marquisat prend 80% du Duche
-            case TERRITORY -> 0.875;        // Duche prend 87.5% de la ville
-            default -> 0.0;
-        };
+        double taxRate = TaxConfig.getCollectionRate(p.getType());
 
         if (taxRate <= 0) return false;
 
