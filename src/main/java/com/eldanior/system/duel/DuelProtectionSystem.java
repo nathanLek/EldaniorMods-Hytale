@@ -61,8 +61,8 @@ public class DuelProtectionSystem extends EntityTickingSystem<EntityStore> {
 
         // Si HP <= 5% du max -> protection
         if (currentHP <= maxHP * 0.05f) {
-            // Remettre a pleine vie
-            statMap.setStatValue(DefaultEntityStatTypes.getHealth(), maxHP);
+            // Remettre a 1 HP (pas pleine vie — le heal complet se fait dans endDuel)
+            statMap.setStatValue(DefaultEntityStatTypes.getHealth(), 1.0f);
 
             if (inDuel) {
                 // Duel classique : terminer le duel

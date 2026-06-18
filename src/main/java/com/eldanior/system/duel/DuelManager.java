@@ -117,7 +117,7 @@ public class DuelManager {
         float loserHPPercent = 0.01f; // 1 HP = quasi 0
 
         // Mise a jour stats + XP transfer
-        processResults(winnerUUID, winnerRef, loserUUID, loserRef, winnerHPPercent);
+        processResults(winnerUUID, winnerRef, loserUUID, loserRef, winnerHPPercent, loserHPPercent);
 
         // Heal les deux joueurs a 100%
         healFull(winnerRef);
@@ -136,7 +136,7 @@ public class DuelManager {
     }
 
     private static void processResults(UUID winnerUUID, PlayerRef winnerRef, UUID loserUUID, PlayerRef loserRef,
-                                        float winnerHPPercent) {
+                                        float winnerHPPercent, float loserHPPercent) {
         try {
             ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
 
@@ -150,7 +150,7 @@ public class DuelManager {
                         int xpLost = lData.removeExperiencePercent(0.10);
                         lData.addDuelLoss();
                         String winnerName = winnerRef != null ? winnerRef.getUsername() : "?";
-                        lData.addDuelHistory(winnerName, false, 1, winnerHPPercent);
+                        lData.addDuelHistory(winnerName, false, loserHPPercent, winnerHPPercent);
                         lStore.putComponent(lRef, type, lData);
 
                         // Winner: gagne l'XP perdue
@@ -163,7 +163,7 @@ public class DuelManager {
                                     wData.addExperience(xpLost);
                                     wData.addDuelWin();
                                     String loserName = loserRef.getUsername();
-                                    wData.addDuelHistory(loserName, true, winnerHPPercent, 1);
+                                    wData.addDuelHistory(loserName, true, winnerHPPercent, loserHPPercent);
                                     wStore.putComponent(wRef, type, wData);
 
                                     // Classement + quete
