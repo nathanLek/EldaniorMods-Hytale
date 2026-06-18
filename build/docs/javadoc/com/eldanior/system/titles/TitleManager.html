@@ -69,6 +69,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#getAll()" tabindex="0">getAll()</a></li>
 <li><a href="#getAvailableIds()" tabindex="0">getAvailableIds()</a></li>
 <li><a href="#checkTitleUnlocks(com.eldanior.system.config.Player.PlayerLevelData)" tabindex="0">checkTitleUnlocks(PlayerLevelData)</a></li>
+<li><a href="#checkAndUnlockTitles(com.hypixel.hytale.component.Ref,com.hypixel.hytale.component.Store,com.eldanior.system.config.Player.PlayerLevelData,com.hypixel.hytale.server.core.universe.PlayerRef)" tabindex="0">checkAndUnlockTitles(Ref, Store, PlayerLevelData, PlayerRef)</a></li>
 </ol>
 </li>
 </ol>
@@ -114,29 +115,37 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="models/TitleModel.html" title="class in com.eldanior.system.titles.models">TitleModel</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#checkTitleUnlocks(com.eldanior.system.config.Player.PlayerLevelData)" class="member-name-link">checkTitleUnlocks</a><wbr>(<a href="../config/Player/PlayerLevelData.html" title="class in com.eldanior.system.config.Player">PlayerLevelData</a>&nbsp;data)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#checkAndUnlockTitles(com.hypixel.hytale.component.Ref,com.hypixel.hytale.component.Store,com.eldanior.system.config.Player.PlayerLevelData,com.hypixel.hytale.server.core.universe.PlayerRef)" class="member-name-link">checkAndUnlockTitles</a><wbr>(com.hypixel.hytale.component.Ref&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;ref,
+ com.hypixel.hytale.component.Store&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;store,
+ <a href="../config/Player/PlayerLevelData.html" title="class in com.eldanior.system.config.Player">PlayerLevelData</a>&nbsp;data,
+ com.hypixel.hytale.server.core.universe.PlayerRef&nbsp;playerRef)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Verifie, attribue et notifie les titres debloques en temps reel.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="models/TitleModel.html" title="class in com.eldanior.system.titles.models">TitleModel</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#checkTitleUnlocks(com.eldanior.system.config.Player.PlayerLevelData)" class="member-name-link">checkTitleUnlocks</a><wbr>(<a href="../config/Player/PlayerLevelData.html" title="class in com.eldanior.system.config.Player">PlayerLevelData</a>&nbsp;data)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Verifie tous les titres et retourne ceux que le joueur vient de debloquer.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="models/TitleModel.html" title="class in com.eldanior.system.titles.models">TitleModel</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#get(java.lang.String)" class="member-name-link">get</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a><wbr>&lt;<a href="models/TitleModel.html" title="class in com.eldanior.system.titles.models">TitleModel</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getAll()" class="member-name-link">getAll</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getAvailableIds()" class="member-name-link">getAvailableIds</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="models/TitleModel.html" title="class in com.eldanior.system.titles.models">TitleModel</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getByDisplayName(java.lang.String)" class="member-name-link">getByDisplayName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#get(java.lang.String)" class="member-name-link">get</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#init()" class="member-name-link">init</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a><wbr>&lt;<a href="models/TitleModel.html" title="class in com.eldanior.system.titles.models">TitleModel</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getAll()" class="member-name-link">getAll</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getAvailableIds()" class="member-name-link">getAvailableIds</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="models/TitleModel.html" title="class in com.eldanior.system.titles.models">TitleModel</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getByDisplayName(java.lang.String)" class="member-name-link">getByDisplayName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#register(com.eldanior.system.titles.models.TitleModel)" class="member-name-link">register</a><wbr>(<a href="models/TitleModel.html" title="class in com.eldanior.system.titles.models">TitleModel</a>&nbsp;model)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#init()" class="member-name-link">init</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#register(com.eldanior.system.titles.models.TitleModel)" class="member-name-link">register</a><wbr>(<a href="models/TitleModel.html" title="class in com.eldanior.system.titles.models">TitleModel</a>&nbsp;model)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -224,6 +233,20 @@ loadScripts(document, 'script');</script>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="models/TitleModel.html" title="class in com.eldanior.system.titles.models">TitleModel</a>&gt;</span>&nbsp;<span class="element-name">checkTitleUnlocks</span><wbr><span class="parameters">(<a href="../config/Player/PlayerLevelData.html" title="class in com.eldanior.system.config.Player">PlayerLevelData</a>&nbsp;data)</span></div>
 <div class="block">Verifie tous les titres et retourne ceux que le joueur vient de debloquer.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="checkAndUnlockTitles(com.hypixel.hytale.component.Ref,com.hypixel.hytale.component.Store,com.eldanior.system.config.Player.PlayerLevelData,com.hypixel.hytale.server.core.universe.PlayerRef)">
+<h3>checkAndUnlockTitles</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">checkAndUnlockTitles</span><wbr><span class="parameters">(com.hypixel.hytale.component.Ref&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;ref,
+ com.hypixel.hytale.component.Store&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;store,
+ <a href="../config/Player/PlayerLevelData.html" title="class in com.eldanior.system.config.Player">PlayerLevelData</a>&nbsp;data,
+ com.hypixel.hytale.server.core.universe.PlayerRef&nbsp;playerRef)</span></div>
+<div class="block">Verifie, attribue et notifie les titres debloques en temps reel.
+A appeler apres tout changement de stats, niveau, argent, kills, etc.
+Ecrit directement dans le store (pas de commandBuffer).</div>
 </div>
 </section>
 </li>
