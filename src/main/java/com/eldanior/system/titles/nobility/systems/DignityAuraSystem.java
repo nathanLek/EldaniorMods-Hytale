@@ -7,6 +7,7 @@ import com.eldanior.system.config.configs.StatConfig;
 import com.eldanior.system.classes.ClassManager;
 import com.eldanior.system.classes.models.ClassModel;
 import com.eldanior.system.config.EldaniorLogger;
+import com.eldanior.system.config.UUIDExtractor;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
@@ -101,7 +102,11 @@ public class DignityAuraSystem extends EntityTickingSystem<EntityStore> {
         Player player = store.getComponent(playerRef, Player.getComponentType());
         if (player == null) return;
 
-        UUID selfUUID = getPlayerUUID(player);
+        PlayerRef selfPlayerRef = store.getComponent(playerRef, PlayerRef.getComponentType());
+        if (selfPlayerRef == null) return;
+        UUID selfUUID;
+        try { selfUUID = UUIDExtractor.getUUID(selfPlayerRef); }
+        catch (Exception e) { return; }
         if (selfUUID == null) return;
 
         // === VERIFIER SI CE JOUEUR EST AFFECTE PAR UNE AURA ===
@@ -312,17 +317,6 @@ public class DignityAuraSystem extends EntityTickingSystem<EntityStore> {
         double dy = a.y - b.y;
         double dz = a.z - b.z;
         return dx * dx + dy * dy + dz * dz;
-    }
-
-    private UUID getPlayerUUID(Player player) {
-        try {
-            for (Method m : player.getClass().getMethods()) {
-                if (m.getReturnType().equals(UUID.class) && m.getParameterCount() == 0) {
-                    return (UUID) m.invoke(player);
-                }
-            }
-        } catch (Exception e) { EldaniorLogger.error("DignityAuraSystem", e); }
-        return null;
     }
 
     // Tracker statique : les emetteurs actifs (ceux qui ont une arme en main)
