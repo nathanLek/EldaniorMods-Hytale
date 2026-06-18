@@ -495,7 +495,9 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
 
         // Duel challenge
         if ("duel_challenge".equals(eventData.action) && eventData.param != null) {
-            DuelTab.handleChallenge(eventData.param, ref, store);
+            if (DuelTab.handleChallenge(eventData.param, ref, store)) {
+                refreshDuelTab(ref, store);
+            }
             return;
         }
 
@@ -886,6 +888,13 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
 
         // Profil tab
         ProfilTab.populate(update, ref, store, data, playerName);
+    }
+
+    private void refreshDuelTab(Ref<EntityStore> ref, Store<EntityStore> store) {
+        UICommandBuilder update = new UICommandBuilder();
+        DuelTab.populate(update, ref, store);
+        appendProfilRefresh(update, ref, store);
+        this.sendUpdate(update);
     }
 
     private void refreshBlackMarketTab(Ref<EntityStore> ref, Store<EntityStore> store) {
