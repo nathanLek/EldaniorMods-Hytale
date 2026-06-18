@@ -33,6 +33,9 @@ public class DuelProtectionSystem extends EntityTickingSystem<EntityStore> {
         tickCounter++;
         if (tickCounter % 5 != 0) return;
 
+        // Traiter les fins de duel en attente sur le thread serveur (thread-safe pour ECS)
+        DuelManager.processPendingEndDuels();
+
         Ref<EntityStore> entityRef = archetypeChunk.getReferenceTo(index);
         if (!entityRef.isValid()) return;
 

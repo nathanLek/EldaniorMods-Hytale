@@ -41,18 +41,9 @@ public class DuelManager {
         }
     }
 
-    private static java.util.Timer duelTimer;
-
     public static void init() {
-        // Timer pour traiter les fins de duel hors du tick (toutes les 200ms)
-        if (duelTimer != null) duelTimer.cancel();
-        duelTimer = new java.util.Timer("EldaniorDuelProcessor", true);
-        duelTimer.scheduleAtFixedRate(new java.util.TimerTask() {
-            @Override
-            public void run() {
-                try { processPendingEndDuels(); } catch (Exception e) { e.printStackTrace(); }
-            }
-        }, 200L, 200L);
+        // processPendingEndDuels() est maintenant appele depuis DuelProtectionSystem.tick()
+        // pour garantir l'execution sur le thread serveur (acces ECS thread-safe)
         System.out.println("[Eldanior] Systeme de Duels initialise.");
     }
 
