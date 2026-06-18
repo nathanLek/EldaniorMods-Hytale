@@ -100,71 +100,77 @@ public class TradeScreen extends InteractiveCustomUIPage<TradeScreen.TradeEventD
     }
 
     private void handleDeposit(Player player, int hotbarSlot) {
-        if (hotbarSlot < 0 || hotbarSlot >= 9) return;
+        synchronized (session) {
+            if (hotbarSlot < 0 || hotbarSlot >= 9) return;
 
-        ItemContainer hotbar = player.getInventory().getHotbar();
-        ItemStack item = hotbar.getItemStack((short) hotbarSlot);
-        if (item == null || item.isEmpty()) return;
+            ItemContainer hotbar = player.getInventory().getHotbar();
+            ItemStack item = hotbar.getItemStack((short) hotbarSlot);
+            if (item == null || item.isEmpty()) return;
 
-        int emptySlot = session.firstEmptySlot(myUUID);
-        if (emptySlot == -1) return; // Slots pleins
+            int emptySlot = session.firstEmptySlot(myUUID);
+            if (emptySlot == -1) return; // Slots pleins
 
-        session.setItem(myUUID, emptySlot, item);
-        hotbar.removeItemStackFromSlot((short) hotbarSlot);
+            session.setItem(myUUID, emptySlot, item);
+            hotbar.removeItemStackFromSlot((short) hotbarSlot);
 
-        // Refresh les deux cotes
-        UICommandBuilder update = new UICommandBuilder();
-        refreshAllSlots(update);
-        refreshHotbar(update, player);
-        refreshValidation(update);
-        this.sendUpdate(update);
+            // Refresh les deux cotes
+            UICommandBuilder update = new UICommandBuilder();
+            refreshAllSlots(update);
+            refreshHotbar(update, player);
+            refreshValidation(update);
+            this.sendUpdate(update);
 
-        // Notifier l'autre joueur
-        notifyOther();
+            // Notifier l'autre joueur
+            notifyOther();
+        }
     }
 
     private void handleTakeBack(Player player, int tradeSlot) {
-        // Verifier qu'il y a de la place dans la hotbar avant de reprendre
-        if (TradeManager.countEmptySlots(myUUID) <= 0) {
-            player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§cVotre hotbar est pleine !"));
-            return;
-        }
-
-        ItemStack item = session.takeItem(myUUID, tradeSlot);
-        if (item == null || item.isEmpty()) return;
-
-        player.getInventory().getHotbar().addItemStack(item);
-
-        UICommandBuilder update = new UICommandBuilder();
-        refreshAllSlots(update);
-        refreshHotbar(update, player);
-        refreshValidation(update);
-        this.sendUpdate(update);
-
-        notifyOther();
-    }
-
-    private void handleValidate(Player player) {
-        boolean bothDone = session.validate(myUUID);
-
-        if (bothDone) {
-            // Les deux ont valide → executer l'echange (ferme aussi les fenetres)
-            TradeManager.endTrade(session, true);
-
-            player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§a§lEchange effectue avec succes !"));
-
-            UUID otherUUID = session.getOther(myUUID);
-            PlayerRef otherRef = Universe.get().getPlayer(otherUUID);
-            if (otherRef != null) {
-                otherRef.sendMessage(com.hypixel.hytale.server.core.Message.raw("§a§lEchange effectue avec succes !"));
+        synchronized (session) {
+            // Verifier qu'il y a de la place dans la hotbar avant de reprendre
+            if (TradeManager.countEmptySlots(myUUID) <= 0) {
+                player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§cVotre hotbar est pleine !"));
+                return;
             }
-        } else {
+
+            ItemStack item = session.takeItem(myUUID, tradeSlot);
+            if (item == null || item.isEmpty()) return;
+
+            player.getInventory().getHotbar().addItemStack(item);
+
             UICommandBuilder update = new UICommandBuilder();
+            refreshAllSlots(update);
+            refreshHotbar(update, player);
             refreshValidation(update);
-            update.set("#TradeStatus.Text", "En attente de validation de l'autre joueur...");
             this.sendUpdate(update);
 
             notifyOther();
+        }
+    }
+
+    private void handleValidate(Player player) {
+        synchronized (session) {
+            boolean bothDone = session.validate(myUUID);
+
+            if (bothDone) {
+                // Les deux ont valide → executer l'echange (ferme aussi les fenetres)
+                TradeManager.endTrade(session, true);
+
+                player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§a§lEchange effectue avec succes !"));
+
+                UUID otherUUID = session.getOther(myUUID);
+                PlayerRef otherRef = Universe.get().getPlayer(otherUUID);
+                if (otherRef != null) {
+                    otherRef.sendMessage(com.hypixel.hytale.server.core.Message.raw("§a§lEchange effectue avec succes !"));
+                }
+            } else {
+                UICommandBuilder update = new UICommandBuilder();
+                refreshValidation(update);
+                update.set("#TradeStatus.Text", "En attente de validation de l'autre joueur...");
+                this.sendUpdate(update);
+
+                notifyOther();
+            }
         }
     }
 
