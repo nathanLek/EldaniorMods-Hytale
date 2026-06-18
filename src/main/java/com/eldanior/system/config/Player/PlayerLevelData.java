@@ -215,6 +215,7 @@ public class PlayerLevelData implements Component<EntityStore> {
             .append(new KeyedCodec<>("ClassId", Codec.STRING), (data, v) -> data.classId = v, data -> data.classId).add()
             .append(new KeyedCodec<>("CurrentTitle", Codec.STRING), (data, v) -> data.currentTitle = v, data -> data.currentTitle).add()
             .append(new KeyedCodec<>("GuildRank", Codec.STRING), (data, v) -> data.guildRank = v, data -> data.guildRank).add()
+            .append(new KeyedCodec<>("ActiveSkillId", Codec.STRING), (data, v) -> data.activeSkillId = (v != null ? v : ""), data -> (data.activeSkillId != null ? data.activeSkillId : "")).add()
             .append(new KeyedCodec<>("NobilityRank", Codec.STRING), (data, v) -> data.nobilityRank = v, data -> data.nobilityRank).add()
             .append(new KeyedCodec<>("NobleFamilyId", Codec.STRING), (data, v) -> data.nobleFamilyId = v, data -> data.nobleFamilyId).add()
             .append(new KeyedCodec<>("Status", Codec.STRING), (data, v) -> data.status = v, data -> data.status).add()
@@ -333,6 +334,7 @@ public class PlayerLevelData implements Component<EntityStore> {
         copy.classId = this.classId;
         copy.currentTitle = this.currentTitle;
         copy.guildRank = this.guildRank;
+        copy.activeSkillId = this.activeSkillId;
         copy.nobilityRank = this.nobilityRank;
         copy.nobleFamilyId = this.nobleFamilyId;
         copy.status = this.status;
