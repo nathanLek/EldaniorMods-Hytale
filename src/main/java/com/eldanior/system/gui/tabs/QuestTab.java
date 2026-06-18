@@ -11,6 +11,7 @@ import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.ui.builder.UICommandBuilder;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
@@ -394,16 +395,7 @@ public class QuestTab {
             num++;
         }
         if (cond.getRequiredItemId() != null) {
-            boolean done = false;
-            if (player != null) {
-                var hotbar = player.getInventory().getHotbar();
-                for (short i = 0; i < 9; i++) {
-                    var item = hotbar.getItemStack(i);
-                    if (item != null && !item.isEmpty() && item.getItemId().equalsIgnoreCase(cond.getRequiredItemId())) {
-                        done = true; break;
-                    }
-                }
-            }
+            boolean done = hasItemInFullInventory(player, cond.getRequiredItemId());
             String name = cond.getRequiredItemId().replaceAll("([a-z])([A-Z])", "$1 $2").replace("_", " ");
             if (name.contains(":")) name = name.substring(name.indexOf(':') + 1);
             objectives.add(new String[]{num + ". " + name, done ? "OK" : "0/1", done ? "1" : "0"});
@@ -422,6 +414,27 @@ public class QuestTab {
                 ui.set("#QActiveObj" + i + "Box.Visible", false);
             }
         }
+    }
+
+    /**
+     * Parcourt l'inventaire complet (hotbar + storage + backpack) pour trouver un item.
+     */
+    private static boolean hasItemInFullInventory(Player player, String itemId) {
+        if (player == null || itemId == null) return false;
+        var inv = player.getInventory();
+        for (short i = 0; i < 9; i++) {
+            ItemStack item = inv.getHotbar().getItemStack(i);
+            if (item != null && !item.isEmpty() && item.getItemId().equalsIgnoreCase(itemId)) return true;
+        }
+        for (short i = 0; i < 27; i++) {
+            ItemStack item = inv.getStorage().getItemStack(i);
+            if (item != null && !item.isEmpty() && item.getItemId().equalsIgnoreCase(itemId)) return true;
+        }
+        for (short i = 0; i < 8; i++) {
+            ItemStack item = inv.getBackpack().getItemStack(i);
+            if (item != null && !item.isEmpty() && item.getItemId().equalsIgnoreCase(itemId)) return true;
+        }
+        return false;
     }
 
     /** Sauvegarde les quetes + cooldowns du joueur dans PlayerLevelData */

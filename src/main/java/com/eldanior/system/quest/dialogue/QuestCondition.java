@@ -40,15 +40,7 @@ public class QuestCondition {
         }
 
         if (requiredItemId != null && player != null) {
-            boolean hasItem = false;
-            var hotbar = player.getInventory().getHotbar();
-            for (short i = 0; i < 9; i++) {
-                ItemStack item = hotbar.getItemStack(i);
-                if (item != null && !item.isEmpty() && item.getItemId().equalsIgnoreCase(requiredItemId)) {
-                    hasItem = true;
-                    break;
-                }
-            }
+            boolean hasItem = hasItemInFullInventory(player, requiredItemId);
             if (!hasItem) {
                 failures.add("Objet requis : " + requiredItemId);
             }
@@ -134,10 +126,28 @@ public class QuestCondition {
     }
 
     private boolean hasItem(Player player, String itemId) {
+        return hasItemInFullInventory(player, itemId);
+    }
+
+    /**
+     * Parcourt l'inventaire complet (hotbar + storage + backpack) pour trouver un item.
+     */
+    private boolean hasItemInFullInventory(Player player, String itemId) {
         if (player == null || itemId == null) return false;
-        var hotbar = player.getInventory().getHotbar();
+        var inv = player.getInventory();
+        // Hotbar (9 slots)
         for (short i = 0; i < 9; i++) {
-            ItemStack item = hotbar.getItemStack(i);
+            ItemStack item = inv.getHotbar().getItemStack(i);
+            if (item != null && !item.isEmpty() && item.getItemId().equalsIgnoreCase(itemId)) return true;
+        }
+        // Storage (27 slots)
+        for (short i = 0; i < 27; i++) {
+            ItemStack item = inv.getStorage().getItemStack(i);
+            if (item != null && !item.isEmpty() && item.getItemId().equalsIgnoreCase(itemId)) return true;
+        }
+        // Backpack (8 slots)
+        for (short i = 0; i < 8; i++) {
+            ItemStack item = inv.getBackpack().getItemStack(i);
             if (item != null && !item.isEmpty() && item.getItemId().equalsIgnoreCase(itemId)) return true;
         }
         return false;
