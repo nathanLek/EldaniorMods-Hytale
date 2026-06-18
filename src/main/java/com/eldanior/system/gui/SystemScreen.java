@@ -367,13 +367,13 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
 
         // Inventory actions
         if ("inv_take".equals(eventData.action) && eventData.param != null) {
-            if (InventaireTab.handleTake(ref, store, Integer.parseInt(eventData.param))) {
+            if (InventaireTab.handleTake(ref, store, EldaniorLogger.parseSafeInt(eventData.param, -1))) {
                 refreshInventaireTab(ref, store);
             }
             return;
         }
         if ("inv_deposit".equals(eventData.action) && eventData.param != null) {
-            if (InventaireTab.handleDeposit(ref, store, Integer.parseInt(eventData.param))) {
+            if (InventaireTab.handleDeposit(ref, store, EldaniorLogger.parseSafeInt(eventData.param, -1))) {
                 refreshInventaireTab(ref, store);
             }
             return;
@@ -503,7 +503,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
 
         // Echange invite
         if ("ech_invite".equals(eventData.action) && eventData.param != null) {
-            if (EchangesTab.handleInvite(Integer.parseInt(eventData.param), ref, store)) {
+            if (EchangesTab.handleInvite(EldaniorLogger.parseSafeInt(eventData.param, -1), ref, store)) {
                 refreshEchangesTab(ref, store);
             }
             return;
@@ -511,7 +511,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
 
         // Echange force (admin)
         if ("ech_force".equals(eventData.action) && eventData.param != null) {
-            EchangesTab.handleForceOpen(Integer.parseInt(eventData.param), ref, store);
+            EchangesTab.handleForceOpen(EldaniorLogger.parseSafeInt(eventData.param, -1), ref, store);
             return;
         }
 
@@ -526,7 +526,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         }
         // Territoires - selection
         if ("terr_select".equals(eventData.action) && eventData.param != null) {
-            if (TerritoiresTab.handleSelect(Integer.parseInt(eventData.param))) {
+            if (TerritoiresTab.handleSelect(EldaniorLogger.parseSafeInt(eventData.param, -1))) {
                 refreshTerritoiresTab(ref, store);
             }
             return;
@@ -624,14 +624,14 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
 
         // Proprietes - selection d'un bien
         if ("prop_select".equals(eventData.action) && eventData.param != null) {
-            if (ProprietesTab.handleSelect(Integer.parseInt(eventData.param))) {
+            if (ProprietesTab.handleSelect(EldaniorLogger.parseSafeInt(eventData.param, -1))) {
                 refreshProprietesTab(ref, store);
             }
             return;
         }
         // Proprietes - acheter ville
         if ("prop_buy_city".equals(eventData.action) && eventData.param != null) {
-            if (ProprietesTab.handleBuyCity(Integer.parseInt(eventData.param), ref, store)) {
+            if (ProprietesTab.handleBuyCity(EldaniorLogger.parseSafeInt(eventData.param, -1), ref, store)) {
                 refreshProprietesTab(ref, store);
                 refreshProfilTab(ref, store);
             }
@@ -639,14 +639,14 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         }
         // Proprietes - acheter/louer
         if ("prop_buy".equals(eventData.action) && eventData.param != null) {
-            if (ProprietesTab.handleBuy(Integer.parseInt(eventData.param), ref, store)) {
+            if (ProprietesTab.handleBuy(EldaniorLogger.parseSafeInt(eventData.param, -1), ref, store)) {
                 refreshProprietesTab(ref, store);
                 refreshProfilTab(ref, store);
             }
             return;
         }
         if ("prop_rent".equals(eventData.action) && eventData.param != null) {
-            if (ProprietesTab.handleRent(Integer.parseInt(eventData.param), ref, store)) {
+            if (ProprietesTab.handleRent(EldaniorLogger.parseSafeInt(eventData.param, -1), ref, store)) {
                 refreshProprietesTab(ref, store);
                 refreshProfilTab(ref, store);
             }
@@ -699,7 +699,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             return;
         }
         if ("prop_invite".equals(eventData.action) && eventData.param != null) {
-            if (ProprietesTab.handleInvite(Integer.parseInt(eventData.param))) {
+            if (ProprietesTab.handleInvite(EldaniorLogger.parseSafeInt(eventData.param, -1))) {
                 refreshProprietesTab(ref, store);
             }
             return;

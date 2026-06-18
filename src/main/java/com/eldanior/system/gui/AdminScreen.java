@@ -225,7 +225,7 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
         switch (action) {
             case "admin_sel" -> {
                 if (param != null) {
-                    AdminTab.selectPlayer(Integer.parseInt(param));
+                    AdminTab.selectPlayer(EldaniorLogger.parseSafeInt(param, -1));
                     refreshDashboard(ref, store);
                 }
             }
@@ -236,19 +236,19 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
                 }
             }
             case "admin_xp" -> {
-                if (param != null && AdminTab.handleAddXP(Integer.parseInt(param), ref, store)) {
+                if (param != null && AdminTab.handleAddXP(EldaniorLogger.parseSafeInt(param, 0), ref, store)) {
                     if (player != null) player.getPlayerRef().sendMessage(Message.raw("§a+" + param + " XP !"));
                     refreshDashboard(ref, store);
                 }
             }
             case "admin_setlv" -> {
-                if (param != null && AdminTab.handleSetLevel(Integer.parseInt(param), ref, store)) {
+                if (param != null && AdminTab.handleSetLevel(EldaniorLogger.parseSafeInt(param, 1), ref, store)) {
                     if (player != null) player.getPlayerRef().sendMessage(Message.raw("§aNiveau defini a " + param));
                     refreshDashboard(ref, store);
                 }
             }
             case "admin_gold" -> {
-                if (param != null && AdminTab.handleGiveGold(Long.parseLong(param), ref, store)) {
+                if (param != null && AdminTab.handleGiveGold(EldaniorLogger.parseSafeLong(param, 0L), ref, store)) {
                     if (player != null) player.getPlayerRef().sendMessage(Message.raw("§a+" + param + " Or !"));
                     refreshDashboard(ref, store);
                 }
@@ -428,7 +428,7 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
             case "world_pnext" -> { int mp = Math.max(0, (worldParcelList.size() - 1) / WORLD_SLOTS); if (worldParcelPage < mp) { worldParcelPage++; worldSelectedId = null; refreshWorldAll(); } }
             case "world_tselect" -> {
                 if (param != null) {
-                    int idx = Integer.parseInt(param) + (worldTerrPage * WORLD_SLOTS);
+                    int idx = EldaniorLogger.parseSafeInt(param, -1) + (worldTerrPage * WORLD_SLOTS);
                     if (idx < worldTerrList.size()) {
                         String id = worldTerrList.get(idx).getId();
                         if (id.equals(worldSelectedId)) { worldSelectedId = null; } else { worldSelectedId = id; worldSelectedIsTerr = true; }
@@ -438,7 +438,7 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
             }
             case "world_pselect" -> {
                 if (param != null) {
-                    int idx = Integer.parseInt(param) + (worldParcelPage * WORLD_SLOTS);
+                    int idx = EldaniorLogger.parseSafeInt(param, -1) + (worldParcelPage * WORLD_SLOTS);
                     if (idx < worldParcelList.size()) {
                         String id = worldParcelList.get(idx).getId();
                         if (id.equals(worldSelectedId)) { worldSelectedId = null; } else { worldSelectedId = id; worldSelectedIsTerr = false; }
@@ -891,8 +891,8 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
             }
             case "player_manage" -> {
                 if (param != null) {
-                    int idx = Integer.parseInt(param) + (playerPage * PLAYERS_PER_PAGE);
-                    if (idx < allPlayerNames.size()) {
+                    int idx = EldaniorLogger.parseSafeInt(param, -1) + (playerPage * PLAYERS_PER_PAGE);
+                    if (idx >= 0 && idx < allPlayerNames.size()) {
                         managedPlayerName = allPlayerNames.get(idx);
                         AdminTab.selectPlayer(idx < 8 ? idx : 0);
                         refreshPlayerDetail(ref, store);
@@ -908,8 +908,8 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
 
     private void selectAndDoQuick(String param, Ref<EntityStore> ref, Store<EntityStore> store) {
         if (param == null) return;
-        int idx = Integer.parseInt(param) + (playerPage * PLAYERS_PER_PAGE);
-        if (idx < allPlayerNames.size()) {
+        int idx = EldaniorLogger.parseSafeInt(param, -1) + (playerPage * PLAYERS_PER_PAGE);
+        if (idx >= 0 && idx < allPlayerNames.size()) {
             AdminTab.selectPlayerByName(allPlayerNames.get(idx));
         }
     }
@@ -1186,7 +1186,7 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
 
     private void handleHologramAction(String action, String param, Ref<EntityStore> ref, Store<EntityStore> store) {
         if ("holo_delete".equals(action) && param != null) {
-            int idx = Integer.parseInt(param);
+            int idx = EldaniorLogger.parseSafeInt(param, -1);
             if (idx >= 0 && idx < cachedHoloIds.size()) {
                 String holoId = cachedHoloIds.get(idx);
                 com.eldanior.system.hologram.HologramManager.delete(holoId);
