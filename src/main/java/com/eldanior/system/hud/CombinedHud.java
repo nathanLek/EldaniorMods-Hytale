@@ -54,7 +54,8 @@ public class CombinedHud extends CustomUIHud {
         boolean nowHasParty = PartyManager.hasParty(ownerUUID);
         if (nowHasParty) {
             if (!hasParty) {
-                // Vient de rejoindre un groupe -> rebuild complet
+                // Vient de rejoindre un groupe -> append le .ui et afficher
+                ui.append("Party/PartyHud.ui");
                 hasParty = true;
             }
             renderParty(ui);

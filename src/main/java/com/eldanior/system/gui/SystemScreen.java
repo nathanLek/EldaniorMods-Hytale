@@ -284,8 +284,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         }
         // Proprietes - detail actions
         events.addEventBinding(CustomUIEventBindingType.Activating, "#PDetBtnProt", EventData.of("Action", "prop_prot"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#PDetBtnPrice", EventData.of("Action", "prop_setprice"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#PDetBtnRent", EventData.of("Action", "prop_setrent"));
+        // prop_setprice and prop_setrent removed — admin-only, handled in AdminScreen via /es admin
         events.addEventBinding(CustomUIEventBindingType.Activating, "#PDetBtnFamily", EventData.of("Action", "prop_family"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#PDetBtnSell", EventData.of("Action", "prop_sellback"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#PDetBtnQuit", EventData.of("Action", "prop_quit"));
@@ -657,7 +656,6 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             if (ProprietesTab.handleToggleProtection()) refreshProprietesTab(ref, store);
             return;
         }
-        // prop_setprice and prop_setrent moved to AdminScreen
         if ("prop_family".equals(eventData.action)) {
             // Prefill la commande dans le chat
             com.hypixel.hytale.server.core.entity.entities.Player p = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
