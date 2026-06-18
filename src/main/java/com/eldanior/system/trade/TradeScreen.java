@@ -30,6 +30,7 @@ public class TradeScreen extends InteractiveCustomUIPage<TradeScreen.TradeEventD
         super(playerRef, CustomPageLifetime.CanDismiss, TradeEventData.CODEC);
         this.myUUID = myUUID;
         this.session = session;
+        TradeManager.registerScreen(myUUID, this);
     }
 
     @Override
@@ -123,6 +124,12 @@ public class TradeScreen extends InteractiveCustomUIPage<TradeScreen.TradeEventD
     }
 
     private void handleTakeBack(Player player, int tradeSlot) {
+        // Verifier qu'il y a de la place dans la hotbar avant de reprendre
+        if (TradeManager.countEmptySlots(myUUID) <= 0) {
+            player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§cVotre hotbar est pleine !"));
+            return;
+        }
+
         ItemStack item = session.takeItem(myUUID, tradeSlot);
         if (item == null || item.isEmpty()) return;
 
@@ -141,7 +148,7 @@ public class TradeScreen extends InteractiveCustomUIPage<TradeScreen.TradeEventD
         boolean bothDone = session.validate(myUUID);
 
         if (bothDone) {
-            // Les deux ont valide → executer l'echange
+            // Les deux ont valide → executer l'echange (ferme aussi les fenetres)
             TradeManager.endTrade(session, true);
 
             player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§a§lEchange effectue avec succes !"));
@@ -151,8 +158,6 @@ public class TradeScreen extends InteractiveCustomUIPage<TradeScreen.TradeEventD
             if (otherRef != null) {
                 otherRef.sendMessage(com.hypixel.hytale.server.core.Message.raw("§a§lEchange effectue avec succes !"));
             }
-
-            this.close();
         } else {
             UICommandBuilder update = new UICommandBuilder();
             refreshValidation(update);
@@ -165,6 +170,7 @@ public class TradeScreen extends InteractiveCustomUIPage<TradeScreen.TradeEventD
 
     private void handleCancel(Player player) {
         UUID otherUUID = session.getOther(myUUID);
+        // endTrade ferme les fenetres des deux joueurs
         TradeManager.endTrade(session, false);
 
         player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§7Echange annule."));
@@ -172,8 +178,6 @@ public class TradeScreen extends InteractiveCustomUIPage<TradeScreen.TradeEventD
         if (otherRef != null) {
             otherRef.sendMessage(com.hypixel.hytale.server.core.Message.raw("§c" + player.getPlayerRef().getUsername() + " a annule l'echange."));
         }
-
-        this.close();
     }
 
     private void refreshAllSlots(UICommandBuilder ui) {
@@ -223,10 +227,25 @@ public class TradeScreen extends InteractiveCustomUIPage<TradeScreen.TradeEventD
     }
 
     private void notifyOther() {
-        // Envoyer un refresh a l'autre joueur pour qu'il voie les changements
-        // Note: dans Hytale, chaque joueur a sa propre instance de TradeScreen
-        // Le refresh des items de l'autre se fait quand il interagit avec sa fenetre
-        // Pour un refresh en temps reel, il faudrait un systeme ECS tick — a implementer plus tard
+        UUID otherUUID = session.getOther(myUUID);
+        TradeScreen otherScreen = TradeManager.getScreen(otherUUID);
+        if (otherScreen != null) {
+            otherScreen.refreshFromOther();
+        }
+    }
+
+    /**
+     * Appele par l'autre joueur pour rafraichir notre vue des items et validations.
+     */
+    public void closeScreen() {
+        this.close();
+    }
+
+    public void refreshFromOther() {
+        UICommandBuilder update = new UICommandBuilder();
+        refreshAllSlots(update);
+        refreshValidation(update);
+        this.sendUpdate(update);
     }
 
     public static class TradeEventData {
