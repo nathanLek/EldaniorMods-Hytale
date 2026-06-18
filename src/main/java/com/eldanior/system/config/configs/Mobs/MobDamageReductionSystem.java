@@ -79,7 +79,7 @@ public class MobDamageReductionSystem extends DamageEventSystem {
             float finalDamage = computeFinalDamage(originalDamage, multiplier, playerLevel, mobLevel);
             damage.setAmount(finalDamage);
 
-            LOGGER.atInfo().log("[DamageReduction] Lv." + playerLevel + " vs " + mobData.getMobTypeId()
+            LOGGER.atFine().log("[DamageReduction] Lv." + playerLevel + " vs " + mobData.getMobTypeId()
                     + " Lv." + mobLevel + " | Brut:" + originalDamage + " → Final:" + finalDamage
                     + " (multiplier:" + multiplier + ")");
         }
