@@ -119,25 +119,25 @@ public class MobNameplateUpdateOnDamageSystem extends DamageEventSystem {
 
     private UUID getPlayerUUID(Vector3d mobPos) {
         UUID nearestPlayerUUID = null;
-        double nearestDistance = 15.0;
+        double nearestDistanceSq = 15.0 * 15.0; // 225.0 — compare squared distances, no sqrt needed
 
         for (Map.Entry<UUID, Vector3d> entry : PlayerPositionTracker.PLAYER_POSITIONS.entrySet()) {
             Vector3d playerPos = entry.getValue();
-            double distance = calculateDistance(mobPos, playerPos);
+            double distSq = distanceSquared(mobPos, playerPos);
 
-            if (distance < nearestDistance) {
-                nearestDistance = distance;
+            if (distSq < nearestDistanceSq) {
+                nearestDistanceSq = distSq;
                 nearestPlayerUUID = entry.getKey();
             }
         }
         return nearestPlayerUUID;
     }
 
-    private double calculateDistance(Vector3d pos1, Vector3d pos2) {
+    private double distanceSquared(Vector3d pos1, Vector3d pos2) {
         double dx = pos1.x - pos2.x;
         double dy = pos1.y - pos2.y;
         double dz = pos1.z - pos2.z;
-        return Math.sqrt(dx * dx + dy * dy + dz * dz);
+        return dx * dx + dy * dy + dz * dz;
     }
 
     private String getSymbolNameplate(int playerLevel, int mobLevel) {
