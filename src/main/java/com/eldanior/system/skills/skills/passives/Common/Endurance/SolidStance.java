@@ -21,21 +21,16 @@ public class SolidStance implements IPassiveCombatSkill {
     private static final float REDUCTION_MASTERED = 0.89f;
     private static final float ENDURANCE_COST = 0.20f;
 
-    private boolean lastProc = false;
-
-    @Override
-    public boolean didProc() { return lastProc; }
-
     @Override
     public float getEnduranceCostPercent() { return ENDURANCE_COST; }
 
     @Override
-    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
-        lastProc = false;
-        if (damage.isCancelled() || victimRef == null) return;
+    public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        boolean proc = false;
+        if (damage.isCancelled() || victimRef == null) return proc;
 
         EntityStatMap statMap = store.getComponent(victimRef, EntityStatsModule.get().getEntityStatMapComponentType());
-        if (statMap == null) return;
+        if (statMap == null) return proc;
 
         EntityStatValue enduranceStat = statMap.get(StatConfig.ENDURANCE.getStatId());
         if (enduranceStat != null && enduranceStat.get() >= (enduranceStat.getMax() * THRESHOLD)) {
@@ -45,7 +40,7 @@ public class SolidStance implements IPassiveCombatSkill {
                 statMap.setStatValue(StatConfig.ENDURANCE.getStatId(), currentStamina - cost);
                 float mult = mastered ? REDUCTION_MASTERED : REDUCTION;
                 damage.setAmount(damage.getAmount() * mult);
-                lastProc = true;
+                proc = true;
 
                 if (attackerRef != null) {
                     PlayerRef playerRef = store.getComponent(attackerRef, PlayerRef.getComponentType());
@@ -56,6 +51,7 @@ public class SolidStance implements IPassiveCombatSkill {
                 }
             }
         }
+        return proc;
     }
 }
 

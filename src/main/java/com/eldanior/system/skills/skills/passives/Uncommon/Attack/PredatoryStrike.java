@@ -21,7 +21,7 @@ public class PredatoryStrike implements IPassiveCombatSkill {
     private static final float BONUS_MULTIPLIER = 1.15f; // +15% dégâts
 
     @Override
-    public void onAttack (Damage damage, PlayerLevelData
+    public boolean onAttack (Damage damage, PlayerLevelData
     attackerData, Store < EntityStore > store, Ref < EntityStore > attackerRef, Ref < EntityStore > victimRef){
 
         // Vérification de chance (15%)
@@ -49,5 +49,6 @@ public class PredatoryStrike implements IPassiveCombatSkill {
                 }
             }
         }
+        return false;
     }
 }

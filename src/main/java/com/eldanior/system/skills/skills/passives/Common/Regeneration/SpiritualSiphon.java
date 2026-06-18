@@ -16,26 +16,22 @@ public class SpiritualSiphon implements IPassiveCombatSkill {
     private static final float RESTORE = 5.0f;
     private static final float RESTORE_MASTERED = 5.5f;
 
-    private boolean lastProc = false;
-
     @Override
-    public boolean didProc() { return lastProc; }
-
-    @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
-        lastProc = false;
-        if (damage.isCancelled() || attackerRef == null) return;
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        boolean proc = false;
+        if (damage.isCancelled() || attackerRef == null) return proc;
 
         if (Math.random() <= CHANCE) {
             EntityStatMap statMap = store.getComponent(attackerRef, EntityStatsModule.get().getEntityStatMapComponentType());
-            if (statMap == null) return;
+            if (statMap == null) return proc;
 
             var manaStat = statMap.get(DefaultEntityStatTypes.getMana());
             if (manaStat != null) {
                 float restore = mastered ? RESTORE_MASTERED : RESTORE;
                 statMap.setStatValue(DefaultEntityStatTypes.getMana(), Math.min(manaStat.getMax(), manaStat.get() + restore));
-                lastProc = true;
+                proc = true;
             }
         }
+        return proc;
     }
 }

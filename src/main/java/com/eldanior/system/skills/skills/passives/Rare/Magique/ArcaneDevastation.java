@@ -9,10 +9,11 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 public class ArcaneDevastation implements IPassiveCombatSkill {
     @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
-        if (damage.isCancelled() || attackerRef == null) return;
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+        if (damage.isCancelled() || attackerRef == null) return false;
         if (Math.random() <= 0.30f) {
             damage.setAmount(damage.getAmount() + 16.0f);
         }
+        return false;
     }
 }

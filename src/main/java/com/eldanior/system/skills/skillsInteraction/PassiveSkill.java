@@ -82,6 +82,10 @@ import com.eldanior.system.skills.skills.passives.Unique.Vie.*;
 import com.eldanior.system.skills.skills.passives.Unique.Maitrise.*;
 import com.eldanior.system.skills.skills.passives.Family.*;
 
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Collections;
+
 public enum PassiveSkill {
 
     // --- GUERRIER ---
@@ -627,6 +631,24 @@ public enum PassiveSkill {
 
     public IPassiveCombatSkill getLogic() {
         return logic;
+    }
+
+    // Lookup map pour éviter valueOf() + try/catch (coûteux en exceptions)
+    private static final Map<String, PassiveSkill> LOOKUP;
+    static {
+        Map<String, PassiveSkill> map = new HashMap<>();
+        for (PassiveSkill ps : values()) {
+            map.put(ps.name(), ps);
+        }
+        LOOKUP = Collections.unmodifiableMap(map);
+    }
+
+    /**
+     * Retourne le PassiveSkill correspondant au nom, ou null si inconnu.
+     * Alternative performante à valueOf() qui évite la création de stack traces.
+     */
+    public static PassiveSkill fromName(String name) {
+        return LOOKUP.get(name);
     }
 }
 

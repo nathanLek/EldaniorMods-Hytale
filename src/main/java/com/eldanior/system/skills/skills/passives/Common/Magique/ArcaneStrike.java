@@ -16,20 +16,15 @@ public class ArcaneStrike implements IPassiveCombatSkill {
     private static final float BONUS = 8.0f;
     private static final float BONUS_MASTERED = 8.8f;
 
-    private boolean lastProc = false;
-
     @Override
-    public boolean didProc() { return lastProc; }
-
-    @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
-        lastProc = false;
-        if (damage.isCancelled() || attackerRef == null) return;
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        boolean proc = false;
+        if (damage.isCancelled() || attackerRef == null) return proc;
 
         if (Math.random() <= CHANCE) {
             float bonus = mastered ? BONUS_MASTERED : BONUS;
             damage.setAmount(damage.getAmount() + bonus);
-            lastProc = true;
+            proc = true;
 
             if (attackerRef != null) {
                 PlayerRef playerRef = store.getComponent(attackerRef, PlayerRef.getComponentType());
@@ -39,5 +34,6 @@ public class ArcaneStrike implements IPassiveCombatSkill {
                 }
             }
         }
+        return proc;
     }
 }

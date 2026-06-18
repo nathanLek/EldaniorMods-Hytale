@@ -15,19 +15,14 @@ public class Hardening implements IPassiveCombatSkill {
     private static final float REDUCTION = 0.96f;
     private static final float REDUCTION_MASTERED = 0.955f;
 
-    private boolean lastProc = false;
-
     @Override
-    public boolean didProc() { return lastProc; }
-
-    @Override
-    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
-        lastProc = false;
-        if (damage.isCancelled()) return;
+    public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        boolean proc = false;
+        if (damage.isCancelled()) return proc;
 
         float mult = mastered ? REDUCTION_MASTERED : REDUCTION;
         damage.setAmount(damage.getAmount() * mult);
-        lastProc = true;
+        proc = true;
 
         if (victimRef != null) {
             PlayerRef playerRef = store.getComponent(victimRef, PlayerRef.getComponentType());
@@ -35,5 +30,6 @@ public class Hardening implements IPassiveCombatSkill {
                 NotificationHelper.sendNotification(playerRef, "<color:yellow>Endurcissement : -" + (int)((1f - mult) * 100) + "% de dégâts</color>", NotificationStyle.Success);
             }
         }
+        return proc;
     }
 }

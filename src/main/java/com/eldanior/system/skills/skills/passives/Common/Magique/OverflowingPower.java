@@ -19,18 +19,13 @@ public class OverflowingPower implements IPassiveCombatSkill {
     private static final float BONUS = 1.15f;
     private static final float BONUS_MASTERED = 1.165f;
 
-    private boolean lastProc = false;
-
     @Override
-    public boolean didProc() { return lastProc; }
-
-    @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
-        lastProc = false;
-        if (damage.isCancelled() || attackerRef == null) return;
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        boolean proc = false;
+        if (damage.isCancelled() || attackerRef == null) return proc;
 
         EntityStatMap statMap = store.getComponent(attackerRef, EntityStatsModule.get().getEntityStatMapComponentType());
-        if (statMap == null) return;
+        if (statMap == null) return proc;
 
         float currentMana = statMap.get(DefaultEntityStatTypes.getMana()).get();
         float maxMana = statMap.get(DefaultEntityStatTypes.getMana()).getMax();
@@ -38,7 +33,7 @@ public class OverflowingPower implements IPassiveCombatSkill {
         if (currentMana >= (maxMana * THRESHOLD)) {
             float mult = mastered ? BONUS_MASTERED : BONUS;
             damage.setAmount(damage.getAmount() * mult);
-            lastProc = true;
+            proc = true;
 
             if (attackerRef != null) {
                 PlayerRef playerRef = store.getComponent(attackerRef, PlayerRef.getComponentType());
@@ -48,5 +43,6 @@ public class OverflowingPower implements IPassiveCombatSkill {
                 }
             }
         }
+        return proc;
     }
 }

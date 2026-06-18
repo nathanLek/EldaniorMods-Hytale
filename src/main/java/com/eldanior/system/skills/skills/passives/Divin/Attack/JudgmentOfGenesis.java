@@ -21,7 +21,7 @@ public class JudgmentOfGenesis implements IPassiveCombatSkill {
     private static final float DIVINE_MULTIPLIER = 2.50f; // +150% dégâts (x3)
 
     @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
 
         if (Math.random() < CHANCE) {
             float currentDamage = damage.getAmount();
@@ -42,5 +42,6 @@ public class JudgmentOfGenesis implements IPassiveCombatSkill {
                 }
             }
         }
+        return false;
     }
 }

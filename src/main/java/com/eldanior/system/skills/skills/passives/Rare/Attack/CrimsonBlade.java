@@ -11,7 +11,8 @@ public class CrimsonBlade implements IPassiveCombatSkill {
     private static final float FLAT_BONUS = 4.0f;
 
     @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
         damage.setAmount(damage.getAmount() + FLAT_BONUS);
+        return false;
     }
 }

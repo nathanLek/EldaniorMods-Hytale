@@ -20,26 +20,21 @@ public class CombatVigor implements IPassiveCombatSkill {
     private static final float RESTORE = 5.0f;
     private static final float RESTORE_MASTERED = 5.5f;
 
-    private boolean lastProc = false;
-
     @Override
-    public boolean didProc() { return lastProc; }
-
-    @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
-        lastProc = false;
-        if (damage.isCancelled() || attackerRef == null) return;
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        boolean proc = false;
+        if (damage.isCancelled() || attackerRef == null) return proc;
 
         if (Math.random() <= CHANCE) {
             EntityStatMap statMap = store.getComponent(attackerRef, EntityStatsModule.get().getEntityStatMapComponentType());
-            if (statMap == null) return;
+            if (statMap == null) return proc;
 
             EntityStatValue enduranceStat = statMap.get(StatConfig.ENDURANCE.getStatId());
             if (enduranceStat != null) {
                 float restore = mastered ? RESTORE_MASTERED : RESTORE;
                 float newEndurance = Math.min(enduranceStat.getMax(), enduranceStat.get() + restore);
                 statMap.setStatValue(StatConfig.ENDURANCE.getStatId(), newEndurance);
-                lastProc = true;
+                proc = true;
 
                 if (attackerRef != null) {
                     PlayerRef playerRef = store.getComponent(attackerRef, PlayerRef.getComponentType());
@@ -50,5 +45,6 @@ public class CombatVigor implements IPassiveCombatSkill {
                 }
             }
         }
+        return proc;
     }
 }

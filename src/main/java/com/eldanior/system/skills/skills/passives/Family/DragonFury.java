@@ -14,7 +14,8 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 public class DragonFury implements IPassiveCombatSkill {
 
     @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
         // Effet visuel uniquement (applique par SkillEffectConfig)
+        return false;
     }
 }

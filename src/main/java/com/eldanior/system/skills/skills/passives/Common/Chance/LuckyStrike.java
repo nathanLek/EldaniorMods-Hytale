@@ -13,11 +13,6 @@ public class LuckyStrike implements IPassiveCombatSkill {
     private static final float CRIT_BONUS = 3.0f;
     private static final float CRIT_BONUS_MASTERED = 3.3f;
 
-    private boolean lastProc = false;
-
-    @Override
-    public boolean didProc() { return lastProc; }
-
     @Override
     public float getFlatStatBonus(StatConfig stat) {
         if (stat == StatConfig.LUCK_CRITICAL) {
@@ -27,7 +22,8 @@ public class LuckyStrike implements IPassiveCombatSkill {
     }
 
     @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
-        lastProc = attackerData.wasLastAttackCrit();
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        boolean proc = attackerData.wasLastAttackCrit();
+        return proc;
     }
 }

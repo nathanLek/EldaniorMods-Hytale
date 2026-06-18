@@ -34,25 +34,25 @@ public class DynaAegis implements IPassiveCombatSkill {
     private static final long COOLDOWN_DURATION = 2 * 60 * 1000L; // 2 minutes
 
     @Override
-    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
-        if (damage.isCancelled() || victimRef == null) return;
+    public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+        if (damage.isCancelled() || victimRef == null) return false;
 
         // 🛡️ NOUVEAU : Un bloc Try/Catch pour empêcher le monstre de disparaître en cas d'erreur
         try {
             PlayerRef playerRef = store.getComponent(victimRef, PlayerRef.getComponentType());
-            if (playerRef == null) return;
+            if (playerRef == null) return false;
 
             long currentTime = System.currentTimeMillis();
 
             // --- 1. LE JOUEUR EST-IL DÉJÀ INVINCIBLE ? ---
             if (invincibilityTimers.containsKey(playerRef) && currentTime < invincibilityTimers.get(playerRef)) {
                 damage.setCancelled(true);
-                return;
+                return false;
             }
 
             // --- 2. LA COMPÉTENCE EST-ELLE EN COOLDOWN ? ---
             if (cooldowns.containsKey(playerRef) && currentTime < cooldowns.get(playerRef)) {
-                return;
+                return false;
             }
 
             // --- 3. VÉRIFICATION DE LA VIE VIA LA STATMAP ---
@@ -94,5 +94,6 @@ public class DynaAegis implements IPassiveCombatSkill {
             LOGGER.atWarning().log("[DynaAegis] Error Critique.");
             e.printStackTrace();
         }
+        return false;
     }
 }

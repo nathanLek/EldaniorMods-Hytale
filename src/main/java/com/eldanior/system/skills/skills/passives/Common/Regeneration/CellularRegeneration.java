@@ -17,27 +17,23 @@ public class CellularRegeneration implements IPassiveCombatSkill {
     private static final float HEAL_PERCENT = 0.05f;
     private static final float HEAL_PERCENT_MASTERED = 0.055f;
 
-    private boolean lastProc = false;
-
     @Override
-    public boolean didProc() { return lastProc; }
-
-    @Override
-    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
-        lastProc = false;
-        if (damage.isCancelled() || victimRef == null) return;
+    public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        boolean proc = false;
+        if (damage.isCancelled() || victimRef == null) return proc;
 
         if (Math.random() <= CHANCE) {
             EntityStatMap statMap = store.getComponent(victimRef, EntityStatsModule.get().getEntityStatMapComponentType());
-            if (statMap == null) return;
+            if (statMap == null) return proc;
 
             EntityStatValue healthStat = statMap.get(StatConfig.VITALITY.getStatId());
             if (healthStat != null) {
                 float percent = mastered ? HEAL_PERCENT_MASTERED : HEAL_PERCENT;
                 float healAmount = healthStat.getMax() * percent;
                 statMap.setStatValue(StatConfig.VITALITY.getStatId(), Math.min(healthStat.getMax(), healthStat.get() + healAmount));
-                lastProc = true;
+                proc = true;
             }
         }
+        return proc;
     }
 }

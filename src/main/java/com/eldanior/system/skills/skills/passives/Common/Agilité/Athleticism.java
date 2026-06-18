@@ -13,11 +13,6 @@ public class Athleticism implements IPassiveCombatSkill {
     private static final float SPEED_BONUS = 1.05f;           // +5% vitesse sprint
     private static final float SPEED_BONUS_MASTERED = 1.055f;  // +5.5% si maîtrisé
 
-    private boolean lastProc = false;
-
-    @Override
-    public boolean didProc() { return lastProc; }
-
     @Override
     public float getStatMultiplier(StatConfig stat) {
         if (stat == StatConfig.AGILITY_SPEED) {
@@ -28,12 +23,16 @@ public class Athleticism implements IPassiveCombatSkill {
 
     // Proc en combat pour la progression (chaque coup = entraînement)
     @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
-        lastProc = true;
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        boolean proc = false;
+        proc = true;
+        return proc;
     }
 
     @Override
-    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
-        lastProc = true;
+    public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        boolean proc = false;
+        proc = true;
+        return proc;
     }
 }

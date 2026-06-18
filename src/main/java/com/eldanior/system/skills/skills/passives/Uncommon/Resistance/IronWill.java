@@ -10,12 +10,13 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 public class IronWill implements IPassiveCombatSkill {
 
     @Override
-    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
-        if (damage.isCancelled()) return;
+    public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+        if (damage.isCancelled()) return false;
 
         // Les coups >12 dégâts réduits de 15%
         if (damage.getAmount() > 12.0f) {
             damage.setAmount(damage.getAmount() * 0.85f);
         }
+        return false;
     }
 }

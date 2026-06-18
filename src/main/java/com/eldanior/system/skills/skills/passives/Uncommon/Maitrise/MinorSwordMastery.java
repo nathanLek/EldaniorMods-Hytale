@@ -12,17 +12,18 @@ import com.hypixel.hytale.server.core.inventory.ItemStack;
 public class MinorSwordMastery implements IPassiveCombatSkill {
 
     @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
-        if (attackerRef == null) return;
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+        if (attackerRef == null) return false;
 
         Player player = store.getComponent(attackerRef, Player.getComponentType());
-        if (player == null) return;
+        if (player == null) return false;
 
         ItemStack mainHandItem = player.getInventory().getActiveHotbarItem();
-        if (mainHandItem == null) return;
-        if (!mainHandItem.getItemId().toLowerCase().contains("sword")) return;
+        if (mainHandItem == null) return false;
+        if (!mainHandItem.getItemId().toLowerCase().contains("sword")) return false;
 
         // +8% dégâts avec une épée (précurseur de Sword Mastery Épique +15%)
         damage.setAmount(damage.getAmount() * 1.08f);
+        return false;
     }
 }

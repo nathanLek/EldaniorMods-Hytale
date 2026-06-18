@@ -21,23 +21,18 @@ public class PressurePoint implements IPassiveCombatSkill {
     private static final float BONUS_MASTERED = 1.165f;
     private static final float HP_THRESHOLD = 0.90f;
 
-    private boolean lastProc = false;
-
     @Override
-    public boolean didProc() { return lastProc; }
-
-    @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
-        lastProc = false;
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        boolean proc = false;
 
         EntityStatMap victimStats = store.getComponent(victimRef, EntityStatsModule.get().getEntityStatMapComponentType());
-        if (victimStats == null) return;
+        if (victimStats == null) return proc;
 
         float currentHealth = Objects.requireNonNull(victimStats.get(DefaultEntityStatTypes.getHealth())).get();
         float maxHealth = Objects.requireNonNull(victimStats.get(DefaultEntityStatTypes.getHealth())).getMax();
 
         if (currentHealth >= (maxHealth * HP_THRESHOLD)) {
-            lastProc = true;
+            proc = true;
             float multiplier = mastered ? BONUS_MASTERED : BONUS;
             damage.setAmount(damage.getAmount() * multiplier);
 
@@ -49,5 +44,6 @@ public class PressurePoint implements IPassiveCombatSkill {
                 }
             }
         }
+        return proc;
     }
 }

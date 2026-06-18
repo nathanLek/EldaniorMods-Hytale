@@ -9,10 +9,11 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 public class CreatorBulwark implements IPassiveCombatSkill {
     @Override
-    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
-        if (damage.isCancelled()) return;
+    public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+        if (damage.isCancelled()) return false;
         if (Math.random() <= 0.40f) {
             damage.setAmount(damage.getAmount() * 0.20f);
         }
+        return false;
     }
 }

@@ -16,21 +16,16 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 public class Perseverance implements IPassiveCombatSkill {
 
-    private boolean lastProc = false;
-
     @Override
-    public boolean didProc() { return lastProc; }
-
-    @Override
-    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
-        lastProc = false;
-        if (damage.isCancelled() || victimRef == null) return;
+    public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+        boolean proc = false;
+        if (damage.isCancelled() || victimRef == null) return proc;
 
         EntityStatMap statMap = store.getComponent(victimRef, EntityStatsModule.get().getEntityStatMapComponentType());
-        if (statMap == null) return;
+        if (statMap == null) return proc;
 
         EntityStatValue healthStat = statMap.get(StatConfig.VITALITY.getStatId());
-        if (healthStat == null) return;
+        if (healthStat == null) return proc;
 
         float currentHealth = healthStat.get();
         float maxHealth = healthStat.getMax();
@@ -40,12 +35,13 @@ public class Perseverance implements IPassiveCombatSkill {
             float healAmount = maxHealth * 0.02f;
             float newHealth = Math.min(maxHealth, currentHealth + healAmount);
             statMap.setStatValue(StatConfig.VITALITY.getStatId(), newHealth);
-            lastProc = true;
+            proc = true;
 
             PlayerRef playerRef = store.getComponent(victimRef, PlayerRef.getComponentType());
             if (playerRef != null) {
                 NotificationHelper.sendNotification(playerRef, "<color:green>Persévérance : +" + String.format("%.0f", healAmount) + " PV</color>", NotificationStyle.Success);
             }
         }
+        return proc;
     }
 }

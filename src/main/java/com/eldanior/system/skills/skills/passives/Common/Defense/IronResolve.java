@@ -12,19 +12,15 @@ public class IronResolve implements IPassiveCombatSkill {
     private static final float FLAT_REDUCTION = 3.0f;
     private static final float FLAT_REDUCTION_MASTERED = 3.3f;
 
-    private boolean lastProc = false;
-
     @Override
-    public boolean didProc() { return lastProc; }
+    public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        boolean proc = false;
+        if (damage.isCancelled()) return proc;
 
-    @Override
-    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
-        lastProc = false;
-        if (damage.isCancelled()) return;
-
-        lastProc = true;
+        proc = true;
         float reduction = mastered ? FLAT_REDUCTION_MASTERED : FLAT_REDUCTION;
         float newDamage = Math.max(1.0f, damage.getAmount() - reduction);
         damage.setAmount(newDamage);
+        return proc;
     }
 }

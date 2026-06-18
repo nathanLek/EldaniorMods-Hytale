@@ -11,14 +11,15 @@ import com.hypixel.hytale.server.core.inventory.ItemStack;
 
 public class LegendarySniperMastery implements IPassiveCombatSkill {
     @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
-        if (attackerRef == null) return;
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+        if (attackerRef == null) return false;
         Player player = store.getComponent(attackerRef, Player.getComponentType());
-        if (player == null) return;
+        if (player == null) return false;
         ItemStack mainHandItem = player.getInventory().getActiveHotbarItem();
-        if (mainHandItem == null) return;
+        if (mainHandItem == null) return false;
         String itemId = mainHandItem.getItemId().toLowerCase();
-        if (!itemId.contains("bow") && !itemId.contains("shortbow")) return;
+        if (!itemId.contains("bow") && !itemId.contains("shortbow")) return false;
         damage.setAmount(damage.getAmount() * 1.25f);
+        return false;
     }
 }

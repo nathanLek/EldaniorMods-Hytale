@@ -456,14 +456,9 @@ public class PlayerLevelData implements Component<EntityStore> {
 
         // 2. Récupération des passifs "Appris" via les parchemins
         for (String skillId : this.unlockedSkills) {
-            try {
-                PassiveSkill learnedPassive = PassiveSkill.valueOf(skillId.toUpperCase());
-
-                if (!activePassives.contains(learnedPassive) && !disabledSkills.contains(skillId.toUpperCase())) {
-                    activePassives.add(learnedPassive);
-                }
-            } catch (IllegalArgumentException e) {
-                // Sort actif, pas un passif — on ignore
+            PassiveSkill learnedPassive = PassiveSkill.fromName(skillId.toUpperCase());
+            if (learnedPassive != null && !activePassives.contains(learnedPassive) && !disabledSkills.contains(skillId.toUpperCase())) {
+                activePassives.add(learnedPassive);
             }
         }
 

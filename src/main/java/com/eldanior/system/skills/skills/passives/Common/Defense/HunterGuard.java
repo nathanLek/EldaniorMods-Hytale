@@ -19,21 +19,16 @@ public class HunterGuard implements IPassiveCombatSkill {
     private static final float REDUCTION_MASTERED = 0.89f;
     private static final float ENDURANCE_COST = 0.15f;
 
-    private boolean lastProc = false;
-
-    @Override
-    public boolean didProc() { return lastProc; }
-
     @Override
     public float getEnduranceCostPercent() { return ENDURANCE_COST; }
 
     @Override
-    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
-        lastProc = false;
-        if (damage.isCancelled() || attackerRef == null || !attackerRef.isValid()) return;
+    public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        boolean proc = false;
+        if (damage.isCancelled() || attackerRef == null || !attackerRef.isValid()) return proc;
 
         boolean isMob = store.getComponent(attackerRef, EldaniorSystem.get().getMobLevelDataType()) != null;
-        if (!isMob) return;
+        if (!isMob) return proc;
 
         EntityStatMap statMap = store.getComponent(victimRef, EntityStatsModule.get().getEntityStatMapComponentType());
         if (statMap != null) {
@@ -46,9 +41,10 @@ public class HunterGuard implements IPassiveCombatSkill {
                     statMap.setStatValue(StatConfig.ENDURANCE.getStatId(), currentStamina - cost);
                     float mult = mastered ? REDUCTION_MASTERED : REDUCTION;
                     damage.setAmount(damage.getAmount() * mult);
-                    lastProc = true;
+                    proc = true;
                 }
             }
         }
+        return proc;
     }
 }

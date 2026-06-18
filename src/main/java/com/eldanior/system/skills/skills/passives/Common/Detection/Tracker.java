@@ -18,11 +18,6 @@ public class Tracker implements IPassiveCombatSkill {
     private static final float TRACKING_BONUS_MASTERED = 1.275f;
     private static final String TRACKING_EFFECT = "Elda_Tracking";
 
-    private boolean lastProc = false;
-
-    @Override
-    public boolean didProc() { return lastProc; }
-
     @Override
     public float getStatMultiplier(StatConfig stat) {
         if (stat == StatConfig.TRACKING_EVIDENCE) {
@@ -32,14 +27,14 @@ public class Tracker implements IPassiveCombatSkill {
     }
 
     @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
-        lastProc = false;
-        if (victimRef == null || !victimRef.isValid()) return;
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        boolean proc = false;
+        if (victimRef == null || !victimRef.isValid()) return proc;
 
         // Appliquer l'effet de tracking sur la victime (15s)
         boolean applied = EffectsManager.applyEffect(victimRef, TRACKING_EFFECT, store);
         if (applied) {
-            lastProc = true;
+            proc = true;
 
             if (attackerRef != null) {
                 PlayerRef playerRef = store.getComponent(attackerRef, PlayerRef.getComponentType());
@@ -49,6 +44,7 @@ public class Tracker implements IPassiveCombatSkill {
                 }
             }
         }
+        return proc;
     }
     // Progression aussi gérée par DetectionSystem (chaque message radar)
 }

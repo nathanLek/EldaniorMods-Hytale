@@ -13,9 +13,9 @@ import java.util.UUID;
 public class RelentlessHunt implements IPassiveCombatSkill {
 
     @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
         UUIDComponent victimUUIDComp = store.getComponent(victimRef, UUIDComponent.getComponentType());
-        if (victimUUIDComp == null) return;
+        if (victimUUIDComp == null) return false;
         UUID currentVictimUUID = victimUUIDComp.getUuid();
 
         if (currentVictimUUID.equals(attackerData.getLastVictimUUID())) {
@@ -31,5 +31,6 @@ public class RelentlessHunt implements IPassiveCombatSkill {
             attackerData.setLastVictimUUID(currentVictimUUID);
             attackerData.setHauntingThrustStacks(1);
         }
+        return false;
     }
 }

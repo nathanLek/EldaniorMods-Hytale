@@ -21,7 +21,7 @@ public class FuryStrike implements IPassiveCombatSkill {
     private static final float BONUS_MULTIPLIER = 1.25f; // +25% dégâts
 
     @Override
-    public void onAttack (Damage damage, PlayerLevelData
+    public boolean onAttack (Damage damage, PlayerLevelData
             attackerData, Store < EntityStore > store, Ref < EntityStore > attackerRef, Ref < EntityStore > victimRef){
 
         // Vérification de chance (15%)
@@ -49,5 +49,6 @@ public class FuryStrike implements IPassiveCombatSkill {
                 }
             }
         }
+        return false;
     }
 }

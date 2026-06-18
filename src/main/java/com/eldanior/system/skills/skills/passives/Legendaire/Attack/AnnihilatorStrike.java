@@ -22,7 +22,7 @@ public class AnnihilatorStrike implements IPassiveCombatSkill {
     private static final float DOUBLE_CAST_CHANCE = 0.25f; // 25% de chance de doubler l'impact
 
     @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
 
         if (Math.random() < CHANCE) {
             float currentDamage = damage.getAmount();
@@ -48,5 +48,6 @@ public class AnnihilatorStrike implements IPassiveCombatSkill {
                 }
             }
         }
+        return false;
     }
 }

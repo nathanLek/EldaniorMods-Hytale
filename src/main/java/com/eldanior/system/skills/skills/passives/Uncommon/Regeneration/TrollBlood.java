@@ -14,13 +14,13 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 public class TrollBlood implements IPassiveCombatSkill {
 
     @Override
-    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
-        if (damage.isCancelled() || victimRef == null) return;
+    public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+        if (damage.isCancelled() || victimRef == null) return false;
 
         // 20% de chance de se soigner de 8% vie max
         if (Math.random() <= 0.20f) {
             EntityStatMap statMap = store.getComponent(victimRef, EntityStatsModule.get().getEntityStatMapComponentType());
-            if (statMap == null) return;
+            if (statMap == null) return false;
 
             EntityStatValue healthStat = statMap.get(StatConfig.VITALITY.getStatId());
             if (healthStat != null) {
@@ -29,5 +29,6 @@ public class TrollBlood implements IPassiveCombatSkill {
                 statMap.setStatValue(StatConfig.VITALITY.getStatId(), newHealth);
             }
         }
+        return false;
     }
 }

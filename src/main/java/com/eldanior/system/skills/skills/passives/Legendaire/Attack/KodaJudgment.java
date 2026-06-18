@@ -21,29 +21,29 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 public class KodaJudgment implements IPassiveCombatSkill {
 
     @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
-        if (damage.isCancelled() || attackerRef == null || victimRef == null) return;
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+        if (damage.isCancelled() || attackerRef == null || victimRef == null) return false;
 
         // --- 1. VÉRIFICATION DE LA VIE (Doit être à 100%) ---
         EntityStatMap victimStatMap = store.getComponent(victimRef, EntityStatsModule.get().getEntityStatMapComponentType());
-        if (victimStatMap == null) return;
+        if (victimStatMap == null) return false;
 
         EntityStatValue victimHealthStat = victimStatMap.get(StatConfig.VITALITY.getStatId());
-        if (victimHealthStat == null) return;
+        if (victimHealthStat == null) return false;
 
         if (victimHealthStat.get() < victimHealthStat.getMax()) {
-            return;
+            return false;
         }
 
         // --- 2. VÉRIFICATION DE L'ENDURANCE (Doit être >= 90%) ---
         EntityStatMap attackerStatMap = store.getComponent(attackerRef, EntityStatsModule.get().getEntityStatMapComponentType());
-        if (attackerStatMap == null) return;
+        if (attackerStatMap == null) return false;
 
         EntityStatValue enduranceStat = attackerStatMap.get(StatConfig.ENDURANCE.getStatId());
-        if (enduranceStat == null) return;
+        if (enduranceStat == null) return false;
 
         if (enduranceStat.get() < (enduranceStat.getMax() * 0.90f)) {
-            return;
+            return false;
         }
 
         // --- 3. RÉCUPÉRATION DES NIVEAUX ---
@@ -64,7 +64,7 @@ public class KodaJudgment implements IPassiveCombatSkill {
         int levelDiff = attackerLevel - targetLevel;
 
         if (levelDiff <= -100) {
-            return;
+            return false;
         }
 
         float chance = 0.12f;
@@ -94,5 +94,6 @@ public class KodaJudgment implements IPassiveCombatSkill {
                 ParticleUtil.spawnParticleEffect("Lightning_Strike_Gold", pos, store);
             }
         }
+        return false;
     }
 }

@@ -16,18 +16,13 @@ public class OpportunistStrike implements IPassiveCombatSkill {
     private static final float BONUS_MASTERED = 1.132f;
     private static final long WINDOW_MS = 2000;
 
-    private boolean lastProc = false;
-
     @Override
-    public boolean didProc() { return lastProc; }
-
-    @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
-        lastProc = false;
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        boolean proc = false;
 
         long timeSinceHit = System.currentTimeMillis() - attackerData.getLastDamageTakenTime();
         if (timeSinceHit <= WINDOW_MS) {
-            lastProc = true;
+            proc = true;
             float multiplier = mastered ? BONUS_MASTERED : BONUS;
             damage.setAmount(damage.getAmount() * multiplier);
 
@@ -39,10 +34,13 @@ public class OpportunistStrike implements IPassiveCombatSkill {
                 }
             }
         }
+        return proc;
     }
 
     @Override
-    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+    public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        boolean proc = false;
         victimData.setLastDamageTakenTime(System.currentTimeMillis());
+        return proc;
     }
 }

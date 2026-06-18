@@ -15,9 +15,9 @@ import java.util.Objects;
 public class VitalPressure implements IPassiveCombatSkill {
 
     @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
         EntityStatMap victimStats = store.getComponent(victimRef, EntityStatsModule.get().getEntityStatMapComponentType());
-        if (victimStats == null) return;
+        if (victimStats == null) return false;
 
         float currentHealth = Objects.requireNonNull(victimStats.get(DefaultEntityStatTypes.getHealth())).get();
         float maxHealth = Objects.requireNonNull(victimStats.get(DefaultEntityStatTypes.getHealth())).getMax();
@@ -26,5 +26,6 @@ public class VitalPressure implements IPassiveCombatSkill {
         if (currentHealth >= (maxHealth * 0.90f)) {
             damage.setAmount(damage.getAmount() * 1.25f);
         }
+        return false;
     }
 }

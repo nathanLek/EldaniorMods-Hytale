@@ -21,18 +21,13 @@ public class SecondWind implements IPassiveCombatSkill {
     private static final float RESTORE = 25.0f;
     private static final float RESTORE_MASTERED = 27.5f;
 
-    private boolean lastProc = false;
-
     @Override
-    public boolean didProc() { return lastProc; }
-
-    @Override
-    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
-        lastProc = false;
-        if (damage.isCancelled() || victimRef == null) return;
+    public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        boolean proc = false;
+        if (damage.isCancelled() || victimRef == null) return proc;
 
         EntityStatMap statMap = store.getComponent(victimRef, EntityStatsModule.get().getEntityStatMapComponentType());
-        if (statMap == null) return;
+        if (statMap == null) return proc;
 
         EntityStatValue enduranceStat = statMap.get(StatConfig.ENDURANCE.getStatId());
         if (enduranceStat != null) {
@@ -41,7 +36,7 @@ public class SecondWind implements IPassiveCombatSkill {
                 if (Math.random() <= CHANCE) {
                     float restore = mastered ? RESTORE_MASTERED : RESTORE;
                     statMap.setStatValue(StatConfig.ENDURANCE.getStatId(), Math.min(enduranceStat.getMax(), currentEndurance + restore));
-                    lastProc = true;
+                    proc = true;
 
                     if (attackerRef != null) {
                         PlayerRef playerRef = store.getComponent(attackerRef, PlayerRef.getComponentType());
@@ -53,5 +48,6 @@ public class SecondWind implements IPassiveCombatSkill {
                 }
             }
         }
+        return proc;
     }
 }
