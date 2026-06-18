@@ -1,5 +1,6 @@
 package com.eldanior.system.territory;
 
+import com.eldanior.system.config.TaxConfig;
 import com.eldanior.system.guild.GuildManager;
 import com.eldanior.system.guild.Guild;
 import com.eldanior.system.titles.nobility.family.FamilyManager;
@@ -8,7 +9,7 @@ import java.util.*;
 
 public class ParcelEconomyManager {
 
-    public static final float TAX_RATE = 0.12f; // 12% de taxe sur toute transaction
+    public static final float TAX_RATE = TaxConfig.TRANSACTION_TAX_RATE;
     private static long lastTaxCollection = 0;
     private static final long TAX_INTERVAL = 7L * 24 * 60 * 60 * 1000; // 7 jours
 
@@ -66,27 +67,27 @@ public class ParcelEconomyManager {
                 else territories.add(pp);
             }
 
-            // Ville: 15%
-            long cityShare = (long) (taxAmount * 0.15);
+            // Ville: part fixe (TaxConfig.CITY_SHARE)
+            long cityShare = (long) (taxAmount * TaxConfig.CITY_SHARE);
             city.addTreasury(cityShare);
             long distributed = cityShare;
-            System.out.println("[Economy] " + cityShare + " Or (15%) -> Ville " + city.getName());
+            System.out.println("[Economy] " + cityShare + " Or (" + (int)(TaxConfig.CITY_SHARE * 100) + "%) -> Ville " + city.getName());
 
             if (territories.size() == 2) {
-                // Duc (premier) 20%, Marquis (deuxieme) 30%
-                long ducShare = (long) (taxAmount * 0.20);
-                long marquisShare = (long) (taxAmount * 0.30);
+                // Duc (premier), Marquis (deuxieme)
+                long ducShare = (long) (taxAmount * TaxConfig.DUCHY_SHARE);
+                long marquisShare = (long) (taxAmount * TaxConfig.MARQUISATE_SHARE);
                 territories.get(0).addTreasury(ducShare);
                 territories.get(1).addTreasury(marquisShare);
                 distributed += ducShare + marquisShare;
-                System.out.println("[Economy] " + ducShare + " Or (20%) -> " + territories.get(0).getName());
-                System.out.println("[Economy] " + marquisShare + " Or (30%) -> " + territories.get(1).getName());
+                System.out.println("[Economy] " + ducShare + " Or (" + (int)(TaxConfig.DUCHY_SHARE * 100) + "%) -> " + territories.get(0).getName());
+                System.out.println("[Economy] " + marquisShare + " Or (" + (int)(TaxConfig.MARQUISATE_SHARE * 100) + "%) -> " + territories.get(1).getName());
             } else if (territories.size() == 1) {
-                // Un seul territoire: 25%
-                long terrShare = (long) (taxAmount * 0.25);
+                // Un seul territoire intermediaire
+                long terrShare = (long) (taxAmount * TaxConfig.SINGLE_TERRITORY_SHARE);
                 territories.get(0).addTreasury(terrShare);
                 distributed += terrShare;
-                System.out.println("[Economy] " + terrShare + " Or (25%) -> " + territories.get(0).getName());
+                System.out.println("[Economy] " + terrShare + " Or (" + (int)(TaxConfig.SINGLE_TERRITORY_SHARE * 100) + "%) -> " + territories.get(0).getName());
             }
 
             // Royaume: tout le reste
