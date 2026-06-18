@@ -208,6 +208,7 @@ public class EldaniorSystem extends JavaPlugin {
                 try {
                     java.util.UUID uuid = UUIDExtractor.getUUID(event.getPlayerRef());
                     PartyManager.handleDisconnect(uuid);
+                    com.eldanior.system.duel.DuelManager.handleDisconnect(uuid);
                     com.eldanior.system.trade.TradeManager.handleDisconnect(uuid);
                     com.eldanior.system.territory.systems.ParcelRangeSystem.handleDisconnect(uuid);
                     com.eldanior.system.gui.tabs.QuestTab.cleanupPlayer(uuid);

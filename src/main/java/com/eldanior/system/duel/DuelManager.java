@@ -91,38 +91,40 @@ public class DuelManager {
      * @param loserUUID le joueur qui a perdu
      */
     public static void endDuel(UUID loserUUID) {
-        ActiveDuel duel = activeDuels.get(loserUUID);
-        if (duel == null) return;
+        synchronized (DUEL_LOCK) {
+            ActiveDuel duel = activeDuels.get(loserUUID);
+            if (duel == null) return;
 
-        UUID winnerUUID = duel.getOpponent(loserUUID);
+            UUID winnerUUID = duel.getOpponent(loserUUID);
 
-        // Retirer le duel actif
-        activeDuels.remove(duel.getPlayer1());
-        activeDuels.remove(duel.getPlayer2());
+            // Retirer le duel actif
+            activeDuels.remove(duel.getPlayer1());
+            activeDuels.remove(duel.getPlayer2());
 
-        PlayerRef winnerRef = Universe.get().getPlayer(winnerUUID);
-        PlayerRef loserRef = Universe.get().getPlayer(loserUUID);
+            PlayerRef winnerRef = Universe.get().getPlayer(winnerUUID);
+            PlayerRef loserRef = Universe.get().getPlayer(loserUUID);
 
-        // Recuperer les HP restants pour l'historique
-        float winnerHPPercent = getHPPercent(winnerRef);
-        float loserHPPercent = 0.01f; // 1 HP = quasi 0
+            // Recuperer les HP restants pour l'historique
+            float winnerHPPercent = getHPPercent(winnerRef);
+            float loserHPPercent = 0.01f; // 1 HP = quasi 0
 
-        // Mise a jour stats + XP transfer
-        processResults(winnerUUID, winnerRef, loserUUID, loserRef, winnerHPPercent, loserHPPercent);
+            // Mise a jour stats + XP transfer
+            processResults(winnerUUID, winnerRef, loserUUID, loserRef, winnerHPPercent, loserHPPercent);
 
-        // Heal les deux joueurs a 100%
-        healFull(winnerRef);
-        healFull(loserRef);
+            // Heal les deux joueurs a 100%
+            healFull(winnerRef);
+            healFull(loserRef);
 
-        // Messages
-        String winnerName = winnerRef != null ? winnerRef.getUsername() : "?";
-        String loserName = loserRef != null ? loserRef.getUsername() : "?";
+            // Messages
+            String winnerName = winnerRef != null ? winnerRef.getUsername() : "?";
+            String loserName = loserRef != null ? loserRef.getUsername() : "?";
 
-        if (winnerRef != null) {
-            winnerRef.sendMessage(Message.raw("§a§lDuel gagne ! §7Vous avez battu " + loserName));
-        }
-        if (loserRef != null) {
-            loserRef.sendMessage(Message.raw("§c§lDuel perdu ! §7" + winnerName + " vous a vaincu."));
+            if (winnerRef != null) {
+                winnerRef.sendMessage(Message.raw("§a§lDuel gagne ! §7Vous avez battu " + loserName));
+            }
+            if (loserRef != null) {
+                loserRef.sendMessage(Message.raw("§c§lDuel perdu ! §7" + winnerName + " vous a vaincu."));
+            }
         }
     }
 
@@ -206,6 +208,43 @@ public class DuelManager {
                 statMap.setStatValue(DefaultEntityStatTypes.getMana(), mana.getMax());
             }
         } catch (Exception e) { EldaniorLogger.error("DuelManager", e); }
+    }
+
+    // ==================== DECONNEXION ====================
+
+    /**
+     * Nettoie les donnees de duel d'un joueur qui se deconnecte.
+     * Annule le duel actif (sans XP: c'est un abandon) et retire les invitations.
+     */
+    public static void handleDisconnect(UUID playerUUID) {
+        if (playerUUID == null) return;
+
+        synchronized (DUEL_LOCK) {
+            // 1. Retirer les invitations ou ce joueur est implique
+            pendingDuels.remove(playerUUID); // en tant que cible
+            pendingDuels.values().removeIf(challenger -> challenger.equals(playerUUID)); // en tant que challenger
+
+            // 2. Retirer de la file d'attente de fin de duel
+            pendingEndDuels.removeIf(uuid -> uuid.equals(playerUUID));
+
+            // 3. Annuler le duel actif si present (pas de XP, c'est un abandon)
+            ActiveDuel duel = activeDuels.get(playerUUID);
+            if (duel != null) {
+                UUID opponentUUID = duel.getOpponent(playerUUID);
+                activeDuels.remove(duel.getPlayer1());
+                activeDuels.remove(duel.getPlayer2());
+
+                // Heal l'adversaire qui reste en jeu
+                PlayerRef opponentRef = Universe.get().getPlayer(opponentUUID);
+                healFull(opponentRef);
+
+                if (opponentRef != null) {
+                    opponentRef.sendMessage(Message.raw("§e§lDuel annule ! §7Votre adversaire s'est deconnecte."));
+                }
+
+                EldaniorLogger.info("[DuelManager] Duel annule (deconnexion de " + playerUUID + ")");
+            }
+        }
     }
 
     // ==================== CLEANUP ====================
