@@ -144,7 +144,7 @@ public class CombatStatsSystem extends DamageEventSystem {
         }
 
         // Plancher minimum : 2% d'esquive quoi qu'il arrive
-        if (dodgeChance > 0 && dodgeChance < 2.0f) {
+        if (dodgeChance < 2.0f) {
             dodgeChance = 2.0f;
         }
 
