@@ -114,6 +114,9 @@ public class ParcelEconomyManager {
      * la derniere collecte de chaque parcelle (via canCollectTax()).
      */
     public static void collectWeeklyTaxes() {
+        // Verifier les locations expirees avant de collecter les impots
+        evictExpiredRentals();
+
         long now = System.currentTimeMillis();
         boolean changed = false;
 
@@ -217,6 +220,40 @@ public class ParcelEconomyManager {
      * Chaque niveau garde 70% et envoie 30% au parent.
      * Si le parent est un Royaume, il recoit tout le reste.
      */
+
+    // ==================== EVICTION LOCATIONS EXPIREES ====================
+
+    /**
+     * Parcourt toutes les parcelles louees et evince les locataires
+     * dont la location a expire ET dont la periode de grace (24h) est terminee.
+     * Appele automatiquement par collectWeeklyTaxes() toutes les 5 minutes.
+     */
+    public static void evictExpiredRentals() {
+        boolean changed = false;
+
+        for (ParcelData parcel : ParcelManager.getAll()) {
+            // Seulement les parcelles actuellement louees et expirees
+            if (!parcel.isRentExpired()) continue;
+
+            // Respecter la periode de grace de 24h
+            if (parcel.isInGracePeriod()) continue;
+
+            // Grace period ecoulee -> eviction
+            String parcelName = parcel.getName();
+            String parcelId = parcel.getId();
+            System.out.println("[Economy] Location expiree: eviction de la parcelle "
+                    + parcelName + " (id=" + parcelId + ")");
+
+            ParcelManager.evict(parcelId);
+            changed = true;
+        }
+
+        if (changed) {
+            // evict() appelle deja save() individuellement,
+            // pas besoin d'un save supplementaire
+            System.out.println("[Economy] Evictions de locations expirees terminees.");
+        }
+    }
 
     // ==================== UTILS ====================
 
