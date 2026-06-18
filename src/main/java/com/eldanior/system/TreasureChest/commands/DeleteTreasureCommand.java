@@ -1,6 +1,7 @@
 package com.eldanior.system.TreasureChest.commands;
 
 import com.eldanior.system.EldaniorSystem;
+import com.eldanior.system.config.EldaniorLogger;
 import com.eldanior.system.TreasureChest.components.PlayerChestData;
 import com.eldanior.system.TreasureChest.resources.TreasureChestTemplate;
 import com.hypixel.hytale.component.Ref;
@@ -33,6 +34,12 @@ public class DeleteTreasureCommand extends AbstractPlayerCommand {
     protected void execute(@Nonnull CommandContext commandContext, @Nonnull Store<EntityStore> store, @Nonnull Ref<EntityStore> ref, @Nonnull PlayerRef playerRef, @Nonnull World world) {
         Player executor = store.getComponent(ref, Player.getComponentType());
         if (executor == null) return;
+
+        // Vérification permission admin
+        if (!playerRef.hasPermission(EldaniorLogger.ADMIN_PERMISSION)) {
+            executor.getPlayerRef().sendMessage(Message.raw("§cVous n'avez pas la permission d'utiliser cette commande."));
+            return;
+        }
 
         Vector3i pos = TargetUtil.getTargetBlock(ref, 10.0, store);
         if (pos == null) {

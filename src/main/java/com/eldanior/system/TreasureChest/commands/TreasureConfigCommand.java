@@ -1,6 +1,6 @@
 package com.eldanior.system.TreasureChest.commands;
 
-
+import com.eldanior.system.config.EldaniorLogger;
 import com.eldanior.system.TreasureChest.pages.TreasureChestConfigPage;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
@@ -25,7 +25,7 @@ public class TreasureConfigCommand extends AbstractPlayerCommand {
     protected void execute(@NonNullDecl CommandContext commandContext, @NonNullDecl Store<EntityStore> store, @NonNullDecl Ref<EntityStore> ref, @NonNullDecl PlayerRef playerRef, @NonNullDecl World world) {
         Player player = store.getComponent(ref, Player.getComponentType());
 
-        if (player != null) {
+        if (player != null && playerRef.hasPermission(EldaniorLogger.ADMIN_PERMISSION)) {
             // Création de l'instance de la page UI
             TreasureChestConfigPage page = new TreasureChestConfigPage(playerRef);
 

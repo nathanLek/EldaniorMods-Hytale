@@ -3,6 +3,7 @@ package com.eldanior.system.skills.commands;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.basecommands.CommandBase;
+import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
@@ -19,6 +20,12 @@ public class GiveRelicCommand extends CommandBase {
     protected void executeSync(@NonNullDecl CommandContext context) {
         // On vérifie que celui qui tape la commande est bien un joueur
         if (!(context.sender() instanceof Player player)) return;
+
+        // Vérification permission admin
+        if (!player.getPlayerRef().hasPermission(EldaniorLogger.ADMIN_PERMISSION)) {
+            player.getPlayerRef().sendMessage(Message.raw("§cVous n'avez pas la permission d'utiliser cette commande."));
+            return;
+        }
 
         // L'ID complet : namespace + id défini dans le JSON
         String fullId = "skill_page_fireball";
