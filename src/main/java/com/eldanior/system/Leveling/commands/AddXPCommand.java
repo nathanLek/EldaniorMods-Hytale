@@ -3,6 +3,7 @@ package com.eldanior.system.Leveling.commands;
 import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.Leveling.utils.NotificationHelper;
+import com.eldanior.system.Leveling.utils.StatCalculator;
 import com.eldanior.system.config.UUIDExtractor;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Ref;
@@ -95,6 +96,9 @@ public class AddXPCommand extends AbstractAsyncCommand {
                 data.addExperience(amount);
 
                 store.putComponent(ref, type, data);
+
+                // Met à jour vie/mana/vitesse après changement de niveau
+                StatCalculator.updatePlayerStats(ref, store, data);
 
                 if (data.getLevel() > oldLvl) {
                     NotificationHelper.showLevelUpTitle(targetPlayer, data.getLevel());

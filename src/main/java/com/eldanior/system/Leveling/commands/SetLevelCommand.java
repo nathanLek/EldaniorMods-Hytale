@@ -51,6 +51,8 @@ public class SetLevelCommand extends AbstractAsyncCommand {
         String playerName = this.playerArg.get(ctx);
         int level = this.levelArg.get(ctx);
 
+        int clampedLevel = Math.max(1, Math.min(PlayerLevelData.MAX_LEVEL, level));
+
         return CompletableFuture.runAsync(() -> {
             try {
                 PlayerRef senderRef = senderEntityStore.getComponent(senderEntityRef, PlayerRef.getComponentType());
@@ -85,10 +87,10 @@ public class SetLevelCommand extends AbstractAsyncCommand {
                 if (data == null) data = new PlayerLevelData();
 
                 int oldLevel = data.getLevel();
-                data.setLevel(level);
+                data.setLevel(clampedLevel);
                 data.setExperience(0);
 
-                if (level == 1) {
+                if (clampedLevel == 1) {
                     // --- RESET COMPLET DU JOUEUR (Hard Reset) ---
                     data.setStrength(1);
                     data.setVitality(1);
@@ -144,7 +146,7 @@ public class SetLevelCommand extends AbstractAsyncCommand {
 
                 } else {
                     // --- GESTION DES POINTS SI ON LE MONTÉ DE NIVEAU ---
-                    int gained = Math.max(0, level - oldLevel) * 3;
+                    int gained = Math.max(0, clampedLevel - oldLevel) * 3;
                     if (gained > 0) {
                         data.setAttributePoints(data.getAttributePoints() + gained);
                     }
@@ -156,8 +158,8 @@ public class SetLevelCommand extends AbstractAsyncCommand {
                 // 2. CRUCIAL : Met à jour la barre de vie et la vitesse en jeu !
                 StatCalculator.updatePlayerStats(ref, store, data);
 
-                sender.getPlayerRef().sendMessage(Message.raw("Niveau défini sur " + level + " pour " + playerName + "."));
-                targetPlayer.sendMessage(Message.raw("Votre niveau a été changé à : " + level + "."));
+                sender.getPlayerRef().sendMessage(Message.raw("Niveau défini sur " + clampedLevel + " pour " + playerName + "."));
+                targetPlayer.sendMessage(Message.raw("Votre niveau a été changé à : " + clampedLevel + "."));
 
             } catch (Exception e) {
                 e.printStackTrace();
