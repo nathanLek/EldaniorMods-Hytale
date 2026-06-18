@@ -21,7 +21,7 @@ public class DuelTab {
 
     public static final int MAX_INVITE_SLOTS = 8;
     public static final int MAX_HISTORY_SLOTS = 10;
-    private static final List<String> cachedPlayerNames = new ArrayList<>();
+    private static final Map<UUID, List<String>> cachedPlayerNames = new HashMap<>();
 
     public static void populate(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store) {
         ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
@@ -61,19 +61,20 @@ public class DuelTab {
 
         // Joueurs en ligne pour defier
         if (!inDuel) {
-            cachedPlayerNames.clear();
+            List<String> playerNames = new ArrayList<>();
             for (PlayerRef pRef : Universe.get().getPlayers()) {
-                if (cachedPlayerNames.size() >= MAX_INVITE_SLOTS) break;
+                if (playerNames.size() >= MAX_INVITE_SLOTS) break;
                 UUID pUUID = extractUUID(pRef);
                 if (pUUID == null || pUUID.equals(myUUID)) continue;
                 if (DuelManager.isInDuel(pUUID)) continue;
-                cachedPlayerNames.add(pRef.getUsername());
+                playerNames.add(pRef.getUsername());
             }
+            cachedPlayerNames.put(myUUID, playerNames);
 
             for (int i = 0; i < MAX_INVITE_SLOTS; i++) {
-                if (i < cachedPlayerNames.size()) {
+                if (i < playerNames.size()) {
                     ui.set("#DuelPlayer" + i + ".Visible", true);
-                    ui.set("#DuelPName" + i + ".Text", cachedPlayerNames.get(i));
+                    ui.set("#DuelPName" + i + ".Text", playerNames.get(i));
                 } else {
                     ui.set("#DuelPlayer" + i + ".Visible", false);
                 }
@@ -84,12 +85,14 @@ public class DuelTab {
     public static boolean handleChallenge(String slotIndex, Ref<EntityStore> ref, Store<EntityStore> store) {
         int idx;
         try { idx = Integer.parseInt(slotIndex); } catch (NumberFormatException e) { return false; }
-        if (idx < 0 || idx >= cachedPlayerNames.size()) return false;
 
         UUID myUUID = getPlayerUUID(ref, store);
         if (myUUID == null || DuelManager.isInDuel(myUUID)) return false;
 
-        String targetName = cachedPlayerNames.get(idx);
+        List<String> myCache = cachedPlayerNames.get(myUUID);
+        if (myCache == null || idx < 0 || idx >= myCache.size()) return false;
+
+        String targetName = myCache.get(idx);
         PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
         if (targetRef == null) return false;
 
