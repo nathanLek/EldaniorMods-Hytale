@@ -5,6 +5,7 @@ import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
+import com.hypixel.hytale.server.core.command.system.arguments.system.OptionalArg;
 import com.hypixel.hytale.server.core.command.system.arguments.system.RequiredArg;
 import com.hypixel.hytale.server.core.command.system.arguments.types.ArgTypes;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractAsyncCommand;
@@ -163,12 +164,12 @@ public class HologramCommand extends AbstractAsyncCommand {
     };
 
     private final RequiredArg<String> actionArg;
-    private final RequiredArg<String> paramArg;
+    private final OptionalArg<String> paramArg;
 
     public HologramCommand() {
         super("hologram", "Gestion des hologrammes (OP)");
         this.actionArg = this.withRequiredArg("action", "create|delete|list", ArgTypes.STRING);
-        this.paramArg = this.withRequiredArg("param", "texte ou id", ArgTypes.STRING);
+        this.paramArg = this.withOptionalArg("param", "texte ou id", ArgTypes.STRING);
     }
 
     @Override
