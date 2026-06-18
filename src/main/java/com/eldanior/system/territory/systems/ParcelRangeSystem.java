@@ -34,7 +34,7 @@ public class ParcelRangeSystem extends EntityTickingSystem<EntityStore> {
     public void tick(float dt, int index, @Nonnull ArchetypeChunk<EntityStore> chunk,
                      @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
 
-        tickCounter++;
+        if (index == 0) tickCounter++;
         if (tickCounter % 20 != 0) return;
 
         Ref<EntityStore> ref = chunk.getReferenceTo(index);

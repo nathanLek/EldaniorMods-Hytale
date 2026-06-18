@@ -20,12 +20,17 @@ import java.util.UUID;
 public class PartyHudUpdateSystem extends EntityTickingSystem<EntityStore> {
 
     private int tickCounter = 0;
+    private boolean shouldUpdate = false;
+
     @Override
     public void tick(float dt, int index, @Nonnull ArchetypeChunk<EntityStore> archetypeChunk,
                      @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
 
-        tickCounter++;
-        if (tickCounter % 10 != 0) return;
+        if (index == 0) {
+            tickCounter++;
+            shouldUpdate = (tickCounter % 10 == 0);
+        }
+        if (!shouldUpdate) return;
 
         Ref<EntityStore> entityRef = archetypeChunk.getReferenceTo(index);
         if (!entityRef.isValid()) return;

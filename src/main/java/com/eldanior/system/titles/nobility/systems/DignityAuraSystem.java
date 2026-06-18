@@ -32,6 +32,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DignityAuraSystem extends EntityTickingSystem<EntityStore> {
 
     private float updateTimer = 0;
+    private boolean shouldUpdate = false;
 
     // Joueurs actuellement ralentis (UUID -> slow actuel applique)
     private static final Map<UUID, Float> slowedPlayers = new ConcurrentHashMap<>();
@@ -92,9 +93,16 @@ public class DignityAuraSystem extends EntityTickingSystem<EntityStore> {
                      @Nonnull Store<EntityStore> store,
                      @Nonnull CommandBuffer<EntityStore> commandBuffer) {
 
-        updateTimer += dt;
-        if (updateTimer < 1.0f) return;
-        if (index == 0) updateTimer = 0;
+        if (index == 0) {
+            updateTimer += dt;
+            if (updateTimer >= 1.0f) {
+                shouldUpdate = true;
+                updateTimer = 0;
+            } else {
+                shouldUpdate = false;
+            }
+        }
+        if (!shouldUpdate) return;
 
         Ref<EntityStore> playerRef = chunk.getReferenceTo(index);
         if (!playerRef.isValid()) return;

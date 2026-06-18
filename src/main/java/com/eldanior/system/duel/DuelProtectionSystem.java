@@ -30,7 +30,7 @@ public class DuelProtectionSystem extends EntityTickingSystem<EntityStore> {
                      @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
 
         // Check toutes les 5 ticks (~0.25s)
-        tickCounter++;
+        if (index == 0) tickCounter++;
         if (tickCounter % 5 != 0) return;
 
         // Traiter les fins de duel en attente sur le thread serveur (thread-safe pour ECS)

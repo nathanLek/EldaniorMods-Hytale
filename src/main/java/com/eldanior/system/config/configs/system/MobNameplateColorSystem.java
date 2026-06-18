@@ -27,15 +27,23 @@ import java.util.UUID;
 public class MobNameplateColorSystem extends EntityTickingSystem<EntityStore> {
 
     private float updateTimer = 0;
+    private boolean shouldUpdate = false;
 
     @Override
     public void tick(float dt, int index, @Nonnull ArchetypeChunk<EntityStore> chunk,
                      @Nonnull Store<EntityStore> store,
                      @Nonnull CommandBuffer<EntityStore> commandBuffer) {
 
-        updateTimer += dt;
-        if (updateTimer < 0.5f) return;
-        if (index == 0) updateTimer = 0;
+        if (index == 0) {
+            updateTimer += dt;
+            if (updateTimer >= 0.5f) {
+                shouldUpdate = true;
+                updateTimer = 0;
+            } else {
+                shouldUpdate = false;
+            }
+        }
+        if (!shouldUpdate) return;
 
         Ref<EntityStore> mobRef = chunk.getReferenceTo(index);
         if (!mobRef.isValid()) return;
