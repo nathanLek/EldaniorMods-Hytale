@@ -4,6 +4,7 @@ import com.eldanior.system.config.UUIDExtractor;
 import com.eldanior.system.config.EldaniorLogger;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class QuestManager {
 
@@ -17,7 +18,7 @@ public class QuestManager {
 
     // Selection aleatoire de 7 quetes journalieres pour aujourd'hui
     private static final int DAILY_SELECTION_COUNT = 5;
-    private static final List<String> todaysDailyIds = new ArrayList<>();
+    private static volatile List<String> todaysDailyIds = List.of();
 
     public static void init() {
         registerQuests();
@@ -222,7 +223,7 @@ public class QuestManager {
         Set<String> ownedIds = new HashSet<>();
         for (PlayerQuest pq : owned) ownedIds.add(pq.getQuestId());
 
-        Map<String, Long> playerCooldowns = cooldowns.computeIfAbsent(playerUUID, k -> new HashMap<>());
+        Map<String, Long> playerCooldowns = cooldowns.computeIfAbsent(playerUUID, k -> new ConcurrentHashMap<>());
         long now = System.currentTimeMillis();
 
         for (QuestModel quest : allQuests.values()) {
@@ -252,8 +253,6 @@ public class QuestManager {
     /** Selectionne aleatoirement DAILY_SELECTION_COUNT quetes journalieres pour aujourd'hui.
      *  Le seed est base sur le jour, donc tous les joueurs voient la meme selection. */
     private static void refreshDailySelection() {
-        todaysDailyIds.clear();
-
         // Pool normal (non-PK)
         List<String> normalDailies = new ArrayList<>();
         // Pool PK
@@ -270,15 +269,20 @@ public class QuestManager {
 
         Random dayRandom = new Random(currentDay * 31L + 2026);
 
+        List<String> newDailyIds = new ArrayList<>();
+
         // 5 quetes normales
         Collections.shuffle(normalDailies, dayRandom);
         int normalCount = Math.min(DAILY_SELECTION_COUNT, normalDailies.size());
-        todaysDailyIds.addAll(normalDailies.subList(0, normalCount));
+        newDailyIds.addAll(normalDailies.subList(0, normalCount));
 
         // 5 quetes PK
         Collections.shuffle(pkDailies, dayRandom);
         int pkCount = Math.min(DAILY_SELECTION_COUNT, pkDailies.size());
-        todaysDailyIds.addAll(pkDailies.subList(0, pkCount));
+        newDailyIds.addAll(pkDailies.subList(0, pkCount));
+
+        // Remplacement atomique — les lecteurs voient l'ancienne ou la nouvelle liste, jamais un etat intermediaire
+        todaysDailyIds = Collections.unmodifiableList(newDailyIds);
 
         System.out.println("[Quests] Journalieres du jour: " + todaysDailyIds);
     }
@@ -287,7 +291,7 @@ public class QuestManager {
 
     public static void setCooldown(UUID playerUUID, String questId, int minutes) {
         if (minutes <= 0) return;
-        cooldowns.computeIfAbsent(playerUUID, k -> new HashMap<>())
+        cooldowns.computeIfAbsent(playerUUID, k -> new ConcurrentHashMap<>())
                 .put(questId, System.currentTimeMillis() + (minutes * 60000L));
     }
 
@@ -314,7 +318,7 @@ public class QuestManager {
 
     public static void deserializeCooldowns(UUID playerUUID, String data) {
         if (data == null || data.isEmpty()) return;
-        Map<String, Long> playerCooldowns = cooldowns.computeIfAbsent(playerUUID, k -> new HashMap<>());
+        Map<String, Long> playerCooldowns = cooldowns.computeIfAbsent(playerUUID, k -> new ConcurrentHashMap<>());
         long now = System.currentTimeMillis();
         for (String entry : data.split("\\|")) {
             String[] parts = entry.split("=");
@@ -347,7 +351,7 @@ public class QuestManager {
     // ==================== PLAYER QUESTS ====================
 
     public static List<PlayerQuest> getPlayerQuests(UUID playerUUID) {
-        return playerQuests.computeIfAbsent(playerUUID, k -> new ArrayList<>());
+        return playerQuests.computeIfAbsent(playerUUID, k -> new CopyOnWriteArrayList<>());
     }
 
     public static PlayerQuest getActiveQuest(UUID playerUUID) {
