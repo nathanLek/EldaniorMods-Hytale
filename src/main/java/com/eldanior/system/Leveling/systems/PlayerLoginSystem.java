@@ -169,7 +169,7 @@ public class PlayerLoginSystem extends EntityTickingSystem<EntityStore> {
             }
         }
 
-        // Charger les quetes du joueur
+        // Charger les quetes du joueur (ECS d'abord, puis fichier shutdown si plus recent)
         String questData = data.getQuestData();
         if (questData != null && !questData.isEmpty()) {
             com.eldanior.system.quest.QuestManager.deserializePlayerQuests(uuid, questData);
@@ -179,6 +179,8 @@ public class PlayerLoginSystem extends EntityTickingSystem<EntityStore> {
         if (cooldownData != null && !cooldownData.isEmpty()) {
             com.eldanior.system.quest.QuestManager.deserializeCooldowns(uuid, cooldownData);
         }
+        // Restaurer depuis le fichier shutdown (ecrase les donnees ECS potentiellement obsoletes)
+        com.eldanior.system.quest.QuestManager.loadPlayerFromFile(uuid);
         com.eldanior.system.quest.QuestManager.checkDailyReset();
 
         // Charger les scores dans le classement persistant

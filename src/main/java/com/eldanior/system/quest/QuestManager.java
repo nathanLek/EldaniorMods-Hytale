@@ -2,6 +2,9 @@ package com.eldanior.system.quest;
 
 import com.eldanior.system.config.UUIDExtractor;
 import com.eldanior.system.config.EldaniorLogger;
+import com.eldanior.system.config.PersistenceUtils;
+import java.io.*;
+import java.nio.file.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -12,6 +15,9 @@ public class QuestManager {
 
     // Quetes actives par joueur (UUID -> liste de PlayerQuest)
     private static final Map<UUID, List<PlayerQuest>> playerQuests = new ConcurrentHashMap<>();
+
+    // Repertoire de donnees pour la sauvegarde fichier (shutdown safety)
+    private static Path dataDir;
 
     // Jour courant pour les journalieres
     private static int currentDay = -1;
@@ -497,6 +503,71 @@ public class QuestManager {
 
     private static int getDayOfYear() {
         return java.time.LocalDate.now().getDayOfYear();
+    }
+
+    // ==================== FILE-BASED PERSISTENCE (shutdown safety) ====================
+
+    public static void initDataDir(Path pluginDataDir) {
+        dataDir = pluginDataDir.resolve("eldanior_data");
+    }
+
+    /**
+     * Sauvegarde toutes les quetes et cooldowns de tous les joueurs connectes
+     * dans un fichier .properties. Appele au shutdown pour eviter la perte de progression.
+     */
+    public static void saveAllToFile() {
+        if (dataDir == null) return;
+        try {
+            Properties props = new Properties();
+            for (Map.Entry<UUID, List<PlayerQuest>> entry : playerQuests.entrySet()) {
+                UUID uuid = entry.getKey();
+                String questData = serializePlayerQuests(uuid);
+                String cooldownData = serializeCooldowns(uuid);
+                if (!questData.isEmpty()) {
+                    props.setProperty(uuid.toString() + ".quests", questData);
+                }
+                if (!cooldownData.isEmpty()) {
+                    props.setProperty(uuid.toString() + ".cooldowns", cooldownData);
+                }
+            }
+            PersistenceUtils.writeAtomicWithBackup(
+                    dataDir.resolve("quest_shutdown.properties"), props,
+                    "Quest & cooldown data saved at shutdown");
+            System.out.println("[Quests] Donnees de " + playerQuests.size() + " joueurs sauvegardees au shutdown.");
+        } catch (Exception e) {
+            EldaniorLogger.error("QuestManager.saveAllToFile", e);
+        }
+    }
+
+    /**
+     * Charge les quetes et cooldowns depuis le fichier shutdown pour un joueur specifique.
+     * Retourne true si des donnees ont ete trouvees et chargees.
+     */
+    public static boolean loadPlayerFromFile(UUID playerUUID) {
+        if (dataDir == null) return false;
+        Path file = dataDir.resolve("quest_shutdown.properties");
+        if (!Files.exists(file)) return false;
+        try {
+            Properties props = new Properties();
+            try (InputStream in = Files.newInputStream(file)) {
+                props.load(in);
+            }
+            String questData = props.getProperty(playerUUID.toString() + ".quests");
+            String cooldownData = props.getProperty(playerUUID.toString() + ".cooldowns");
+            boolean loaded = false;
+            if (questData != null && !questData.isEmpty()) {
+                deserializePlayerQuests(playerUUID, questData);
+                loaded = true;
+            }
+            if (cooldownData != null && !cooldownData.isEmpty()) {
+                deserializeCooldowns(playerUUID, cooldownData);
+                loaded = true;
+            }
+            return loaded;
+        } catch (Exception e) {
+            EldaniorLogger.error("QuestManager.loadPlayerFromFile", e);
+            return false;
+        }
     }
 
     // ==================== SERIALIZATION ====================
