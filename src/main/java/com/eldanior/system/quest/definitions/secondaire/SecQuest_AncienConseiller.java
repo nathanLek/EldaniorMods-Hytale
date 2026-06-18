@@ -18,7 +18,7 @@ public class SecQuest_AncienConseiller extends NpcDialogueQuest {
                 "sec_ancien_conseiller",
                 "L'Epopee d'un Roi",
                 "Rencontrez l'ancien conseiller du Roi Fou et decouvrez les secrets du royaume.",
-                QuestType.COLLECTION, QuestCategory.PRINCIPAL, QuestDifficulty.A,
+                QuestType.COLLECTION, QuestCategory.SECONDAIRE, QuestDifficulty.A,
                 null, 1,
                 5000, 50000, null,
                 null,
