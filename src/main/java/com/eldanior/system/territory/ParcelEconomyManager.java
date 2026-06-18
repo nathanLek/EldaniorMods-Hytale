@@ -105,12 +105,73 @@ public class ParcelEconomyManager {
     // ==================== IMPOTS HEBDOMADAIRES ====================
 
     /**
-     * Appele periodiquement — maintenant la distribution est automatique a chaque transaction.
-     * Ce timer ne fait plus que verifier les locations expirees.
+     * Collecte les impots hebdomadaires : chaque parcelle de type TERRITORY,
+     * GRAND_TERRITORY ou KINGDOM preleve un pourcentage (defini dans TaxConfig)
+     * de la tresorerie de ses enfants directs.
+     *
+     * Appele periodiquement par PersistenceManager (toutes les 5 minutes),
+     * mais ne s'execute reellement que si 7 jours se sont ecoules depuis
+     * la derniere collecte de chaque parcelle (via canCollectTax()).
      */
     public static void collectWeeklyTaxes() {
-        // Les taxes sont maintenant distribuees automatiquement via distributeTax()
-        // Ce check peut etre utilise pour les locations expirees plus tard
+        long now = System.currentTimeMillis();
+        boolean changed = false;
+
+        for (ParcelData collector : ParcelManager.getAll()) {
+            // Seuls TERRITORY, GRAND_TERRITORY, KINGDOM collectent
+            double rate = TaxConfig.getCollectionRate(collector.getType());
+            if (rate <= 0.0) continue;
+
+            // Cooldown de 7 jours par parcelle
+            if (!collector.canCollectTax()) continue;
+
+            // Collecter depuis les enfants directs
+            List<String> childrenIds = ParcelManager.getChildrenOf(collector.getId());
+            if (childrenIds.isEmpty()) continue;
+
+            long totalCollected = 0;
+
+            for (String childId : childrenIds) {
+                ParcelData child = ParcelManager.get(childId);
+                if (child == null) continue;
+
+                long childTreasury = child.getTreasury();
+                if (childTreasury <= 0) continue;
+
+                long amount = (long) (childTreasury * rate);
+                if (amount <= 0) continue;
+
+                child.addTreasury(-amount);
+                totalCollected += amount;
+
+                System.out.println("[Economy] Impot hebdo: " + amount + " Or preleve de "
+                        + child.getName() + " (" + child.getType().getLabel() + ")"
+                        + " -> " + collector.getName() + " (" + collector.getType().getLabel() + ")"
+                        + " [" + (int)(rate * 100) + "%]");
+            }
+
+            if (totalCollected > 0) {
+                collector.addTreasury(totalCollected);
+                collector.setLastTaxCollection(now);
+                collector.setLastTaxAmount(totalCollected);
+                changed = true;
+
+                System.out.println("[Economy] " + collector.getName()
+                        + " a collecte " + totalCollected + " Or d'impots hebdomadaires");
+
+                // Redistribuer vers la famille/guilde associee si applicable
+                sendToFamilyOrGuild(collector, totalCollected);
+            } else {
+                // Marquer la collecte meme si rien a prelever (eviter retry inutile)
+                collector.setLastTaxCollection(now);
+                collector.setLastTaxAmount(0);
+                changed = true;
+            }
+        }
+
+        if (changed) {
+            ParcelManager.save();
+        }
     }
 
     /**
