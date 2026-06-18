@@ -66,15 +66,16 @@ public class BlackMarketTab {
         try { slotIdx = Integer.parseInt(slotIndex); } catch (NumberFormatException e) { return false; }
         int idx = currentPage * MAX_SLOTS + slotIdx;
 
-        ShopListing listing = ShopManager.getBlackMarketListing(idx);
-        if (listing == null) return false;
+        // Pre-checks before atomic buy (read-only, no race condition risk)
+        ShopListing peekListing = ShopManager.getBlackMarketListing(idx);
+        if (peekListing == null) return false;
 
         UUID myUUID = getPlayerUUID(ref, store);
-        if (myUUID == null || myUUID.equals(listing.getSellerUUID())) return false;
+        if (myUUID == null || myUUID.equals(peekListing.getSellerUUID())) return false;
 
         ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
         PlayerLevelData data = store.getComponent(ref, type);
-        if (data == null || data.getMoney() < listing.getPrice()) {
+        if (data == null || data.getMoney() < peekListing.getPrice()) {
             Player p = store.getComponent(ref, Player.getComponentType());
             if (p != null) p.getPlayerRef().sendMessage(Message.raw("§cPas assez d'or !"));
             return false;
@@ -82,8 +83,21 @@ public class BlackMarketTab {
 
         Player buyer = store.getComponent(ref, Player.getComponentType());
         if (buyer == null) return false;
+
+        // Atomic buy: remove listing in one synchronized operation to prevent duplication
+        ShopListing listing = ShopManager.buyBlackMarketListing(idx);
+        if (listing == null) {
+            buyer.getPlayerRef().sendMessage(Message.raw("§cCet objet a deja ete achete !"));
+            return false;
+        }
+
         var result = buyer.getInventory().getHotbar().addItemStack(listing.getItem());
-        if (!result.succeeded()) { buyer.getPlayerRef().sendMessage(Message.raw("§cInventaire plein !")); return false; }
+        if (!result.succeeded()) {
+            // Re-add listing since we already removed it but can't give the item
+            ShopManager.addBlackMarketListing(listing.getSellerUUID(), listing.getSellerName(), listing.getItem(), listing.getPrice());
+            buyer.getPlayerRef().sendMessage(Message.raw("§cInventaire plein !"));
+            return false;
+        }
 
         data.removeMoney(listing.getPrice());
         store.putComponent(ref, type, data);
@@ -102,7 +116,6 @@ public class BlackMarketTab {
             ShopManager.addPendingEarnings(listing.getSellerUUID(), listing.getPrice());
         }
 
-        ShopManager.removeBlackMarketListing(idx);
         buyer.getPlayerRef().sendMessage(Message.raw("§aObjet achete au Marche Noir pour " + listing.getPrice() + " Or !"));
         return true;
     }
