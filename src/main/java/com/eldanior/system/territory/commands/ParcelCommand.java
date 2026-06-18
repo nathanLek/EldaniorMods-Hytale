@@ -532,6 +532,9 @@ public class ParcelCommand extends AbstractAsyncCommand {
                     }
                     oldRef.sendMessage(Message.raw("§a" + sender.getPlayerRef().getUsername() + " a achete votre parcelle " + parcel.getName() + " pour " + parcel.getPrice() + " Or !"));
                 } catch (Exception e) { EldaniorLogger.error("ParcelCommand", e); }
+            } else {
+                // Proprietaire offline — stocker les gains en attente
+                ParcelManager.addPendingEarnings(oldOwner, parcel.getPrice());
             }
         }
 

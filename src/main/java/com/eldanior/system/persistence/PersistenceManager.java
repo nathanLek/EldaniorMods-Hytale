@@ -4,6 +4,7 @@ import com.eldanior.system.classement.ClassementManager;
 import com.eldanior.system.guild.Guild;
 import com.eldanior.system.guild.GuildManager;
 import com.eldanior.system.shop.ShopManager;
+import com.eldanior.system.territory.ParcelManager;
 import com.eldanior.system.titles.nobility.family.FamilyManager;
 import com.eldanior.system.titles.nobility.family.NobleFamilyModel;
 import com.eldanior.system.config.EldaniorLogger;
@@ -300,6 +301,13 @@ public class PersistenceManager {
             pendingProps.setProperty(entry.getKey().toString(), String.valueOf(entry.getValue()));
         }
         PersistenceUtils.writeAtomicWithBackup(dataDir.resolve("pending_earnings.properties"), pendingProps, "Pending shop earnings");
+
+        // Save pending parcel earnings
+        Properties parcelPendingProps = new Properties();
+        for (var entry : ParcelManager.getPendingEarningsMap().entrySet()) {
+            parcelPendingProps.setProperty(entry.getKey().toString(), String.valueOf(entry.getValue()));
+        }
+        PersistenceUtils.writeAtomicWithBackup(dataDir.resolve("pending_parcel_earnings.properties"), parcelPendingProps, "Pending parcel earnings");
     }
 
     private static void saveMarketListings(String filename, List<ShopManager.ShopListing> listings) throws IOException {
@@ -335,6 +343,20 @@ public class PersistenceManager {
                     UUID uuid = UUID.fromString(key);
                     long amount = Long.parseLong(pp.getProperty(key));
                     ShopManager.addPendingEarnings(uuid, amount);
+                } catch (Exception e) { EldaniorLogger.error("PersistenceManager", e); }
+            }
+        }
+
+        // Pending parcel earnings
+        Path parcelPendingFile = dataDir.resolve("pending_parcel_earnings.properties");
+        if (Files.exists(parcelPendingFile)) {
+            Properties ppe = new Properties();
+            try (InputStream in = Files.newInputStream(parcelPendingFile)) { ppe.load(in); }
+            for (String key : ppe.stringPropertyNames()) {
+                try {
+                    UUID uuid = UUID.fromString(key);
+                    long amount = Long.parseLong(ppe.getProperty(key));
+                    ParcelManager.addPendingEarnings(uuid, amount);
                 } catch (Exception e) { EldaniorLogger.error("PersistenceManager", e); }
             }
         }
