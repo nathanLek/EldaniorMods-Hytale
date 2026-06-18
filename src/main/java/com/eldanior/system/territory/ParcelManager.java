@@ -12,6 +12,7 @@ public class ParcelManager {
 
     private static final Map<String, ParcelData> parcels = new ConcurrentHashMap<>();
     private static final Map<UUID, int[]> playerSelections = new ConcurrentHashMap<>(); // pos1[3] + pos2[3]
+    private static final Map<UUID, Long> pendingEarnings = new ConcurrentHashMap<>();
     private static Path dataDir;
     private static volatile long version = 0;
 
@@ -22,6 +23,21 @@ public class ParcelManager {
         load();
         assignDefaultOwners();
         System.out.println("[Eldanior] ParcelManager: " + parcels.size() + " parcelles chargees.");
+    }
+
+    // ==================== PENDING EARNINGS (ventes offline) ====================
+
+    public static void addPendingEarnings(UUID playerUUID, long amount) {
+        pendingEarnings.merge(playerUUID, amount, Long::sum);
+    }
+
+    public static Map<UUID, Long> getPendingEarningsMap() {
+        return pendingEarnings;
+    }
+
+    public static long collectPendingEarnings(UUID playerUUID) {
+        Long amount = pendingEarnings.remove(playerUUID);
+        return amount != null ? amount : 0;
     }
 
     // ==================== SELECTION (pos1/pos2) ====================

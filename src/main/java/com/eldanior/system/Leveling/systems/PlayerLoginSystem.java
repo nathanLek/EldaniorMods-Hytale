@@ -154,6 +154,21 @@ public class PlayerLoginSystem extends EntityTickingSystem<EntityStore> {
             }
         }
 
+        // Collecter les gains des ventes de parcelles en attente
+        long pendingParcelGold = com.eldanior.system.territory.ParcelManager.collectPendingEarnings(uuid);
+        if (pendingParcelGold > 0) {
+            final long parcelGold = pendingParcelGold;
+            final PlayerLevelData parcelData = data;
+            commandBuffer.run(deferredStore -> {
+                parcelData.addMoney(parcelGold);
+                deferredStore.putComponent(playerRef, type, parcelData);
+            });
+            com.hypixel.hytale.server.core.universe.PlayerRef pRefParcel = store.getComponent(playerRef, com.hypixel.hytale.server.core.universe.PlayerRef.getComponentType());
+            if (pRefParcel != null) {
+                pRefParcel.sendMessage(com.hypixel.hytale.server.core.Message.raw("§a+" + parcelGold + " Or recu de ventes de parcelles !"));
+            }
+        }
+
         // Charger les quetes du joueur
         String questData = data.getQuestData();
         if (questData != null && !questData.isEmpty()) {
