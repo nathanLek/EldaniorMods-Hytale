@@ -14,6 +14,8 @@ import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
+import com.eldanior.system.config.PersistenceUtils;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -187,9 +189,7 @@ public class HologramManager {
                 idx++;
             }
 
-            try (OutputStream out = Files.newOutputStream(dataDir.resolve("holograms.properties"))) {
-                props.store(out, "Eldanior Holograms");
-            }
+            PersistenceUtils.writeAtomicWithBackup(dataDir.resolve("holograms.properties"), props, "Eldanior Holograms");
         } catch (Exception e) {
             System.err.println("[Hologram] Erreur save: " + e.getMessage());
         }
