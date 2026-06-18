@@ -14,6 +14,7 @@ import com.hypixel.hytale.server.core.prefab.selection.SelectionManager;
 import com.hypixel.hytale.server.core.prefab.selection.SelectionProvider;
 import com.hypixel.hytale.server.core.NameMatching;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
+import com.hypixel.hytale.server.core.command.system.arguments.system.OptionalArg;
 import com.hypixel.hytale.server.core.command.system.arguments.system.RequiredArg;
 import com.hypixel.hytale.server.core.command.system.arguments.types.ArgTypes;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractAsyncCommand;
@@ -31,14 +32,14 @@ import java.util.concurrent.CompletableFuture;
 public class ParcelCommand extends AbstractAsyncCommand {
 
     private final RequiredArg<String> actionArg;
-    private final RequiredArg<String> arg1;
-    private final RequiredArg<String> arg2;
+    private final OptionalArg<String> arg1;
+    private final OptionalArg<String> arg2;
 
     public ParcelCommand() {
         super("parcel", "Gestion des parcelles (pos1|pos2|create|delete|info|invite|kick|setperm|list|sell|buy)");
         this.actionArg = this.withRequiredArg("action", "pos1|pos2|create|delete|info|invite|kick|setperm|list|sell|buy", ArgTypes.STRING);
-        this.arg1 = this.withRequiredArg("arg1", "type/nom/joueur", ArgTypes.STRING);
-        this.arg2 = this.withRequiredArg("arg2", "nom/valeur", ArgTypes.STRING);
+        this.arg1 = this.withOptionalArg("arg1", "type/nom/joueur", ArgTypes.STRING);
+        this.arg2 = this.withOptionalArg("arg2", "nom/valeur", ArgTypes.STRING);
     }
 
     @Override
@@ -167,6 +168,10 @@ public class ParcelCommand extends AbstractAsyncCommand {
     private void handleCreate(Player sender, UUID uuid, CommandContext ctx, boolean isAdmin) {
         String typeStr = this.arg1.get(ctx);
         String name = this.arg2.get(ctx);
+        if (typeStr == null || typeStr.isEmpty() || name == null || name.isEmpty()) {
+            sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es parcel create <type> <nom>"));
+            return;
+        }
 
         ParcelType type;
         try { type = ParcelType.valueOf(typeStr.toUpperCase()); }
@@ -220,7 +225,7 @@ public class ParcelCommand extends AbstractAsyncCommand {
         if (!ParcelManager.hasFullSelection(uuid)) {
             sender.getPlayerRef().sendMessage(Message.raw("§cAucune selection detectee !"));
             sender.getPlayerRef().sendMessage(Message.raw("§7Utilisez le §fSelection Tool §7dans le jeu, ou :"));
-            sender.getPlayerRef().sendMessage(Message.raw("§f/es parcel pos1 _ §7puis §f/es parcel pos2 _"));
+            sender.getPlayerRef().sendMessage(Message.raw("§f/es parcel pos1 §7puis §f/es parcel pos2"));
             return;
         }
 
@@ -280,6 +285,10 @@ public class ParcelCommand extends AbstractAsyncCommand {
 
     private void handleDelete(Player sender, UUID uuid, CommandContext ctx, boolean isAdmin) {
         String idOrName = this.arg1.get(ctx);
+        if (idOrName == null || idOrName.isEmpty()) {
+            sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es parcel delete <id_ou_nom>"));
+            return;
+        }
         ParcelData parcel = findParcel(idOrName);
         if (parcel == null) {
             sender.getPlayerRef().sendMessage(Message.raw("§cParcelle introuvable: " + idOrName));
@@ -336,6 +345,10 @@ public class ParcelCommand extends AbstractAsyncCommand {
 
     private void handleInvite(Player sender, UUID uuid, CommandContext ctx, boolean isAdmin) {
         String playerName = this.arg1.get(ctx);
+        if (playerName == null || playerName.isEmpty()) {
+            sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es parcel invite <joueur>"));
+            return;
+        }
 
         // Trouver la parcelle ou se trouve le sender
         var ref = sender.getReference();
@@ -371,6 +384,10 @@ public class ParcelCommand extends AbstractAsyncCommand {
 
     private void handleKick(Player sender, UUID uuid, CommandContext ctx, boolean isAdmin) {
         String playerName = this.arg1.get(ctx);
+        if (playerName == null || playerName.isEmpty()) {
+            sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es parcel kick <joueur>"));
+            return;
+        }
 
         var ref = sender.getReference();
         if (ref == null) return;
@@ -406,6 +423,10 @@ public class ParcelCommand extends AbstractAsyncCommand {
         // /es parcel setperm <role:permission> <true|false>
         String rolePermStr = this.arg1.get(ctx);
         String valueStr = this.arg2.get(ctx);
+        if (rolePermStr == null || rolePermStr.isEmpty() || valueStr == null || valueStr.isEmpty()) {
+            sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es parcel setperm <ROLE:PERMISSION> <true|false>"));
+            return;
+        }
 
         var ref = sender.getReference();
         if (ref == null) return;
@@ -464,6 +485,10 @@ public class ParcelCommand extends AbstractAsyncCommand {
 
     private void handleSell(Player sender, UUID uuid, CommandContext ctx, boolean isAdmin) {
         String priceStr = this.arg1.get(ctx);
+        if (priceStr == null || priceStr.isEmpty()) {
+            sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es parcel sell <prix>"));
+            return;
+        }
         long price;
         try { price = Long.parseLong(priceStr); }
         catch (Exception e) { sender.getPlayerRef().sendMessage(Message.raw("§cPrix invalide.")); return; }
@@ -552,6 +577,10 @@ public class ParcelCommand extends AbstractAsyncCommand {
 
     private void handleSetPrice(Player sender, UUID uuid, CommandContext ctx, boolean isAdmin) {
         String priceStr = this.arg1.get(ctx);
+        if (priceStr == null || priceStr.isEmpty()) {
+            sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es parcel setprice <prix>"));
+            return;
+        }
         long price;
         try { price = Long.parseLong(priceStr); } catch (Exception e) { sender.getPlayerRef().sendMessage(Message.raw("§cPrix invalide.")); return; }
 
@@ -567,6 +596,10 @@ public class ParcelCommand extends AbstractAsyncCommand {
 
     private void handleSetRent(Player sender, UUID uuid, CommandContext ctx, boolean isAdmin) {
         String priceStr = this.arg1.get(ctx);
+        if (priceStr == null || priceStr.isEmpty()) {
+            sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es parcel setrent <prix>"));
+            return;
+        }
         long rentPrice;
         try { rentPrice = Long.parseLong(priceStr); } catch (Exception e) { sender.getPlayerRef().sendMessage(Message.raw("§cPrix invalide.")); return; }
 
@@ -589,6 +622,10 @@ public class ParcelCommand extends AbstractAsyncCommand {
         }
 
         String familyId = this.arg1.get(ctx);
+        if (familyId == null || familyId.isEmpty()) {
+            sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es parcel assign <familyId>"));
+            return;
+        }
 
         ParcelData parcel = getParcelAtPlayer(sender);
         if (parcel == null) {
@@ -613,6 +650,10 @@ public class ParcelCommand extends AbstractAsyncCommand {
         }
 
         String guildIdOrName = this.arg1.get(ctx);
+        if (guildIdOrName == null || guildIdOrName.isEmpty()) {
+            sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es parcel assignguild <guilde>"));
+            return;
+        }
 
         ParcelData parcel = getParcelAtPlayer(sender);
         if (parcel == null) {
@@ -660,7 +701,7 @@ public class ParcelCommand extends AbstractAsyncCommand {
             return;
         }
         String rankStr = this.arg1.get(ctx);
-        if (rankStr == null || !java.util.Set.of("E", "D", "C", "B", "A", "S").contains(rankStr.toUpperCase())) {
+        if (rankStr == null || rankStr.isEmpty() || !java.util.Set.of("E", "D", "C", "B", "A", "S").contains(rankStr.toUpperCase())) {
             sender.getPlayerRef().sendMessage(Message.raw("§cUsage: /es parcel setrank <E|D|C|B|A|S>"));
             return;
         }
@@ -687,6 +728,10 @@ public class ParcelCommand extends AbstractAsyncCommand {
             return;
         }
         String delayStr = this.arg1.get(ctx);
+        if (delayStr == null || delayStr.isEmpty()) {
+            sender.getPlayerRef().sendMessage(Message.raw("§cUsage: /es parcel setregen <secondes>"));
+            return;
+        }
         int delaySec;
         try { delaySec = Integer.parseInt(delayStr); }
         catch (NumberFormatException e) {
