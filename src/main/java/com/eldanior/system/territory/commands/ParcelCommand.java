@@ -512,7 +512,7 @@ public class ParcelCommand extends AbstractAsyncCommand {
         }
 
         // Transfert
-        data.addMoney(-parcel.getPrice());
+        data.removeMoney(parcel.getPrice());
         store.putComponent(ref, EldaniorSystem.get().getPlayerLevelDataType(), data);
 
         // Ancien proprietaire recoit l'or

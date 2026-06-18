@@ -446,7 +446,7 @@ public class ProprietesTab {
             long taxAmount = taxResult[1];
 
             // Prelever le montant total au joueur
-            data.addMoney(-totalPrice);
+            data.removeMoney(totalPrice);
             store.putComponent(ref, EldaniorSystem.get().getPlayerLevelDataType(), data);
 
             // Le net va au proprio (joueur) ou a la ville (si pas de proprio joueur)
@@ -480,7 +480,7 @@ public class ProprietesTab {
             long netAmount = taxResult[0];
             long taxAmount = taxResult[1];
 
-            data.addMoney(-totalRent);
+            data.removeMoney(totalRent);
             store.putComponent(ref, EldaniorSystem.get().getPlayerLevelDataType(), data);
 
             // Le net va au proprio (joueur) ou a la ville
@@ -505,7 +505,7 @@ public class ProprietesTab {
             long[] taxResult = ParcelEconomyManager.calculateTax(totalRent);
             long taxAmount = taxResult[1];
 
-            data.addMoney(-totalRent);
+            data.removeMoney(totalRent);
             store.putComponent(ref, EldaniorSystem.get().getPlayerLevelDataType(), data);
 
             // Le net va au proprio (joueur) ou a la ville
