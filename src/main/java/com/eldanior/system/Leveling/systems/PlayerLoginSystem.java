@@ -4,7 +4,7 @@ import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.Leveling.utils.StatCalculator;
 import com.eldanior.system.classement.ClassementManager;
 import com.eldanior.system.config.Player.PlayerLevelData;
-import com.eldanior.system.config.EldaniorLogger;
+import com.eldanior.system.config.UUIDExtractor;
 import com.hypixel.hytale.component.ArchetypeChunk;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.ComponentType;
@@ -14,6 +14,7 @@ import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatsModule;
 import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
@@ -40,7 +41,11 @@ public class PlayerLoginSystem extends EntityTickingSystem<EntityStore> {
         Player player = store.getComponent(playerRef, Player.getComponentType());
         if (player == null) return;
 
-        UUID uuid = getPlayerUUID(store, playerRef);
+        PlayerRef pRef = store.getComponent(playerRef, PlayerRef.getComponentType());
+        if (pRef == null) return;
+        UUID uuid;
+        try { uuid = UUIDExtractor.getUUID(pRef); }
+        catch (Exception e) { return; }
         if (uuid == null) return;
 
         if (initializedPlayers.contains(uuid)) return;
@@ -168,20 +173,6 @@ public class PlayerLoginSystem extends EntityTickingSystem<EntityStore> {
         ClassementManager.updateDuelWins(playerName, data.getDuelWins());
 
         initializedPlayers.add(uuid);
-    }
-
-    private UUID getPlayerUUID(Store<EntityStore> store, Ref<EntityStore> playerRef) {
-        try {
-            Player player = store.getComponent(playerRef, Player.getComponentType());
-            if (player == null) return null;
-
-            for (java.lang.reflect.Method m : player.getClass().getMethods()) {
-                if (m.getReturnType().equals(UUID.class) && m.getParameterCount() == 0) {
-                    return (UUID) m.invoke(player);
-                }
-            }
-        } catch (Exception e) { EldaniorLogger.error("PlayerLoginSystem", e); }
-        return null;
     }
 
     public void invalidate(UUID uuid) {

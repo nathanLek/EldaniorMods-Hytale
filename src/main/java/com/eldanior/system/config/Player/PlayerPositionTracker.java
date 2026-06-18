@@ -1,13 +1,14 @@
 package com.eldanior.system.config.Player;
 
 import com.eldanior.system.EldaniorSystem;
-import com.eldanior.system.config.EldaniorLogger;
+import com.eldanior.system.config.UUIDExtractor;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
 import org.joml.Vector3d;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
@@ -36,7 +37,11 @@ public class PlayerPositionTracker extends EntityTickingSystem<EntityStore> {
         TransformComponent transform = store.getComponent(playerRef, TransformComponent.getComponentType());
         if (transform == null) return;
 
-        UUID playerUUID = getPlayerUUID(player);
+        PlayerRef pRef = store.getComponent(playerRef, PlayerRef.getComponentType());
+        if (pRef == null) return;
+        UUID playerUUID;
+        try { playerUUID = UUIDExtractor.getUUID(pRef); }
+        catch (Exception e) { return; }
         if (playerUUID == null) return;
 
         ComponentType<EntityStore, PlayerLevelData> playerLevelType =
@@ -47,17 +52,6 @@ public class PlayerPositionTracker extends EntityTickingSystem<EntityStore> {
         PLAYER_POSITIONS.put(playerUUID, transform.getPosition());
         PLAYER_LEVELS.put(playerUUID, playerLevel);
         PLAYER_DIGNITY.put(playerUUID, (playerData != null) ? playerData.getDignity() : 0);
-    }
-
-    private UUID getPlayerUUID(Player player) {
-        try {
-            for (java.lang.reflect.Method m : player.getClass().getMethods()) {
-                if (m.getReturnType().equals(UUID.class) && m.getParameterCount() == 0) {
-                    return (UUID) m.invoke(player);
-                }
-            }
-        } catch (Exception e) { EldaniorLogger.error("PlayerPositionTracker", e); }
-        return null;
     }
 
     @Nonnull
