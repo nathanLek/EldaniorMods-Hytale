@@ -161,7 +161,7 @@ public class PlayerLevelData implements Component<EntityStore> {
 
     public void restoreMana(int amount) {
         if (currentMana < 0) currentMana = getMaxMana();
-        currentMana = currentMana + amount;
+        currentMana = Math.min(getMaxMana(), currentMana + amount);
     }
 
     public boolean canCast(String skillId) {
@@ -727,7 +727,7 @@ public class PlayerLevelData implements Component<EntityStore> {
     public void setVitality(int vitality) { this.vitality = vitality; }
     public void setIntelligence(int intelligence) { this.intelligence = intelligence; }
     public void setLuck(int luck) { this.luck = luck; }
-    public void setMoney(long money) { this.money = money; }
+    public void setMoney(long money) { this.money = Math.max(0, money); }
 
     public void addTitle(String title) {
         if (this.unlockedTitles == null) this.unlockedTitles = new ArrayList<>();
@@ -793,6 +793,12 @@ public class PlayerLevelData implements Component<EntityStore> {
         mobKills.put(key, mobKills.getOrDefault(key, 0) + 1);
     }
 
-    public void addMoney(long amount) { this.money += amount; }
+    public void addMoney(long amount) {
+        if (amount < 0) {
+            removeMoney(-amount);
+            return;
+        }
+        this.money += amount;
+    }
     public void removeMoney(long amount) { this.money = Math.max(0, this.money - amount); }
 }
