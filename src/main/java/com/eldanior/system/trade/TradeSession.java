@@ -12,9 +12,9 @@ public class TradeSession {
     private final UUID player2;
     private final ItemStack[] player1Items;
     private final ItemStack[] player2Items;
-    private boolean player1Validated;
-    private boolean player2Validated;
-    private boolean cancelled;
+    private volatile boolean player1Validated;
+    private volatile boolean player2Validated;
+    private volatile boolean cancelled;
 
     public TradeSession(UUID player1, UUID player2) {
         this.player1 = player1;
