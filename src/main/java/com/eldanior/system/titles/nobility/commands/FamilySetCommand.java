@@ -107,6 +107,9 @@ public class FamilySetCommand extends AbstractAsyncCommand {
 
                 FamilyManager.claimFamily(family.getId());
 
+                // Verifier titres en temps reel apres attribution de famille
+                com.eldanior.system.titles.TitleManager.checkAndUnlockTitles(ref, store, copy, targetPlayer);
+
                 sender.getPlayerRef().sendMessage(Message.raw("§a" + targetName + " est Patriarche de " + family.getFormattedName()));
                 targetPlayer.sendMessage(Message.raw("§eVous etes Patriarche de " + family.getFormattedName() + " §7- §o" + family.getMotto()));
             } catch (Exception e) { e.printStackTrace(); }

@@ -209,6 +209,12 @@ public class ProfilTab {
         store.putComponent(ref, type, data);
 
         com.eldanior.system.Leveling.utils.StatCalculator.updatePlayerStats(ref, store, data);
+
+        // Verifier titres en temps reel apres changement de stats
+        com.hypixel.hytale.server.core.universe.PlayerRef playerRef =
+                store.getComponent(ref, com.hypixel.hytale.server.core.universe.PlayerRef.getComponentType());
+        com.eldanior.system.titles.TitleManager.checkAndUnlockTitles(ref, store, data, playerRef);
+
         return true;
     }
 

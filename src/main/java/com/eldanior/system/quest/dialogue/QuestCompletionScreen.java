@@ -125,6 +125,10 @@ public class QuestCompletionScreen extends InteractiveCustomUIPage<QuestCompleti
         // Mettre à jour les stats en jeu
         com.eldanior.system.Leveling.utils.StatCalculator.updatePlayerStats(ref, store, pData);
 
+        // Verifier titres en temps reel apres completion de quete (XP, or, niveau)
+        PlayerRef pRef3 = store.getComponent(ref, PlayerRef.getComponentType());
+        com.eldanior.system.titles.TitleManager.checkAndUnlockTitles(ref, store, pData, pRef3);
+
         this.close();
     }
 

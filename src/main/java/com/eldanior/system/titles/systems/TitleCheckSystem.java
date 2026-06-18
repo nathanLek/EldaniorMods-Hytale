@@ -59,7 +59,11 @@ public class TitleCheckSystem extends EntityTickingSystem<EntityStore> {
             }
         }
 
-        commandBuffer.putComponent(ref, type, data);
+        // Utiliser commandBuffer.run() pour ecrire via le deferred store,
+        // ce qui evite les ecrasements par d'autres systemes
+        commandBuffer.run(deferredStore -> {
+            deferredStore.putComponent(ref, type, data);
+        });
     }
 
     @Nonnull

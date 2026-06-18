@@ -1,9 +1,16 @@
 package com.eldanior.system.titles;
 
+import com.eldanior.system.EldaniorSystem;
+import com.eldanior.system.Leveling.utils.NotificationHelper;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.config.configs.Rarity;
 import com.eldanior.system.titles.definitions.*;
 import com.eldanior.system.titles.models.TitleModel;
+import com.hypixel.hytale.component.ComponentType;
+import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import java.util.*;
 
@@ -653,5 +660,26 @@ public class TitleManager {
         }
 
         return newlyUnlocked;
+    }
+
+    /**
+     * Verifie, attribue et notifie les titres debloques en temps reel.
+     * A appeler apres tout changement de stats, niveau, argent, kills, etc.
+     * Ecrit directement dans le store (pas de commandBuffer).
+     */
+    public static void checkAndUnlockTitles(Ref<EntityStore> ref, Store<EntityStore> store, PlayerLevelData data, PlayerRef playerRef) {
+        List<TitleModel> newTitles = checkTitleUnlocks(data);
+        if (newTitles.isEmpty()) return;
+
+        for (TitleModel title : newTitles) {
+            data.addTitle(title.getId());
+            if (playerRef != null) {
+                NotificationHelper.showEventTitle(playerRef,
+                        "TITRE DEBLOQUE", title.getDisplayName(), true);
+            }
+        }
+
+        ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
+        store.putComponent(ref, type, data);
     }
 }

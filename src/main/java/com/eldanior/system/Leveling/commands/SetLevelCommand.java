@@ -158,6 +158,9 @@ public class SetLevelCommand extends AbstractAsyncCommand {
                 // 2. CRUCIAL : Met à jour la barre de vie et la vitesse en jeu !
                 StatCalculator.updatePlayerStats(ref, store, data);
 
+                // Verifier titres en temps reel apres changement de niveau
+                com.eldanior.system.titles.TitleManager.checkAndUnlockTitles(ref, store, data, targetPlayer);
+
                 sender.getPlayerRef().sendMessage(Message.raw("Niveau défini sur " + clampedLevel + " pour " + playerName + "."));
                 targetPlayer.sendMessage(Message.raw("Votre niveau a été changé à : " + clampedLevel + "."));
 

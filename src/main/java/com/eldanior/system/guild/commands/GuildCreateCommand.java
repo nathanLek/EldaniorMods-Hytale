@@ -112,6 +112,9 @@ public class GuildCreateCommand extends AbstractAsyncCommand {
                 copy.setGuildId(guild.getId());
                 store.putComponent(ref, type, copy);
 
+                // Verifier titres en temps reel apres creation de guilde
+                com.eldanior.system.titles.TitleManager.checkAndUnlockTitles(ref, store, copy, sender.getPlayerRef());
+
                 sender.getPlayerRef().sendMessage(Message.raw("§a§lGuilde " + guild.getFormattedName() + " " + guild.getFormattedTag() + " §a§lcreee !"));
                 sender.getPlayerRef().sendMessage(Message.raw("§7Vous etes le Chef. -150,000 or."));
                 sender.getPlayerRef().sendMessage(Message.raw("§7Invitez des membres avec §f/es guild invite <joueur>"));

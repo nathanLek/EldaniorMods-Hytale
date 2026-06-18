@@ -100,6 +100,9 @@ public class RankPromoteCommand extends AbstractAsyncCommand {
 
                 NobilityManager.recordKingPromotion(newRank);
 
+                // Verifier titres en temps reel apres promotion de rang
+                com.eldanior.system.titles.TitleManager.checkAndUnlockTitles(ref, store, copy, targetPlayer);
+
                 sender.getPlayerRef().sendMessage(Message.raw("§a" + targetName + " promu au rang de " + newRank.getFormattedName()));
                 com.eldanior.system.Leveling.utils.NotificationHelper.showEventTitle(targetPlayer,
                         "PROMOTION NOBLESSE", newRank.getFormattedName(), true);
