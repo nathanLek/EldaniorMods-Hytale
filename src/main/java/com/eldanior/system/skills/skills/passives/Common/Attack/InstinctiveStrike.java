@@ -18,17 +18,12 @@ public class InstinctiveStrike implements IPassiveCombatSkill {
     private static final float BONUS_MULTIPLIER = 1.10f;
     private static final float BONUS_MULTIPLIER_MASTERED = 1.11f;
 
-    private boolean lastProc = false;
-
     @Override
-    public boolean didProc() { return lastProc; }
-
-    @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
-        lastProc = false;
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        boolean proc = false;
 
         if (Math.random() < CHANCE) {
-            lastProc = true;
+            proc = true;
             float multiplier = mastered ? BONUS_MULTIPLIER_MASTERED : BONUS_MULTIPLIER;
             float currentDamage = damage.getAmount();
             float newDamage = currentDamage * multiplier;
@@ -44,5 +39,6 @@ public class InstinctiveStrike implements IPassiveCombatSkill {
                 }
             }
         }
+        return proc;
     }
 }

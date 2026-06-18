@@ -18,20 +18,20 @@ public class SwordMastery implements IPassiveCombatSkill {
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
 
     @Override // 🌟 Signature mise à jour avec 5 arguments
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
 
-        if (attackerRef == null) return;
+        if (attackerRef == null) return false;
 
         // 1. On récupère le composant Player directement via attackerRef
         Player player = store.getComponent(attackerRef, Player.getComponentType());
-        if (player == null) return;
+        if (player == null) return false;
 
         // 2. On récupère l'objet en main
         ItemStack mainHandItem = player.getInventory().getActiveHotbarItem();
 
         // 3. Vérification : Main vide ou pas une épée ?
-        if (mainHandItem == null) return;
-        if (!mainHandItem.getItemId().toLowerCase().contains("sword")) return;
+        if (mainHandItem == null) return false;
+        if (!mainHandItem.getItemId().toLowerCase().contains("sword")) return false;
 
         // --- APPLIQUE LE BONUS (+15%) ---
         float currentDamage = damage.getAmount();
@@ -48,5 +48,6 @@ public class SwordMastery implements IPassiveCombatSkill {
                 ParticleUtil.spawnParticleEffect("Shield_Block", pos, store);
             }
         }
+        return false;
     }
 }

@@ -225,10 +225,10 @@ public class CombatStatsSystem extends DamageEventSystem {
                 }
 
                 boolean mastered = tracker.isSkillMastered(skill.getId());
-                skill.getLogic().onAttack(damage, attackerData, store, attackerRef, victimRef, mastered);
+                boolean procced = skill.getLogic().onAttack(damage, attackerData, store, attackerRef, victimRef, mastered);
 
                 // Le mana n'est consommé QUE si le skill a effectivement proc
-                if (skill.getLogic().didProc()) {
+                if (procced) {
                     if (manaCost > 0) {
                         realMana -= manaCost;
                         attackerStatMap.setStatValue(DefaultEntityStatTypes.getMana(), realMana);
@@ -313,10 +313,10 @@ public class CombatStatsSystem extends DamageEventSystem {
                 if (skill.getCooldownSeconds() > 0 && !victimData.canCast(skill.getId())) continue;
 
                 boolean mastered = victimData.isSkillMastered(skill.getId());
-                skill.getLogic().onDefend(damage, victimData, store, attackerRef, victimRef, mastered);
+                boolean procced = skill.getLogic().onDefend(damage, victimData, store, attackerRef, victimRef, mastered);
 
                 // Si le skill a proc : incrémenter progression + appliquer cooldown
-                if (skill.getLogic().didProc()) {
+                if (procced) {
                     victimData.addSkillProc(skill.getId());
                     if (skill.getCooldownSeconds() > 0) {
                         victimData.applyCooldown(skill.getId(), skill.getCooldownSeconds());

@@ -13,13 +13,14 @@ import java.util.Objects;
 
 public class CrushingPressure implements IPassiveCombatSkill {
     @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
         EntityStatMap victimStats = store.getComponent(victimRef, EntityStatsModule.get().getEntityStatMapComponentType());
-        if (victimStats == null) return;
+        if (victimStats == null) return false;
         float currentHealth = Objects.requireNonNull(victimStats.get(DefaultEntityStatTypes.getHealth())).get();
         float maxHealth = Objects.requireNonNull(victimStats.get(DefaultEntityStatTypes.getHealth())).getMax();
         if (currentHealth >= (maxHealth * 0.90f)) {
             damage.setAmount(damage.getAmount() * 1.35f);
         }
+        return false;
     }
 }

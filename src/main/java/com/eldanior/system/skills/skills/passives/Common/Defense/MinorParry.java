@@ -20,18 +20,13 @@ public class MinorParry implements IPassiveCombatSkill {
     private static final float REDUCTION_MASTERED = 0.835f;
     private static final float ENDURANCE_COST = 0.20f;
 
-    private boolean lastProc = false;
-
-    @Override
-    public boolean didProc() { return lastProc; }
-
     @Override
     public float getEnduranceCostPercent() { return ENDURANCE_COST; }
 
     @Override
-    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
-        lastProc = false;
-        if (damage.isCancelled()) return;
+    public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        boolean proc = false;
+        if (damage.isCancelled()) return proc;
 
         if (Math.random() <= CHANCE) {
             EntityStatMap statMap = store.getComponent(victimRef, EntityStatsModule.get().getEntityStatMapComponentType());
@@ -44,7 +39,7 @@ public class MinorParry implements IPassiveCombatSkill {
                         statMap.setStatValue(StatConfig.ENDURANCE.getStatId(), currentStamina - cost);
                         float mult = mastered ? REDUCTION_MASTERED : REDUCTION;
                         damage.setAmount(damage.getAmount() * mult);
-                        lastProc = true;
+                        proc = true;
 
                         PlayerRef playerRef = store.getComponent(victimRef, PlayerRef.getComponentType());
                         if (playerRef != null) {
@@ -54,5 +49,6 @@ public class MinorParry implements IPassiveCombatSkill {
                 }
             }
         }
+        return proc;
     }
 }

@@ -22,18 +22,13 @@ public class ManaBarrier implements IPassiveCombatSkill {
     private static final float REDUCTION_MASTERED = 0.89f;
     private static final float MANA_COST = 0.10f;
 
-    private boolean lastProc = false;
-
     @Override
-    public boolean didProc() { return lastProc; }
-
-    @Override
-    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
-        lastProc = false;
-        if (damage.isCancelled() || victimRef == null) return;
+    public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        boolean proc = false;
+        if (damage.isCancelled() || victimRef == null) return proc;
 
         EntityStatMap statMap = store.getComponent(victimRef, EntityStatsModule.get().getEntityStatMapComponentType());
-        if (statMap == null) return;
+        if (statMap == null) return proc;
 
         float currentMana = statMap.get(DefaultEntityStatTypes.getMana()).get();
         float maxMana = statMap.get(DefaultEntityStatTypes.getMana()).getMax();
@@ -43,7 +38,7 @@ public class ManaBarrier implements IPassiveCombatSkill {
             statMap.setStatValue(DefaultEntityStatTypes.getMana(), currentMana - cost);
             float mult = mastered ? REDUCTION_MASTERED : REDUCTION;
             damage.setAmount(damage.getAmount() * mult);
-            lastProc = true;
+            proc = true;
 
             if (attackerRef != null) {
                 PlayerRef playerRef = store.getComponent(attackerRef, PlayerRef.getComponentType());
@@ -53,5 +48,6 @@ public class ManaBarrier implements IPassiveCombatSkill {
                 }
             }
         }
+        return proc;
     }
 }

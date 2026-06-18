@@ -23,7 +23,7 @@ public class DetectionOfVitalPoints implements IPassiveCombatSkill {
     private final Map<PlayerLevelData, Integer> hitCounters = new WeakHashMap<>();
 
     @Override // 🌟 Mis à jour avec les 5 arguments pour correspondre à ton interface
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
 
         int currentHits = hitCounters.getOrDefault(attackerData, 0);
         currentHits++;
@@ -68,5 +68,6 @@ public class DetectionOfVitalPoints implements IPassiveCombatSkill {
                 }
             }
         }
+        return false;
     }
 }

@@ -47,24 +47,26 @@ public class DignityAuraPassive implements IPassiveCombatSkill {
     }
 
     @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData,
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData,
                          Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
-        if (damage.isCancelled()) return;
+        if (damage.isCancelled()) return false;
         int dignity = attackerData.getDignity();
-        if (dignity < 5) return;
+        if (dignity < 5) return false;
 
         float bonus = getDamageBonus(dignity);
         damage.setAmount(damage.getAmount() * (1.0f + bonus));
+        return false;
     }
 
     @Override
-    public void onDefend(Damage damage, PlayerLevelData defenderData,
+    public boolean onDefend(Damage damage, PlayerLevelData defenderData,
                          Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> defenderRef) {
-        if (damage.isCancelled()) return;
+        if (damage.isCancelled()) return false;
         int dignity = defenderData.getDignity();
-        if (dignity < 5) return;
+        if (dignity < 5) return false;
 
         float reduction = getDamageReduction(dignity);
         damage.setAmount(damage.getAmount() * (1.0f - reduction));
+        return false;
     }
 }

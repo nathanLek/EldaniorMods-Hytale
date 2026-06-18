@@ -21,21 +21,16 @@ public class Tenacity implements IPassiveCombatSkill {
     private static final float REDUCTION = 0.92f;
     private static final float REDUCTION_MASTERED = 0.91f;
 
-    private boolean lastProc = false;
-
     @Override
-    public boolean didProc() { return lastProc; }
-
-    @Override
-    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
-        lastProc = false;
-        if (damage.isCancelled() || victimRef == null) return;
+    public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        boolean proc = false;
+        if (damage.isCancelled() || victimRef == null) return proc;
 
         EntityStatMap statMap = store.getComponent(victimRef, EntityStatsModule.get().getEntityStatMapComponentType());
-        if (statMap == null) return;
+        if (statMap == null) return proc;
 
         EntityStatValue healthStat = statMap.get(StatConfig.VITALITY.getStatId());
-        if (healthStat == null) return;
+        if (healthStat == null) return proc;
 
         float currentHealth = healthStat.get();
         float maxHealth = healthStat.getMax();
@@ -44,12 +39,13 @@ public class Tenacity implements IPassiveCombatSkill {
         if (currentHealth < (maxHealth * threshold)) {
             float mult = mastered ? REDUCTION_MASTERED : REDUCTION;
             damage.setAmount(damage.getAmount() * mult);
-            lastProc = true;
+            proc = true;
 
             PlayerRef playerRef = store.getComponent(victimRef, PlayerRef.getComponentType());
             if (playerRef != null) {
                 NotificationHelper.sendNotification(playerRef, "<color:red>Ténacité : -" + (int)((1f - mult) * 100) + "% de dégâts (vie basse)</color>", NotificationStyle.Success);
             }
         }
+        return proc;
     }
 }

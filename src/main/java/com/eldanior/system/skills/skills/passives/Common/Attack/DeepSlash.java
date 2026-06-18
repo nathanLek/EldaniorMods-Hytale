@@ -14,19 +14,16 @@ public class DeepSlash implements IPassiveCombatSkill {
     private static final float FLAT_BONUS = 1.0f;
     private static final float FLAT_BONUS_MASTERED = 1.1f;
 
-    private boolean lastProc = false;
-
     @Override
-    public boolean didProc() { return lastProc; }
-
-    @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
-        lastProc = true;
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        boolean proc = false;
+        proc = true;
 
         float bonus = mastered ? FLAT_BONUS_MASTERED : FLAT_BONUS;
         float originalDamage = damage.getAmount();
         damage.setAmount(originalDamage + bonus);
 
         LOGGER.atInfo().log("[Skill] DEEP_SLASH : " + originalDamage + " -> " + (originalDamage + bonus) + " (+" + bonus + ")");
+        return proc;
     }
 }

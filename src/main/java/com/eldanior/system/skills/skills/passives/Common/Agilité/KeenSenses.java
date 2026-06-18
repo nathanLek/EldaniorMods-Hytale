@@ -16,11 +16,6 @@ public class KeenSenses implements IPassiveCombatSkill {
     private static final float CRIT_BONUS_MASTERED = 1.022f;
     private static final float ENDURANCE_COST = 0.10f;
 
-    private boolean lastProc = false;
-
-    @Override
-    public boolean didProc() { return lastProc; }
-
     @Override
     public float getEnduranceCostPercent() { return ENDURANCE_COST; }
 
@@ -33,9 +28,9 @@ public class KeenSenses implements IPassiveCombatSkill {
     }
 
     @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
-        lastProc = false;
-        if (!attackerData.wasLastAttackCrit()) return;
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        boolean proc = false;
+        if (!attackerData.wasLastAttackCrit()) return proc;
 
         EntityStatMap statMap = store.getComponent(attackerRef, EntityStatsModule.get().getEntityStatMapComponentType());
         if (statMap != null) {
@@ -45,9 +40,10 @@ public class KeenSenses implements IPassiveCombatSkill {
                 float cost = currentStamina * ENDURANCE_COST;
                 if (currentStamina > cost) {
                     statMap.setStatValue(StatConfig.ENDURANCE.getStatId(), currentStamina - cost);
-                    lastProc = true;
+                    proc = true;
                 }
             }
         }
+        return proc;
     }
 }

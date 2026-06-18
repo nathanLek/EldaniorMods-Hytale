@@ -21,7 +21,7 @@ public class SeismicStrike implements IPassiveCombatSkill {
     private static final float BONUS_MULTIPLIER = 1.35f; // +35% dégâts
 
     @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
 
         if (Math.random() < CHANCE) {
             float currentDamage = damage.getAmount();
@@ -42,5 +42,6 @@ public class SeismicStrike implements IPassiveCombatSkill {
                 }
             }
         }
+        return false;
     }
 }

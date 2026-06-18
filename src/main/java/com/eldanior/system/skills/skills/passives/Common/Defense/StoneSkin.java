@@ -12,18 +12,14 @@ public class StoneSkin implements IPassiveCombatSkill {
     private static final float REDUCTION = 0.95f;
     private static final float REDUCTION_MASTERED = 0.945f;
 
-    private boolean lastProc = false;
-
     @Override
-    public boolean didProc() { return lastProc; }
+    public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        boolean proc = false;
+        if (damage.isCancelled()) return proc;
 
-    @Override
-    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
-        lastProc = false;
-        if (damage.isCancelled()) return;
-
-        lastProc = true;
+        proc = true;
         float mult = mastered ? REDUCTION_MASTERED : REDUCTION;
         damage.setAmount(damage.getAmount() * mult);
+        return proc;
     }
 }

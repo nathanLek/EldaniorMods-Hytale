@@ -23,9 +23,10 @@ public class FrostResilience implements IPassiveCombatSkill {
     }
 
     @Override
-    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
-        if (damage.isCancelled()) return;
+    public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+        if (damage.isCancelled()) return false;
         float reduction = getReduction(victimData.getLevel());
         damage.setAmount(damage.getAmount() * (1.0f - reduction));
+        return false;
     }
 }

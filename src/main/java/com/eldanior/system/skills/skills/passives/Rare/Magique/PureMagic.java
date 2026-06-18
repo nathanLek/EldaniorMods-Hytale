@@ -13,13 +13,14 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 public class PureMagic implements IPassiveCombatSkill {
     @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
-        if (damage.isCancelled() || attackerRef == null) return;
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+        if (damage.isCancelled() || attackerRef == null) return false;
         EntityStatMap statMap = store.getComponent(attackerRef, EntityStatsModule.get().getEntityStatMapComponentType());
-        if (statMap == null) return;
+        if (statMap == null) return false;
         EntityStatValue manaStat = statMap.get(StatConfig.INTELLIGENCE.getStatId());
         if (manaStat != null && manaStat.get() >= (manaStat.getMax() * 0.60f)) {
             damage.setAmount(damage.getAmount() * 1.35f);
         }
+        return false;
     }
 }

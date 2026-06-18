@@ -18,19 +18,16 @@ public interface IPassiveCombatSkill {
             return Integer.compare(this.distance, o.distance); // Trie par distance
         }
     }
-    default void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {}
-    default void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {}
+    default boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) { return false; }
+    default boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) { return false; }
 
     // Versions avec mastery (appelées par CombatStatsSystem) — par défaut délègue aux méthodes sans mastery
-    default void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
-        onAttack(damage, attackerData, store, attackerRef, victimRef);
+    default boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        return onAttack(damage, attackerData, store, attackerRef, victimRef);
     }
-    default void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
-        onDefend(damage, victimData, store, attackerRef, victimRef);
+    default boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        return onDefend(damage, victimData, store, attackerRef, victimRef);
     }
-
-    // Retourne true si le skill a effectivement proc (pour cooldown + progression)
-    default boolean didProc() { return false; }
 
     // Coûts alternatifs (% de la stat actuelle, affichés dans l'interface)
     default float getEnduranceCostPercent() { return 0f; }

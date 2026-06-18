@@ -10,12 +10,13 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 public class ReactiveBulwark implements IPassiveCombatSkill {
 
     @Override
-    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
-        if (damage.isCancelled()) return;
+    public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+        if (damage.isCancelled()) return false;
 
         // 15% de chance de réduire un coup de 30%
         if (Math.random() <= 0.15f) {
             damage.setAmount(damage.getAmount() * 0.70f);
         }
+        return false;
     }
 }

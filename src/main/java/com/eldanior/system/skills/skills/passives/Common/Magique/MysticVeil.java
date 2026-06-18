@@ -20,15 +20,10 @@ public class MysticVeil implements IPassiveCombatSkill {
     private static final float REDUCTION_MASTERED = 0.725f;
     private static final float MANA_COST = 20.0f;
 
-    private boolean lastProc = false;
-
     @Override
-    public boolean didProc() { return lastProc; }
-
-    @Override
-    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
-        lastProc = false;
-        if (damage.isCancelled() || victimRef == null) return;
+    public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        boolean proc = false;
+        if (damage.isCancelled() || victimRef == null) return proc;
 
         if (Math.random() <= CHANCE) {
             EntityStatMap statMap = store.getComponent(victimRef, EntityStatsModule.get().getEntityStatMapComponentType());
@@ -38,7 +33,7 @@ public class MysticVeil implements IPassiveCombatSkill {
                     statMap.setStatValue(DefaultEntityStatTypes.getMana(), currentMana - MANA_COST);
                     float mult = mastered ? REDUCTION_MASTERED : REDUCTION;
                     damage.setAmount(damage.getAmount() * mult);
-                    lastProc = true;
+                    proc = true;
 
                     if (attackerRef != null) {
                         PlayerRef playerRef = store.getComponent(attackerRef, PlayerRef.getComponentType());
@@ -50,5 +45,6 @@ public class MysticVeil implements IPassiveCombatSkill {
                 }
             }
         }
+        return proc;
     }
 }

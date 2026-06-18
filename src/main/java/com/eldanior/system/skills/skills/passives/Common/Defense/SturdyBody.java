@@ -13,11 +13,6 @@ public class SturdyBody implements IPassiveCombatSkill {
     private static final float DEFENSE_BONUS = 15.0f;
     private static final float DEFENSE_BONUS_MASTERED = 16.5f;
 
-    private boolean lastProc = false;
-
-    @Override
-    public boolean didProc() { return lastProc; }
-
     @Override
     public float getFlatStatBonus(StatConfig stat) {
         if (stat == StatConfig.ENDURANCE_DEFENSE) {
@@ -27,7 +22,9 @@ public class SturdyBody implements IPassiveCombatSkill {
     }
 
     @Override
-    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
-        lastProc = true;
+    public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        boolean proc = false;
+        proc = true;
+        return proc;
     }
 }

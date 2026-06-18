@@ -23,9 +23,10 @@ public class ShadowStrike implements IPassiveCombatSkill {
     }
 
     @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
-        if (damage.isCancelled()) return;
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+        if (damage.isCancelled()) return false;
         float bonus = getBonus(attackerData.getLevel());
         damage.setAmount(damage.getAmount() * (1.0f + bonus));
+        return false;
     }
 }

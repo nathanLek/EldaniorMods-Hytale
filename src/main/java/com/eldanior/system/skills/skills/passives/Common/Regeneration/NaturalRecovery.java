@@ -14,8 +14,9 @@ public class NaturalRecovery implements IPassiveCombatSkill {
     private static final float REGEN_MULTIPLIER_MASTERED = 1.32f;
 
     @Override
-    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+    public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
         victimData.setLastDamageTakenTime(System.currentTimeMillis());
+        return false;
     }
 
     @Override

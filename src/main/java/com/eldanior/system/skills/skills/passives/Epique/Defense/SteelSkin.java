@@ -19,8 +19,8 @@ public class SteelSkin implements IPassiveCombatSkill {
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
 
     @Override
-    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
-        if (damage.isCancelled()) return;
+    public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+        if (damage.isCancelled()) return false;
 
         float currentDamage = damage.getAmount();
         float newDamage = currentDamage * 0.85f;
@@ -40,5 +40,6 @@ public class SteelSkin implements IPassiveCombatSkill {
                 ParticleUtil.spawnParticleEffect("Shield_Block", pos, store);
             }
         }
+        return false;
     }
 }

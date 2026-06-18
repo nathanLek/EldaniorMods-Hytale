@@ -20,14 +20,14 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 public class MauvaisPresage implements IPassiveCombatSkill {
 
     @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
-        if (damage.isCancelled() || attackerRef == null || victimRef == null) return;
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+        if (damage.isCancelled() || attackerRef == null || victimRef == null) return false;
 
         // 10% de chance de déclencher la malédiction
         if (Math.random() <= 0.10f) {
 
             EntityStatMap victimStatMap = store.getComponent(victimRef, EntityStatsModule.get().getEntityStatMapComponentType());
-            if (victimStatMap == null) return;
+            if (victimStatMap == null) return false;
 
             // --- 1. CHOC TOXIQUE (Dégâts bonus basés sur les PV Max) ---
             EntityStatValue victimHealthStat = victimStatMap.get(StatConfig.VITALITY.getStatId());
@@ -59,5 +59,6 @@ public class MauvaisPresage implements IPassiveCombatSkill {
                 ParticleUtil.spawnParticleEffect("Poison_Splash", pos, store);
             }
         }
+        return false;
     }
 }

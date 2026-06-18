@@ -11,8 +11,9 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 public class VitalRecovery implements IPassiveCombatSkill {
 
     @Override
-    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+    public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
         victimData.setLastDamageTakenTime(System.currentTimeMillis());
+        return false;
     }
 
     @Override

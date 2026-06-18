@@ -11,8 +11,8 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 public class BeastGuard implements IPassiveCombatSkill {
 
     @Override
-    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
-        if (damage.isCancelled() || attackerRef == null || !attackerRef.isValid()) return;
+    public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+        if (damage.isCancelled() || attackerRef == null || !attackerRef.isValid()) return false;
 
         boolean isMob = store.getComponent(attackerRef, EldaniorSystem.get().getMobLevelDataType()) != null;
 
@@ -20,5 +20,6 @@ public class BeastGuard implements IPassiveCombatSkill {
             // -15% de dégâts contre les monstres
             damage.setAmount(damage.getAmount() * 0.85f);
         }
+        return false;
     }
 }

@@ -20,17 +20,12 @@ public class HauntingThrust implements IPassiveCombatSkill {
     private static final float STACK_BONUS_MASTERED = 0.033f;  // +3.3% par stack si maîtrisé
     private static final int MAX_STACKS = 5;
 
-    private boolean lastProc = false;
-
     @Override
-    public boolean didProc() { return lastProc; }
-
-    @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
-        lastProc = false;
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        boolean proc = false;
 
         UUIDComponent victimUUIDComp = store.getComponent(victimRef, UUIDComponent.getComponentType());
-        if (victimUUIDComp == null) return;
+        if (victimUUIDComp == null) return proc;
         UUID currentVictimUUID = victimUUIDComp.getUuid();
 
         float bonus = mastered ? STACK_BONUS_MASTERED : STACK_BONUS;
@@ -44,7 +39,7 @@ public class HauntingThrust implements IPassiveCombatSkill {
 
             float bonusMultiplier = 1.0f + (stacks * bonus);
             damage.setAmount(damage.getAmount() * bonusMultiplier);
-            lastProc = true;
+            proc = true;
 
             int percentDisplay = (int)(stacks * bonus * 100);
             if (attackerRef != null) {
@@ -58,5 +53,6 @@ public class HauntingThrust implements IPassiveCombatSkill {
             attackerData.setLastVictimUUID(currentVictimUUID);
             attackerData.setHauntingThrustStacks(1);
         }
+        return proc;
     }
 }

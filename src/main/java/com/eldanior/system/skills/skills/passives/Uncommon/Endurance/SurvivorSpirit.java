@@ -14,11 +14,11 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 public class SurvivorSpirit implements IPassiveCombatSkill {
 
     @Override
-    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
-        if (damage.isCancelled() || victimRef == null) return;
+    public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+        if (damage.isCancelled() || victimRef == null) return false;
 
         EntityStatMap statMap = store.getComponent(victimRef, EntityStatsModule.get().getEntityStatMapComponentType());
-        if (statMap == null) return;
+        if (statMap == null) return false;
 
         EntityStatValue enduranceStat = statMap.get(StatConfig.ENDURANCE.getStatId());
         if (enduranceStat != null) {
@@ -33,5 +33,6 @@ public class SurvivorSpirit implements IPassiveCombatSkill {
                 }
             }
         }
+        return false;
     }
 }

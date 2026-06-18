@@ -12,11 +12,12 @@ public class BattleScars implements IPassiveCombatSkill {
     private static final float FLAT_REDUCTION = 4.0f;
 
     @Override
-    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
-        if (damage.isCancelled()) return;
+    public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+        if (damage.isCancelled()) return false;
 
         float newDamage = damage.getAmount() - FLAT_REDUCTION;
         if (newDamage < 1.0f) newDamage = 1.0f;
         damage.setAmount(newDamage);
+        return false;
     }
 }

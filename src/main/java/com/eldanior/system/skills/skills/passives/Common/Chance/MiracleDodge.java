@@ -19,18 +19,13 @@ public class MiracleDodge implements IPassiveCombatSkill {
     private static final float CHANCE_MASTERED = 0.033f;
     private static final float ENDURANCE_COST = 0.15f; // 15%
 
-    private boolean lastProc = false;
-
-    @Override
-    public boolean didProc() { return lastProc; }
-
     @Override
     public float getEnduranceCostPercent() { return ENDURANCE_COST; }
 
     @Override
-    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
-        lastProc = false;
-        if (damage.isCancelled()) return;
+    public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        boolean proc = false;
+        if (damage.isCancelled()) return proc;
 
         float chance = mastered ? CHANCE_MASTERED : CHANCE;
         if (Math.random() <= chance) {
@@ -42,7 +37,7 @@ public class MiracleDodge implements IPassiveCombatSkill {
                 if (currentStamina > cost) {
                     statMap.setStatValue(DefaultEntityStatTypes.getStamina(), currentStamina - cost);
                     damage.setCancelled(true);
-                    lastProc = true;
+                    proc = true;
 
                     if (victimRef != null) {
                         PlayerRef playerRef = store.getComponent(victimRef, PlayerRef.getComponentType());
@@ -53,5 +48,6 @@ public class MiracleDodge implements IPassiveCombatSkill {
                 }
             }
         }
+        return proc;
     }
 }

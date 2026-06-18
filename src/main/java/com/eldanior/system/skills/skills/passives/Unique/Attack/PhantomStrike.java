@@ -21,17 +21,12 @@ public class PhantomStrike implements IPassiveCombatSkill {
     private static final float BONUS_MULTIPLIER = 1.50f; // +50% dégâts
     private static final float MASTERY_BONUS = 0.10f; // +10% supplémentaire si maîtrisé
 
-    private boolean lastProc = false;
-
     @Override
-    public boolean didProc() { return lastProc; }
-
-    @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
-        lastProc = false;
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        boolean proc = false;
 
         if (Math.random() < CHANCE) {
-            lastProc = true;
+            proc = true;
             float multiplier = mastered ? BONUS_MULTIPLIER + MASTERY_BONUS : BONUS_MULTIPLIER;
             float currentDamage = damage.getAmount();
             float newDamage = currentDamage * multiplier;
@@ -52,5 +47,6 @@ public class PhantomStrike implements IPassiveCombatSkill {
                 }
             }
         }
+        return proc;
     }
 }

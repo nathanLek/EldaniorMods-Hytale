@@ -14,11 +14,11 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 public class UnleashedMagic implements IPassiveCombatSkill {
 
     @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
-        if (damage.isCancelled() || attackerRef == null) return;
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+        if (damage.isCancelled() || attackerRef == null) return false;
 
         EntityStatMap statMap = store.getComponent(attackerRef, EntityStatsModule.get().getEntityStatMapComponentType());
-        if (statMap == null) return;
+        if (statMap == null) return false;
 
         EntityStatValue manaStat = statMap.get(StatConfig.INTELLIGENCE.getStatId());
         if (manaStat != null) {
@@ -27,5 +27,6 @@ public class UnleashedMagic implements IPassiveCombatSkill {
                 damage.setAmount(damage.getAmount() * 1.25f);
             }
         }
+        return false;
     }
 }

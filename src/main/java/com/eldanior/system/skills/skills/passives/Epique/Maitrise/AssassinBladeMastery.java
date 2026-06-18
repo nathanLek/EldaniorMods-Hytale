@@ -11,12 +11,13 @@ import com.hypixel.hytale.server.core.inventory.ItemStack;
 
 public class AssassinBladeMastery implements IPassiveCombatSkill {
     @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
-        if (attackerRef == null) return;
+    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+        if (attackerRef == null) return false;
         Player player = store.getComponent(attackerRef, Player.getComponentType());
-        if (player == null) return;
+        if (player == null) return false;
         ItemStack mainHandItem = player.getInventory().getActiveHotbarItem();
-        if (mainHandItem == null || !mainHandItem.getItemId().toLowerCase().contains("dagger")) return;
+        if (mainHandItem == null || !mainHandItem.getItemId().toLowerCase().contains("dagger")) return false;
         damage.setAmount(damage.getAmount() * 1.20f);
+        return false;
     }
 }
