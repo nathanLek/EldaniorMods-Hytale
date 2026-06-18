@@ -136,10 +136,20 @@ public class CraftingRestrictionSystem extends EntityEventSystem<EntityStore, Us
             }
         }
 
-        // Verifier aussi dans enabledSkills
+        // Verifier aussi dans enabledSkills et unlockedSkills
         if (!hasSpecificSkill) {
-            hasSpecificSkill = playerData.isSkillEnabled(requiredSkill.name());
+            hasSpecificSkill = playerData.isSkillEnabled(requiredSkill.name())
+                    || playerData.getUnlockedSkills().contains(requiredSkill.name())
+                    || playerData.getUnlockedSkills().contains(requiredSkill.name().toLowerCase());
         }
+
+        // Debug log pour diagnostiquer
+        EldaniorLogger.debug("[Craft] Bench: '" + benchName + "' | RequiredSkill: " + requiredSkill.name()
+                + " | hasSpecific: " + hasSpecificSkill
+                + " | activePassives: " + playerData.getActivePassives()
+                + " | unlockedSkills: " + playerData.getUnlockedSkills()
+                + " | enabledSkills: " + playerData.getEnabledSkills()
+                + " | disabledSkills: " + playerData.getDisabledSkills());
 
         if (!hasSpecificSkill) {
             event.setCancelled(true);

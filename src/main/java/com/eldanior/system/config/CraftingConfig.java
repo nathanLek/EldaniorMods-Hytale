@@ -26,15 +26,16 @@ public final class CraftingConfig {
 
     // Mapping : mot-cle du bench -> competence requise
     // Utilise contains() donc matche "bench_weapon", "weapon_bench", etc.
-    public static final Map<String, PassiveSkill> BENCH_SKILLS = Map.of(
-            "cooking", PassiveSkill.CRAFT_CUISINE,
-            "furnace", PassiveSkill.CRAFT_FONDERIE,
-            "armor", PassiveSkill.CRAFT_ARMURERIE,
-            "weapon", PassiveSkill.CRAFT_FORGE_ARMES,
-            "tannery", PassiveSkill.CRAFT_TANNERIE,
-            "alchemy", PassiveSkill.CRAFT_ALCHIMIE,
-            "lumbermill", PassiveSkill.CRAFT_SCIERIE,
-            "farming", PassiveSkill.CRAFT_AGRICULTURE,
-            "salvage", PassiveSkill.CRAFT_RECYCLAGE
+    public static final Map<String, PassiveSkill> BENCH_SKILLS = Map.ofEntries(
+            Map.entry("cooking", PassiveSkill.CRAFT_CUISINE),
+            Map.entry("furnace", PassiveSkill.CRAFT_FONDERIE),
+            Map.entry("armor", PassiveSkill.CRAFT_ARMURERIE),
+            Map.entry("armour", PassiveSkill.CRAFT_ARMURERIE),
+            Map.entry("weapon", PassiveSkill.CRAFT_FORGE_ARMES),
+            Map.entry("tannery", PassiveSkill.CRAFT_TANNERIE),
+            Map.entry("alchemy", PassiveSkill.CRAFT_ALCHIMIE),
+            Map.entry("lumbermill", PassiveSkill.CRAFT_SCIERIE),
+            Map.entry("farming", PassiveSkill.CRAFT_AGRICULTURE),
+            Map.entry("salvage", PassiveSkill.CRAFT_RECYCLAGE)
     );
 }
