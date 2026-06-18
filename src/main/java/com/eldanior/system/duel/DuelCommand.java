@@ -9,6 +9,7 @@ import com.hypixel.hytale.server.core.command.system.arguments.system.RequiredAr
 import com.hypixel.hytale.server.core.command.system.arguments.types.ArgTypes;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractAsyncCommand;
 import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.NameMatching;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.universe.world.World;
@@ -23,8 +24,8 @@ public class DuelCommand extends AbstractAsyncCommand {
     private final RequiredArg<String> actionArg;
 
     public DuelCommand() {
-        super("duel", "Duel (accept/decline)");
-        this.actionArg = this.withRequiredArg("action", "accept|decline", ArgTypes.STRING);
+        super("duel", "Duel (accept/decline/player)");
+        this.actionArg = this.withRequiredArg("action", "accept|decline|<player>", ArgTypes.STRING);
     }
 
     @Override
@@ -92,7 +93,42 @@ public class DuelCommand extends AbstractAsyncCommand {
                             challengerRef.sendMessage(Message.raw("§c" + sender.getPlayerRef().getUsername() + " a refuse votre defi."));
                         }
                     }
-                    default -> sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es duel <accept|decline>"));
+                    default -> {
+                        // Treat action as a player name to challenge
+                        String targetName = action;
+                        PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
+                        if (targetRef == null) {
+                            sender.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable : " + targetName));
+                            return;
+                        }
+
+                        UUID targetUUID = UUIDExtractor.getUUID(targetRef);
+                        if (targetUUID == null) {
+                            sender.getPlayerRef().sendMessage(Message.raw("§cErreur : impossible d'identifier ce joueur."));
+                            return;
+                        }
+
+                        if (targetUUID.equals(senderUUID)) {
+                            sender.getPlayerRef().sendMessage(Message.raw("§cVous ne pouvez pas vous defier vous-meme."));
+                            return;
+                        }
+
+                        if (DuelManager.isInDuel(senderUUID)) {
+                            sender.getPlayerRef().sendMessage(Message.raw("§cVous etes deja en duel."));
+                            return;
+                        }
+
+                        if (DuelManager.isInDuel(targetUUID)) {
+                            sender.getPlayerRef().sendMessage(Message.raw("§c" + targetName + " est deja en duel."));
+                            return;
+                        }
+
+                        DuelManager.sendChallenge(senderUUID, targetUUID);
+
+                        sender.getPlayerRef().sendMessage(Message.raw("§6Defi envoye a " + targetRef.getUsername() + " !"));
+                        targetRef.sendMessage(Message.raw("§6§l" + sender.getPlayerRef().getUsername() + " vous defie en duel !"));
+                        targetRef.sendMessage(Message.raw("§7Tapez §f/es duel accept §7ou §f/es duel decline"));
+                    }
                 }
             } catch (Exception e) { e.printStackTrace(); }
         }, world);
