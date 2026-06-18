@@ -193,7 +193,7 @@ public class CombatStatsSystem extends DamageEventSystem {
         attackerData.setLastAttackWasCrit(isCrit);
         if (isCrit) {
             currentDamage *= CRIT_MULTIPLIER;
-            LOGGER.atSevere().log("Coup Critique Donné ===> " + currentDamage);
+            LOGGER.atFine().log("Coup Critique Donné ===> " + currentDamage);
             // Effet visuel Red_Flash sur la victime lors d'un coup critique
             try {
                 com.eldanior.system.config.Effects.EffectsManager.applyEffect(victimRef, "Red_Flash", store);
@@ -206,15 +206,14 @@ public class CombatStatsSystem extends DamageEventSystem {
         EntityStatMap attackerStatMap = store.getComponent(attackerRef, EntityStatsModule.get().getEntityStatMapComponentType());
         float realMana = attackerStatMap != null ? attackerStatMap.get(DefaultEntityStatTypes.getMana()).get() : 0;
 
-        // Cloner les données pour tracker procs + cooldowns
+        // Travailler directement sur attackerData (pas de clone — même pattern que applyEnduranceDefense)
         boolean dataChanged = false;
-        PlayerLevelData tracker = (PlayerLevelData) attackerData.clone();
 
         for (PassiveSkill skill : attackerData.getActivePassives()) {
             if (skill.getLogic() != null) {
                 // Vérifier le cooldown du skill passif
-                if (skill.getCooldownSeconds() > 0 && !tracker.canCast(skill.getId())) {
-                    LOGGER.atInfo().log("[Passive] " + skill.getId() + " en COOLDOWN — skip (reste " + tracker.getRemainingCooldown(skill.getId()) / 1000 + "s)");
+                if (skill.getCooldownSeconds() > 0 && !attackerData.canCast(skill.getId())) {
+                    LOGGER.atInfo().log("[Passive] " + skill.getId() + " en COOLDOWN — skip (reste " + attackerData.getRemainingCooldown(skill.getId()) / 1000 + "s)");
                     continue;
                 }
 
@@ -224,7 +223,7 @@ public class CombatStatsSystem extends DamageEventSystem {
                     continue;
                 }
 
-                boolean mastered = tracker.isSkillMastered(skill.getId());
+                boolean mastered = attackerData.isSkillMastered(skill.getId());
                 boolean procced = skill.getLogic().onAttack(damage, attackerData, store, attackerRef, victimRef, mastered);
 
                 // Le mana n'est consommé QUE si le skill a effectivement proc
@@ -233,10 +232,10 @@ public class CombatStatsSystem extends DamageEventSystem {
                         realMana -= manaCost;
                         attackerStatMap.setStatValue(DefaultEntityStatTypes.getMana(), realMana);
                     }
-                    tracker.addSkillProc(skill.getId());
-                    LOGGER.atInfo().log("[Passive] " + skill.getId() + " PROC! Mana: " + (int)realMana + " (-" + manaCost + ") | Progression: " + String.format("%.2f", tracker.getSkillProgression(skill.getId())) + "% | Mastered: " + mastered);
+                    attackerData.addSkillProc(skill.getId());
+                    LOGGER.atInfo().log("[Passive] " + skill.getId() + " PROC! Mana: " + (int)realMana + " (-" + manaCost + ") | Progression: " + String.format("%.2f", attackerData.getSkillProgression(skill.getId())) + "% | Mastered: " + mastered);
                     if (skill.getCooldownSeconds() > 0) {
-                        tracker.applyCooldown(skill.getId(), skill.getCooldownSeconds());
+                        attackerData.applyCooldown(skill.getId(), skill.getCooldownSeconds());
                         LOGGER.atInfo().log("[Passive] " + skill.getId() + " COOLDOWN activé: " + skill.getCooldownSeconds() + "s");
                     }
                     dataChanged = true;
@@ -247,15 +246,9 @@ public class CombatStatsSystem extends DamageEventSystem {
             }
         }
 
-        // Synchroniser les champs transient modifiés par les skills (ex: HauntingThrust stacks)
-        tracker.setLastVictimUUID(attackerData.getLastVictimUUID());
-        tracker.setHauntingThrustStacks(attackerData.getHauntingThrustStacks());
-        tracker.setLastDamageTakenTime(attackerData.getLastDamageTakenTime());
-        tracker.setLastAttackWasCrit(attackerData.wasLastAttackCrit());
-
         // Persister les changements (procs, cooldowns, stacks)
         if (dataChanged) {
-            commandBuffer.putComponent(attackerRef, EldaniorSystem.get().getPlayerLevelDataType(), tracker);
+            commandBuffer.putComponent(attackerRef, EldaniorSystem.get().getPlayerLevelDataType(), attackerData);
         }
 
         // --- TITLE EFFECTS (bonus degats vs mob type) ---
