@@ -46,4 +46,31 @@ public final class EldaniorLogger {
     public static boolean isDebugMode() {
         return debugMode;
     }
+
+    /**
+     * Parse un entier de facon securisee. Retourne defaultValue si la string est null ou non numerique.
+     * Evite les NumberFormatException dans les handlers GUI.
+     */
+    public static int parseSafeInt(String s, int defaultValue) {
+        if (s == null || s.isEmpty()) return defaultValue;
+        try {
+            return Integer.parseInt(s);
+        } catch (NumberFormatException e) {
+            warn("parseSafeInt: valeur invalide '" + s + "', utilisation de " + defaultValue);
+            return defaultValue;
+        }
+    }
+
+    /**
+     * Parse un long de facon securisee. Retourne defaultValue si la string est null ou non numerique.
+     */
+    public static long parseSafeLong(String s, long defaultValue) {
+        if (s == null || s.isEmpty()) return defaultValue;
+        try {
+            return Long.parseLong(s);
+        } catch (NumberFormatException e) {
+            warn("parseSafeLong: valeur invalide '" + s + "', utilisation de " + defaultValue);
+            return defaultValue;
+        }
+    }
 }

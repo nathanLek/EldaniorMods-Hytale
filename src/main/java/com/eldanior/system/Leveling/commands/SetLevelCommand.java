@@ -79,7 +79,10 @@ public class SetLevelCommand extends AbstractAsyncCommand {
                 }
 
                 var ref = targetPlayer.getReference();
-                assert ref != null;
+                if (ref == null) {
+                    senderRef.sendMessage(Message.raw("Erreur : Reference joueur introuvable."));
+                    return;
+                }
                 Store<EntityStore> store = ref.getStore();
                 ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
 
