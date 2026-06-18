@@ -29,7 +29,15 @@ public class PlayerLoginSystem extends EntityTickingSystem<EntityStore> {
 
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
 
+    private static PlayerLoginSystem instance;
+
+    public static PlayerLoginSystem getInstance() { return instance; }
+
     private final Set<UUID> initializedPlayers = new HashSet<>();
+
+    public PlayerLoginSystem() {
+        instance = this;
+    }
 
     @Override
     public void tick(float dt, int index, @Nonnull ArchetypeChunk<EntityStore> archetypeChunk,

@@ -28,6 +28,10 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class MovementTrackingSystem extends EntityTickingSystem<EntityStore> {
 
+    private static MovementTrackingSystem instance;
+
+    public static MovementTrackingSystem getInstance() { return instance; }
+
     private static final int JUMPS_PER_PROC = 2;
     private static final double BLOCKS_PER_PROC = 10.0;
 
@@ -51,6 +55,25 @@ public class MovementTrackingSystem extends EntityTickingSystem<EntityStore> {
     private final Map<UUID, Float> manaRegenAccum = new ConcurrentHashMap<>();
     private final Map<UUID, Float> lastHP = new ConcurrentHashMap<>();
     private final Map<UUID, Float> hpRegenAccum = new ConcurrentHashMap<>();
+
+    public MovementTrackingSystem() {
+        instance = this;
+    }
+
+    /** Nettoie toutes les donnees en memoire d'un joueur qui se deconnecte. */
+    public void removePlayer(UUID uuid) {
+        if (uuid == null) return;
+        lastY.remove(uuid);
+        wasRising.remove(uuid);
+        jumpCounters.remove(uuid);
+        lastXZ.remove(uuid);
+        distanceAccum.remove(uuid);
+        lastNightProcTime.remove(uuid);
+        lastMana.remove(uuid);
+        manaRegenAccum.remove(uuid);
+        lastHP.remove(uuid);
+        hpRegenAccum.remove(uuid);
+    }
 
     @Override
     public void tick(float dt, int index, @Nonnull ArchetypeChunk<EntityStore> archetypeChunk,

@@ -520,4 +520,11 @@ public class QuestManager {
             if (pq != null) quests.add(pq);
         }
     }
+
+    /** Nettoie les donnees en memoire d'un joueur qui se deconnecte. */
+    public static void handleDisconnect(UUID playerUUID) {
+        if (playerUUID == null) return;
+        playerQuests.remove(playerUUID);
+        cooldowns.remove(playerUUID);
+    }
 }

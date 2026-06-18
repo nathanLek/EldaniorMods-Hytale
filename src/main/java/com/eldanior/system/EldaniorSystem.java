@@ -213,11 +213,34 @@ public class EldaniorSystem extends JavaPlugin {
                     com.eldanior.system.territory.systems.ParcelRangeSystem.handleDisconnect(uuid);
                     com.eldanior.system.gui.tabs.QuestTab.cleanupPlayer(uuid);
 
-                    // Memory leak cleanup
+                    // Memory leak cleanup — static maps
                     com.eldanior.system.config.Player.PlayerPositionTracker.PLAYER_POSITIONS.remove(uuid);
                     com.eldanior.system.config.Player.PlayerPositionTracker.PLAYER_LEVELS.remove(uuid);
                     com.eldanior.system.config.Player.PlayerPositionTracker.PLAYER_DIGNITY.remove(uuid);
                     com.eldanior.system.config.RateLimiter.cleanup(uuid);
+
+                    // Quest data (playerQuests + cooldowns)
+                    com.eldanior.system.quest.QuestManager.handleDisconnect(uuid);
+
+                    // MovementTrackingSystem (10 maps: lastY, wasRising, jumpCounters, etc.)
+                    var movementSystem = com.eldanior.system.skills.system.MovementTrackingSystem.getInstance();
+                    if (movementSystem != null) movementSystem.removePlayer(uuid);
+
+                    // PlayerLoginSystem (initializedPlayers — permet re-init au reconnect)
+                    var loginSystem = PlayerLoginSystem.getInstance();
+                    if (loginSystem != null) loginSystem.invalidate(uuid);
+
+                    // GuildManager (pendingInvites)
+                    GuildManager.handleDisconnect(uuid);
+
+                    // InvisibilityManager (invisiblePlayers)
+                    com.eldanior.system.skills.system.InvisibilityManager.handleDisconnect(uuid);
+
+                    // ParcelManager (playerSelections)
+                    com.eldanior.system.territory.ParcelManager.handleDisconnect(uuid);
+
+                    // DignityAuraSystem (slowedPlayers + activeEmitters)
+                    DignityAuraSystem.handleDisconnect(uuid);
                 } catch (Exception e) { EldaniorLogger.error("EldaniorSystem", e); }
             });
             this.getEntityStoreRegistry().registerSystem(new TreasureChestBreakBlockEvent());

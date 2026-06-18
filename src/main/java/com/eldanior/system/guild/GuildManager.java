@@ -114,4 +114,10 @@ public class GuildManager {
     public static boolean hasPendingInvite(UUID targetUUID) {
         return pendingInvites.containsKey(targetUUID);
     }
+
+    /** Nettoie les invitations en attente d'un joueur qui se deconnecte. */
+    public static void handleDisconnect(UUID playerUUID) {
+        if (playerUUID == null) return;
+        pendingInvites.remove(playerUUID);
+    }
 }
