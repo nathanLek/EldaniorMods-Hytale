@@ -12,6 +12,7 @@ import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.NameMatching;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
+import com.hypixel.hytale.server.core.command.system.arguments.system.OptionalArg;
 import com.hypixel.hytale.server.core.command.system.arguments.system.RequiredArg;
 import com.hypixel.hytale.server.core.command.system.arguments.types.ArgTypes;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractAsyncCommand;
@@ -28,12 +29,12 @@ import java.util.concurrent.CompletableFuture;
 public class GuildCommand extends AbstractAsyncCommand {
 
     private final RequiredArg<String> actionArg;
-    private final RequiredArg<String> arg1;
+    private final OptionalArg<String> arg1;
 
     public GuildCommand() {
         super("guild", "Gestion de guilde (invite/kick/promote/demote/info/leave/accept/decline)");
         this.actionArg = this.withRequiredArg("action", "invite|kick|promote|demote|info|leave|accept|decline", ArgTypes.STRING);
-        this.arg1 = this.withRequiredArg("arg", "Joueur ou nom de guilde", ArgTypes.STRING);
+        this.arg1 = this.withOptionalArg("arg", "Joueur ou nom de guilde", ArgTypes.STRING);
     }
 
     @Override
@@ -77,6 +78,10 @@ public class GuildCommand extends AbstractAsyncCommand {
     // ==================== INVITE ====================
     private void handleInvite(Player sender, CommandContext ctx) {
         String targetName = this.arg1.get(ctx);
+        if (targetName == null || targetName.isEmpty()) {
+            sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es guild invite <joueur>"));
+            return;
+        }
 
         try {
             var senderRef = sender.getReference();
@@ -121,7 +126,7 @@ public class GuildCommand extends AbstractAsyncCommand {
 
             sender.getPlayerRef().sendMessage(Message.raw("§aInvitation envoyee a " + targetName + " pour rejoindre " + guild.getFormattedName()));
             targetPlayer.sendMessage(Message.raw("§e" + sender.getPlayerRef().getUsername() + " vous invite a rejoindre la guilde " + guild.getFormattedName()));
-            targetPlayer.sendMessage(Message.raw("§7Tapez §f/es guild accept _ §7pour accepter ou §f/es guild decline _ §7pour refuser."));
+            targetPlayer.sendMessage(Message.raw("§7Tapez §f/es guild accept §7pour accepter ou §f/es guild decline §7pour refuser."));
         } catch (Exception e) { e.printStackTrace(); }
     }
 
@@ -179,6 +184,10 @@ public class GuildCommand extends AbstractAsyncCommand {
     // ==================== KICK ====================
     private void handleKick(Player sender, CommandContext ctx) {
         String targetName = this.arg1.get(ctx);
+        if (targetName == null || targetName.isEmpty()) {
+            sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es guild kick <joueur>"));
+            return;
+        }
 
         try {
             UUID senderUUID = getSenderUUID(sender);
@@ -228,6 +237,10 @@ public class GuildCommand extends AbstractAsyncCommand {
     // ==================== PROMOTE ====================
     private void handlePromote(Player sender, CommandContext ctx) {
         String targetName = this.arg1.get(ctx);
+        if (targetName == null || targetName.isEmpty()) {
+            sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es guild promote <joueur>"));
+            return;
+        }
 
         try {
             var senderRef = sender.getReference();
@@ -272,6 +285,10 @@ public class GuildCommand extends AbstractAsyncCommand {
     // ==================== DEMOTE ====================
     private void handleDemote(Player sender, CommandContext ctx) {
         String targetName = this.arg1.get(ctx);
+        if (targetName == null || targetName.isEmpty()) {
+            sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es guild demote <joueur>"));
+            return;
+        }
 
         try {
             var senderRef = sender.getReference();
@@ -349,6 +366,10 @@ public class GuildCommand extends AbstractAsyncCommand {
     // ==================== INFO ====================
     private void handleInfo(Player sender, CommandContext ctx) {
         String guildName = this.arg1.get(ctx);
+        if (guildName == null || guildName.isEmpty()) {
+            sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es guild info <nom_guilde>"));
+            return;
+        }
 
         Guild guild = GuildManager.getByName(guildName);
         if (guild == null) guild = GuildManager.getByTag(guildName);

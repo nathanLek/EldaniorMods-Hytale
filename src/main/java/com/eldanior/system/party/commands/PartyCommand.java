@@ -8,6 +8,7 @@ import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.NameMatching;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
+import com.hypixel.hytale.server.core.command.system.arguments.system.OptionalArg;
 import com.hypixel.hytale.server.core.command.system.arguments.system.RequiredArg;
 import com.hypixel.hytale.server.core.command.system.arguments.types.ArgTypes;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractAsyncCommand;
@@ -24,12 +25,12 @@ import java.util.concurrent.CompletableFuture;
 public class PartyCommand extends AbstractAsyncCommand {
 
     private final RequiredArg<String> actionArg;
-    private final RequiredArg<String> playerArg;
+    private final OptionalArg<String> playerArg;
 
     public PartyCommand() {
         super("party", "Groupe (create/invite/kick/leave/disband/accept/decline/list)");
         this.actionArg = this.withRequiredArg("action", "create|invite|kick|leave|disband|accept|decline|list", ArgTypes.STRING);
-        this.playerArg = this.withRequiredArg("joueur", "Joueur cible", ArgTypes.STRING);
+        this.playerArg = this.withOptionalArg("joueur", "Joueur cible", ArgTypes.STRING);
     }
 
     @Override
@@ -100,7 +101,7 @@ public class PartyCommand extends AbstractAsyncCommand {
             Party party = PartyManager.getParty(senderUUID);
 
             if (party == null) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cVous n'etes dans aucun groupe. Creez-en un avec §f/es party create _"));
+                sender.getPlayerRef().sendMessage(Message.raw("§cVous n'etes dans aucun groupe. Creez-en un avec §f/es party create"));
                 return;
             }
 
@@ -115,6 +116,10 @@ public class PartyCommand extends AbstractAsyncCommand {
             }
 
             String targetName = this.playerArg.get(ctx);
+            if (targetName == null || targetName.isEmpty()) {
+                sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es party invite <joueur>"));
+                return;
+            }
             PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
             if (targetRef == null) {
                 sender.getPlayerRef().sendMessage(Message.raw("§cJoueur '" + targetName + "' introuvable."));
@@ -132,7 +137,7 @@ public class PartyCommand extends AbstractAsyncCommand {
 
             sender.getPlayerRef().sendMessage(Message.raw("§aInvitation envoyee a " + targetName));
             targetRef.sendMessage(Message.raw("§e" + sender.getPlayerRef().getUsername() + " vous invite a rejoindre son groupe !"));
-            targetRef.sendMessage(Message.raw("§7Tapez §f/es party accept _ §7pour accepter ou §f/es party decline _ §7pour refuser."));
+            targetRef.sendMessage(Message.raw("§7Tapez §f/es party accept §7pour accepter ou §f/es party decline §7pour refuser."));
         } catch (Exception e) { e.printStackTrace(); }
     }
 
@@ -210,6 +215,10 @@ public class PartyCommand extends AbstractAsyncCommand {
             }
 
             String targetName = this.playerArg.get(ctx);
+            if (targetName == null || targetName.isEmpty()) {
+                sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es party kick <joueur>"));
+                return;
+            }
             UUID targetUUID = null;
             for (var entry : party.getMembers().entrySet()) {
                 if (entry.getValue().equalsIgnoreCase(targetName)) {
@@ -224,7 +233,7 @@ public class PartyCommand extends AbstractAsyncCommand {
             }
 
             if (targetUUID.equals(senderUUID)) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cVous ne pouvez pas vous exclure. Utilisez §f/es party leave _"));
+                sender.getPlayerRef().sendMessage(Message.raw("§cVous ne pouvez pas vous exclure. Utilisez §f/es party leave"));
                 return;
             }
 

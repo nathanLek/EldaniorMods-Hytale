@@ -5,6 +5,7 @@ import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
+import com.hypixel.hytale.server.core.command.system.arguments.system.OptionalArg;
 import com.hypixel.hytale.server.core.command.system.arguments.system.RequiredArg;
 import com.hypixel.hytale.server.core.command.system.arguments.types.ArgTypes;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractAsyncCommand;
@@ -163,12 +164,12 @@ public class HologramCommand extends AbstractAsyncCommand {
     };
 
     private final RequiredArg<String> actionArg;
-    private final RequiredArg<String> paramArg;
+    private final OptionalArg<String> paramArg;
 
     public HologramCommand() {
         super("hologram", "Gestion des hologrammes (OP)");
         this.actionArg = this.withRequiredArg("action", "create|delete|list", ArgTypes.STRING);
-        this.paramArg = this.withRequiredArg("param", "texte ou id", ArgTypes.STRING);
+        this.paramArg = this.withOptionalArg("param", "texte ou id", ArgTypes.STRING);
     }
 
     @Override
@@ -346,18 +347,18 @@ public class HologramCommand extends AbstractAsyncCommand {
         sender.getPlayerRef().sendMessage(Message.raw("§6=== Hologrammes ==="));
         sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram create <texte> §7— Cree (_ = espace, | = ligne)"));
         sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram delete <id> §7— Supprime"));
-        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram list _ §7— Liste"));
+        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram list §7— Liste"));
         sender.getPlayerRef().sendMessage(Message.raw("§6--- Presets ---"));
-        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram welcome _ §7— Bienvenue"));
-        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram classes _ §7— Maitre des Classes"));
-        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram guilde _ §7— Hall des Guildes"));
-        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram noblesse _ §7— Palais Royal"));
-        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram eglise _ §7— Cathedrale Sacree"));
-        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram marche _ §7— Place du Marche"));
-        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram combat _ §7— Arene de Combat"));
-        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram quetes _ §7— Panneau des Quetes"));
-        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram competences _ §7— Tour des Competences"));
-        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram famille _ §7— Manoir des Familles"));
-        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram donjon _ §7— Portail de Donjon"));
+        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram welcome §7— Bienvenue"));
+        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram classes §7— Maitre des Classes"));
+        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram guilde §7— Hall des Guildes"));
+        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram noblesse §7— Palais Royal"));
+        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram eglise §7— Cathedrale Sacree"));
+        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram marche §7— Place du Marche"));
+        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram combat §7— Arene de Combat"));
+        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram quetes §7— Panneau des Quetes"));
+        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram competences §7— Tour des Competences"));
+        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram famille §7— Manoir des Familles"));
+        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram donjon §7— Portail de Donjon"));
     }
 }
