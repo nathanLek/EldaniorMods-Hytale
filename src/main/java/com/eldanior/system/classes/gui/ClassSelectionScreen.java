@@ -171,6 +171,11 @@ public class ClassSelectionScreen extends InteractiveCustomUIPage<ClassSelection
         playerData.setPlayerClass(model.getDisplayName());
         playerData.setPlayerClassId(model.getId());
         playerData.clearSavedEvolutionChoices();
+        // Attribuer les compétences actives de la classe
+        for (String activeSkillId : model.getActiveSkillIds()) {
+            playerData.learnSkill(activeSkillId);
+            playerData.enableSkill(activeSkillId);
+        }
         // Classe Dragon : dignité de base à 1000 + Aura Draconique
         if ("dragon".equalsIgnoreCase(model.getId())) {
             playerData.setDignity(1000);
@@ -217,15 +222,20 @@ public class ClassSelectionScreen extends InteractiveCustomUIPage<ClassSelection
                 ui.set("#CStat" + i + "f.Text", "LCK +" + model.getBonusLck());
 
                 List<PassiveSkill> skills = model.getSkillsPassiveIds();
+                List<String> activeIds = model.getActiveSkillIds();
+                int slotIndex = 0;
                 if (skills != null) {
-                    for (int s = 0; s < 3; s++) {
-                        String skillLabel = "#CSkill" + i + (char) ('a' + s);
-                        if (s < skills.size()) {
-                            ui.set(skillLabel + ".Text", "- " + skills.get(s).getDisplayName());
-                        } else {
-                            ui.set(skillLabel + ".Text", "");
-                        }
+                    for (int s = 0; s < skills.size() && slotIndex < 3; s++, slotIndex++) {
+                        ui.set("#CSkill" + i + (char) ('a' + slotIndex) + ".Text", "- " + skills.get(s).getDisplayName());
                     }
+                }
+                for (int s = 0; s < activeIds.size() && slotIndex < 3; s++, slotIndex++) {
+                    var activeSkill = com.eldanior.system.skills.SkillManager.getSkillFromId(activeIds.get(s));
+                    String name = activeSkill.map(sk -> sk.displayName()).orElse(activeIds.get(s));
+                    ui.set("#CSkill" + i + (char) ('a' + slotIndex) + ".Text", "- " + name + " (Actif)");
+                }
+                for (; slotIndex < 3; slotIndex++) {
+                    ui.set("#CSkill" + i + (char) ('a' + slotIndex) + ".Text", "");
                 }
             } else {
                 ui.set("#ClassCard" + i + ".Visible", false);

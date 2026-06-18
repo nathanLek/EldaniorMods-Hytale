@@ -221,6 +221,12 @@ public enum LootTableConfig {
             new LootEntry("skill_page_sharp_blade",           1, 1, 1, 0.5),
             new LootEntry("skill_page_soul_stealer",          1, 1, 1, 0.5),
             new LootEntry("skill_page_spellblade",            1, 1, 1, 0.5),
+            new LootEntry("skill_page_boule_de_feu",          1, 1, 1, 0.5),
+            new LootEntry("skill_page_flamme_ardente",        1, 1, 1, 0.5),
+            new LootEntry("skill_page_eclat_de_glace",        1, 1, 1, 0.5),
+            new LootEntry("skill_page_tempete_elementaire",   1, 1, 1, 0.5),
+            new LootEntry("skill_page_lien_enchantement",    1, 1, 1, 0.5),
+            new LootEntry("skill_page_main_du_trepas",       1, 1, 1, 0.5),
             new LootEntry("skill_page_steel_constitution",    1, 1, 1, 0.5),
             new LootEntry("skill_page_steel_resolve",         1, 1, 1, 0.5),
             new LootEntry("skill_page_survivor_spirit",       1, 1, 1, 0.5),
@@ -239,6 +245,8 @@ public enum LootTableConfig {
             new LootEntry("skill_page_minor_sword_mastery",   1, 1, 1, 0.5),
 
             // --- Compétences Rare (0.3%) ---
+            new LootEntry("skill_page_souffle_embrase",             1, 1, 1, 0.3),
+            new LootEntry("skill_page_piege_incendiaire",           1, 1, 1, 0.3),
             new LootEntry("skill_page_abyssal_vision",              1, 1, 1, 0.3),
             new LootEntry("skill_page_acrobatic_poise",             1, 1, 1, 0.3),
             new LootEntry("skill_page_adamantine_bulwark",          1, 1, 1, 0.3),
@@ -347,7 +355,12 @@ public enum LootTableConfig {
             new LootEntry("skill_page_war_legend",                   1, 1, 1, 0.1),
             new LootEntry("skill_page_war_prophecy",                 1, 1, 1, 0.1),
 
+            // --- Compétences Épique (0.1%) ---
+            new LootEntry("skill_page_meteore",                      1, 1, 1, 0.1),
+            new LootEntry("skill_page_nova_de_feu",                  1, 1, 1, 0.1),
+
             // --- Compétences Unique (0.05%) ---
+            new LootEntry("skill_page_inferno",                      1, 1, 1, 0.05),
             new LootEntry("skill_page_abyss_blade",                  1, 1, 1, 0.05),
             new LootEntry("skill_page_absolute_precision",           1, 1, 1, 0.05),
             new LootEntry("skill_page_absolute_supremacy",           1, 1, 1, 0.05),
@@ -383,6 +396,7 @@ public enum LootTableConfig {
             new LootEntry("skill_page_true_sight",                   1, 1, 1, 0.05),
 
             // --- Compétences Légendaire (0.02%) ---
+            new LootEntry("skill_page_souffle_du_dragon",            1, 1, 1, 0.02),
             new LootEntry("skill_page_arcane_genesis",               1, 1, 1, 0.02),
             new LootEntry("skill_page_celestial_constitution",       1, 1, 1, 0.02),
             new LootEntry("skill_page_celestial_fortress",           1, 1, 1, 0.02),
@@ -407,6 +421,7 @@ public enum LootTableConfig {
             new LootEntry("skill_page_time_dodge",                   1, 1, 1, 0.02),
 
             // --- Compétences Divin (0.01%) ---
+            new LootEntry("skill_page_apocalypse_ignee",             1, 1, 1, 0.01),
             new LootEntry("skill_page_absolute_resolve",             1, 1, 1, 0.01),
             new LootEntry("skill_page_absolute_sight",               1, 1, 1, 0.01),
             new LootEntry("skill_page_arcane_creation",              1, 1, 1, 0.01),
@@ -729,6 +744,12 @@ public enum LootTableConfig {
             new LootEntry("skill_page_sharp_blade",           1, 1, 1, 0.5),
             new LootEntry("skill_page_soul_stealer",          1, 1, 1, 0.5),
             new LootEntry("skill_page_spellblade",            1, 1, 1, 0.5),
+            new LootEntry("skill_page_boule_de_feu",          1, 1, 1, 0.5),
+            new LootEntry("skill_page_flamme_ardente",        1, 1, 1, 0.5),
+            new LootEntry("skill_page_eclat_de_glace",        1, 1, 1, 0.5),
+            new LootEntry("skill_page_tempete_elementaire",   1, 1, 1, 0.5),
+            new LootEntry("skill_page_lien_enchantement",    1, 1, 1, 0.5),
+            new LootEntry("skill_page_main_du_trepas",       1, 1, 1, 0.5),
             new LootEntry("skill_page_steel_constitution",    1, 1, 1, 0.5),
             new LootEntry("skill_page_steel_resolve",         1, 1, 1, 0.5),
             new LootEntry("skill_page_survivor_spirit",       1, 1, 1, 0.5),
@@ -747,6 +768,8 @@ public enum LootTableConfig {
             new LootEntry("skill_page_minor_sword_mastery",   1, 1, 1, 0.5),
 
             // --- Compétences Rare (0.2%) ---
+            new LootEntry("skill_page_souffle_embrase",             1, 1, 1, 0.2),
+            new LootEntry("skill_page_piege_incendiaire",           1, 1, 1, 0.2),
             new LootEntry("skill_page_abyssal_vision",              1, 1, 1, 0.2),
             new LootEntry("skill_page_acrobatic_poise",             1, 1, 1, 0.2),
             new LootEntry("skill_page_adamantine_bulwark",          1, 1, 1, 0.2),
@@ -855,7 +878,12 @@ public enum LootTableConfig {
             new LootEntry("skill_page_war_legend",                   1, 1, 1, 0.1),
             new LootEntry("skill_page_war_prophecy",                 1, 1, 1, 0.1),
 
+            // --- Compétences Épique (0.1%) ---
+            new LootEntry("skill_page_meteore",                      1, 1, 1, 0.1),
+            new LootEntry("skill_page_nova_de_feu",                  1, 1, 1, 0.1),
+
             // --- Compétences Unique (0.05%) ---
+            new LootEntry("skill_page_inferno",                      1, 1, 1, 0.05),
             new LootEntry("skill_page_abyss_blade",                  1, 1, 1, 0.05),
             new LootEntry("skill_page_absolute_precision",           1, 1, 1, 0.05),
             new LootEntry("skill_page_absolute_supremacy",           1, 1, 1, 0.05),
@@ -891,6 +919,7 @@ public enum LootTableConfig {
             new LootEntry("skill_page_true_sight",                   1, 1, 1, 0.05),
 
             // --- Compétences Légendaire (0.02%) ---
+            new LootEntry("skill_page_souffle_du_dragon",            1, 1, 1, 0.02),
             new LootEntry("skill_page_arcane_genesis",               1, 1, 1, 0.02),
             new LootEntry("skill_page_celestial_constitution",       1, 1, 1, 0.02),
             new LootEntry("skill_page_celestial_fortress",           1, 1, 1, 0.02),
@@ -915,6 +944,7 @@ public enum LootTableConfig {
             new LootEntry("skill_page_time_dodge",                   1, 1, 1, 0.02),
 
             // --- Compétences Divin (0.01%) ---
+            new LootEntry("skill_page_apocalypse_ignee",             1, 1, 1, 0.01),
             new LootEntry("skill_page_absolute_resolve",             1, 1, 1, 0.01),
             new LootEntry("skill_page_absolute_sight",               1, 1, 1, 0.01),
             new LootEntry("skill_page_arcane_creation",              1, 1, 1, 0.01),
@@ -1125,6 +1155,12 @@ public enum LootTableConfig {
             new LootEntry("skill_page_sharp_blade",           1, 1, 1, 25),
             new LootEntry("skill_page_soul_stealer",          1, 1, 1, 25),
             new LootEntry("skill_page_spellblade",            1, 1, 1, 25),
+            new LootEntry("skill_page_boule_de_feu",          1, 1, 1, 25),
+            new LootEntry("skill_page_flamme_ardente",        1, 1, 1, 25),
+            new LootEntry("skill_page_eclat_de_glace",        1, 1, 1, 25),
+            new LootEntry("skill_page_tempete_elementaire",   1, 1, 1, 25),
+            new LootEntry("skill_page_lien_enchantement",    1, 1, 1, 25),
+            new LootEntry("skill_page_main_du_trepas",       1, 1, 1, 25),
             new LootEntry("skill_page_steel_constitution",    1, 1, 1, 25),
             new LootEntry("skill_page_steel_resolve",         1, 1, 1, 25),
             new LootEntry("skill_page_survivor_spirit",       1, 1, 1, 25),
@@ -1143,6 +1179,8 @@ public enum LootTableConfig {
             new LootEntry("skill_page_minor_sword_mastery",   1, 1, 1, 25),
 
             // --- Compétences Rare (15%) ---
+            new LootEntry("skill_page_souffle_embrase",             1, 1, 1, 15),
+            new LootEntry("skill_page_piege_incendiaire",           1, 1, 1, 15),
             new LootEntry("skill_page_abyssal_vision",              1, 1, 1, 15),
             new LootEntry("skill_page_acrobatic_poise",             1, 1, 1, 15),
             new LootEntry("skill_page_adamantine_bulwark",          1, 1, 1, 15),
@@ -1257,7 +1295,12 @@ public enum LootTableConfig {
             new LootEntry("skill_page_phantom_strike",       1, 1, 1, 0.2),
             new LootEntry("skill_page_tono_squive",          1, 1, 1, 0.2),
 
+            // --- Compétences Épique (8%) ---
+            new LootEntry("skill_page_meteore",                      1, 1, 1, 8),
+            new LootEntry("skill_page_nova_de_feu",                  1, 1, 1, 8),
+
             // --- Compétences Unique (5%) ---
+            new LootEntry("skill_page_inferno",                      1, 1, 1, 0.2),
             new LootEntry("skill_page_abyss_blade",                  1, 1, 1, 0.2),
             new LootEntry("skill_page_absolute_precision",           1, 1, 1, 0.2),
             new LootEntry("skill_page_absolute_supremacy",           1, 1, 1, 0.2),
@@ -1293,6 +1336,7 @@ public enum LootTableConfig {
             new LootEntry("skill_page_true_sight",                   1, 1, 1, 0.2),
 
             // --- Compétences Légendaire (3%) ---
+            new LootEntry("skill_page_souffle_du_dragon",            1, 1, 1, 0.05),
             new LootEntry("skill_page_arcane_genesis",               1, 1, 1, 0.05),
             new LootEntry("skill_page_celestial_constitution",       1, 1, 1, 0.05),
             new LootEntry("skill_page_celestial_fortress",           1, 1, 1, 0.05),
@@ -1317,6 +1361,7 @@ public enum LootTableConfig {
             new LootEntry("skill_page_time_dodge",                   1, 1, 1, 0.05),
 
             // --- Compétences Légendaires (0.05% ≈ 1/2000) ---
+            new LootEntry("skill_page_souffle_du_dragon",    1, 1, 1, 0.05),
             new LootEntry("skill_page_annihilator_strike",   1, 1, 1, 0.05),
             new LootEntry("skill_page_diamond_skin",         1, 1, 1, 0.05),
             new LootEntry("skill_page_fly",                  1, 1, 1, 0.05),
@@ -1324,6 +1369,7 @@ public enum LootTableConfig {
             new LootEntry("skill_page_universal_detection",  1, 1, 1, 0.05),
 
             // --- Compétences Divines (0.01% ≈ 1/10000) ---
+            new LootEntry("skill_page_apocalypse_ignee",     1, 1, 1, 0.01),
             new LootEntry("skill_page_divine_aegis",         1, 1, 1, 0.01),
             new LootEntry("skill_page_dyna_aegis",           1, 1, 1, 0.01),
             new LootEntry("skill_page_judgment_of_genesis",  1, 1, 1, 0.01),
@@ -1649,6 +1695,12 @@ public enum LootTableConfig {
             new LootEntry("skill_page_sharp_blade",           1, 1, 1, 0.5),
             new LootEntry("skill_page_soul_stealer",          1, 1, 1, 0.5),
             new LootEntry("skill_page_spellblade",            1, 1, 1, 0.5),
+            new LootEntry("skill_page_boule_de_feu",          1, 1, 1, 0.5),
+            new LootEntry("skill_page_flamme_ardente",        1, 1, 1, 0.5),
+            new LootEntry("skill_page_eclat_de_glace",        1, 1, 1, 0.5),
+            new LootEntry("skill_page_tempete_elementaire",   1, 1, 1, 0.5),
+            new LootEntry("skill_page_lien_enchantement",    1, 1, 1, 0.5),
+            new LootEntry("skill_page_main_du_trepas",       1, 1, 1, 0.5),
             new LootEntry("skill_page_steel_constitution",    1, 1, 1, 0.5),
             new LootEntry("skill_page_steel_resolve",         1, 1, 1, 0.5),
             new LootEntry("skill_page_survivor_spirit",       1, 1, 1, 0.5),
@@ -1667,6 +1719,8 @@ public enum LootTableConfig {
             new LootEntry("skill_page_minor_sword_mastery",   1, 1, 1, 0.5),
 
             // --- Compétences Rare (0.3%) ---
+            new LootEntry("skill_page_souffle_embrase",             1, 1, 1, 0.3),
+            new LootEntry("skill_page_piege_incendiaire",           1, 1, 1, 0.3),
             new LootEntry("skill_page_abyssal_vision",              1, 1, 1, 0.3),
             new LootEntry("skill_page_acrobatic_poise",             1, 1, 1, 0.3),
             new LootEntry("skill_page_adamantine_bulwark",          1, 1, 1, 0.3),
@@ -1775,7 +1829,12 @@ public enum LootTableConfig {
             new LootEntry("skill_page_war_legend",                   1, 1, 1, 0.1),
             new LootEntry("skill_page_war_prophecy",                 1, 1, 1, 0.1),
 
+            // --- Compétences Épique (0.1%) ---
+            new LootEntry("skill_page_meteore",                      1, 1, 1, 0.1),
+            new LootEntry("skill_page_nova_de_feu",                  1, 1, 1, 0.1),
+
             // --- Compétences Unique (0.05%) ---
+            new LootEntry("skill_page_inferno",                      1, 1, 1, 0.05),
             new LootEntry("skill_page_abyss_blade",                  1, 1, 1, 0.05),
             new LootEntry("skill_page_absolute_precision",           1, 1, 1, 0.05),
             new LootEntry("skill_page_absolute_supremacy",           1, 1, 1, 0.05),
@@ -1811,6 +1870,7 @@ public enum LootTableConfig {
             new LootEntry("skill_page_true_sight",                   1, 1, 1, 0.05),
 
             // --- Compétences Légendaire (0.02%) ---
+            new LootEntry("skill_page_souffle_du_dragon",            1, 1, 1, 0.02),
             new LootEntry("skill_page_arcane_genesis",               1, 1, 1, 0.02),
             new LootEntry("skill_page_celestial_constitution",       1, 1, 1, 0.02),
             new LootEntry("skill_page_celestial_fortress",           1, 1, 1, 0.02),
@@ -1835,6 +1895,7 @@ public enum LootTableConfig {
             new LootEntry("skill_page_time_dodge",                   1, 1, 1, 0.02),
 
             // --- Compétences Divin (0.01%) ---
+            new LootEntry("skill_page_apocalypse_ignee",             1, 1, 1, 0.01),
             new LootEntry("skill_page_absolute_resolve",             1, 1, 1, 0.01),
             new LootEntry("skill_page_absolute_sight",               1, 1, 1, 0.01),
             new LootEntry("skill_page_arcane_creation",              1, 1, 1, 0.01),

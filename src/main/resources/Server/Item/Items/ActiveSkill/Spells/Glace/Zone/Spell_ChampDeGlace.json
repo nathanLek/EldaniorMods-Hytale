@@ -1,0 +1,124 @@
+{
+  "TranslationProperties": {
+    "Name": "Champ de Glace",
+    "Description": "Gelez le sol autour de vous, créant un champ de glace qui ralentit et blesse vos ennemis. Maintenez le clic droit pour charger le sort, puis relâchez votre puissance avec la touche Ability."
+  },
+  "Categories": [
+    "Items.Weapons",
+    "Eldanior_System.Spells"
+  ],
+  "Quality": "Rare",
+  "ItemLevel": 60,
+  "Model": "Items/Weapons/Spellbook/Book.blockymodel",
+  "Texture": "Items/Weapons/Spellbook/Frost_Texture.png",
+  "PlayerAnimationsId": "Spellbook",
+  "Reticle": "DefaultMelee",
+  "Interactions": {
+    "Secondary": "Root_Spell_ChampDeGlace_Charge",
+    "Ability1": "Root_Spell_ChampDeGlace_Launch"
+  },
+  "InteractionVars": {
+    "Spellbook_Cast_Hurl_Charged": {
+      "Interactions": [
+        {
+          "Parent": "Spellbook_Cast_Hurl_Charged",
+          "Costs": {
+            "Mana": 250
+          }
+        }
+      ]
+    },
+    "Spellbook_Cast_Hurl_Cost": {
+      "Interactions": [
+        {
+          "Parent": "Spellbook_Cast_Cost",
+          "StatModifiers": {
+            "Mana": -250
+          }
+        }
+      ]
+    },
+    "Spellbook_Cast_Hurl_Launch": "Spellbook_Cast_Launch",
+    "Spellbook_Cast_Hurl_Effect": "Spellbook_Cast_Effect",
+    "Spellbook_Cast_Hurl_Fail": "Spellbook_Cast_Fail",
+    "Block_Effect": "Block_Swing_Down_Effect",
+    "Block_Swing_Left_Damage": "Block_Swing_Left_Damage",
+    "Block_Swing_Right_Damage": "Block_Swing_Right_Damage",
+    "Block_Swing_Down_Damage": "Block_Swing_Down_Damage"
+  },
+  "IconProperties": {
+    "Scale": 0.545,
+    "Translation": [
+      -8.4,
+      -8.4
+    ],
+    "Rotation": [
+      45,
+      90,
+      0
+    ]
+  },
+  "Scale": 1.3,
+  "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
+  "Icon": "Icons/ItemsGenerated/Weapon_Spellbook_Frost.png",
+  "Tags": {
+    "Type": [
+      "Weapon"
+    ],
+    "Family": [
+      "Spellbook"
+    ]
+  },
+  "Weapon": {
+    "EntityStatsToClear": [
+      "SignatureEnergy"
+    ],
+    "StatModifiers": {
+      "SignatureEnergy": [
+        {
+          "Amount": 1,
+          "CalculationType": "Additive"
+        }
+      ]
+    }
+  },
+  "ItemAppearanceConditions": {
+    "SignatureEnergy": [
+      {
+        "Condition": [
+          1,
+          1
+        ],
+        "Particles": [
+          {
+            "SystemId": "Effect_Snow",
+            "TargetNodeName": "Origin",
+            "TargetEntityPart": "PrimaryItem",
+            "Scale": 0.4
+          },
+          {
+            "SystemId": "Weapon_Frost_Mist",
+            "TargetNodeName": "Origin",
+            "TargetEntityPart": "PrimaryItem",
+            "Scale": 0.5
+          }
+        ],
+        "FirstPersonParticles": [
+          {
+            "SystemId": "Effect_Snow",
+            "TargetNodeName": "Origin",
+            "TargetEntityPart": "PrimaryItem",
+            "Scale": 0.4
+          },
+          {
+            "SystemId": "Weapon_Frost_Mist",
+            "TargetNodeName": "Origin",
+            "TargetEntityPart": "PrimaryItem",
+            "Scale": 0.5
+          }
+        ]
+      }
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books"
+}

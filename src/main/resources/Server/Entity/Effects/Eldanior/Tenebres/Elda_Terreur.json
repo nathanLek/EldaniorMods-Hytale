@@ -1,0 +1,15 @@
+{
+  "Duration": 5,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#110022",
+    "EntityTopTint": "#330066",
+    "ScreenEffect": "ScreenEffects/Poison.png",
+    "Particles": [{"SystemId": "Spectre_Void_Head"}, {"SystemId": "Spectre_Void_Arms"}],
+    "ModelVFXId": "Intangible_Dark",
+    "HorizontalSpeedMultiplier": 0.3
+  },
+  "OverlapBehavior": "Overwrite",
+  "Infinite": false,
+  "Debuff": true,
+  "StatusEffectIcon": "UI/StatusEffects/Poison.png"
+}

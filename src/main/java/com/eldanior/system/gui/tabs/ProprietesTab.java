@@ -8,7 +8,7 @@ import com.eldanior.system.config.UUIDExtractor;
 import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.component.Ref;
-import com.hypixel.hytale.math.vector.Vector3d;
+import org.joml.Vector3d;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.ui.builder.UICommandBuilder;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
@@ -732,7 +732,7 @@ public class ProprietesTab {
             // Assigner la ville au joueur
             com.hypixel.hytale.server.core.entity.entities.Player player = store.getComponent(ref,
                     com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
-            String playerName = player != null ? player.getDisplayName() : "";
+            String playerName = player != null ? player.getPlayerRef().getUsername() : "";
             city.setOwnerUUID(buyerUUID);
             city.setOwnerName(playerName);
             city.addMember(buyerUUID, ParcelRole.OWNER);

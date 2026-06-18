@@ -2,26 +2,51 @@
 
 #territoire #parcelle #immobilier #protection
 
-## Types de zones
+## Types de zones (12 types)
 
 | Type | Cree par | Dans | Couleur |
 |------|----------|------|---------|
 | **KINGDOM** | Admin | - (top level) | Or #FFD700 |
-| **TERRITORY** | Admin/Noble | Kingdom ou Territory | Bleu #3498DB |
+| **GRAND_TERRITORY** | Admin/Noble | Kingdom | - |
+| **TERRITORY** | Admin/Noble | Kingdom ou Grand Territory | Bleu #3498DB |
 | **CITY** | Admin/Noble | Territory | Vert #2ECC71 |
 | **PLOT** | Admin | City | Gris #aabbcc |
 | **HOUSING** | Admin | City | Violet #9B59B6 |
 | **ROOM** | Admin | Housing | Rose #E91E63 |
 | **FARM** | Admin | City/Territory | Marron #8B4513 |
+| **FOREST** | Admin | Territory/Grand Territory | - |
+| **ARENA** | Admin | Territory/Grand Territory | - |
+| **DUNGEON** | Admin | Territory/Grand Territory | - |
+| **MINE** | Admin | Territory/Grand Territory | - |
 
 ## Hierarchie de propriete
 ```
 Royaume → proprio = Famille Royale
-  Territoire Marquis → proprio = Famille du Marquis
-    Territoire Duc → proprio = Famille du Duc
+  Grand Territoire → proprio = Famille noble (prix : 100M)
+    Territoire Marquis → proprio = Famille du Marquis (prix : 30M)
       Ville → proprio = Guilde du Comte
         Plot/Housing → proprio = Ville (par defaut) ou Joueur (achat/location)
+      Arene → PvP avec leaderboards (ArenaManager)
+      Donjon → dungeonRank (defaut "E"), regenDelaySec (defaut 300s)
+      Mine / Foret / Ferme → zones de ressources
 ```
+
+## Types speciaux
+
+### GRAND_TERRITORY
+- Niveau intermediaire entre Kingdom et Territory
+- Prix famille : 100 000 000
+- Peut contenir : TERRITORY, CITY, ARENA, DUNGEON, MINE, FARM, FOREST, PLOT, HOUSING
+
+### DUNGEON
+- Champ `dungeonRank` (defaut "E") — rang de difficulte
+- Champ `regenDelaySec` (defaut 300s) — delai de regeneration
+- Champs `firstDiscovererName` / `firstDiscovererUUID` — premier explorateur
+
+### ARENA (ArenaManager)
+- Leaderboards par arene (kills/deaths par joueur, top players)
+- Persistence dans `arena_stats.properties`
+- `DuelProtectionSystem` gere aussi la protection anti-mort en arene
 
 ## Creation
 1. Selectionner une zone avec le **Selection Tool** de Hytale
@@ -103,7 +128,7 @@ Royaume → proprio = Famille Royale
 - `territory/systems/ParcelRangeSystem.java` - Detection entree/sortie
 
 ## Pages detaillees
-- [[Territoires/Types et Hierarchie]] - 7 types, arbre hierarchique
+- [[Territoires/Types et Hierarchie]] - 12 types, arbre hierarchique
 - [[Territoires/Permissions et Roles]] - Qui peut faire quoi, cas location
 - [[Territoires/Achat et Location]] - Achat, location, taxes, renouvellement
 

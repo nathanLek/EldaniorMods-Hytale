@@ -100,9 +100,9 @@ public class DuelTab {
 
         Player player = store.getComponent(ref, Player.getComponentType());
         if (player != null) {
-            player.sendMessage(Message.raw("§6Defi envoye a " + targetName + " !"));
+            player.getPlayerRef().sendMessage(Message.raw("§6Defi envoye a " + targetName + " !"));
         }
-        targetRef.sendMessage(Message.raw("§6§l" + (player != null ? player.getDisplayName() : "?") + " vous defie en duel !"));
+        targetRef.sendMessage(Message.raw("§6§l" + (player != null ? player.getPlayerRef().getUsername() : "?") + " vous defie en duel !"));
         targetRef.sendMessage(Message.raw("§7Tapez §f/es duel accept §7ou §f/es duel decline"));
 
         return true;

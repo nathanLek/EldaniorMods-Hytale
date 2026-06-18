@@ -6,6 +6,7 @@ import com.eldanior.system.titles.TitleManager;
 import com.eldanior.system.titles.models.TitleEffect;
 import com.eldanior.system.titles.models.TitleModel;
 import com.hypixel.hytale.component.ComponentType;
+import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
@@ -13,6 +14,8 @@ import com.hypixel.hytale.server.core.command.system.arguments.system.RequiredAr
 import com.hypixel.hytale.server.core.command.system.arguments.types.ArgTypes;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractAsyncCommand;
 import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
@@ -35,57 +38,67 @@ public class TitleOneArgCommand extends AbstractAsyncCommand {
     @Nonnull
     @Override
     public CompletableFuture<Void> executeAsync(@Nonnull CommandContext ctx) {
-        if (!(ctx.sender() instanceof Player sender)) return CompletableFuture.completedFuture(null);
+        Ref<EntityStore> senderEntityRef = ctx.senderAsPlayerRef();
+        if (senderEntityRef == null || !senderEntityRef.isValid()) return CompletableFuture.completedFuture(null);
+
+        Store<EntityStore> senderEntityStore = senderEntityRef.getStore();
+        World world = ((EntityStore) senderEntityStore.getExternalData()).getWorld();
+        if (world == null) return CompletableFuture.completedFuture(null);
 
         String action = this.actionArg.get(ctx);
 
-        switch (action.toLowerCase()) {
-            case "equip" -> handleEquip(sender, ctx);
-            case "info" -> handleInfo(sender, ctx);
-            default -> sender.sendMessage(Message.raw("§cUsage : /es title <equip|info> <titleId>"));
-        }
+        return CompletableFuture.runAsync(() -> {
+            try {
+                PlayerRef senderRef = senderEntityStore.getComponent(senderEntityRef, PlayerRef.getComponentType());
+                Player sender = senderEntityStore.getComponent(senderEntityRef, Player.getComponentType());
+                if (senderRef == null || sender == null) return;
 
-        return CompletableFuture.completedFuture(null);
+                switch (action.toLowerCase()) {
+                    case "equip" -> handleEquip(sender, ctx);
+                    case "info" -> handleInfo(sender, ctx);
+                    default -> senderRef.sendMessage(Message.raw("§cUsage : /es title <equip|info> <titleId>"));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }, world);
     }
 
     private void handleEquip(Player sender, CommandContext ctx) {
         String titleId = this.titleIdArg.get(ctx);
 
-        assert sender.getWorld() != null;
-        CompletableFuture.runAsync(() -> {
-            try {
-                var ref = sender.getReference();
-                if (ref == null) return;
+        try {
+            var ref = sender.getReference();
+            if (ref == null) return;
 
-                Store<EntityStore> store = ref.getStore();
-                ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
-                PlayerLevelData data = store.getComponent(ref, type);
+            Store<EntityStore> store = ref.getStore();
+            ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
+            PlayerLevelData data = store.getComponent(ref, type);
 
-                if (data == null) {
-                    sender.sendMessage(Message.raw("§cAucune donnee trouvee."));
-                    return;
-                }
-
-                if (!data.getUnlockedTitles().contains(titleId.toLowerCase())) {
-                    sender.sendMessage(Message.raw("§cVous ne possedez pas ce titre."));
-                    return;
-                }
-
-                TitleModel title = TitleManager.get(titleId.toLowerCase());
-                if (title == null) {
-                    sender.sendMessage(Message.raw("§cTitre '" + titleId + "' inconnu dans le registre."));
-                    return;
-                }
-
-                data.setCurrentTitle(title.getId());
-                store.putComponent(ref, type, data);
-
-                sender.sendMessage(Message.raw("§aTitre equipe : " + title.getFormattedName()));
-
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (data == null) {
+                sender.getPlayerRef().sendMessage(Message.raw("§cAucune donnee trouvee."));
+                return;
             }
-        }, sender.getWorld());
+
+            if (!data.getUnlockedTitles().contains(titleId.toLowerCase())) {
+                sender.getPlayerRef().sendMessage(Message.raw("§cVous ne possedez pas ce titre."));
+                return;
+            }
+
+            TitleModel title = TitleManager.get(titleId.toLowerCase());
+            if (title == null) {
+                sender.getPlayerRef().sendMessage(Message.raw("§cTitre '" + titleId + "' inconnu dans le registre."));
+                return;
+            }
+
+            data.setCurrentTitle(title.getId());
+            store.putComponent(ref, type, data);
+
+            sender.getPlayerRef().sendMessage(Message.raw("§aTitre equipe : " + title.getFormattedName()));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void handleInfo(Player sender, CommandContext ctx) {
@@ -93,29 +106,29 @@ public class TitleOneArgCommand extends AbstractAsyncCommand {
 
         TitleModel title = TitleManager.get(titleId.toLowerCase());
         if (title == null) {
-            sender.sendMessage(Message.raw("§cTitre '" + titleId + "' inconnu."));
+            sender.getPlayerRef().sendMessage(Message.raw("§cTitre '" + titleId + "' inconnu."));
             return;
         }
 
-        sender.sendMessage(Message.raw("§6=== " + title.getFormattedName() + " §6==="));
-        sender.sendMessage(Message.raw("§7" + title.getDescription()));
-        sender.sendMessage(Message.raw("§7Rarete : " + title.getRarity().getDisplayName()));
-        sender.sendMessage(Message.raw("§7Categorie : " + title.getCategory().getDisplayName()));
+        sender.getPlayerRef().sendMessage(Message.raw("§6=== " + title.getFormattedName() + " §6==="));
+        sender.getPlayerRef().sendMessage(Message.raw("§7" + title.getDescription()));
+        sender.getPlayerRef().sendMessage(Message.raw("§7Rarete : " + title.getRarity().getDisplayName()));
+        sender.getPlayerRef().sendMessage(Message.raw("§7Categorie : " + title.getCategory().getDisplayName()));
 
         var bonus = title.getBonus();
         if (bonus.strength() != 0 || bonus.vitality() != 0 || bonus.intelligence() != 0
                 || bonus.endurance() != 0 || bonus.agility() != 0 || bonus.luck() != 0) {
-            sender.sendMessage(Message.raw("§eBonus de stats :"));
-            if (bonus.strength() != 0) sender.sendMessage(Message.raw("§7  STR +" + bonus.strength()));
-            if (bonus.vitality() != 0) sender.sendMessage(Message.raw("§7  VIT +" + bonus.vitality()));
-            if (bonus.intelligence() != 0) sender.sendMessage(Message.raw("§7  INT +" + bonus.intelligence()));
-            if (bonus.endurance() != 0) sender.sendMessage(Message.raw("§7  END +" + bonus.endurance()));
-            if (bonus.agility() != 0) sender.sendMessage(Message.raw("§7  AGL +" + bonus.agility()));
-            if (bonus.luck() != 0) sender.sendMessage(Message.raw("§7  LCK +" + bonus.luck()));
+            sender.getPlayerRef().sendMessage(Message.raw("§eBonus de stats :"));
+            if (bonus.strength() != 0) sender.getPlayerRef().sendMessage(Message.raw("§7  STR +" + bonus.strength()));
+            if (bonus.vitality() != 0) sender.getPlayerRef().sendMessage(Message.raw("§7  VIT +" + bonus.vitality()));
+            if (bonus.intelligence() != 0) sender.getPlayerRef().sendMessage(Message.raw("§7  INT +" + bonus.intelligence()));
+            if (bonus.endurance() != 0) sender.getPlayerRef().sendMessage(Message.raw("§7  END +" + bonus.endurance()));
+            if (bonus.agility() != 0) sender.getPlayerRef().sendMessage(Message.raw("§7  AGL +" + bonus.agility()));
+            if (bonus.luck() != 0) sender.getPlayerRef().sendMessage(Message.raw("§7  LCK +" + bonus.luck()));
         }
 
         if (!title.getEffects().isEmpty()) {
-            sender.sendMessage(Message.raw("§eEffets speciaux :"));
+            sender.getPlayerRef().sendMessage(Message.raw("§eEffets speciaux :"));
             for (TitleEffect effect : title.getEffects()) {
                 String desc = switch (effect.type()) {
                     case DAMAGE_BONUS_VS_MOB -> "+" + (int)(effect.value() * 100) + "% degats vs " + effect.target();
@@ -125,7 +138,7 @@ public class TitleOneArgCommand extends AbstractAsyncCommand {
                     case HEALTH_BONUS_FLAT -> "+" + (int) effect.value() + " PV";
                     case MANA_BONUS_FLAT -> "+" + (int) effect.value() + " Mana";
                 };
-                sender.sendMessage(Message.raw("§7  " + desc));
+                sender.getPlayerRef().sendMessage(Message.raw("§7  " + desc));
             }
         }
     }

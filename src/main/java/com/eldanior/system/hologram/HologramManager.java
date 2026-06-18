@@ -3,8 +3,8 @@ package com.eldanior.system.hologram;
 import com.hypixel.hytale.component.AddReason;
 import com.hypixel.hytale.component.Holder;
 import com.hypixel.hytale.math.vector.Transform;
-import com.hypixel.hytale.math.vector.Vector3d;
-import com.hypixel.hytale.math.vector.Vector3f;
+import org.joml.Vector3d;
+import org.joml.Vector3f;
 import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.entity.entities.ProjectileComponent;
 import com.hypixel.hytale.server.core.entity.nameplate.Nameplate;
@@ -127,7 +127,7 @@ public class HologramManager {
                         holder.putComponent(ProjectileComponent.getComponentType(), projectileComponent);
 
                         Vector3d pos = new Vector3d(data.getX(), baseY - (i * 0.3), data.getZ());
-                        Vector3f rot = new Vector3f(0, 0, 0);
+                        com.hypixel.hytale.math.vector.Rotation3f rot = new com.hypixel.hytale.math.vector.Rotation3f(0, 0, 0);
                         holder.putComponent(TransformComponent.getComponentType(), new TransformComponent(pos, rot));
 
                         holder.ensureComponent(UUIDComponent.getComponentType());

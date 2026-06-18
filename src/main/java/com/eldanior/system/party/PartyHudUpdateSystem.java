@@ -40,7 +40,7 @@ public class PartyHudUpdateSystem extends EntityTickingSystem<EntityStore> {
         if (playerUUID == null || !PartyManager.hasParty(playerUUID)) return;
 
         // Le CombinedHud gere tout. S'il n'existe pas encore, QuestHudUpdateSystem le creera.
-        CustomUIHud hud = player.getHudManager().getCustomHud();
+        CustomUIHud hud = player.getHudManager().getCustomHud("combined_hud");
         if (hud instanceof CombinedHud) {
             hud.show(); // Force refresh
         }

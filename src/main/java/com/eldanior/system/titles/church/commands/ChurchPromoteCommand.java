@@ -6,6 +6,7 @@ import com.eldanior.system.titles.church.ChurchManager;
 import com.eldanior.system.titles.church.ChurchRank;
 import com.eldanior.system.config.UUIDExtractor;
 import com.hypixel.hytale.component.ComponentType;
+import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.NameMatching;
@@ -16,6 +17,7 @@ import com.hypixel.hytale.server.core.command.system.basecommands.AbstractAsyncC
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
+import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
@@ -39,41 +41,49 @@ public class ChurchPromoteCommand extends AbstractAsyncCommand {
     @Nonnull
     @Override
     public CompletableFuture<Void> executeAsync(@Nonnull CommandContext ctx) {
-        if (!(ctx.sender() instanceof Player sender)) return CompletableFuture.completedFuture(null);
+        Ref<EntityStore> senderEntityRef = ctx.senderAsPlayerRef();
+        if (senderEntityRef == null || !senderEntityRef.isValid()) return CompletableFuture.completedFuture(null);
+
+        Store<EntityStore> senderEntityStore = senderEntityRef.getStore();
+        World world = ((EntityStore) senderEntityStore.getExternalData()).getWorld();
+        if (world == null) return CompletableFuture.completedFuture(null);
 
         String targetName = this.playerArg.get(ctx);
         String rankStr = this.rankArg.get(ctx);
 
-        ChurchRank newRank = ChurchRank.fromString(rankStr);
-        if (newRank == null || newRank == ChurchRank.PAPE || newRank == ChurchRank.LAIQUE
-                || newRank == ChurchRank.RELIGIEUX || newRank == ChurchRank.SAINT) {
-            sender.sendMessage(Message.raw("§cRang invalide. Utilisez : pretre, archeveque, cardinal"));
-            return CompletableFuture.completedFuture(null);
-        }
-
-        assert sender.getWorld() != null;
         return CompletableFuture.runAsync(() -> {
             try {
+                PlayerRef senderRef = senderEntityStore.getComponent(senderEntityRef, PlayerRef.getComponentType());
+                Player sender = senderEntityStore.getComponent(senderEntityRef, Player.getComponentType());
+                if (senderRef == null || sender == null) return;
+
+                ChurchRank newRank = ChurchRank.fromString(rankStr);
+                if (newRank == null || newRank == ChurchRank.PAPE || newRank == ChurchRank.LAIQUE
+                        || newRank == ChurchRank.RELIGIEUX || newRank == ChurchRank.SAINT) {
+                    senderRef.sendMessage(Message.raw("§cRang invalide. Utilisez : pretre, archeveque, cardinal"));
+                    return;
+                }
+
                 UUID senderUUID = getSenderUUID(sender);
                 if (senderUUID == null || !senderUUID.equals(ChurchManager.getCurrentPopeUUID())) {
-                    if (!sender.hasPermission("eldanior.command.church.promote")) {
-                        sender.sendMessage(Message.raw("§cSeul le Pape ou un Admin peut promouvoir."));
+                    if (!sender.getPlayerRef().hasPermission("eldanior.command.church.promote")) {
+                        sender.getPlayerRef().sendMessage(Message.raw("§cSeul le Pape ou un Admin peut promouvoir."));
                         return;
                     }
                 }
 
                 if (!ChurchManager.canPopePromote(newRank)) {
-                    sender.sendMessage(Message.raw("§cPlus de places pour " + newRank.getFormattedName()
+                    sender.getPlayerRef().sendMessage(Message.raw("§cPlus de places pour " + newRank.getFormattedName()
                             + " §c(" + ChurchManager.getRemainingSlots(newRank) + "/" + newRank.getMaxPerChurch() + ")"));
                     return;
                 }
 
                 PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
-                if (targetRef == null) { sender.sendMessage(Message.raw("§cJoueur introuvable.")); return; }
+                if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable.")); return; }
 
                 UUID targetUUID = extractUUID(targetRef);
                 PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
-                if (targetPlayer == null) { sender.sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
+                if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
 
                 var ref = targetPlayer.getReference();
                 if (ref == null) return;
@@ -90,11 +100,11 @@ public class ChurchPromoteCommand extends AbstractAsyncCommand {
 
                 ChurchManager.recordPopePromotion(newRank);
 
-                sender.sendMessage(Message.raw("§a" + targetName + " promu au rang de " + newRank.getFormattedName()));
+                sender.getPlayerRef().sendMessage(Message.raw("§a" + targetName + " promu au rang de " + newRank.getFormattedName()));
                 com.eldanior.system.Leveling.utils.NotificationHelper.showEventTitle(targetPlayer,
                         "PROMOTION EGLISE", newRank.getFormattedName(), true);
             } catch (Exception e) { e.printStackTrace(); }
-        }, sender.getWorld());
+        }, world);
     }
 
     private UUID extractUUID(PlayerRef playerRef) throws Exception {

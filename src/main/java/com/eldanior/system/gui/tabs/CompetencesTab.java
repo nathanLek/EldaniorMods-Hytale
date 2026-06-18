@@ -39,6 +39,9 @@ public class CompetencesTab {
                 seen.add(ps.name());
             }
         }
+        if (classModel != null && classModel.getActiveSkillIds() != null) {
+            seen.addAll(classModel.getActiveSkillIds());
+        }
 
         String familyId = data.getNobleFamilyId();
         if (familyId != null && !familyId.isEmpty()) {
@@ -70,6 +73,8 @@ public class CompetencesTab {
         ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
         PlayerLevelData data = store.getComponent(ref, type);
         if (data == null) return;
+        hasCooldownActive = false;
+        activeCooldowns.clear();
 
         List<String> allSkillIds = buildSkillList(data);
 
@@ -122,14 +127,47 @@ public class CompetencesTab {
                 ui.set("#SkillName" + i + ".Text", info.name);
                 ui.set("#SkillType" + i + ".Text", info.rarity.isEmpty() ? info.type : info.rarity);
                 ui.set("#SkillDesc" + i + ".Text", info.description);
-                ui.set("#SkillStats" + i + ".Text", info.stats);
 
-                // Rarity color on label + border (same as market)
-                ui.set("#SkillType" + i + ".Style.TextColor", rarityColor);
+                // Rarity color on border + type label
                 ui.set("#SkillBorder" + i + ".Background", rarityColor);
+                ui.set("#SkillType" + i + ".Style.TextColor", rarityColor);
 
-                // Toggle button
+                // --- Colonne stats : Mana / Endurance / Vie / Cooldown / Taux ---
+                long remainingCd = data.getRemainingCooldown(entry.skillId.toUpperCase());
+                float progression = data.getSkillProgression(entry.skillId);
+                boolean mastered = data.isSkillMastered(entry.skillId);
+
+                // Mana (bleu)
+                ui.set("#SkillMana" + i + ".Visible", info.manaCost > 0);
+                if (info.manaCost > 0) {
+                    ui.set("#SkillManaVal" + i + ".Text", String.valueOf(info.manaCost));
+                }
+
+                // Endurance (jaune-vert)
+                ui.set("#SkillEndurance" + i + ".Visible", info.enduranceCost > 0);
+                if (info.enduranceCost > 0) {
+                    ui.set("#SkillEnduranceVal" + i + ".Text", (int)(info.enduranceCost * 100) + "%");
+                }
+
+                // Vie (rouge)
+                ui.set("#SkillLife" + i + ".Visible", info.lifeCost > 0);
+                if (info.lifeCost > 0) {
+                    ui.set("#SkillLifeVal" + i + ".Text", (int)(info.lifeCost * 100) + "%");
+                }
+
+                // Cooldown (orange) — badge affiche toujours le MAX
+                ui.set("#SkillCd" + i + ".Visible", info.cooldownMax > 0);
+                if (info.cooldownMax > 0) {
+                    ui.set("#SkillCdVal" + i + ".Text", formatCooldownMax(info.cooldownMax));
+                }
+
+                // Taux / Maitrise (vert)
+                ui.set("#SkillMastery" + i + ".Visible", true);
+                ui.set("#SkillMasteryVal" + i + ".Text", mastered ? "MAX" : String.format("%.2f%%", progression));
+
+                // --- 3 états : ACTIF / INACTIF / EN RECHARGE ---
                 if ("Active".equals(info.type)) {
+                    // Skills actifs : gestion spéciale (give item)
                     boolean alreadyHas = false;
                     var skillOpt = SkillManager.getSkillFromId(entry.skillId);
                     if (skillOpt.isPresent() && skillOpt.get().catalystId() != null) {
@@ -140,12 +178,43 @@ public class CompetencesTab {
                                     || personalChestHasItem(ref, store, skillOpt.get().catalystId());
                         }
                     }
-                    ui.set("#SkillToggle" + i + ".Text", alreadyHas ? "POSSEDE" : "GIVE");
+                    ui.set("#SkillActiveBar" + i + ".Visible", alreadyHas);
+                    ui.set("#SkillStateBadge" + i + ".Visible", false);
                     ui.set("#SkillToggle" + i + ".Visible", !alreadyHas);
-                } else {
-                    ui.set("#SkillToggle" + i + ".Text", enabled ? "DESACTIVER" : "ACTIVER");
-                    ui.set("#SkillToggle" + i + ".Background", enabled ? "#1a3a1a" : "#3a1a1a");
+                    ui.set("#SkillCdTimer" + i + ".Visible", false);
+                    ui.set("#SkillToggleWrap" + i + ".Background", "#2a3040");
+                } else if (remainingCd > 0) {
+                    // EN RECHARGE
+                    hasCooldownActive = true;
+                    activeCooldowns.put(i, new CooldownEntry(System.currentTimeMillis() + remainingCd));
+                    ui.set("#SkillActiveBar" + i + ".Visible", false);
+                    ui.set("#SkillStateBadge" + i + ".Visible", true);
+                    ui.set("#SkillStateBadge" + i + ".Text", "RECHARGE");
+                    ui.set("#SkillStateBadge" + i + ".Style.TextColor", "#ef9f27");
+                    ui.set("#SkillStateBadge" + i + ".Background", "#2a2410");
+                    ui.set("#SkillToggleWrap" + i + ".Background", "#2a2410");
+                    ui.set("#SkillToggle" + i + ".Visible", false);
+                    ui.set("#SkillCdTimer" + i + ".Visible", true);
+                    ui.set("#SkillCdTimer" + i + ".Text", formatCooldown(remainingCd));
+                } else if (enabled) {
+                    // ACTIF
+                    ui.set("#SkillActiveBar" + i + ".Visible", true);
+                    ui.set("#SkillStateBadge" + i + ".Visible", true);
+                    ui.set("#SkillStateBadge" + i + ".Text", "ACTIVE");
+                    ui.set("#SkillStateBadge" + i + ".Style.TextColor", "#7ed47e");
+                    ui.set("#SkillStateBadge" + i + ".Background", "#1a3a1a");
+                    ui.set("#SkillToggleWrap" + i + ".Background", "#1a3a1a");
                     ui.set("#SkillToggle" + i + ".Visible", true);
+                    ui.set("#SkillToggle" + i + ".Text", "ON");
+                    ui.set("#SkillCdTimer" + i + ".Visible", false);
+                } else {
+                    // INACTIF
+                    ui.set("#SkillActiveBar" + i + ".Visible", false);
+                    ui.set("#SkillStateBadge" + i + ".Visible", false);
+                    ui.set("#SkillToggleWrap" + i + ".Background", "#2a3040");
+                    ui.set("#SkillToggle" + i + ".Visible", true);
+                    ui.set("#SkillToggle" + i + ".Text", "OFF");
+                    ui.set("#SkillCdTimer" + i + ".Visible", false);
                 }
             } else {
                 ui.set("#SkillCard" + i + ".Visible", false);
@@ -202,6 +271,46 @@ public class CompetencesTab {
         return true;
     }
 
+    // Cache des cooldowns actifs pour refresh sans relire le store
+    private static boolean hasCooldownActive = false;
+    private static final Map<Integer, CooldownEntry> activeCooldowns = new HashMap<>();
+
+    public static boolean hasCooldownActive() { return hasCooldownActive; }
+
+    // Met à jour UNIQUEMENT les timers cooldown (pas besoin du store)
+    public static void updateCooldownTimers(UICommandBuilder ui) {
+        boolean anyActive = false;
+        for (var entry : activeCooldowns.entrySet()) {
+            int slot = entry.getKey();
+            CooldownEntry cd = entry.getValue();
+            long remaining = cd.endTime - System.currentTimeMillis();
+            if (remaining > 0) {
+                ui.set("#SkillCdTimer" + slot + ".Text", formatCooldown(remaining));
+                anyActive = true;
+            } else {
+                // Cooldown terminé — repasser en état ACTIF
+                ui.set("#SkillStateBadge" + slot + ".Visible", true);
+                ui.set("#SkillStateBadge" + slot + ".Text", "ACTIVE");
+                ui.set("#SkillStateBadge" + slot + ".Style.TextColor", "#7ed47e");
+                ui.set("#SkillStateBadge" + slot + ".Background", "#1a3a1a");
+                ui.set("#SkillActiveBar" + slot + ".Visible", true);
+                ui.set("#SkillToggleWrap" + slot + ".Background", "#1a3a1a");
+                ui.set("#SkillToggle" + slot + ".Visible", true);
+                ui.set("#SkillToggle" + slot + ".Text", "ON");
+                ui.set("#SkillCdTimer" + slot + ".Visible", false);
+            }
+        }
+        if (!anyActive) {
+            activeCooldowns.clear();
+            hasCooldownActive = false;
+        }
+    }
+
+    private static class CooldownEntry {
+        final long endTime;
+        CooldownEntry(long endTime) { this.endTime = endTime; }
+    }
+
     public static void nextPage() { currentPage++; }
     public static void prevPage() { if (currentPage > 0) currentPage--; }
     public static void switchToPassives() { viewingActives = false; currentPage = 0; }
@@ -227,22 +336,22 @@ public class CompetencesTab {
             if (player == null) return false;
 
             if (playerHasItem(player, catalystId)) {
-                player.sendMessage(com.hypixel.hytale.server.core.Message.raw("§cVous possedez deja cet item !"));
+                player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§cVous possedez deja cet item !"));
                 return false;
             }
 
             if (personalChestHasItem(ref, store, catalystId)) {
-                player.sendMessage(com.hypixel.hytale.server.core.Message.raw("§cCet item est deja dans votre coffre personnel !"));
+                player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§cCet item est deja dans votre coffre personnel !"));
                 return false;
             }
 
             var itemStack = new com.hypixel.hytale.server.core.inventory.ItemStack(catalystId, 1);
             var result = player.getInventory().getHotbar().addItemStack(itemStack);
             if (result.succeeded()) {
-                player.sendMessage(com.hypixel.hytale.server.core.Message.raw("§aItem obtenu : " + catalystId));
+                player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§aItem obtenu : " + catalystId));
                 return true;
             } else {
-                player.sendMessage(com.hypixel.hytale.server.core.Message.raw("§cInventaire plein !"));
+                player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§cInventaire plein !"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -290,7 +399,13 @@ public class CompetencesTab {
             info.type = "Passive";
             info.description = passive.getDescription();
             info.rarity = guessRarity(passive);
-            info.stats = passive.getManaCost() > 0 ? "Mana: " + passive.getManaCost() : "";
+            info.manaCost = passive.getManaCost();
+            info.cooldownMax = passive.getCooldownSeconds();
+            if (passive.getLogic() != null) {
+                info.enduranceCost = passive.getLogic().getEnduranceCostPercent();
+                info.lifeCost = passive.getLogic().getLifeCostPercent();
+            }
+            info.stats = "";
             return info;
         } catch (IllegalArgumentException e) { /* argument invalide */ }
 
@@ -299,9 +414,15 @@ public class CompetencesTab {
         if (opt.isPresent()) {
             SkillModel model = opt.get();
             info.name = model.displayName();
-            info.type = model.catalystId() != null ? "Active" : "Passive";
-            info.description = model.requiredClass() != null ? "Classe: " + model.requiredClass() : "";
-            info.rarity = "";
+            if (model.catalystId() != null) {
+                info.type = "Active";
+                info.rarity = guessRarityFromSkillId(skillId);
+                info.description = "ACTIVE";
+            } else {
+                info.type = "Passive";
+                info.rarity = guessRarityFromSkillId(skillId);
+                info.description = model.requiredClass() != null ? "Classe: " + model.requiredClass() : "";
+            }
             info.stats = buildModelStats(model);
             return info;
         }
@@ -310,6 +431,26 @@ public class CompetencesTab {
         info.name = formatId(skillId);
         info.type = "?";
         return info;
+    }
+
+    private static final Map<String, String> SKILL_RARITY_MAP = Map.ofEntries(
+            Map.entry("BOULE_DE_FEU", "UNCOMMON"),
+            Map.entry("FLAMME_ARDENTE", "UNCOMMON"),
+            Map.entry("SOUFFLE_EMBRASE", "RARE"),
+            Map.entry("PIEGE_INCENDIAIRE", "RARE"),
+            Map.entry("METEORE", "LEGENDAIRE"),
+            Map.entry("NOVA_DE_FEU", "UNIQUE"),
+            Map.entry("INFERNO", "EPIQUE"),
+            Map.entry("SOUFFLE_DU_DRAGON", "LEGENDAIRE"),
+            Map.entry("APOCALYPSE_IGNEE", "DIVIN"),
+            Map.entry("BATON_MAGIQUE", "COMMUN"),
+            Map.entry("TEMPETE_ELEMENTAIRE", "RARE"),
+            Map.entry("LIEN_ENCHANTEMENT", "RARE"),
+            Map.entry("MAIN_DU_TREPAS", "RARE")
+    );
+
+    private static String guessRarityFromSkillId(String skillId) {
+        return SKILL_RARITY_MAP.getOrDefault(skillId.toUpperCase(), "COMMUN");
     }
 
     private static String guessRarity(PassiveSkill passive) {
@@ -361,12 +502,34 @@ public class CompetencesTab {
         return sb.toString();
     }
 
+    private static String formatCooldown(long remainingMs) {
+        long totalSeconds = remainingMs / 1000;
+        long minutes = totalSeconds / 60;
+        long seconds = totalSeconds % 60;
+        if (minutes > 0) {
+            return minutes + "m" + String.format("%02d", seconds) + "s";
+        }
+        return seconds + "s";
+    }
+
+    private static String formatCooldownMax(float seconds) {
+        int min = (int)(seconds / 60);
+        int sec = (int)(seconds % 60);
+        if (min > 0 && sec > 0) return min + "m" + String.format("%02d", sec) + "s";
+        if (min > 0) return min + "m";
+        return sec + "s";
+    }
+
     private static class SkillInfo {
         String name = "?";
         String type = "?";
         String rarity = "";
         String description = "";
         String stats = "";
+        int manaCost = 0;
+        float enduranceCost = 0f;
+        float lifeCost = 0f;
+        float cooldownMax = 0f;
     }
 
     private static class SkillEntry {

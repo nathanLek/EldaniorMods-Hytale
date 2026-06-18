@@ -9,7 +9,7 @@ import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.EntityEventSystem;
-import com.hypixel.hytale.math.vector.Vector3i;
+import org.joml.Vector3i;
 import com.hypixel.hytale.protocol.packets.interface_.NotificationStyle;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.event.events.ecs.UseBlockEvent;
@@ -32,7 +32,7 @@ public class ParcelInteractEvent extends EntityEventSystem<EntityStore, UseBlock
         Player player = store.getComponent(playerRef, Player.getComponentType());
         if (player == null) return;
 
-        if (player.hasPermission(EldaniorLogger.ADMIN_PERMISSION)) return;
+        if (player.getPlayerRef().hasPermission(EldaniorLogger.ADMIN_PERMISSION)) return;
 
         Vector3i target = event.getTargetBlock();
         String world = player.getWorld() != null ? player.getWorld().getName() : "";
@@ -40,7 +40,7 @@ public class ParcelInteractEvent extends EntityEventSystem<EntityStore, UseBlock
         UUID playerUUID = getUUID(store, playerRef);
         if (playerUUID == null) return;
 
-        ParcelData parcel = ParcelManager.getParcelAt(world, target.getX(), target.getY(), target.getZ());
+        ParcelData parcel = ParcelManager.getParcelAt(world, target.x(), target.y(), target.z());
         if (parcel == null) return;
 
         if (!parcel.hasPermission(playerUUID, ParcelPermission.INTERACT)) {

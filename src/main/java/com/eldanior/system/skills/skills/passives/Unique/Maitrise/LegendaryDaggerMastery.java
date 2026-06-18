@@ -15,7 +15,7 @@ public class LegendaryDaggerMastery implements IPassiveCombatSkill {
         if (attackerRef == null) return;
         Player player = store.getComponent(attackerRef, Player.getComponentType());
         if (player == null) return;
-        ItemStack mainHandItem = player.getInventory().getItemInHand();
+        ItemStack mainHandItem = player.getInventory().getActiveHotbarItem();
         if (mainHandItem == null || !mainHandItem.getItemId().toLowerCase().contains("dagger")) return;
         damage.setAmount(damage.getAmount() * 1.25f);
     }

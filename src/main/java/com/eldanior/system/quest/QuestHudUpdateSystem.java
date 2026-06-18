@@ -82,7 +82,7 @@ public class QuestHudUpdateSystem extends EntityTickingSystem<EntityStore> {
         boolean hasParty = PartyManager.hasParty(playerUUID);
         boolean needsHud = active != null || hasMainQuest || hasParty;
 
-        CustomUIHud currentHud = player.getHudManager().getCustomHud();
+        CustomUIHud currentHud = player.getHudManager().getCustomHud("combined_hud");
         PlayerLevelData pData = store.getComponent(entityRef, EldaniorSystem.get().getPlayerLevelDataType());
 
         if (needsHud) {
@@ -94,12 +94,12 @@ public class QuestHudUpdateSystem extends EntityTickingSystem<EntityStore> {
                 // Creer le CombinedHud (remplace tout autre HUD)
                 CombinedHud newHud = new CombinedHud(playerRef, playerUUID);
                 newHud.setCachedData(pData, player);
-                player.getHudManager().setCustomHud(playerRef, newHud);
+                player.getHudManager().addCustomHud(playerRef, newHud);
             }
         } else {
             // Pas besoin de HUD
             if (currentHud instanceof CombinedHud) {
-                player.getHudManager().setCustomHud(playerRef, null);
+                player.getHudManager().removeCustomHud(playerRef, "combined_hud");
             }
         }
     }

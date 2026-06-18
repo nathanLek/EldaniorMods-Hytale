@@ -1,0 +1,15 @@
+{
+  "Duration": 8,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#002266",
+    "EntityTopTint": "#4488ff",
+    "Particles": [{"SystemId": "Effect_Heal"}, {"SystemId": "Water_Dripping"}],
+    "ModelVFXId": "Intangible_Dark"
+  },
+  "DamageCalculatorCooldown": 1,
+  "StatModifiers": {"Health": 5},
+  "OverlapBehavior": "Overwrite",
+  "Infinite": false,
+  "Debuff": false,
+  "StatusEffectIcon": "UI/StatusEffects/Burn.png"
+}

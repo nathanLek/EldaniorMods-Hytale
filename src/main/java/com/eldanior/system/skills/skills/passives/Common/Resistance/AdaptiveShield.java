@@ -1,22 +1,42 @@
 package com.eldanior.system.skills.skills.passives.Common.Resistance;
 
+import com.eldanior.system.Leveling.utils.NotificationHelper;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.skills.skillsInteraction.IPassiveCombatSkill;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.protocol.packets.interface_.NotificationStyle;
 import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 public class AdaptiveShield implements IPassiveCombatSkill {
 
+    private static final float CHANCE = 0.07f;
+    private static final float REDUCTION = 0.85f;
+    private static final float REDUCTION_MASTERED = 0.835f;
+
+    private boolean lastProc = false;
+
     @Override
-    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+    public boolean didProc() { return lastProc; }
+
+    @Override
+    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        lastProc = false;
         if (damage.isCancelled()) return;
 
-        // 10% de chance de réduire un coup de 20%
-        if (Math.random() <= 0.10f) {
-            float currentDamage = damage.getAmount();
-            damage.setAmount(currentDamage * 0.80f);
+        if (Math.random() <= CHANCE) {
+            float mult = mastered ? REDUCTION_MASTERED : REDUCTION;
+            damage.setAmount(damage.getAmount() * mult);
+            lastProc = true;
+
+            if (victimRef != null) {
+                PlayerRef playerRef = store.getComponent(victimRef, PlayerRef.getComponentType());
+                if (playerRef != null) {
+                    NotificationHelper.sendNotification(playerRef, "<color:yellow>Bouclier Adaptatif : -" + (int)((1f - mult) * 100) + "% de dégâts</color>", NotificationStyle.Success);
+                }
+            }
         }
     }
 }

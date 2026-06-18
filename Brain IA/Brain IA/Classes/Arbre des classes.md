@@ -2,6 +2,10 @@
 
 #classes #evolution #arbre
 
+## Classe speciale hors-famille
+
+**DragonAncestral** — classe unique enregistree en dehors de toutes les familles. Initialisee en premier dans `ClassManager.init()` avant les 5 bases. Fichier : `definitions/DragonAncestral.java`. Ne suit pas le systeme de gacha.
+
 ## Guerrier (Warrior)
 ```
 Guerrier (Lvl 180)
@@ -37,7 +41,7 @@ Guerrier (Lvl 180)
 ## Mage
 ```
 Mage (Lvl 180)
-├── 7 Common (Elementaliste, Enchanteur, Necromancien, Invocateur, Guerisseur, Pyromancien, Cryomancien)
+├── 7 Common (Elementaliste, Enchanteur, Necromancien, Invocateur, Guerisseur, Pyromancien, [[Cryomancien]])
 ├── 8 Rare (Archimage, Sorcier, Druide, Illusionniste, Mystique, Thaumaturge, Alchimiste, Sage)
 ├── 5 Epic (Magus, Liche, Oracle, MaitreElementaire, Chronoturge)
 ├── 3 Unique (Archonte, MageVoid, Primordial)
@@ -74,7 +78,7 @@ Marchand (Lvl 180)
 ├── 3 Common (Caravanier, Negociant, Prospecteur) → 1 evol. chacun
 ├── 4 Rare (Banquier, MasterArtisan, RelicHunter, Smuggler) → 1 evol. chacun
 ├── 3 Epic (BlackMarketPrince, GoldBaron, GuildMaster) → 1 evol. chacun
-├── 2 Legendary (UnderworldKing, ProsperityAvatar, WorldForger) → 1 evol. chacun
+├── 3 Legendary (UnderworldKing, ProsperityAvatar, WorldForger) → 1 evol. chacun
 └── 2 Divine (MarchandDivin → DemiMarchand, RoiDuCommerce → DemiCommercant)
 ```
 Les marchands n'ont qu'**1 seule evolution** par classe (pas 3).
@@ -87,7 +91,7 @@ Les marchands n'ont qu'**1 seule evolution** par classe (pas 3).
 | Assassin | 27 | 77 | 104 |
 | Archer | 15 | 43 | 58 |
 | Marchand | 15 | 15 | 30 |
-| **Total** | **111** | **288** | **399 + 5 bases + Novice = 405** |
+| **Total** | **111** | **288** | **399 familles + 5 bases + Novice + DragonAncestral = 406** |
 
 ## Liens
 - [[Systems/Classes]] - Details du systeme

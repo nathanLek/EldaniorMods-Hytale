@@ -29,6 +29,7 @@ public class ConsumableItemMoneyInteraction extends SimpleInteraction {
         if (!firstRun || type != InteractionType.Use) return;
 
         var playerRef = context.getOwningEntity();
+        if (playerRef == null || !playerRef.isValid()) return;
         Player player = playerRef.getStore().getComponent(playerRef, Player.getComponentType());
         PlayerLevelData data = playerRef.getStore().getComponent(playerRef, EldaniorSystem.get().getPlayerLevelDataType());
 

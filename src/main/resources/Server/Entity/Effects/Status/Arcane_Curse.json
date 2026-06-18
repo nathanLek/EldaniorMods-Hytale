@@ -1,0 +1,30 @@
+{
+  "ApplicationEffects": {
+    "EntityBottomTint": "#001a33",
+    "EntityTopTint": "#06ffd8",
+    "ScreenEffect": "ScreenEffects/Snow.png",
+    "WorldSoundEventId": "SFX_Effect_Poison_World",
+    "LocalSoundEventId": "SFX_Effect_Poison_Local",
+    "Particles": [
+      {
+        "SystemId": "Effect_Poison"
+      }
+    ],
+    "HorizontalSpeedMultiplier": 0.4
+  },
+  "DamageCalculatorCooldown": 1,
+  "DamageCalculator": {
+    "BaseDamage": {
+      "Poison": 6
+    }
+  },
+  "DamageEffects": {
+    "WorldSoundEventId": "SFX_Effect_Poison_World",
+    "PlayerSoundEventId": "SFX_Effect_Poison_Local"
+  },
+  "OverlapBehavior": "Extend",
+  "Infinite": false,
+  "Debuff": true,
+  "StatusEffectIcon": "UI/StatusEffects/Poison.png",
+  "Duration": 8
+}

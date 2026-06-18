@@ -1,0 +1,15 @@
+{
+  "Duration": 4,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#443300",
+    "EntityTopTint": "#72745e",
+    "ScreenEffect": "ScreenEffects/Poison.png",
+    "Particles": [{"SystemId": "Block_Break_Dirt"}, {"SystemId": "Ash"}],
+    "MovementEffects": {"DisableAll": true},
+    "KnockbackMultiplier": 0
+  },
+  "OverlapBehavior": "Overwrite",
+  "Infinite": false,
+  "Debuff": true,
+  "StatusEffectIcon": "UI/StatusEffects/Burn.png"
+}

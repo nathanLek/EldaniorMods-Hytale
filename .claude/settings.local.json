@@ -1,6 +1,16 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(./gradlew compileJava)",
+      "Bash(python3 -c 'import json,sys; json.load\\(open\\('\\\\''__TRACKED_VAR__'\\\\''\\)\\); print\\('\\\\''OK  '\\\\''+'\\\\''__TRACKED_VAR__'\\\\''\\)')",
+      "mcp__linear__create_issue_label",
+      "mcp__linear__save_project",
+      "mcp__linear__save_milestone",
+      "mcp__linear__save_issue"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "hytale-docs"
-  ],
-  "enableAllProjectMcpServers": true
+  ]
 }

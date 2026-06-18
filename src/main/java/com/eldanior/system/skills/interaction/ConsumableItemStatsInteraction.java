@@ -31,6 +31,7 @@ public class ConsumableItemStatsInteraction extends SimpleInteraction {
 
         try {
             var playerRef = context.getOwningEntity();
+            if (playerRef == null || !playerRef.isValid()) return;
             Player player = playerRef.getStore().getComponent(playerRef, Player.getComponentType());
             PlayerLevelData data = playerRef.getStore().getComponent(playerRef, EldaniorSystem.get().getPlayerLevelDataType());
 
@@ -46,8 +47,13 @@ public class ConsumableItemStatsInteraction extends SimpleInteraction {
                     .filter(s -> itemId.equals(s.catalystId()))
                     .findFirst();
             if (skillOpt.isPresent()) {
-                if (!data.getUnlockedSkills().contains(skillOpt.get().skillId())) {
-                    player.sendMessage(com.hypixel.hytale.server.core.Message.raw("§cVous n'avez pas appris cette competence !"));
+                boolean hasSkill = data.getUnlockedSkills().contains(skillOpt.get().skillId());
+                if (!hasSkill) {
+                    var classModel = com.eldanior.system.classes.ClassManager.get(data.getPlayerClassId());
+                    hasSkill = classModel != null && classModel.getActiveSkillIds().contains(skillOpt.get().skillId());
+                }
+                if (!hasSkill) {
+                    player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§cVous n'avez pas appris cette competence !"));
                     return;
                 }
             }

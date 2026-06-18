@@ -1,11 +1,8 @@
 package com.eldanior.system.party;
 
 import com.eldanior.system.config.EldaniorLogger;
-import com.hypixel.hytale.protocol.packets.interface_.CustomHud;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
-import com.hypixel.hytale.server.core.universe.Universe;
-import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -130,11 +127,11 @@ public class PartyManager {
 
             // Le CombinedHud sera cree/mis a jour par QuestHudUpdateSystem au prochain tick
             // Force un show pour trigger le refresh
-            var currentHud = hudManager.getCustomHud();
+            var currentHud = hudManager.getCustomHud("combined_hud");
             if (currentHud instanceof com.eldanior.system.hud.CombinedHud) {
                 currentHud.show();
             }
-            System.out.println("[Party] Groupe rejoint pour " + player.getDisplayName() + " (HUD gere par CombinedHud)");
+            System.out.println("[Party] Groupe rejoint pour " + player.getPlayerRef().getUsername() + " (HUD gere par CombinedHud)");
         } catch (Exception e) {
             System.out.println("[Party] Erreur HUD: " + e.getMessage());
             e.printStackTrace();
@@ -154,7 +151,7 @@ public class PartyManager {
 
             // Ne pas supprimer le HUD - le CombinedHud gere tout
             // Il masquera le panel groupe automatiquement au prochain tick
-            var currentHud = hudManager.getCustomHud();
+            var currentHud = hudManager.getCustomHud("combined_hud");
             if (currentHud instanceof com.eldanior.system.hud.CombinedHud) {
                 currentHud.show(); // Force refresh
             }
@@ -163,9 +160,9 @@ public class PartyManager {
 
     public static void removeHudByUUID(UUID playerUUID) {
         try {
-            PlayerRef playerRef = Universe.get().getPlayer(playerUUID);
-            if (playerRef == null) return;
-            playerRef.getPacketHandler().writeNoCache(new CustomHud(true, null));
+            // Le CombinedHud sera supprime automatiquement par QuestHudUpdateSystem au prochain tick
+            // quand hasParty retourne false pour ce joueur
+            System.out.println("[Party] removeHudByUUID: HUD sera nettoyé au prochain tick pour " + playerUUID);
         } catch (Exception e) { EldaniorLogger.error("PartyManager", e); }
     }
 }

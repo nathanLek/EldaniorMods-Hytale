@@ -50,12 +50,12 @@ public class WithdrawCommand extends AbstractPlayerCommand {
         long amount = this.amountArg.get(ctx).longValue();
 
         if (amount <= 0) {
-            player.sendMessage(Message.raw("Le montant doit etre superieur a 0."));
+            player.getPlayerRef().sendMessage(Message.raw("Le montant doit etre superieur a 0."));
             return;
         }
 
         if (data.getMoney() < amount) {
-            player.sendMessage(Message.raw("Solde insuffisant. Vous avez " + data.getMoney() + " Eldan."));
+            player.getPlayerRef().sendMessage(Message.raw("Solde insuffisant. Vous avez " + data.getMoney() + " Eldan."));
             return;
         }
 
@@ -69,7 +69,7 @@ public class WithdrawCommand extends AbstractPlayerCommand {
         }
 
         if (freeSlots < breakdown.size()) {
-            player.sendMessage(Message.raw("<color:red>Inventaire plein. Il vous faut " + breakdown.size()
+            player.getPlayerRef().sendMessage(Message.raw("<color:red>Inventaire plein. Il vous faut " + breakdown.size()
                     + " slots libres (vous en avez " + freeSlots + ").</color>"));
             return;
         }
@@ -83,7 +83,7 @@ public class WithdrawCommand extends AbstractPlayerCommand {
             summary.append("  ").append(entry.getValue()).append("x ").append(getCoinLabel(entry.getKey())).append("\n");
         }
         summary.append("Solde restant : ").append(data.getMoney()).append(" Eldan");
-        player.sendMessage(Message.raw(summary.toString()));
+        player.getPlayerRef().sendMessage(Message.raw(summary.toString()));
     }
 
     private LinkedHashMap<String, Integer> decompose(long amount) {

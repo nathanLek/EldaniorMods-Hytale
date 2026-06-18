@@ -31,6 +31,7 @@ import com.eldanior.system.skills.InteractionManager;
 import com.eldanior.system.skills.SkillManager;
 import com.eldanior.system.skills.system.DetectionSystem;
 import com.eldanior.system.skills.system.FlySystem;
+import com.eldanior.system.skills.system.MovementTrackingSystem;
 import com.eldanior.system.skills.system.MorphFlightSystem;
 import com.eldanior.system.config.UUIDExtractor;
 import com.eldanior.system.config.EldaniorLogger;
@@ -222,8 +223,12 @@ public class EldaniorSystem extends JavaPlugin {
             this.getEntityStoreRegistry().registerSystem(new TreasureChestDamageBlockEvent());
             this.getEntityStoreRegistry().registerSystem(new TreasureChestRangeSystem());
             this.getEntityStoreRegistry().registerSystem(new CraftingRestrictionSystem());
+            this.getEntityStoreRegistry().registerEntityEventType(
+                    com.hypixel.hytale.server.core.event.events.ecs.CraftRecipeEvent.Post.class);
+            this.getEntityStoreRegistry().registerSystem(new CraftingProgressionSystem());
             this.getEntityStoreRegistry().registerSystem(new MasterySystem());
             this.getEntityStoreRegistry().registerSystem(new FlySystem());
+            this.getEntityStoreRegistry().registerSystem(new MovementTrackingSystem());
             this.getEntityStoreRegistry().registerSystem(new MorphFlightSystem());
             this.getEntityStoreRegistry().registerSystem(new PlayerNameplateSystem());
             this.getEntityStoreRegistry().registerSystem(new PartyHudUpdateSystem());

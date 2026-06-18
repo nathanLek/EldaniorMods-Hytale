@@ -29,13 +29,13 @@ public class GiveRelicCommand extends CommandBase {
 
             // Ajout à l'inventaire
             if (player.getInventory().getHotbar().addItemStack(relic).succeeded()) {
-                player.sendMessage(Message.raw("Relique obtenue ! Testez le clic droit.").color(Color.GREEN));
+                player.getPlayerRef().sendMessage(Message.raw("Relique obtenue ! Testez le clic droit.").color(Color.GREEN));
             } else {
-                player.sendMessage(Message.raw("Votre inventaire est plein !").color(Color.RED));
+                player.getPlayerRef().sendMessage(Message.raw("Votre inventaire est plein !").color(Color.RED));
             }
         } catch (Exception e) {
             // Message d'erreur si le JSON est mal chargé ou l'ID incorrect
-            player.sendMessage(Message.raw("ERREUR : Impossible de trouver l'item '" + fullId + "'").color(Color.RED));
+            player.getPlayerRef().sendMessage(Message.raw("ERREUR : Impossible de trouver l'item '" + fullId + "'").color(Color.RED));
             // Affiche l'erreur dans la console pour debug
             e.printStackTrace();
         }

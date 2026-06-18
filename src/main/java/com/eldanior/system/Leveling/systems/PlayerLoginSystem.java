@@ -68,9 +68,18 @@ public class PlayerLoginSystem extends EntityTickingSystem<EntityStore> {
                     " / " + statMap.get(DefaultEntityStatTypes.getMana()).getMax());
 
             StatCalculator.updatePlayerStats(playerRef, deferredStore, finalData);
+
+            // Synchroniser le mana interne avec le vrai max mana du système de stats Hytale
+            float realMaxMana = statMap.get(DefaultEntityStatTypes.getMana()).getMax();
+            int realMax = (int) realMaxMana;
+            LOGGER.atInfo().log("[PlayerLogin] Mana sync: interne=" + finalData.getCurrentMana() + " | realMax=" + realMax + " | getMaxMana()=" + finalData.getMaxMana());
+            finalData.setCurrentMana(realMax);
+            deferredStore.putComponent(playerRef, EldaniorSystem.get().getPlayerLevelDataType(), finalData);
+
             LOGGER.atInfo().log("[PlayerLogin] Mana après update : " +
                     statMap.get(DefaultEntityStatTypes.getMana()).get() +
-                    " / " + statMap.get(DefaultEntityStatTypes.getMana()).getMax());
+                    " / " + statMap.get(DefaultEntityStatTypes.getMana()).getMax() +
+                    " | Mana interne: " + finalData.getCurrentMana());
             LOGGER.atInfo().log("[PlayerLogin] Stats appliquées pour : " + uuid + " Lv." + finalData.getLevel());
         });
 
@@ -153,7 +162,7 @@ public class PlayerLoginSystem extends EntityTickingSystem<EntityStore> {
         com.eldanior.system.quest.QuestManager.checkDailyReset();
 
         // Charger les scores dans le classement persistant
-        String playerName = player.getDisplayName();
+        String playerName = player.getPlayerRef().getUsername();
         ClassementManager.updateMobKills(playerName, data.getTotalMobKills());
         ClassementManager.updatePvPKills(playerName, data.getPlayerKills());
         ClassementManager.updateDuelWins(playerName, data.getDuelWins());

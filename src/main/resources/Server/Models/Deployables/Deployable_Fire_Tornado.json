@@ -1,0 +1,54 @@
+{
+  "Model": "Items/Projectiles/Tornado.blockymodel",
+  "Texture": "Items/Projectiles/Tornado_Texture.png",
+  "EyeHeight": 5,
+  "HitBox": {
+    "Max": { "X": 3, "Y": 8, "Z": 3 },
+    "Min": { "X": -3, "Y": 0, "Z": -3 }
+  },
+  "MinScale": 8,
+  "MaxScale": 8,
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Tornado_Spin.blockyanim",
+          "BlendingDuration": 0,
+          "SoundEventId": "SFX_Tornado",
+          "Speed": 1.5
+        }
+      ]
+    }
+  },
+  "Particles": [
+    { "SystemId": "Fire_Tornado", "TargetNodeName": "", "Scale": 5.0 },
+    { "SystemId": "Battleaxe_Signature_Whirlwind", "TargetNodeName": "", "Scale": 6.0 },
+    { "SystemId": "Fire_Projectile", "TargetNodeName": "4A", "Scale": 6.0 },
+    { "SystemId": "Fire_Projectile", "TargetNodeName": "4B", "Scale": 6.0 },
+    { "SystemId": "Effect_Fire", "TargetNodeName": "3A", "Scale": 5.0 },
+    { "SystemId": "Effect_Fire", "TargetNodeName": "3B", "Scale": 5.0 },
+    { "SystemId": "Torch_Fire", "TargetNodeName": "2A", "Scale": 5.0 },
+    { "SystemId": "Torch_Fire", "TargetNodeName": "2B", "Scale": 5.0 },
+    { "SystemId": "Fire_Projectile", "TargetNodeName": "1A", "Scale": 4.0 },
+    { "SystemId": "Fire_Projectile", "TargetNodeName": "1B", "Scale": 4.0 },
+    { "SystemId": "Fire_Charge_Charging_Constant", "TargetNodeName": "4A", "Scale": 4.0 },
+    { "SystemId": "Fire_ChargeRed", "TargetNodeName": "3A", "Scale": 3.0 },
+    { "SystemId": "Fire_ChargeOrange", "TargetNodeName": "2A", "Scale": 3.0 }
+  ],
+  "Trails": [
+    { "TargetNodeName": "GA", "TrailId": "Small_Default" },
+    { "TargetNodeName": "GB", "TrailId": "Small_Default" },
+    { "TargetNodeName": "1A", "TrailId": "Small_Default" },
+    { "TargetNodeName": "1B", "TrailId": "Small_Default" },
+    { "TargetNodeName": "2A", "TrailId": "Small_Default" },
+    { "TargetNodeName": "2B", "TrailId": "Small_Default" },
+    { "TargetNodeName": "3A", "TrailId": "Small_Default" },
+    { "TargetNodeName": "3B", "TrailId": "Small_Default" },
+    { "TargetNodeName": "4A", "TrailId": "Small_Default" },
+    { "TargetNodeName": "4B", "TrailId": "Small_Default" }
+  ],
+  "Light": {
+    "Color": "#f84",
+    "Radius": 20
+  }
+}

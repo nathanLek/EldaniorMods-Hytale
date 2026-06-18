@@ -118,7 +118,7 @@ public class OpenClassSelectionInteraction extends SimpleInteraction {
         }
 
         // La sauvegarde se fait dans ClassEvolutionIntroScreen.build()
-        boolean isAdmin = player.hasPermission(EldaniorLogger.ADMIN_PERMISSION);
+        boolean isAdmin = player.getPlayerRef().hasPermission(EldaniorLogger.ADMIN_PERMISSION);
         player.getPageManager().openCustomPage(entityRef, store,
                 new ClassEvolutionIntroScreen(playerRef, proposedIds, playerData.getEvolutionRerolls(), isAdmin));
     }

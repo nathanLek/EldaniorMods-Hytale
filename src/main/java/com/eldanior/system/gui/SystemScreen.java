@@ -45,6 +45,11 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             "Profil", "Inventaire", "Competences", "Guilde", "Groupe", "Famille", "Titres", "Quetes", "Classements", "Duel", "Shop", "BlackMarket", "Territoires", "Proprietes", "Echanges", "Wiki"
     };
 
+    // Timer pour refresh automatique des cooldowns dans l'onglet compétences
+    private java.util.concurrent.ScheduledFuture<?> cooldownRefreshTask = null;
+    private Ref<EntityStore> cachedRef = null;
+    private Store<EntityStore> cachedStore = null;
+
     public SystemScreen(@Nonnull PlayerRef playerRef) {
         super(playerRef, CustomPageLifetime.CanDismiss, SystemEventData.CODEC);
     }
@@ -100,7 +105,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         com.eldanior.system.classes.models.ClassModel classModel = com.eldanior.system.classes.ClassManager.get(classType);
         boolean showEchanges = classModel != null && (classModel.getType() == com.eldanior.system.config.configs.ClassType.MERCHANT
             || classModel.getType() == com.eldanior.system.config.configs.ClassType.DRAGON);
-        if (!showEchanges && playerCheck != null && playerCheck.hasPermission(EldaniorLogger.ADMIN_PERMISSION)) showEchanges = true;
+        if (!showEchanges && playerCheck != null && playerCheck.getPlayerRef().hasPermission(EldaniorLogger.ADMIN_PERMISSION)) showEchanges = true;
         if (showEchanges) {
             ui.set("#TabBtnEchanges.Visible", true);
             EchangesTab.populate(ui, ref, store, false);
@@ -204,7 +209,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         }
 
         // Populate black market (visible si PK ou admin)
-        boolean showBM = data.isPK() || (playerCheck != null && playerCheck.hasPermission(EldaniorLogger.ADMIN_PERMISSION));
+        boolean showBM = data.isPK() || (playerCheck != null && playerCheck.getPlayerRef().hasPermission(EldaniorLogger.ADMIN_PERMISSION));
         ui.set("#TabBtnBlackMarket.Visible", showBM);
         if (showBM) {
             BlackMarketTab.populate(ui, ref, store);
@@ -531,16 +536,16 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         if ("terr_family".equals(eventData.action)) {
             com.hypixel.hytale.server.core.entity.entities.Player p = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
             if (p != null) {
-                p.sendMessage(com.hypixel.hytale.server.core.Message.raw("§6Tapez dans le chat :"));
-                p.sendMessage(com.hypixel.hytale.server.core.Message.raw("§f/es parcel assign <familyId> _"));
+                p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§6Tapez dans le chat :"));
+                p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§f/es parcel assign <familyId> _"));
             }
             return;
         }
         if ("terr_guild".equals(eventData.action)) {
             com.hypixel.hytale.server.core.entity.entities.Player p = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
             if (p != null) {
-                p.sendMessage(com.hypixel.hytale.server.core.Message.raw("§6Tapez dans le chat :"));
-                p.sendMessage(com.hypixel.hytale.server.core.Message.raw("§f/es parcel assignguild <guildId> _"));
+                p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§6Tapez dans le chat :"));
+                p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§f/es parcel assignguild <guildId> _"));
             }
             return;
         }
@@ -563,7 +568,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             if (TerritoiresTab.handleCollectTax()) {
                 refreshTerritoiresTab(ref, store);
                 com.hypixel.hytale.server.core.entity.entities.Player p = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
-                if (p != null) p.sendMessage(com.hypixel.hytale.server.core.Message.raw("§a§lImpots collectes !"));
+                if (p != null) p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§a§lImpots collectes !"));
             }
             return;
         }
@@ -571,7 +576,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             if (TerritoiresTab.handleTransferTreasury()) {
                 refreshTerritoiresTab(ref, store);
                 com.hypixel.hytale.server.core.entity.entities.Player p = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
-                if (p != null) p.sendMessage(com.hypixel.hytale.server.core.Message.raw("§a§lTresorerie transferee !"));
+                if (p != null) p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§a§lTresorerie transferee !"));
             }
             return;
         }
@@ -583,7 +588,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         }
         if ("terr_invasion".equals(eventData.action)) {
             com.hypixel.hytale.server.core.entity.entities.Player p = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
-            if (p != null) p.sendMessage(com.hypixel.hytale.server.core.Message.raw("§c§lINVASION LANCEE ! §7(fonctionnalite en cours de developpement)"));
+            if (p != null) p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§c§lINVASION LANCEE ! §7(fonctionnalite en cours de developpement)"));
             return;
         }
 
@@ -655,8 +660,8 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             // Prefill la commande dans le chat
             com.hypixel.hytale.server.core.entity.entities.Player p = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
             if (p != null) {
-                p.sendMessage(com.hypixel.hytale.server.core.Message.raw("§6Tapez dans le chat :"));
-                p.sendMessage(com.hypixel.hytale.server.core.Message.raw("§f/es parcel assign <familyId> _"));
+                p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§6Tapez dans le chat :"));
+                p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§f/es parcel assign <familyId> _"));
             }
             return;
         }
@@ -753,7 +758,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         if ("guild_create".equals(eventData.action)) {
             com.hypixel.hytale.server.core.entity.entities.Player player = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
             if (player != null) {
-                player.sendMessage(Message.raw("§eTapez dans le chat : §f/es guildcreate <nom> <tag>"));
+                player.getPlayerRef().sendMessage(Message.raw("§eTapez dans le chat : §f/es guildcreate <nom> <tag>"));
             }
             return;
         }
@@ -830,14 +835,14 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             if (player == null || pRef == null) return;
                         java.util.UUID uuid = UUIDExtractor.getUUID(pRef);
 
-            var currentHud = player.getHudManager().getCustomHud();
+            var currentHud = player.getHudManager().getCustomHud("combined_hud");
             if (currentHud instanceof com.eldanior.system.hud.CombinedHud) {
                 currentHud.show(); // Refresh
             } else {
                 var data = store.getComponent(ref, com.eldanior.system.EldaniorSystem.get().getPlayerLevelDataType());
                 com.eldanior.system.hud.CombinedHud hud = new com.eldanior.system.hud.CombinedHud(pRef, uuid);
                 hud.setCachedData(data, player);
-                player.getHudManager().setCustomHud(pRef, hud);
+                player.getHudManager().addCustomHud(pRef, hud);
             }
         } catch (Exception e) { e.printStackTrace(); }
     }
@@ -875,7 +880,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             || classModel.getType() == com.eldanior.system.config.configs.ClassType.DRAGON);
         if (!showEchanges) {
             com.hypixel.hytale.server.core.entity.entities.Player pCheck = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
-            if (pCheck != null && pCheck.hasPermission(EldaniorLogger.ADMIN_PERMISSION)) showEchanges = true;
+            if (pCheck != null && pCheck.getPlayerRef().hasPermission(EldaniorLogger.ADMIN_PERMISSION)) showEchanges = true;
         }
         update.set("#TabBtnEchanges.Visible", showEchanges);
 
@@ -901,6 +906,46 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         UICommandBuilder update = new UICommandBuilder();
         CompetencesTab.populate(update, ref, store);
         this.sendUpdate(update);
+        // Démarrer/arrêter le timer auto-refresh selon les cooldowns actifs
+        if (CompetencesTab.hasCooldownActive()) {
+            startCooldownRefresh(ref, store);
+        } else {
+            stopCooldownRefresh();
+        }
+    }
+
+    private void startCooldownRefresh(Ref<EntityStore> ref, Store<EntityStore> store) {
+        this.cachedRef = ref;
+        this.cachedStore = store;
+        if (cooldownRefreshTask != null && !cooldownRefreshTask.isCancelled()) return; // déjà actif
+        cooldownRefreshTask = EldaniorLogger.SCHEDULER.scheduleAtFixedRate(() -> {
+            try {
+                // Update léger : uniquement les timers, sans relire le store
+                UICommandBuilder update = new UICommandBuilder();
+                CompetencesTab.updateCooldownTimers(update);
+                try {
+                    this.sendUpdate(update);
+                } catch (Exception sendEx) {
+                    // Page fermée, arrêter le timer
+                    stopCooldownRefresh();
+                    return;
+                }
+                // Auto-stop quand plus de cooldowns
+                if (!CompetencesTab.hasCooldownActive()) {
+                    stopCooldownRefresh();
+                }
+            } catch (Exception e) {
+                EldaniorLogger.error("CooldownRefresh", e);
+                stopCooldownRefresh();
+            }
+        }, 1, 1, java.util.concurrent.TimeUnit.SECONDS);
+    }
+
+    private void stopCooldownRefresh() {
+        if (cooldownRefreshTask != null) {
+            cooldownRefreshTask.cancel(false);
+            cooldownRefreshTask = null;
+        }
     }
 
     private void refreshGuildeTab(Ref<EntityStore> ref, Store<EntityStore> store) {
@@ -948,6 +993,11 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
     }
 
     private void switchTab(String tabName, Ref<EntityStore> ref, Store<EntityStore> store) {
+        // Arrêter le refresh cooldown si on quitte l'onglet compétences
+        if (!"competences".equals(tabName)) {
+            stopCooldownRefresh();
+        }
+
         UICommandBuilder update = new UICommandBuilder();
 
         // Hide all tabs
@@ -984,6 +1034,12 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         // admin tab removed — /es admin
         if ("competences".equals(tabName)) {
             CompetencesTab.populate(update, ref, store);
+            if (CompetencesTab.hasCooldownActive()) {
+                // Defer le start pour après l'envoi de l'update
+                this.cachedRef = ref;
+                this.cachedStore = store;
+                EldaniorLogger.SCHEDULER.schedule(() -> startCooldownRefresh(ref, store), 500, java.util.concurrent.TimeUnit.MILLISECONDS);
+            }
         }
         if ("guilde".equals(tabName)) {
             GuildeTab.populate(update, ref, store);
@@ -1008,7 +1064,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         }
         if ("echanges".equals(tabName)) {
             com.hypixel.hytale.server.core.entity.entities.Player pc = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
-            boolean adm = pc != null && pc.hasPermission(EldaniorLogger.ADMIN_PERMISSION);
+            boolean adm = pc != null && pc.getPlayerRef().hasPermission(EldaniorLogger.ADMIN_PERMISSION);
             EchangesTab.populate(update, ref, store, adm);
         }
         if ("profil".equals(tabName)) {

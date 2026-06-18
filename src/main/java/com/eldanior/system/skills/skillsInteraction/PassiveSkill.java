@@ -86,7 +86,7 @@ public enum PassiveSkill {
 
     // --- GUERRIER ---
     SWORD_MASTERY("SWORD_MASTERY", "Maîtrise de l'Épée", "Augmente les dégâts infligés avec une épée de 15%.", new SwordMastery()),
-    ATHLETICISM("ATHLETICISM", "Athlétisme", "Réduit la consommation d'endurance lors du sprint.", new Athleticism()),
+    ATHLETICISM("ATHLETICISM", "Athlétisme", "+5% vitesse de sprint.", new Athleticism()),
     MANAWELL("MANAWELL", "Puit de Mana", "Augmente du mana à vie de 10%.", new ManaWell()),
     DETECTIONOFVITALPOINTS("DETECTIONOFVITALPOINTS", "Detection De Point Vital", "+15% fixes ajoutés à ta stat critique", 12, new DetectionOfVitalPoints()),
 
@@ -96,7 +96,7 @@ public enum PassiveSkill {
     SURVIVAL_INSTINCT("SURVIVAL_INSTINCT", "Instinct de Survie", "+10% Conscience des menaces.", new SurvivalInstinct()),
     NIGHT_VISION("NIGHT_VISION", "Vision Nocturne", "+20% Visibilité en basse lumière.", new NightVision()),
     SIXTH_SENSE("SIXTH_SENSE", "Sixième Sens", "+5% Détection de l'invisibilité.", new SixthSense()),
-    TRACKER("TRACKER", "Pisteur", "+25% Visibilité des traces de mobs.", new Tracker()),
+    TRACKER("TRACKER", "Pisteur", "Marque la cible attaquée pendant 15s. Coût: 15 mana. CD: 5min.", 15, 300f, new Tracker()),
 
     // --- ATTACK (coût mana selon la puissance) ---
     KODA_JUDGMENT("KODA_JUDGMENT", "Jugement de Koda", "12% de chance d'exécution au premier coup (Endurance >= 90%). Coût: 25 mana.", 25, new KodaJudgment()),
@@ -106,37 +106,37 @@ public enum PassiveSkill {
     PREDATORY_STRIKE("PREDATORY_STRIKE", "Frappe de Prédateur", "10% de chances d'infliger 15% de dégâts bonus et de voler de la vie. Coût: 5 mana.", 5, new PredatoryStrike()),
     FURY_STRIKE("FURY_STRIKE", "Frappe de Fureur", "12% de chances d'infliger +25% dégâts (30% sur ennemis faibles). Coût: 8 mana.", 8, new FuryStrike()),
     SEISMIC_STRIKE("SEISMIC_STRIKE", "Frappe Sismique", "15% de chances d'infliger +35% dégâts et de créer une onde de choc. Coût: 12 mana.", 12, new SeismicStrike()),
-    PHANTOM_STRIKE("PHANTOM_STRIKE", "Frappe Fantôme", "18% de chances d'infliger +50% de dégâts dévastateurs. Coût: 18 mana.", 18, new PhantomStrike()),
+    PHANTOM_STRIKE("PHANTOM_STRIKE", "Frappe Fantôme", "18% de chances d'infliger +50% de dégâts dévastateurs.", 18, 180f, new PhantomStrike()),
     ANNIHILATOR_STRIKE("ANNIHILATOR_STRIKE", "Frappe de l'Annihilateur", "22% de chances d'infliger +75% de dégâts. Chance de Double Impact. Coût: 25 mana.", 25, new AnnihilatorStrike()),
     JUDGMENT_OF_GENESIS("JUDGMENT_OF_GENESIS", "Décret de la Genèse", "30% de chances de +150% dégâts. Annihile instantanément les faibles. Coût: 40 mana.", 40, new JudgmentOfGenesis()),
 
     // --- ENDURANCE (pas de coût mana) ---
     TIRELESS_BREATH("TIRELESS_BREATH", "Souffle Inépuisable", "+10 Endurance maximale.", new TirelessBreath()),
     THICK_SKIN("THICK_SKIN", "Peau Épaisse", "+5 à la Défense d'Endurance.", new ThickSkin()),
-    SOLID_STANCE("SOLID_STANCE", "Posture Solide", "Réduit les dégâts de 10% si l'Endurance est >= 80%.", new SolidStance()),
+    SOLID_STANCE("SOLID_STANCE", "Posture Solide", "-10% dégâts si Endurance >= 80%. Coût: 20% endurance. CD: 30s.", 0, 30f, new SolidStance()),
     COMBAT_VIGOR("COMBAT_VIGOR", "Vigueur Combative", "20% de chance de restaurer 5 d'Endurance en attaquant.", new CombatVigor()),
     SECOND_WIND("SECOND_WIND", "Second Souffle", "15% de chance de restaurer 25 d'Endurance en subissant un coup (si Endurance < 20%).", new SecondWind()),
 
     // --- MAGIQUE (coût mana pour les offensifs) ---
     AWAKENED_MIND("AWAKENED_MIND", "Esprit Éveillé", "+15 Intelligence.", new AwakenedMind()),
     ARCANE_STRIKE("ARCANE_STRIKE", "Frappe Arcanique", "20% de chance d'infliger 8 dégâts arcaniques supplémentaires. Coût: 10 mana.", 10, new ArcaneStrike()),
-    MANA_BARRIER("MANA_BARRIER", "Barrière de Mana", "Réduit les dégâts subis de 10% si votre Mana est >= 50%.", new ManaBarrier()),
+    MANA_BARRIER("MANA_BARRIER", "Barrière de Mana", "-10% dégâts si Mana >= 50%. Consomme 10% du mana.", 50, new ManaBarrier()),
     OVERFLOWING_POWER("OVERFLOWING_POWER", "Puissance Débordante", "Vos attaques infligent +15% de dégâts si votre Mana est à 100%.", new OverflowingPower()),
-    MYSTIC_VEIL("MYSTIC_VEIL", "Voile Mystique", "15% de chance de réduire les dégâts subis de 25%.", new MysticVeil()),
+    MYSTIC_VEIL("MYSTIC_VEIL", "Voile Mystique", "5% de chance de -25% dégâts reçus. Consomme 20 mana.", 20, new MysticVeil()),
     VOL("VOL", "Vol", "Capacité de vol (1 mana/s).", new Fly()),
 
     // --- REGENERATION (pas de coût mana) ---
     CELLULAR_REGENERATION("CELLULAR_REGENERATION", "Régénération Cellulaire", "15% de chance de restaurer 5% de vos PV Max en subissant une attaque.", new CellularRegeneration()),
     ACTIVE_BREATHING("ACTIVE_BREATHING", "Respiration Active", "20% de chance de restaurer 8 points d'Endurance par attaque.", new ActiveBreathing()),
     SPIRITUAL_SIPHON("SPIRITUAL_SIPHON", "Siphon Spirituel", "20% de chance de restaurer 5 points de Mana par attaque.", new SpiritualSiphon()),
-    MANA_FONT("MANA_FONT", "Source de Mana", "Multiplie la régénération naturelle de Mana par 1.5.", new ManaFont()),
+    MANA_FONT("MANA_FONT", "Source de Mana", "Multiplie la régénération naturelle de Mana par 20%.", new ManaFont()),
     NATURAL_RECOVERY("NATURAL_RECOVERY", "Rétablissement Naturel", "Restaure 1% des PV max si pas touché depuis 5 secondes.", new NaturalRecovery()),
     MANA_HEART("MANA_HEART", "Coeur de Mana", "Multiplie la régénération naturelle de Mana par 10.5.", new ManaHeart()),
 
     // --- AGILITÉ (pas de coût mana) ---
     WIND_STEP("WIND_STEP", "Pas de Vent", "+3% Vitesse de déplacement.", new WindStep()),
     LIGHT_REFLEXES("LIGHT_REFLEXES", "Réflexes Éclairs", "+4% Vitesse d'attaque.", new LightReflexes()),
-    ELDANIOR_SUPPLENESS("ELDANIOR_SUPPLENESS", "Souplesse d'Eldanior", "+10% Hauteur de saut.", new EldaniorSuppleness()),
+    ELDANIOR_SUPPLENESS("ELDANIOR_SUPPLENESS", "Souplesse d'Eldanior", "+10% Hauteur de saut.", new com.eldanior.system.skills.skills.passives.Common.Agilitе́.EldaniorSuppleness()),
     KEEN_SENSES("KEEN_SENSES", "Sens Aiguisés", "+2% Chance de Critique.", new KeenSenses()),
 
     TONOSQUIVE("TONOSQUIVE", "Tono'squive", "Augmente vos chances d'esquive de 30%.", new Tonosquive()),
@@ -174,11 +174,11 @@ public enum PassiveSkill {
     STURDY_BODY("STURDY_BODY","Corps Robuste", "Augmente l'Endurance de 15 points.", new SturdyBody()),
 
     // --- RÉSISTANCE (pas de coût mana) ---
-    TENACITY("TENACITY", "Ténacité", "Sous 30% de vie, réduit les dégâts reçus de 8%.", new Tenacity()),
-    ADAPTIVE_SHIELD("ADAPTIVE_SHIELD", "Bouclier Adaptatif", "10% de chance de réduire un coup de 20%.", new AdaptiveShield()),
-    PAIN_TOLERANCE("PAIN_TOLERANCE", "Tolérance à la Douleur", "Réduit les dégâts de 2 points fixes sur chaque coup.", new PainTolerance()),
-    HARDENING("HARDENING", "Endurcissement", "Réduit tous les dégâts reçus de 4%.", new Hardening()),
-    STEEL_NERVES("STEEL_NERVES", "Nerfs d'Acier", "Les coups au-dessus de 15 dégâts sont réduits de 10%.", new SteelNerves()),
+    TENACITY("TENACITY", "Ténacité", "Sous 30% de vie, -8% dégâts reçus. Maîtrise : seuil 35%, -9%.", new Tenacity()),
+    ADAPTIVE_SHIELD("ADAPTIVE_SHIELD", "Bouclier Adaptatif", "7% de chance de réduire un coup de 15%. Maîtrise : -16.5%.", new AdaptiveShield()),
+    PAIN_TOLERANCE("PAIN_TOLERANCE", "Tolérance à la Douleur", "-2 dégâts fixes sur chaque coup. Maîtrise : -2.5.", new PainTolerance()),
+    HARDENING("HARDENING", "Endurcissement", "-4% de dégâts reçus permanent. Maîtrise : -4.5%.", new Hardening()),
+    STEEL_NERVES("STEEL_NERVES", "Nerfs d'Acier", "Coups >15 dégâts : -10%. Maîtrise : seuil 13, -11%.", new SteelNerves()),
 
     // --- VIE (pas de coût mana) ---
     ROBUST_CONSTITUTION("ROBUST_CONSTITUTION", "Constitution Robuste", "+5 à la Vitalité.", new RobustConstitution()),
@@ -583,19 +583,25 @@ public enum PassiveSkill {
     private final String displayName;
     private final String description;
     private final int manaCost;
+    private final float cooldownSeconds; // Cooldown en secondes après un proc (0 = pas de cooldown)
 
     // LA MAGIE EST ICI : Chaque Enum contient la logique de son propre combat
     private final IPassiveCombatSkill logic;
 
     PassiveSkill(String id, String displayName, String description, IPassiveCombatSkill logic) {
-        this(id, displayName, description, 0, logic);
+        this(id, displayName, description, 0, 0f, logic);
     }
 
     PassiveSkill(String id, String displayName, String description, int manaCost, IPassiveCombatSkill logic) {
+        this(id, displayName, description, manaCost, 0f, logic);
+    }
+
+    PassiveSkill(String id, String displayName, String description, int manaCost, float cooldownSeconds, IPassiveCombatSkill logic) {
         this.id = id;
         this.displayName = displayName;
         this.description = description;
         this.manaCost = manaCost;
+        this.cooldownSeconds = cooldownSeconds;
         this.logic = logic;
     }
 
@@ -613,6 +619,10 @@ public enum PassiveSkill {
 
     public int getManaCost() {
         return manaCost;
+    }
+
+    public float getCooldownSeconds() {
+        return cooldownSeconds;
     }
 
     public IPassiveCombatSkill getLogic() {

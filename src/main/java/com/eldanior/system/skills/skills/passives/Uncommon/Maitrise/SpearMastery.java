@@ -18,7 +18,7 @@ public class SpearMastery implements IPassiveCombatSkill {
         Player player = store.getComponent(attackerRef, Player.getComponentType());
         if (player == null) return;
 
-        ItemStack mainHandItem = player.getInventory().getItemInHand();
+        ItemStack mainHandItem = player.getInventory().getActiveHotbarItem();
         if (mainHandItem == null) return;
         if (!mainHandItem.getItemId().toLowerCase().contains("spear")) return;
 

@@ -7,6 +7,7 @@ import com.eldanior.system.classes.models.ClassModel;
 import com.eldanior.system.Leveling.utils.StatCalculator;
 import com.eldanior.system.config.UUIDExtractor;
 import com.hypixel.hytale.component.ComponentType;
+import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.NameMatching;
@@ -17,6 +18,7 @@ import com.hypixel.hytale.server.core.command.system.basecommands.AbstractAsyncC
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
+import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
@@ -41,30 +43,38 @@ public class SetClassCommand extends AbstractAsyncCommand {
     @Override
     public CompletableFuture<Void> executeAsync(@Nonnull CommandContext ctx) {
 
-        if (!(ctx.sender() instanceof Player sender)) return CompletableFuture.completedFuture(null);
+        Ref<EntityStore> senderEntityRef = ctx.senderAsPlayerRef();
+        if (senderEntityRef == null || !senderEntityRef.isValid()) return CompletableFuture.completedFuture(null);
 
-        if (!sender.hasPermission("eldanior.command.setclass")) {
-            sender.sendMessage(Message.raw("§cErreur : Pas de permission."));
-            return CompletableFuture.completedFuture(null);
-        }
+        Store<EntityStore> senderEntityStore = senderEntityRef.getStore();
+        World world = ((EntityStore) senderEntityStore.getExternalData()).getWorld();
+        if (world == null) return CompletableFuture.completedFuture(null);
 
         String targetName = this.playerArg.get(ctx);
         String classId = this.classIdArg.get(ctx);
 
-        PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
-        if (targetRef == null) {
-            sender.sendMessage(Message.raw("§cErreur : Joueur '" + targetName + "' introuvable."));
-            return CompletableFuture.completedFuture(null);
-        }
-
-        assert sender.getWorld() != null;
         return CompletableFuture.runAsync(() -> {
             try {
-                                UUID targetUUID = UUIDExtractor.getUUID(targetRef);
+                PlayerRef senderRef = senderEntityStore.getComponent(senderEntityRef, PlayerRef.getComponentType());
+                Player sender = senderEntityStore.getComponent(senderEntityRef, Player.getComponentType());
+                if (senderRef == null || sender == null) return;
+
+                if (!senderRef.hasPermission("eldanior.command.setclass")) {
+                    senderRef.sendMessage(Message.raw("§cErreur : Pas de permission."));
+                    return;
+                }
+
+                PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
+                if (targetRef == null) {
+                    senderRef.sendMessage(Message.raw("§cErreur : Joueur '" + targetName + "' introuvable."));
+                    return;
+                }
+
+                UUID targetUUID = UUIDExtractor.getUUID(targetRef);
 
                 PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
                 if (targetPlayer == null) {
-                    sender.sendMessage(Message.raw("§cErreur : Le joueur doit être connecté."));
+                    sender.getPlayerRef().sendMessage(Message.raw("§cErreur : Le joueur doit être connecté."));
                     return;
                 }
 
@@ -79,8 +89,8 @@ public class SetClassCommand extends AbstractAsyncCommand {
 
                 ClassModel model = ClassManager.get(classId.toLowerCase());
                 if (model == null) {
-                    sender.sendMessage(Message.raw("§cErreur : Classe '" + classId + "' inconnue."));
-                    sender.sendMessage(Message.raw("§7IDs réellement chargés : " + ClassManager.getAvailableIds()));
+                    sender.getPlayerRef().sendMessage(Message.raw("§cErreur : Classe '" + classId + "' inconnue."));
+                    sender.getPlayerRef().sendMessage(Message.raw("§7IDs réellement chargés : " + ClassManager.getAvailableIds()));
                     return;
                 }
 
@@ -94,12 +104,12 @@ public class SetClassCommand extends AbstractAsyncCommand {
                 store.putComponent(ref, type, data);
                 StatCalculator.updatePlayerStats(ref, store, data);
 
-                sender.sendMessage(Message.raw("§aSuccès : " + targetName + " est maintenant " + model.getDisplayName() + " (Skills mis à jour)"));
+                sender.getPlayerRef().sendMessage(Message.raw("§aSuccès : " + targetName + " est maintenant " + model.getDisplayName() + " (Skills mis à jour)"));
                 targetPlayer.sendMessage(Message.raw("§eVotre classe a été changée en : §6" + model.getDisplayName()));
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }, sender.getWorld());
+        }, world);
     }
 }

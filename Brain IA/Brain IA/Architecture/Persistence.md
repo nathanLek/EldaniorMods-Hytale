@@ -18,6 +18,10 @@ Donnees **globales**, sauvegardees manuellement dans `eldanior_data/`.
 - `classements.properties` → classements
 - `shop.properties` → boutique
 - `blackmarket.properties` → marche noir
+- `pending_earnings.properties` → gains en attente (joueurs absents, shop earnings)
+- `holograms.properties` → persistence des hologrammes
+- `arena_stats.properties` → stats des arenes (leaderboards)
+- `hierarchies.properties` → hierarchies (Roi, Pape) — corrige, desormais persiste
 - Autosave toutes les **5 minutes**
 
 ### 3. Parcelles (fichier separe)

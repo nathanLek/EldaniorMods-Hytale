@@ -1,0 +1,158 @@
+{
+  "Type": "StatsCondition",
+  "Costs": {
+    "SignatureEnergy": 1
+  },
+  "RunTime": 0.1,
+  "Next": {
+    "Type": "Serial",
+    "Interactions": [
+      {
+        "Type": "ChangeStat",
+        "StatModifiers": {
+          "SignatureEnergy": 0
+        },
+        "Behaviour": "Set"
+      },
+      {
+        "Type": "ApplyEffect",
+        "EffectId": "Nova_Invulnerability"
+      },
+      {
+        "Type": "ApplyEffect",
+        "EffectId": "Nova_Fire_Aura"
+      },
+      {
+        "Type": "Parallel",
+        "Interactions": [
+          {
+            "Interactions": [
+              {
+                "Type": "Selector",
+                "Selector": {
+                  "Id": "AOECircle",
+                  "Range": 12
+                },
+                "Effects": {
+                  "Particles": [
+                    {
+                      "SystemId": "Hedera_Scream",
+                      "TargetEntityPart": "Entity",
+                      "TargetNodeName": "Pelvis",
+                      "Scale": 1.2
+                    },
+                    {
+                      "SystemId": "Explosion_Big",
+                      "TargetEntityPart": "Entity",
+                      "TargetNodeName": "Pelvis",
+                      "Scale": 1.5
+                    },
+                    {
+                      "SystemId": "Effect_Fire",
+                      "TargetEntityPart": "Entity",
+                      "TargetNodeName": "Pelvis",
+                      "Scale": 2.0
+                    }
+                  ]
+                },
+                "HitEntity": {
+                  "Interactions": [
+                    {
+                      "Type": "DamageEntity",
+                      "DamageCalculator": {
+                        "BaseDamage": {
+                          "Fire": 15
+                        }
+                      },
+                      "DamageEffects": {
+                        "Knockback": {
+                          "Force": 8,
+                          "RelativeX": 0,
+                          "RelativeZ": -10,
+                          "VelocityY": 5
+                        },
+                        "WorldParticles": [
+                          { "SystemId": "Impact_Fire" },
+                          { "SystemId": "Effect_Fire" }
+                        ]
+                      }
+                    },
+                    {
+                      "Type": "ApplyEffect",
+                      "Entity": "Target",
+                      "EffectId": "Nova_Burn"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "Interactions": [
+              {
+                "Type": "Simple",
+                "RunTime": 0.8,
+                "Effects": {
+                  "ItemAnimationId": "CastPushCharged",
+                  "WorldSoundEventId": "SFX_Fireball_Death",
+                  "Particles": [
+                    {
+                      "SystemId": "Hedera_Scream",
+                      "TargetEntityPart": "Entity",
+                      "TargetNodeName": "Pelvis",
+                      "Scale": 1.5
+                    },
+                    {
+                      "SystemId": "Explosion_Big",
+                      "TargetEntityPart": "Entity",
+                      "TargetNodeName": "Pelvis",
+                      "Scale": 1.5
+                    },
+                    {
+                      "SystemId": "Effect_Fire",
+                      "TargetEntityPart": "Entity",
+                      "TargetNodeName": "Pelvis",
+                      "Scale": 2.0
+                    },
+                    {
+                      "SystemId": "Mace_Signature_Ground_Hit",
+                      "TargetEntityPart": "Entity",
+                      "TargetNodeName": "Pelvis",
+                      "Scale": 1.5
+                    },
+                    {
+                      "SystemId": "Mace_Signature_Cast_End",
+                      "TargetEntityPart": "Entity",
+                      "TargetNodeName": "Pelvis",
+                      "Scale": 1.2
+                    },
+                    {
+                      "SystemId": "Torch_Fire",
+                      "TargetEntityPart": "Entity",
+                      "TargetNodeName": "Pelvis",
+                      "Scale": 2.0
+                    },
+                    {
+                      "SystemId": "Fire_Charge_Soak1",
+                      "TargetEntityPart": "Entity",
+                      "TargetNodeName": "Pelvis",
+                      "Scale": 1.2
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "Failed": {
+    "Type": "Simple",
+    "RunTime": 0.3,
+    "Effects": {
+      "ItemAnimationId": "Interact",
+      "WorldSoundEventId": "SFX_Bow_No_Ammo"
+    }
+  }
+}

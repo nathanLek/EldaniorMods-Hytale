@@ -1,0 +1,19 @@
+{
+  "Duration": 6,
+  "Debuff": true,
+  "DamageCalculatorCooldown": 1,
+  "DamageCalculator": {
+    "BaseDamage": {
+      "Poison": 6
+    }
+  },
+  "ApplicationEffects": {
+    "EntityBottomTint": "#2d0a2d",
+    "EntityTopTint": "#5a1a5a",
+    "Particles": [
+      { "SystemId": "Potion_Health_Implosion", "Scale": 0.5 }
+    ]
+  },
+  "OverlapBehavior": "Overwrite",
+  "Infinite": false
+}

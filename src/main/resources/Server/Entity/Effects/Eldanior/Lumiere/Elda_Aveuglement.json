@@ -1,0 +1,15 @@
+{
+  "Duration": 4,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#ffffcc",
+    "EntityTopTint": "#ffffff",
+    "ScreenEffect": "ScreenEffects/Fire.png",
+    "Particles": [{"SystemId": "Aura_Sphere"}, {"SystemId": "Blue_Beam"}],
+    "MovementEffects": {"DisableAll": true},
+    "KnockbackMultiplier": 0
+  },
+  "OverlapBehavior": "Overwrite",
+  "Infinite": false,
+  "Debuff": true,
+  "StatusEffectIcon": "UI/StatusEffects/Burn.png"
+}

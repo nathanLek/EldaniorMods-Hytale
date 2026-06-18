@@ -39,7 +39,7 @@ public class TradeScreen extends InteractiveCustomUIPage<TradeScreen.TradeEventD
 
         // Noms des joueurs
         Player me = store.getComponent(ref, Player.getComponentType());
-        String myName = me != null ? me.getDisplayName() : "Moi";
+        String myName = me != null ? me.getPlayerRef().getUsername() : "Moi";
         UUID otherUUID = session.getOther(myUUID);
         PlayerRef otherRef = Universe.get().getPlayer(otherUUID);
         String otherName = otherRef != null ? otherRef.getUsername() : "Autre";
@@ -144,7 +144,7 @@ public class TradeScreen extends InteractiveCustomUIPage<TradeScreen.TradeEventD
             // Les deux ont valide → executer l'echange
             TradeManager.endTrade(session, true);
 
-            player.sendMessage(com.hypixel.hytale.server.core.Message.raw("§a§lEchange effectue avec succes !"));
+            player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§a§lEchange effectue avec succes !"));
 
             UUID otherUUID = session.getOther(myUUID);
             PlayerRef otherRef = Universe.get().getPlayer(otherUUID);
@@ -167,10 +167,10 @@ public class TradeScreen extends InteractiveCustomUIPage<TradeScreen.TradeEventD
         UUID otherUUID = session.getOther(myUUID);
         TradeManager.endTrade(session, false);
 
-        player.sendMessage(com.hypixel.hytale.server.core.Message.raw("§7Echange annule."));
+        player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§7Echange annule."));
         PlayerRef otherRef = Universe.get().getPlayer(otherUUID);
         if (otherRef != null) {
-            otherRef.sendMessage(com.hypixel.hytale.server.core.Message.raw("§c" + player.getDisplayName() + " a annule l'echange."));
+            otherRef.sendMessage(com.hypixel.hytale.server.core.Message.raw("§c" + player.getPlayerRef().getUsername() + " a annule l'echange."));
         }
 
         this.close();

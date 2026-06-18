@@ -4,6 +4,7 @@ import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.config.UUIDExtractor;
 import com.hypixel.hytale.component.ComponentType;
+import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.NameMatching;
@@ -14,6 +15,7 @@ import com.hypixel.hytale.server.core.command.system.basecommands.AbstractAsyncC
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
+import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
@@ -37,103 +39,110 @@ public class NobilityStatusCommand extends AbstractAsyncCommand {
     @Nonnull
     @Override
     public CompletableFuture<Void> executeAsync(@Nonnull CommandContext ctx) {
-        if (!(ctx.sender() instanceof Player sender)) return CompletableFuture.completedFuture(null);
+        Ref<EntityStore> senderEntityRef = ctx.senderAsPlayerRef();
+        if (senderEntityRef == null || !senderEntityRef.isValid()) return CompletableFuture.completedFuture(null);
+
+        Store<EntityStore> senderEntityStore = senderEntityRef.getStore();
+        World world = ((EntityStore) senderEntityStore.getExternalData()).getWorld();
+        if (world == null) return CompletableFuture.completedFuture(null);
 
         String action = this.actionArg.get(ctx);
 
-        switch (action.toLowerCase()) {
-            case "setvice" -> handleSetVice(sender, ctx);
-            case "info" -> handleStatusInfo(sender, ctx);
-            default -> sender.sendMessage(Message.raw("§cUsage : /es nstatus <setvice|info> <joueur>"));
-        }
+        return CompletableFuture.runAsync(() -> {
+            try {
+                PlayerRef senderRef = senderEntityStore.getComponent(senderEntityRef, PlayerRef.getComponentType());
+                Player sender = senderEntityStore.getComponent(senderEntityRef, Player.getComponentType());
+                if (senderRef == null || sender == null) return;
 
-        return CompletableFuture.completedFuture(null);
+                switch (action.toLowerCase()) {
+                    case "setvice" -> handleSetVice(sender, ctx);
+                    case "info" -> handleStatusInfo(sender, ctx);
+                    default -> senderRef.sendMessage(Message.raw("§cUsage : /es nstatus <setvice|info> <joueur>"));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }, world);
     }
 
     private void handleSetVice(Player sender, CommandContext ctx) {
         String targetName = this.playerArg.get(ctx);
 
-        assert sender.getWorld() != null;
-        CompletableFuture.runAsync(() -> {
-            try {
-                var senderRef = sender.getReference();
-                if (senderRef == null) return;
-                Store<EntityStore> senderStore = senderRef.getStore();
-                ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
-                PlayerLevelData senderData = senderStore.getComponent(senderRef, type);
-                if (senderData == null) return;
+        try {
+            var senderRef = sender.getReference();
+            if (senderRef == null) return;
+            Store<EntityStore> senderStore = senderRef.getStore();
+            ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
+            PlayerLevelData senderData = senderStore.getComponent(senderRef, type);
+            if (senderData == null) return;
 
-                if (!senderData.isPatriarch()) {
-                    sender.sendMessage(Message.raw("§cSeul le Patriarche peut nommer un Vice-Patriarche."));
-                    return;
-                }
+            if (!senderData.isPatriarch()) {
+                sender.getPlayerRef().sendMessage(Message.raw("§cSeul le Patriarche peut nommer un Vice-Patriarche."));
+                return;
+            }
 
-                String familyId = senderData.getNobleFamilyId();
+            String familyId = senderData.getNobleFamilyId();
 
-                PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
-                if (targetRef == null) { sender.sendMessage(Message.raw("§cJoueur introuvable.")); return; }
+            PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
+            if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable.")); return; }
 
-                UUID targetUUID = extractUUID(targetRef);
-                PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
-                if (targetPlayer == null) { sender.sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
+            UUID targetUUID = extractUUID(targetRef);
+            PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
+            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
 
-                var ref = targetPlayer.getReference();
-                if (ref == null) return;
-                Store<EntityStore> store = ref.getStore();
-                PlayerLevelData data = store.getComponent(ref, type);
-                if (data == null) return;
+            var ref = targetPlayer.getReference();
+            if (ref == null) return;
+            Store<EntityStore> store = ref.getStore();
+            PlayerLevelData data = store.getComponent(ref, type);
+            if (data == null) return;
 
-                if (!familyId.equals(data.getNobleFamilyId())) {
-                    sender.sendMessage(Message.raw("§c" + targetName + " n'est pas dans votre famille."));
-                    return;
-                }
+            if (!familyId.equals(data.getNobleFamilyId())) {
+                sender.getPlayerRef().sendMessage(Message.raw("§c" + targetName + " n'est pas dans votre famille."));
+                return;
+            }
 
-                PlayerLevelData copy = (PlayerLevelData) data.clone();
-                if (copy == null) return;
-                copy.setStatus("VICE");
-                store.putComponent(ref, type, copy);
+            PlayerLevelData copy = (PlayerLevelData) data.clone();
+            if (copy == null) return;
+            copy.setStatus("VICE");
+            store.putComponent(ref, type, copy);
 
-                sender.sendMessage(Message.raw("§a" + targetName + " est maintenant Vice-Patriarche."));
-                targetPlayer.sendMessage(Message.raw("§eVous etes maintenant Vice-Patriarche !"));
-            } catch (Exception e) { e.printStackTrace(); }
-        }, sender.getWorld());
+            sender.getPlayerRef().sendMessage(Message.raw("§a" + targetName + " est maintenant Vice-Patriarche."));
+            targetPlayer.sendMessage(Message.raw("§eVous etes maintenant Vice-Patriarche !"));
+        } catch (Exception e) { e.printStackTrace(); }
     }
 
     private void handleStatusInfo(Player sender, CommandContext ctx) {
         String targetName = this.playerArg.get(ctx);
 
-        assert sender.getWorld() != null;
-        CompletableFuture.runAsync(() -> {
-            try {
-                PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
-                if (targetRef == null) { sender.sendMessage(Message.raw("§cJoueur introuvable.")); return; }
+        try {
+            PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
+            if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable.")); return; }
 
-                UUID targetUUID = extractUUID(targetRef);
-                PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
-                if (targetPlayer == null) { sender.sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
+            UUID targetUUID = extractUUID(targetRef);
+            PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
+            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
 
-                var ref = targetPlayer.getReference();
-                if (ref == null) return;
-                Store<EntityStore> store = ref.getStore();
-                ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
-                PlayerLevelData data = store.getComponent(ref, type);
-                if (data == null) { sender.sendMessage(Message.raw("§cAucune donnee.")); return; }
+            var ref = targetPlayer.getReference();
+            if (ref == null) return;
+            Store<EntityStore> store = ref.getStore();
+            ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
+            PlayerLevelData data = store.getComponent(ref, type);
+            if (data == null) { sender.getPlayerRef().sendMessage(Message.raw("§cAucune donnee.")); return; }
 
-                String status = data.getStatus();
-                String statusDisplay = "§7Aucun";
-                if (status != null && !status.isEmpty()) {
-                    statusDisplay = switch (status) {
-                        case "PATRIARCH" -> "§6Patriarche";
-                        case "VICE" -> "§eVice-Patriarche";
-                        case "MEMBER" -> "§7Membre";
-                        default -> "§7" + status;
-                    };
-                }
+            String status = data.getStatus();
+            String statusDisplay = "§7Aucun";
+            if (status != null && !status.isEmpty()) {
+                statusDisplay = switch (status) {
+                    case "PATRIARCH" -> "§6Patriarche";
+                    case "VICE" -> "§eVice-Patriarche";
+                    case "MEMBER" -> "§7Membre";
+                    default -> "§7" + status;
+                };
+            }
 
-                sender.sendMessage(Message.raw("§6=== Status de " + targetName + " ==="));
-                sender.sendMessage(Message.raw("§7Status : " + statusDisplay));
-            } catch (Exception e) { e.printStackTrace(); }
-        }, sender.getWorld());
+            sender.getPlayerRef().sendMessage(Message.raw("§6=== Status de " + targetName + " ==="));
+            sender.getPlayerRef().sendMessage(Message.raw("§7Status : " + statusDisplay));
+        } catch (Exception e) { e.printStackTrace(); }
     }
 
     private UUID extractUUID(PlayerRef playerRef) throws Exception {

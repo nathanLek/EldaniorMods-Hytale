@@ -90,7 +90,7 @@ public class ShopTab {
         PlayerLevelData dataCheck = store.getComponent(ref, typeCheck);
         if (dataCheck != null && dataCheck.isPK()) {
             Player p = store.getComponent(ref, Player.getComponentType());
-            if (p != null) p.sendMessage(Message.raw("§cLes criminels n'ont pas acces au Marche ! Utilisez le Marche Noir."));
+            if (p != null) p.getPlayerRef().sendMessage(Message.raw("§cLes criminels n'ont pas acces au Marche ! Utilisez le Marche Noir."));
             return false;
         }
 
@@ -99,7 +99,7 @@ public class ShopTab {
         PlayerLevelData data = store.getComponent(ref, type);
         if (data == null || data.getMoney() < listing.getPrice()) {
             Player player = store.getComponent(ref, Player.getComponentType());
-            if (player != null) player.sendMessage(Message.raw("§cPas assez d'or ! (besoin de " + listing.getPrice() + ")"));
+            if (player != null) player.getPlayerRef().sendMessage(Message.raw("§cPas assez d'or ! (besoin de " + listing.getPrice() + ")"));
             return false;
         }
 
@@ -109,7 +109,7 @@ public class ShopTab {
 
         var result = buyer.getInventory().getHotbar().addItemStack(listing.getItem());
         if (!result.succeeded()) {
-            buyer.sendMessage(Message.raw("§cInventaire plein !"));
+            buyer.getPlayerRef().sendMessage(Message.raw("§cInventaire plein !"));
             return false;
         }
 
@@ -128,7 +128,7 @@ public class ShopTab {
                     if (sData != null) {
                         sData.addMoney(listing.getPrice());
                         sStore.putComponent(sRef, type, sData);
-                        sellerRef.sendMessage(Message.raw("§a" + buyer.getDisplayName() + " a achete votre objet pour " + listing.getPrice() + " Or !"));
+                        sellerRef.sendMessage(Message.raw("§a" + buyer.getPlayerRef().getUsername() + " a achete votre objet pour " + listing.getPrice() + " Or !"));
                     }
                 }
             } catch (Exception e) { EldaniorLogger.error("ShopTab", e); }
@@ -140,7 +140,7 @@ public class ShopTab {
         // Remove listing
         ShopManager.removeListing(idx);
 
-        buyer.sendMessage(Message.raw("§aObjet achete pour " + listing.getPrice() + " Or !"));
+        buyer.getPlayerRef().sendMessage(Message.raw("§aObjet achete pour " + listing.getPrice() + " Or !"));
         return true;
     }
 
@@ -157,18 +157,18 @@ public class ShopTab {
         if (myUUID == null || me == null) return false;
 
         boolean isOwner = myUUID.equals(listing.getSellerUUID());
-        boolean isAdmin = me.hasPermission(EldaniorLogger.ADMIN_PERMISSION);
+        boolean isAdmin = me.getPlayerRef().hasPermission(EldaniorLogger.ADMIN_PERMISSION);
         if (!isOwner && !isAdmin) return false;
 
         if (isOwner) {
             // Owner: retourne l'item directement
             var result = me.getInventory().getHotbar().addItemStack(listing.getItem());
             if (!result.succeeded()) {
-                me.sendMessage(Message.raw("§cInventaire plein !"));
+                me.getPlayerRef().sendMessage(Message.raw("§cInventaire plein !"));
                 return false;
             }
             ShopManager.removeListing(idx);
-            me.sendMessage(Message.raw("§7Annonce retiree, objet recupere."));
+            me.getPlayerRef().sendMessage(Message.raw("§7Annonce retiree, objet recupere."));
         } else {
             // Admin: retourne l'item au vendeur (en ligne ou pending)
             PlayerRef sellerRef = com.hypixel.hytale.server.core.universe.Universe.get().getPlayer(listing.getSellerUUID());
@@ -189,7 +189,7 @@ public class ShopTab {
             // Note: si vendeur deconnecte, l'item est perdu (pas de pending items system)
             // On pourrait ajouter un systeme de pending items plus tard
             ShopManager.removeListing(idx);
-            me.sendMessage(Message.raw("§eAnnonce de " + listing.getSellerName() + " retiree (admin)."));
+            me.getPlayerRef().sendMessage(Message.raw("§eAnnonce de " + listing.getSellerName() + " retiree (admin)."));
         }
         return true;
     }

@@ -37,6 +37,7 @@ public class QuestNpcInteraction extends SimpleInteraction {
         if (!firstRun || type != InteractionType.Use) return;
 
         var entityRef = context.getOwningEntity();
+        if (entityRef == null || !entityRef.isValid()) return;
         var store = entityRef.getStore();
 
         Player player = store.getComponent(entityRef, Player.getComponentType());

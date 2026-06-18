@@ -52,6 +52,20 @@ Quand le joueur ferme la fenetre sans choisir, les 3 propositions sont sauvegard
 - `classes/definitions/` - Definitions des classes par famille
 - `classes/definitions/*/400/` - Evolutions Tier 2
 
+## Details techniques de ClassManager
+
+### isEvolution(String id)
+Indique si un ID de classe est une evolution (Tier 1 ou Tier 2) plutot qu'une classe de base. Construit un `Set<String> evolutionIds` a partir de `model.getNextClassId()` apres `init()`. Calcule une seule fois.
+
+### Fallback "novice" dans get()
+Si un ID est introuvable dans le registre, `ClassManager.get()` retourne la classe "novice" par defaut et logue une erreur (evite les NullPointerExceptions).
+
+### Classe speciale DragonAncestral
+Enregistree en premier dans `init()`, avant les 5 classes de base. Classe hors-famille, sans gacha. Voir [[Classes/Arbre des classes]].
+
+### activeSkillIds dans ClassModel
+`ClassModel` dispose d'un constructeur surcharge acceptant une `List<String> activeSkillIds` pour lier des sorts actifs a une classe specifique (IDs correspondant aux entrees du spellbook JSON).
+
 ## Liens
 - [[Systems/Skills]] - Competences passives par classe
 - [[Systems/Consommables]] - Parchemin de Relance

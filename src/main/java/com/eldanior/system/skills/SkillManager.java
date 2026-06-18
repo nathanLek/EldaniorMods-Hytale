@@ -1842,6 +1842,78 @@ public class SkillManager {
                 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
                 List.of(), List.of("DAGGER_MASTERY", "SHADOW_BLADE_MASTERY", "ASSASSIN_BLADE_MASTERY", "LEGENDARY_DAGGER_MASTERY", "DIVIN_DAGGER_MASTERY")
         ));
+
+        // --- COMPÉTENCES ACTIVES (SORTS) ---
+        register("skill_page_boule_de_feu", new SkillModel(
+                "BOULE_DE_FEU", "Spell_BouleDeFeu", "Boule de Feu", "mage, dragon",
+                100, 0.0f, 1.0f, 5.0f, 30.0f, 0.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_flamme_ardente", new SkillModel(
+                "FLAMME_ARDENTE", "Spell_FlammeArdente", "Flamme Ardente", "mage, dragon",
+                150, 0.0f, 1.0f, 3.0f, 30.0f, 3.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_souffle_embrase", new SkillModel(
+                "SOUFFLE_EMBRASE", "Spell_SouffleEmbrase", "Souffle Embrasé", "mage, dragon",
+                300, 0.0f, 1.2f, 8.0f, 5.0f, 0.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_piege_incendiaire", new SkillModel(
+                "PIEGE_INCENDIAIRE", "Spell_PiegeIncendiaire", "Piège Incendiaire", "mage, dragon",
+                300, 0.0f, 1.0f, 2.0f, 15.0f, 5.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_meteore", new SkillModel(
+                "METEORE", "Spell_Meteore", "Météore", "mage, dragon",
+                2500, 0.0f, 1.5f, 20.0f, 30.0f, 0.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_nova_de_feu", new SkillModel(
+                "NOVA_DE_FEU", "Spell_NovaDeFeu", "Nova de Feu", "mage, dragon",
+                1200, 0.0f, 1.5f, 15.0f, 5.0f, 0.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_inferno", new SkillModel(
+                "INFERNO", "Spell_Inferno", "Inferno", "mage, dragon",
+                600, 0.0f, 1.5f, 10.0f, 30.0f, 5.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_souffle_du_dragon", new SkillModel(
+                "SOUFFLE_DU_DRAGON", "Spell_SouffleDuDragon", "Souffle du Dragon", "mage, dragon",
+                2500, 0.0f, 2.0f, 25.0f, 8.0f, 0.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_apocalypse_ignee", new SkillModel(
+                "APOCALYPSE_IGNEE", "Spell_ApocalypseIgnee", "Apocalypse Ignée", "mage, dragon",
+                4000, 0.0f, 2.5f, 50.0f, 30.0f, 0.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_baton_magique", new SkillModel(
+                "BATON_MAGIQUE", "Weapon_Staff_Student", "Bâton Magique", "mage",
+                50, 0.0f, 0.0f, 15.0f, 0.0f, 0.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_tempete_elementaire", new SkillModel(
+                "TEMPETE_ELEMENTAIRE", "Spell_TempeteElementaire", "Tempête Élémentaire", "mage, elementaliste",
+                300, 0.0f, 1.5f, 25.0f, 10.0f, 5.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_lien_enchantement", new SkillModel(
+                "LIEN_ENCHANTEMENT", "Spell_LienEnchantement", "Lien d'Enchantement", "mage, enchanteur",
+                200, 0.0f, 1.2f, 0.0f, 0.0f, 10.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_main_du_trepas", new SkillModel(
+                "MAIN_DU_TREPAS", "Spell_MainDuTrepas", "Main du Trépas", "mage, necromancien",
+                250, 0.0f, 1.5f, 20.0f, 30.0f, 6.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_eclat_de_glace", new SkillModel(
+                "ECLAT_DE_GLACE", "Spell_EclatDeGlace", "Éclat de Glace", "mage, cryomancien",
+                80, 0.0f, 1.0f, 18.0f, 30.0f, 6.0f,
+                List.of(), List.of()
+        ));
     }
 
     private static void register(String itemId, SkillModel skill) {

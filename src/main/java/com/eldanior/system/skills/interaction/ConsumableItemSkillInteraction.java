@@ -32,6 +32,7 @@ public class ConsumableItemSkillInteraction extends SimpleInteraction {
         if (!firstRun || type != InteractionType.Use) return;
 
         var playerRef = context.getOwningEntity();
+        if (playerRef == null || !playerRef.isValid()) return;
         Player player = playerRef.getStore().getComponent(playerRef, Player.getComponentType());
         PlayerLevelData data = playerRef.getStore().getComponent(playerRef, EldaniorSystem.get().getPlayerLevelDataType());
 
@@ -54,7 +55,7 @@ public class ConsumableItemSkillInteraction extends SimpleInteraction {
             if (requiredClass != null && !requiredClass.equalsIgnoreCase("all")) {
                 String reqLower = requiredClass.toLowerCase();
                 if (!reqLower.contains(playerClass) && !reqLower.contains(parentClass)) {
-                    player.sendMessage(Message.raw("Votre classe n'est pas apte à déchiffrer ce savoir !")
+                    player.getPlayerRef().sendMessage(Message.raw("Votre classe n'est pas apte à déchiffrer ce savoir !")
                             .color(Color.ORANGE));
                     return;
                 }
@@ -65,7 +66,7 @@ public class ConsumableItemSkillInteraction extends SimpleInteraction {
 
             // 1. Possède-t-il DÉJÀ exactement cette compétence ?
             if (playerSkills.contains(newSkillId)) {
-                player.sendMessage(Message.raw("Vous maîtrisez déjà ce savoir !").color(Color.RED));
+                player.getPlayerRef().sendMessage(Message.raw("Vous maîtrisez déjà ce savoir !").color(Color.RED));
                 return;
             }
 
@@ -74,7 +75,7 @@ public class ConsumableItemSkillInteraction extends SimpleInteraction {
             if (skill.levelUp() != null) {
                 for (String higherSkill : skill.levelUp()) {
                     if (playerSkills.contains(higherSkill)) {
-                        player.sendMessage(Message.raw("Vous maîtrisez déjà une version supérieure de ce savoir !")
+                        player.getPlayerRef().sendMessage(Message.raw("Vous maîtrisez déjà une version supérieure de ce savoir !")
                                 .color(Color.RED));
                         return;
                     }
@@ -101,13 +102,13 @@ public class ConsumableItemSkillInteraction extends SimpleInteraction {
                 data.removeSkill(skillToEvolve);
                 data.learnSkill(newSkillId);
 
-                player.sendMessage(Message.raw("Évolution de " + skillToEvolve + " ! Le savoir a muté en : " + skill.displayName())
+                player.getPlayerRef().sendMessage(Message.raw("Évolution de " + skillToEvolve + " ! Le savoir a muté en : " + skill.displayName())
                         .color(Color.MAGENTA).bold(true));
             } else {
                 // C'EST UN NOUVEL APPRENTISSAGE (Classique)
                 data.learnSkill(newSkillId);
 
-                player.sendMessage(Message.raw("Savoir acquis : " + skill.displayName())
+                player.getPlayerRef().sendMessage(Message.raw("Savoir acquis : " + skill.displayName())
                         .color(Color.CYAN).bold(true));
             }
 

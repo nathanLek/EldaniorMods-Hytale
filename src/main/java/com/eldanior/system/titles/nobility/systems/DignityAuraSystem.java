@@ -10,7 +10,7 @@ import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
-import com.hypixel.hytale.math.vector.Vector3d;
+import org.joml.Vector3d;
 import com.hypixel.hytale.protocol.MovementSettings;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.entity.entities.player.movement.MovementManager;
@@ -185,7 +185,7 @@ public class DignityAuraSystem extends EntityTickingSystem<EntityStore> {
         // L'aura ne fonctionne que si elle est activée
         if (selfDignity >= 5 && auraEnabled) {
             Inventory inv = player.getInventory();
-            ItemStack heldItem = (inv != null) ? inv.getItemInHand() : null;
+            ItemStack heldItem = (inv != null) ? inv.getActiveHotbarItem() : null;
 
             if (heldItem != null && !heldItem.isEmpty() && isWeapon(heldItem.getItemId().toLowerCase())) {
                 setEmitterActive(selfUUID);

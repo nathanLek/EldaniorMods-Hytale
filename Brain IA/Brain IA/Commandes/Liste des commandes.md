@@ -96,6 +96,20 @@
 | `/es parcel assign <familyId> _` | Assigner famille |
 | `/es parcel assignguild <guildId> _` | Assigner guilde |
 
+### Hologrammes
+| Commande | Description |
+|----------|-------------|
+| `/es hologram create <nom>` | Creer un hologramme a la position actuelle |
+| `/es hologram delete <nom>` | Supprimer un hologramme |
+| `/es hologram list` | Lister les hologrammes |
+| `/es hologram preset <preset>` | Appliquer un preset narratif (Welcome, Classes, Guilde...) |
+
+### Coffres au tresor
+| Commande | Description |
+|----------|-------------|
+| `/es treasure delete <id>` | Supprimer un coffre au tresor |
+| `/es treasure config` | Configurer les coffres au tresor |
+
 ### Interface
 | Commande | Description |
 |----------|-------------|

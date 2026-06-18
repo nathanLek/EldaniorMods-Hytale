@@ -1,0 +1,22 @@
+{
+  "Model": "Items/Projectiles/Projectile.blockymodel",
+  "Texture": "Items/Projectiles/Projectile_default.png",
+  "HitBox": {
+    "Max": { "X": 1.5, "Y": 1.5, "Z": 1.5 },
+    "Min": { "X": -1.5, "Y": -1.5, "Z": -1.5 }
+  },
+  "MinScale": 0.01,
+  "MaxScale": 0.01,
+  "Particles": [
+    { "SystemId": "Beam_Lightning2", "TargetNodeName": "", "Scale": 2.0 },
+    { "SystemId": "Test_Beam", "TargetNodeName": "", "Scale": 2.0 },
+    { "SystemId": "Flamethrower", "TargetNodeName": "", "Scale": 3.0 },
+    { "SystemId": "Effect_Fire", "TargetNodeName": "", "Scale": 2.0 },
+    { "SystemId": "Fire_Projectile", "TargetNodeName": "", "Scale": 2.5 },
+    { "SystemId": "Torch_Fire", "TargetNodeName": "", "Scale": 2.0 }
+  ],
+  "Light": {
+    "Color": "#fa4",
+    "Radius": 20
+  }
+}

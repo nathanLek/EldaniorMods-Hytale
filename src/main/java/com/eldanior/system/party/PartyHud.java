@@ -22,7 +22,7 @@ public class PartyHud extends CustomUIHud {
     private final UUID ownerUUID;
 
     public PartyHud(PlayerRef playerRef, UUID ownerUUID) {
-        super(playerRef);
+        super(playerRef, "party_hud");
         this.ownerUUID = ownerUUID;
     }
 

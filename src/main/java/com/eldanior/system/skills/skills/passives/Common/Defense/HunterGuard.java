@@ -2,25 +2,53 @@ package com.eldanior.system.skills.skills.passives.Common.Defense;
 
 import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.config.Player.PlayerLevelData;
+import com.eldanior.system.config.configs.StatConfig;
 import com.eldanior.system.skills.skillsInteraction.IPassiveCombatSkill;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
+import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
+import com.hypixel.hytale.server.core.modules.entitystats.EntityStatsModule;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 public class HunterGuard implements IPassiveCombatSkill {
 
+    private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
+    private static final float REDUCTION = 0.90f;
+    private static final float REDUCTION_MASTERED = 0.89f;
+    private static final float ENDURANCE_COST = 0.15f;
+
+    private boolean lastProc = false;
+
     @Override
-    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+    public boolean didProc() { return lastProc; }
+
+    @Override
+    public float getEnduranceCostPercent() { return ENDURANCE_COST; }
+
+    @Override
+    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        lastProc = false;
         if (damage.isCancelled() || attackerRef == null || !attackerRef.isValid()) return;
 
-        // On vérifie si l'attaquant possède le composant "Mob" (donc ce n'est pas un joueur)
         boolean isMob = store.getComponent(attackerRef, EldaniorSystem.get().getMobLevelDataType()) != null;
+        if (!isMob) return;
 
-        if (isMob) {
-            // -10% de dégâts contre les monstres
-            float newDamage = damage.getAmount() * 0.90f;
-            damage.setAmount(newDamage);
+        EntityStatMap statMap = store.getComponent(victimRef, EntityStatsModule.get().getEntityStatMapComponentType());
+        if (statMap != null) {
+            var staminaStat = statMap.get(StatConfig.ENDURANCE.getStatId());
+            if (staminaStat != null) {
+                float currentStamina = staminaStat.get();
+                float cost = currentStamina * ENDURANCE_COST;
+                LOGGER.atInfo().log("[HunterGuard] Stamina: " + currentStamina + " | Cost: " + cost);
+                if (currentStamina > cost) {
+                    statMap.setStatValue(StatConfig.ENDURANCE.getStatId(), currentStamina - cost);
+                    float mult = mastered ? REDUCTION_MASTERED : REDUCTION;
+                    damage.setAmount(damage.getAmount() * mult);
+                    lastProc = true;
+                }
+            }
         }
     }
 }

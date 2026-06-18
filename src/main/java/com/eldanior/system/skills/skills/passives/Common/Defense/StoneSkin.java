@@ -1,51 +1,29 @@
 package com.eldanior.system.skills.skills.passives.Common.Defense;
 
-import com.eldanior.system.Leveling.utils.NotificationHelper;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.skills.skillsInteraction.IPassiveCombatSkill;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.logger.HytaleLogger;
-import com.hypixel.hytale.math.vector.Vector3d;
-import com.hypixel.hytale.protocol.packets.interface_.NotificationStyle;
-import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
 import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
-import com.hypixel.hytale.server.core.universe.PlayerRef;
-import com.hypixel.hytale.server.core.universe.world.ParticleUtil;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 public class StoneSkin implements IPassiveCombatSkill {
 
-    private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
+    private static final float REDUCTION = 0.95f;
+    private static final float REDUCTION_MASTERED = 0.945f;
+
+    private boolean lastProc = false;
 
     @Override
-    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+    public boolean didProc() { return lastProc; }
 
+    @Override
+    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        lastProc = false;
         if (damage.isCancelled()) return;
 
-        float currentDamage = damage.getAmount();
-
-        // 🌟 CORRECTION : 0.95f pour 5% de réduction !
-        float newDamage = currentDamage * 0.95f;
-        damage.setAmount(newDamage);
-
-        // 🌟 CORRECTION : Le log affiche STONE_SKIN
-        LOGGER.atInfo().log("[Skill] STONE_SKIN activé ! Dégâts réduits de " + currentDamage + " à " + newDamage);
-
-        if (victimRef != null) {
-            PlayerRef playerRef = store.getComponent(victimRef, PlayerRef.getComponentType());
-
-            if (playerRef != null) {
-                // 🌟 CORRECTION : Le texte affiche Peau de Pierre
-                NotificationHelper.sendNotification(playerRef, "<color:gray>Peau de Pierre : -5% de dégâts</color>", NotificationStyle.Success);
-            }
-
-            TransformComponent transform = store.getComponent(victimRef, TransformComponent.getComponentType());
-
-            if (transform != null) {
-                Vector3d pos = transform.getPosition().add(0, 1.0, 0);
-                ParticleUtil.spawnParticleEffect("Shield_Block", pos, store);
-            }
-        }
+        lastProc = true;
+        float mult = mastered ? REDUCTION_MASTERED : REDUCTION;
+        damage.setAmount(damage.getAmount() * mult);
     }
 }

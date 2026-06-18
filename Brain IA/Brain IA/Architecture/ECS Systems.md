@@ -32,6 +32,20 @@ Execute a chaque tick du serveur pour les entites filtrees.
 | MasterySystem | Bonus maitrise d'armes | Chaque tick |
 | CraftingRestrictionSystem | Restrictions craft par classe | Sur craft |
 | ParcelRangeSystem | Detection entree/sortie zone | ~20 ticks |
+| MovementTrackingSystem | Tracking mouvement joueurs (skills/system/) | Chaque tick |
+| TitleCheckSystem | Verifie deblocage titres (titles/systems/) | ~20 ticks (polling) |
+| FarmRegenSystem | Regeneration des fermes (territory/systems/) | Periodique |
+| TreasureChestRangeSystem | Detection proximite coffres (TreasureChest/systems/) | Chaque tick |
+| TreasureContainerMonitoringSystem | Surveillance containers coffres (TreasureChest/systems/) | Chaque tick |
+
+### GlobalEventSystem (evenements globaux)
+Repond a un evenement global enregistre via `registerGlobal`.
+
+| Systeme | Evenement | Role |
+|---------|-----------|------|
+| ParcelMapSystem | StartWorldEvent | Chargement carte des parcelles au demarrage (territory/systems/) |
+| CraftingProgressionSystem | PlayerCraftEvent | Progression crafting (Leveling/systems/) |
+| TreasureStartWorldEventListener | StartWorldEvent | Initialisation des coffres au demarrage (TreasureChest/events/) |
 
 ### EntityEventSystem (evenementiel)
 Repond a un evenement specifique.
@@ -66,6 +80,11 @@ this.getEntityStoreRegistry().registerSystem(new MonSysteme());
 |-----------|---------|
 | TreasureChestTemplate | Templates des coffres au tresor |
 | TreasureChestConfig | Config des coffres (cooldown, particules) |
+
+## Notes importantes
+
+### LuckSystem — classe morte (a surveiller)
+`LuckSystem` existe en fichier Java (`Leveling/systems/LuckSystem.java`) mais n'est **pas enregistre** dans `EldaniorSystem.setup()`. Classe morte ou en attente d'integration. Ne pas supprimer sans verification.
 
 ## Fichiers cles
 - `EldaniorSystem.java` - Point d'entree, enregistrement de tout

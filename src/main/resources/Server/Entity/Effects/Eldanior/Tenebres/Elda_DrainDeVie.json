@@ -1,0 +1,16 @@
+{
+  "Duration": 6,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#110022",
+    "EntityTopTint": "#6600cc",
+    "Particles": [{"SystemId": "Eye_Void_Eye"}, {"SystemId": "GreenOrbTrail"}],
+    "ModelVFXId": "Intangible_Dark"
+  },
+  "DamageCalculatorCooldown": 1,
+  "DamageCalculator": {"BaseDamage": {"Poison": 4}},
+  "OverlapBehavior": "Overwrite",
+  "Infinite": false,
+  "Debuff": true,
+  "StatusEffectIcon": "UI/StatusEffects/Poison.png",
+  "DeathMessageKey": "server.general.deathCause.poison"
+}

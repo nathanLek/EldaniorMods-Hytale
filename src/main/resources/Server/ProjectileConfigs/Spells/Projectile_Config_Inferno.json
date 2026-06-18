@@ -1,0 +1,99 @@
+{
+  "Model": "Projectile",
+  "Physics": {
+    "Type": "Standard",
+    "Gravity": 3,
+    "TerminalVelocityAir": 50,
+    "TerminalVelocityWater": 20,
+    "SticksVertically": true,
+    "Bounciness": 0
+  },
+  "LaunchForce": 40,
+  "Interactions": {
+    "ProjectileHit": {
+      "Cooldown": { "Cooldown": 0 },
+      "Interactions": [
+        {
+          "Type": "ApplyEffect",
+          "Entity": "Target",
+          "EffectId": "Lava_Burn"
+        },
+        {
+          "Type": "SpawnDeployableAtHitLocation",
+          "Config": {
+            "Type": "Aoe",
+            "Shape": "Cylinder",
+            "Id": "Fire_Tornado",
+            "LiveDuration": 5,
+            "Model": "Deployable_Fire_Tornado",
+            "ModelScale": 1.0,
+            "StartRadius": 1,
+            "EndRadius": 5,
+            "Height": 8,
+            "RadiusChangeTime": 0.5,
+            "DamageInterval": 0.5,
+            "DamageAmount": 0,
+            "ApplyEffects": [ "Lava_Burn" ],
+            "Invulnerable": true,
+            "AttackOwner": false,
+            "AttackTeam": false,
+            "DeploySoundEventId": "SFX_Staff_Flame_Trap_Deploy",
+            "DespawnSoundEventId": "SFX_Staff_Flame_Trap_Despawn",
+            "SpawnParticles": [
+              { "SystemId": "Explosion_Big", "TargetEntityPart": "Entity", "Scale": 2.0 },
+              { "SystemId": "Effect_Fire", "TargetEntityPart": "Entity", "Scale": 3.0 }
+            ],
+            "DespawnParticles": [
+              { "SystemId": "Explosion_Medium", "TargetEntityPart": "Entity" },
+              { "SystemId": "Effect_Fire", "TargetEntityPart": "Entity", "Scale": 2.0 }
+            ]
+          }
+        },
+        {
+          "Type": "RemoveEntity",
+          "Entity": "User"
+        }
+      ]
+    },
+    "ProjectileMiss": {
+      "Cooldown": { "Cooldown": 0 },
+      "Interactions": [
+        {
+          "Type": "SpawnDeployableAtHitLocation",
+          "Config": {
+            "Type": "Aoe",
+            "Shape": "Cylinder",
+            "Id": "Fire_Tornado",
+            "LiveDuration": 5,
+            "Model": "Deployable_Fire_Tornado",
+            "ModelScale": 1.0,
+            "StartRadius": 1,
+            "EndRadius": 5,
+            "Height": 8,
+            "RadiusChangeTime": 0.5,
+            "DamageInterval": 0.5,
+            "DamageAmount": 0,
+            "ApplyEffects": [ "Lava_Burn" ],
+            "Invulnerable": true,
+            "AttackOwner": false,
+            "AttackTeam": false,
+            "DeploySoundEventId": "SFX_Staff_Flame_Trap_Deploy",
+            "DespawnSoundEventId": "SFX_Staff_Flame_Trap_Despawn",
+            "SpawnParticles": [
+              { "SystemId": "Explosion_Big", "TargetEntityPart": "Entity", "Scale": 2.0 },
+              { "SystemId": "Effect_Fire", "TargetEntityPart": "Entity", "Scale": 3.0 }
+            ],
+            "DespawnParticles": [
+              { "SystemId": "Explosion_Medium", "TargetEntityPart": "Entity" },
+              { "SystemId": "Effect_Fire", "TargetEntityPart": "Entity", "Scale": 2.0 }
+            ]
+          }
+        },
+        {
+          "Type": "RemoveEntity",
+          "Entity": "User"
+        }
+      ]
+    }
+  }
+}

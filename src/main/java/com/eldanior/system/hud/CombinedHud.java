@@ -21,7 +21,7 @@ public class CombinedHud extends CustomUIHud {
     private boolean hasParty;
 
     public CombinedHud(PlayerRef playerRef, UUID ownerUUID) {
-        super(playerRef);
+        super(playerRef, "combined_hud");
         this.ownerUUID = ownerUUID;
         this.questHud = new QuestHud(playerRef, ownerUUID);
     }

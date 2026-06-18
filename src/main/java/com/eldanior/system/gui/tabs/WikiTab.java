@@ -14,17 +14,23 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 public class WikiTab {
 
     private static int currentPage = 0;
-    private static final int TOTAL_PAGES = 5;
+    private static final int TOTAL_PAGES = 13;
+    private static final int ADMIN_PAGE = 12;
+
+    private static final String[] PAGE_NAMES = {
+        "General", "Leveling", "Groupe", "Duel", "Echange", "Guilde", "Famille",
+        "Noblesse", "Territoires", "Classes", "Competences", "Titres", "Admin"
+    };
 
     public static void populate(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store) {
         boolean isAdmin = false;
         try {
             Player player = store.getComponent(ref, Player.getComponentType());
-            isAdmin = player != null && player.hasPermission(EldaniorLogger.ADMIN_PERMISSION);
+            isAdmin = player != null && player.getPlayerRef().hasPermission(EldaniorLogger.ADMIN_PERMISSION);
         } catch (Exception ignored) {}
 
         // Navigation
-        ui.set("#WikiPageInfo.Text", "Page " + (currentPage + 1) + "/" + TOTAL_PAGES);
+        ui.set("#WikiPageInfo.Text", PAGE_NAMES[currentPage] + " (" + (currentPage + 1) + "/" + TOTAL_PAGES + ")");
         ui.set("#WikiBtnPrev.Visible", currentPage > 0);
         ui.set("#WikiBtnNext.Visible", currentPage < TOTAL_PAGES - 1);
 
@@ -34,11 +40,11 @@ public class WikiTab {
         }
 
         // Afficher/cacher la page admin
-        ui.set("#WikiPage4.Visible", currentPage == 4 && isAdmin);
-        if (currentPage == 4 && !isAdmin) {
+        ui.set("#WikiPage" + ADMIN_PAGE + ".Visible", currentPage == ADMIN_PAGE && isAdmin);
+        if (currentPage == ADMIN_PAGE && !isAdmin) {
             currentPage = 0;
             ui.set("#WikiPage0.Visible", true);
-            ui.set("#WikiPageInfo.Text", "Page 1/" + TOTAL_PAGES);
+            ui.set("#WikiPageInfo.Text", PAGE_NAMES[0] + " (1/" + TOTAL_PAGES + ")");
         }
     }
 

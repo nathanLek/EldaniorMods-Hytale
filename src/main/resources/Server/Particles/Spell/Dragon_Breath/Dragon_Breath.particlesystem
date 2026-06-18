@@ -1,0 +1,52 @@
+{
+  "Spawners": [
+    {
+      "SpawnerId": "Flamethrower_Core",
+      "PositionOffset": { "Z": -1.4 },
+      "LifeSpanOverride": { "Min": 0.3, "Max": 0.4 }
+    },
+    {
+      "SpawnerId": "Flamethrower_CoreThin",
+      "PositionOffset": { "Z": 0.5 },
+      "LifeSpanOverride": { "Min": 0.3, "Max": 0.4 }
+    },
+    {
+      "SpawnerId": "Flamethrower_End",
+      "PositionOffset": { "Z": -2.0 },
+      "LifeSpanOverride": { "Min": 0.2, "Max": 0.3 }
+    },
+    {
+      "SpawnerId": "Flamethrower_Beam_Flat",
+      "PositionOffset": { "Z": -0.3 },
+      "LifeSpanOverride": { "Min": 0.3, "Max": 0.4 }
+    },
+    {
+      "SpawnerId": "Flamethrower_Overlay_Flat",
+      "PositionOffset": { "Z": -0.3 },
+      "LifeSpanOverride": { "Min": 0.3, "Max": 0.4 }
+    },
+    {
+      "SpawnerId": "Flamethrower_Sparks",
+      "FixedRotation": false,
+      "LifeSpanOverride": { "Min": 0.2, "Max": 0.3 }
+    },
+    {
+      "SpawnerId": "Flamethrower_Start2",
+      "PositionOffset": { "Z": 1.8 },
+      "LifeSpanOverride": { "Min": 0.2, "Max": 0.3 }
+    },
+    {
+      "SpawnerId": "Flamethrower_Start",
+      "PositionOffset": { "Z": 2.0 },
+      "LifeSpanOverride": { "Min": 0.2, "Max": 0.3 }
+    },
+    {
+      "SpawnerId": "Flamethrower_Glow_Start",
+      "PositionOffset": { "Z": 2.0 },
+      "LifeSpanOverride": { "Min": 0.2, "Max": 0.3 }
+    }
+  ],
+  "CullDistance": 100.0,
+  "IsImportant": true,
+  "LifeSpan": 0.5
+}

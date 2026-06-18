@@ -13,23 +13,29 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 public class ActiveBreathing implements IPassiveCombatSkill {
 
+    private static final float CHANCE = 0.20f;
+    private static final float RESTORE = 8.0f;
+    private static final float RESTORE_MASTERED = 8.8f;
+
+    private boolean lastProc = false;
+
     @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+    public boolean didProc() { return lastProc; }
+
+    @Override
+    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        lastProc = false;
         if (damage.isCancelled() || attackerRef == null) return;
 
-        // 20% de chance de restaurer de l'endurance en frappant
-        if (Math.random() <= 0.20f) {
+        if (Math.random() <= CHANCE) {
             EntityStatMap statMap = store.getComponent(attackerRef, EntityStatsModule.get().getEntityStatMapComponentType());
             if (statMap == null) return;
 
             EntityStatValue enduranceStat = statMap.get(StatConfig.ENDURANCE.getStatId());
             if (enduranceStat != null) {
-                float maxEndurance = enduranceStat.getMax();
-                float currentEndurance = enduranceStat.get();
-
-                // Restaure 8 points fixes
-                float newEndurance = Math.min(maxEndurance, currentEndurance + 8.0f);
-                statMap.setStatValue(StatConfig.ENDURANCE.getStatId(), newEndurance);
+                float restore = mastered ? RESTORE_MASTERED : RESTORE;
+                statMap.setStatValue(StatConfig.ENDURANCE.getStatId(), Math.min(enduranceStat.getMax(), enduranceStat.get() + restore));
+                lastProc = true;
             }
         }
     }

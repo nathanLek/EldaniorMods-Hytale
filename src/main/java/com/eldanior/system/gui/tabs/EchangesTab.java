@@ -7,7 +7,7 @@ import com.eldanior.system.config.UUIDExtractor;
 import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.math.vector.Vector3d;
+import org.joml.Vector3d;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
@@ -103,7 +103,7 @@ public class EchangesTab {
             if (sent) {
                 com.hypixel.hytale.server.core.entity.entities.Player player = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
                 if (player != null) {
-                    player.sendMessage(com.hypixel.hytale.server.core.Message.raw("§aDemande d'echange envoyee a " + targetName));
+                    player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§aDemande d'echange envoyee a " + targetName));
                 }
                 targetRef.sendMessage(com.hypixel.hytale.server.core.Message.raw("§e" + myPRef.getUsername() + " veut echanger avec vous !"));
                 targetRef.sendMessage(com.hypixel.hytale.server.core.Message.raw("§7Tapez §f/es trade accept §7ou §f/es trade decline"));
@@ -139,7 +139,7 @@ public class EchangesTab {
             if (player != null) {
                 player.getPageManager().openCustomPage(ref, store,
                         new com.eldanior.system.trade.TradeScreen(myPRef, myUUID, session));
-                player.sendMessage(com.hypixel.hytale.server.core.Message.raw("§a§lEchange force avec " + targetName + " !"));
+                player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§a§lEchange force avec " + targetName + " !"));
             }
 
             // Ouvrir la fenetre pour la cible

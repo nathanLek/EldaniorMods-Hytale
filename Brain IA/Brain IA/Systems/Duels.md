@@ -13,10 +13,16 @@
 ## Protection
 - `DuelProtectionSystem` empeche la mort pendant un duel
 - Si HP <= 5% max → remet a 1 HP et fin du duel
+- Gere aussi les **Arenes** (via `ArenaManager`), pas uniquement les duels 1v1
+
+## XP et economie
+- Le **perdant** perd **10% de son XP** total
+- Le **gagnant** recoit cette XP perdue
+- En fin de duel, les deux joueurs sont heal complet (**HP + Mana** via `healFull()`)
 
 ## Stats
 - Victoires / Defaites
-- Streak / Meilleur Streak
+- Streak / Meilleur Streak (note : le streak n'est pas implemente dans DuelManager, seuls `addDuelWin`/`addDuelLoss` existent)
 - Historique recent
 
 ## Commandes

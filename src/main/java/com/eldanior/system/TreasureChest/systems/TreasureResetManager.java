@@ -62,7 +62,7 @@ public class TreasureResetManager {
                         if (loot != null) {
                             resetAction.accept(loot);
                             // Sauvegarde impérative
-                            storage.save(uuid, holder).join();
+                            storage.save(uuid, holder, true).join();
                         }
                     }
                 }).exceptionally(ex -> {

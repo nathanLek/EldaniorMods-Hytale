@@ -135,7 +135,7 @@ public class AdminTab {
 
         // Verification permission admin
         Player adminCheck = store.getComponent(ref, Player.getComponentType());
-        if (adminCheck == null || !adminCheck.hasPermission(EldaniorLogger.ADMIN_PERMISSION)) {
+        if (adminCheck == null || !adminCheck.getPlayerRef().hasPermission(EldaniorLogger.ADMIN_PERMISSION)) {
             return false;
         }
         if (pendingCommand.contains("<") || pendingCommand.contains(">")) return false; // Non rempli
@@ -155,7 +155,7 @@ public class AdminTab {
                         String target = parts[2];
                         String titleId = parts[3];
                         PlayerRef targetRef = Universe.get().getPlayerByUsername(target, com.hypixel.hytale.server.core.NameMatching.EXACT_IGNORE_CASE);
-                        if (targetRef == null) { player.sendMessage(Message.raw("§cJoueur introuvable: " + target)); return false; }
+                        if (targetRef == null) { player.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable: " + target)); return false; }
 
                         return executeOnTarget(targetRef, (tRef, tStore, data) -> {
                             if ("grant".equals(action)) { data.addTitle(titleId); targetRef.sendMessage(Message.raw("§aTitre accorde: " + titleId)); }
@@ -169,7 +169,7 @@ public class AdminTab {
                         String target = parts[1];
                         String familyId = parts[2];
                         PlayerRef targetRef = Universe.get().getPlayerByUsername(target, com.hypixel.hytale.server.core.NameMatching.EXACT_IGNORE_CASE);
-                        if (targetRef == null) { player.sendMessage(Message.raw("§cJoueur introuvable: " + target)); return false; }
+                        if (targetRef == null) { player.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable: " + target)); return false; }
 
                         return executeOnTarget(targetRef, (tRef, tStore, data) -> {
                             data.setNobleFamilyId(familyId);
@@ -207,24 +207,24 @@ public class AdminTab {
                 }
                 case "guildcreate" -> {
                     if (parts.length >= 3) {
-                        player.sendMessage(Message.raw("§eTapez dans le chat: /es guildcreate " + parts[1] + " " + parts[2]));
+                        player.getPlayerRef().sendMessage(Message.raw("§eTapez dans le chat: /es guildcreate " + parts[1] + " " + parts[2]));
                     }
                 }
                 case "guilddisband" -> {
-                    player.sendMessage(Message.raw("§eTapez dans le chat: /es guilddisband"));
+                    player.getPlayerRef().sendMessage(Message.raw("§eTapez dans le chat: /es guilddisband"));
                 }
                 case "bankGive" -> {
                     if (parts.length >= 2) {
-                        player.sendMessage(Message.raw("§eTapez dans le chat: /es bankGive " + parts[1]));
+                        player.getPlayerRef().sendMessage(Message.raw("§eTapez dans le chat: /es bankGive " + parts[1]));
                     }
                 }
                 default -> {
-                    player.sendMessage(Message.raw("§cCommande inconnue: " + parts[0]));
+                    player.getPlayerRef().sendMessage(Message.raw("§cCommande inconnue: " + parts[0]));
                     return false;
                 }
             }
         } catch (Exception e) {
-            player.sendMessage(Message.raw("§cErreur: " + e.getMessage()));
+            player.getPlayerRef().sendMessage(Message.raw("§cErreur: " + e.getMessage()));
             return false;
         }
         return true;

@@ -1,0 +1,17 @@
+{
+  "Duration": 8,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#a0d4ff",
+    "EntityTopTint": "#80ecff",
+    "ScreenEffect": "ScreenEffects/Snow.png",
+    "Particles": [{"SystemId": "Effect_Snow"}, {"SystemId": "Ice_Blast"}],
+    "ModelVFXId": "Freeze",
+    "HorizontalSpeedMultiplier": 0.7
+  },
+  "DamageCalculatorCooldown": 2,
+  "DamageCalculator": {"BaseDamage": {"Ice": 3}},
+  "OverlapBehavior": "Overwrite",
+  "Infinite": false,
+  "Debuff": true,
+  "StatusEffectIcon": "UI/StatusEffects/Burn.png"
+}

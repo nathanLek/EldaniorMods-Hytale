@@ -1,6 +1,5 @@
 package com.eldanior.system.Leveling.utils;
 
-import com.hypixel.hytale.protocol.MaybeBool;
 import com.hypixel.hytale.server.core.Message;
 
 import java.awt.*;
@@ -80,9 +79,9 @@ public class TinyMsg {
     private static Message createStyledMessage(String content, StyleState state) {
         Message msg = Message.raw(content);
         if (state.color != null) msg = msg.color(state.color);
-        if (state.bold) msg.getFormattedMessage().bold = MaybeBool.True;
-        if (state.italic) msg.getFormattedMessage().italic = MaybeBool.True;
-        if (state.underlined) msg.getFormattedMessage().underlined = MaybeBool.True;
+        if (state.bold) msg.getFormattedMessage().bold = true;
+        if (state.italic) msg.getFormattedMessage().italic = true;
+        if (state.underlined) msg.getFormattedMessage().underlined = true;
         return msg;
     }
 

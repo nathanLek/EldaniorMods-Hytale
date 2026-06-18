@@ -6,7 +6,7 @@ import com.eldanior.system.skills.skillsInteraction.IPassiveCombatSkill;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.logger.HytaleLogger;
-import com.hypixel.hytale.math.vector.Vector3d;
+import org.joml.Vector3d;
 import com.hypixel.hytale.protocol.packets.interface_.NotificationStyle;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
 import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
@@ -19,25 +19,35 @@ public class PhantomStrike implements IPassiveCombatSkill {
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
     private static final float CHANCE = 0.18f; // 18% de chance
     private static final float BONUS_MULTIPLIER = 1.50f; // +50% dégâts
+    private static final float MASTERY_BONUS = 0.10f; // +10% supplémentaire si maîtrisé
+
+    private boolean lastProc = false;
 
     @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+    public boolean didProc() { return lastProc; }
+
+    @Override
+    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        lastProc = false;
 
         if (Math.random() < CHANCE) {
+            lastProc = true;
+            float multiplier = mastered ? BONUS_MULTIPLIER + MASTERY_BONUS : BONUS_MULTIPLIER;
             float currentDamage = damage.getAmount();
-            float newDamage = currentDamage * BONUS_MULTIPLIER;
+            float newDamage = currentDamage * multiplier;
 
-            // On applique les dégâts augmentés
             damage.setAmount(newDamage);
 
-            LOGGER.atInfo().log("[Skill] PHANTOM_STRIKE : " + currentDamage + " -> " + newDamage + " (UNIQUE)");
+            String masteryTag = mastered ? " ★" : "";
+            int percentBonus = mastered ? 60 : 50;
+            LOGGER.atInfo().log("[Skill] PHANTOM_STRIKE : " + currentDamage + " -> " + newDamage + " (UNIQUE" + masteryTag + ")");
 
             if (attackerRef != null) {
                 PlayerRef playerRef = store.getComponent(attackerRef, PlayerRef.getComponentType());
 
                 if (playerRef != null) {
                     NotificationHelper.sendNotification(playerRef,
-                            "<color:#b300ff><b>✧ FRAPPE FANTÔME : +50% DÉGÂTS ✧</b></color>",
+                            "<color:#b300ff><b>FRAPPE FANTÔME : +" + percentBonus + "% DÉGÂTS" + masteryTag + "</b></color>",
                             NotificationStyle.Success);
                 }
             }

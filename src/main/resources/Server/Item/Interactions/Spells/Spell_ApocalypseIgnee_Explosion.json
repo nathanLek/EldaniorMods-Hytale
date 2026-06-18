@@ -1,0 +1,19 @@
+{
+  "Parent": "Bomb_Explode",
+  "Config": {
+    "DamageBlocks": false,
+    "EntityDamage": 50.0,
+    "EntityDamageRadius": 20,
+    "EntityDamageFalloff": 0.3
+  },
+  "Effects": {
+    "WorldSoundEventId": "SFX_Fireball_Death",
+    "CameraEffect": "Mace_Explode",
+    "Particles": [
+      { "SystemId": "Explosion_Big", "TargetEntityPart": "Entity", "Scale": 6.0 },
+      { "SystemId": "Hedera_Scream", "TargetEntityPart": "Entity", "Scale": 6.0 },
+      { "SystemId": "Effect_Fire", "TargetEntityPart": "Entity", "Scale": 6.0 },
+      { "SystemId": "Mace_Signature_Ground_Hit", "TargetEntityPart": "Entity", "Scale": 6.0 }
+    ]
+  }
+}

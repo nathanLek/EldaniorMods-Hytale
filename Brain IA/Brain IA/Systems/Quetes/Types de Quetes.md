@@ -17,7 +17,7 @@
 
 ### Journalieres
 - **Repetables** avec cooldown de 24h
-- **5 quetes aleatoires** selectionnees chaque jour parmi 102+
+- **10 quetes aleatoires** (5 normales + 5 PK, selectionnees separement) chaque jour parmi 102+
 - Reset a minuit (getDayOfYear change)
 
 ## 6 Types de quetes journalieres
@@ -38,6 +38,20 @@
 | MEDIUM | ×1.0 |
 | HARD | ×1.3 |
 | EXTREME | ×1.8 |
+
+## Structure des dossiers de definitions
+```
+quest/definitions/
+├── principal/          (quetes principales)
+├── secondaire/         (quetes secondaires + info)
+└── journaliere/        (quetes journalieres)
+    ├── chasse/
+    ├── massacre/
+    ├── collection/
+    ├── exploration/
+    ├── duel/
+    └── pk/             (sous-series : Assassin 1-10, Pillard 1-5, Terreur 1-8, DuelSombre)
+```
 
 ## Fichiers cles
 - `quest/QuestType.java` — enum des 6 types

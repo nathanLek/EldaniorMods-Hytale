@@ -1,0 +1,30 @@
+{
+  "Id": "skill_page_aura_hivernale",
+  "TranslationProperties": {
+    "Name": "Parchemin : Aura Hivernale",
+    "Description": "Un parchemin ancien contenant les secrets de l'invocation d'une aura hivernale. Utilisez-le pour apprendre ce sort."
+  },
+  "Icon": "Icons/ItemsGenerated/Recipe_Page.png",
+  "Quality": "Epic",
+  "Categories": [
+    "Eldanior_System.Parchemin"
+  ],
+  "Tags": {
+    "Type": [
+      "Item",
+      "Consumable"
+    ]
+  },
+  "MaxStack": 1,
+  "PlayerAnimationsId": "Item",
+  "Model": "Items/Consumables/Recipes/Recipe.blockymodel",
+  "Texture": "Items/Consumables/Recipes/Recipe_Texture.png",
+  "IconProperties": {
+    "Scale": 0.76,
+    "Rotation": [ 135, 135, 0 ],
+    "Translation": [ -1, 5 ]
+  },
+  "Interactions": {
+    "Use": "Root_ConsumableItemSkillInteraction"
+  }
+}

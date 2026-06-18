@@ -1,0 +1,27 @@
+{
+  "Duration": 5,
+  "Debuff": false,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#ff2200",
+    "EntityTopTint": "#ffaa00",
+    "ScreenEffect": "ScreenEffects/Fire.png",
+    "WorldSoundEventId": "SFX_Staff_Flame_Trap_Loop",
+    "LocalSoundEventId": "SFX_Effect_Burn_Local",
+    "Particles": [
+      {
+        "SystemId": "Effect_Fire"
+      },
+      {
+        "SystemId": "Torch_Fire"
+      },
+      {
+        "SystemId": "Fire_Charge_Charging_Constant"
+      },
+      {
+        "SystemId": "Explosion_Medium"
+      }
+    ],
+    "ModelVFXId": "Burn",
+    "HorizontalSpeedMultiplier": 0.6
+  }
+}

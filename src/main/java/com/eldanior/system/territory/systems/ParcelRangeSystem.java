@@ -10,7 +10,7 @@ import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
-import com.hypixel.hytale.math.vector.Vector3d;
+import org.joml.Vector3d;
 import com.hypixel.hytale.protocol.packets.interface_.NotificationStyle;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
@@ -270,7 +270,7 @@ public class ParcelRangeSystem extends EntityTickingSystem<EntityStore> {
                         com.hypixel.hytale.protocol.packets.interface_.NotificationStyle.Success);
 
                 // Premier joueur à découvrir ?
-                boolean isFirstDiscoverer = parcel.setFirstDiscoverer(player.getDisplayName(), playerUUID.toString());
+                boolean isFirstDiscoverer = parcel.setFirstDiscoverer(player.getPlayerRef().getUsername(), playerUUID.toString());
                 if (isFirstDiscoverer) {
                     ParcelManager.save();
                     NotificationHelper.showEventTitle(pRef,

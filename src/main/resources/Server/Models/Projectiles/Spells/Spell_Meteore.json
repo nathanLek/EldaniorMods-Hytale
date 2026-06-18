@@ -1,0 +1,71 @@
+{
+  "Model": "Items/Projectiles/Fireball.blockymodel",
+  "Texture": "Items/Projectiles/Fireball.png",
+  "HitBox": {
+    "Max": { "X": 3.0, "Y": 3.0, "Z": 3.0 },
+    "Min": { "X": -3.0, "Y": -3.0, "Z": -3.0 }
+  },
+  "MinScale": 20.0,
+  "MaxScale": 25.0,
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "Items/Animations/Spin_Roll/Spin_Roll_Left.blockyanim",
+          "BlendingDuration": 0
+        }
+      ]
+    }
+  },
+  "Particles": [
+    {
+      "SystemId": "Fire_Projectile",
+      "TargetNodeName": "",
+      "Scale": 20.0
+    },
+    {
+      "SystemId": "Effect_Fire",
+      "TargetNodeName": "",
+      "Scale": 15.0
+    },
+    {
+      "SystemId": "Torch_Fire",
+      "TargetNodeName": "",
+      "Scale": 18.0
+    },
+    {
+      "SystemId": "Fire_ChargeRed",
+      "TargetNodeName": "",
+      "Scale": 10.0
+    },
+    {
+      "SystemId": "Explosion_Big",
+      "TargetNodeName": "",
+      "Scale": 10.0
+    },
+    {
+      "SystemId": "Fire_Charge_Charging_Constant",
+      "TargetNodeName": "",
+      "Scale": 12.0
+    }
+  ],
+  "Trails": [
+    {
+      "TargetNodeName": "Origin_Item",
+      "TrailId": "Small_Default"
+    },
+    {
+      "TargetNodeName": "Origin_Item",
+      "TrailId": "Small_Default",
+      "RotationOffset": {
+        "Yaw": 90,
+        "Pitch": 0,
+        "Roll": 0
+      }
+    }
+  ],
+  "Light": {
+    "Color": "#fa4",
+    "Radius": 50
+  }
+}

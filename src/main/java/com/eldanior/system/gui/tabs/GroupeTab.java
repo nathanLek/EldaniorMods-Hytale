@@ -96,7 +96,7 @@ public class GroupeTab {
         if (uuid == null || player == null) return false;
         if (PartyManager.hasParty(uuid)) return false;
 
-        Party party = PartyManager.createParty(uuid, player.getDisplayName());
+        Party party = PartyManager.createParty(uuid, player.getPlayerRef().getUsername());
         if (party == null) return false;
 
         PartyManager.showHudForPlayer(player, uuid);
@@ -193,7 +193,7 @@ public class GroupeTab {
         }
         Player player = store.getComponent(ref, Player.getComponentType());
         if (player != null) {
-            player.sendMessage(Message.raw("§eVous avez donne le role de Capitaine a " + members.get(idx).getValue()));
+            player.getPlayerRef().sendMessage(Message.raw("§eVous avez donne le role de Capitaine a " + members.get(idx).getValue()));
         }
         return true;
     }
@@ -225,7 +225,7 @@ public class GroupeTab {
 
         Player player = store.getComponent(ref, Player.getComponentType());
         if (player != null) {
-            player.sendMessage(Message.raw("§aInvitation envoyee a " + targetName));
+            player.getPlayerRef().sendMessage(Message.raw("§aInvitation envoyee a " + targetName));
         }
         targetRef.sendMessage(Message.raw("§eVous avez ete invite a rejoindre un groupe !"));
         targetRef.sendMessage(Message.raw("§7Tapez §f/es party accept _ §7pour accepter."));
@@ -235,7 +235,7 @@ public class GroupeTab {
     private static void populateInviteList(UICommandBuilder ui, Party party, UUID myUUID) {
         cachedInviteNames.clear();
 
-        List<PlayerRef> allPlayers = Universe.get().getPlayers();
+        List<PlayerRef> allPlayers = new ArrayList<>(Universe.get().getPlayers());
         Set<UUID> memberUUIDs = new HashSet<>(party.getMemberUUIDs());
 
         for (PlayerRef pRef : allPlayers) {

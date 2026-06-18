@@ -2,13 +2,15 @@ package com.eldanior.system.Leveling.systems;
 
 import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.Leveling.utils.NotificationHelper;
+import com.eldanior.system.config.CraftingConfig;
+import com.eldanior.system.config.EldaniorLogger;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
 import com.hypixel.hytale.builtin.crafting.component.BenchBlock;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.EntityEventSystem;
-import com.hypixel.hytale.math.vector.Vector3i;
+import org.joml.Vector3i;
 import com.hypixel.hytale.protocol.packets.interface_.NotificationStyle;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.event.events.ecs.UseBlockEvent;
@@ -18,7 +20,6 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Restriction d'acces aux benchs d'artisanat.
@@ -27,29 +28,6 @@ import java.util.Set;
  * - Autres benchs : necessite la competence specifique OU la competence "Artisanat" (passe-partout)
  */
 public class CraftingRestrictionSystem extends EntityEventSystem<EntityStore, UseBlockEvent.Pre> {
-
-    // Benchs accessibles a tous sans competence
-    private static final Set<String> FREE_BENCHES = Set.of(
-            "bench_furniture", "bench_builders", "bench_campfire"
-    );
-
-    // Benchs bloques pour tout le monde (meme avec Artisanat)
-    private static final Set<String> BLOCKED_BENCHES = Set.of(
-            "bench_arcane", "bench_workbench"
-    );
-
-    // Mapping : nom du bench (lowercase) -> competence requise
-    private static final Map<String, PassiveSkill> BENCH_SKILLS = Map.of(
-            "bench_cooking", PassiveSkill.CRAFT_CUISINE,
-            "bench_furnace", PassiveSkill.CRAFT_FONDERIE,
-            "bench_armour", PassiveSkill.CRAFT_ARMURERIE,
-            "bench_weapon", PassiveSkill.CRAFT_FORGE_ARMES,
-            "bench_tannery", PassiveSkill.CRAFT_TANNERIE,
-            "bench_alchemy", PassiveSkill.CRAFT_ALCHIMIE,
-            "bench_lumbermill", PassiveSkill.CRAFT_SCIERIE,
-            "bench_farming", PassiveSkill.CRAFT_AGRICULTURE,
-            "bench_salvage", PassiveSkill.CRAFT_RECYCLAGE
-    );
 
     public CraftingRestrictionSystem() {
         super(UseBlockEvent.Pre.class);
@@ -70,10 +48,10 @@ public class CraftingRestrictionSystem extends EntityEventSystem<EntityStore, Us
 
         Vector3i target = event.getTargetBlock();
 
-        assert player.getWorld() != null;
+        if (player.getWorld() == null) return;
         BenchBlock benchComponent = BlockModule.getComponent(
                 BenchBlock.getComponentType(),
-                player.getWorld(), target.getX(), target.getY(), target.getZ()
+                player.getWorld(), target.x(), target.y(), target.z()
         );
 
         if (benchComponent == null) return;
@@ -81,14 +59,16 @@ public class CraftingRestrictionSystem extends EntityEventSystem<EntityStore, Us
         // Recuperer le nom du bench via le BlockType
         String benchName = "";
         try {
-            benchName = player.getWorld().getBlockType(target.getX(), target.getY(), target.getZ())
+            benchName = player.getWorld().getBlockType(target.x(), target.y(), target.z())
                     .getId().toLowerCase();
-        } catch (Exception ignored) {}
+        } catch (Exception e) {
+            EldaniorLogger.error("CraftingRestrictionSystem: failed to get bench name", e);
+        }
 
-        com.eldanior.system.config.EldaniorLogger.debug("[Craft] Bench detecte: '" + benchName + "'");
+        EldaniorLogger.debug("[Craft] Bench detecte: '" + benchName + "'");
 
         // Verifier si c'est un bench bloque pour tout le monde
-        for (String blocked : BLOCKED_BENCHES) {
+        for (String blocked : CraftingConfig.BLOCKED_BENCHES) {
             if (benchName.contains(blocked)) {
                 event.setCancelled(true);
                 NotificationHelper.sendNotification(netRef,
@@ -99,7 +79,7 @@ public class CraftingRestrictionSystem extends EntityEventSystem<EntityStore, Us
         }
 
         // Verifier si c'est un bench libre
-        for (String freeBench : FREE_BENCHES) {
+        for (String freeBench : CraftingConfig.FREE_BENCHES) {
             if (benchName.contains(freeBench)) return; // Libre pour tous
         }
 
@@ -128,7 +108,7 @@ public class CraftingRestrictionSystem extends EntityEventSystem<EntityStore, Us
         // Chercher la competence specifique pour ce bench
         PassiveSkill requiredSkill = null;
         String skillName = "";
-        for (Map.Entry<String, PassiveSkill> entry : BENCH_SKILLS.entrySet()) {
+        for (Map.Entry<String, PassiveSkill> entry : CraftingConfig.BENCH_SKILLS.entrySet()) {
             if (benchName.contains(entry.getKey())) {
                 requiredSkill = entry.getValue();
                 skillName = entry.getValue().getDisplayName();

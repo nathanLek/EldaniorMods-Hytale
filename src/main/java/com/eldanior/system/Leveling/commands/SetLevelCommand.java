@@ -5,6 +5,7 @@ import com.eldanior.system.Leveling.utils.StatCalculator; // <-- L'import vital 
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.config.UUIDExtractor;
 import com.hypixel.hytale.component.ComponentType;
+import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.arguments.system.RequiredArg;
@@ -14,10 +15,10 @@ import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.NameMatching;
+import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.core.Message;
 
-import java.util.ArrayList;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import javax.annotation.Nonnull;
@@ -40,30 +41,38 @@ public class SetLevelCommand extends AbstractAsyncCommand {
     @Override
     public CompletableFuture<Void> executeAsync(@Nonnull CommandContext ctx) {
 
-        if (!(ctx.sender() instanceof Player sender)) return CompletableFuture.completedFuture(null);
+        Ref<EntityStore> senderEntityRef = ctx.senderAsPlayerRef();
+        if (senderEntityRef == null || !senderEntityRef.isValid()) return CompletableFuture.completedFuture(null);
 
-        if (!sender.hasPermission("eldanior.command.setlevel")) {
-            sender.sendMessage(Message.raw("Erreur : Pas de permission."));
-            return CompletableFuture.completedFuture(null);
-        }
+        Store<EntityStore> senderEntityStore = senderEntityRef.getStore();
+        World world = ((EntityStore) senderEntityStore.getExternalData()).getWorld();
+        if (world == null) return CompletableFuture.completedFuture(null);
 
         String playerName = this.playerArg.get(ctx);
         int level = this.levelArg.get(ctx);
 
-        PlayerRef targetRef = Universe.get().getPlayerByUsername(playerName, NameMatching.EXACT_IGNORE_CASE);
-        if (targetRef == null) {
-            sender.sendMessage(Message.raw("Erreur : Joueur introuvable."));
-            return CompletableFuture.completedFuture(null);
-        }
-
-        assert sender.getWorld() != null;
         return CompletableFuture.runAsync(() -> {
             try {
-                                UUID targetUUID = UUIDExtractor.getUUID(targetRef);
+                PlayerRef senderRef = senderEntityStore.getComponent(senderEntityRef, PlayerRef.getComponentType());
+                Player sender = senderEntityStore.getComponent(senderEntityRef, Player.getComponentType());
+                if (senderRef == null || sender == null) return;
+
+                if (!senderRef.hasPermission("eldanior.command.setlevel")) {
+                    senderRef.sendMessage(Message.raw("Erreur : Pas de permission."));
+                    return;
+                }
+
+                PlayerRef targetRef = Universe.get().getPlayerByUsername(playerName, NameMatching.EXACT_IGNORE_CASE);
+                if (targetRef == null) {
+                    senderRef.sendMessage(Message.raw("Erreur : Joueur introuvable."));
+                    return;
+                }
+
+                UUID targetUUID = UUIDExtractor.getUUID(targetRef);
 
                 PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
                 if (targetPlayer == null) {
-                    sender.sendMessage(Message.raw("Erreur : Le joueur doit être connecté."));
+                    sender.getPlayerRef().sendMessage(Message.raw("Erreur : Le joueur doit être connecté."));
                     return;
                 }
 
@@ -147,13 +156,12 @@ public class SetLevelCommand extends AbstractAsyncCommand {
                 // 2. CRUCIAL : Met à jour la barre de vie et la vitesse en jeu !
                 StatCalculator.updatePlayerStats(ref, store, data);
 
-                sender.sendMessage(Message.raw("Niveau défini sur " + level + " pour " + playerName + "."));
+                sender.getPlayerRef().sendMessage(Message.raw("Niveau défini sur " + level + " pour " + playerName + "."));
                 targetPlayer.sendMessage(Message.raw("Votre niveau a été changé à : " + level + "."));
 
             } catch (Exception e) {
-                sender.sendMessage(Message.raw("Erreur technique : " + e.getMessage()));
                 e.printStackTrace();
             }
-        }, sender.getWorld());
+        }, world);
     }
 }

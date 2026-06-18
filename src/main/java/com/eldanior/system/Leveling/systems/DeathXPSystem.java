@@ -25,8 +25,8 @@ import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
 import com.hypixel.hytale.logger.HytaleLogger;
-import com.hypixel.hytale.math.vector.Vector3d;
-import com.hypixel.hytale.math.vector.Vector3f;
+import org.joml.Vector3d;
+import org.joml.Vector3f;
 import com.hypixel.hytale.protocol.packets.interface_.NotificationStyle;
 import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.entity.entities.Player;
@@ -253,6 +253,14 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
                                 "TITRE DEBLOQUE", title.getDisplayName(), true);
                     }
                 }
+
+                // Progression des skills de loot/chance à chaque kill de mob
+                for (var passive : dataToWrite.getActivePassives()) {
+                    String name = passive.name();
+                    if ("FORTUNE_COINS".equals(name)) {
+                        dataToWrite.addSkillProc(name);
+                    }
+                }
             }
 
             commandBuffer.putComponent(killerEntityRef, lvlType, dataToWrite);
@@ -312,7 +320,7 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
                             String coinType = com.eldanior.system.config.configs.CoinItemRegistry.getCoinTypeForLevel(victimLevel);
                             ItemStack coinStack = new ItemStack(coinType, quantity);
 
-                            Holder<EntityStore> itemEntityHolder = ItemComponent.generateItemDrop(store, coinStack, spawnPos, Vector3f.ZERO, 0.0F, 0.5F, 0.0F);
+                            Holder<EntityStore> itemEntityHolder = ItemComponent.generateItemDrop(store, coinStack, spawnPos, com.hypixel.hytale.math.vector.Rotation3f.ZERO, 0.0F, 0.5F, 0.0F);
                             if (itemEntityHolder != null) {
                                 commandBuffer.addEntity(itemEntityHolder, AddReason.SPAWN);
                             }

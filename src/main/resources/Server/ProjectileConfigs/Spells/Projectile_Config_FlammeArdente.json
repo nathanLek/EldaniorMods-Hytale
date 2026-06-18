@@ -1,0 +1,14 @@
+{
+  "Parent": "Projectile_Config_Fireball",
+  "Interactions": {
+    "ProjectileHit": {
+      "Interactions": [
+        {
+          "Type": "ApplyEffect",
+          "Entity": "Target",
+          "EffectId": "Burn"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "Duration": 6,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#002266",
+    "EntityTopTint": "#0044cc",
+    "ScreenEffect": "ScreenEffects/Snow.png",
+    "Particles": [{"SystemId": "Water_Splash"}, {"SystemId": "Rain"}],
+    "ModelVFXId": "Intangible_Dark"
+  },
+  "DamageCalculatorCooldown": 1,
+  "DamageCalculator": {"BaseDamage": {"Poison": 6}},
+  "OverlapBehavior": "Overwrite",
+  "Infinite": false,
+  "Debuff": true,
+  "StatusEffectIcon": "UI/StatusEffects/Burn.png",
+  "DeathMessageKey": "server.general.deathCause.drown"
+}

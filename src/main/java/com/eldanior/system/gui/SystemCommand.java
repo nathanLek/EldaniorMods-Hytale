@@ -1,10 +1,12 @@
 package com.eldanior.system.gui;
 
+import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractAsyncCommand;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
@@ -22,22 +24,24 @@ public class SystemCommand extends AbstractAsyncCommand {
     @Nonnull
     @Override
     public CompletableFuture<Void> executeAsync(@Nonnull CommandContext ctx) {
-        if (!(ctx.sender() instanceof Player sender)) return CompletableFuture.completedFuture(null);
+        Ref<EntityStore> ref = ctx.senderAsPlayerRef();
+        if (ref == null || !ref.isValid()) return CompletableFuture.completedFuture(null);
 
-        assert sender.getWorld() != null;
+        Store<EntityStore> store = ref.getStore();
+        World world = ((EntityStore) store.getExternalData()).getWorld();
+        if (world == null) return CompletableFuture.completedFuture(null);
+
         return CompletableFuture.runAsync(() -> {
             try {
-                var ref = sender.getReference();
-                assert ref != null;
-                Store<EntityStore> store = ref.getStore();
                 PlayerRef playerRef = store.getComponent(ref, PlayerRef.getComponentType());
-                assert playerRef != null;
+                Player player = store.getComponent(ref, Player.getComponentType());
+                if (playerRef == null || player == null) return;
 
-                sender.getPageManager().openCustomPage(ref, store, new SystemScreen(playerRef));
+                player.getPageManager().openCustomPage(ref, store, new SystemScreen(playerRef));
             } catch (Exception e) {
                 System.err.println("[System] Erreur GUI : " + e.getMessage());
                 e.printStackTrace();
             }
-        }, sender.getWorld());
+        }, world);
     }
 }

@@ -8,7 +8,7 @@ import com.eldanior.system.config.configs.Mobs.MobLevelData;
 import com.eldanior.system.config.configs.Mobs.MobVirtualHPSystem;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
-import com.hypixel.hytale.math.vector.Vector3d;
+import org.joml.Vector3d;
 import com.hypixel.hytale.server.core.entity.nameplate.Nameplate;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
 import com.hypixel.hytale.server.core.modules.entity.damage.Damage;

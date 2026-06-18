@@ -1,0 +1,15 @@
+{
+  "Duration": 10,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#004400",
+    "EntityTopTint": "#008000",
+    "Particles": [{"SystemId": "Effect_Poison"}, {"SystemId": "Weather_Posion_Smoke"}],
+    "ModelVFXId": "Intangible_Dark",
+    "WorldSoundEventId": "SFX_Effect_Poison_World",
+    "LocalSoundEventId": "SFX_Effect_Poison_Local"
+  },
+  "OverlapBehavior": "Overwrite",
+  "Infinite": false,
+  "Debuff": true,
+  "StatusEffectIcon": "UI/StatusEffects/Poison.png"
+}

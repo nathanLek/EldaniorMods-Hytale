@@ -16,6 +16,7 @@ public abstract class ClassModel {
     private final Rarity rarity;
     private final ClassType type;
     private final List<PassiveSkill> passiveSkills;
+    private final List<String> activeSkillIds;
     private final List<WeaponMastery> allowedMasteries;
 
     private final List<String> nextClassId;
@@ -47,12 +48,36 @@ public abstract class ClassModel {
             int agl,
             int lck
     ) {
+        this(id, displayName, description, rarity, type, passiveSkills, Collections.emptyList(),
+                allowedMasteries, nextClassId, promotionLevel, adminAccess, str, vit, intel, end, agl, lck);
+    }
+
+    public ClassModel(
+            String id,
+            String displayName,
+            String description,
+            Rarity rarity,
+            ClassType type,
+            List<PassiveSkill> passiveSkills,
+            List<String> activeSkillIds,
+            List<WeaponMastery> allowedMasteries,
+            List<String> nextClassId,
+            int promotionLevel,
+            boolean adminAccess,
+            int str,
+            int vit,
+            int intel,
+            int end,
+            int agl,
+            int lck
+    ) {
         this.id = id;
         this.displayName = displayName;
         this.description = description;
         this.rarity = rarity;
         this.type = type;
         this.passiveSkills = (passiveSkills != null) ? List.copyOf(passiveSkills) : Collections.emptyList();
+        this.activeSkillIds = (activeSkillIds != null) ? List.copyOf(activeSkillIds) : Collections.emptyList();
         this.allowedMasteries = (allowedMasteries != null) ? List.copyOf(allowedMasteries) : Collections.emptyList();
         this.nextClassId = (nextClassId != null) ? List.copyOf(nextClassId) : Collections.emptyList();
         this.promotionLevel = promotionLevel;
@@ -72,6 +97,7 @@ public abstract class ClassModel {
     public ClassType getType() { return type; }
 
     public List<PassiveSkill> getSkillsPassiveIds() { return passiveSkills; }
+    public List<String> getActiveSkillIds() { return activeSkillIds; }
     public List<WeaponMastery> getAllowedMasteries() { return allowedMasteries; }
 
     public List<String> getNextClassId() { return nextClassId; }

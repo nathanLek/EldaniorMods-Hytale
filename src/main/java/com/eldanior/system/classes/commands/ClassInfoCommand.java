@@ -4,6 +4,7 @@ import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.config.UUIDExtractor;
 import com.hypixel.hytale.component.ComponentType;
+import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.NameMatching;
@@ -14,6 +15,7 @@ import com.hypixel.hytale.server.core.command.system.basecommands.AbstractAsyncC
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
+import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
@@ -36,23 +38,31 @@ public class ClassInfoCommand extends AbstractAsyncCommand {
     @Nonnull
     @Override
     public CompletableFuture<Void> executeAsync(@Nonnull CommandContext ctx) {
-        if (!(ctx.sender() instanceof Player sender)) return CompletableFuture.completedFuture(null);
+        Ref<EntityStore> senderEntityRef = ctx.senderAsPlayerRef();
+        if (senderEntityRef == null || !senderEntityRef.isValid()) return CompletableFuture.completedFuture(null);
+
+        Store<EntityStore> senderEntityStore = senderEntityRef.getStore();
+        World world = ((EntityStore) senderEntityStore.getExternalData()).getWorld();
+        if (world == null) return CompletableFuture.completedFuture(null);
 
         String targetName = this.playerArg.get(ctx);
 
-        // Même logique de récupération que SetLevelCommand
-        PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
-
-        if (targetRef == null) {
-            sender.sendMessage(Message.raw("§cJoueur introuvable."));
-            return CompletableFuture.completedFuture(null);
-        }
-
-        assert sender.getWorld() != null;
         return CompletableFuture.runAsync(() -> {
             try {
+                PlayerRef senderRef = senderEntityStore.getComponent(senderEntityRef, PlayerRef.getComponentType());
+                Player sender = senderEntityStore.getComponent(senderEntityRef, Player.getComponentType());
+                if (senderRef == null || sender == null) return;
+
+                // Même logique de récupération que SetLevelCommand
+                PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
+
+                if (targetRef == null) {
+                    senderRef.sendMessage(Message.raw("§cJoueur introuvable."));
+                    return;
+                }
+
                 // Reflection pour UUID (Ta méthode robuste)
-                                UUID targetUUID = UUIDExtractor.getUUID(targetRef);
+                UUID targetUUID = UUIDExtractor.getUUID(targetRef);
 
                 PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
 
@@ -66,17 +76,17 @@ public class ClassInfoCommand extends AbstractAsyncCommand {
                 PlayerLevelData data = store.getComponent(ref, type);
 
                 if (data != null) {
-                    sender.sendMessage(Message.raw("§e--- Info : " + targetName + " ---"));
-                    sender.sendMessage(Message.raw("§fClasse : " + data.getPlayerClass()));
-                    sender.sendMessage(Message.raw("§fID : §7" + data.getPlayerClassId()));
-                    sender.sendMessage(Message.raw("§fNiveau : " + data.getLevel()));
-                    sender.sendMessage(Message.raw("§fMana Max : " + (int)data.getMaxMana()));
+                    sender.getPlayerRef().sendMessage(Message.raw("§e--- Info : " + targetName + " ---"));
+                    sender.getPlayerRef().sendMessage(Message.raw("§fClasse : " + data.getPlayerClass()));
+                    sender.getPlayerRef().sendMessage(Message.raw("§fID : §7" + data.getPlayerClassId()));
+                    sender.getPlayerRef().sendMessage(Message.raw("§fNiveau : " + data.getLevel()));
+                    sender.getPlayerRef().sendMessage(Message.raw("§fMana Max : " + (int)data.getMaxMana()));
                 } else {
-                    sender.sendMessage(Message.raw("§cPas de données pour ce joueur."));
+                    sender.getPlayerRef().sendMessage(Message.raw("§cPas de données pour ce joueur."));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }, sender.getWorld());
+        }, world);
     }
 }

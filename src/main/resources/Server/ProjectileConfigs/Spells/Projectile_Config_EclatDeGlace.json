@@ -1,0 +1,36 @@
+{
+  "Parent": "Projectile_Config_Fireball",
+  "Model": "Spell_EclatDeGlace",
+  "Interactions": {
+    "ProjectileHit": {
+      "Cooldown": { "Cooldown": 0 },
+      "Interactions": [
+        {
+          "Type": "DamageEntity",
+          "Entity": "Target",
+          "DamageCalculator": {
+            "BaseDamage": { "Ice": 18 }
+          },
+          "DamageEffects": {
+            "WorldParticles": [
+              { "SystemId": "Impact_Ice" },
+              { "SystemId": "Effect_Snow" }
+            ]
+          }
+        },
+        {
+          "Type": "ApplyEffect",
+          "Entity": "Target",
+          "EffectId": "Elda_Givre"
+        },
+        { "Type": "RemoveEntity", "Entity": "User" }
+      ]
+    },
+    "ProjectileMiss": {
+      "Cooldown": { "Cooldown": 0 },
+      "Interactions": [
+        { "Type": "RemoveEntity", "Entity": "User" }
+      ]
+    }
+  }
+}

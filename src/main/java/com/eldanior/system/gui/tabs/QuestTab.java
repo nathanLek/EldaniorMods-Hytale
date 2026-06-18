@@ -356,7 +356,7 @@ public class QuestTab {
         saveQuestData(uuid, ref, store);
 
         Player player = store.getComponent(ref, Player.getComponentType());
-        if (player != null) player.sendMessage(Message.raw("§cQuete abandonnee."));
+        if (player != null) player.getPlayerRef().sendMessage(Message.raw("§cQuete abandonnee."));
         return true;
     }
 
@@ -371,7 +371,7 @@ public class QuestTab {
         saveQuestData(uuid, ref, store);
 
         Player player = store.getComponent(ref, Player.getComponentType());
-        if (player != null) player.sendMessage(Message.raw("§cQuete abandonnee."));
+        if (player != null) player.getPlayerRef().sendMessage(Message.raw("§cQuete abandonnee."));
         return true;
     }
 

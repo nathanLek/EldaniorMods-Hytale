@@ -1,0 +1,89 @@
+{
+  "Model": "Projectile",
+  "Physics": {
+    "Type": "Standard",
+    "Gravity": 500,
+    "TerminalVelocityAir": 500,
+    "TerminalVelocityWater": 500,
+    "SticksVertically": true,
+    "Bounciness": 0
+  },
+  "LaunchForce": 0,
+  "SpawnOffset": {
+    "X": 0,
+    "Y": 1,
+    "Z": 0
+  },
+  "Interactions": {
+    "ProjectileMiss": {
+      "Cooldown": { "Cooldown": 0 },
+      "Interactions": [
+        {
+          "Type": "SpawnDeployableAtHitLocation",
+          "Config": {
+            "Type": "Aoe",
+            "Shape": "Cylinder",
+            "Id": "Apocalypse_Ground_Zone",
+            "LiveDuration": 8,
+            "Model": "Deployable_Fire_Trap",
+            "ModelScale": 0.01,
+            "StartRadius": 5,
+            "EndRadius": 30,
+            "Height": 3,
+            "RadiusChangeTime": 1.0,
+            "DamageInterval": 0.5,
+            "DamageAmount": 0,
+            "ApplyEffects": [ "Lava_Burn" ],
+            "Invulnerable": true,
+            "AttackOwner": false,
+            "AttackTeam": false,
+            "DeploySoundEventId": "SFX_Staff_Flame_Trap_Deploy",
+            "DespawnSoundEventId": "SFX_Staff_Flame_Trap_Despawn",
+            "AmbientSoundEventId": "SFX_Staff_Flame_Trap_Loop",
+            "SpawnParticles": [
+              { "SystemId": "Explosion_Big", "TargetEntityPart": "Entity", "Scale": 4.0 },
+              { "SystemId": "Effect_Fire", "TargetEntityPart": "Entity", "Scale": 4.0 },
+              { "SystemId": "Hedera_Scream", "TargetEntityPart": "Entity", "Scale": 4.0 }
+            ]
+          }
+        },
+        { "Type": "RemoveEntity", "Entity": "User" }
+      ]
+    },
+    "ProjectileHit": {
+      "Cooldown": { "Cooldown": 0 },
+      "Interactions": [
+        {
+          "Type": "SpawnDeployableAtHitLocation",
+          "Config": {
+            "Type": "Aoe",
+            "Shape": "Cylinder",
+            "Id": "Apocalypse_Ground_Zone",
+            "LiveDuration": 8,
+            "Model": "Deployable_Fire_Trap",
+            "ModelScale": 0.01,
+            "StartRadius": 5,
+            "EndRadius": 30,
+            "Height": 3,
+            "RadiusChangeTime": 1.0,
+            "DamageInterval": 0.5,
+            "DamageAmount": 0,
+            "ApplyEffects": [ "Lava_Burn" ],
+            "Invulnerable": true,
+            "AttackOwner": false,
+            "AttackTeam": false,
+            "DeploySoundEventId": "SFX_Staff_Flame_Trap_Deploy",
+            "DespawnSoundEventId": "SFX_Staff_Flame_Trap_Despawn",
+            "AmbientSoundEventId": "SFX_Staff_Flame_Trap_Loop",
+            "SpawnParticles": [
+              { "SystemId": "Explosion_Big", "TargetEntityPart": "Entity", "Scale": 4.0 },
+              { "SystemId": "Effect_Fire", "TargetEntityPart": "Entity", "Scale": 4.0 },
+              { "SystemId": "Hedera_Scream", "TargetEntityPart": "Entity", "Scale": 4.0 }
+            ]
+          }
+        },
+        { "Type": "RemoveEntity", "Entity": "User" }
+      ]
+    }
+  }
+}

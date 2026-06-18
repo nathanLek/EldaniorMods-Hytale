@@ -1,35 +1,40 @@
 package com.eldanior.system.skills.skills.passives.Common.Regeneration;
 
 import com.eldanior.system.config.Player.PlayerLevelData;
-import com.eldanior.system.config.configs.StatConfig;
 import com.eldanior.system.skills.skillsInteraction.IPassiveCombatSkill;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
-import com.hypixel.hytale.server.core.modules.entitystats.EntityStatValue;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatsModule;
+import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 public class SpiritualSiphon implements IPassiveCombatSkill {
 
+    private static final float CHANCE = 0.20f;
+    private static final float RESTORE = 5.0f;
+    private static final float RESTORE_MASTERED = 5.5f;
+
+    private boolean lastProc = false;
+
     @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+    public boolean didProc() { return lastProc; }
+
+    @Override
+    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        lastProc = false;
         if (damage.isCancelled() || attackerRef == null) return;
 
-        // 20% de chance de restaurer du Mana
-        if (Math.random() <= 0.20f) {
+        if (Math.random() <= CHANCE) {
             EntityStatMap statMap = store.getComponent(attackerRef, EntityStatsModule.get().getEntityStatMapComponentType());
             if (statMap == null) return;
 
-            EntityStatValue manaStat = statMap.get(StatConfig.INTELLIGENCE.getStatId());
+            var manaStat = statMap.get(DefaultEntityStatTypes.getMana());
             if (manaStat != null) {
-                float maxMana = manaStat.getMax();
-                float currentMana = manaStat.get();
-
-                // Restaure 5 points de Mana
-                float newMana = Math.min(maxMana, currentMana + 5.0f);
-                statMap.setStatValue(StatConfig.INTELLIGENCE.getStatId(), newMana);
+                float restore = mastered ? RESTORE_MASTERED : RESTORE;
+                statMap.setStatValue(DefaultEntityStatTypes.getMana(), Math.min(manaStat.getMax(), manaStat.get() + restore));
+                lastProc = true;
             }
         }
     }

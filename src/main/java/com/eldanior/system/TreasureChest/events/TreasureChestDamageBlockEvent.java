@@ -9,7 +9,7 @@ import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.EntityEventSystem;
-import com.hypixel.hytale.math.vector.Vector3i;
+import org.joml.Vector3i;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.event.events.ecs.DamageBlockEvent;
 import com.hypixel.hytale.server.core.modules.block.BlockModule;
@@ -32,17 +32,17 @@ public class TreasureChestDamageBlockEvent extends EntityEventSystem<EntityStore
         Vector3i target = event.getTargetBlock();
         World world = player.getWorld();
 
-        if (isProtectedChest(world, target.getX(), target.getY(), target.getZ())) {
+        if (isProtectedChest(world, target.x(), target.y(), target.z())) {
             assert world != null;
-            if (shouldCancelDamage(world, target.getX(), target.getY(), target.getZ())) {
+            if (shouldCancelDamage(world, target.x(), target.y(), target.z())) {
                 event.setCancelled(true);
                 return;
             }
         }
 
-        if (isProtectedChest(world, target.getX(), target.getY() + 1, target.getZ()) ||
-                isProtectedChest(world, target.getX() + 1, target.getY() + 1, target.getZ()) ||
-                isProtectedChest(world, target.getX(), target.getY() + 1, target.getZ() + 1)) {
+        if (isProtectedChest(world, target.x(), target.y() + 1, target.z()) ||
+                isProtectedChest(world, target.x() + 1, target.y() + 1, target.z()) ||
+                isProtectedChest(world, target.x(), target.y() + 1, target.z() + 1)) {
             event.setCancelled(true);
         }
     }

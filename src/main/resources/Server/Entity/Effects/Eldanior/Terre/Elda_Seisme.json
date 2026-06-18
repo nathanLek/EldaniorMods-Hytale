@@ -1,0 +1,16 @@
+{
+  "Duration": 2,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#443300",
+    "EntityTopTint": "#888c8d",
+    "Particles": [{"SystemId": "Block_Break_Stone"}, {"SystemId": "Stone_Bounce"}],
+    "WorldSoundEventId": "SFX_Ice_Break",
+    "LocalSoundEventId": "SFX_Ice_Break",
+    "MovementEffects": {"DisableAll": true},
+    "KnockbackMultiplier": 0
+  },
+  "OverlapBehavior": "Overwrite",
+  "Infinite": false,
+  "Debuff": true,
+  "StatusEffectIcon": "UI/StatusEffects/Burn.png"
+}

@@ -90,9 +90,9 @@
 ## Fichiers cles
 - `classes/definitions/` — chaque classe tier 1
 - `classes/ClassManager.java` — registre et evolutions
-- `classes/ClassModel.java` — modele de classe
+- `classes/ClassModel.java` — modele de classe ; supporte un champ optionnel `activeSkillIds` (`List<String>`) pour lier des sorts actifs via constructeur surcharge
 
 ## Liens
-- [[Arbre des classes]] - Arbre complet des 405 classes
+- [[Arbre des classes]] - Arbre complet des 406 classes
 - [[Familles/Familles Royales]] - Skills de famille
 - [[../Systems/Classes]] - Systeme de classes

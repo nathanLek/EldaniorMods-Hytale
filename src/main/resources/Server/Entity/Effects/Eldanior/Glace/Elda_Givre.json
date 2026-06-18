@@ -1,0 +1,15 @@
+{
+  "Duration": 6,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#a0d4ff",
+    "EntityTopTint": "#80ecff",
+    "ModelVFXId": "Intangible_Dark",
+    "ScreenEffect": "ScreenEffects/Snow.png",
+    "Particles": [{"SystemId": "Effect_Snow"}, {"SystemId": "Weapon_Frost_Mist"}],
+    "HorizontalSpeedMultiplier": 0.5
+  },
+  "OverlapBehavior": "Overwrite",
+  "Infinite": false,
+  "Debuff": true,
+  "StatusEffectIcon": "UI/StatusEffects/Burn.png"
+}

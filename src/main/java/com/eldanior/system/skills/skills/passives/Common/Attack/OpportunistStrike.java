@@ -12,32 +12,37 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 public class OpportunistStrike implements IPassiveCombatSkill {
 
+    private static final float BONUS = 1.12f;
+    private static final float BONUS_MASTERED = 1.132f;
+    private static final long WINDOW_MS = 2000;
+
+    private boolean lastProc = false;
+
     @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+    public boolean didProc() { return lastProc; }
 
-        long lastTimeTakenDamage = attackerData.getLastDamageTakenTime();
-        long currentTime = System.currentTimeMillis();
+    @Override
+    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        lastProc = false;
 
-        // Si le dernier dégât reçu date de moins de 2000ms (2 secondes)
-        if (currentTime - lastTimeTakenDamage <= 2000) {
-            float currentDmg = damage.getAmount();
-            damage.setAmount(currentDmg * 1.12f);
+        long timeSinceHit = System.currentTimeMillis() - attackerData.getLastDamageTakenTime();
+        if (timeSinceHit <= WINDOW_MS) {
+            lastProc = true;
+            float multiplier = mastered ? BONUS_MASTERED : BONUS;
+            damage.setAmount(damage.getAmount() * multiplier);
 
-            // On peut reset pour éviter que le bonus s'applique sur 50 coups en 2 sec
-            // attackerData.setLastDamageTakenTime(0);
+            int percent = mastered ? 13 : 12;
             if (attackerRef != null) {
                 PlayerRef playerRef = store.getComponent(attackerRef, PlayerRef.getComponentType());
-
                 if (playerRef != null) {
-                    NotificationHelper.sendNotification(playerRef, "<color:white>Frappe Opportuniste : +12% dégâts</color>", NotificationStyle.Success);
+                    NotificationHelper.sendNotification(playerRef, "<color:white>Frappe Opportuniste : +" + percent + "% dégâts</color>", NotificationStyle.Success);
                 }
             }
         }
     }
 
     @Override
-    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
-        // C'est ici qu'on enregistre le moment où le joueur prend un coup !
+    public void onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
         victimData.setLastDamageTakenTime(System.currentTimeMillis());
     }
 }

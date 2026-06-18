@@ -2,6 +2,7 @@ package com.eldanior.system.shop;
 
 import com.eldanior.system.config.UUIDExtractor;
 import com.eldanior.system.config.EldaniorLogger;
+import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
@@ -11,6 +12,7 @@ import com.hypixel.hytale.server.core.command.system.basecommands.AbstractAsyncC
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
@@ -31,38 +33,45 @@ public class SellCommand extends AbstractAsyncCommand {
 
     @Nonnull
     @Override
+    @SuppressWarnings("removal")
     public CompletableFuture<Void> executeAsync(@Nonnull CommandContext ctx) {
-        if (!(ctx.sender() instanceof Player sender)) return CompletableFuture.completedFuture(null);
+        Ref<EntityStore> ref = ctx.senderAsPlayerRef();
+        if (ref == null || !ref.isValid()) return CompletableFuture.completedFuture(null);
+
+        Store<EntityStore> store = ref.getStore();
+        World world = ((EntityStore) store.getExternalData()).getWorld();
+        if (world == null) return CompletableFuture.completedFuture(null);
 
         int price = this.priceArg.get(ctx);
-        if (price <= 0) {
-            sender.sendMessage(Message.raw("§cLe prix doit etre superieur a 0."));
-            return CompletableFuture.completedFuture(null);
-        }
 
-        assert sender.getWorld() != null;
         return CompletableFuture.runAsync(() -> {
             try {
-                // Recuperer l'item en main
-                var inventory = sender.getInventory();
-                ItemStack item = inventory.getItemInHand();
+                PlayerRef senderRef = store.getComponent(ref, PlayerRef.getComponentType());
+                Player sender = store.getComponent(ref, Player.getComponentType());
+                if (senderRef == null || sender == null) return;
 
-                if (item == null || item.isEmpty()) {
-                    sender.sendMessage(Message.raw("§cVous n'avez rien en main !"));
+                if (price <= 0) {
+                    senderRef.sendMessage(Message.raw("§cLe prix doit etre superieur a 0."));
                     return;
                 }
 
-                UUID sellerUUID = getSenderUUID(sender);
+                // Recuperer l'item en main
+                var inventory = sender.getInventory();
+                ItemStack item = inventory.getActiveHotbarItem();
+
+                if (item == null || item.isEmpty()) {
+                    senderRef.sendMessage(Message.raw("§cVous n'avez rien en main !"));
+                    return;
+                }
+
+                UUID sellerUUID = UUIDExtractor.getUUID(senderRef);
                 if (sellerUUID == null) return;
 
                 // Determiner si PK
-                var sRef = sender.getReference();
-                if (sRef == null) return;
-                var sStore = sRef.getStore();
-                com.eldanior.system.config.Player.PlayerLevelData data = sStore.getComponent(sRef,
+                com.eldanior.system.config.Player.PlayerLevelData data = store.getComponent(ref,
                         com.eldanior.system.EldaniorSystem.get().getPlayerLevelDataType());
                 boolean isPK = data != null && data.isPK();
-                boolean isAdmin = sender.hasPermission(EldaniorLogger.ADMIN_PERMISSION);
+                boolean isAdmin = senderRef.hasPermission(EldaniorLogger.ADMIN_PERMISSION);
 
                 // Check limite (3 max pour non-admin)
                 if (!isAdmin) {
@@ -70,7 +79,7 @@ public class SellCommand extends AbstractAsyncCommand {
                             ? ShopManager.getBlackMarketPlayerListingCount(sellerUUID)
                             : ShopManager.getPlayerListingCount(sellerUUID);
                     if (currentListings >= ShopManager.MAX_LISTINGS_PER_PLAYER) {
-                        sender.sendMessage(Message.raw("§cLimite atteinte ! Vous avez deja " + ShopManager.MAX_LISTINGS_PER_PLAYER + " objets en vente."));
+                        senderRef.sendMessage(Message.raw("§cLimite atteinte ! Vous avez deja " + ShopManager.MAX_LISTINGS_PER_PLAYER + " objets en vente."));
                         return;
                     }
                 }
@@ -81,9 +90,9 @@ public class SellCommand extends AbstractAsyncCommand {
 
                 // Ajouter au bon marche
                 if (isPK) {
-                    ShopManager.addBlackMarketListing(sellerUUID, sender.getDisplayName(), item, price);
+                    ShopManager.addBlackMarketListing(sellerUUID, senderRef.getUsername(), item, price);
                 } else {
-                    ShopManager.addListing(sellerUUID, sender.getDisplayName(), item, price);
+                    ShopManager.addListing(sellerUUID, senderRef.getUsername(), item, price);
                 }
 
                 String itemName = item.getItemId();
@@ -96,14 +105,13 @@ public class SellCommand extends AbstractAsyncCommand {
                     }
                 } catch (Exception e) { EldaniorLogger.error("SellCommand", e); }
 
-                sender.sendMessage(Message.raw("§a" + itemName + " §amis en vente pour §e" + price + " Or §a!"));
-                sender.sendMessage(Message.raw("§7Les joueurs peuvent l'acheter via §f/es system §7> Shop"));
+                senderRef.sendMessage(Message.raw("§a" + itemName + " §amis en vente pour §e" + price + " Or §a!"));
+                senderRef.sendMessage(Message.raw("§7Les joueurs peuvent l'acheter via §f/es system §7> Shop"));
 
             } catch (Exception e) {
-                sender.sendMessage(Message.raw("§cErreur: " + e.getMessage()));
                 e.printStackTrace();
             }
-        }, sender.getWorld());
+        }, world);
     }
 
     private UUID getSenderUUID(Player sender) throws Exception {

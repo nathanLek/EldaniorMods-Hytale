@@ -14,7 +14,7 @@ import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
 import com.hypixel.hytale.logger.HytaleLogger;
-import com.hypixel.hytale.math.vector.Vector3d;
+import org.joml.Vector3d;
 import com.hypixel.hytale.protocol.Color;
 import com.hypixel.hytale.protocol.SoundCategory;
 import com.hypixel.hytale.server.core.Message;
@@ -108,6 +108,16 @@ public class TreasureChestRangeSystem extends EntityTickingSystem<EntityStore> {
                                 EldaniorSystem.get().getPlayerLevelDataType());
                         if (levelData != null) {
                             levelData.addChestDiscovered();
+                            // Progression skills à la découverte d'un coffre
+                            for (var passive : levelData.getActivePassives()) {
+                                String pName = passive.name();
+                                if ("GOOD_OMEN".equals(pName) || "TREASURE_HUNTER".equals(pName)) {
+                                    levelData.addSkillProc(pName);
+                                    com.eldanior.system.Leveling.utils.NotificationHelper.sendNotification(
+                                            playerRef, "<color:green>+" + pName + " progression</color>",
+                                            com.hypixel.hytale.protocol.packets.interface_.NotificationStyle.Success);
+                                }
+                            }
                             java.util.List<TitleModel> newTitles = TitleManager.checkTitleUnlocks(levelData);
                             for (TitleModel title : newTitles) {
                                 levelData.addTitle(title.getId());

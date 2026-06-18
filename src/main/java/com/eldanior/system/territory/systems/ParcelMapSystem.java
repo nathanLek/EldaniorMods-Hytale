@@ -5,8 +5,8 @@ import com.eldanior.system.territory.ParcelManager;
 import com.eldanior.system.territory.ParcelType;
 import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.math.vector.Transform;
-import com.hypixel.hytale.math.vector.Vector3d;
-import com.hypixel.hytale.math.vector.Vector3f;
+import org.joml.Vector3d;
+import org.joml.Vector3f;
 import com.hypixel.hytale.protocol.Color;
 import com.hypixel.hytale.protocol.packets.worldmap.ClearWorldMap;
 import com.hypixel.hytale.protocol.packets.worldmap.MapImage;
@@ -112,7 +112,7 @@ public class ParcelMapSystem {
                 try {
                     Transform transform = new Transform(
                             new Vector3d(centerX, centerY, centerZ),
-                            new Vector3f(0, 0, 0)
+                            new com.hypixel.hytale.math.vector.Rotation3f(0, 0, 0)
                     );
 
                     MapMarkerBuilder builder = new MapMarkerBuilder(

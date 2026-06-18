@@ -18,6 +18,7 @@ public class Mage extends ClassModel {
                 Rarity.COMMON,
                 ClassType.MAGE,
                 List.of(PassiveSkill.MANA_FONT, PassiveSkill.AWAKENED_MIND),
+                List.of("BATON_MAGIQUE"),
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
                 List.of("elementaliste", "enchanteur", "necromancien", "invocateur", "guerisseur", "pyromancien", "cryomancien", "archimage", "sorcier", "druide", "illusionniste", "mystique", "thaumaturge", "alchimiste", "sage", "magus", "liche", "oracle", "maitre_elementaire", "chronoturge", "archonte", "mage_void", "primordial", "demiurge", "prophete", "avatar_arcanique", "dieu_des_arcanes"),
                 180,

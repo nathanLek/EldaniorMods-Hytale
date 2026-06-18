@@ -9,7 +9,7 @@ import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.EntityEventSystem;
-import com.hypixel.hytale.math.vector.Vector3i;
+import org.joml.Vector3i;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.event.events.ecs.PlaceBlockEvent;
@@ -65,10 +65,10 @@ public class TreasureChestPlaceBlockEvent extends EntityEventSystem<EntityStore,
         Vector3i pos = event.getTargetBlock();
         World world = player.getWorld();
 
-        if (isProtectedChest(world, pos.getX() + 1, pos.getY(), pos.getZ()) ||
-                isProtectedChest(world, pos.getX() - 1, pos.getY(), pos.getZ()) ||
-                isProtectedChest(world, pos.getX(), pos.getY(), pos.getZ() + 1) ||
-                isProtectedChest(world, pos.getX(), pos.getY(), pos.getZ() - 1)) {
+        if (isProtectedChest(world, pos.x() + 1, pos.y(), pos.z()) ||
+                isProtectedChest(world, pos.x() - 1, pos.y(), pos.z()) ||
+                isProtectedChest(world, pos.x(), pos.y(), pos.z() + 1) ||
+                isProtectedChest(world, pos.x(), pos.y(), pos.z() - 1)) {
             event.setCancelled(true);
             return;
         }
@@ -105,8 +105,8 @@ public class TreasureChestPlaceBlockEvent extends EntityEventSystem<EntityStore,
             dropListName = "custom";
         }
 
-        template.saveTemplate(pos.getX(), pos.getY(), pos.getZ(), loot, dropListName);
-        player.sendMessage(Message.raw("§2✔ [Eldanior] Coffre au trésor enregistré automatiquement !"));
+        template.saveTemplate(pos.x(), pos.y(), pos.z(), loot, dropListName);
+        player.getPlayerRef().sendMessage(Message.raw("§2✔ [Eldanior] Coffre au trésor enregistré automatiquement !"));
     }
 
     // ✅ Update 4 : BlockModule.getComponent() remplace player.getWorld().getState()

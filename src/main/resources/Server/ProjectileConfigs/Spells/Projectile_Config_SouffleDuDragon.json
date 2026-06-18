@@ -1,0 +1,53 @@
+{
+  "Model": "Spell_SouffleDuDragon",
+  "Physics": {
+    "Type": "Standard",
+    "Gravity": 0,
+    "TerminalVelocityAir": 8,
+    "TerminalVelocityWater": 5,
+    "SticksVertically": false,
+    "Bounciness": 0
+  },
+  "LaunchForce": 8,
+  "Interactions": {
+    "ProjectileHit": {
+      "Cooldown": { "Cooldown": 0.5 },
+      "Interactions": [
+        {
+          "Type": "DamageEntity",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Fire": 25
+            }
+          },
+          "DamageEffects": {
+            "Knockback": {
+              "Force": 3,
+              "RelativeZ": -3,
+              "VelocityY": 1
+            },
+            "WorldParticles": [
+              { "SystemId": "Impact_Fire" },
+              { "SystemId": "Effect_Fire" }
+            ]
+          }
+        },
+        {
+          "Type": "ApplyEffect",
+          "Entity": "Target",
+          "EffectId": "Lava_Burn"
+        },
+        "Spell_SouffleDuDragon_Explosion"
+      ]
+    },
+    "ProjectileMiss": {
+      "Cooldown": { "Cooldown": 0 },
+      "Interactions": [
+        {
+          "Type": "RemoveEntity",
+          "Entity": "User"
+        }
+      ]
+    }
+  }
+}

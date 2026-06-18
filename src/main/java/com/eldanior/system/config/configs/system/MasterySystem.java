@@ -41,7 +41,7 @@ public class MasterySystem extends EntityTickingSystem<EntityStore> {
         if (inv == null) return;
 
         short currentSlot = inv.getActiveHotbarSlot();
-        ItemStack heldItem = inv.getItemInHand();
+        ItemStack heldItem = inv.getActiveHotbarItem();
 
         if (heldItem != null && !heldItem.isEmpty()) {
             WeaponMastery required = getWeaponMastery(heldItem);
@@ -98,7 +98,12 @@ public class MasterySystem extends EntityTickingSystem<EntityStore> {
         String itemId = item.getItemId();
         for (var skill : com.eldanior.system.skills.SkillManager.getAllSkills()) {
             if (itemId.equals(skill.catalystId())) {
-                return !data.getUnlockedSkills().contains(skill.skillId());
+                // Vérifié dans les skills appris
+                if (data.getUnlockedSkills().contains(skill.skillId())) return false;
+                // Vérifié dans les skills actifs de la classe
+                var classModel = com.eldanior.system.classes.ClassManager.get(data.getPlayerClassId());
+                if (classModel != null && classModel.getActiveSkillIds().contains(skill.skillId())) return false;
+                return true;
             }
         }
         return false;

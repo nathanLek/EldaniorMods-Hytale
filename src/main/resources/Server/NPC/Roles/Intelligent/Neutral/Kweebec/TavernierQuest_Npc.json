@@ -1,5 +1,6 @@
 {
   "Type": "Generic",
+  "Appearance": "Kweebec_Sapling",
   "Parameters": {
     "Invulnerable": {
       "Value": true,
@@ -28,6 +29,7 @@
   "MotionControllerList": [
     {
       "Type": "Walk",
+      "MinWalkSpeed": 0.005,
       "MaxWalkSpeed": 0.01,
       "Gravity": 10,
       "RunThreshold": 0.3,

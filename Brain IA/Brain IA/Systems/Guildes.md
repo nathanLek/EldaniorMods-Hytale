@@ -10,7 +10,7 @@
 | Role | Permissions |
 |------|-------------|
 | CHEF | Tout (invite, kick, promote, disband, tresorerie) |
-| OFFICER | Invite, kick |
+| OFFICER | Invite (le kick est reserve au Chef uniquement dans le code) |
 | MEMBER | Acces basique |
 
 ## Commandes
@@ -38,6 +38,17 @@
 - Les Comtes gerent les villes via leur guilde
 - `/es parcel assignguild <guildId> _` assigne une guilde a une ville
 - Les taxes de la ville alimentent la tresorerie de la guilde
+
+## Stats de guilde (Guild.java)
+- `totalMobKills` — kills de mobs cumules
+- `totalPlayerKills` — kills de joueurs cumules
+- `totalDeaths` — morts cumulees
+- `treasury` — tresorerie
+- `contribution` — contribution des membres
+
+## Limitations connues
+- **Pas de persistence** : les guildes sont perdues au restart serveur (bug connu, non corrige)
+- **Pas de limite de membres** : une guilde est techniquement illimitee
 
 ## Fichiers cles
 - `guild/GuildManager.java` - Registre des guildes

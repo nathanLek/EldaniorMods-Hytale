@@ -5,7 +5,7 @@
 ## Acces
 Commande `/es system` → ouvre le menu principal
 
-## Onglets (16 total)
+## Onglets (17 total)
 
 | Onglet | Visible pour | Couleur |
 |--------|-------------|---------|
@@ -23,8 +23,12 @@ Commande `/es system` → ouvre le menu principal
 | Black Market | PK ou Admin | Standard |
 | Territoires | Nobles (Roi/Marquis/Duc/Comte) ou Admin | Marron |
 | Proprietes | Tous | Standard |
-| Echanges | Marchands ou Admin | Or |
+| Echanges | Marchands, Dragon ou Admin | Or |
+| Wiki | Tous | Standard |
 | Admin | Permission setlevel | Rouge |
+
+### WikiTab (13 pages)
+Onglet encyclopedique accessible a tous, contenant : General, Leveling, Groupe, Duel, Echange, Guilde, Famille, Noblesse, Territoires, Classes, Competences, Titres, Admin.
 
 ## Architecture technique
 - `SystemScreen.java` extends `InteractiveCustomUIPage`
@@ -48,7 +52,7 @@ Utilise dans Proprietes et Territoires :
 ## Fichiers cles
 - `gui/SystemScreen.java` - Controleur principal (~1000 lignes)
 - `gui/SystemCommand.java` - Commande /es system
-- `gui/tabs/*.java` - 16 onglets
+- `gui/tabs/*.java` - 17 onglets (dont WikiTab.java)
 - `Common/UI/Custom/System/SystemPage.ui` - Layout
 
 ## Liens

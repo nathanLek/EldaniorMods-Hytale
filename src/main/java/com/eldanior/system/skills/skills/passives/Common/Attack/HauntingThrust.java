@@ -16,43 +16,47 @@ import java.util.UUID;
 public class HauntingThrust implements IPassiveCombatSkill {
 
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
+    private static final float STACK_BONUS = 0.03f;           // +3% par stack
+    private static final float STACK_BONUS_MASTERED = 0.033f;  // +3.3% par stack si maîtrisé
+    private static final int MAX_STACKS = 5;
+
+    private boolean lastProc = false;
 
     @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+    public boolean didProc() { return lastProc; }
 
-        // 1. Récupérer l'UUID de la victime
+    @Override
+    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        lastProc = false;
+
         UUIDComponent victimUUIDComp = store.getComponent(victimRef, UUIDComponent.getComponentType());
         if (victimUUIDComp == null) return;
         UUID currentVictimUUID = victimUUIDComp.getUuid();
 
-        // 2. Vérifier si c'est la même cible
-        if (currentVictimUUID.equals(attackerData.getLastVictimUUID())) {
+        float bonus = mastered ? STACK_BONUS_MASTERED : STACK_BONUS;
 
+        if (currentVictimUUID.equals(attackerData.getLastVictimUUID())) {
             int stacks = attackerData.getHauntingThrustStacks();
-            if (stacks < 5) {
+            if (stacks < MAX_STACKS) {
                 stacks++;
                 attackerData.setHauntingThrustStacks(stacks);
             }
 
-            float bonusMultiplier = 1.0f + (stacks * 0.03f);
+            float bonusMultiplier = 1.0f + (stacks * bonus);
             damage.setAmount(damage.getAmount() * bonusMultiplier);
+            lastProc = true;
 
+            int percentDisplay = (int)(stacks * bonus * 100);
             if (attackerRef != null) {
                 PlayerRef playerRef = store.getComponent(attackerRef, PlayerRef.getComponentType());
-
                 if (playerRef != null) {
-                    NotificationHelper.sendNotification(playerRef, "<color:white>Estocade Obsédante : (+ " + (stacks * 3) + "%) dégâts</color>", NotificationStyle.Success);
+                    NotificationHelper.sendNotification(playerRef, "<color:white>Estocade Obsédante : (+" + percentDisplay + "%) dégâts</color>", NotificationStyle.Success);
                 }
             }
-
-            LOGGER.atInfo().log("[Skill] Estocade Obsédante : Stack " + stacks + " (+" + (stacks * 3) + "%)");
-
+            LOGGER.atInfo().log("[Skill] Estocade Obsédante : Stack " + stacks + " (+" + percentDisplay + "%)");
         } else {
-            // Nouvelle cible : on reset les stacks à 1
             attackerData.setLastVictimUUID(currentVictimUUID);
             attackerData.setHauntingThrustStacks(1);
-            // On applique quand même le premier stack de 3% ?
-            // Ou on reste à 0% pour le premier coup, à toi de choisir l'équilibrage !
         }
     }
 }

@@ -1,0 +1,30 @@
+{
+  "Id": "skill_page_coeur_de_glace",
+  "TranslationProperties": {
+    "Name": "Parchemin : Coeur de Glace",
+    "Description": "Un parchemin ancien contenant les secrets de l'invocation d'un coeur de glace. Utilisez-le pour apprendre ce sort."
+  },
+  "Icon": "Icons/ItemsGenerated/Recipe_Page.png",
+  "Quality": "Legendary",
+  "Categories": [
+    "Eldanior_System.Parchemin"
+  ],
+  "Tags": {
+    "Type": [
+      "Item",
+      "Consumable"
+    ]
+  },
+  "MaxStack": 1,
+  "PlayerAnimationsId": "Item",
+  "Model": "Items/Consumables/Recipes/Recipe.blockymodel",
+  "Texture": "Items/Consumables/Recipes/Recipe_Texture.png",
+  "IconProperties": {
+    "Scale": 0.76,
+    "Rotation": [ 135, 135, 0 ],
+    "Translation": [ -1, 5 ]
+  },
+  "Interactions": {
+    "Use": "Root_ConsumableItemSkillInteraction"
+  }
+}

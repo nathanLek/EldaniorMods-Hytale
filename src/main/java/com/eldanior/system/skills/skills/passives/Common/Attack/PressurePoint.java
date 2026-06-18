@@ -7,39 +7,45 @@ import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.packets.interface_.NotificationStyle;
 import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
+import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatsModule;
 import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
-import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
-
 import java.util.Objects;
-
 
 public class PressurePoint implements IPassiveCombatSkill {
 
-    @Override
-    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
+    private static final float BONUS = 1.15f;
+    private static final float BONUS_MASTERED = 1.165f;
+    private static final float HP_THRESHOLD = 0.90f;
 
-        // 1. On récupère les stats de la VICTIME
+    private boolean lastProc = false;
+
+    @Override
+    public boolean didProc() { return lastProc; }
+
+    @Override
+    public void onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef, boolean mastered) {
+        lastProc = false;
+
         EntityStatMap victimStats = store.getComponent(victimRef, EntityStatsModule.get().getEntityStatMapComponentType());
         if (victimStats == null) return;
 
-        // 2. On vérifie sa vie actuelle et max
         float currentHealth = Objects.requireNonNull(victimStats.get(DefaultEntityStatTypes.getHealth())).get();
         float maxHealth = Objects.requireNonNull(victimStats.get(DefaultEntityStatTypes.getHealth())).getMax();
 
-        // 3. Si la cible est à plus de 90% de sa vie
-        if (currentHealth >= (maxHealth * 0.90f)) {
-            float oldDamage = damage.getAmount();
-            damage.setAmount(oldDamage * 1.15f); // +15% de bonus
+        if (currentHealth >= (maxHealth * HP_THRESHOLD)) {
+            lastProc = true;
+            float multiplier = mastered ? BONUS_MASTERED : BONUS;
+            damage.setAmount(damage.getAmount() * multiplier);
 
+            int percent = mastered ? 16 : 15;
             if (attackerRef != null) {
                 PlayerRef playerRef = store.getComponent(attackerRef, PlayerRef.getComponentType());
-
                 if (playerRef != null) {
-                    NotificationHelper.sendNotification(playerRef, "<color:white>Point de Pression : +15% dégâts</color>", NotificationStyle.Success);
+                    NotificationHelper.sendNotification(playerRef, "<color:white>Point de Pression : +" + percent + "% dégâts</color>", NotificationStyle.Success);
                 }
             }
         }

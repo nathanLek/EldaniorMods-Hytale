@@ -1,0 +1,44 @@
+{
+  "Type": "Charging",
+  "Effects": {
+    "ItemAnimationId": "Guard"
+  },
+  "AllowIndefiniteHold": false,
+  "HorizontalSpeedMultiplier": 0.0,
+  "Next": {
+    "1": {
+      "Type": "StatsCondition",
+      "Costs": { "Mana": 400 },
+      "RunTime": 0.1,
+      "Next": {
+        "Type": "Serial",
+        "Interactions": [
+          { "Type": "ChangeStat", "StatModifiers": { "Mana": -400 } },
+          { "Type": "ApplyEffect", "EffectId": "Magic_Shield" },
+          {
+            "Type": "Simple",
+            "RunTime": 10.0,
+            "Effects": {
+              "ItemAnimationId": "Guard",
+              "MovementEffects": { "DisableAll": true }
+            }
+          },
+          {
+            "Type": "Simple",
+            "RunTime": 0.1,
+            "Effects": { "ClearAnimationOnFinish": true }
+          }
+        ]
+      },
+      "Failed": {
+        "Type": "Simple",
+        "RunTime": 0.5,
+        "Effects": {
+          "ItemAnimationId": "Interact",
+          "WorldSoundEventId": "SFX_Bow_No_Ammo",
+          "CameraEffect": "Mace_Explode"
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,7 @@
 package com.eldanior.system.titles;
 
 import com.eldanior.system.config.Player.PlayerLevelData;
+import com.eldanior.system.config.configs.Rarity;
 import com.eldanior.system.titles.definitions.*;
 import com.eldanior.system.titles.models.TitleModel;
 
@@ -559,6 +560,53 @@ public class TitleManager {
         register(new DungeonWarrior());
         register(new WorldExplorer());
         register(new UltimateExplorer());
+
+        // ========== CRAFT MASTERY (9 metiers x 4 paliers = 36 titres) ==========
+        // Cuisine
+        register(new CraftMasteryTitle("craft_cuisine_apprenti", "Apprenti Cuisinier", "Atteindre 500 procs en Cuisine.", Rarity.COMMON, "CRAFT_CUISINE", 500));
+        register(new CraftMasteryTitle("craft_cuisine_compagnon", "Compagnon Cuisinier", "Atteindre 2000 procs en Cuisine.", Rarity.RARE, "CRAFT_CUISINE", 2000));
+        register(new CraftMasteryTitle("craft_cuisine_expert", "Expert Cuisinier", "Atteindre 5000 procs en Cuisine.", Rarity.EPIC, "CRAFT_CUISINE", 5000));
+        register(new CraftMasteryTitle("craft_cuisine_maitre", "Maitre Cuisinier", "Maitriser la Cuisine.", Rarity.LEGENDARY, "CRAFT_CUISINE", 10000));
+        // Fonderie
+        register(new CraftMasteryTitle("craft_fonderie_apprenti", "Apprenti Fondeur", "Atteindre 500 procs en Fonderie.", Rarity.COMMON, "CRAFT_FONDERIE", 500));
+        register(new CraftMasteryTitle("craft_fonderie_compagnon", "Compagnon Fondeur", "Atteindre 2000 procs en Fonderie.", Rarity.RARE, "CRAFT_FONDERIE", 2000));
+        register(new CraftMasteryTitle("craft_fonderie_expert", "Expert Fondeur", "Atteindre 5000 procs en Fonderie.", Rarity.EPIC, "CRAFT_FONDERIE", 5000));
+        register(new CraftMasteryTitle("craft_fonderie_maitre", "Maitre Fondeur", "Maitriser la Fonderie.", Rarity.LEGENDARY, "CRAFT_FONDERIE", 10000));
+        // Armurerie
+        register(new CraftMasteryTitle("craft_armurerie_apprenti", "Apprenti Armurier", "Atteindre 500 procs en Armurerie.", Rarity.COMMON, "CRAFT_ARMURERIE", 500));
+        register(new CraftMasteryTitle("craft_armurerie_compagnon", "Compagnon Armurier", "Atteindre 2000 procs en Armurerie.", Rarity.RARE, "CRAFT_ARMURERIE", 2000));
+        register(new CraftMasteryTitle("craft_armurerie_expert", "Expert Armurier", "Atteindre 5000 procs en Armurerie.", Rarity.EPIC, "CRAFT_ARMURERIE", 5000));
+        register(new CraftMasteryTitle("craft_armurerie_maitre", "Maitre Armurier", "Maitriser l'Armurerie.", Rarity.LEGENDARY, "CRAFT_ARMURERIE", 10000));
+        // Forge d'Armes
+        register(new CraftMasteryTitle("craft_forge_apprenti", "Apprenti Forgeron", "Atteindre 500 procs en Forge d'Armes.", Rarity.COMMON, "CRAFT_FORGE_ARMES", 500));
+        register(new CraftMasteryTitle("craft_forge_compagnon", "Compagnon Forgeron", "Atteindre 2000 procs en Forge d'Armes.", Rarity.RARE, "CRAFT_FORGE_ARMES", 2000));
+        register(new CraftMasteryTitle("craft_forge_expert", "Expert Forgeron", "Atteindre 5000 procs en Forge d'Armes.", Rarity.EPIC, "CRAFT_FORGE_ARMES", 5000));
+        register(new CraftMasteryTitle("craft_forge_maitre", "Maitre Forgeron", "Maitriser la Forge d'Armes.", Rarity.LEGENDARY, "CRAFT_FORGE_ARMES", 10000));
+        // Tannerie
+        register(new CraftMasteryTitle("craft_tannerie_apprenti", "Apprenti Tanneur", "Atteindre 500 procs en Tannerie.", Rarity.COMMON, "CRAFT_TANNERIE", 500));
+        register(new CraftMasteryTitle("craft_tannerie_compagnon", "Compagnon Tanneur", "Atteindre 2000 procs en Tannerie.", Rarity.RARE, "CRAFT_TANNERIE", 2000));
+        register(new CraftMasteryTitle("craft_tannerie_expert", "Expert Tanneur", "Atteindre 5000 procs en Tannerie.", Rarity.EPIC, "CRAFT_TANNERIE", 5000));
+        register(new CraftMasteryTitle("craft_tannerie_maitre", "Maitre Tanneur", "Maitriser la Tannerie.", Rarity.LEGENDARY, "CRAFT_TANNERIE", 10000));
+        // Alchimie
+        register(new CraftMasteryTitle("craft_alchimie_apprenti", "Apprenti Alchimiste", "Atteindre 500 procs en Alchimie.", Rarity.COMMON, "CRAFT_ALCHIMIE", 500));
+        register(new CraftMasteryTitle("craft_alchimie_compagnon", "Compagnon Alchimiste", "Atteindre 2000 procs en Alchimie.", Rarity.RARE, "CRAFT_ALCHIMIE", 2000));
+        register(new CraftMasteryTitle("craft_alchimie_expert", "Expert Alchimiste", "Atteindre 5000 procs en Alchimie.", Rarity.EPIC, "CRAFT_ALCHIMIE", 5000));
+        register(new CraftMasteryTitle("craft_alchimie_maitre", "Maitre Alchimiste", "Maitriser l'Alchimie.", Rarity.LEGENDARY, "CRAFT_ALCHIMIE", 10000));
+        // Scierie
+        register(new CraftMasteryTitle("craft_scierie_apprenti", "Apprenti Bucheron", "Atteindre 500 procs en Scierie.", Rarity.COMMON, "CRAFT_SCIERIE", 500));
+        register(new CraftMasteryTitle("craft_scierie_compagnon", "Compagnon Bucheron", "Atteindre 2000 procs en Scierie.", Rarity.RARE, "CRAFT_SCIERIE", 2000));
+        register(new CraftMasteryTitle("craft_scierie_expert", "Expert Bucheron", "Atteindre 5000 procs en Scierie.", Rarity.EPIC, "CRAFT_SCIERIE", 5000));
+        register(new CraftMasteryTitle("craft_scierie_maitre", "Maitre Bucheron", "Maitriser la Scierie.", Rarity.LEGENDARY, "CRAFT_SCIERIE", 10000));
+        // Agriculture
+        register(new CraftMasteryTitle("craft_agriculture_apprenti", "Apprenti Fermier", "Atteindre 500 procs en Agriculture.", Rarity.COMMON, "CRAFT_AGRICULTURE", 500));
+        register(new CraftMasteryTitle("craft_agriculture_compagnon", "Compagnon Fermier", "Atteindre 2000 procs en Agriculture.", Rarity.RARE, "CRAFT_AGRICULTURE", 2000));
+        register(new CraftMasteryTitle("craft_agriculture_expert", "Expert Fermier", "Atteindre 5000 procs en Agriculture.", Rarity.EPIC, "CRAFT_AGRICULTURE", 5000));
+        register(new CraftMasteryTitle("craft_agriculture_maitre", "Maitre Fermier", "Maitriser l'Agriculture.", Rarity.LEGENDARY, "CRAFT_AGRICULTURE", 10000));
+        // Recyclage
+        register(new CraftMasteryTitle("craft_recyclage_apprenti", "Apprenti Recycleur", "Atteindre 500 procs en Recyclage.", Rarity.COMMON, "CRAFT_RECYCLAGE", 500));
+        register(new CraftMasteryTitle("craft_recyclage_compagnon", "Compagnon Recycleur", "Atteindre 2000 procs en Recyclage.", Rarity.RARE, "CRAFT_RECYCLAGE", 2000));
+        register(new CraftMasteryTitle("craft_recyclage_expert", "Expert Recycleur", "Atteindre 5000 procs en Recyclage.", Rarity.EPIC, "CRAFT_RECYCLAGE", 5000));
+        register(new CraftMasteryTitle("craft_recyclage_maitre", "Maitre Recycleur", "Maitriser le Recyclage.", Rarity.LEGENDARY, "CRAFT_RECYCLAGE", 10000));
 
         System.out.println("[Eldanior] " + titles.size() + " titres charges.");
     }

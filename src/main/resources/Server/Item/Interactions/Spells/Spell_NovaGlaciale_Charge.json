@@ -1,0 +1,29 @@
+{
+  "Type": "Charging",
+  "Effects": {
+    "ItemAnimationId": "CastHurlCharging",
+    "WorldSoundEventId": "SFX_Staff_Ice_Shoot",
+    "Particles": [
+      {"SystemId": "Effect_Snow", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.3},
+      {"SystemId": "Rings_Rings_Ice", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.2}
+    ]
+  },
+  "AllowIndefiniteHold": false,
+  "HorizontalSpeedMultiplier": 0.6,
+  "Next": {
+    "1": {
+      "Type": "StatsCondition",
+      "Costs": {"Mana": 300},
+      "RunTime": 0.2,
+      "Next": {
+        "Type": "Parallel",
+        "Interactions": [
+          {"Interactions": [{"Type": "ChangeStat", "StatModifiers": {"Mana": -300}}]},
+          {"Interactions": [{"Type": "ChangeStat", "StatModifiers": {"SignatureEnergy": 1}, "Behaviour": "Set"}]},
+          {"Interactions": [{"Type": "Simple", "RunTime": 0.3, "Effects": {"ItemAnimationId": "CastHurlCharged", "WorldSoundEventId": "SFX_Ice_Break", "Particles": [{"SystemId": "IceBall", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.3}]}}]}
+        ]
+      },
+      "Failed": {"Type": "Simple", "RunTime": 0.3, "Effects": {"ItemAnimationId": "Interact", "WorldSoundEventId": "SFX_Bow_No_Ammo"}}
+    }
+  }
+}

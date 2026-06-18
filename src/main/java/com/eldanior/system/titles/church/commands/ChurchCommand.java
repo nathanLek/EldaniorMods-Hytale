@@ -6,6 +6,7 @@ import com.eldanior.system.titles.church.ChurchManager;
 import com.eldanior.system.titles.church.ChurchRank;
 import com.eldanior.system.config.UUIDExtractor;
 import com.hypixel.hytale.component.ComponentType;
+import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.NameMatching;
@@ -16,6 +17,7 @@ import com.hypixel.hytale.server.core.command.system.basecommands.AbstractAsyncC
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
+import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
@@ -39,244 +41,245 @@ public class ChurchCommand extends AbstractAsyncCommand {
     @Nonnull
     @Override
     public CompletableFuture<Void> executeAsync(@Nonnull CommandContext ctx) {
-        if (!(ctx.sender() instanceof Player sender)) return CompletableFuture.completedFuture(null);
+        Ref<EntityStore> senderEntityRef = ctx.senderAsPlayerRef();
+        if (senderEntityRef == null || !senderEntityRef.isValid()) return CompletableFuture.completedFuture(null);
+
+        Store<EntityStore> senderEntityStore = senderEntityRef.getStore();
+        World world = ((EntityStore) senderEntityStore.getExternalData()).getWorld();
+        if (world == null) return CompletableFuture.completedFuture(null);
 
         String action = this.actionArg.get(ctx);
 
-        switch (action.toLowerCase()) {
-            case "setpope" -> handleSetPope(sender, ctx);
-            case "demote" -> handleDemote(sender, ctx);
-            case "ordain" -> handleOrdain(sender, ctx);
-            case "info" -> handleInfo(sender, ctx);
-            case "status" -> handleStatus(sender);
-            default -> sender.sendMessage(Message.raw("§cUsage : /es church <setpope|demote|ordain|info|status> <joueur>"));
-        }
+        return CompletableFuture.runAsync(() -> {
+            try {
+                PlayerRef senderRef = senderEntityStore.getComponent(senderEntityRef, PlayerRef.getComponentType());
+                Player sender = senderEntityStore.getComponent(senderEntityRef, Player.getComponentType());
+                if (senderRef == null || sender == null) return;
 
-        return CompletableFuture.completedFuture(null);
+                switch (action.toLowerCase()) {
+                    case "setpope" -> handleSetPope(sender, ctx);
+                    case "demote" -> handleDemote(sender, ctx);
+                    case "ordain" -> handleOrdain(sender, ctx);
+                    case "info" -> handleInfo(sender, ctx);
+                    case "status" -> handleStatus(sender);
+                    default -> senderRef.sendMessage(Message.raw("§cUsage : /es church <setpope|demote|ordain|info|status> <joueur>"));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }, world);
     }
 
     // ==================== SET POPE (Admin only) ====================
     private void handleSetPope(Player sender, CommandContext ctx) {
-        if (!sender.hasPermission("eldanior.command.church.setpope")) {
-            sender.sendMessage(Message.raw("§cErreur : Pas de permission (Admin requis)."));
+        if (!sender.getPlayerRef().hasPermission("eldanior.command.church.setpope")) {
+            sender.getPlayerRef().sendMessage(Message.raw("§cErreur : Pas de permission (Admin requis)."));
             return;
         }
 
         String targetName = this.playerArg.get(ctx);
         PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
-        if (targetRef == null) { sender.sendMessage(Message.raw("§cJoueur introuvable.")); return; }
+        if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable.")); return; }
 
-        assert sender.getWorld() != null;
-        CompletableFuture.runAsync(() -> {
-            try {
-                UUID targetUUID = extractUUID(targetRef);
-                PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
-                if (targetPlayer == null) { sender.sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
+        try {
+            UUID targetUUID = extractUUID(targetRef);
+            PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
+            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
 
-                var ref = targetPlayer.getReference();
-                if (ref == null) return;
-                Store<EntityStore> store = ref.getStore();
-                ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
+            var ref = targetPlayer.getReference();
+            if (ref == null) return;
+            Store<EntityStore> store = ref.getStore();
+            ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
 
-                // Retrograder l'ancien pape en Cardinal
-                UUID oldPopeUUID = ChurchManager.getCurrentPopeUUID();
-                if (oldPopeUUID != null && !oldPopeUUID.equals(targetUUID)) {
-                    PlayerRef oldPopeRef = Universe.get().getPlayer(oldPopeUUID);
-                    if (oldPopeRef != null) {
-                        var oldRef = oldPopeRef.getReference();
-                        if (oldRef != null) {
-                            Store<EntityStore> oldStore = oldRef.getStore();
-                            PlayerLevelData oldData = oldStore.getComponent(oldRef, type);
-                            if (oldData != null) {
-                                PlayerLevelData oldCopy = (PlayerLevelData) oldData.clone();
-                                if (oldCopy != null) {
-                                    oldCopy.setChurchRank(ChurchRank.CARDINAL.name());
-                                    oldCopy.setFaith(ChurchRank.CARDINAL.getBaseFaith());
-                                    oldStore.putComponent(oldRef, type, oldCopy);
-                                    oldPopeRef.sendMessage(Message.raw("§eVous avez ete retrogade au rang de §5Cardinal§e."));
-                                }
+            // Retrograder l'ancien pape en Cardinal
+            UUID oldPopeUUID = ChurchManager.getCurrentPopeUUID();
+            if (oldPopeUUID != null && !oldPopeUUID.equals(targetUUID)) {
+                PlayerRef oldPopeRef = Universe.get().getPlayer(oldPopeUUID);
+                if (oldPopeRef != null) {
+                    var oldRef = oldPopeRef.getReference();
+                    if (oldRef != null) {
+                        Store<EntityStore> oldStore = oldRef.getStore();
+                        PlayerLevelData oldData = oldStore.getComponent(oldRef, type);
+                        if (oldData != null) {
+                            PlayerLevelData oldCopy = (PlayerLevelData) oldData.clone();
+                            if (oldCopy != null) {
+                                oldCopy.setChurchRank(ChurchRank.CARDINAL.name());
+                                oldCopy.setFaith(ChurchRank.CARDINAL.getBaseFaith());
+                                oldStore.putComponent(oldRef, type, oldCopy);
+                                oldPopeRef.sendMessage(Message.raw("§eVous avez ete retrogade au rang de §5Cardinal§e."));
                             }
                         }
                     }
                 }
+            }
 
-                PlayerLevelData data = store.getComponent(ref, type);
-                if (data == null) data = new PlayerLevelData();
-                PlayerLevelData copy = (PlayerLevelData) data.clone();
-                if (copy == null) return;
+            PlayerLevelData data = store.getComponent(ref, type);
+            if (data == null) data = new PlayerLevelData();
+            PlayerLevelData copy = (PlayerLevelData) data.clone();
+            if (copy == null) return;
 
-                copy.setChurchRank(ChurchRank.PAPE.name());
-                copy.setFaith(ChurchRank.PAPE.getBaseFaith());
-                store.putComponent(ref, type, copy);
+            copy.setChurchRank(ChurchRank.PAPE.name());
+            copy.setFaith(ChurchRank.PAPE.getBaseFaith());
+            store.putComponent(ref, type, copy);
 
-                ChurchManager.setPope(targetUUID, targetName);
+            ChurchManager.setPope(targetUUID, targetName);
 
-                sender.sendMessage(Message.raw("§a" + targetName + " est maintenant " + ChurchRank.PAPE.getFormattedName() + " §a!"));
-                targetPlayer.sendMessage(Message.raw("§6§lVous etes desormais le " + ChurchRank.PAPE.getFormattedName() + " §6§l!"));
-            } catch (Exception e) { e.printStackTrace(); }
-        }, sender.getWorld());
+            sender.getPlayerRef().sendMessage(Message.raw("§a" + targetName + " est maintenant " + ChurchRank.PAPE.getFormattedName() + " §a!"));
+            targetPlayer.sendMessage(Message.raw("§6§lVous etes desormais le " + ChurchRank.PAPE.getFormattedName() + " §6§l!"));
+        } catch (Exception e) { e.printStackTrace(); }
     }
 
     // ==================== DEMOTE ====================
     private void handleDemote(Player sender, CommandContext ctx) {
-        if (!sender.hasPermission("eldanior.command.church.demote")) {
+        if (!sender.getPlayerRef().hasPermission("eldanior.command.church.demote")) {
             UUID senderUUID;
             try { senderUUID = getSenderUUID(sender); } catch (Exception e) { return; }
             if (senderUUID == null || !senderUUID.equals(ChurchManager.getCurrentPopeUUID())) {
-                sender.sendMessage(Message.raw("§cSeul le Pape ou un Admin peut retrograder.")); return;
+                sender.getPlayerRef().sendMessage(Message.raw("§cSeul le Pape ou un Admin peut retrograder.")); return;
             }
         }
 
         String targetName = this.playerArg.get(ctx);
 
-        assert sender.getWorld() != null;
-        CompletableFuture.runAsync(() -> {
-            try {
-                PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
-                if (targetRef == null) { sender.sendMessage(Message.raw("§cJoueur introuvable.")); return; }
+        try {
+            PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
+            if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable.")); return; }
 
-                UUID targetUUID = extractUUID(targetRef);
-                PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
-                if (targetPlayer == null) { sender.sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
+            UUID targetUUID = extractUUID(targetRef);
+            PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
+            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
 
-                var ref = targetPlayer.getReference();
-                if (ref == null) return;
-                Store<EntityStore> store = ref.getStore();
-                ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
-                PlayerLevelData data = store.getComponent(ref, type);
-                if (data == null) return;
+            var ref = targetPlayer.getReference();
+            if (ref == null) return;
+            Store<EntityStore> store = ref.getStore();
+            ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
+            PlayerLevelData data = store.getComponent(ref, type);
+            if (data == null) return;
 
-                ChurchRank currentRank = ChurchRank.fromString(data.getChurchRank());
-                if (currentRank == null || currentRank == ChurchRank.LAIQUE) {
-                    sender.sendMessage(Message.raw("§cCe joueur est deja Laique.")); return;
-                }
+            ChurchRank currentRank = ChurchRank.fromString(data.getChurchRank());
+            if (currentRank == null || currentRank == ChurchRank.LAIQUE) {
+                sender.getPlayerRef().sendMessage(Message.raw("§cCe joueur est deja Laique.")); return;
+            }
 
-                if (currentRank == ChurchRank.RELIGIEUX) ChurchManager.removeAcolyte(targetUUID);
+            if (currentRank == ChurchRank.RELIGIEUX) ChurchManager.removeAcolyte(targetUUID);
 
-                ChurchRank newRank = currentRank.previous();
-                // Skip SAINT en demote (passer directement de Cardinal a Archeveque au-dessus)
-                PlayerLevelData copy = (PlayerLevelData) data.clone();
-                if (copy == null) return;
+            ChurchRank newRank = currentRank.previous();
+            // Skip SAINT en demote (passer directement de Cardinal a Archeveque au-dessus)
+            PlayerLevelData copy = (PlayerLevelData) data.clone();
+            if (copy == null) return;
 
-                copy.setChurchRank(newRank.name());
-                copy.setFaith(newRank.getBaseFaith());
-                store.putComponent(ref, type, copy);
+            copy.setChurchRank(newRank.name());
+            copy.setFaith(newRank.getBaseFaith());
+            store.putComponent(ref, type, copy);
 
-                sender.sendMessage(Message.raw("§a" + targetName + " retrogade a " + newRank.getFormattedName()));
-                targetPlayer.sendMessage(Message.raw("§cVous avez ete retrogade a " + newRank.getFormattedName()));
-            } catch (Exception e) { e.printStackTrace(); }
-        }, sender.getWorld());
+            sender.getPlayerRef().sendMessage(Message.raw("§a" + targetName + " retrogade a " + newRank.getFormattedName()));
+            targetPlayer.sendMessage(Message.raw("§cVous avez ete retrogade a " + newRank.getFormattedName()));
+        } catch (Exception e) { e.printStackTrace(); }
     }
 
     // ==================== ORDAIN (Ordonner un Religieux) ====================
     private void handleOrdain(Player sender, CommandContext ctx) {
         String targetName = this.playerArg.get(ctx);
 
-        assert sender.getWorld() != null;
-        CompletableFuture.runAsync(() -> {
-            try {
-                UUID senderUUID = getSenderUUID(sender);
-                var senderRef = sender.getReference();
-                if (senderRef == null) return;
-                Store<EntityStore> senderStore = senderRef.getStore();
-                ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
-                PlayerLevelData senderData = senderStore.getComponent(senderRef, type);
-                if (senderData == null) return;
+        try {
+            UUID senderUUID = getSenderUUID(sender);
+            var senderRef = sender.getReference();
+            if (senderRef == null) return;
+            Store<EntityStore> senderStore = senderRef.getStore();
+            ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
+            PlayerLevelData senderData = senderStore.getComponent(senderRef, type);
+            if (senderData == null) return;
 
-                ChurchRank senderRank = ChurchRank.fromString(senderData.getChurchRank());
-                if (senderRank == null || !senderRank.isClergy() || senderRank == ChurchRank.RELIGIEUX) {
-                    sender.sendMessage(Message.raw("§cVous devez etre au moins Pretre pour ordonner.")); return;
-                }
-                if (!ChurchManager.canPromoteAcolyte(senderUUID, senderRank)) {
-                    sender.sendMessage(Message.raw("§cLimite d'acolytes atteinte (" + senderRank.getMaxAcolytes() + " max).")); return;
-                }
+            ChurchRank senderRank = ChurchRank.fromString(senderData.getChurchRank());
+            if (senderRank == null || !senderRank.isClergy() || senderRank == ChurchRank.RELIGIEUX) {
+                sender.getPlayerRef().sendMessage(Message.raw("§cVous devez etre au moins Pretre pour ordonner.")); return;
+            }
+            if (!ChurchManager.canPromoteAcolyte(senderUUID, senderRank)) {
+                sender.getPlayerRef().sendMessage(Message.raw("§cLimite d'acolytes atteinte (" + senderRank.getMaxAcolytes() + " max).")); return;
+            }
 
-                PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
-                if (targetRef == null) { sender.sendMessage(Message.raw("§cJoueur introuvable.")); return; }
+            PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
+            if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable.")); return; }
 
-                UUID targetUUID = extractUUID(targetRef);
-                PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
-                if (targetPlayer == null) { sender.sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
+            UUID targetUUID = extractUUID(targetRef);
+            PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
+            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
 
-                var ref = targetPlayer.getReference();
-                if (ref == null) return;
-                Store<EntityStore> store = ref.getStore();
-                PlayerLevelData data = store.getComponent(ref, type);
-                if (data == null) data = new PlayerLevelData();
+            var ref = targetPlayer.getReference();
+            if (ref == null) return;
+            Store<EntityStore> store = ref.getStore();
+            PlayerLevelData data = store.getComponent(ref, type);
+            if (data == null) data = new PlayerLevelData();
 
-                ChurchRank targetRank = ChurchRank.fromString(data.getChurchRank());
-                if (targetRank != null && targetRank != ChurchRank.LAIQUE) {
-                    sender.sendMessage(Message.raw("§cCe joueur a deja un rang d'eglise.")); return;
-                }
+            ChurchRank targetRank = ChurchRank.fromString(data.getChurchRank());
+            if (targetRank != null && targetRank != ChurchRank.LAIQUE) {
+                sender.getPlayerRef().sendMessage(Message.raw("§cCe joueur a deja un rang d'eglise.")); return;
+            }
 
-                PlayerLevelData copy = (PlayerLevelData) data.clone();
-                if (copy == null) return;
-                copy.setChurchRank(ChurchRank.RELIGIEUX.name());
-                copy.setFaith(ChurchRank.RELIGIEUX.getBaseFaith());
-                store.putComponent(ref, type, copy);
-                ChurchManager.addAcolyte(senderUUID, targetUUID);
+            PlayerLevelData copy = (PlayerLevelData) data.clone();
+            if (copy == null) return;
+            copy.setChurchRank(ChurchRank.RELIGIEUX.name());
+            copy.setFaith(ChurchRank.RELIGIEUX.getBaseFaith());
+            store.putComponent(ref, type, copy);
+            ChurchManager.addAcolyte(senderUUID, targetUUID);
 
-                sender.sendMessage(Message.raw("§a" + targetName + " est maintenant " + ChurchRank.RELIGIEUX.getFormattedName()));
-                targetPlayer.sendMessage(Message.raw("§eVous avez ete ordonne " + ChurchRank.RELIGIEUX.getFormattedName() + " §epar " + sender.getDisplayName() + " !"));
-            } catch (Exception e) { e.printStackTrace(); }
-        }, sender.getWorld());
+            sender.getPlayerRef().sendMessage(Message.raw("§a" + targetName + " est maintenant " + ChurchRank.RELIGIEUX.getFormattedName()));
+            targetPlayer.sendMessage(Message.raw("§eVous avez ete ordonne " + ChurchRank.RELIGIEUX.getFormattedName() + " §epar " + sender.getPlayerRef().getUsername() + " !"));
+        } catch (Exception e) { e.printStackTrace(); }
     }
 
     // ==================== INFO ====================
     private void handleInfo(Player sender, CommandContext ctx) {
         String targetName = this.playerArg.get(ctx);
 
-        assert sender.getWorld() != null;
-        CompletableFuture.runAsync(() -> {
-            try {
-                PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
-                if (targetRef == null) { sender.sendMessage(Message.raw("§cJoueur introuvable.")); return; }
+        try {
+            PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
+            if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable.")); return; }
 
-                UUID targetUUID = extractUUID(targetRef);
-                PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
-                if (targetPlayer == null) { sender.sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
+            UUID targetUUID = extractUUID(targetRef);
+            PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
+            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
 
-                var ref = targetPlayer.getReference();
-                if (ref == null) return;
-                Store<EntityStore> store = ref.getStore();
-                ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
-                PlayerLevelData data = store.getComponent(ref, type);
-                if (data == null) { sender.sendMessage(Message.raw("§cAucune donnee.")); return; }
+            var ref = targetPlayer.getReference();
+            if (ref == null) return;
+            Store<EntityStore> store = ref.getStore();
+            ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
+            PlayerLevelData data = store.getComponent(ref, type);
+            if (data == null) { sender.getPlayerRef().sendMessage(Message.raw("§cAucune donnee.")); return; }
 
-                ChurchRank rank = ChurchRank.fromString(data.getChurchRank());
-                if (rank == null) rank = ChurchRank.LAIQUE;
+            ChurchRank rank = ChurchRank.fromString(data.getChurchRank());
+            if (rank == null) rank = ChurchRank.LAIQUE;
 
-                sender.sendMessage(Message.raw("§6=== Eglise - " + targetName + " ==="));
-                sender.sendMessage(Message.raw("§7Rang : " + rank.getFormattedName()));
-                sender.sendMessage(Message.raw("§7Foi : §e" + data.getFaith()));
+            sender.getPlayerRef().sendMessage(Message.raw("§6=== Eglise - " + targetName + " ==="));
+            sender.getPlayerRef().sendMessage(Message.raw("§7Rang : " + rank.getFormattedName()));
+            sender.getPlayerRef().sendMessage(Message.raw("§7Foi : §e" + data.getFaith()));
 
-                if (rank == ChurchRank.RELIGIEUX) {
-                    UUID master = ChurchManager.getMasterOf(targetUUID);
-                    if (master != null) {
-                        PlayerRef masterRef = Universe.get().getPlayer(master);
-                        String masterName = (masterRef != null) ? masterRef.getUsername() : "Inconnu";
-                        sender.sendMessage(Message.raw("§7Ordonne par : §e" + masterName));
-                    }
+            if (rank == ChurchRank.RELIGIEUX) {
+                UUID master = ChurchManager.getMasterOf(targetUUID);
+                if (master != null) {
+                    PlayerRef masterRef = Universe.get().getPlayer(master);
+                    String masterName = (masterRef != null) ? masterRef.getUsername() : "Inconnu";
+                    sender.getPlayerRef().sendMessage(Message.raw("§7Ordonne par : §e" + masterName));
                 }
+            }
 
-                if (rank.getMaxAcolytes() > 0 && rank != ChurchRank.RELIGIEUX) {
-                    int count = ChurchManager.getAcolytesOf(targetUUID).size();
-                    sender.sendMessage(Message.raw("§7Acolytes : §e" + count + "/" + rank.getMaxAcolytes()));
-                }
-            } catch (Exception e) { e.printStackTrace(); }
-        }, sender.getWorld());
+            if (rank.getMaxAcolytes() > 0 && rank != ChurchRank.RELIGIEUX) {
+                int count = ChurchManager.getAcolytesOf(targetUUID).size();
+                sender.getPlayerRef().sendMessage(Message.raw("§7Acolytes : §e" + count + "/" + rank.getMaxAcolytes()));
+            }
+        } catch (Exception e) { e.printStackTrace(); }
     }
 
     // ==================== STATUS ====================
     private void handleStatus(Player sender) {
         String popeName = ChurchManager.getCurrentPopeName();
-        if (popeName.isEmpty()) { sender.sendMessage(Message.raw("§7Aucun Pape n'a ete nomme.")); return; }
+        if (popeName.isEmpty()) { sender.getPlayerRef().sendMessage(Message.raw("§7Aucun Pape n'a ete nomme.")); return; }
 
-        sender.sendMessage(Message.raw("§6=== Eglise ==="));
-        sender.sendMessage(Message.raw("§6Pape : §f" + popeName));
+        sender.getPlayerRef().sendMessage(Message.raw("§6=== Eglise ==="));
+        sender.getPlayerRef().sendMessage(Message.raw("§6Pape : §f" + popeName));
         for (ChurchRank rank : new ChurchRank[]{ChurchRank.CARDINAL, ChurchRank.ARCHEVEQUE, ChurchRank.PRETRE}) {
             int remaining = ChurchManager.getRemainingSlots(rank);
-            sender.sendMessage(Message.raw("§7" + rank.getDisplayName() + " : " + rank.getColorCode() + remaining + "/" + rank.getMaxPerChurch() + " places"));
+            sender.getPlayerRef().sendMessage(Message.raw("§7" + rank.getDisplayName() + " : " + rank.getColorCode() + remaining + "/" + rank.getMaxPerChurch() + " places"));
         }
     }
 

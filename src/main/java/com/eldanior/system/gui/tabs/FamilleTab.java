@@ -317,7 +317,7 @@ public class FamilleTab {
                     UUID playerUUID = pRef != null ? com.eldanior.system.config.UUIDExtractor.getUUID(pRef) : null;
                     com.hypixel.hytale.server.core.entity.entities.Player player = store.getComponent(ref,
                             com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
-                    String playerName = player != null ? player.getDisplayName() : "";
+                    String playerName = player != null ? player.getPlayerRef().getUsername() : "";
                     if (playerUUID != null) {
                         parcel.setOwnerUUID(playerUUID);
                         parcel.setOwnerName(playerName);

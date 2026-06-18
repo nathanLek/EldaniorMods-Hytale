@@ -1,0 +1,144 @@
+{
+  "Type": "StatsCondition",
+  "Costs": {
+    "SignatureEnergy": 1
+  },
+  "RunTime": 0.1,
+  "Next": {
+    "Type": "Serial",
+    "Interactions": [
+      {
+        "Type": "ChangeStat",
+        "StatModifiers": {
+          "SignatureEnergy": 0
+        },
+        "Behaviour": "Set"
+      },
+      {
+        "Type": "Parallel",
+        "Interactions": [
+          {
+            "Interactions": [
+              {
+                "Type": "Simple",
+                "RunTime": 8.8,
+                "Effects": {
+                  "ItemAnimationId": "CastPushCharged",
+                  "WorldSoundEventId": "SFX_Staff_Flame_Trap_Loop",
+                  "MovementEffects": {
+                    "DisableAll": true
+                  },
+                  "Particles": [
+                    {
+                      "SystemId": "Flamethrower",
+                      "TargetEntityPart": "Entity",
+                      "TargetNodeName": "Pelvis",
+                      "PositionOffset": { "Z": 13 },
+                      "RotationOffset": { "Yaw": 180 },
+                      "Scale": 4.0
+                    },
+                    {
+                      "SystemId": "Fire_Charge_Charging_Constant",
+                      "TargetEntityPart": "Entity",
+                      "TargetNodeName": "Pelvis",
+                      "Scale": 1.0
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "Interactions": [
+              { "Type": "Selector", "RunTime": 0.2, "Selector": { "Id": "Stab", "TestLineOfSight": true, "ExtendTop": 1.0, "ExtendLeft": 1.0, "ExtendRight": 1.0, "ExtendBottom": 1.0, "StartDistance": 0.1, "EndDistance": 30 },
+                "Effects": {
+                  "Particles": [
+                    { "SystemId": "Flamethrower", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "PositionOffset": { "Z": 13 }, "RotationOffset": { "Yaw": 180 }, "Scale": 4.0 }, { "SystemId": "Effect_Fire", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 3.0 },
+                    { "SystemId": "Torch_Fire", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 3.0 }
+                  ]
+                },
+                "HitEntity": { "Interactions": [
+                  { "Type": "DamageEntity", "DamageCalculator": { "BaseDamage": { "Fire": 25 } }, "DamageEffects": { "Knockback": { "Force": 2, "RelativeZ": -2, "VelocityY": 1 }, "WorldParticles": [{ "SystemId": "Impact_Fire" }, { "SystemId": "Effect_Fire" }] } },
+                  { "Type": "ApplyEffect", "Entity": "Target", "EffectId": "Lava_Burn" }
+                ] }
+              },
+              { "Type": "Simple", "RunTime": 0.4 },
+              { "Type": "Selector", "RunTime": 0.2, "Selector": { "Id": "Stab", "TestLineOfSight": true, "ExtendTop": 1.0, "ExtendLeft": 1.0, "ExtendRight": 1.0, "ExtendBottom": 1.0, "StartDistance": 0.1, "EndDistance": 30 },
+                "Effects": { "Particles": [{ "SystemId": "Flamethrower", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "PositionOffset": { "Z": 13 }, "RotationOffset": { "Yaw": 180 }, "Scale": 4.0 }] },
+                "HitEntity": { "Interactions": [{ "Type": "DamageEntity", "DamageCalculator": { "BaseDamage": { "Fire": 25 } }, "DamageEffects": { "Knockback": { "Force": 2, "RelativeZ": -2, "VelocityY": 1 }, "WorldParticles": [{ "SystemId": "Impact_Fire" }, { "SystemId": "Effect_Fire" }] } }, { "Type": "ApplyEffect", "Entity": "Target", "EffectId": "Lava_Burn" }] }
+              },
+              { "Type": "Simple", "RunTime": 0.4 },
+              { "Type": "Selector", "RunTime": 0.2, "Selector": { "Id": "Stab", "TestLineOfSight": true, "ExtendTop": 1.0, "ExtendLeft": 1.0, "ExtendRight": 1.0, "ExtendBottom": 1.0, "StartDistance": 0.1, "EndDistance": 30 },
+                "Effects": { "Particles": [{ "SystemId": "Flamethrower", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "PositionOffset": { "Z": 13 }, "RotationOffset": { "Yaw": 180 }, "Scale": 4.0 }] },
+                "HitEntity": { "Interactions": [{ "Type": "DamageEntity", "DamageCalculator": { "BaseDamage": { "Fire": 25 } }, "DamageEffects": { "Knockback": { "Force": 2, "RelativeZ": -2, "VelocityY": 1 }, "WorldParticles": [{ "SystemId": "Impact_Fire" }, { "SystemId": "Effect_Fire" }] } }, { "Type": "ApplyEffect", "Entity": "Target", "EffectId": "Lava_Burn" }] }
+              },
+              { "Type": "Simple", "RunTime": 0.4 },
+              { "Type": "Selector", "RunTime": 0.2, "Selector": { "Id": "Stab", "TestLineOfSight": true, "ExtendTop": 1.0, "ExtendLeft": 1.0, "ExtendRight": 1.0, "ExtendBottom": 1.0, "StartDistance": 0.1, "EndDistance": 30 },
+                "Effects": { "Particles": [{ "SystemId": "Flamethrower", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "PositionOffset": { "Z": 13 }, "RotationOffset": { "Yaw": 180 }, "Scale": 4.0 }] },
+                "HitEntity": { "Interactions": [{ "Type": "DamageEntity", "DamageCalculator": { "BaseDamage": { "Fire": 25 } }, "DamageEffects": { "Knockback": { "Force": 2, "RelativeZ": -2, "VelocityY": 1 }, "WorldParticles": [{ "SystemId": "Impact_Fire" }, { "SystemId": "Effect_Fire" }] } }, { "Type": "ApplyEffect", "Entity": "Target", "EffectId": "Lava_Burn" }] }
+              },
+              { "Type": "Simple", "RunTime": 0.4 },
+              { "Type": "Selector", "RunTime": 0.2, "Selector": { "Id": "Stab", "TestLineOfSight": true, "ExtendTop": 1.0, "ExtendLeft": 1.0, "ExtendRight": 1.0, "ExtendBottom": 1.0, "StartDistance": 0.1, "EndDistance": 30 },
+                "Effects": { "Particles": [{ "SystemId": "Flamethrower", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "PositionOffset": { "Z": 13 }, "RotationOffset": { "Yaw": 180 }, "Scale": 4.0 }] },
+                "HitEntity": { "Interactions": [{ "Type": "DamageEntity", "DamageCalculator": { "BaseDamage": { "Fire": 25 } }, "DamageEffects": { "Knockback": { "Force": 2, "RelativeZ": -2, "VelocityY": 1 }, "WorldParticles": [{ "SystemId": "Impact_Fire" }, { "SystemId": "Effect_Fire" }] } }, { "Type": "ApplyEffect", "Entity": "Target", "EffectId": "Lava_Burn" }] }
+              },
+              { "Type": "Simple", "RunTime": 0.4 },
+              { "Type": "Selector", "RunTime": 0.2, "Selector": { "Id": "Stab", "TestLineOfSight": true, "ExtendTop": 1.0, "ExtendLeft": 1.0, "ExtendRight": 1.0, "ExtendBottom": 1.0, "StartDistance": 0.1, "EndDistance": 30 },
+                "Effects": { "Particles": [{ "SystemId": "Flamethrower", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "PositionOffset": { "Z": 13 }, "RotationOffset": { "Yaw": 180 }, "Scale": 4.0 }] },
+                "HitEntity": { "Interactions": [{ "Type": "DamageEntity", "DamageCalculator": { "BaseDamage": { "Fire": 25 } }, "DamageEffects": { "Knockback": { "Force": 2, "RelativeZ": -2, "VelocityY": 1 }, "WorldParticles": [{ "SystemId": "Impact_Fire" }, { "SystemId": "Effect_Fire" }] } }, { "Type": "ApplyEffect", "Entity": "Target", "EffectId": "Lava_Burn" }] }
+              },
+              { "Type": "Simple", "RunTime": 0.4 },
+              { "Type": "Selector", "RunTime": 0.2, "Selector": { "Id": "Stab", "TestLineOfSight": true, "ExtendTop": 1.0, "ExtendLeft": 1.0, "ExtendRight": 1.0, "ExtendBottom": 1.0, "StartDistance": 0.1, "EndDistance": 30 },
+                "Effects": { "Particles": [{ "SystemId": "Flamethrower", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "PositionOffset": { "Z": 13 }, "RotationOffset": { "Yaw": 180 }, "Scale": 4.0 }] },
+                "HitEntity": { "Interactions": [{ "Type": "DamageEntity", "DamageCalculator": { "BaseDamage": { "Fire": 25 } }, "DamageEffects": { "Knockback": { "Force": 2, "RelativeZ": -2, "VelocityY": 1 }, "WorldParticles": [{ "SystemId": "Impact_Fire" }, { "SystemId": "Effect_Fire" }] } }, { "Type": "ApplyEffect", "Entity": "Target", "EffectId": "Lava_Burn" }] }
+              },
+              { "Type": "Simple", "RunTime": 0.4 },
+              { "Type": "Selector", "RunTime": 0.2, "Selector": { "Id": "Stab", "TestLineOfSight": true, "ExtendTop": 1.0, "ExtendLeft": 1.0, "ExtendRight": 1.0, "ExtendBottom": 1.0, "StartDistance": 0.1, "EndDistance": 30 },
+                "Effects": { "Particles": [{ "SystemId": "Flamethrower", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "PositionOffset": { "Z": 13 }, "RotationOffset": { "Yaw": 180 }, "Scale": 4.0 }] },
+                "HitEntity": { "Interactions": [{ "Type": "DamageEntity", "DamageCalculator": { "BaseDamage": { "Fire": 25 } }, "DamageEffects": { "Knockback": { "Force": 2, "RelativeZ": -2, "VelocityY": 1 }, "WorldParticles": [{ "SystemId": "Impact_Fire" }, { "SystemId": "Effect_Fire" }] } }, { "Type": "ApplyEffect", "Entity": "Target", "EffectId": "Lava_Burn" }] }
+              },
+              { "Type": "Simple", "RunTime": 0.4 },
+              { "Type": "Selector", "RunTime": 0.2, "Selector": { "Id": "Stab", "TestLineOfSight": true, "ExtendTop": 1.0, "ExtendLeft": 1.0, "ExtendRight": 1.0, "ExtendBottom": 1.0, "StartDistance": 0.1, "EndDistance": 30 },
+                "Effects": { "Particles": [{ "SystemId": "Flamethrower", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "PositionOffset": { "Z": 13 }, "RotationOffset": { "Yaw": 180 }, "Scale": 4.0 }] },
+                "HitEntity": { "Interactions": [{ "Type": "DamageEntity", "DamageCalculator": { "BaseDamage": { "Fire": 25 } }, "DamageEffects": { "Knockback": { "Force": 2, "RelativeZ": -2, "VelocityY": 1 }, "WorldParticles": [{ "SystemId": "Impact_Fire" }, { "SystemId": "Effect_Fire" }] } }, { "Type": "ApplyEffect", "Entity": "Target", "EffectId": "Lava_Burn" }] }
+              },
+              { "Type": "Simple", "RunTime": 0.4 },
+              { "Type": "Selector", "RunTime": 0.2, "Selector": { "Id": "Stab", "TestLineOfSight": true, "ExtendTop": 1.0, "ExtendLeft": 1.0, "ExtendRight": 1.0, "ExtendBottom": 1.0, "StartDistance": 0.1, "EndDistance": 30 },
+                "Effects": { "Particles": [{ "SystemId": "Flamethrower", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "PositionOffset": { "Z": 13 }, "RotationOffset": { "Yaw": 180 }, "Scale": 4.0 }] },
+                "HitEntity": { "Interactions": [{ "Type": "DamageEntity", "DamageCalculator": { "BaseDamage": { "Fire": 25 } }, "DamageEffects": { "Knockback": { "Force": 2, "RelativeZ": -2, "VelocityY": 1 }, "WorldParticles": [{ "SystemId": "Impact_Fire" }, { "SystemId": "Effect_Fire" }] } }, { "Type": "ApplyEffect", "Entity": "Target", "EffectId": "Lava_Burn" }] }
+              },
+              { "Type": "Simple", "RunTime": 0.4 },
+              { "Type": "Selector", "RunTime": 0.2, "Selector": { "Id": "Stab", "TestLineOfSight": true, "ExtendTop": 1.0, "ExtendLeft": 1.0, "ExtendRight": 1.0, "ExtendBottom": 1.0, "StartDistance": 0.1, "EndDistance": 30 },
+                "Effects": { "Particles": [{ "SystemId": "Flamethrower", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "PositionOffset": { "Z": 13 }, "RotationOffset": { "Yaw": 180 }, "Scale": 4.0 }] },
+                "HitEntity": { "Interactions": [{ "Type": "DamageEntity", "DamageCalculator": { "BaseDamage": { "Fire": 25 } }, "DamageEffects": { "Knockback": { "Force": 2, "RelativeZ": -2, "VelocityY": 1 }, "WorldParticles": [{ "SystemId": "Impact_Fire" }, { "SystemId": "Effect_Fire" }] } }, { "Type": "ApplyEffect", "Entity": "Target", "EffectId": "Lava_Burn" }] }
+              },
+              { "Type": "Simple", "RunTime": 0.4 },
+              { "Type": "Selector", "RunTime": 0.2, "Selector": { "Id": "Stab", "TestLineOfSight": true, "ExtendTop": 1.0, "ExtendLeft": 1.0, "ExtendRight": 1.0, "ExtendBottom": 1.0, "StartDistance": 0.1, "EndDistance": 30 },
+                "Effects": { "Particles": [] },
+                "HitEntity": { "Interactions": [{ "Type": "DamageEntity", "DamageCalculator": { "BaseDamage": { "Fire": 25 } }, "DamageEffects": { "Knockback": { "Force": 2, "RelativeZ": -2, "VelocityY": 1 }, "WorldParticles": [{ "SystemId": "Impact_Fire" }, { "SystemId": "Effect_Fire" }] } }, { "Type": "ApplyEffect", "Entity": "Target", "EffectId": "Lava_Burn" }] }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Type": "Simple",
+        "RunTime": 0.1,
+        "Effects": {
+          "ItemAnimationId": "Interact",
+          "ClearAnimationOnFinish": true,
+          "ClearSoundEventOnFinish": true,
+          "ClearParticlesOnFinish": true
+        }
+      }
+    ]
+  },
+  "Failed": {
+    "Type": "Simple",
+    "RunTime": 0.3,
+    "Effects": {
+      "ItemAnimationId": "Interact",
+      "WorldSoundEventId": "SFX_Bow_No_Ammo"
+    }
+  }
+}

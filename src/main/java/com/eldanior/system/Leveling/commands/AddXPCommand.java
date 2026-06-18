@@ -5,6 +5,7 @@ import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.Leveling.utils.NotificationHelper;
 import com.eldanior.system.config.UUIDExtractor;
 import com.hypixel.hytale.component.ComponentType;
+import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.packets.interface_.NotificationStyle;
 import com.hypixel.hytale.server.core.Message;
@@ -16,6 +17,7 @@ import com.hypixel.hytale.server.core.command.system.basecommands.AbstractAsyncC
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
+import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
@@ -40,35 +42,43 @@ public class AddXPCommand extends AbstractAsyncCommand {
     @Override
     public CompletableFuture<Void> executeAsync(@Nonnull CommandContext ctx) {
 
-        if (!(ctx.sender() instanceof Player sender)) return CompletableFuture.completedFuture(null);
+        Ref<EntityStore> senderEntityRef = ctx.senderAsPlayerRef();
+        if (senderEntityRef == null || !senderEntityRef.isValid()) return CompletableFuture.completedFuture(null);
 
-        if (!sender.hasPermission("eldanior.command.addxp")) {
-            sender.sendMessage(Message.raw("Erreur : Pas de permission."));
-            return CompletableFuture.completedFuture(null);
-        }
+        Store<EntityStore> senderEntityStore = senderEntityRef.getStore();
+        World world = ((EntityStore) senderEntityStore.getExternalData()).getWorld();
+        if (world == null) return CompletableFuture.completedFuture(null);
 
         String playerName = this.playerArg.get(ctx);
         int amount = this.amountArg.get(ctx);
 
-        if (amount <= 0) {
-            sender.sendMessage(Message.raw("Erreur : Le montant doit être positif."));
-            return CompletableFuture.completedFuture(null);
-        }
-
-        PlayerRef targetRef = Universe.get().getPlayerByUsername(playerName, NameMatching.EXACT_IGNORE_CASE);
-        if (targetRef == null) {
-            sender.sendMessage(Message.raw("Erreur : Joueur introuvable."));
-            return CompletableFuture.completedFuture(null);
-        }
-
-        assert sender.getWorld() != null;
         return CompletableFuture.runAsync(() -> {
             try {
-                                UUID targetUUID = UUIDExtractor.getUUID(targetRef);
+                PlayerRef senderRef = senderEntityStore.getComponent(senderEntityRef, PlayerRef.getComponentType());
+                Player sender = senderEntityStore.getComponent(senderEntityRef, Player.getComponentType());
+                if (senderRef == null || sender == null) return;
+
+                if (!senderRef.hasPermission("eldanior.command.addxp")) {
+                    senderRef.sendMessage(Message.raw("Erreur : Pas de permission."));
+                    return;
+                }
+
+                if (amount <= 0) {
+                    senderRef.sendMessage(Message.raw("Erreur : Le montant doit être positif."));
+                    return;
+                }
+
+                PlayerRef targetRef = Universe.get().getPlayerByUsername(playerName, NameMatching.EXACT_IGNORE_CASE);
+                if (targetRef == null) {
+                    senderRef.sendMessage(Message.raw("Erreur : Joueur introuvable."));
+                    return;
+                }
+
+                UUID targetUUID = UUIDExtractor.getUUID(targetRef);
 
                 PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
                 if (targetPlayer == null) {
-                    sender.sendMessage(Message.raw("Erreur : Le joueur doit être connecté."));
+                    sender.getPlayerRef().sendMessage(Message.raw("Erreur : Le joueur doit être connecté."));
                     return;
                 }
 
@@ -94,12 +104,11 @@ public class AddXPCommand extends AbstractAsyncCommand {
                 NotificationHelper.sendNotification(targetPlayer, msgTarget, NotificationStyle.Success);
 
                 String msgSender = "Donné : <color:green>" + amount + " XP</color> à <color:yellow>" + targetPlayer.getUsername() + "</color>";
-                sender.sendMessage(Message.raw(msgSender));
+                sender.getPlayerRef().sendMessage(Message.raw(msgSender));
 
             } catch (Exception e) {
-                sender.sendMessage(Message.raw("Erreur technique : " + e.getMessage()));
                 e.printStackTrace();
             }
-        }, sender.getWorld());
+        }, world);
     }
 }

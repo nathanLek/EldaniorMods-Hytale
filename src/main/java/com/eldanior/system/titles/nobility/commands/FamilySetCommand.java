@@ -8,6 +8,7 @@ import com.eldanior.system.titles.nobility.family.FamilyManager;
 import com.eldanior.system.titles.nobility.family.NobleFamilyModel;
 import com.eldanior.system.config.UUIDExtractor;
 import com.hypixel.hytale.component.ComponentType;
+import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.NameMatching;
@@ -18,6 +19,7 @@ import com.hypixel.hytale.server.core.command.system.basecommands.AbstractAsyncC
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
+import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
@@ -41,40 +43,48 @@ public class FamilySetCommand extends AbstractAsyncCommand {
     @Nonnull
     @Override
     public CompletableFuture<Void> executeAsync(@Nonnull CommandContext ctx) {
-        if (!(ctx.sender() instanceof Player sender)) return CompletableFuture.completedFuture(null);
+        Ref<EntityStore> senderEntityRef = ctx.senderAsPlayerRef();
+        if (senderEntityRef == null || !senderEntityRef.isValid()) return CompletableFuture.completedFuture(null);
 
-        if (!sender.hasPermission("eldanior.command.family.set")) {
-            UUID senderUUID;
-            try { senderUUID = getSenderUUID(sender); } catch (Exception e) { return CompletableFuture.completedFuture(null); }
-            if (senderUUID == null || !senderUUID.equals(NobilityManager.getCurrentKingUUID())) {
-                sender.sendMessage(Message.raw("§cSeul le Roi ou un Admin peut forcer une famille."));
-                return CompletableFuture.completedFuture(null);
-            }
-        }
+        Store<EntityStore> senderEntityStore = senderEntityRef.getStore();
+        World world = ((EntityStore) senderEntityStore.getExternalData()).getWorld();
+        if (world == null) return CompletableFuture.completedFuture(null);
 
         String targetName = this.playerArg.get(ctx);
         String familyId = this.familyArg.get(ctx).toLowerCase();
 
-        NobleFamilyModel family = FamilyManager.get(familyId);
-        if (family == null) {
-            sender.sendMessage(Message.raw("§cFamille '" + familyId + "' inconnue."));
-            sender.sendMessage(Message.raw("§7Disponibles : " + FamilyManager.getAvailableIds()));
-            return CompletableFuture.completedFuture(null);
-        }
-
-        if (FamilyManager.isFamilyTaken(familyId)) {
-            sender.sendMessage(Message.raw("§eAttention : Cette famille est deja prise. Attribution forcee (Admin)."));
-        }
-
-        assert sender.getWorld() != null;
         return CompletableFuture.runAsync(() -> {
             try {
+                PlayerRef senderRef = senderEntityStore.getComponent(senderEntityRef, PlayerRef.getComponentType());
+                Player sender = senderEntityStore.getComponent(senderEntityRef, Player.getComponentType());
+                if (senderRef == null || sender == null) return;
+
+                if (!senderRef.hasPermission("eldanior.command.family.set")) {
+                    UUID senderUUID;
+                    try { senderUUID = getSenderUUID(sender); } catch (Exception e) { return; }
+                    if (senderUUID == null || !senderUUID.equals(NobilityManager.getCurrentKingUUID())) {
+                        senderRef.sendMessage(Message.raw("§cSeul le Roi ou un Admin peut forcer une famille."));
+                        return;
+                    }
+                }
+
+                NobleFamilyModel family = FamilyManager.get(familyId);
+                if (family == null) {
+                    senderRef.sendMessage(Message.raw("§cFamille '" + familyId + "' inconnue."));
+                    senderRef.sendMessage(Message.raw("§7Disponibles : " + FamilyManager.getAvailableIds()));
+                    return;
+                }
+
+                if (FamilyManager.isFamilyTaken(familyId)) {
+                    senderRef.sendMessage(Message.raw("§eAttention : Cette famille est deja prise. Attribution forcee (Admin)."));
+                }
+
                 PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
-                if (targetRef == null) { sender.sendMessage(Message.raw("§cJoueur introuvable.")); return; }
+                if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable.")); return; }
 
                 UUID targetUUID = extractUUID(targetRef);
                 PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
-                if (targetPlayer == null) { sender.sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
+                if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
 
                 var ref = targetPlayer.getReference();
                 if (ref == null) return;
@@ -85,7 +95,7 @@ public class FamilySetCommand extends AbstractAsyncCommand {
 
                 NobilityRank rank = NobilityRank.fromString(data.getNobilityRank());
                 if (rank == null || !rank.isNoble()) {
-                    sender.sendMessage(Message.raw("§cCe joueur n'est pas noble."));
+                    sender.getPlayerRef().sendMessage(Message.raw("§cCe joueur n'est pas noble."));
                     return;
                 }
 
@@ -97,10 +107,10 @@ public class FamilySetCommand extends AbstractAsyncCommand {
 
                 FamilyManager.claimFamily(family.getId());
 
-                sender.sendMessage(Message.raw("§a" + targetName + " est Patriarche de " + family.getFormattedName()));
+                sender.getPlayerRef().sendMessage(Message.raw("§a" + targetName + " est Patriarche de " + family.getFormattedName()));
                 targetPlayer.sendMessage(Message.raw("§eVous etes Patriarche de " + family.getFormattedName() + " §7- §o" + family.getMotto()));
             } catch (Exception e) { e.printStackTrace(); }
-        }, sender.getWorld());
+        }, world);
     }
 
     private UUID extractUUID(PlayerRef playerRef) throws Exception {

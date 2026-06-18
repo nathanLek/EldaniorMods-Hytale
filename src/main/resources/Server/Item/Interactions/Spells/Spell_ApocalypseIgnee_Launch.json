@@ -1,0 +1,86 @@
+{
+  "Type": "StatsCondition",
+  "Costs": { "SignatureEnergy": 1 },
+  "RunTime": 0.1,
+  "Next": {
+    "Type": "Serial",
+    "Interactions": [
+      { "Type": "ChangeStat", "StatModifiers": { "SignatureEnergy": 0 }, "Behaviour": "Set" },
+      { "Type": "ApplyEffect", "EffectId": "Apocalypse_Invulnerability" },
+      { "Type": "ApplyEffect", "EffectId": "Nova_Fire_Aura" },
+      {
+        "Type": "Simple", "RunTime": 2.0,
+        "Effects": {
+          "ItemAnimationId": "CastPushCharging", "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Charge",
+          "CameraEffect": "Mace_Explode", "MovementEffects": { "DisableAll": true },
+          "Particles": [
+            { "SystemId": "Rings_Rings", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 2.0 },
+            { "SystemId": "Mace_Signature_Cast", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 1.5 },
+            { "SystemId": "Fire_Charge_Charging_Constant", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 2.0 },
+            { "SystemId": "E_Sphere_Old", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 0.5 },
+            { "SystemId": "Effect_Fire", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 2.0 }
+          ]
+        }
+      },
+      {
+        "Type": "Parallel",
+        "Interactions": [
+          { "Interactions": [{
+            "Type": "Simple", "RunTime": 6.0,
+            "Effects": { "ItemAnimationId": "CastPushCharged", "WorldSoundEventId": "SFX_Fireball_Death", "MovementEffects": { "DisableAll": true },
+              "Particles": [{ "SystemId": "Fire_Charge_Charging_Constant", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 1.0 }]
+            }
+          }]},
+          { "Interactions": [{ "Type": "Projectile", "Config": "Projectile_Config_Apocalypse_Nova", "Next": { "Type": "Simple", "RunTime": 0.1 } }]},
+          { "Interactions": [
+            { "Type": "Projectile", "Config": "Projectile_Config_ApocalypseIgnee", "Next": { "Type": "Simple", "RunTime": 0.1 } }
+          ]},
+          { "Interactions": [
+            { "Type": "Simple", "RunTime": 0.4 },
+            { "Type": "Projectile", "Config": "Projectile_Config_ApocalypseIgnee_2", "Next": { "Type": "Simple", "RunTime": 0.1 } }
+          ]},
+          { "Interactions": [
+            { "Type": "Simple", "RunTime": 0.8 },
+            { "Type": "Projectile", "Config": "Projectile_Config_ApocalypseIgnee_3", "Next": { "Type": "Simple", "RunTime": 0.1 } }
+          ]},
+          { "Interactions": [
+            { "Type": "Simple", "RunTime": 1.2 },
+            { "Type": "Projectile", "Config": "Projectile_Config_ApocalypseIgnee_4", "Next": { "Type": "Simple", "RunTime": 0.1 } }
+          ]},
+          { "Interactions": [
+            { "Type": "Simple", "RunTime": 1.6 },
+            { "Type": "Projectile", "Config": "Projectile_Config_ApocalypseIgnee_5", "Next": { "Type": "Simple", "RunTime": 0.1 } }
+          ]},
+          { "Interactions": [
+            { "Type": "Simple", "RunTime": 2.0 },
+            { "Type": "Projectile", "Config": "Projectile_Config_ApocalypseIgnee_6", "Next": { "Type": "Simple", "RunTime": 0.1 } }
+          ]},
+          { "Interactions": [
+            { "Type": "Simple", "RunTime": 2.4 },
+            { "Type": "Projectile", "Config": "Projectile_Config_ApocalypseIgnee_7", "Next": { "Type": "Simple", "RunTime": 0.1 } }
+          ]},
+          { "Interactions": [
+            { "Type": "Simple", "RunTime": 2.8 },
+            { "Type": "Projectile", "Config": "Projectile_Config_ApocalypseIgnee_8", "Next": { "Type": "Simple", "RunTime": 0.1 } }
+          ]},
+          { "Interactions": [
+            { "Type": "Simple", "RunTime": 3.2 },
+            { "Type": "Projectile", "Config": "Projectile_Config_ApocalypseIgnee_9", "Next": { "Type": "Simple", "RunTime": 0.1 } }
+          ]},
+          { "Interactions": [
+            { "Type": "Simple", "RunTime": 3.6 },
+            { "Type": "Projectile", "Config": "Projectile_Config_ApocalypseIgnee_10", "Next": { "Type": "Simple", "RunTime": 0.1 } }
+          ]}
+        ]
+      },
+      {
+        "Type": "Simple", "RunTime": 0.1,
+        "Effects": { "ItemAnimationId": "Interact", "ClearAnimationOnFinish": true, "ClearSoundEventOnFinish": true, "ClearParticlesOnFinish": true }
+      }
+    ]
+  },
+  "Failed": {
+    "Type": "Simple", "RunTime": 0.3,
+    "Effects": { "ItemAnimationId": "Interact", "WorldSoundEventId": "SFX_Bow_No_Ammo" }
+  }
+}

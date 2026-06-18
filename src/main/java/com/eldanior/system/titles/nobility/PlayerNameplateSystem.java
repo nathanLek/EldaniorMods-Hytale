@@ -34,7 +34,7 @@ public class PlayerNameplateSystem extends EntityTickingSystem<EntityStore> {
         PlayerLevelData data = store.getComponent(playerRef, type);
         if (data == null) return;
 
-        String playerName = player.getDisplayName();
+        String playerName = player.getPlayerRef().getUsername();
         String nameplate = NobilityManager.buildNameplate(playerName, data);
 
         commandBuffer.putComponent(playerRef, Nameplate.getComponentType(), new Nameplate(nameplate));

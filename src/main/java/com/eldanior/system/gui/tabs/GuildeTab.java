@@ -93,7 +93,7 @@ public class GuildeTab {
                 // Can't leave as chef with members
                 Player player = store.getComponent(ref, Player.getComponentType());
                 if (player != null) {
-                    player.sendMessage(Message.raw("§cTransferez le role de Chef ou dissolvez la guilde."));
+                    player.getPlayerRef().sendMessage(Message.raw("§cTransferez le role de Chef ou dissolvez la guilde."));
                 }
                 return false;
             }
@@ -158,7 +158,7 @@ public class GuildeTab {
         store.putComponent(ref, type, data);
 
         Player player = store.getComponent(ref, Player.getComponentType());
-        if (player != null) player.sendMessage(Message.raw("§e-1000 Or retire de la tresorerie !"));
+        if (player != null) player.getPlayerRef().sendMessage(Message.raw("§e-1000 Or retire de la tresorerie !"));
         return true;
     }
 
@@ -177,7 +177,7 @@ public class GuildeTab {
         guild.addTreasury(1000);
 
         Player player = store.getComponent(ref, Player.getComponentType());
-        if (player != null) player.sendMessage(Message.raw("§a+1000 Or depose dans la tresorerie !"));
+        if (player != null) player.getPlayerRef().sendMessage(Message.raw("§a+1000 Or depose dans la tresorerie !"));
         return true;
     }
 
@@ -216,7 +216,7 @@ public class GuildeTab {
 
         Player player = store.getComponent(ref, Player.getComponentType());
         if (player != null) {
-            player.sendMessage(Message.raw("§aInvitation envoyee a " + targetName));
+            player.getPlayerRef().sendMessage(Message.raw("§aInvitation envoyee a " + targetName));
         }
         targetRef.sendMessage(Message.raw("§eVous etes invite a rejoindre la guilde " + guild.getFormattedName()));
         targetRef.sendMessage(Message.raw("§7Tapez §f/es guild accept _ §7pour accepter."));
@@ -226,7 +226,7 @@ public class GuildeTab {
     private static void populateInviteList(UICommandBuilder ui, Guild guild, UUID myUUID) {
         cachedInviteNames.clear();
 
-        List<PlayerRef> allPlayers = Universe.get().getPlayers();
+        List<PlayerRef> allPlayers = new ArrayList<>(Universe.get().getPlayers());
         Set<UUID> memberUUIDs = guild.getMembers();
 
         for (PlayerRef pRef : allPlayers) {

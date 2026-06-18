@@ -25,6 +25,7 @@ Quetes independantes donnees par des PNJ.
 |-------|---------|------|
 | Duelliste | `SideQuest_Duelliste.java` | Combat/Duel |
 | Explorateur | `SideQuest_Explorateur.java` | Exploration |
+| AncienConseiller | `SecQuest_AncienConseiller.java` | Dialogue/Lore |
 
 ### Caracteristiques
 - Independantes (pas de chaine)
@@ -52,9 +53,8 @@ cooldownMinutes                 // 0 pour non-repetable
 ```
 
 ## Fichiers cles
-- `quest/definitions/main/` — quetes principales
-- `quest/definitions/side/` — quetes secondaires
-- `quest/definitions/info/` — quetes d'information
+- `quest/definitions/principal/` — quetes principales
+- `quest/definitions/secondaire/` — quetes secondaires + info
 - `quest/QuestModel.java` — modele de quete
 
 ## Liens

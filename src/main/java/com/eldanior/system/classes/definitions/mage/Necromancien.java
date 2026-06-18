@@ -13,6 +13,7 @@ public class Necromancien extends ClassModel {
         super("necromancien", "Necromancien", "Le Necromancien puise dans les energies sombres de la mort. Ses maledictions affaiblissent l'ame de ses victimes.",
                 Rarity.COMMON, ClassType.MAGE,
                 List.of(PassiveSkill.SPIRITUAL_SIPHON, PassiveSkill.AWAKENED_MIND, PassiveSkill.LUCKY_STRIKE),
+                List.of("MAIN_DU_TREPAS"),
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
                 List.of("necromancien_noir", "seigneur_des_morts", "invocateur_d_ames"), 400, false,
                 4, 6, 24, 4, 4, 8);

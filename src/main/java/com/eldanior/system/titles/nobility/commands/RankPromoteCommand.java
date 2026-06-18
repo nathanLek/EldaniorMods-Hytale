@@ -7,6 +7,7 @@ import com.eldanior.system.titles.nobility.NobilityRank;
 import com.eldanior.system.titles.nobility.family.FamilyManager;
 import com.eldanior.system.config.UUIDExtractor;
 import com.hypixel.hytale.component.ComponentType;
+import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.NameMatching;
@@ -17,6 +18,7 @@ import com.hypixel.hytale.server.core.command.system.basecommands.AbstractAsyncC
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
+import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
@@ -40,40 +42,48 @@ public class RankPromoteCommand extends AbstractAsyncCommand {
     @Nonnull
     @Override
     public CompletableFuture<Void> executeAsync(@Nonnull CommandContext ctx) {
-        if (!(ctx.sender() instanceof Player sender)) return CompletableFuture.completedFuture(null);
+        Ref<EntityStore> senderEntityRef = ctx.senderAsPlayerRef();
+        if (senderEntityRef == null || !senderEntityRef.isValid()) return CompletableFuture.completedFuture(null);
+
+        Store<EntityStore> senderEntityStore = senderEntityRef.getStore();
+        World world = ((EntityStore) senderEntityStore.getExternalData()).getWorld();
+        if (world == null) return CompletableFuture.completedFuture(null);
 
         String targetName = this.playerArg.get(ctx);
         String rankStr = this.rankArg.get(ctx);
 
-        NobilityRank newRank = NobilityRank.fromString(rankStr);
-        if (newRank == null || newRank == NobilityRank.ROI || newRank == NobilityRank.ROTURIER || newRank == NobilityRank.CHEVALIER) {
-            sender.sendMessage(Message.raw("§cRang invalide. Utilisez : baron, comte, duc, marquis"));
-            return CompletableFuture.completedFuture(null);
-        }
-
-        assert sender.getWorld() != null;
         return CompletableFuture.runAsync(() -> {
             try {
+                PlayerRef senderRef = senderEntityStore.getComponent(senderEntityRef, PlayerRef.getComponentType());
+                Player sender = senderEntityStore.getComponent(senderEntityRef, Player.getComponentType());
+                if (senderRef == null || sender == null) return;
+
+                NobilityRank newRank = NobilityRank.fromString(rankStr);
+                if (newRank == null || newRank == NobilityRank.ROI || newRank == NobilityRank.ROTURIER || newRank == NobilityRank.CHEVALIER) {
+                    senderRef.sendMessage(Message.raw("§cRang invalide. Utilisez : baron, comte, duc, marquis"));
+                    return;
+                }
+
                 UUID senderUUID = getSenderUUID(sender);
                 if (senderUUID == null || !senderUUID.equals(NobilityManager.getCurrentKingUUID())) {
-                    if (!sender.hasPermission("eldanior.command.rank.promote")) {
-                        sender.sendMessage(Message.raw("§cSeul le Roi ou un Admin peut promouvoir."));
+                    if (!sender.getPlayerRef().hasPermission("eldanior.command.rank.promote")) {
+                        sender.getPlayerRef().sendMessage(Message.raw("§cSeul le Roi ou un Admin peut promouvoir."));
                         return;
                     }
                 }
 
                 if (!NobilityManager.canKingPromote(newRank)) {
-                    sender.sendMessage(Message.raw("§cPlus de places pour " + newRank.getFormattedName()
+                    sender.getPlayerRef().sendMessage(Message.raw("§cPlus de places pour " + newRank.getFormattedName()
                             + " §c(" + NobilityManager.getRemainingSlots(newRank) + "/" + newRank.getMaxPerKingdom() + ")"));
                     return;
                 }
 
                 PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
-                if (targetRef == null) { sender.sendMessage(Message.raw("§cJoueur introuvable.")); return; }
+                if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable.")); return; }
 
                 UUID targetUUID = extractUUID(targetRef);
                 PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
-                if (targetPlayer == null) { sender.sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
+                if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
 
                 var ref = targetPlayer.getReference();
                 if (ref == null) return;
@@ -90,7 +100,7 @@ public class RankPromoteCommand extends AbstractAsyncCommand {
 
                 NobilityManager.recordKingPromotion(newRank);
 
-                sender.sendMessage(Message.raw("§a" + targetName + " promu au rang de " + newRank.getFormattedName()));
+                sender.getPlayerRef().sendMessage(Message.raw("§a" + targetName + " promu au rang de " + newRank.getFormattedName()));
                 com.eldanior.system.Leveling.utils.NotificationHelper.showEventTitle(targetPlayer,
                         "PROMOTION NOBLESSE", newRank.getFormattedName(), true);
 
@@ -100,7 +110,7 @@ public class RankPromoteCommand extends AbstractAsyncCommand {
                     targetPlayer.sendMessage(Message.raw("§7Disponibles : §e" + available));
                 }
             } catch (Exception e) { e.printStackTrace(); }
-        }, sender.getWorld());
+        }, world);
     }
 
     private UUID extractUUID(PlayerRef playerRef) throws Exception {

@@ -38,11 +38,12 @@ Les titres peuvent donner :
 
 ## Gestion dans le GUI
 - Onglet **Titres** dans le SystemScreen
-- Liste des titres debloques
-- Bouton pour equiper/desequiper
+- **30 slots max** (`MAX_TITLE_SLOTS = 30`)
+- Liste des titres debloques avec bouton **EQUIPE** (titre actif) / **EQUIPER** (titre inactif)
+- Formatage des bonus : `"FOR +X | VIT +Y"`
 
 ## Deblocage
-- Automatique : certains titres se debloquent quand une condition est remplie
+- Automatique : `TitleCheckSystem` verifie les conditions **toutes les 1 seconde** (polling, pas evenementiel — cause du delai de deblocage pouvant aller jusqu'a 1s)
 - Manuel : via commande admin `/es titleadmin grant <joueur> <titleId>`
 - Quete : recompense de quete
 
@@ -55,6 +56,11 @@ Les titres peuvent donner :
 - `titles/enums/` - Categories et enums
 - `gui/tabs/TitresTab.java` - Onglet GUI
 
+## Note architecturale
+Au niveau code, les systemes **Noblesse**, **Eglise** et **Familles** resident dans le package `titles/` (sous-packages `titles/nobility/`, `titles/church/`, `titles/nobility/family/`). Ce sont des "titres" au sens architectural, mais documentes comme systemes independants dans le Brain IA.
+
 ## Liens
-- [[Systems/Noblesse]] - Rangs de noblesse (separe des titres)
+- [[Systems/Noblesse]] - Rangs de noblesse (package titles/nobility/)
+- [[Systems/Eglise]] - Rangs religieux (package titles/church/)
+- [[Systems/Familles]] - Familles nobles (package titles/nobility/family/)
 - [[Systems/Quetes]] - Titres en recompense

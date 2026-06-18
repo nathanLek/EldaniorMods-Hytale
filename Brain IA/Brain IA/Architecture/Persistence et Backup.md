@@ -38,10 +38,10 @@
 | `duelHistory` | PlayerLevelData | Historique perdu |
 | `cooldowns` | PlayerLevelData | Cooldowns reset |
 | Quetes actives | QuestManager | Progression perdue |
-| Hierarchies (Roi, Pape) | NobilityManager, ChurchManager | Relations perdues |
+| ~~Hierarchies (Roi, Pape)~~ | ~~NobilityManager, ChurchManager~~ | **CORRIGE** — persiste via `saveHierarchies()`/`loadHierarchies()` dans `hierarchies.properties` |
 
-### Timer non annule
-- `autoSaveTimer` dans PersistenceManager n'a pas de `cancel()` au shutdown
+### ~~Timer non annule~~ — CORRIGE
+- `autoSaveTimer` a desormais un `cancel()` dans la methode `shutdown()`
 
 ## Correction proposee
 - Ecriture atomique (fichier temp → rename)

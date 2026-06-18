@@ -27,7 +27,7 @@ public class BlackMarketTab {
     public static void populate(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store) {
         UUID myUUID = getPlayerUUID(ref, store);
         Player playerCheck = store.getComponent(ref, Player.getComponentType());
-        boolean isAdmin = playerCheck != null && playerCheck.hasPermission(EldaniorLogger.ADMIN_PERMISSION);
+        boolean isAdmin = playerCheck != null && playerCheck.getPlayerRef().hasPermission(EldaniorLogger.ADMIN_PERMISSION);
         List<ShopListing> listings = ShopManager.getBlackMarketListings();
 
         int totalPages = Math.max(1, (int) Math.ceil((double) listings.size() / MAX_SLOTS));
@@ -76,14 +76,14 @@ public class BlackMarketTab {
         PlayerLevelData data = store.getComponent(ref, type);
         if (data == null || data.getMoney() < listing.getPrice()) {
             Player p = store.getComponent(ref, Player.getComponentType());
-            if (p != null) p.sendMessage(Message.raw("§cPas assez d'or !"));
+            if (p != null) p.getPlayerRef().sendMessage(Message.raw("§cPas assez d'or !"));
             return false;
         }
 
         Player buyer = store.getComponent(ref, Player.getComponentType());
         if (buyer == null) return false;
         var result = buyer.getInventory().getHotbar().addItemStack(listing.getItem());
-        if (!result.succeeded()) { buyer.sendMessage(Message.raw("§cInventaire plein !")); return false; }
+        if (!result.succeeded()) { buyer.getPlayerRef().sendMessage(Message.raw("§cInventaire plein !")); return false; }
 
         data.removeMoney(listing.getPrice());
         store.putComponent(ref, type, data);
@@ -95,7 +95,7 @@ public class BlackMarketTab {
                 var sStore = sRef.getStore();
                 PlayerLevelData sData = sStore.getComponent(sRef, type);
                 if (sData != null) { sData.addMoney(listing.getPrice()); sStore.putComponent(sRef, type, sData);
-                    sellerRef.sendMessage(Message.raw("§a" + buyer.getDisplayName() + " a achete votre objet (Marche Noir) pour " + listing.getPrice() + " Or !"));
+                    sellerRef.sendMessage(Message.raw("§a" + buyer.getPlayerRef().getUsername() + " a achete votre objet (Marche Noir) pour " + listing.getPrice() + " Or !"));
                 }
             } catch (Exception e) { EldaniorLogger.error("BlackMarketTab", e); }
         } else {
@@ -103,7 +103,7 @@ public class BlackMarketTab {
         }
 
         ShopManager.removeBlackMarketListing(idx);
-        buyer.sendMessage(Message.raw("§aObjet achete au Marche Noir pour " + listing.getPrice() + " Or !"));
+        buyer.getPlayerRef().sendMessage(Message.raw("§aObjet achete au Marche Noir pour " + listing.getPrice() + " Or !"));
         return true;
     }
 
@@ -120,14 +120,14 @@ public class BlackMarketTab {
         if (myUUID == null || me == null) return false;
 
         boolean isOwner = myUUID.equals(listing.getSellerUUID());
-        boolean isAdmin = me.hasPermission(EldaniorLogger.ADMIN_PERMISSION);
+        boolean isAdmin = me.getPlayerRef().hasPermission(EldaniorLogger.ADMIN_PERMISSION);
         if (!isOwner && !isAdmin) return false;
 
         if (isOwner) {
             var result = me.getInventory().getHotbar().addItemStack(listing.getItem());
-            if (!result.succeeded()) { me.sendMessage(Message.raw("§cInventaire plein !")); return false; }
+            if (!result.succeeded()) { me.getPlayerRef().sendMessage(Message.raw("§cInventaire plein !")); return false; }
             ShopManager.removeBlackMarketListing(idx);
-            me.sendMessage(Message.raw("§7Annonce retiree du Marche Noir."));
+            me.getPlayerRef().sendMessage(Message.raw("§7Annonce retiree du Marche Noir."));
         } else {
             PlayerRef sellerRef = com.hypixel.hytale.server.core.universe.Universe.get().getPlayer(listing.getSellerUUID());
             if (sellerRef != null) {
@@ -142,7 +142,7 @@ public class BlackMarketTab {
                 } catch (Exception e) { EldaniorLogger.error("BlackMarketTab", e); }
             }
             ShopManager.removeBlackMarketListing(idx);
-            me.sendMessage(Message.raw("§eAnnonce retiree du Marche Noir (admin)."));
+            me.getPlayerRef().sendMessage(Message.raw("§eAnnonce retiree du Marche Noir (admin)."));
         }
         return true;
     }

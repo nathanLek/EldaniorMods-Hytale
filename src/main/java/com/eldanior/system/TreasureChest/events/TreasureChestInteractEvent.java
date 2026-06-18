@@ -13,7 +13,7 @@ import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.EntityEventSystem;
-import com.hypixel.hytale.math.vector.Vector3i;
+import org.joml.Vector3i;
 import com.hypixel.hytale.protocol.packets.interface_.NotificationStyle;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.event.events.ecs.UseBlockEvent;
@@ -50,14 +50,14 @@ public class TreasureChestInteractEvent extends EntityEventSystem<EntityStore, U
         ItemContainerBlock container = BlockModule.getComponent(
                 ItemContainerBlock.getComponentType(),
                 world,
-                target.getX(), target.getY(), target.getZ()
+                target.x(), target.y(), target.z()
         );
         if (container == null) return;
 
         TreasureChestTemplate template = world.getChunkStore().getStore().getResource(EldaniorSystem.CHEST_TEMPLATE_TYPE);
 
         if (!event.getInteractionType().toString().equals("Use")) return;
-        if (!template.hasTemplate(target.getX(), target.getY(), target.getZ())) return;
+        if (!template.hasTemplate(target.x(), target.y(), target.z())) return;
 
         PlayerChestData playerData = store.getComponent(playerRef, EldaniorSystem.get().getPlayerChestDataType());
         if (playerData == null) {
@@ -66,17 +66,17 @@ public class TreasureChestInteractEvent extends EntityEventSystem<EntityStore, U
         }
 
         String worldName = world.getName();
-        List<ItemStack> savedInventory = playerData.getInventory(target.getX(), target.getY(), target.getZ(), worldName);
-        boolean discovered = playerData.isDiscovered(target.getX(), target.getY(), target.getZ(), worldName);
+        List<ItemStack> savedInventory = playerData.getInventory(target.x(), target.y(), target.z(), worldName);
+        boolean discovered = playerData.isDiscovered(target.x(), target.y(), target.z(), worldName);
 
         SimpleItemContainer itemContainer = container.getItemContainer();
 
         if (savedInventory == null || savedInventory.isEmpty()) {
-            String droplist = template.getDropList(target.getX(), target.getY(), target.getZ());
+            String droplist = template.getDropList(target.x(), target.y(), target.z());
             LootTableConfig table = LootTableConfig.getById(droplist);
 
             long currentTime = System.currentTimeMillis();
-            long lastLootTime = playerData.getLastLootTime(target.getX(), target.getY(), target.getZ(), worldName);
+            long lastLootTime = playerData.getLastLootTime(target.x(), target.y(), target.z(), worldName);
             long cooldownMillis = table.getCooldownMillis();
 
             if (!discovered || (currentTime - lastLootTime) >= cooldownMillis) {
@@ -105,14 +105,21 @@ public class TreasureChestInteractEvent extends EntityEventSystem<EntityStore, U
 
                     shuffleAndFill(itemContainer, finalSelection);
 
-                    playerData.setDiscovered(target.getX(), target.getY(), target.getZ(), worldName, true);
-                    playerData.setInventory(target.getX(), target.getY(), target.getZ(), worldName, finalSelection);
-                    playerData.setLastLootTime(target.getX(), target.getY(), target.getZ(), worldName, currentTime);
+                    playerData.setDiscovered(target.x(), target.y(), target.z(), worldName, true);
+                    playerData.setInventory(target.x(), target.y(), target.z(), worldName, finalSelection);
+                    playerData.setLastLootTime(target.x(), target.y(), target.z(), worldName, currentTime);
                     commandBuffer.replaceComponent(playerRef, EldaniorSystem.get().getPlayerChestDataType(), playerData);
 
                     // Incrementer le compteur de coffres du profil AVANT la quete
                     if (levelData != null) {
                         levelData.addChestDiscovered();
+                        // Progression skills de loot/chance à l'ouverture d'un coffre
+                        for (var passive : levelData.getActivePassives()) {
+                            String pName = passive.name();
+                            if ("GOOD_OMEN".equals(pName) || "TREASURE_HUNTER".equals(pName)) {
+                                levelData.addSkillProc(pName);
+                            }
+                        }
                         commandBuffer.replaceComponent(playerRef, EldaniorSystem.get().getPlayerLevelDataType(), levelData);
                     }
 
@@ -148,7 +155,7 @@ public class TreasureChestInteractEvent extends EntityEventSystem<EntityStore, U
         }
 
         commandBuffer.addComponent(playerRef, EldaniorSystem.OPENED_CONTAINER_TYPE,
-                new OpenedContainerComponent(target.getX(), target.getY(), target.getZ()));
+                new OpenedContainerComponent(target.x(), target.y(), target.z()));
     }
 
     private void fillFixed(SimpleItemContainer itemContainer, List<ItemStack> items) {

@@ -25,6 +25,9 @@ import com.hypixel.hytale.server.core.modules.entity.damage.DamageEventSystem;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
+import com.hypixel.hytale.server.core.modules.entitystats.EntityStatsModule;
+import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
 import com.hypixel.hytale.protocol.packets.interface_.NotificationStyle;
 
 import javax.annotation.Nonnull;
@@ -83,7 +86,7 @@ public class CombatStatsSystem extends DamageEventSystem {
         if (damage.isCancelled()) return;
 
         // 3. Gestion de la Victime (Endurance + Passifs)
-        applyEnduranceDefense(victimRef, store, damage);
+        applyEnduranceDefense(victimRef, store, damage, commandBuffer);
     }
 
     private boolean tryDodge(Ref<EntityStore> victimRef, Store<EntityStore> store, Damage damage) {
@@ -186,7 +189,9 @@ public class CombatStatsSystem extends DamageEventSystem {
         float strengthBonus = StatConfig.STRENGTH_DAMAGE.getFinalValue(attackerData, attackerClass);
         float currentDamage = damage.getAmount() + strengthBonus;
 
-        if (LuckSystem.isCriticalHit(attackerData)) {
+        boolean isCrit = LuckSystem.isCriticalHit(attackerData);
+        attackerData.setLastAttackWasCrit(isCrit);
+        if (isCrit) {
             currentDamage *= CRIT_MULTIPLIER;
             LOGGER.atSevere().log("Coup Critique Donné ===> " + currentDamage);
             // Effet visuel Red_Flash sur la victime lors d'un coup critique
@@ -197,27 +202,60 @@ public class CombatStatsSystem extends DamageEventSystem {
 
         damage.setAmount(currentDamage);
 
-        // Cloner les données pour tracker la consommation de mana
-        boolean manaConsumed = false;
-        PlayerLevelData manaTracker = (PlayerLevelData) attackerData.clone();
+        // Lire le vrai mana depuis le système de stats Hytale (celui qui se régénère)
+        EntityStatMap attackerStatMap = store.getComponent(attackerRef, EntityStatsModule.get().getEntityStatMapComponentType());
+        float realMana = attackerStatMap != null ? attackerStatMap.get(DefaultEntityStatTypes.getMana()).get() : 0;
+
+        // Cloner les données pour tracker procs + cooldowns
+        boolean dataChanged = false;
+        PlayerLevelData tracker = (PlayerLevelData) attackerData.clone();
 
         for (PassiveSkill skill : attackerData.getActivePassives()) {
             if (skill.getLogic() != null) {
-                int manaCost = skill.getManaCost();
-                if (manaCost > 0) {
-                    if (!manaTracker.hasEnoughMana(manaCost)) continue; // Pas assez de mana, skip le skill
-                    manaTracker.consumeMana(manaCost);
-                    manaConsumed = true;
+                // Vérifier le cooldown du skill passif
+                if (skill.getCooldownSeconds() > 0 && !tracker.canCast(skill.getId())) {
+                    LOGGER.atInfo().log("[Passive] " + skill.getId() + " en COOLDOWN — skip (reste " + tracker.getRemainingCooldown(skill.getId()) / 1000 + "s)");
+                    continue;
                 }
-                skill.getLogic().onAttack(damage, attackerData, store, attackerRef, victimRef);
+
+                int manaCost = skill.getManaCost();
+                if (manaCost > 0 && realMana < manaCost) {
+                    LOGGER.atInfo().log("[Passive] " + skill.getId() + " pas assez de MANA (" + (int)realMana + "/" + manaCost + ") — skip");
+                    continue;
+                }
+
+                boolean mastered = tracker.isSkillMastered(skill.getId());
+                skill.getLogic().onAttack(damage, attackerData, store, attackerRef, victimRef, mastered);
+
+                // Le mana n'est consommé QUE si le skill a effectivement proc
+                if (skill.getLogic().didProc()) {
+                    if (manaCost > 0) {
+                        realMana -= manaCost;
+                        attackerStatMap.setStatValue(DefaultEntityStatTypes.getMana(), realMana);
+                    }
+                    tracker.addSkillProc(skill.getId());
+                    LOGGER.atInfo().log("[Passive] " + skill.getId() + " PROC! Mana: " + (int)realMana + " (-" + manaCost + ") | Progression: " + String.format("%.2f", tracker.getSkillProgression(skill.getId())) + "% | Mastered: " + mastered);
+                    if (skill.getCooldownSeconds() > 0) {
+                        tracker.applyCooldown(skill.getId(), skill.getCooldownSeconds());
+                        LOGGER.atInfo().log("[Passive] " + skill.getId() + " COOLDOWN activé: " + skill.getCooldownSeconds() + "s");
+                    }
+                    dataChanged = true;
+                }
+
                 // Effet visuel du skill
                 com.eldanior.system.config.Effects.SkillEffectConfig.applySkillEffects(skill, attackerRef, victimRef, store);
             }
         }
 
-        // Persister la consommation de mana si elle a eu lieu
-        if (manaConsumed) {
-            commandBuffer.putComponent(attackerRef, EldaniorSystem.get().getPlayerLevelDataType(), manaTracker);
+        // Synchroniser les champs transient modifiés par les skills (ex: HauntingThrust stacks)
+        tracker.setLastVictimUUID(attackerData.getLastVictimUUID());
+        tracker.setHauntingThrustStacks(attackerData.getHauntingThrustStacks());
+        tracker.setLastDamageTakenTime(attackerData.getLastDamageTakenTime());
+        tracker.setLastAttackWasCrit(attackerData.wasLastAttackCrit());
+
+        // Persister les changements (procs, cooldowns, stacks)
+        if (dataChanged) {
+            commandBuffer.putComponent(attackerRef, EldaniorSystem.get().getPlayerLevelDataType(), tracker);
         }
 
         // --- TITLE EFFECTS (bonus degats vs mob type) ---
@@ -251,7 +289,7 @@ public class CombatStatsSystem extends DamageEventSystem {
         // Bonus de degats de l'aura retire — l'aura ralentit/paralyse les mobs via DignityAuraSystem
     }
 
-    private void applyEnduranceDefense(Ref<EntityStore> victimRef, Store<EntityStore> store, Damage damage) {
+    private void applyEnduranceDefense(Ref<EntityStore> victimRef, Store<EntityStore> store, Damage damage, CommandBuffer<EntityStore> commandBuffer) {
         PlayerLevelData victimData = store.getComponent(victimRef, EldaniorSystem.get().getPlayerLevelDataType());
         if (victimData == null) return;
 
@@ -268,12 +306,32 @@ public class CombatStatsSystem extends DamageEventSystem {
             attackerRef = entitySource.getRef();
         }
 
+        boolean defenseDataChanged = false;
         for (PassiveSkill skill : victimData.getActivePassives()) {
             if (skill.getLogic() != null) {
-                skill.getLogic().onDefend(damage, victimData, store, attackerRef, victimRef);
+                // Vérifier le cooldown du skill passif
+                if (skill.getCooldownSeconds() > 0 && !victimData.canCast(skill.getId())) continue;
+
+                boolean mastered = victimData.isSkillMastered(skill.getId());
+                skill.getLogic().onDefend(damage, victimData, store, attackerRef, victimRef, mastered);
+
+                // Si le skill a proc : incrémenter progression + appliquer cooldown
+                if (skill.getLogic().didProc()) {
+                    victimData.addSkillProc(skill.getId());
+                    if (skill.getCooldownSeconds() > 0) {
+                        victimData.applyCooldown(skill.getId(), skill.getCooldownSeconds());
+                    }
+                    defenseDataChanged = true;
+                }
+
                 // Effet visuel du skill (pour la defense, l'attaquant et victime sont inverses)
                 com.eldanior.system.config.Effects.SkillEffectConfig.applySkillEffects(skill, victimRef, attackerRef, store);
             }
+        }
+
+        // Persister les procs/cooldowns défensifs
+        if (defenseDataChanged) {
+            commandBuffer.putComponent(victimRef, EldaniorSystem.get().getPlayerLevelDataType(), victimData);
         }
 
         // --- TITLE EFFECTS (reduction degats from mob type) ---

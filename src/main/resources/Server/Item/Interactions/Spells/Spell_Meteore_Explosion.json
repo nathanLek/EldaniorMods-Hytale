@@ -1,0 +1,111 @@
+{
+  "Parent": "Bomb_Explode",
+  "Config": {
+    "DamageBlocks": false,
+    "EntityDamage": 100.0,
+    "EntityDamageRadius": 50,
+    "EntityDamageFalloff": 0.3,
+    "Knockback": {
+      "Type": "Point",
+      "Force": 15,
+      "VelocityType": "Set"
+    }
+  },
+  "Effects": {
+    "WorldSoundEventId": "SFX_Fireball_Death",
+    "LocalSoundEventId": "SFX_Fireball_Death",
+    "CameraEffect": "Mace_Explode",
+    "Particles": [
+      {
+        "SystemId": "Explosion_Big",
+        "TargetEntityPart": "Entity",
+        "Scale": 20.0
+      },
+      {
+        "SystemId": "Explosion_Big",
+        "TargetEntityPart": "Entity",
+        "Scale": 15.0,
+        "PositionOffset": { "X": 5, "Y": 0, "Z": 0 }
+      },
+      {
+        "SystemId": "Explosion_Big",
+        "TargetEntityPart": "Entity",
+        "Scale": 15.0,
+        "PositionOffset": { "X": -5, "Y": 0, "Z": 0 }
+      },
+      {
+        "SystemId": "Explosion_Big",
+        "TargetEntityPart": "Entity",
+        "Scale": 15.0,
+        "PositionOffset": { "X": 0, "Y": 0, "Z": 5 }
+      },
+      {
+        "SystemId": "Explosion_Big",
+        "TargetEntityPart": "Entity",
+        "Scale": 15.0,
+        "PositionOffset": { "X": 0, "Y": 0, "Z": -5 }
+      },
+      {
+        "SystemId": "Hedera_Scream",
+        "TargetEntityPart": "Entity",
+        "Scale": 20.0
+      },
+      {
+        "SystemId": "Effect_Fire",
+        "TargetEntityPart": "Entity",
+        "Scale": 20.0
+      },
+      {
+        "SystemId": "Effect_Fire",
+        "TargetEntityPart": "Entity",
+        "Scale": 15.0,
+        "PositionOffset": { "X": 4, "Y": 0, "Z": 4 }
+      },
+      {
+        "SystemId": "Effect_Fire",
+        "TargetEntityPart": "Entity",
+        "Scale": 15.0,
+        "PositionOffset": { "X": -4, "Y": 0, "Z": -4 }
+      },
+      {
+        "SystemId": "Effect_Fire",
+        "TargetEntityPart": "Entity",
+        "Scale": 15.0,
+        "PositionOffset": { "X": 4, "Y": 0, "Z": -4 }
+      },
+      {
+        "SystemId": "Effect_Fire",
+        "TargetEntityPart": "Entity",
+        "Scale": 15.0,
+        "PositionOffset": { "X": -4, "Y": 0, "Z": 4 }
+      },
+      {
+        "SystemId": "Mace_Signature_Ground_Hit",
+        "TargetEntityPart": "Entity",
+        "Scale": 20.0
+      },
+      {
+        "SystemId": "Torch_Fire",
+        "TargetEntityPart": "Entity",
+        "Scale": 20.0
+      },
+      {
+        "SystemId": "Torch_Fire",
+        "TargetEntityPart": "Entity",
+        "Scale": 15.0,
+        "PositionOffset": { "X": 6, "Y": 0, "Z": 0 }
+      },
+      {
+        "SystemId": "Torch_Fire",
+        "TargetEntityPart": "Entity",
+        "Scale": 15.0,
+        "PositionOffset": { "X": -6, "Y": 0, "Z": 0 }
+      },
+      {
+        "SystemId": "Fire_Charge_Soak1",
+        "TargetEntityPart": "Entity",
+        "Scale": 15.0
+      }
+    ]
+  }
+}

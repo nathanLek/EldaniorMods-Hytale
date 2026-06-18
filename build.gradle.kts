@@ -60,11 +60,16 @@ dependencies {
 
 java {
     toolchain {
-        // Assurez-vous d'avoir Java 21 installé, sinon mettez 17
-        languageVersion.set(JavaLanguageVersion.of(21))
+        languageVersion.set(JavaLanguageVersion.of(25))
     }
     withSourcesJar()
     withJavadocJar()
+}
+
+tasks.withType<JavaCompile> {
+    // Supprime les warnings pour les méthodes Hytale deprecated sans remplacement
+    // (getPlayerRef, getHotbar, getStorage, getActiveHotbarSlot)
+    options.compilerArgs.addAll(listOf("-Xlint:-removal", "-Xlint:-deprecation"))
 }
 
 // --- TÂCHES AUTOMATIQUES ---
@@ -99,7 +104,7 @@ tasks.register<Exec>("runServer") {
 
     val javaToolchains = project.extensions.getByType<JavaToolchainService>()
     val javaLauncher = javaToolchains.launcherFor {
-        languageVersion.set(JavaLanguageVersion.of(21))
+        languageVersion.set(JavaLanguageVersion.of(25))
     }.get()
     executable(javaLauncher.executablePath.asFile.absolutePath)
 

@@ -1,0 +1,61 @@
+{
+  "RenderMode": "Erosion",
+  "EmitOffset": {
+    "X": { "Min": 0, "Max": 1.2 },
+    "Y": { "Min": 0, "Max": 0.5 },
+    "Z": { "Min": 0, "Max": 1.2 }
+  },
+  "ParticleRotationInfluence": "Velocity",
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "MaxConcurrentParticles": 400,
+  "ParticleLifeSpan": { "Min": 3, "Max": 5 },
+  "ParticleRotateWithSpawner": false,
+  "SpawnRate": { "Min": 50, "Max": 50 },
+  "TotalParticles": { "Min": 1200, "Max": 1200 },
+  "InitialVelocity": {
+    "Yaw": { "Min": 90, "Max": 90 },
+    "Pitch": { "Min": 80, "Max": 100 },
+    "Speed": { "Min": 2.5, "Max": 4 }
+  },
+  "Attractors": [
+    {
+      "Position": { "X": 0, "Y": 0, "Z": 0 },
+      "RadialAxis": { "X": 0, "Y": 1, "Z": 0 },
+      "Radius": 0,
+      "RadialAcceleration": -38,
+      "RadialTangentAcceleration": 6,
+      "DampingMultiplier": { "X": 1, "Y": 0.998, "Z": 1 }
+    }
+  ],
+  "Particle": {
+    "Texture": "Particles/Textures/Fire/Fire_Center_Erosion.png",
+    "FrameSize": { "Width": 128, "Height": 128 },
+    "ScaleRatioConstraint": "OneToOne",
+    "Animation": {
+      "0": {
+        "Color": "#ffaa00",
+        "Scale": { "X": { "Min": 0.6, "Max": 1.0 }, "Y": { "Min": 0.6, "Max": 1.0 } },
+        "Opacity": 0.8
+      },
+      "40": {
+        "Color": "#ff4400",
+        "Scale": { "X": { "Min": 0.8, "Max": 1.2 }, "Y": { "Min": 0.8, "Max": 1.2 } },
+        "Opacity": 0.6
+      },
+      "100": {
+        "Color": "#aa1100",
+        "Opacity": 0
+      }
+    },
+    "InitialAnimationFrame": {
+      "Rotation": {
+        "X": { "Min": 0, "Max": 360 },
+        "Y": { "Min": 0, "Max": 0 },
+        "Z": { "Min": 0, "Max": 0 }
+      },
+      "Scale": { "X": { "Min": 0.4, "Max": 0.7 }, "Y": { "Min": 0.4, "Max": 0.7 } },
+      "Opacity": 0.7
+    }
+  }
+}

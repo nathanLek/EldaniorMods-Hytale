@@ -9,8 +9,8 @@ import com.eldanior.system.config.Player.PlayerPositionTracker;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.EntityEventSystem;
-import com.hypixel.hytale.math.vector.Vector3d;
-import com.hypixel.hytale.math.vector.Vector3i;
+import org.joml.Vector3d;
+import org.joml.Vector3i;
 import com.hypixel.hytale.protocol.packets.interface_.NotificationStyle;
 import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType;
 import com.hypixel.hytale.server.core.entity.entities.Player;
@@ -74,7 +74,7 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
 
         String worldName = player.getWorld().getName();
 
-        ParcelData parcel = ParcelManager.getParcelAt(worldName, target.getX(), target.getY(), target.getZ());
+        ParcelData parcel = ParcelManager.getParcelAt(worldName, target.x(), target.y(), target.z());
         if (parcel == null) return;
 
         ParcelType type = parcel.getType();
@@ -98,21 +98,21 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
     private void handleSimpleRegen(Vector3i target, String worldName, ParcelData parcel, World world) {
         String blockName;
         try {
-            blockName = world.getBlockType(target.getX(), target.getY(), target.getZ()).getId();
+            blockName = world.getBlockType(target.x(), target.y(), target.z()).getId();
         } catch (Exception e) {
             EldaniorLogger.error("FarmRegen: impossible de lire le bloc", e);
             return;
         }
         if (blockName == null || blockName.isEmpty()) return;
 
-        BlockPos blockPos = new BlockPos(worldName, target.getX(), target.getY(), target.getZ());
+        BlockPos blockPos = new BlockPos(worldName, target.x(), target.y(), target.z());
         if (pendingSimpleRegen.containsKey(blockPos)) return;
 
         pendingSimpleRegen.put(blockPos, Boolean.TRUE);
         int delaySec = parcel.getRegenDelaySec();
 
         EldaniorLogger.info("[FarmRegen] Bloc casse dans " + parcel.getName() +
-                " a " + target.getX() + "," + target.getY() + "," + target.getZ() +
+                " a " + target.x() + "," + target.y() + "," + target.z() +
                 " block=" + blockName + " delai=" + delaySec + "s");
 
         // Avertissement 10s avant la regen
@@ -122,9 +122,9 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
             try {
                 world.execute(() -> {
                     try {
-                        world.setBlock(target.getX(), target.getY(), target.getZ(), blockName);
+                        world.setBlock(target.x(), target.y(), target.z(), blockName);
                         EldaniorLogger.info("[FarmRegen] Bloc restaure a " +
-                                target.getX() + "," + target.getY() + "," + target.getZ() +
+                                target.x() + "," + target.y() + "," + target.z() +
                                 " block=" + blockName);
                     } catch (Exception e) {
                         EldaniorLogger.error("FarmRegen.setBlock", e);
@@ -149,7 +149,7 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
         }
 
         EldaniorLogger.info("[ForestRegen] Bloc casse dans " + parcel.getName() +
-                " a " + target.getX() + "," + target.getY() + "," + target.getZ() +
+                " a " + target.x() + "," + target.y() + "," + target.z() +
                 " delai=" + parcel.getRegenDelaySec() + "s");
 
         long now = System.currentTimeMillis();

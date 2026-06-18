@@ -1,6 +1,7 @@
 package com.eldanior.system.duel;
 
 import com.eldanior.system.config.UUIDExtractor;
+import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
@@ -10,6 +11,7 @@ import com.hypixel.hytale.server.core.command.system.basecommands.AbstractAsyncC
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
+import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
@@ -31,20 +33,28 @@ public class DuelCommand extends AbstractAsyncCommand {
     @Nonnull
     @Override
     public CompletableFuture<Void> executeAsync(@Nonnull CommandContext ctx) {
-        if (!(ctx.sender() instanceof Player sender)) return CompletableFuture.completedFuture(null);
+        Ref<EntityStore> ref = ctx.senderAsPlayerRef();
+        if (ref == null || !ref.isValid()) return CompletableFuture.completedFuture(null);
+
+        Store<EntityStore> store = ref.getStore();
+        World world = ((EntityStore) store.getExternalData()).getWorld();
+        if (world == null) return CompletableFuture.completedFuture(null);
 
         String action = this.actionArg.get(ctx);
 
-        assert sender.getWorld() != null;
         return CompletableFuture.runAsync(() -> {
             try {
-                UUID senderUUID = getSenderUUID(sender);
+                PlayerRef senderRef = store.getComponent(ref, PlayerRef.getComponentType());
+                Player sender = store.getComponent(ref, Player.getComponentType());
+                if (senderRef == null || sender == null) return;
+
+                UUID senderUUID = UUIDExtractor.getUUID(senderRef);
                 if (senderUUID == null) return;
 
                 switch (action.toLowerCase()) {
                     case "accept" -> {
                         if (!DuelManager.hasPendingChallenge(senderUUID)) {
-                            sender.sendMessage(Message.raw("§cAucun defi en attente."));
+                            sender.getPlayerRef().sendMessage(Message.raw("§cAucun defi en attente."));
                             return;
                         }
 
@@ -53,39 +63,39 @@ public class DuelCommand extends AbstractAsyncCommand {
 
                         PlayerRef challengerRef = Universe.get().getPlayer(challengerUUID);
                         if (challengerRef == null) {
-                            sender.sendMessage(Message.raw("§cLe joueur n'est plus connecte."));
+                            sender.getPlayerRef().sendMessage(Message.raw("§cLe joueur n'est plus connecte."));
                             return;
                         }
 
                         if (DuelManager.isInDuel(challengerUUID) || DuelManager.isInDuel(senderUUID)) {
-                            sender.sendMessage(Message.raw("§cUn des joueurs est deja en duel."));
+                            sender.getPlayerRef().sendMessage(Message.raw("§cUn des joueurs est deja en duel."));
                             return;
                         }
 
                         // Lancer le duel
                         DuelManager.startDuel(senderUUID, challengerUUID);
 
-                        sender.sendMessage(Message.raw("§6§lDUEL COMMENCE ! §7Battez-vous !"));
-                        challengerRef.sendMessage(Message.raw("§6§lDUEL COMMENCE ! §7" + sender.getDisplayName() + " a accepte !"));
+                        sender.getPlayerRef().sendMessage(Message.raw("§6§lDUEL COMMENCE ! §7Battez-vous !"));
+                        challengerRef.sendMessage(Message.raw("§6§lDUEL COMMENCE ! §7" + sender.getPlayerRef().getUsername() + " a accepte !"));
                     }
                     case "decline" -> {
                         if (!DuelManager.hasPendingChallenge(senderUUID)) {
-                            sender.sendMessage(Message.raw("§cAucun defi en attente."));
+                            sender.getPlayerRef().sendMessage(Message.raw("§cAucun defi en attente."));
                             return;
                         }
                         UUID challengerUUID = DuelManager.getPendingChallenger(senderUUID);
                         DuelManager.clearChallenge(senderUUID);
 
-                        sender.sendMessage(Message.raw("§7Defi refuse."));
+                        sender.getPlayerRef().sendMessage(Message.raw("§7Defi refuse."));
                         PlayerRef challengerRef = Universe.get().getPlayer(challengerUUID);
                         if (challengerRef != null) {
-                            challengerRef.sendMessage(Message.raw("§c" + sender.getDisplayName() + " a refuse votre defi."));
+                            challengerRef.sendMessage(Message.raw("§c" + sender.getPlayerRef().getUsername() + " a refuse votre defi."));
                         }
                     }
-                    default -> sender.sendMessage(Message.raw("§cUsage : /es duel <accept|decline>"));
+                    default -> sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es duel <accept|decline>"));
                 }
             } catch (Exception e) { e.printStackTrace(); }
-        }, sender.getWorld());
+        }, world);
     }
 
     private UUID getSenderUUID(Player sender) throws Exception {

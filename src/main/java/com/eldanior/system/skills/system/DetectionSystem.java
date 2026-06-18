@@ -14,7 +14,7 @@ import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
-import com.hypixel.hytale.math.vector.Vector3d;
+import org.joml.Vector3d;
 import com.hypixel.hytale.protocol.packets.interface_.NotificationStyle;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
@@ -134,7 +134,7 @@ public class DetectionSystem extends EntityTickingSystem<EntityStore> {
                             double dz = radar.pos.z - tPos.z;
                             int dist = (int) Math.sqrt((dx * dx) + (dy * dy) + (dz * dz));
 
-                            String playerName = targetPlayer.getDisplayName();
+                            String playerName = targetPlayer.getPlayerRef().getUsername();
                             allTargets.add(new IPassiveCombatSkill.RadarTarget(playerName != null ? playerName : "Joueur", dist, true));
                         }
                     }
@@ -171,6 +171,46 @@ public class DetectionSystem extends EntityTickingSystem<EntityStore> {
                     }
 
                     NotificationHelper.sendNotification(pRef, message, style);
+
+                    // Progression des skills de détection à chaque message radar
+                    if (pData != null) {
+                        boolean hasSixthSense = false;
+                        for (PassiveSkill skill : pData.getActivePassives()) {
+                            String sName = skill.name();
+                            if ("EAGLE_EYE".equals(sName) || "SURVIVAL_INSTINCT".equals(sName)
+                                    || "SIXTH_SENSE".equals(sName)
+                                    || "TRACKER".equals(sName) || "UNIVERSAL_DETECTION".equals(sName)) {
+                                pData.addSkillProc(sName);
+                            }
+                            if ("SIXTH_SENSE".equals(sName)) hasSixthSense = true;
+                        }
+
+                        // SixthSense : détecter les joueurs invisibles à portée
+                        if (hasSixthSense) {
+                            for (Ref<EntityStore> target : radar.detectedPlayers) {
+                                Player targetPlayer = store.getComponent(target, Player.getComponentType());
+                                if (targetPlayer != null) {
+                                    com.hypixel.hytale.server.core.universe.PlayerRef targetPRef =
+                                            store.getComponent(target, com.hypixel.hytale.server.core.universe.PlayerRef.getComponentType());
+                                    if (targetPRef != null) {
+                                        java.util.UUID targetUUID = targetPRef.getUuid();
+                                        InvisibilityManager.InvisType invisType = InvisibilityManager.getInvisType(targetUUID);
+                                        if (invisType == InvisibilityManager.InvisType.PARTIAL) {
+                                            NotificationHelper.sendNotification(pRef,
+                                                    "<color:#aa44ff>Sixieme Sens : presence furtive detectee !</color>",
+                                                    NotificationStyle.Warning);
+                                            pData.addSkillProc("SIXTH_SENSE");
+                                        } else if (invisType == InvisibilityManager.InvisType.TOTAL) {
+                                            NotificationHelper.sendNotification(pRef,
+                                                    "<color:#ff4444>Sixieme Sens : presence invisible detectee !</color>",
+                                                    NotificationStyle.Warning);
+                                            pData.addSkillProc("SIXTH_SENSE");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
             radar.lastMessageTime = now;

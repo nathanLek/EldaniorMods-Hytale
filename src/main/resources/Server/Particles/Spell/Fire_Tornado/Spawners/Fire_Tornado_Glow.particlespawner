@@ -1,0 +1,42 @@
+{
+  "RenderMode": "BlendLinear",
+  "EmitOffset": {
+    "X": { "Min": 0, "Max": 0.8 },
+    "Y": { "Min": 0, "Max": 2 },
+    "Z": { "Min": 0, "Max": 0.8 }
+  },
+  "ParticleRotationInfluence": "None",
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "MaxConcurrentParticles": 200,
+  "ParticleLifeSpan": { "Min": 1, "Max": 2 },
+  "ParticleRotateWithSpawner": false,
+  "SpawnRate": { "Min": 30, "Max": 30 },
+  "TotalParticles": { "Min": 500, "Max": 500 },
+  "InitialVelocity": {
+    "Yaw": { "Min": 0, "Max": 360 },
+    "Pitch": { "Min": 70, "Max": 90 },
+    "Speed": { "Min": 1, "Max": 3 }
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Basic/Glow.png",
+    "FrameSize": { "Width": 64, "Height": 64 },
+    "ScaleRatioConstraint": "OneToOne",
+    "Animation": {
+      "0": {
+        "Color": "#ffcc00",
+        "Scale": { "X": { "Min": 0.3, "Max": 0.6 }, "Y": { "Min": 0.3, "Max": 0.6 } },
+        "Opacity": 1.0
+      },
+      "100": {
+        "Color": "#ff4400",
+        "Scale": { "X": { "Min": 0.1, "Max": 0.2 }, "Y": { "Min": 0.1, "Max": 0.2 } },
+        "Opacity": 0
+      }
+    },
+    "InitialAnimationFrame": {
+      "Scale": { "X": { "Min": 0.2, "Max": 0.4 }, "Y": { "Min": 0.2, "Max": 0.4 } },
+      "Opacity": 0.9
+    }
+  }
+}

@@ -7,10 +7,14 @@ import com.hypixel.hytale.protocol.packets.interface_.NotificationStyle;
 import java.util.List;
 
 public class SurvivalInstinct implements IPassiveCombatSkill {
+
+    private static final float THREAT_BONUS = 1.50f;
+    private static final float THREAT_BONUS_MASTERED = 1.55f;
+
     @Override
     public float getStatMultiplier(StatConfig stat) {
         if (stat == StatConfig.THREAT_AWARENESS) {
-            return 1.50f; // Améliore la déception des menaces proches
+            return THREAT_BONUS;
         }
         return 1.0f;
     }
@@ -25,4 +29,5 @@ public class SurvivalInstinct implements IPassiveCombatSkill {
     public NotificationStyle getRadarStyle() {
         return NotificationStyle.Warning;
     }
+    // Progression gérée par DetectionSystem (chaque message radar)
 }

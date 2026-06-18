@@ -425,7 +425,7 @@ public class TerritoiresTab {
             com.eldanior.system.titles.nobility.NobilityRank nRank =
                     com.eldanior.system.titles.nobility.NobilityRank.fromString(rank);
             if (nRank != null && !com.eldanior.system.titles.nobility.NobilityManager.canKingPromote(nRank)) {
-                player.sendMessage(com.hypixel.hytale.server.core.Message.raw(
+                player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw(
                         "§cLimite atteinte pour le rang " + rank + " !"));
                 return false;
             }
@@ -447,11 +447,11 @@ public class TerritoiresTab {
                 if (nRank != null) {
                     com.eldanior.system.titles.nobility.NobilityManager.recordKingPromotion(nRank);
                 }
-                player.sendMessage(com.hypixel.hytale.server.core.Message.raw(
+                player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw(
                         "§6§lDecret Royal recu ! §7Donnez-le a un joueur pour le nommer §e" + rank));
                 return true;
             } else {
-                player.sendMessage(com.hypixel.hytale.server.core.Message.raw("§cInventaire plein !"));
+                player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§cInventaire plein !"));
             }
         } catch (Exception e) {
             System.err.println("[Territoire] Erreur decret: " + e.getMessage());

@@ -5,7 +5,7 @@ import com.eldanior.system.TreasureChest.components.PlayerChestData;
 import com.eldanior.system.TreasureChest.resources.TreasureChestTemplate;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.math.vector.Vector3i;
+import org.joml.Vector3i;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractPlayerCommand;
@@ -36,7 +36,7 @@ public class DeleteTreasureCommand extends AbstractPlayerCommand {
 
         Vector3i pos = TargetUtil.getTargetBlock(ref, 10.0, store);
         if (pos == null) {
-            executor.sendMessage(Message.raw("§cRegardez le coffre que vous voulez supprimer."));
+            executor.getPlayerRef().sendMessage(Message.raw("§cRegardez le coffre que vous voulez supprimer."));
             return;
         }
 
@@ -44,21 +44,21 @@ public class DeleteTreasureCommand extends AbstractPlayerCommand {
         ItemContainerBlock container = BlockModule.getComponent(
                 ItemContainerBlock.getComponentType(),
                 world,
-                pos.getX(), pos.getY(), pos.getZ()
+                pos.x(), pos.y(), pos.z()
         );
 
         if (container == null) {
-            executor.sendMessage(Message.raw("§cCe bloc n'est pas un conteneur."));
+            executor.getPlayerRef().sendMessage(Message.raw("§cCe bloc n'est pas un conteneur."));
             return;
         }
 
         TreasureChestTemplate template = world.getChunkStore().getStore().getResource(EldaniorSystem.CHEST_TEMPLATE_TYPE);
-        if (template != null && template.hasTemplate(pos.getX(), pos.getY(), pos.getZ())) {
-            template.removeTemplate(pos.getX(), pos.getY(), pos.getZ());
+        if (template != null && template.hasTemplate(pos.x(), pos.y(), pos.z())) {
+            template.removeTemplate(pos.x(), pos.y(), pos.z());
             cleanupPlayerData(executor, pos, world.getName(), store);
-            executor.sendMessage(Message.raw("§aLe coffre au trésor a été supprimé avec succès."));
+            executor.getPlayerRef().sendMessage(Message.raw("§aLe coffre au trésor a été supprimé avec succès."));
         } else {
-            executor.sendMessage(Message.raw("§eCe coffre n'est pas enregistré comme un coffre au trésor."));
+            executor.getPlayerRef().sendMessage(Message.raw("§eCe coffre n'est pas enregistré comme un coffre au trésor."));
         }
     }
 
@@ -69,7 +69,7 @@ public class DeleteTreasureCommand extends AbstractPlayerCommand {
         try {
             allPlayers = storage.getPlayers();
         } catch (Exception e) {
-            executor.sendMessage(Message.raw("§6[Avertissement] Nettoyage partiel : impossible de lire la liste des joueurs hors-ligne."));
+            executor.getPlayerRef().sendMessage(Message.raw("§6[Avertissement] Nettoyage partiel : impossible de lire la liste des joueurs hors-ligne."));
             return;
         }
 
@@ -79,15 +79,15 @@ public class DeleteTreasureCommand extends AbstractPlayerCommand {
             if (targetRef != null && targetRef.isValid()) {
                 PlayerChestData data = store.getComponent(targetRef.getReference(), EldaniorSystem.get().getPlayerChestDataType());
                 if (data != null) {
-                    data.resetChest(pos.getX(), pos.getY(), pos.getZ(), worldName);
+                    data.resetChest(pos.x(), pos.y(), pos.z(), worldName);
                 }
             } else {
                 storage.load(uuid).thenAccept(holder -> {
                     if (holder != null) {
                         PlayerChestData data = holder.getComponent(EldaniorSystem.get().getPlayerChestDataType());
                         if (data != null) {
-                            data.resetChest(pos.getX(), pos.getY(), pos.getZ(), worldName);
-                            storage.save(uuid, holder);
+                            data.resetChest(pos.x(), pos.y(), pos.z(), worldName);
+                            storage.save(uuid, holder, true);
                         }
                     }
                 });

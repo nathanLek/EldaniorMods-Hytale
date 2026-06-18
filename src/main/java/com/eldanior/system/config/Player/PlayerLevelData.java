@@ -88,6 +88,7 @@ public class PlayerLevelData implements Component<EntityStore> {
     private UUID lastVictimUUID;
     private int hauntingThrustStacks;
     private transient long lastDamageTakenTime = 0;
+    private transient boolean lastAttackWasCrit = false;
     private int currentMana = -1; // -1 = pas encore initialisé, sera mis à maxMana au premier accès
 
     private List<String> unlockedSkills = new ArrayList<>();
@@ -97,6 +98,9 @@ public class PlayerLevelData implements Component<EntityStore> {
 
     // Kill tracking par type de mob (ex: "goblin_scrapper" -> 150)
     private Map<String, Integer> mobKills = new HashMap<>();
+
+    // Skill progression : nombre de procs par skill (ex: "PHANTOM_STRIKE" -> 4523)
+    private Map<String, Integer> skillProcs = new HashMap<>();
 
     // Evolution de classe : choix sauvegardés + rerolls
     private String savedEvolutionChoices = ""; // IDs séparés par des virgules (ex: "templier,paladin,berserker")
@@ -135,7 +139,15 @@ public class PlayerLevelData implements Component<EntityStore> {
 
     public int getCurrentMana() {
         if (currentMana < 0) currentMana = getMaxMana();
-        return Math.min(currentMana, getMaxMana());
+        return currentMana;
+    }
+
+    public int getRawCurrentMana() {
+        return currentMana;
+    }
+
+    public void setCurrentMana(int mana) {
+        this.currentMana = Math.max(0, mana);
     }
 
     public boolean hasEnoughMana(float amount) {
@@ -149,7 +161,7 @@ public class PlayerLevelData implements Component<EntityStore> {
 
     public void restoreMana(int amount) {
         if (currentMana < 0) currentMana = getMaxMana();
-        currentMana = Math.min(getMaxMana(), currentMana + amount);
+        currentMana = currentMana + amount;
     }
 
     public boolean canCast(String skillId) {
@@ -165,6 +177,33 @@ public class PlayerLevelData implements Component<EntityStore> {
     public long getRemainingCooldown(String skillId) {
         if (!cooldowns.containsKey(skillId)) return 0;
         return Math.max(0, cooldowns.get(skillId) - System.currentTimeMillis());
+    }
+
+    // --- SKILL PROGRESSION (1 proc = 0.01%, 10000 procs = 100%) ---
+    private static final int PROCS_TO_MASTER = 10000;
+
+    public void addSkillProc(String skillId) {
+        skillProcs.put(skillId, Math.min(PROCS_TO_MASTER, skillProcs.getOrDefault(skillId, 0) + 1));
+    }
+
+    public void setSkillProcs(String skillId, int procs) {
+        skillProcs.put(skillId, Math.min(PROCS_TO_MASTER, Math.max(0, procs)));
+    }
+
+    public int getSkillProcs(String skillId) {
+        return skillProcs.getOrDefault(skillId, 0);
+    }
+
+    public float getSkillProgression(String skillId) {
+        return (float) getSkillProcs(skillId) / PROCS_TO_MASTER * 100f;
+    }
+
+    public boolean isSkillMastered(String skillId) {
+        return getSkillProcs(skillId) >= PROCS_TO_MASTER;
+    }
+
+    public com.eldanior.system.Leveling.CraftTier getCraftTier(String skillId) {
+        return com.eldanior.system.Leveling.CraftTier.fromProcs(getSkillProcs(skillId));
     }
 
     // --- LE CODEC ---
@@ -249,6 +288,26 @@ public class PlayerLevelData implements Component<EntityStore> {
                 }
                 return sb.toString();
             }).add()
+            .append(new KeyedCodec<>("SkillProcs", Codec.STRING), (data, value) -> {
+                data.skillProcs = new HashMap<>();
+                if (value != null && !value.isEmpty()) {
+                    for (String entry : value.split(",")) {
+                        String[] parts = entry.split(":");
+                        if (parts.length == 2) {
+                            try {
+                                data.skillProcs.put(parts[0], Integer.parseInt(parts[1]));
+                            } catch (NumberFormatException e) { /* format invalide */ }
+                        }
+                    }
+                }
+            }, (data) -> {
+                StringBuilder sb = new StringBuilder();
+                for (Map.Entry<String, Integer> e : data.skillProcs.entrySet()) {
+                    if (sb.length() > 0) sb.append(",");
+                    sb.append(e.getKey()).append(":").append(e.getValue());
+                }
+                return sb.toString();
+            }).add()
             .append(new KeyedCodec<>("DuelWins", Codec.INTEGER), (data, v) -> data.duelWins = v, data -> data.duelWins).add()
             .append(new KeyedCodec<>("DuelLosses", Codec.INTEGER), (data, v) -> data.duelLosses = v, data -> data.duelLosses).add()
             .append(new KeyedCodec<>("ForcePK", Codec.BOOLEAN), (data, v) -> data.forcePK = v, data -> data.forcePK).add()
@@ -323,6 +382,7 @@ public class PlayerLevelData implements Component<EntityStore> {
 
         copy.cooldowns = new HashMap<>(this.cooldowns);
         copy.mobKills = new HashMap<>(this.mobKills);
+        copy.skillProcs = new HashMap<>(this.skillProcs);
         copy.savedEvolutionChoices = this.savedEvolutionChoices;
         copy.evolutionRerolls = this.evolutionRerolls;
 
@@ -624,6 +684,8 @@ public class PlayerLevelData implements Component<EntityStore> {
     public void setHauntingThrustStacks(int stacks) { this.hauntingThrustStacks = stacks; }
     public long getLastDamageTakenTime() { return lastDamageTakenTime; }
     public void setLastDamageTakenTime(long time) { this.lastDamageTakenTime = time; }
+    public boolean wasLastAttackCrit() { return lastAttackWasCrit; }
+    public void setLastAttackWasCrit(boolean crit) { this.lastAttackWasCrit = crit; }
 
     // ================= SETTERS =================
     public void setLevel(int level) { this.level = level; }

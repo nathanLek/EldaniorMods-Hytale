@@ -1,0 +1,148 @@
+{
+  "TranslationProperties": {
+    "Name": "Apocalypse Ignée",
+    "Description": "Le sort ultime de pyromagie. Invoquez une pluie de feu celeste qui annihile tout dans la zone d'impact."
+  },
+  "Categories": [
+    "Items.Weapons",
+    "Eldanior_System.Spells"
+  ],
+  "Quality": "Divin",
+  "ItemLevel": 150,
+  "Model": "Items/Weapons/Spellbook/Book.blockymodel",
+  "Texture": "Items/Weapons/Spellbook/Book_Fire_Texture.png",
+  "PlayerAnimationsId": "Spellbook",
+  "Reticle": "DefaultMelee",
+  "Interactions": {
+    "Secondary": "Root_Spell_ApocalypseIgnee_Charge",
+    "Ability1": "Root_Spell_ApocalypseIgnee_Launch"
+  },
+  "InteractionVars": {
+    "Spellbook_Cast_Hurl_Charged": {
+      "Interactions": [
+        {
+          "Parent": "Spellbook_Cast_Hurl_Charged",
+          "Costs": {
+            "Mana": 4000
+          }
+        }
+      ]
+    },
+    "Spellbook_Cast_Hurl_Cost": {
+      "Interactions": [
+        {
+          "Parent": "Spellbook_Cast_Cost",
+          "StatModifiers": {
+            "Mana": -4000
+          }
+        }
+      ]
+    },
+    "Spellbook_Cast_Hurl_Launch": "Spellbook_Cast_Launch",
+    "Spellbook_Cast_Hurl_Effect": "Spellbook_Cast_Effect",
+    "Spellbook_Cast_Hurl_Fail": "Spellbook_Cast_Fail",
+    "Block_Effect": "Block_Swing_Down_Effect",
+    "Block_Swing_Left_Damage": "Block_Swing_Left_Damage",
+    "Block_Swing_Right_Damage": "Block_Swing_Right_Damage",
+    "Block_Swing_Down_Damage": "Block_Swing_Down_Damage"
+  },
+  "IconProperties": {
+    "Scale": 0.545,
+    "Translation": [
+      -8.4,
+      -8.4
+    ],
+    "Rotation": [
+      45,
+      90,
+      0
+    ]
+  },
+  "Scale": 1.3,
+  "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
+  "Icon": "Icons/ItemsGenerated/Weapon_Spellbook_Fire.png",
+  "Tags": {
+    "Type": [
+      "Weapon"
+    ],
+    "Family": [
+      "Spellbook"
+    ]
+  },
+  "Weapon": {
+    "EntityStatsToClear": [
+      "SignatureEnergy"
+    ],
+    "StatModifiers": {
+      "SignatureEnergy": [
+        {
+          "Amount": 1,
+          "CalculationType": "Additive"
+        }
+      ]
+    }
+  },
+  "ItemAppearanceConditions": {
+    "SignatureEnergy": [
+      {
+        "Condition": [
+          1,
+          1
+        ],
+        "Particles": [
+          {
+            "SystemId": "Fire_Charge1",
+            "TargetNodeName": "Origin",
+            "TargetEntityPart": "PrimaryItem",
+            "Scale": 0.7
+          },
+          {
+            "SystemId": "Torch_Fire",
+            "TargetNodeName": "Origin",
+            "TargetEntityPart": "PrimaryItem",
+            "Scale": 0.8
+          },
+          {
+            "SystemId": "Fire_ChargeWhite",
+            "TargetNodeName": "Origin",
+            "TargetEntityPart": "PrimaryItem",
+            "Scale": 0.3
+          },
+          {
+            "SystemId": "Fire_ChargeRed",
+            "TargetNodeName": "Origin",
+            "TargetEntityPart": "PrimaryItem",
+            "Scale": 0.3
+          }
+        ],
+        "FirstPersonParticles": [
+          {
+            "SystemId": "Fire_Charge1",
+            "TargetNodeName": "Origin",
+            "TargetEntityPart": "PrimaryItem",
+            "Scale": 0.7
+          },
+          {
+            "SystemId": "Torch_Fire",
+            "TargetNodeName": "Origin",
+            "TargetEntityPart": "PrimaryItem",
+            "Scale": 0.8
+          },
+          {
+            "SystemId": "Fire_ChargeWhite",
+            "TargetNodeName": "Origin",
+            "TargetEntityPart": "PrimaryItem",
+            "Scale": 0.3
+          },
+          {
+            "SystemId": "Fire_ChargeRed",
+            "TargetNodeName": "Origin",
+            "TargetEntityPart": "PrimaryItem",
+            "Scale": 0.3
+          }
+        ]
+      }
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books"
+}

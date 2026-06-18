@@ -1,0 +1,19 @@
+{
+  "Duration": 8,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#004400",
+    "EntityTopTint": "#330066",
+    "Particles": [{"SystemId": "Corrupted_Bubbles"}, {"SystemId": "Fire_Green"}],
+    "ModelVFXId": "Intangible_Dark",
+    "HorizontalSpeedMultiplier": 0.7,
+    "WorldSoundEventId": "SFX_Effect_Poison_World",
+    "LocalSoundEventId": "SFX_Effect_Poison_Local"
+  },
+  "DamageCalculatorCooldown": 1,
+  "DamageCalculator": {"BaseDamage": {"Poison": 3}},
+  "OverlapBehavior": "Extend",
+  "Infinite": false,
+  "Debuff": true,
+  "StatusEffectIcon": "UI/StatusEffects/Poison.png",
+  "DeathMessageKey": "server.general.deathCause.poison"
+}

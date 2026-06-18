@@ -8,6 +8,7 @@ import com.eldanior.system.titles.nobility.family.FamilyManager;
 import com.eldanior.system.titles.nobility.family.NobleFamilyModel;
 import com.eldanior.system.config.UUIDExtractor;
 import com.hypixel.hytale.component.ComponentType;
+import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.NameMatching;
@@ -18,6 +19,7 @@ import com.hypixel.hytale.server.core.command.system.basecommands.AbstractAsyncC
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
+import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
@@ -42,140 +44,147 @@ public class FamilyCommand extends AbstractAsyncCommand {
     @Nonnull
     @Override
     public CompletableFuture<Void> executeAsync(@Nonnull CommandContext ctx) {
-        if (!(ctx.sender() instanceof Player sender)) return CompletableFuture.completedFuture(null);
+        Ref<EntityStore> senderEntityRef = ctx.senderAsPlayerRef();
+        if (senderEntityRef == null || !senderEntityRef.isValid()) return CompletableFuture.completedFuture(null);
+
+        Store<EntityStore> senderEntityStore = senderEntityRef.getStore();
+        World world = ((EntityStore) senderEntityStore.getExternalData()).getWorld();
+        if (world == null) return CompletableFuture.completedFuture(null);
 
         String action = this.actionArg.get(ctx);
 
-        switch (action.toLowerCase()) {
-            case "choose" -> handleChoose(sender, ctx);
-            case "invite" -> handleInvite(sender, ctx);
-            case "info" -> handleInfo(sender, ctx);
-            default -> sender.sendMessage(Message.raw("§cUsage : /es family <choose|invite|info> <familyId/joueur>"));
-        }
+        return CompletableFuture.runAsync(() -> {
+            try {
+                PlayerRef senderRef = senderEntityStore.getComponent(senderEntityRef, PlayerRef.getComponentType());
+                Player sender = senderEntityStore.getComponent(senderEntityRef, Player.getComponentType());
+                if (senderRef == null || sender == null) return;
 
-        return CompletableFuture.completedFuture(null);
+                switch (action.toLowerCase()) {
+                    case "choose" -> handleChoose(sender, ctx, world);
+                    case "invite" -> handleInvite(sender, ctx, world);
+                    case "info" -> handleInfo(sender, ctx);
+                    default -> senderRef.sendMessage(Message.raw("§cUsage : /es family <choose|invite|info> <familyId/joueur>"));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }, world);
     }
 
     // ==================== CHOOSE ====================
-    private void handleChoose(Player sender, CommandContext ctx) {
+    private void handleChoose(Player sender, CommandContext ctx, World world) {
         String familyId = this.arg1.get(ctx).toLowerCase();
 
         NobleFamilyModel family = FamilyManager.get(familyId);
         if (family == null) {
-            sender.sendMessage(Message.raw("§cFamille '" + familyId + "' inconnue."));
-            sender.sendMessage(Message.raw("§7Disponibles : " + FamilyManager.getAvailableIds()));
+            sender.getPlayerRef().sendMessage(Message.raw("§cFamille '" + familyId + "' inconnue."));
+            sender.getPlayerRef().sendMessage(Message.raw("§7Disponibles : " + FamilyManager.getAvailableIds()));
             return;
         }
 
         if (FamilyManager.isFamilyTaken(familyId)) {
-            sender.sendMessage(Message.raw("§cCette famille est deja prise."));
+            sender.getPlayerRef().sendMessage(Message.raw("§cCette famille est deja prise."));
             return;
         }
 
-        assert sender.getWorld() != null;
-        CompletableFuture.runAsync(() -> {
-            try {
-                var ref = sender.getReference();
-                if (ref == null) return;
-                Store<EntityStore> store = ref.getStore();
-                ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
-                PlayerLevelData data = store.getComponent(ref, type);
-                if (data == null) return;
+        try {
+            var ref = sender.getReference();
+            if (ref == null) return;
+            Store<EntityStore> store = ref.getStore();
+            ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
+            PlayerLevelData data = store.getComponent(ref, type);
+            if (data == null) return;
 
-                NobilityRank rank = NobilityRank.fromString(data.getNobilityRank());
-                if (rank == null || (rank != NobilityRank.MARQUIS && rank != NobilityRank.DUC)) {
-                    sender.sendMessage(Message.raw("§cSeuls les Marquis et Ducs peuvent choisir une famille."));
-                    return;
-                }
+            NobilityRank rank = NobilityRank.fromString(data.getNobilityRank());
+            if (rank == null || (rank != NobilityRank.MARQUIS && rank != NobilityRank.DUC)) {
+                sender.getPlayerRef().sendMessage(Message.raw("§cSeuls les Marquis et Ducs peuvent choisir une famille."));
+                return;
+            }
 
-                if (data.getNobleFamilyId() != null && !data.getNobleFamilyId().isEmpty()) {
-                    sender.sendMessage(Message.raw("§cVous appartenez deja a une famille."));
-                    return;
-                }
+            if (data.getNobleFamilyId() != null && !data.getNobleFamilyId().isEmpty()) {
+                sender.getPlayerRef().sendMessage(Message.raw("§cVous appartenez deja a une famille."));
+                return;
+            }
 
-                if (family.getMinimumRank() != rank) {
-                    sender.sendMessage(Message.raw("§cCette famille est reservee aux " + family.getMinimumRank().getFormattedName() + "§c."));
-                    sender.sendMessage(Message.raw("§7Pour votre rang : §e" + FamilyManager.getAvailableFamilyIdsForRank(rank)));
-                    return;
-                }
+            if (family.getMinimumRank() != rank) {
+                sender.getPlayerRef().sendMessage(Message.raw("§cCette famille est reservee aux " + family.getMinimumRank().getFormattedName() + "§c."));
+                sender.getPlayerRef().sendMessage(Message.raw("§7Pour votre rang : §e" + FamilyManager.getAvailableFamilyIdsForRank(rank)));
+                return;
+            }
 
-                PlayerLevelData copy = (PlayerLevelData) data.clone();
-                if (copy == null) return;
-                copy.setNobleFamilyId(family.getId());
-                copy.setStatus("PATRIARCH");
-                store.putComponent(ref, type, copy);
+            PlayerLevelData copy = (PlayerLevelData) data.clone();
+            if (copy == null) return;
+            copy.setNobleFamilyId(family.getId());
+            copy.setStatus("PATRIARCH");
+            store.putComponent(ref, type, copy);
 
-                FamilyManager.claimFamily(family.getId());
+            FamilyManager.claimFamily(family.getId());
 
-                sender.sendMessage(Message.raw("§aVous etes Patriarche de la famille " + family.getFormattedName() + " §a!"));
-                sender.sendMessage(Message.raw("§7Devise : §o" + family.getMotto()));
-                sender.sendMessage(Message.raw("§7Competence : §e" + family.getFamilyPassive().getDisplayName()));
-            } catch (Exception e) { e.printStackTrace(); }
-        }, sender.getWorld());
+            sender.getPlayerRef().sendMessage(Message.raw("§aVous etes Patriarche de la famille " + family.getFormattedName() + " §a!"));
+            sender.getPlayerRef().sendMessage(Message.raw("§7Devise : §o" + family.getMotto()));
+            sender.getPlayerRef().sendMessage(Message.raw("§7Competence : §e" + family.getFamilyPassive().getDisplayName()));
+        } catch (Exception e) { e.printStackTrace(); }
     }
 
     // ==================== INVITE ====================
-    private void handleInvite(Player sender, CommandContext ctx) {
+    private void handleInvite(Player sender, CommandContext ctx, World world) {
         String targetName = this.arg1.get(ctx);
 
-        assert sender.getWorld() != null;
-        CompletableFuture.runAsync(() -> {
-            try {
-                var senderRef = sender.getReference();
-                if (senderRef == null) return;
-                Store<EntityStore> senderStore = senderRef.getStore();
-                ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
-                PlayerLevelData senderData = senderStore.getComponent(senderRef, type);
-                if (senderData == null) return;
+        try {
+            var senderRef = sender.getReference();
+            if (senderRef == null) return;
+            Store<EntityStore> senderStore = senderRef.getStore();
+            ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
+            PlayerLevelData senderData = senderStore.getComponent(senderRef, type);
+            if (senderData == null) return;
 
-                if (!senderData.canInviteToFamily()) {
-                    sender.sendMessage(Message.raw("§cSeul le Patriarche ou le Vice-Patriarche peut inviter."));
-                    return;
-                }
+            if (!senderData.canInviteToFamily()) {
+                sender.getPlayerRef().sendMessage(Message.raw("§cSeul le Patriarche ou le Vice-Patriarche peut inviter."));
+                return;
+            }
 
-                String familyId = senderData.getNobleFamilyId();
-                if (familyId == null || familyId.isEmpty()) {
-                    sender.sendMessage(Message.raw("§cVous n'appartenez a aucune famille."));
-                    return;
-                }
+            String familyId = senderData.getNobleFamilyId();
+            if (familyId == null || familyId.isEmpty()) {
+                sender.getPlayerRef().sendMessage(Message.raw("§cVous n'appartenez a aucune famille."));
+                return;
+            }
 
-                NobleFamilyModel family = FamilyManager.get(familyId);
-                if (family == null) { sender.sendMessage(Message.raw("§cFamille introuvable.")); return; }
+            NobleFamilyModel family = FamilyManager.get(familyId);
+            if (family == null) { sender.getPlayerRef().sendMessage(Message.raw("§cFamille introuvable.")); return; }
 
-                PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
-                if (targetRef == null) { sender.sendMessage(Message.raw("§cJoueur introuvable.")); return; }
+            PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
+            if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable.")); return; }
 
-                UUID targetUUID = extractUUID(targetRef);
-                PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
-                if (targetPlayer == null) { sender.sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
+            UUID targetUUID = extractUUID(targetRef);
+            PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
+            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
 
-                var ref = targetPlayer.getReference();
-                if (ref == null) return;
-                Store<EntityStore> store = ref.getStore();
-                PlayerLevelData data = store.getComponent(ref, type);
-                if (data == null) data = new PlayerLevelData();
+            var ref = targetPlayer.getReference();
+            if (ref == null) return;
+            Store<EntityStore> store = ref.getStore();
+            PlayerLevelData data = store.getComponent(ref, type);
+            if (data == null) data = new PlayerLevelData();
 
-                if (data.getNobleFamilyId() != null && !data.getNobleFamilyId().isEmpty()) {
-                    sender.sendMessage(Message.raw("§c" + targetName + " appartient deja a une famille."));
-                    return;
-                }
+            if (data.getNobleFamilyId() != null && !data.getNobleFamilyId().isEmpty()) {
+                sender.getPlayerRef().sendMessage(Message.raw("§c" + targetName + " appartient deja a une famille."));
+                return;
+            }
 
-                NobilityRank targetRank = NobilityRank.fromString(data.getNobilityRank());
-                if (targetRank == null || !targetRank.isNoble()) {
-                    sender.sendMessage(Message.raw("§c" + targetName + " n'est pas noble."));
-                    return;
-                }
+            NobilityRank targetRank = NobilityRank.fromString(data.getNobilityRank());
+            if (targetRank == null || !targetRank.isNoble()) {
+                sender.getPlayerRef().sendMessage(Message.raw("§c" + targetName + " n'est pas noble."));
+                return;
+            }
 
-                PlayerLevelData copy = (PlayerLevelData) data.clone();
-                if (copy == null) return;
-                copy.setNobleFamilyId(familyId);
-                copy.setStatus("MEMBER");
-                store.putComponent(ref, type, copy);
+            PlayerLevelData copy = (PlayerLevelData) data.clone();
+            if (copy == null) return;
+            copy.setNobleFamilyId(familyId);
+            copy.setStatus("MEMBER");
+            store.putComponent(ref, type, copy);
 
-                sender.sendMessage(Message.raw("§a" + targetName + " a rejoint " + family.getFormattedName() + " §aen tant que Membre."));
-                targetPlayer.sendMessage(Message.raw("§eVous avez rejoint la famille " + family.getFormattedName() + " §7- §o" + family.getMotto()));
-            } catch (Exception e) { e.printStackTrace(); }
-        }, sender.getWorld());
+            sender.getPlayerRef().sendMessage(Message.raw("§a" + targetName + " a rejoint " + family.getFormattedName() + " §aen tant que Membre."));
+            targetPlayer.sendMessage(Message.raw("§eVous avez rejoint la famille " + family.getFormattedName() + " §7- §o" + family.getMotto()));
+        } catch (Exception e) { e.printStackTrace(); }
     }
 
     // ==================== INFO ====================
@@ -184,18 +193,18 @@ public class FamilyCommand extends AbstractAsyncCommand {
 
         NobleFamilyModel family = FamilyManager.get(familyId);
         if (family == null) {
-            sender.sendMessage(Message.raw("§cFamille '" + familyId + "' inconnue."));
-            sender.sendMessage(Message.raw("§7Disponibles : " + FamilyManager.getAvailableIds()));
+            sender.getPlayerRef().sendMessage(Message.raw("§cFamille '" + familyId + "' inconnue."));
+            sender.getPlayerRef().sendMessage(Message.raw("§7Disponibles : " + FamilyManager.getAvailableIds()));
             return;
         }
 
-        sender.sendMessage(Message.raw("§6=== " + family.getFormattedName() + " §6==="));
-        sender.sendMessage(Message.raw("§7Devise : §o" + family.getMotto()));
-        sender.sendMessage(Message.raw("§7Rarete : " + family.getRarity().getDisplayName()));
-        sender.sendMessage(Message.raw("§7Rang requis : " + family.getMinimumRank().getFormattedName()));
-        sender.sendMessage(Message.raw("§7Competence : §e" + family.getFamilyPassive().getDisplayName()
+        sender.getPlayerRef().sendMessage(Message.raw("§6=== " + family.getFormattedName() + " §6==="));
+        sender.getPlayerRef().sendMessage(Message.raw("§7Devise : §o" + family.getMotto()));
+        sender.getPlayerRef().sendMessage(Message.raw("§7Rarete : " + family.getRarity().getDisplayName()));
+        sender.getPlayerRef().sendMessage(Message.raw("§7Rang requis : " + family.getMinimumRank().getFormattedName()));
+        sender.getPlayerRef().sendMessage(Message.raw("§7Competence : §e" + family.getFamilyPassive().getDisplayName()
                 + " §8(" + family.getFamilyPassive().getDescription() + ")"));
-        sender.sendMessage(Message.raw("§7Disponible : " + (FamilyManager.isFamilyTaken(familyId) ? "§cNon (prise)" : "§aOui")));
+        sender.getPlayerRef().sendMessage(Message.raw("§7Disponible : " + (FamilyManager.isFamilyTaken(familyId) ? "§cNon (prise)" : "§aOui")));
     }
 
     private UUID extractUUID(PlayerRef playerRef) throws Exception {

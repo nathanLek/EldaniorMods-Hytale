@@ -1,0 +1,35 @@
+{
+  "Parent": "Projectile_Config_Fireball",
+  "Physics": {
+    "Type": "Standard",
+    "Gravity": 3.0,
+    "TerminalVelocityAir": 100,
+    "TerminalVelocityWater": 50,
+    "Bounciness": 0
+  },
+  "LaunchForce": 45,
+  "Interactions": {
+    "ProjectileHit": {
+      "Cooldown": { "Cooldown": 0 },
+      "Interactions": [
+        {
+          "Type": "DamageEntity",
+          "Entity": "Target",
+          "DamageCalculator": { "BaseDamage": { "Poison": 20 } }
+        },
+        {
+          "Type": "ApplyEffect",
+          "Entity": "Target",
+          "EffectId": "Drain_Vie"
+        },
+        { "Type": "RemoveEntity", "Entity": "User" }
+      ]
+    },
+    "ProjectileMiss": {
+      "Cooldown": { "Cooldown": 0 },
+      "Interactions": [
+        { "Type": "RemoveEntity", "Entity": "User" }
+      ]
+    }
+  }
+}

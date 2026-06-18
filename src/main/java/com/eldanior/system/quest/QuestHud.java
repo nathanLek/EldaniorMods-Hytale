@@ -22,7 +22,7 @@ public class QuestHud extends CustomUIHud {
     private Player cachedPlayer;
 
     public QuestHud(PlayerRef playerRef, UUID ownerUUID) {
-        super(playerRef);
+        super(playerRef, "quest_hud");
         this.ownerUUID = ownerUUID;
     }
 
