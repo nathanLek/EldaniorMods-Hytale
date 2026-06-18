@@ -79,6 +79,9 @@ public class EldaniorSystem extends JavaPlugin {
         com.eldanior.system.trade.TradeManager.cancelAllTrades();
         com.eldanior.system.duel.DuelManager.cancelAllDuels();
 
+        // Forcer la serialisation des quetes et cooldowns de tous les joueurs connectes
+        com.eldanior.system.quest.QuestManager.saveAllToFile();
+
         // Sauvegarder toutes les donnees
         com.eldanior.system.persistence.PersistenceManager.saveAll();
         com.eldanior.system.territory.ParcelManager.saveAll();
@@ -114,6 +117,7 @@ public class EldaniorSystem extends JavaPlugin {
             com.eldanior.system.classement.ClassementManager.init();
             com.eldanior.system.duel.DuelManager.init();
             com.eldanior.system.quest.QuestManager.init();
+            com.eldanior.system.quest.QuestManager.initDataDir(this.getDataDirectory());
 
             com.eldanior.system.trade.TradeManager.init();
             com.eldanior.system.territory.ParcelManager.init(this.getDataDirectory());
