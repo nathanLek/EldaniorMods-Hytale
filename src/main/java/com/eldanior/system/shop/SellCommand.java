@@ -21,6 +21,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class SellCommand extends AbstractAsyncCommand {
 
+    private static final int MAX_SELL_PRICE = 10_000_000;
     private final RequiredArg<Integer> priceArg;
 
     public SellCommand() {
@@ -52,6 +53,11 @@ public class SellCommand extends AbstractAsyncCommand {
 
                 if (price <= 0) {
                     senderRef.sendMessage(Message.raw("§cLe prix doit etre superieur a 0."));
+                    return;
+                }
+
+                if (price > MAX_SELL_PRICE) {
+                    senderRef.sendMessage(Message.raw("§cPrix maximum autorise : 10 000 000 Or."));
                     return;
                 }
 
