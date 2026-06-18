@@ -499,6 +499,76 @@ public class QuestManager {
         return java.time.LocalDate.now().getDayOfYear();
     }
 
+    // ==================== FILE PERSISTENCE (shutdown safety) ====================
+
+    private static java.nio.file.Path dataDir;
+
+    public static void setDataDir(java.nio.file.Path dir) { dataDir = dir; }
+
+    /**
+     * Sauvegarde toutes les quetes et cooldowns en memoire dans un fichier .properties.
+     * Appele par PersistenceManager.saveAll() et au shutdown pour garantir
+     * que les donnees en memoire ne sont pas perdues.
+     */
+    public static void saveAllToFile() {
+        if (dataDir == null) return;
+        try {
+            java.util.Properties props = new java.util.Properties();
+            for (var entry : playerQuests.entrySet()) {
+                UUID uuid = entry.getKey();
+                String questSerialized = serializePlayerQuests(uuid);
+                String cooldownSerialized = serializeCooldowns(uuid);
+                if (!questSerialized.isEmpty()) {
+                    props.setProperty(uuid + ".quests", questSerialized);
+                }
+                if (!cooldownSerialized.isEmpty()) {
+                    props.setProperty(uuid + ".cooldowns", cooldownSerialized);
+                }
+            }
+            // Aussi sauvegarder les cooldowns pour les joueurs qui n'ont pas de quetes actives
+            for (var entry : cooldowns.entrySet()) {
+                UUID uuid = entry.getKey();
+                if (!props.containsKey(uuid + ".cooldowns")) {
+                    String cooldownSerialized = serializeCooldowns(uuid);
+                    if (!cooldownSerialized.isEmpty()) {
+                        props.setProperty(uuid + ".cooldowns", cooldownSerialized);
+                    }
+                }
+            }
+            com.eldanior.system.config.PersistenceUtils.writeAtomicWithBackup(
+                    dataDir.resolve("quests.properties"), props, "Quest & cooldown data (shutdown backup)");
+        } catch (Exception e) {
+            System.err.println("[QuestManager] Erreur sauvegarde quetes: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Charge les quetes/cooldowns depuis le fichier pour un joueur specifique.
+     * Utilise au login si le PlayerLevelData (EntityStore) est vide,
+     * comme filet de securite en cas de shutdown sans serialisation ECS.
+     */
+    public static void loadFromFileForPlayer(UUID uuid) {
+        if (dataDir == null) return;
+        java.nio.file.Path file = dataDir.resolve("quests.properties");
+        if (!java.nio.file.Files.exists(file)) return;
+
+        try (java.io.InputStream in = java.nio.file.Files.newInputStream(file)) {
+            java.util.Properties props = new java.util.Properties();
+            props.load(in);
+
+            String questData = props.getProperty(uuid + ".quests");
+            if (questData != null && !questData.isEmpty()) {
+                deserializePlayerQuests(uuid, questData);
+            }
+            String cooldownData = props.getProperty(uuid + ".cooldowns");
+            if (cooldownData != null && !cooldownData.isEmpty()) {
+                deserializeCooldowns(uuid, cooldownData);
+            }
+        } catch (Exception e) {
+            System.err.println("[QuestManager] Erreur chargement fichier pour " + uuid + ": " + e.getMessage());
+        }
+    }
+
     // ==================== SERIALIZATION ====================
 
     public static String serializePlayerQuests(UUID playerUUID) {

@@ -171,13 +171,21 @@ public class PlayerLoginSystem extends EntityTickingSystem<EntityStore> {
 
         // Charger les quetes du joueur
         String questData = data.getQuestData();
-        if (questData != null && !questData.isEmpty()) {
-            com.eldanior.system.quest.QuestManager.deserializePlayerQuests(uuid, questData);
-        }
-        // Charger les cooldowns de quetes
         String cooldownData = data.getCooldownData();
-        if (cooldownData != null && !cooldownData.isEmpty()) {
-            com.eldanior.system.quest.QuestManager.deserializeCooldowns(uuid, cooldownData);
+        boolean hasEcsData = (questData != null && !questData.isEmpty())
+                || (cooldownData != null && !cooldownData.isEmpty());
+
+        if (hasEcsData) {
+            // Source primaire : EntityStore (donnees ECS)
+            if (questData != null && !questData.isEmpty()) {
+                com.eldanior.system.quest.QuestManager.deserializePlayerQuests(uuid, questData);
+            }
+            if (cooldownData != null && !cooldownData.isEmpty()) {
+                com.eldanior.system.quest.QuestManager.deserializeCooldowns(uuid, cooldownData);
+            }
+        } else {
+            // Fallback: fichier de sauvegarde (filet de securite si shutdown sans serialisation ECS)
+            com.eldanior.system.quest.QuestManager.loadFromFileForPlayer(uuid);
         }
         com.eldanior.system.quest.QuestManager.checkDailyReset();
 

@@ -29,6 +29,9 @@ public class PersistenceManager {
         }
         load();
 
+        // Donner le chemin de donnees au QuestManager pour la persistence fichier
+        com.eldanior.system.quest.QuestManager.setDataDir(dataDir);
+
         // Autosave toutes les 5 minutes
         autoSaveTimer = new java.util.Timer("EldaniorAutoSave", true);
         autoSaveTimer.scheduleAtFixedRate(new java.util.TimerTask() {
@@ -57,6 +60,8 @@ public class PersistenceManager {
             saveClassements();
             saveShop();
             saveHierarchies();
+            // Sauvegarder quetes et cooldowns en memoire (filet de securite shutdown)
+            com.eldanior.system.quest.QuestManager.saveAllToFile();
             // Verifier les impots hebdomadaires
             com.eldanior.system.territory.ParcelEconomyManager.collectWeeklyTaxes();
             com.eldanior.system.territory.ParcelManager.saveAll();
