@@ -79,11 +79,12 @@ public class ShopTab {
         try { slotIdx = Integer.parseInt(slotIndex); } catch (NumberFormatException e) { return false; }
         int idx = currentPage * MAX_SHOP_SLOTS + slotIdx;
 
-        ShopListing listing = ShopManager.getListing(idx);
-        if (listing == null) return false;
+        // Pre-checks before atomic buy (read-only, no race condition risk)
+        ShopListing peekListing = ShopManager.getListing(idx);
+        if (peekListing == null) return false;
 
         UUID myUUID = getPlayerUUID(ref, store);
-        if (myUUID == null || myUUID.equals(listing.getSellerUUID())) return false;
+        if (myUUID == null || myUUID.equals(peekListing.getSellerUUID())) return false;
 
         // PK ne peuvent pas acheter au shop normal
         ComponentType<EntityStore, PlayerLevelData> typeCheck = EldaniorSystem.get().getPlayerLevelDataType();
@@ -97,18 +98,27 @@ public class ShopTab {
         // Check money
         ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
         PlayerLevelData data = store.getComponent(ref, type);
-        if (data == null || data.getMoney() < listing.getPrice()) {
+        if (data == null || data.getMoney() < peekListing.getPrice()) {
             Player player = store.getComponent(ref, Player.getComponentType());
-            if (player != null) player.getPlayerRef().sendMessage(Message.raw("§cPas assez d'or ! (besoin de " + listing.getPrice() + ")"));
+            if (player != null) player.getPlayerRef().sendMessage(Message.raw("§cPas assez d'or ! (besoin de " + peekListing.getPrice() + ")"));
+            return false;
+        }
+
+        Player buyer = store.getComponent(ref, Player.getComponentType());
+        if (buyer == null) return false;
+
+        // Atomic buy: remove listing in one synchronized operation to prevent duplication
+        ShopListing listing = ShopManager.buyListing(idx);
+        if (listing == null) {
+            buyer.getPlayerRef().sendMessage(Message.raw("§cCet objet a deja ete achete !"));
             return false;
         }
 
         // Give item to buyer
-        Player buyer = store.getComponent(ref, Player.getComponentType());
-        if (buyer == null) return false;
-
         var result = buyer.getInventory().getHotbar().addItemStack(listing.getItem());
         if (!result.succeeded()) {
+            // Re-add listing since we already removed it but can't give the item
+            ShopManager.addListing(listing.getSellerUUID(), listing.getSellerName(), listing.getItem(), listing.getPrice());
             buyer.getPlayerRef().sendMessage(Message.raw("§cInventaire plein !"));
             return false;
         }
@@ -136,9 +146,6 @@ public class ShopTab {
             // Vendeur deconnecte -> gains en attente
             ShopManager.addPendingEarnings(listing.getSellerUUID(), listing.getPrice());
         }
-
-        // Remove listing
-        ShopManager.removeListing(idx);
 
         buyer.getPlayerRef().sendMessage(Message.raw("§aObjet achete pour " + listing.getPrice() + " Or !"));
         return true;
