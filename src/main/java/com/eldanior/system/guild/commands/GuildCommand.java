@@ -157,6 +157,9 @@ public class GuildCommand extends AbstractAsyncCommand {
             GuildManager.joinGuild(senderUUID, guild);
             GuildManager.clearInvite(senderUUID);
 
+            // Verifier titres en temps reel apres avoir rejoint une guilde
+            com.eldanior.system.titles.TitleManager.checkAndUnlockTitles(ref, store, copy, sender.getPlayerRef());
+
             sender.getPlayerRef().sendMessage(Message.raw("§aVous avez rejoint la guilde " + guild.getFormattedName() + " §a!"));
         } catch (Exception e) { e.printStackTrace(); }
     }
@@ -257,6 +260,9 @@ public class GuildCommand extends AbstractAsyncCommand {
             if (copy == null) return;
             copy.setGuildRole("OFFICER");
             store.putComponent(ref, type, copy);
+
+            // Verifier titres en temps reel apres promotion dans la guilde
+            com.eldanior.system.titles.TitleManager.checkAndUnlockTitles(ref, store, copy, targetPlayer);
 
             sender.getPlayerRef().sendMessage(Message.raw("§a" + targetName + " est maintenant " + GuildRole.OFFICER.getFormattedName()));
             targetPlayer.sendMessage(Message.raw("§eVous etes maintenant " + GuildRole.OFFICER.getFormattedName() + " §ede votre guilde !"));

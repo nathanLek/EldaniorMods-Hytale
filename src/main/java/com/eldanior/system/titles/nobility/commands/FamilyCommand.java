@@ -120,6 +120,9 @@ public class FamilyCommand extends AbstractAsyncCommand {
 
             FamilyManager.claimFamily(family.getId());
 
+            // Verifier titres en temps reel apres choix de famille
+            com.eldanior.system.titles.TitleManager.checkAndUnlockTitles(ref, store, copy, sender.getPlayerRef());
+
             sender.getPlayerRef().sendMessage(Message.raw("§aVous etes Patriarche de la famille " + family.getFormattedName() + " §a!"));
             sender.getPlayerRef().sendMessage(Message.raw("§7Devise : §o" + family.getMotto()));
             sender.getPlayerRef().sendMessage(Message.raw("§7Competence : §e" + family.getFamilyPassive().getDisplayName()));
@@ -181,6 +184,9 @@ public class FamilyCommand extends AbstractAsyncCommand {
             copy.setNobleFamilyId(familyId);
             copy.setStatus("MEMBER");
             store.putComponent(ref, type, copy);
+
+            // Verifier titres en temps reel apres avoir rejoint une famille
+            com.eldanior.system.titles.TitleManager.checkAndUnlockTitles(ref, store, copy, targetPlayer);
 
             sender.getPlayerRef().sendMessage(Message.raw("§a" + targetName + " a rejoint " + family.getFormattedName() + " §aen tant que Membre."));
             targetPlayer.sendMessage(Message.raw("§eVous avez rejoint la famille " + family.getFormattedName() + " §7- §o" + family.getMotto()));

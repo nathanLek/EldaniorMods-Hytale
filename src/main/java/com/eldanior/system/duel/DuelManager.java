@@ -164,6 +164,9 @@ public class DuelManager {
                                     QuestManager.onDuelWin(winnerUUID);
 
                                     winnerRef.sendMessage(Message.raw("§a+" + xpLost + " XP (mise du duel)"));
+
+                                    // Verifier titres en temps reel apres victoire en duel
+                                    com.eldanior.system.titles.TitleManager.checkAndUnlockTitles(wRef, wStore, wData, winnerRef);
                                 }
                             }
                         }

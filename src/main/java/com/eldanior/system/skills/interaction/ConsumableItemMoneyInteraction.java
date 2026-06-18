@@ -52,6 +52,9 @@ public class ConsumableItemMoneyInteraction extends SimpleInteraction {
                     com.eldanior.system.Leveling.utils.NotificationHelper.sendNotification(pRefComp,
                             "<color:gold>+" + coinValue + " Or</color> <color:gray>| Solde : " + data.getMoney() + "</color>",
                             com.hypixel.hytale.protocol.packets.interface_.NotificationStyle.Success);
+
+                    // Verifier titres en temps reel apres gain d'or
+                    com.eldanior.system.titles.TitleManager.checkAndUnlockTitles(playerRef, playerRef.getStore(), data, pRefComp);
                 }
             } catch (Exception e) { EldaniorLogger.error("ConsumableItemMoneyInteraction", e); }
 

@@ -104,6 +104,9 @@ public class AddXPCommand extends AbstractAsyncCommand {
                     NotificationHelper.showLevelUpTitle(targetPlayer, data.getLevel());
                 }
 
+                // Verifier titres en temps reel apres ajout d'XP/niveau
+                com.eldanior.system.titles.TitleManager.checkAndUnlockTitles(ref, store, data, targetPlayer);
+
                 String msgTarget = "Reçu : <color:green>+" + amount + " XP</color> (Admin)";
                 NotificationHelper.sendNotification(targetPlayer, msgTarget, NotificationStyle.Success);
 
