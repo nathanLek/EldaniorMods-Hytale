@@ -1,12 +1,31 @@
 {
   "permissions": {
     "allow": [
-      "Bash(./gradlew compileJava)",
-      "Bash(python3 -c 'import json,sys; json.load\\(open\\('\\\\''__TRACKED_VAR__'\\\\''\\)\\); print\\('\\\\''OK  '\\\\''+'\\\\''__TRACKED_VAR__'\\\\''\\)')",
-      "mcp__linear__create_issue_label",
-      "mcp__linear__save_project",
-      "mcp__linear__save_milestone",
-      "mcp__linear__save_issue"
+      "Bash(git *)",
+      "Bash(./gradlew *)",
+      "Bash(gh *)",
+      "Bash(python3 *)",
+      "Bash(python3)",
+      "Bash(cd *)",
+      "Bash(ls *)",
+      "Bash(grep *)",
+      "Bash(perl *)",
+      "Bash(wc *)",
+      "Edit",
+      "Write",
+      "Read",
+      "Glob",
+      "Grep",
+      "mcp__linear__*",
+      "mcp__hytale-docs__*",
+      "Bash(javap -p -cp \"/Users/nathanlecat/Library/Application Support/Hytale/install/release/package/game/latest/Server/HytaleServer.jar\" com.hypixel.hytale.server.core.inventory.transaction.ItemStackTransaction)",
+      "Bash(mkdir -p src/main/resources/Server/NPC/Roles/Eldanior/Summons)",
+      "Bash(mv src/main/resources/Server/NPC/Roles/Undead/Skeleton/*.json src/main/resources/Server/NPC/Roles/Eldanior/Summons/)",
+      "Bash(rmdir src/main/resources/Server/NPC/Roles/Undead/Skeleton src/main/resources/Server/NPC/Roles/Undead)",
+      "Bash(jar tf:*)",
+      "Bash(rm \"/Users/nathanlecat/Desktop/Nathan Lecat/EldaniorMods-Hytale/src/main/resources/Server/Particles/_Test/Cinematic/Pizza/Blood_Effect.particlesystem\")",
+      "Bash(rmdir \"/Users/nathanlecat/Desktop/Nathan Lecat/EldaniorMods-Hytale/src/main/resources/Server/Particles/_Test/Cinematic/Pizza\")",
+      "Bash(echo \"Exit: $?\")"
     ]
   },
   "enableAllProjectMcpServers": true,

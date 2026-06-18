@@ -1,0 +1,142 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.Mastery_Of_Chimeras.name",
+    "Description": "server.items.Mastery_Of_Chimeras.description"
+  },
+  "Categories": [
+    "Eldanior_System.Spells"
+  ],
+  "Quality": "Rare",
+  "ItemLevel": 100,
+  "Model": "Items/Weapons/Spellbook/Grimoire.blockymodel",
+  "Texture": "Items/Weapons/Spellbook/Grimoire_Purple_Texture.png",
+  "PlayerAnimationsId": "Spellbook",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Translation": [
+      -10,
+      -10
+    ],
+    "Rotation": [
+      45,
+      90,
+      0
+    ]
+  },
+  "Icon": "Icons/ItemsGenerated/Weapon_Spellbook_Grimoire_Purple.png",
+  "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
+  "MaxStack": 1,
+  "Tags": {
+    "Type": [
+      "Weapon"
+    ],
+    "Family": [
+      "Spellbook"
+    ]
+  },
+  "Weapon": {},
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "Interactions": {
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "StatsCondition",
+          "Costs": {
+            "Mana": 300
+          },
+          "Lenient": true,
+          "LessThan": false,
+          "Next": {
+            "Type": "Simple",
+            "Next": {
+              "Type": "Charging",
+              "Effects": {
+                "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Charge",
+                "ItemAnimationId": "CastHurlCharging",
+                "Particles": [
+                  {
+                    "SystemId": "Plant_Eternal",
+                    "Color": "#404f42",
+                    "DetachedFromModel": true,
+                    "RotationOffset": {
+                      "Yaw": 180,
+                      "Pitch": 180,
+                      "Roll": 90
+                    },
+                    "Scale": 4
+                  }
+                ],
+                "ClearAnimationOnFinish": true,
+                "ClearSoundEventOnFinish": true,
+                "WaitForAnimationToFinish": false
+              },
+              "AllowIndefiniteHold": true,
+              "HorizontalSpeedMultiplier": 0,
+              "CancelOnItemChange": true,
+              "RunTime": 3.5,
+              "Next": {
+                "0": {
+                  "Type": "Simple",
+                  "Effects": {
+                    "ItemAnimationId": "Interact"
+                  }
+                },
+                "3.5": {
+                  "Type": "RunOnBlockTypes",
+                  "BlockSets": [
+                    "Grass"
+                  ],
+                  "MaxCount": 1,
+                  "Range": 5,
+                  "Interactions": {
+                    "Interactions": [
+                      {
+                        "Type": "Serial",
+                        "Interactions": [
+                          {
+                            "Type": "ChangeStat",
+                            "StatModifiers": {
+                              "Mana": -300
+                            }
+                          },
+                          {
+                            "Type": "SpawnNPC",
+                            "WeightedEntityIds": [],
+                            "EntityId": "Mastery_Of_Chimeras",
+                            "SpawnOffset": {
+                              "Y": 1
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "Next": {
+                    "Type": "Simple"
+                  },
+                  "Failed": {
+                    "Type": "Simple",
+                    "Effects": {
+                      "ItemAnimationId": "Interact"
+                    }
+                  }
+                }
+              },
+              "Failed": {
+                "Type": "Simple",
+                "Effects": {
+                  "ItemAnimationId": "Interact"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "Cooldown": {
+        "SkipCooldownReset": false,
+        "InterruptRecharge": false,
+        "Cooldown": 100
+      }
+    }
+  }
+}

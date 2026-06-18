@@ -1,0 +1,127 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.Materialisation_Of_The_Ancient_Dragon.name",
+    "Description": "server.items.Materialisation_Of_The_Ancient_Dragon.description"
+  },
+  "Categories": [
+    "Eldanior_System.Spells"
+  ],
+  "Quality": "Divin",
+  "ItemLevel": 1000,
+  "Model": "Items/Weapons/Spellbook/Grimoire.blockymodel",
+  "Texture": "Items/Weapons/Spellbook/Grimoire_Purple_Texture.png",
+  "PlayerAnimationsId": "Spellbook",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Translation": [
+      -10,
+      -10
+    ],
+    "Rotation": [
+      45,
+      90,
+      0
+    ]
+  },
+  "Icon": "Icons/ItemsGenerated/Weapon_Spellbook_Grimoire_Purple.png",
+  "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
+  "MaxStack": 1,
+  "Tags": {
+    "Type": [
+      "Weapon"
+    ],
+    "Family": [
+      "Spellbook"
+    ]
+  },
+  "Weapon": {},
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "Interactions": {
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "StatsCondition",
+          "Costs": {
+            "Mana": 6500
+          },
+          "Lenient": true,
+          "LessThan": false,
+          "Next": {
+            "Type": "Simple",
+            "Next": {
+              "Type": "Charging",
+              "Effects": {
+                "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Charge",
+                "ItemAnimationId": "CastHurlCharging",
+                "FirstPersonParticles": [
+                  {
+                    "SystemId": "Plant_Eternal",
+                    "Color": "#404f42",
+                    "DetachedFromModel": true,
+                    "RotationOffset": {
+                      "Yaw": 180,
+                      "Pitch": 180,
+                      "Roll": 90
+                    },
+                    "Scale": 4
+                  }
+                ],
+                "Particles": [
+                  {
+                    "SystemId": "Plant_Eternal",
+                    "Color": "#404f42",
+                    "DetachedFromModel": true,
+                    "RotationOffset": {
+                      "Yaw": 180,
+                      "Pitch": 180,
+                      "Roll": 90
+                    },
+                    "Scale": 4
+                  }
+                ],
+                "ClearAnimationOnFinish": true,
+                "ClearSoundEventOnFinish": true,
+                "WaitForAnimationToFinish": false
+              },
+              "AllowIndefiniteHold": true,
+              "HorizontalSpeedMultiplier": 0,
+              "CancelOnItemChange": true,
+              "RunTime": 2,
+              "Next": {
+                "0": {
+                  "Type": "Simple",
+                  "Effects": {
+                    "ItemAnimationId": "Interact"
+                  }
+                },
+                "2": {
+                  "Type": "ApplyEffect",
+                  "EffectId": {
+                    "Parent": "Morph_Dragon"
+                  },
+                  "Next": {
+                    "Type": "ChangeStat",
+                    "StatModifiers": {
+                      "Mana": -6500
+                    }
+                  }
+                }
+              },
+              "Failed": {
+                "Type": "Simple",
+                "Effects": {
+                  "ItemAnimationId": "Interact"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "Cooldown": {
+        "SkipCooldownReset": false,
+        "InterruptRecharge": false,
+        "Cooldown": 0
+      }
+    }
+  }
+}

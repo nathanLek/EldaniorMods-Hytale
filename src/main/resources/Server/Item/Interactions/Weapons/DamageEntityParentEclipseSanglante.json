@@ -1,0 +1,60 @@
+{
+  "Type": "DamageEntity",
+  "DamageEffects": {
+    "ModelParticles": [
+      {
+        "SystemId": "Critical_Hit_Blood",
+        "Scale": 2,
+        "PositionOffset": {
+          "Y": 1
+        },
+        "Color": "#ff0000",
+        "TargetEntityPart": "Entity"
+      }
+    ],
+    "Knockback": {
+      "Force": 10,
+      "VelocityConfig": {
+        "AirResistance": 0.636,
+        "GroundResistance": 0.84,
+        "AirResistanceMax": 0
+      }
+    },
+    "StaminaDrainMultiplier": 3
+  },
+  "Next": {
+    "Type": "Serial",
+    "Interactions": [
+      {
+        "Type": "ApplyEffect",
+        "EffectId": "Red_Flash",
+        "Entity": "Target"
+      },
+      {
+        "Type": "ClearEntityEffect",
+        "Entity": "Target",
+        "EntityEffectId": "Potion_Health_Lesser_Regen"
+      },
+      {
+        "Type": "ClearEntityEffect",
+        "Entity": "Target",
+        "EntityEffectId": "Potion_Health_Greater_Regen"
+      },
+      {
+        "Type": "ClearEntityEffect",
+        "Entity": "Target",
+        "EntityEffectId": "Potion_Stamina_Regen"
+      }
+    ]
+  },
+  "EntityStatsOnHit": [
+    {
+      "EntityStatId": "Health",
+      "Amount": 30,
+      "MultiplierPerExtraEntityHit": 0.2,
+      "MultipliersPerEntitiesHit": [
+        10
+      ]
+    }
+  ]
+}

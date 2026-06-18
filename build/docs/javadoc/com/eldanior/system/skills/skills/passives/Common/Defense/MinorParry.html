@@ -63,7 +63,6 @@ loadScripts(document, 'script');</script>
 </li>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
 <ol class="toc-list">
-<li><a href="#didProc()" tabindex="0">didProc()</a></li>
 <li><a href="#getEnduranceCostPercent()" tabindex="0">getEnduranceCostPercent()</a></li>
 <li><a href="#onDefend(com.hypixel.hytale.server.core.modules.entity.damage.Damage,com.eldanior.system.config.Player.PlayerLevelData,com.hypixel.hytale.component.Store,com.hypixel.hytale.component.Ref,com.hypixel.hytale.component.Ref,boolean)" tabindex="0">onDefend(Damage, PlayerLevelData, Store, Ref, Ref, boolean)</a></li>
 </ol>
@@ -125,20 +124,17 @@ implements <a href="../../../../skillsInteraction/IPassiveCombatSkill.html" titl
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#didProc()" class="member-name-link">didProc</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEnduranceCostPercent()" class="member-name-link">getEnduranceCostPercent</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEnduranceCostPercent()" class="member-name-link">getEnduranceCostPercent</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onDefend(com.hypixel.hytale.server.core.modules.entity.damage.Damage,com.eldanior.system.config.Player.PlayerLevelData,com.hypixel.hytale.component.Store,com.hypixel.hytale.component.Ref,com.hypixel.hytale.component.Ref,boolean)" class="member-name-link">onDefend</a><wbr>(com.hypixel.hytale.server.core.modules.entity.damage.Damage&nbsp;damage,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onDefend(com.hypixel.hytale.server.core.modules.entity.damage.Damage,com.eldanior.system.config.Player.PlayerLevelData,com.hypixel.hytale.component.Store,com.hypixel.hytale.component.Ref,com.hypixel.hytale.component.Ref,boolean)" class="member-name-link">onDefend</a><wbr>(com.hypixel.hytale.server.core.modules.entity.damage.Damage&nbsp;damage,
  <a href="../../../../../config/Player/PlayerLevelData.html" title="class in com.eldanior.system.config.Player">PlayerLevelData</a>&nbsp;victimData,
  com.hypixel.hytale.component.Store&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;store,
  com.hypixel.hytale.component.Ref&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;attackerRef,
  com.hypixel.hytale.component.Ref&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;victimRef,
  boolean&nbsp;mastered)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -176,18 +172,6 @@ implements <a href="../../../../skillsInteraction/IPassiveCombatSkill.html" titl
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="didProc()">
-<h3>didProc</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">didProc</span>()</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="../../../../skillsInteraction/IPassiveCombatSkill.html#didProc()">didProc</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../skillsInteraction/IPassiveCombatSkill.html" title="interface in com.eldanior.system.skills.skillsInteraction">IPassiveCombatSkill</a></code></dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
 <section class="detail" id="getEnduranceCostPercent()">
 <h3>getEnduranceCostPercent</h3>
 <div class="horizontal-scroll">
@@ -203,7 +187,7 @@ implements <a href="../../../../skillsInteraction/IPassiveCombatSkill.html" titl
 <section class="detail" id="onDefend(com.hypixel.hytale.server.core.modules.entity.damage.Damage,com.eldanior.system.config.Player.PlayerLevelData,com.hypixel.hytale.component.Store,com.hypixel.hytale.component.Ref,com.hypixel.hytale.component.Ref,boolean)">
 <h3>onDefend</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onDefend</span><wbr><span class="parameters">(com.hypixel.hytale.server.core.modules.entity.damage.Damage&nbsp;damage,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">onDefend</span><wbr><span class="parameters">(com.hypixel.hytale.server.core.modules.entity.damage.Damage&nbsp;damage,
  <a href="../../../../../config/Player/PlayerLevelData.html" title="class in com.eldanior.system.config.Player">PlayerLevelData</a>&nbsp;victimData,
  com.hypixel.hytale.component.Store&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;store,
  com.hypixel.hytale.component.Ref&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;attackerRef,

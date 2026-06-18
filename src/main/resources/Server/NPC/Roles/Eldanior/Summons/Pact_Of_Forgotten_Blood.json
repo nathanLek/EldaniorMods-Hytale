@@ -1,0 +1,40 @@
+{
+  "Type": "Variant",
+  "Reference": "Template_Summoned_Ally",
+  "Modify": {
+    "MaxHealth": 2150,
+    "HearingRange": 3,
+    "ViewSector": 270,
+    "Appearance": "Ghoul",
+    "Weapons": [],
+    "OffHand": [],
+    "DefaultOffHandSlot": 0,
+    "FlockArray": [
+      "Ghoul"
+    ],
+    "Attack": "Root_NPC_Skeleton_Knight_Attack",
+    "AttackDistance": 8,
+    "AttackPauseRange": [
+      1,
+      1.5
+    ],
+    "CombatAttackPreDelay": [
+      0.1,
+      0.3
+    ],
+    "DesiredAttackDistanceRange": [
+      1,
+      5
+    ],
+    "MaxSpeed": 8,
+    "ApplySeparation": true,
+    "BreathesInWater": true,
+    "CombatBackOffAfterAttack": false,
+    "CombatStrafingDurationRange": [
+      0.2,
+      1
+    ],
+    "BlockProbability": 0,
+    "NameTranslationKey": "server.npcRoles.Skeleton_Knight.name"
+  }
+}

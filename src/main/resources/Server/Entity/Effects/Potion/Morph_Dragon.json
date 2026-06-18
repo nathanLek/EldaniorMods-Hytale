@@ -1,0 +1,14 @@
+{
+  "StatusEffectIcon": "Icons/ItemsGenerated/Potion_Purify.png",
+  "OverlapBehavior": "Overwrite",
+  "Duration": 120,
+  "ModelChange": "Dragon_Void",
+  "ApplicationEffects": {
+    "Particles": [
+      {
+        "SystemId": "Potion_Morph_Burst"
+      }
+    ],
+    "WorldSoundEventId": "SFX_Pigeon_Death"
+  }
+}

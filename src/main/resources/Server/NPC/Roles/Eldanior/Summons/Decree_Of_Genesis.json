@@ -1,0 +1,40 @@
+{
+  "Type": "Variant",
+  "Reference": "Template_Summoned_Ally",
+  "Modify": {
+    "MaxHealth": 2150,
+    "HearingRange": 10,
+    "ViewSector": 360,
+    "Appearance": "Spirit_Ember",
+    "Weapons": [],
+    "OffHand": [],
+    "DefaultOffHandSlot": 0,
+    "FlockArray": [
+      "Spirit_Ember"
+    ],
+    "Attack": "Root_NPC_Skeleton_Knight_Attack",
+    "AttackDistance": 12,
+    "AttackPauseRange": [
+      0,
+      1.5
+    ],
+    "CombatAttackPreDelay": [
+      0.1,
+      0.5
+    ],
+    "DesiredAttackDistanceRange": [
+      1,
+      2.5
+    ],
+    "MaxSpeed": 8,
+    "ApplySeparation": true,
+    "BreathesInWater": true,
+    "CombatBackOffAfterAttack": true,
+    "CombatStrafingDurationRange": [
+      0.2,
+      0.8
+    ],
+    "BlockProbability": 0,
+    "NameTranslationKey": "server.npcRoles.Skeleton_Knight.name"
+  }
+}

@@ -1,0 +1,732 @@
+{
+  "DisplayNameKey": "Tavernier",
+  "RefreshInterval": {
+    "Days": 1
+  },
+  "RestockHour": 6,
+  "TradeSlots": [
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Food_Bread",
+          "Quantity": 3
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Copper_Coins",
+            "Quantity": 15
+          }
+        ],
+        "Stock": 20
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Food_Cheese",
+          "Quantity": 2
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Copper_Coins",
+            "Quantity": 20
+          }
+        ],
+        "Stock": 15
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Food_Egg",
+          "Quantity": 5
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Copper_Coins",
+            "Quantity": 12
+          }
+        ],
+        "Stock": 20
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Food_Chicken_Raw",
+          "Quantity": 2
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Copper_Coins",
+            "Quantity": 25
+          }
+        ],
+        "Stock": 10
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Food_Beef_Raw",
+          "Quantity": 2
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Copper_Coins",
+            "Quantity": 30
+          }
+        ],
+        "Stock": 10
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Food_Pork_Raw",
+          "Quantity": 2
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Copper_Coins",
+            "Quantity": 28
+          }
+        ],
+        "Stock": 10
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Food_Fish_Raw",
+          "Quantity": 2
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Copper_Coins",
+            "Quantity": 22
+          }
+        ],
+        "Stock": 10
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Food_Wildmeat_Raw",
+          "Quantity": 2
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Copper_Coins",
+            "Quantity": 35
+          }
+        ],
+        "Stock": 8
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Food_Kebab_Meat",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Silver_Coins",
+            "Quantity": 15
+          }
+        ],
+        "Stock": 5
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Food_Kebab_Fruit",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Silver_Coins",
+            "Quantity": 12
+          }
+        ],
+        "Stock": 5
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Food_Kebab_Vegetable",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Silver_Coins",
+            "Quantity": 10
+          }
+        ],
+        "Stock": 5
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Food_Kebab_Mushroom",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Silver_Coins",
+            "Quantity": 10
+          }
+        ],
+        "Stock": 5
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Food_Pie_Apple",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Silver_Coins",
+            "Quantity": 20
+          }
+        ],
+        "Stock": 3
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Food_Pie_Meat",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Silver_Coins",
+            "Quantity": 25
+          }
+        ],
+        "Stock": 3
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Food_Pie_Pumpkin",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Silver_Coins",
+            "Quantity": 18
+          }
+        ],
+        "Stock": 3
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Food_Salad_Caesar",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Silver_Coins",
+            "Quantity": 15
+          }
+        ],
+        "Stock": 5
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Food_Salad_Berry",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Silver_Coins",
+            "Quantity": 12
+          }
+        ],
+        "Stock": 5
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Food_Salad_Mushroom",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Silver_Coins",
+            "Quantity": 12
+          }
+        ],
+        "Stock": 5
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Food_Fish_Grilled",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Silver_Coins",
+            "Quantity": 18
+          }
+        ],
+        "Stock": 5
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Food_Wildmeat_Cooked",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Silver_Coins",
+            "Quantity": 22
+          }
+        ],
+        "Stock": 5
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Food_Vegetable_Cooked",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Silver_Coins",
+            "Quantity": 10
+          }
+        ],
+        "Stock": 5
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Food_Popcorn",
+          "Quantity": 3
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Copper_Coins",
+            "Quantity": 8
+          }
+        ],
+        "Stock": 15
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Ingredient_Salt",
+          "Quantity": 3
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Copper_Coins",
+            "Quantity": 10
+          }
+        ],
+        "Stock": 15
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Ingredient_Dough",
+          "Quantity": 3
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Copper_Coins",
+            "Quantity": 12
+          }
+        ],
+        "Stock": 15
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Plant_Fruit_Apple",
+          "Quantity": 5
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Copper_Coins",
+            "Quantity": 8
+          }
+        ],
+        "Stock": 20
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Potion_Health_Small",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Copper_Coins",
+            "Quantity": 40
+          }
+        ],
+        "Stock": 10
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Potion_Health_Lesser",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Silver_Coins",
+            "Quantity": 8
+          }
+        ],
+        "Stock": 8
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Potion_Health",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Silver_Coins",
+            "Quantity": 25
+          }
+        ],
+        "Stock": 5
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Potion_Stamina_Small",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Copper_Coins",
+            "Quantity": 35
+          }
+        ],
+        "Stock": 10
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Potion_Stamina",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Silver_Coins",
+            "Quantity": 20
+          }
+        ],
+        "Stock": 5
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Potion_Regen_Health_Small",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Silver_Coins",
+            "Quantity": 15
+          }
+        ],
+        "Stock": 5
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Potion_Regen_Stamina_Small",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Silver_Coins",
+            "Quantity": 12
+          }
+        ],
+        "Stock": 5
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Potion_Antidote",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Silver_Coins",
+            "Quantity": 30
+          }
+        ],
+        "Stock": 5
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Copper_Coins",
+          "Quantity": 5
+        },
+        "Input": [
+          {
+            "ItemId": "Food_Chicken_Raw",
+            "Quantity": 5
+          }
+        ]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Copper_Coins",
+          "Quantity": 8
+        },
+        "Input": [
+          {
+            "ItemId": "Food_Beef_Raw",
+            "Quantity": 5
+          }
+        ]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Copper_Coins",
+          "Quantity": 6
+        },
+        "Input": [
+          {
+            "ItemId": "Food_Pork_Raw",
+            "Quantity": 5
+          }
+        ]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Copper_Coins",
+          "Quantity": 4
+        },
+        "Input": [
+          {
+            "ItemId": "Food_Fish_Raw",
+            "Quantity": 5
+          }
+        ]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Copper_Coins",
+          "Quantity": 3
+        },
+        "Input": [
+          {
+            "ItemId": "Plant_Crop_Wheat_Item",
+            "Quantity": 10
+          }
+        ]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Copper_Coins",
+          "Quantity": 3
+        },
+        "Input": [
+          {
+            "ItemId": "Plant_Crop_Corn_Item",
+            "Quantity": 10
+          }
+        ]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Copper_Coins",
+          "Quantity": 10
+        },
+        "Input": [
+          {
+            "ItemId": "Food_Wildmeat_Raw",
+            "Quantity": 5
+          }
+        ]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Copper_Coins",
+          "Quantity": 4
+        },
+        "Input": [
+          {
+            "ItemId": "Plant_Crop_Carrot_Item",
+            "Quantity": 10
+          }
+        ]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Copper_Coins",
+          "Quantity": 4
+        },
+        "Input": [
+          {
+            "ItemId": "Plant_Crop_Potato_Item",
+            "Quantity": 10
+          }
+        ]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Copper_Coins",
+          "Quantity": 5
+        },
+        "Input": [
+          {
+            "ItemId": "Plant_Crop_Tomato_Item",
+            "Quantity": 10
+          }
+        ]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Silver_Coins",
+          "Quantity": 3
+        },
+        "Input": [
+          {
+            "ItemId": "Food_Fish_Raw_Rare",
+            "Quantity": 1
+          }
+        ]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Silver_Coins",
+          "Quantity": 8
+        },
+        "Input": [
+          {
+            "ItemId": "Food_Fish_Raw_Epic",
+            "Quantity": 1
+          }
+        ]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Silver_Coins",
+          "Quantity": 25
+        },
+        "Input": [
+          {
+            "ItemId": "Food_Fish_Raw_Legendary",
+            "Quantity": 1
+          }
+        ]
+      }
+    }
+  ]
+}

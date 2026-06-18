@@ -61,7 +61,6 @@ loadScripts(document, 'script');</script>
 <li><a href="#onDefend(com.hypixel.hytale.server.core.modules.entity.damage.Damage,com.eldanior.system.config.Player.PlayerLevelData,com.hypixel.hytale.component.Store,com.hypixel.hytale.component.Ref,com.hypixel.hytale.component.Ref)" tabindex="0">onDefend(Damage, PlayerLevelData, Store, Ref, Ref)</a></li>
 <li><a href="#onAttack(com.hypixel.hytale.server.core.modules.entity.damage.Damage,com.eldanior.system.config.Player.PlayerLevelData,com.hypixel.hytale.component.Store,com.hypixel.hytale.component.Ref,com.hypixel.hytale.component.Ref,boolean)" tabindex="0">onAttack(Damage, PlayerLevelData, Store, Ref, Ref, boolean)</a></li>
 <li><a href="#onDefend(com.hypixel.hytale.server.core.modules.entity.damage.Damage,com.eldanior.system.config.Player.PlayerLevelData,com.hypixel.hytale.component.Store,com.hypixel.hytale.component.Ref,com.hypixel.hytale.component.Ref,boolean)" tabindex="0">onDefend(Damage, PlayerLevelData, Store, Ref, Ref, boolean)</a></li>
-<li><a href="#didProc()" tabindex="0">didProc()</a></li>
 <li><a href="#getEnduranceCostPercent()" tabindex="0">getEnduranceCostPercent()</a></li>
 <li><a href="#getLifeCostPercent()" tabindex="0">getLifeCostPercent()</a></li>
 <li><a href="#getFlatStatBonus(com.eldanior.system.config.configs.StatConfig)" tabindex="0">getFlatStatBonus(StatConfig)</a></li>
@@ -116,62 +115,59 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#didProc()" class="member-name-link">didProc</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default float</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getEnduranceCostPercent()" class="member-name-link">getEnduranceCostPercent</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default float</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getEnduranceCostPercent()" class="member-name-link">getEnduranceCostPercent</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getFlatStatBonus(com.eldanior.system.config.configs.StatConfig)" class="member-name-link">getFlatStatBonus</a><wbr>(<a href="../../config/configs/StatConfig.html" title="enum class in com.eldanior.system.config.configs">StatConfig</a>&nbsp;stat)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default float</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getFlatStatBonus(com.eldanior.system.config.configs.StatConfig)" class="member-name-link">getFlatStatBonus</a><wbr>(<a href="../../config/configs/StatConfig.html" title="enum class in com.eldanior.system.config.configs">StatConfig</a>&nbsp;stat)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getLifeCostPercent()" class="member-name-link">getLifeCostPercent</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default float</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getLifeCostPercent()" class="member-name-link">getLifeCostPercent</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getRadarMessage(java.util.List,int,int)" class="member-name-link">getRadarMessage</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="IPassiveCombatSkill.RadarTarget.html" title="class in com.eldanior.system.skills.skillsInteraction">IPassiveCombatSkill.RadarTarget</a>&gt;&nbsp;closestTargets,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getRadarMessage(java.util.List,int,int)" class="member-name-link">getRadarMessage</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="IPassiveCombatSkill.RadarTarget.html" title="class in com.eldanior.system.skills.skillsInteraction">IPassiveCombatSkill.RadarTarget</a>&gt;&nbsp;closestTargets,
  int&nbsp;extraMobs,
  int&nbsp;extraPlayers)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default com.hypixel.hytale.protocol.packets.interface_.NotificationStyle</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getRadarStyle()" class="member-name-link">getRadarStyle</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default float</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getRegenMultiplier(com.eldanior.system.config.configs.StatConfig)" class="member-name-link">getRegenMultiplier</a><wbr>(<a href="../../config/configs/StatConfig.html" title="enum class in com.eldanior.system.config.configs">StatConfig</a>&nbsp;stat)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default com.hypixel.hytale.protocol.packets.interface_.NotificationStyle</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getRadarStyle()" class="member-name-link">getRadarStyle</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default float</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getStatMultiplier(com.eldanior.system.config.configs.StatConfig)" class="member-name-link">getStatMultiplier</a><wbr>(<a href="../../config/configs/StatConfig.html" title="enum class in com.eldanior.system.config.configs">StatConfig</a>&nbsp;stat)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getRegenMultiplier(com.eldanior.system.config.configs.StatConfig)" class="member-name-link">getRegenMultiplier</a><wbr>(<a href="../../config/configs/StatConfig.html" title="enum class in com.eldanior.system.config.configs">StatConfig</a>&nbsp;stat)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#onAttack(com.hypixel.hytale.server.core.modules.entity.damage.Damage,com.eldanior.system.config.Player.PlayerLevelData,com.hypixel.hytale.component.Store,com.hypixel.hytale.component.Ref,com.hypixel.hytale.component.Ref)" class="member-name-link">onAttack</a><wbr>(com.hypixel.hytale.server.core.modules.entity.damage.Damage&nbsp;damage,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default float</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getStatMultiplier(com.eldanior.system.config.configs.StatConfig)" class="member-name-link">getStatMultiplier</a><wbr>(<a href="../../config/configs/StatConfig.html" title="enum class in com.eldanior.system.config.configs">StatConfig</a>&nbsp;stat)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#onAttack(com.hypixel.hytale.server.core.modules.entity.damage.Damage,com.eldanior.system.config.Player.PlayerLevelData,com.hypixel.hytale.component.Store,com.hypixel.hytale.component.Ref,com.hypixel.hytale.component.Ref)" class="member-name-link">onAttack</a><wbr>(com.hypixel.hytale.server.core.modules.entity.damage.Damage&nbsp;damage,
  <a href="../../config/Player/PlayerLevelData.html" title="class in com.eldanior.system.config.Player">PlayerLevelData</a>&nbsp;attackerData,
  com.hypixel.hytale.component.Store&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;store,
  com.hypixel.hytale.component.Ref&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;attackerRef,
  com.hypixel.hytale.component.Ref&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;victimRef)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#onAttack(com.hypixel.hytale.server.core.modules.entity.damage.Damage,com.eldanior.system.config.Player.PlayerLevelData,com.hypixel.hytale.component.Store,com.hypixel.hytale.component.Ref,com.hypixel.hytale.component.Ref,boolean)" class="member-name-link">onAttack</a><wbr>(com.hypixel.hytale.server.core.modules.entity.damage.Damage&nbsp;damage,
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#onAttack(com.hypixel.hytale.server.core.modules.entity.damage.Damage,com.eldanior.system.config.Player.PlayerLevelData,com.hypixel.hytale.component.Store,com.hypixel.hytale.component.Ref,com.hypixel.hytale.component.Ref,boolean)" class="member-name-link">onAttack</a><wbr>(com.hypixel.hytale.server.core.modules.entity.damage.Damage&nbsp;damage,
  <a href="../../config/Player/PlayerLevelData.html" title="class in com.eldanior.system.config.Player">PlayerLevelData</a>&nbsp;attackerData,
  com.hypixel.hytale.component.Store&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;store,
  com.hypixel.hytale.component.Ref&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;attackerRef,
  com.hypixel.hytale.component.Ref&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;victimRef,
  boolean&nbsp;mastered)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#onDefend(com.hypixel.hytale.server.core.modules.entity.damage.Damage,com.eldanior.system.config.Player.PlayerLevelData,com.hypixel.hytale.component.Store,com.hypixel.hytale.component.Ref,com.hypixel.hytale.component.Ref)" class="member-name-link">onDefend</a><wbr>(com.hypixel.hytale.server.core.modules.entity.damage.Damage&nbsp;damage,
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#onDefend(com.hypixel.hytale.server.core.modules.entity.damage.Damage,com.eldanior.system.config.Player.PlayerLevelData,com.hypixel.hytale.component.Store,com.hypixel.hytale.component.Ref,com.hypixel.hytale.component.Ref)" class="member-name-link">onDefend</a><wbr>(com.hypixel.hytale.server.core.modules.entity.damage.Damage&nbsp;damage,
  <a href="../../config/Player/PlayerLevelData.html" title="class in com.eldanior.system.config.Player">PlayerLevelData</a>&nbsp;victimData,
  com.hypixel.hytale.component.Store&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;store,
  com.hypixel.hytale.component.Ref&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;attackerRef,
  com.hypixel.hytale.component.Ref&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;victimRef)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#onDefend(com.hypixel.hytale.server.core.modules.entity.damage.Damage,com.eldanior.system.config.Player.PlayerLevelData,com.hypixel.hytale.component.Store,com.hypixel.hytale.component.Ref,com.hypixel.hytale.component.Ref,boolean)" class="member-name-link">onDefend</a><wbr>(com.hypixel.hytale.server.core.modules.entity.damage.Damage&nbsp;damage,
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#onDefend(com.hypixel.hytale.server.core.modules.entity.damage.Damage,com.eldanior.system.config.Player.PlayerLevelData,com.hypixel.hytale.component.Store,com.hypixel.hytale.component.Ref,com.hypixel.hytale.component.Ref,boolean)" class="member-name-link">onDefend</a><wbr>(com.hypixel.hytale.server.core.modules.entity.damage.Damage&nbsp;damage,
  <a href="../../config/Player/PlayerLevelData.html" title="class in com.eldanior.system.config.Player">PlayerLevelData</a>&nbsp;victimData,
  com.hypixel.hytale.component.Store&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;store,
  com.hypixel.hytale.component.Ref&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;attackerRef,
  com.hypixel.hytale.component.Ref&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;victimRef,
  boolean&nbsp;mastered)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -190,7 +186,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="onAttack(com.hypixel.hytale.server.core.modules.entity.damage.Damage,com.eldanior.system.config.Player.PlayerLevelData,com.hypixel.hytale.component.Store,com.hypixel.hytale.component.Ref,com.hypixel.hytale.component.Ref)">
 <h3>onAttack</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onAttack</span><wbr><span class="parameters">(com.hypixel.hytale.server.core.modules.entity.damage.Damage&nbsp;damage,
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">onAttack</span><wbr><span class="parameters">(com.hypixel.hytale.server.core.modules.entity.damage.Damage&nbsp;damage,
  <a href="../../config/Player/PlayerLevelData.html" title="class in com.eldanior.system.config.Player">PlayerLevelData</a>&nbsp;attackerData,
  com.hypixel.hytale.component.Store&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;store,
  com.hypixel.hytale.component.Ref&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;attackerRef,
@@ -202,7 +198,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="onDefend(com.hypixel.hytale.server.core.modules.entity.damage.Damage,com.eldanior.system.config.Player.PlayerLevelData,com.hypixel.hytale.component.Store,com.hypixel.hytale.component.Ref,com.hypixel.hytale.component.Ref)">
 <h3>onDefend</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onDefend</span><wbr><span class="parameters">(com.hypixel.hytale.server.core.modules.entity.damage.Damage&nbsp;damage,
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">onDefend</span><wbr><span class="parameters">(com.hypixel.hytale.server.core.modules.entity.damage.Damage&nbsp;damage,
  <a href="../../config/Player/PlayerLevelData.html" title="class in com.eldanior.system.config.Player">PlayerLevelData</a>&nbsp;victimData,
  com.hypixel.hytale.component.Store&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;store,
  com.hypixel.hytale.component.Ref&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;attackerRef,
@@ -214,7 +210,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="onAttack(com.hypixel.hytale.server.core.modules.entity.damage.Damage,com.eldanior.system.config.Player.PlayerLevelData,com.hypixel.hytale.component.Store,com.hypixel.hytale.component.Ref,com.hypixel.hytale.component.Ref,boolean)">
 <h3>onAttack</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onAttack</span><wbr><span class="parameters">(com.hypixel.hytale.server.core.modules.entity.damage.Damage&nbsp;damage,
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">onAttack</span><wbr><span class="parameters">(com.hypixel.hytale.server.core.modules.entity.damage.Damage&nbsp;damage,
  <a href="../../config/Player/PlayerLevelData.html" title="class in com.eldanior.system.config.Player">PlayerLevelData</a>&nbsp;attackerData,
  com.hypixel.hytale.component.Store&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;store,
  com.hypixel.hytale.component.Ref&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;attackerRef,
@@ -227,20 +223,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="onDefend(com.hypixel.hytale.server.core.modules.entity.damage.Damage,com.eldanior.system.config.Player.PlayerLevelData,com.hypixel.hytale.component.Store,com.hypixel.hytale.component.Ref,com.hypixel.hytale.component.Ref,boolean)">
 <h3>onDefend</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onDefend</span><wbr><span class="parameters">(com.hypixel.hytale.server.core.modules.entity.damage.Damage&nbsp;damage,
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">onDefend</span><wbr><span class="parameters">(com.hypixel.hytale.server.core.modules.entity.damage.Damage&nbsp;damage,
  <a href="../../config/Player/PlayerLevelData.html" title="class in com.eldanior.system.config.Player">PlayerLevelData</a>&nbsp;victimData,
  com.hypixel.hytale.component.Store&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;store,
  com.hypixel.hytale.component.Ref&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;attackerRef,
  com.hypixel.hytale.component.Ref&lt;com.hypixel.hytale.server.core.universe.world.storage.EntityStore&gt;&nbsp;victimRef,
  boolean&nbsp;mastered)</span></div>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="didProc()">
-<h3>didProc</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">didProc</span>()</div>
 </div>
 </section>
 </li>

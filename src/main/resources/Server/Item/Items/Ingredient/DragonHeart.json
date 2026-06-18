@@ -1,0 +1,42 @@
+{
+  "TranslationProperties": {
+    "Name": "Coeur de Dragon",
+    "Description": "Essence de Vie et de Mana d'un Dragon"
+  },
+  "Icon": "Icons/ItemsGenerated/DragonHeart.png",
+  "Quality": "Legendary",
+  "Categories": [
+    "Eldanior_System.Autres"
+  ],
+  "Model": "Resources/Ingredients/Voidheart.blockymodel",
+  "Texture": "Items/Items/DragonHeart.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.9,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -13
+    ]
+  },
+  "Tags": {
+    "Type": [
+      "Ingredient"
+    ]
+  },
+  "ItemEntity": {
+    "ParticleSystemId": null,
+    "ParticleColor": "#ff0000",
+    "ShowItemParticles": true
+  },
+  "Scale": 1.2,
+  "Light": {
+    "Color": "#103",
+    "Radius": 1
+  },
+  "DropOnDeath": true
+}

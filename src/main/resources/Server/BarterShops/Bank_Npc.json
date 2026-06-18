@@ -1,0 +1,137 @@
+{
+  "DisplayNameKey": "ELDANIOR BANK",
+  "RefreshInterval": {
+    "Days": 1
+  },
+  "RestockHour": 1,
+  "TradeSlots": [
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Silver_Coins",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Copper_Coins",
+            "Quantity": 10
+          }
+        ],
+        "Stock": 10000
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Copper_Coins",
+          "Quantity": 10
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Silver_Coins",
+            "Quantity": 1
+          }
+        ],
+        "Stock": 10000
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Gold_Coins",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Silver_Coins",
+            "Quantity": 10
+          }
+        ],
+        "Stock": 10000
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Input": [
+          {
+            "ItemId": "Elda_Gold_Coins",
+            "Quantity": 1
+          }
+        ],
+        "Output": {
+          "ItemId": "Elda_Silver_Coins",
+          "Quantity": 10
+        },
+        "Stock": 10000
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Input": [
+          {
+            "ItemId": "Elda_Gold_Coins",
+            "Quantity": 10
+          }
+        ],
+        "Output": {
+          "ItemId": "Elda_Diamond_Coins",
+          "Quantity": 1
+        },
+        "Stock": 10000
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Input": [
+          {
+            "ItemId": "Elda_Diamond_Coins",
+            "Quantity": 1
+          }
+        ],
+        "Output": {
+          "ItemId": "Elda_Gold_Coins",
+          "Quantity": 10
+        },
+        "Stock": 10000
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Input": [
+          {
+            "ItemId": "Elda_Diamond_Coins",
+            "Quantity": 10
+          }
+        ],
+        "Output": {
+          "ItemId": "Elda_Zenith_Coins",
+          "Quantity": 1
+        },
+        "Stock": 10000
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Input": [
+          {
+            "ItemId": "Elda_Zenith_Coins",
+            "Quantity": 1
+          }
+        ],
+        "Output": {
+          "ItemId": "Elda_Diamond_Coins",
+          "Quantity": 10
+        },
+        "Stock": 10000
+      }
+    }
+  ]
+}

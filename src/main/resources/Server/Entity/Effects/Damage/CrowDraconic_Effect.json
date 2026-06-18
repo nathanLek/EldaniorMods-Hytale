@@ -1,0 +1,40 @@
+{
+  "ApplicationEffects": {
+    "EntityBottomTint": "#000000",
+    "EntityTopTint": "#000000",
+    "HorizontalSpeedMultiplier": 1,
+    "KnockbackMultiplier": 0,
+    "Particles": [
+      {
+        "SystemId": "Sword_Charged_Trail_Blade_Praetorian",
+        "TargetEntityPart": "Self",
+        "Scale": 3,
+        "Color": "#ff0000",
+        "PositionOffset": {
+          "Y": 1
+        }
+      }
+    ]
+  },
+  "Duration": 5,
+  "RemovalBehavior": "Duration",
+  "OverlapBehavior": "Extend",
+  "Infinite": true,
+  "Debuff": false,
+  "DamageEffects": {
+    "ModelParticles": [
+      {
+        "SystemId": "Sword_Charged_Trail_Blade_Praetorian",
+        "Color": "#ff0101",
+        "DetachedFromModel": true,
+        "TargetEntityPart": "PrimaryItem"
+      }
+    ],
+    "WorldParticles": [
+      {
+        "SystemId": "Sword_Charged_Trail_Blade_Praetorian",
+        "Color": "#ff0000"
+      }
+    ]
+  }
+}

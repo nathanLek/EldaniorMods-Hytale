@@ -1,36 +1,46 @@
 {
   "Type": "Generic",
-  "Appearance": "Kweebec_Sapling",
   "Parameters": {
     "Invulnerable": {
-      "Value": true,
-      "Description": "NPC de quete invulnerable"
+      "Value": false,
+      "Description": "Whether this NPC is invulnerable."
+    },
+    "MemoriesNameOverride": {
+      "Value": "Kweebec_Rootling",
+      "Description": "Overrides the memory name if set"
     },
     "NameTranslationKey": {
-      "Value": "Ancien Conseiller",
+      "Value": "Forgeron Tier1",
       "Description": "Translation key for NPC name display"
     }
   },
   "StartState": "Idle",
   "DefaultNPCAttitude": "Ignore",
   "DefaultPlayerAttitude": "Neutral",
-  "MaxHealth": 9999,
+  "Appearance": "PlayerTestModel_V",
+  "MaxHealth": 5550,
   "IsMemory": false,
   "MemoriesCategory": "Kweebec",
-  "DisableDamageGroups": ["Self"],
+  "MemoriesNameOverride": {
+    "Compute": "MemoriesNameOverride"
+  },
+  "DisableDamageGroups": [
+    "Self"
+  ],
   "CombatConfig": {
     "EntityEffect": "Immunity_Environmental"
   },
-  "BusyStates": ["$Interaction"],
+  "BusyStates": [
+    "$Interaction"
+  ],
   "Invulnerable": {
     "Compute": "Invulnerable"
   },
-  "KnockbackScale": 0,
+  "KnockbackScale": 0.5,
   "MotionControllerList": [
     {
       "Type": "Walk",
-      "MinWalkSpeed": 0.005,
-      "MaxWalkSpeed": 0.01,
+      "MaxWalkSpeed": 5,
       "Gravity": 10,
       "RunThreshold": 0.3,
       "MaxFallSpeed": 15,
@@ -42,56 +52,151 @@
     {
       "Instructions": [
         {
-          "Sensor": { "Type": "State", "State": "Idle" },
+          "$Comment": "Idle state - no player nearby",
+          "Sensor": {
+            "Type": "State",
+            "State": "Idle"
+          },
           "Instructions": [
             {
+              "$Comment": "Wave at player when they approach",
               "ActionsBlocking": true,
-              "Sensor": { "Type": "Player", "Range": 8 },
+              "Sensor": {
+                "Type": "Player",
+                "Range": 8
+              },
               "Actions": [
-                { "Type": "State", "State": "Watching" }
+                {
+                  "Type": "PlayAnimation",
+                  "Slot": "Status",
+                  "Animation": "Wave"
+                },
+                {
+                  "Type": "State",
+                  "State": "Watching"
+                }
               ]
             },
             {
-              "Sensor": { "Type": "Any" },
-              "BodyMotion": { "Type": "Nothing" }
+              "Sensor": {
+                "Type": "Any"
+              },
+              "BodyMotion": {
+                "Type": "Nothing"
+              }
             }
           ]
         },
         {
-          "Sensor": { "Type": "State", "State": "Watching" },
+          "$Comment": "Watching state - player is nearby, just watch them",
+          "Sensor": {
+            "Type": "State",
+            "State": "Watching"
+          },
           "Instructions": [
             {
+              "$Comment": "Watch nearby players with head",
               "Continue": true,
-              "Sensor": { "Type": "Player", "Range": 12 },
-              "HeadMotion": { "Type": "Watch" }
+              "Sensor": {
+                "Type": "Player",
+                "Range": 12
+              },
+              "HeadMotion": {
+                "Type": "Watch"
+              }
             },
             {
-              "Sensor": { "Type": "Not", "Sensor": { "Type": "Player", "Range": 12 } },
+              "$Comment": "Clear wave animation after delay",
+              "Continue": true,
+              "Sensor": {
+                "Type": "Any"
+              },
               "Actions": [
-                { "Type": "State", "State": "Idle" }
+                {
+                  "Type": "Timeout",
+                  "Delay": [
+                    2,
+                    2
+                  ],
+                  "Action": {
+                    "Type": "PlayAnimation",
+                    "Slot": "Status"
+                  }
+                }
               ]
             },
             {
-              "Sensor": { "Type": "Any" },
-              "BodyMotion": { "Type": "Nothing" }
+              "$Comment": "Return to Idle when player leaves (clear animation first)",
+              "Sensor": {
+                "Type": "Not",
+                "Sensor": {
+                  "Type": "Player",
+                  "Range": 12
+                }
+              },
+              "Actions": [
+                {
+                  "Type": "PlayAnimation",
+                  "Slot": "Status"
+                },
+                {
+                  "Type": "State",
+                  "State": "Idle"
+                }
+              ]
+            },
+            {
+              "Sensor": {
+                "Type": "Any"
+              },
+              "BodyMotion": {
+                "Type": "Nothing"
+              }
             }
           ]
         },
         {
-          "Sensor": { "Type": "State", "State": "$Interaction" },
+          "$Comment": "Interaction state - look at player while shop is open",
+          "Sensor": {
+            "Type": "State",
+            "State": "$Interaction"
+          },
           "Instructions": [
             {
               "Continue": true,
-              "Sensor": { "Type": "Target", "Range": 10 },
-              "HeadMotion": { "Type": "Watch" }
+              "Sensor": {
+                "Type": "Target",
+                "Range": 10
+              },
+              "HeadMotion": {
+                "Type": "Watch"
+              }
             },
             {
-              "Sensor": { "Type": "Any" },
+              "$Comment": "Return to Watching after interaction ends",
+              "Sensor": {
+                "Type": "Any"
+              },
               "Actions": [
-                { "Type": "Timeout", "Delay": [3, 3], "Action": { "Type": "Sequence", "Actions": [
-                  { "Type": "ReleaseTarget" },
-                  { "Type": "State", "State": "Watching" }
-                ]}}
+                {
+                  "Type": "Timeout",
+                  "Delay": [
+                    1,
+                    1
+                  ],
+                  "Action": {
+                    "Type": "Sequence",
+                    "Actions": [
+                      {
+                        "Type": "ReleaseTarget"
+                      },
+                      {
+                        "Type": "State",
+                        "State": "Watching"
+                      }
+                    ]
+                  }
+                }
               ]
             }
           ]
@@ -102,22 +207,58 @@
   "InteractionInstruction": {
     "Instructions": [
       {
-        "Sensor": { "Type": "Not", "Sensor": { "Type": "CanInteract", "ViewSector": 180 } },
-        "Actions": [{ "Type": "SetInteractable", "Interactable": false }]
+        "Sensor": {
+          "Type": "Not",
+          "Sensor": {
+            "Type": "CanInteract",
+            "ViewSector": 180
+          }
+        },
+        "Actions": [
+          {
+            "Type": "SetInteractable",
+            "Interactable": false
+          }
+        ]
       },
       {
         "Continue": true,
-        "Sensor": { "Type": "Any" },
-        "Actions": [{ "Type": "SetInteractable", "Interactable": true, "Hint": "server.interactionHints.talk" }]
+        "Sensor": {
+          "Type": "Any"
+        },
+        "Actions": [
+          {
+            "Type": "SetInteractable",
+            "Interactable": true,
+            "Hint": "server.interactionHints.trade"
+          }
+        ]
       },
       {
-        "Sensor": { "Type": "HasInteracted" },
+        "Sensor": {
+          "Type": "HasInteracted"
+        },
         "Instructions": [
           {
-            "Sensor": { "Type": "Not", "Sensor": { "Type": "State", "State": "$Interaction" } },
+            "Sensor": {
+              "Type": "Not",
+              "Sensor": {
+                "Type": "State",
+                "State": "$Interaction"
+              }
+            },
             "Actions": [
-              { "Type": "LockOnInteractionTarget" },
-              { "Type": "State", "State": "$Interaction" }
+              {
+                "Type": "LockOnInteractionTarget"
+              },
+              {
+                "Type": "OpenBarterShop",
+                "Shop": "Forgeron_Tier1_Merchant"
+              },
+              {
+                "Type": "State",
+                "State": "$Interaction"
+              }
             ]
           }
         ]

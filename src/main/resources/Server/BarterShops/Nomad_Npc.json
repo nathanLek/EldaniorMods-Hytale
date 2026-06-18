@@ -1,0 +1,57 @@
+{
+  "DisplayNameKey": "server.barter.kweebec_merchant.title",
+  "RefreshInterval": {
+    "Days": 1
+  },
+  "RestockHour": 6,
+  "TradeSlots": [
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Weapon_Sword_Iron",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Deco_Treasure",
+            "Quantity": 10
+          }
+        ],
+        "Stock": 10
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Ingredient_Salt",
+          "Quantity": 3
+        },
+        "Input": [
+          {
+            "ItemId": "Ingredient_Life_Essence",
+            "Quantity": 20
+          }
+        ],
+        "Stock": 10
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Ingredient_Dough",
+          "Quantity": 3
+        },
+        "Input": [
+          {
+            "ItemId": "Ingredient_Life_Essence",
+            "Quantity": 20
+          }
+        ],
+        "Stock": 10
+      }
+    }
+  ]
+}

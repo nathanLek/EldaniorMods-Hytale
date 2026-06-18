@@ -1,0 +1,173 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.Potion_Health_Lesser.name",
+    "Description": "server.items.Potion_Health_Lesser.description"
+  },
+  "ItemLevel": 10,
+  "PlayerAnimationsId": {
+    "Parent": "Item",
+    "Animations": {
+      "Consume": {
+        "FirstPerson": "Characters/Animations/Items/Main_Handed/Item/Attacks/Drink/Drink_FPS.blockyanim",
+        "ThirdPerson": "Characters/Animations/Items/Main_Handed/Item/Attacks/Drink/Drink.blockyanim",
+        "Speed": 1,
+        "Looping": true
+      }
+    }
+  },
+  "Categories": [
+    "Eldanior_System.Consommables"
+  ],
+  "Icon": "Icons/ItemsGenerated/Furniture_Royal_Magic_Potion_Glow.png",
+  "IconProperties": {
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Scale": 0.8,
+    "Translation": [
+      0,
+      -10
+    ]
+  },
+  "Recipe": {
+    "KnowledgeRequired": false,
+    "Input": [
+      {
+        "ItemId": "Potion_Empty",
+        "Quantity": 3
+      },
+      {
+        "ItemId": "Plant_Fruit_Berries_Red",
+        "Quantity": 6
+      },
+      {
+        "ItemId": "Plant_Crop_Health1",
+        "Quantity": 1
+      },
+      {
+        "ItemId": "Plant_Petals_Blood",
+        "Quantity": 3
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Id": "Alchemybench",
+        "Type": "Crafting",
+        "Categories": [
+          "Alchemy_Potions"
+        ]
+      }
+    ],
+    "OutputQuantity": 3,
+    "TimeSeconds": 1
+  },
+  "Interactions": {
+    "Secondary": "Root_Secondary_Consume_Potion"
+  },
+  "InteractionVars": {
+    "RemoveEffect": {
+      "Interactions": [
+        {
+          "Type": "Simple"
+        }
+      ]
+    },
+    "Effect": {
+      "Interactions": [
+        {
+          "Type": "EffectCondition",
+          "EntityEffectIds": [
+            "Potion_Health_Greater_Regen"
+          ],
+          "Match": "None",
+          "Next": {
+            "Type": "Serial",
+            "Interactions": [
+              {
+                "Type": "ApplyEffect",
+                "EffectId": "Potion_Health_Instant_Lesser"
+              },
+              {
+                "Type": "ApplyEffect",
+                "EffectId": "Potion_Health_Lesser_Regen"
+              }
+            ]
+          },
+          "Failed": {
+            "Type": "Simple"
+          }
+        }
+      ]
+    },
+    "ConsumeSFX": {
+      "Interactions": [
+        {
+          "Parent": "Consume_SFX",
+          "Effects": {
+            "LocalSoundEventId": "SFX_Health_Potion_Low_Drink"
+          }
+        }
+      ]
+    },
+    "ConsumedSFX": {
+      "Interactions": [
+        {
+          "Parent": "Consumed_SFX",
+          "Effects": {
+            "LocalSoundEventId": "SFX_Potion_Drink_Success"
+          }
+        }
+      ]
+    }
+  },
+  "Utility": {
+    "Compatible": false
+  },
+  "BlockType": {
+    "BlockParticleSetId": "Leaves_Fir_Snow",
+    "BlockSoundSetId": "Glass",
+    "CustomModel": "Blocks/Decorative_Sets/Royal_Magic/Potion_Glow.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/Decorative_Sets/Royal_Magic/Glowing_Potion_Texture.png",
+        "Weight": 1
+      }
+    ],
+    "CustomModelScale": 0.5,
+    "DrawType": "Model",
+    "Flags": {
+      "IsUsable": true
+    },
+    "Gathering": {
+      "Harvest": {},
+      "Soft": {}
+    },
+    "HitboxType": "Potion",
+    "Material": "Empty",
+    "RandomRotation": "YawStep1",
+    "Opacity": "Transparent",
+    "Support": {
+      "Down": [
+        {
+          "FaceType": "Full"
+        }
+      ]
+    },
+    "ParticleColor": "#e1ff00",
+    "Light": {
+      "Color": "#522"
+    }
+  },
+  "Consumable": true,
+  "Tags": {
+    "Type": [
+      "Potion"
+    ]
+  },
+  "Scale": 2,
+  "MaxStack": 1,
+  "DropOnDeath": true,
+  "Quality": "Legendary"
+}

@@ -1,0 +1,636 @@
+{
+  "DisplayNameKey": "Alchimiste",
+  "RefreshInterval": {
+    "Days": 1
+  },
+  "RestockHour": 6,
+  "TradeSlots": [
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Potion_Health_Small",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Gold_Coins",
+            "Quantity": 100
+          }
+        ],
+        "Stock": 5
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Potion_Health_Lesser",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Diamond_Coins",
+            "Quantity": 3
+          }
+        ],
+        "Stock": 3
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Potion_Health",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Diamond_Coins",
+            "Quantity": 8
+          }
+        ],
+        "Stock": 2
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Potion_Health_Greater",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Zenith_Coins",
+            "Quantity": 2
+          }
+        ],
+        "Stock": 1
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Potion_Health_Large",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Zenith_Coins",
+            "Quantity": 5
+          }
+        ],
+        "Stock": 1
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Potion_Stamina_Small",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Gold_Coins",
+            "Quantity": 80
+          }
+        ],
+        "Stock": 5
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Potion_Stamina",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Diamond_Coins",
+            "Quantity": 6
+          }
+        ],
+        "Stock": 2
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Potion_Stamina_Greater",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Zenith_Coins",
+            "Quantity": 2
+          }
+        ],
+        "Stock": 1
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Potion_Stamina_Large",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Zenith_Coins",
+            "Quantity": 5
+          }
+        ],
+        "Stock": 1
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Potion_Antidote",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Diamond_Coins",
+            "Quantity": 8
+          }
+        ],
+        "Stock": 3
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Potion_Morph_Pigeon",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Zenith_Coins",
+            "Quantity": 10
+          }
+        ],
+        "Stock": 1
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Potion_Morph_Dog",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Zenith_Coins",
+            "Quantity": 10
+          }
+        ],
+        "Stock": 1
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Potion_Morph_Frog",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Zenith_Coins",
+            "Quantity": 10
+          }
+        ],
+        "Stock": 1
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Potion_Morph_Mouse",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Zenith_Coins",
+            "Quantity": 10
+          }
+        ],
+        "Stock": 1
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Potion_Empty_Small",
+          "Quantity": 3
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Gold_Coins",
+            "Quantity": 5
+          }
+        ],
+        "Stock": 10
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Potion_Empty",
+          "Quantity": 3
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Gold_Coins",
+            "Quantity": 10
+          }
+        ],
+        "Stock": 10
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Potion_Empty_Large",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Gold_Coins",
+            "Quantity": 20
+          }
+        ],
+        "Stock": 5
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Plant_Crop_Health1",
+          "Quantity": 3
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Gold_Coins",
+            "Quantity": 8
+          }
+        ],
+        "Stock": 8
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Plant_Crop_Health2",
+          "Quantity": 2
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Diamond_Coins",
+            "Quantity": 5
+          }
+        ],
+        "Stock": 3
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Plant_Crop_Health3",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Zenith_Coins",
+            "Quantity": 2
+          }
+        ],
+        "Stock": 1
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Plant_Crop_Mana1",
+          "Quantity": 3
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Gold_Coins",
+            "Quantity": 8
+          }
+        ],
+        "Stock": 8
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Plant_Crop_Mana2",
+          "Quantity": 2
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Diamond_Coins",
+            "Quantity": 5
+          }
+        ],
+        "Stock": 3
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Plant_Crop_Mana3",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Zenith_Coins",
+            "Quantity": 2
+          }
+        ],
+        "Stock": 1
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Plant_Crop_Stamina1",
+          "Quantity": 3
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Gold_Coins",
+            "Quantity": 8
+          }
+        ],
+        "Stock": 8
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Plant_Crop_Stamina2",
+          "Quantity": 2
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Diamond_Coins",
+            "Quantity": 5
+          }
+        ],
+        "Stock": 3
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Plant_Crop_Stamina3",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Zenith_Coins",
+            "Quantity": 2
+          }
+        ],
+        "Stock": 1
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Tool_Growth_Potion",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Diamond_Coins",
+            "Quantity": 10
+          }
+        ],
+        "Stock": 3
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Copper_Coins",
+          "Quantity": 5
+        },
+        "Input": [
+          {
+            "ItemId": "Plant_Crop_Health1",
+            "Quantity": 10
+          }
+        ]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Copper_Coins",
+          "Quantity": 5
+        },
+        "Input": [
+          {
+            "ItemId": "Plant_Crop_Mana1",
+            "Quantity": 10
+          }
+        ]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Copper_Coins",
+          "Quantity": 5
+        },
+        "Input": [
+          {
+            "ItemId": "Plant_Crop_Stamina1",
+            "Quantity": 10
+          }
+        ]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Silver_Coins",
+          "Quantity": 8
+        },
+        "Input": [
+          {
+            "ItemId": "Plant_Crop_Health2",
+            "Quantity": 5
+          }
+        ]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Silver_Coins",
+          "Quantity": 8
+        },
+        "Input": [
+          {
+            "ItemId": "Plant_Crop_Mana2",
+            "Quantity": 5
+          }
+        ]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Silver_Coins",
+          "Quantity": 8
+        },
+        "Input": [
+          {
+            "ItemId": "Plant_Crop_Stamina2",
+            "Quantity": 5
+          }
+        ]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Silver_Coins",
+          "Quantity": 25
+        },
+        "Input": [
+          {
+            "ItemId": "Plant_Crop_Health3",
+            "Quantity": 3
+          }
+        ]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Silver_Coins",
+          "Quantity": 25
+        },
+        "Input": [
+          {
+            "ItemId": "Plant_Crop_Mana3",
+            "Quantity": 3
+          }
+        ]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Silver_Coins",
+          "Quantity": 25
+        },
+        "Input": [
+          {
+            "ItemId": "Plant_Crop_Stamina3",
+            "Quantity": 3
+          }
+        ]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Copper_Coins",
+          "Quantity": 10
+        },
+        "Input": [
+          {
+            "ItemId": "Ingredient_Sac_Venom",
+            "Quantity": 3
+          }
+        ]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Copper_Coins",
+          "Quantity": 15
+        },
+        "Input": [
+          {
+            "ItemId": "Plant_Crop_Mushroom_Cap_Poison",
+            "Quantity": 5
+          }
+        ]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Silver_Coins",
+          "Quantity": 12
+        },
+        "Input": [
+          {
+            "ItemId": "Plant_Crop_Mushroom_Glowing_Purple",
+            "Quantity": 3
+          }
+        ]
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Silver_Coins",
+          "Quantity": 12
+        },
+        "Input": [
+          {
+            "ItemId": "Plant_Crop_Mushroom_Glowing_Blue",
+            "Quantity": 3
+          }
+        ]
+      }
+    }
+  ]
+}
