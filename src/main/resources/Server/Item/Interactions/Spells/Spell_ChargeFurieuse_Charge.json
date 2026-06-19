@@ -1,0 +1,41 @@
+{
+  "Type": "Charging",
+  "Effects": {
+    "ItemAnimationId": "CastPushCharging",
+    "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Charge",
+    "Particles": [
+      { "SystemId": "Fire_Charge_Charging_Constant", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.3, "Color": "#ff4500" },
+      { "SystemId": "Mace_Signature_Cast", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.3, "Color": "#ff4500" }
+    ]
+  },
+  "AllowIndefiniteHold": false,
+  "HorizontalSpeedMultiplier": 0.4,
+  "Next": {
+    "1": {
+      "Type": "StatsCondition",
+      "Costs": { "Mana": 130 },
+      "RunTime": 0.2,
+      "Next": {
+        "Type": "Parallel",
+        "Interactions": [
+          { "Interactions": [{ "Type": "ChangeStat", "StatModifiers": { "Mana": -130 } }] },
+          { "Interactions": [{ "Type": "ChangeStat", "StatModifiers": { "SignatureEnergy": 1 }, "Behaviour": "Set" }] },
+          { "Interactions": [{
+            "Type": "Simple", "RunTime": 0.3,
+            "Effects": {
+              "ItemAnimationId": "CastPushCharged",
+              "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Impact",
+              "Particles": [
+                { "SystemId": "Fire_Charge_Soak1", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.4, "Color": "#ff4500" }
+              ]
+            }
+          }] }
+        ]
+      },
+      "Failed": {
+        "Type": "Simple", "RunTime": 0.3,
+        "Effects": { "ItemAnimationId": "Interact", "WorldSoundEventId": "SFX_Bow_No_Ammo" }
+      }
+    }
+  }
+}

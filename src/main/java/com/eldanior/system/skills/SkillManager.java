@@ -2061,6 +2061,74 @@ public class SkillManager {
                 300, 0.0f, 1.5f, 3.0f, 15.0f, 5.0f,
                 List.of(), List.of()
         ));
+
+        // --- COMPÉTENCES ACTIVES ARCHER ---
+        register("skill_page_fleche_explosive", new SkillModel(
+                "FLECHE_EXPLOSIVE", "Spell_FlecheExplosive", "Fleche Explosive", "archer, dragon",
+                120, 0.0f, 1.0f, 15.0f, 30.0f, 0.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_pluie_de_fleches", new SkillModel(
+                "PLUIE_DE_FLECHES", "Spell_PluieDeFleches", "Pluie de Fleches", "archer, dragon",
+                250, 0.0f, 1.5f, 8.0f, 6.0f, 5.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_tir_percant", new SkillModel(
+                "TIR_PERCANT", "Spell_TirPercant", "Tir Percant", "archer, dragon",
+                80, 0.0f, 0.8f, 20.0f, 40.0f, 0.0f,
+                List.of(), List.of()
+        ));
+
+        // --- COMPÉTENCES ACTIVES ASSASSIN ---
+        register("skill_page_frappe_de_l_ombre", new SkillModel(
+                "FRAPPE_DE_L_OMBRE", "Spell_FrappeDeLOmbre", "Frappe de l'Ombre", "assassin, dragon",
+                150, 0.0f, 0.8f, 25.0f, 3.0f, 0.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_lame_empoisonnee", new SkillModel(
+                "LAME_EMPOISONNEE", "Spell_LameEmpoisonnee", "Lame Empoisonnee", "assassin, dragon",
+                100, 0.0f, 0.8f, 8.0f, 30.0f, 6.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_pas_d_ombre", new SkillModel(
+                "PAS_D_OMBRE", "Spell_PasDOmbre", "Pas d'Ombre", "assassin, dragon",
+                200, 0.0f, 0.6f, 0.0f, 0.0f, 0.0f,
+                List.of(), List.of()
+        ));
+
+        // --- COMPÉTENCES ACTIVES WARRIOR ---
+        register("skill_page_charge_furieuse", new SkillModel(
+                "CHARGE_FURIEUSE", "Spell_ChargeFurieuse", "Charge Furieuse", "warrior, dragon",
+                130, 0.0f, 1.0f, 12.0f, 4.0f, 0.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_cri_de_guerre", new SkillModel(
+                "CRI_DE_GUERRE", "Spell_CriDeGuerre", "Cri de Guerre", "warrior, dragon",
+                200, 0.0f, 1.5f, 0.0f, 10.0f, 10.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_tourbillon", new SkillModel(
+                "TOURBILLON", "Spell_Tourbillon", "Tourbillon", "warrior, dragon",
+                160, 0.0f, 1.0f, 30.0f, 5.0f, 0.0f,
+                List.of(), List.of()
+        ));
+
+        // --- COMPÉTENCES ACTIVES MARCHAND ---
+        register("skill_page_appel_de_caravane", new SkillModel(
+                "APPEL_DE_CARAVANE", "Spell_AppelDeCaravane", "Appel de Caravane", "merchant, dragon",
+                300, 0.0f, 2.0f, 0.0f, 0.0f, 0.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_evaluation", new SkillModel(
+                "EVALUATION", "Spell_Evaluation", "Evaluation", "merchant, dragon",
+                150, 0.0f, 1.2f, 0.0f, 0.0f, 10.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_potion_de_fortune", new SkillModel(
+                "POTION_DE_FORTUNE", "Spell_PotionDeFortune", "Potion de Fortune", "merchant, dragon",
+                100, 0.0f, 1.0f, 0.0f, 0.0f, 8.0f,
+                List.of(), List.of()
+        ));
     }
 
     private static void register(String itemId, SkillModel skill) {

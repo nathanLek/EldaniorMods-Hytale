@@ -1,0 +1,43 @@
+{
+  "Appearance": "Projectile",
+  "Radius": 0.1,
+  "Height": 0.2,
+  "VerticalCenterShot": 0.1,
+  "HorizontalCenterShot": 0.1,
+  "DepthShot": 1,
+  "PitchAdjustShot": true,
+  "SticksVertically": true,
+  "MuzzleVelocity": 60,
+  "TerminalVelocity": 100,
+  "Gravity": 3,
+  "Bounciness": 0,
+  "ImpactSlowdown": 0,
+  "TimeToLive": 4,
+  "Damage": 0,
+  "DeadTime": 0,
+  "DeadTimeMiss": 0,
+  "MissParticles": { "SystemId": "Impact_Fire" },
+  "DeathParticles": { "SystemId": "Impact_Fire" },
+  "DeathEffectsOnHit": true,
+  "HitParticles": { "SystemId": "Impact_Fire" },
+  "MissSoundEventId": "SFX_Fireball_Miss",
+  "DeathSoundEventId": "SFX_Fireball_Death",
+  "ExplosionConfig": {
+    "DamageEntities": true,
+    "DamageBlocks": false,
+    "EntityDamageRadius": 4,
+    "EntityDamageFalloff": 0.8,
+    "Knockback": {
+      "Type": "Point",
+      "VelocityConfig": {
+        "AirResistance": 0.97,
+        "AirResistanceMax": 0.96,
+        "GroundResistance": 0.94,
+        "GroundResistanceMax": 0.3,
+        "Threshold": 3.0
+      },
+      "Force": 4,
+      "VelocityType": "Set"
+    }
+  }
+}

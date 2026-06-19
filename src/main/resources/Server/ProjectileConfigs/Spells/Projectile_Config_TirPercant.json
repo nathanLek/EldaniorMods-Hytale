@@ -1,0 +1,15 @@
+{
+  "Parent": "Projectile_Config_Fireball",
+  "Interactions": {
+    "ProjectileHit": {
+      "Interactions": [
+        {
+          "Type": "DamageEntity",
+          "DamageCalculator": {
+            "BaseDamage": { "Projectile": 20 }
+          }
+        }
+      ]
+    }
+  }
+}
