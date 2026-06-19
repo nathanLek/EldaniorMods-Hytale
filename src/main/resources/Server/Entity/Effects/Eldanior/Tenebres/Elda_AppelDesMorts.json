@@ -1,0 +1,17 @@
+{
+  "Duration": 8,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#0a001a",
+    "EntityTopTint": "#440088",
+    "Particles": [{"SystemId": "Spectre_Void_Body"}, {"SystemId": "Spectre_Void_Arms"}],
+    "ModelVFXId": "Intangible_Dark",
+    "HorizontalSpeedMultiplier": 0.5
+  },
+  "DamageCalculatorCooldown": 1.5,
+  "DamageCalculator": {"BaseDamage": {"Poison": 6}},
+  "OverlapBehavior": "Overwrite",
+  "Infinite": false,
+  "Debuff": true,
+  "StatusEffectIcon": "UI/StatusEffects/Poison.png",
+  "DeathMessageKey": "server.general.deathCause.poison"
+}

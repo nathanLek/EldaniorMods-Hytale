@@ -1,0 +1,18 @@
+{
+  "Duration": 10,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#1a0033",
+    "EntityTopTint": "#8800aa",
+    "ScreenEffect": "ScreenEffects/Poison.png",
+    "Particles": [{"SystemId": "Eye_Void_Eye"}, {"SystemId": "Spectre_Void_Head"}],
+    "ModelVFXId": "Intangible_Dark",
+    "HorizontalSpeedMultiplier": 0.4
+  },
+  "DamageCalculatorCooldown": 2,
+  "DamageCalculator": {"BaseDamage": {"Poison": 3}},
+  "OverlapBehavior": "Extend",
+  "Infinite": false,
+  "Debuff": true,
+  "StatusEffectIcon": "UI/StatusEffects/Poison.png",
+  "DeathMessageKey": "server.general.deathCause.poison"
+}

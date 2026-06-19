@@ -1914,6 +1914,21 @@ public class SkillManager {
                 80, 0.0f, 1.0f, 18.0f, 30.0f, 6.0f,
                 List.of(), List.of()
         ));
+        register("skill_page_drain_vital", new SkillModel(
+                "DRAIN_VITAL", "Spell_DrainVital", "Drain Vital", "mage, necromancien",
+                200, 0.0f, 1.5f, 18.0f, 25.0f, 12.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_appel_des_morts", new SkillModel(
+                "APPEL_DES_MORTS", "Spell_AppelDesMorts", "Appel des Morts", "mage, necromancien",
+                350, 0.0f, 2.0f, 6.0f, 15.0f, 8.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_malediction_necrotique", new SkillModel(
+                "MALEDICTION_NECROTIQUE", "Spell_MaledictionNecrotique", "Malédiction Nécrotique", "mage, necromancien",
+                300, 0.0f, 1.8f, 10.0f, 20.0f, 3.0f,
+                List.of(), List.of()
+        ));
     }
 
     private static void register(String itemId, SkillModel skill) {

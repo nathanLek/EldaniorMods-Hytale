@@ -1,0 +1,41 @@
+{
+  "Model": "Spell_DrainVital",
+  "Physics": {
+    "Type": "Standard",
+    "Gravity": 2,
+    "TerminalVelocityAir": 70,
+    "TerminalVelocityWater": 35,
+    "SticksVertically": true,
+    "Bounciness": 0
+  },
+  "LaunchForce": 35,
+  "Interactions": {
+    "ProjectileHit": {
+      "Cooldown": { "Cooldown": 0 },
+      "Interactions": [
+        {
+          "Type": "DamageEntity",
+          "Entity": "Target",
+          "DamageCalculator": { "BaseDamage": { "Poison": 18 } }
+        },
+        {
+          "Type": "ApplyEffect",
+          "Entity": "Target",
+          "EffectId": "Elda_DrainDeVie"
+        },
+        {
+          "Type": "ChangeStat",
+          "Entity": "Owner",
+          "StatModifiers": { "Health": 12 }
+        },
+        { "Type": "RemoveEntity", "Entity": "User" }
+      ]
+    },
+    "ProjectileMiss": {
+      "Cooldown": { "Cooldown": 0 },
+      "Interactions": [
+        { "Type": "RemoveEntity", "Entity": "User" }
+      ]
+    }
+  }
+}
