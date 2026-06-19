@@ -46,7 +46,7 @@ public class TreasureChestInteractEvent extends EntityEventSystem<EntityStore, U
         Vector3i target = event.getTargetBlock();
         World world = player.getWorld();
 
-        assert world != null;
+        if (world == null) return;
         ItemContainerBlock container = BlockModule.getComponent(
                 ItemContainerBlock.getComponentType(),
                 world,
@@ -134,7 +134,7 @@ public class TreasureChestInteractEvent extends EntityEventSystem<EntityStore, U
 
                     String msgSuccess = "<color:gold>Trésor découvert !</color> <color:gray>(+" + finalSelection.size() + " objets)</color>";
                     PlayerRef pRef = store.getComponent(playerRef, PlayerRef.getComponentType());
-                    assert pRef != null;
+                    if (pRef == null) return;
                     NotificationHelper.sendNotification(pRef, msgSuccess, NotificationStyle.Success);
                 }
             } else {
@@ -147,7 +147,7 @@ public class TreasureChestInteractEvent extends EntityEventSystem<EntityStore, U
 
                 String msgCooldown = "<color:red>Ce coffre est vide...</color> <color:gray>(Recharge dans " + timeFormatted + ")</color>";
                 PlayerRef pRef = store.getComponent(playerRef, PlayerRef.getComponentType());
-                assert pRef != null;
+                if (pRef == null) return;
                 NotificationHelper.sendNotification(pRef, msgCooldown, NotificationStyle.Warning);
             }
         } else {
