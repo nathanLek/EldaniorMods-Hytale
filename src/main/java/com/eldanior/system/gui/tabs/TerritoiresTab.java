@@ -21,13 +21,31 @@ public class TerritoiresTab {
     public static final int MAX_TERR_SLOTS = 4;
     public static final int MAX_DETAIL_CHILDREN = 6;
 
-    private static final List<String> cachedTerrIds = new ArrayList<>();
-    private static int selectedIndex = -1;
-    private static String selectedTerrId = null;
-    private static int terrPage = 0;
-    private static List<ParcelData> allTerritories = new ArrayList<>();
+    /** Per-player state for territory tab */
+    private static final java.util.concurrent.ConcurrentHashMap<UUID, TerrState> playerStates = new java.util.concurrent.ConcurrentHashMap<>();
+
+    private static TerrState getState(UUID uuid) {
+        return playerStates.computeIfAbsent(uuid, k -> new TerrState());
+    }
+
+    private static class TerrState {
+        final List<String> cachedTerrIds = new ArrayList<>();
+        int selectedIndex = -1;
+        String selectedTerrId = null;
+        int terrPage = 0;
+        List<ParcelData> allTerritories = new ArrayList<>();
+    }
+
+    private static UUID getPlayerUUID(Ref<EntityStore> ref, Store<EntityStore> store) {
+        PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
+        if (pRef == null) return new UUID(0, 0);
+        try { return com.eldanior.system.config.UUIDExtractor.getUUID(pRef); } catch (Exception e) { return new UUID(0, 0); }
+    }
 
     public static void populate(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store) {
+        UUID uuid = getPlayerUUID(ref, store);
+        TerrState st = getState(uuid);
+
         String familyId = "";
         String guildId = "";
 
@@ -57,23 +75,23 @@ public class TerritoiresTab {
         }
 
         territories.sort(Comparator.comparingInt(p -> p.getType().ordinal()));
-        allTerritories = territories;
+        st.allTerritories = territories;
 
         int totalPages = Math.max(1, (int) Math.ceil((double) territories.size() / MAX_TERR_SLOTS));
-        if (terrPage >= totalPages) terrPage = totalPages - 1;
-        if (terrPage < 0) terrPage = 0;
-        int start = terrPage * MAX_TERR_SLOTS;
+        if (st.terrPage >= totalPages) st.terrPage = totalPages - 1;
+        if (st.terrPage < 0) st.terrPage = 0;
+        int start = st.terrPage * MAX_TERR_SLOTS;
 
-        cachedTerrIds.clear();
-        ui.set("#TerrCount.Text", territories.size() + " TERRITOIRE(S) — Page " + (terrPage + 1) + "/" + totalPages);
-        ui.set("#TerrBtnPrev.Visible", terrPage > 0);
-        ui.set("#TerrBtnNext.Visible", terrPage < totalPages - 1);
+        st.cachedTerrIds.clear();
+        ui.set("#TerrCount.Text", territories.size() + " TERRITOIRE(S) — Page " + (st.terrPage + 1) + "/" + totalPages);
+        ui.set("#TerrBtnPrev.Visible", st.terrPage > 0);
+        ui.set("#TerrBtnNext.Visible", st.terrPage < totalPages - 1);
 
         for (int i = 0; i < MAX_TERR_SLOTS; i++) {
             int dataIdx = start + i;
             if (dataIdx < territories.size()) {
                 ParcelData p = territories.get(dataIdx);
-                cachedTerrIds.add(p.getId());
+                st.cachedTerrIds.add(p.getId());
                 ui.set("#TerrSlot" + i + ".Visible", true);
 
                 String typeColor = switch (p.getType()) {
@@ -114,32 +132,32 @@ public class TerritoiresTab {
                 ui.set("#TerrProt" + i + ".Style.TextColor", p.isProtectedByDefault() ? "#4CAF50" : "#cc4444");
 
                 // Highlight selected
-                boolean sel = (i == selectedIndex);
+                boolean sel = (i == st.selectedIndex);
                 ui.set("#TerrSlot" + i + ".Style.Default.Background", sel ? "#1a2a3a" : "#0d1520");
             } else {
-                cachedTerrIds.add("");
+                st.cachedTerrIds.add("");
                 ui.set("#TerrSlot" + i + ".Visible", false);
             }
         }
 
         // Detail panel
-        populateDetail(ui, ref, store);
+        populateDetail(ui, ref, store, st);
 
         ui.set("#TerrInfoLabel.Text", territories.isEmpty() ? "Aucun territoire sous votre gestion." : "");
     }
 
     // === PANNEAU DETAIL ===
-    private static void populateDetail(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store) {
-        if (selectedTerrId == null) {
+    private static void populateDetail(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store, TerrState st) {
+        if (st.selectedTerrId == null) {
             ui.set("#TerrDetail.Visible", false);
             return;
         }
 
-        ParcelData p = ParcelManager.get(selectedTerrId);
+        ParcelData p = ParcelManager.get(st.selectedTerrId);
         if (p == null) {
             ui.set("#TerrDetail.Visible", false);
-            selectedTerrId = null;
-            selectedIndex = -1;
+            st.selectedTerrId = null;
+            st.selectedIndex = -1;
             return;
         }
 
@@ -298,45 +316,58 @@ public class TerritoiresTab {
 
     // === PAGINATION ===
 
-    public static boolean handlePrev() {
-        if (terrPage > 0) { terrPage--; selectedIndex = -1; selectedTerrId = null; return true; }
+    public static boolean handlePrev(UUID uuid) {
+        TerrState st = getState(uuid);
+        if (st.terrPage > 0) { st.terrPage--; st.selectedIndex = -1; st.selectedTerrId = null; return true; }
         return false;
     }
+    /** @deprecated Use handlePrev(uuid) */
+    public static boolean handlePrev() { return false; }
 
-    public static boolean handleNext() {
-        int totalPages = Math.max(1, (int) Math.ceil((double) allTerritories.size() / MAX_TERR_SLOTS));
-        if (terrPage < totalPages - 1) { terrPage++; selectedIndex = -1; selectedTerrId = null; return true; }
+    public static boolean handleNext(UUID uuid) {
+        TerrState st = getState(uuid);
+        int totalPages = Math.max(1, (int) Math.ceil((double) st.allTerritories.size() / MAX_TERR_SLOTS));
+        if (st.terrPage < totalPages - 1) { st.terrPage++; st.selectedIndex = -1; st.selectedTerrId = null; return true; }
         return false;
     }
+    /** @deprecated Use handleNext(uuid) */
+    public static boolean handleNext() { return false; }
 
     // === HANDLERS ===
 
-    public static boolean handleSelect(int index) {
-        if (index < 0 || index >= cachedTerrIds.size()) return false;
-        String id = cachedTerrIds.get(index);
+    public static boolean handleSelect(int index, UUID uuid) {
+        TerrState st = getState(uuid);
+        if (index < 0 || index >= st.cachedTerrIds.size()) return false;
+        String id = st.cachedTerrIds.get(index);
         if (id == null || id.isEmpty()) return false;
-        if (selectedIndex == index) {
-            selectedIndex = -1;
-            selectedTerrId = null;
+        if (st.selectedIndex == index) {
+            st.selectedIndex = -1;
+            st.selectedTerrId = null;
         } else {
-            selectedIndex = index;
-            selectedTerrId = id;
+            st.selectedIndex = index;
+            st.selectedTerrId = id;
         }
         return true;
     }
+    /** @deprecated Use handleSelect(index, uuid) */
+    public static boolean handleSelect(int index) { return false; }
 
-    public static boolean handleTogglePvp() {
-        if (selectedTerrId == null) return false;
-        ParcelData p = ParcelManager.get(selectedTerrId);
+    public static boolean handleTogglePvp(UUID uuid) {
+        TerrState st = getState(uuid);
+        if (st.selectedTerrId == null) return false;
+        ParcelData p = ParcelManager.get(st.selectedTerrId);
         if (p == null) return false;
         p.setPvpEnabled(!p.isPvpEnabled());
         ParcelManager.save();
         return true;
     }
+    /** @deprecated Use handleTogglePvp(uuid) */
+    public static boolean handleTogglePvp() { return false; }
 
-    public static boolean handleCollectTax() {
-        if (selectedTerrId == null) return false;
-        ParcelData p = ParcelManager.get(selectedTerrId);
+    public static boolean handleCollectTax(UUID uuid) {
+        TerrState st = getState(uuid);
+        if (st.selectedTerrId == null) return false;
+        ParcelData p = ParcelManager.get(st.selectedTerrId);
         if (p == null) return false;
         if (!p.canCollectTax()) return false;
 
@@ -368,10 +399,13 @@ public class TerritoiresTab {
         ParcelManager.save();
         return true;
     }
+    /** @deprecated Use handleCollectTax(uuid) */
+    public static boolean handleCollectTax() { return false; }
 
-    public static boolean handleTransferTreasury() {
-        if (selectedTerrId == null) return false;
-        ParcelData p = ParcelManager.get(selectedTerrId);
+    public static boolean handleTransferTreasury(UUID uuid) {
+        TerrState st = getState(uuid);
+        if (st.selectedTerrId == null) return false;
+        ParcelData p = ParcelManager.get(st.selectedTerrId);
         if (p == null) return false;
         if (!p.canTransferTreasury()) return false;
         if (p.getTreasury() <= 0) return false;
@@ -411,6 +445,8 @@ public class TerritoiresTab {
         }
         return transferred;
     }
+    /** @deprecated Use handleTransferTreasury(uuid) */
+    public static boolean handleTransferTreasury() { return false; }
 
     public static boolean handleGiveDecret(String rank, Ref<EntityStore> ref, Store<EntityStore> store) {
         try {
@@ -456,8 +492,10 @@ public class TerritoiresTab {
     }
 
     public static boolean handleSellCity(Ref<EntityStore> ref, Store<EntityStore> store) {
-        if (selectedTerrId == null) return false;
-        ParcelData p = ParcelManager.get(selectedTerrId);
+        UUID uuid = getPlayerUUID(ref, store);
+        TerrState st = getState(uuid);
+        if (st.selectedTerrId == null) return false;
+        ParcelData p = ParcelManager.get(st.selectedTerrId);
         if (p == null || p.getType() != ParcelType.CITY) return false;
 
         try {
@@ -484,8 +522,8 @@ public class TerritoiresTab {
             pRef.sendMessage(com.hypixel.hytale.server.core.Message.raw(
                     "§eVille revendue ! +" + String.format("%,d", refund) + " Or (50% du prix)."));
 
-            selectedTerrId = null;
-            selectedIndex = -1;
+            st.selectedTerrId = null;
+            st.selectedIndex = -1;
             return true;
         } catch (Exception e) {
             EldaniorLogger.error("TerritoiresTab:sellCity", e);
@@ -493,22 +531,28 @@ public class TerritoiresTab {
         }
     }
 
-    public static boolean handleToggleProtection() {
-        if (selectedTerrId == null) return false;
-        ParcelData p = ParcelManager.get(selectedTerrId);
+    public static boolean handleToggleProtection(UUID uuid) {
+        TerrState st = getState(uuid);
+        if (st.selectedTerrId == null) return false;
+        ParcelData p = ParcelManager.get(st.selectedTerrId);
         if (p == null) return false;
         p.setProtectedByDefault(!p.isProtectedByDefault());
         ParcelManager.save();
         return true;
     }
+    /** @deprecated Use handleToggleProtection(uuid) */
+    public static boolean handleToggleProtection() { return false; }
 
-    public static boolean handleDelete() {
-        if (selectedTerrId == null) return false;
-        ParcelManager.deleteParcel(selectedTerrId);
-        selectedTerrId = null;
-        selectedIndex = -1;
+    public static boolean handleDelete(UUID uuid) {
+        TerrState st = getState(uuid);
+        if (st.selectedTerrId == null) return false;
+        ParcelManager.deleteParcel(st.selectedTerrId);
+        st.selectedTerrId = null;
+        st.selectedIndex = -1;
         return true;
     }
+    /** @deprecated Use handleDelete(uuid) */
+    public static boolean handleDelete() { return false; }
 
     // === UTILS ===
 

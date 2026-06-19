@@ -25,18 +25,31 @@ public class ProprietesTab {
     public static final int MAX_INVITE_SLOTS = 4;
     public static final int MAX_CITY_SLOTS = 5;
 
-    private static final List<String> cachedOwnedIds = new ArrayList<>();
-    private static final List<String> cachedAvailableIds = new ArrayList<>();
-    private static final List<String> cachedCityIds = new ArrayList<>();
-    private static final List<String> cachedInviteNames = new ArrayList<>();
-    private static int selectedIndex = -1;
-    private static String selectedParcelId = null;
+    /** Per-player state for proprietes tab */
+    private static final java.util.concurrent.ConcurrentHashMap<UUID, PropState> playerStates = new java.util.concurrent.ConcurrentHashMap<>();
 
-    // Pagination
-    private static int ownedPage = 0;
-    private static int availablePage = 0;
-    private static List<ParcelData> allOwned = new ArrayList<>();
-    private static List<ParcelData> allAvailable = new ArrayList<>();
+    private static PropState getState(UUID uuid) {
+        return playerStates.computeIfAbsent(uuid, k -> new PropState());
+    }
+
+    private static class PropState {
+        final List<String> cachedOwnedIds = new ArrayList<>();
+        final List<String> cachedAvailableIds = new ArrayList<>();
+        final List<String> cachedCityIds = new ArrayList<>();
+        final List<String> cachedInviteNames = new ArrayList<>();
+        int selectedIndex = -1;
+        String selectedParcelId = null;
+        int ownedPage = 0;
+        int availablePage = 0;
+        List<ParcelData> allOwned = new ArrayList<>();
+        List<ParcelData> allAvailable = new ArrayList<>();
+    }
+
+    private static UUID extractUUID(Ref<EntityStore> ref, Store<EntityStore> store) {
+        PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
+        if (pRef == null) return new UUID(0, 0);
+        try { return UUIDExtractor.getUUID(pRef); } catch (Exception e) { return new UUID(0, 0); }
+    }
 
     public static void populate(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store) {
         UUID myUUID = null;
@@ -47,8 +60,11 @@ public class ProprietesTab {
             }
         } catch (Exception e) { EldaniorLogger.error("ProprietesTab", e); }
 
-        cachedOwnedIds.clear();
-        cachedAvailableIds.clear();
+        UUID stateUUID = myUUID != null ? myUUID : new UUID(0, 0);
+        PropState st = getState(stateUUID);
+
+        st.cachedOwnedIds.clear();
+        st.cachedAvailableIds.clear();
 
         // === MES BIENS : seulement PLOT, HOUSING ===
         List<ParcelData> owned = new ArrayList<>();
@@ -61,22 +77,22 @@ public class ProprietesTab {
             }
         }
         owned.sort(Comparator.comparingInt(p -> p.getType().ordinal()));
-        allOwned = owned;
+        st.allOwned = owned;
 
         int ownedTotalPages = Math.max(1, (int) Math.ceil((double) owned.size() / MAX_OWNED_SLOTS));
-        if (ownedPage >= ownedTotalPages) ownedPage = ownedTotalPages - 1;
-        if (ownedPage < 0) ownedPage = 0;
-        int ownedStart = ownedPage * MAX_OWNED_SLOTS;
+        if (st.ownedPage >= ownedTotalPages) st.ownedPage = ownedTotalPages - 1;
+        if (st.ownedPage < 0) st.ownedPage = 0;
+        int ownedStart = st.ownedPage * MAX_OWNED_SLOTS;
 
-        ui.set("#PropInfoLabel.Text", "MES BIENS (" + owned.size() + ") — Page " + (ownedPage + 1) + "/" + ownedTotalPages);
-        ui.set("#POwnPrev.Visible", ownedPage > 0);
-        ui.set("#POwnNext.Visible", ownedPage < ownedTotalPages - 1);
+        ui.set("#PropInfoLabel.Text", "MES BIENS (" + owned.size() + ") — Page " + (st.ownedPage + 1) + "/" + ownedTotalPages);
+        ui.set("#POwnPrev.Visible", st.ownedPage > 0);
+        ui.set("#POwnNext.Visible", st.ownedPage < ownedTotalPages - 1);
 
         for (int i = 0; i < MAX_OWNED_SLOTS; i++) {
             int dataIdx = ownedStart + i;
             if (dataIdx < owned.size()) {
                 ParcelData p = owned.get(dataIdx);
-                cachedOwnedIds.add(p.getId());
+                st.cachedOwnedIds.add(p.getId());
                 ui.set("#POwnSlot" + i + ".Visible", true);
                 ui.set("#POwnType" + i + ".Text", "[" + p.getType().getLabel() + "]");
                 ui.set("#POwnType" + i + ".Style.TextColor", getTypeColor(p));
@@ -116,36 +132,36 @@ public class ProprietesTab {
                 ui.set("#POwnPrice" + i + ".Text", priceText);
 
                 // Highlight si selectionne
-                boolean selected = (i == selectedIndex);
+                boolean selected = (i == st.selectedIndex);
                 ui.set("#POwnSlot" + i + ".Background", selected ? "#1a2a3a" : "#111825(0.7)");
             } else {
-                cachedOwnedIds.add("");
+                st.cachedOwnedIds.add("");
                 ui.set("#POwnSlot" + i + ".Visible", false);
             }
         }
 
         // === PANNEAU DETAIL ===
-        populateDetail(ui, myUUID);
+        populateDetail(ui, myUUID, st);
 
         // === DISPONIBLES ===
         List<ParcelData> available = ParcelManager.getAvailable();
         available.sort(Comparator.comparingLong(ParcelData::getPrice));
-        allAvailable = available;
+        st.allAvailable = available;
 
         int availTotalPages = Math.max(1, (int) Math.ceil((double) available.size() / MAX_AVAILABLE_SLOTS));
-        if (availablePage >= availTotalPages) availablePage = availTotalPages - 1;
-        if (availablePage < 0) availablePage = 0;
-        int availStart = availablePage * MAX_AVAILABLE_SLOTS;
+        if (st.availablePage >= availTotalPages) st.availablePage = availTotalPages - 1;
+        if (st.availablePage < 0) st.availablePage = 0;
+        int availStart = st.availablePage * MAX_AVAILABLE_SLOTS;
 
-        ui.set("#PropAvailLabel.Text", "MARCHE IMMOBILIER (" + available.size() + ") — Page " + (availablePage + 1) + "/" + availTotalPages);
-        ui.set("#PAvPrev.Visible", availablePage > 0);
-        ui.set("#PAvNext.Visible", availablePage < availTotalPages - 1);
+        ui.set("#PropAvailLabel.Text", "MARCHE IMMOBILIER (" + available.size() + ") — Page " + (st.availablePage + 1) + "/" + availTotalPages);
+        ui.set("#PAvPrev.Visible", st.availablePage > 0);
+        ui.set("#PAvNext.Visible", st.availablePage < availTotalPages - 1);
 
         for (int i = 0; i < MAX_AVAILABLE_SLOTS; i++) {
             int dataIdx = availStart + i;
             if (dataIdx < available.size()) {
                 ParcelData p = available.get(dataIdx);
-                cachedAvailableIds.add(p.getId());
+                st.cachedAvailableIds.add(p.getId());
                 ui.set("#PAvSlot" + i + ".Visible", true);
                 ui.set("#PAvType" + i + ".Text", "[" + p.getType().getLabel() + "]");
                 ui.set("#PAvType" + i + ".Style.TextColor", getTypeColor(p));
@@ -178,7 +194,7 @@ public class ProprietesTab {
                 ui.set("#PAvBtnBuy" + i + ".Visible", p.isForSale() && p.getPrice() > 0 && !isMyProperty);
                 ui.set("#PAvBtnRent" + i + ".Visible", p.isForRent() && p.getRentPrice() > 0 && !isMyProperty);
             } else {
-                cachedAvailableIds.add("");
+                st.cachedAvailableIds.add("");
                 ui.set("#PAvSlot" + i + ".Visible", false);
             }
         }
@@ -192,7 +208,7 @@ public class ProprietesTab {
         boolean canBuyCity = isComteOrHigher && isGuildLeader;
 
         ui.set("#CitySection.Visible", canBuyCity);
-        cachedCityIds.clear();
+        st.cachedCityIds.clear();
 
         if (canBuyCity) {
             List<ParcelData> cities = ParcelManager.getAvailableCities();
@@ -201,7 +217,7 @@ public class ProprietesTab {
             for (int i = 0; i < MAX_CITY_SLOTS; i++) {
                 if (i < cities.size()) {
                     ParcelData city = cities.get(i);
-                    cachedCityIds.add(city.getId());
+                    st.cachedCityIds.add(city.getId());
                     ui.set("#CitySlot" + i + ".Visible", true);
                     ui.set("#CityName" + i + ".Text", city.getName());
 
@@ -214,7 +230,7 @@ public class ProprietesTab {
                     ui.set("#CityLoc" + i + ".Text", loc.isEmpty() ? "" : loc);
                     ui.set("#CityPrice" + i + ".Text", String.format("%,d", ParcelManager.CITY_PRICE) + " Or");
                 } else {
-                    cachedCityIds.add("");
+                    st.cachedCityIds.add("");
                     ui.set("#CitySlot" + i + ".Visible", false);
                 }
             }
@@ -222,17 +238,17 @@ public class ProprietesTab {
     }
 
     // === PANNEAU DETAIL D'UNE PARCELLE SELECTIONNEE ===
-    private static void populateDetail(UICommandBuilder ui, UUID myUUID) {
-        if (selectedParcelId == null) {
+    private static void populateDetail(UICommandBuilder ui, UUID myUUID, PropState st) {
+        if (st.selectedParcelId == null) {
             ui.set("#PropDetail.Visible", false);
             return;
         }
 
-        ParcelData p = ParcelManager.get(selectedParcelId);
+        ParcelData p = ParcelManager.get(st.selectedParcelId);
         if (p == null) {
             ui.set("#PropDetail.Visible", false);
-            selectedParcelId = null;
-            selectedIndex = -1;
+            st.selectedParcelId = null;
+            st.selectedIndex = -1;
             return;
         }
 
@@ -356,7 +372,7 @@ public class ProprietesTab {
         }
 
         // Joueurs a proximite invitables
-        cachedInviteNames.clear();
+        st.cachedInviteNames.clear();
         List<UUID> nearbyPlayers = new ArrayList<>();
         for (Map.Entry<UUID, Vector3d> entry : PlayerPositionTracker.PLAYER_POSITIONS.entrySet()) {
             UUID otherUUID = entry.getKey();
@@ -373,11 +389,11 @@ public class ProprietesTab {
                     PlayerRef invRef = Universe.get().getPlayer(otherUUID);
                     if (invRef != null) invName = invRef.getUsername();
                 } catch (Exception e) { EldaniorLogger.error("ProprietesTab", e); }
-                cachedInviteNames.add(invName);
+                st.cachedInviteNames.add(invName);
                 ui.set("#PDetInv" + i + ".Visible", true);
                 ui.set("#PDetInvName" + i + ".Text", invName);
             } else {
-                cachedInviteNames.add("");
+                st.cachedInviteNames.add("");
                 ui.set("#PDetInv" + i + ".Visible", false);
             }
         }
@@ -385,48 +401,60 @@ public class ProprietesTab {
 
     // === PAGINATION ===
 
-    public static boolean handleOwnedPrev() {
-        if (ownedPage > 0) { ownedPage--; selectedIndex = -1; selectedParcelId = null; return true; }
+    public static boolean handleOwnedPrev(UUID uuid) {
+        PropState st = getState(uuid);
+        if (st.ownedPage > 0) { st.ownedPage--; st.selectedIndex = -1; st.selectedParcelId = null; return true; }
         return false;
     }
+    /** @deprecated */ public static boolean handleOwnedPrev() { return false; }
 
-    public static boolean handleOwnedNext() {
-        int totalPages = Math.max(1, (int) Math.ceil((double) allOwned.size() / MAX_OWNED_SLOTS));
-        if (ownedPage < totalPages - 1) { ownedPage++; selectedIndex = -1; selectedParcelId = null; return true; }
+    public static boolean handleOwnedNext(UUID uuid) {
+        PropState st = getState(uuid);
+        int totalPages = Math.max(1, (int) Math.ceil((double) st.allOwned.size() / MAX_OWNED_SLOTS));
+        if (st.ownedPage < totalPages - 1) { st.ownedPage++; st.selectedIndex = -1; st.selectedParcelId = null; return true; }
         return false;
     }
+    /** @deprecated */ public static boolean handleOwnedNext() { return false; }
 
-    public static boolean handleAvailablePrev() {
-        if (availablePage > 0) { availablePage--; return true; }
+    public static boolean handleAvailablePrev(UUID uuid) {
+        PropState st = getState(uuid);
+        if (st.availablePage > 0) { st.availablePage--; return true; }
         return false;
     }
+    /** @deprecated */ public static boolean handleAvailablePrev() { return false; }
 
-    public static boolean handleAvailableNext() {
-        int totalPages = Math.max(1, (int) Math.ceil((double) allAvailable.size() / MAX_AVAILABLE_SLOTS));
-        if (availablePage < totalPages - 1) { availablePage++; return true; }
+    public static boolean handleAvailableNext(UUID uuid) {
+        PropState st = getState(uuid);
+        int totalPages = Math.max(1, (int) Math.ceil((double) st.allAvailable.size() / MAX_AVAILABLE_SLOTS));
+        if (st.availablePage < totalPages - 1) { st.availablePage++; return true; }
         return false;
     }
+    /** @deprecated */ public static boolean handleAvailableNext() { return false; }
 
     // === HANDLERS ===
 
-    public static boolean handleSelect(int index) {
-        if (index < 0 || index >= cachedOwnedIds.size()) return false;
-        String id = cachedOwnedIds.get(index);
+    public static boolean handleSelect(int index, UUID uuid) {
+        PropState st = getState(uuid);
+        if (index < 0 || index >= st.cachedOwnedIds.size()) return false;
+        String id = st.cachedOwnedIds.get(index);
         if (id == null || id.isEmpty()) return false;
 
-        if (selectedIndex == index) {
-            selectedIndex = -1;
-            selectedParcelId = null;
+        if (st.selectedIndex == index) {
+            st.selectedIndex = -1;
+            st.selectedParcelId = null;
         } else {
-            selectedIndex = index;
-            selectedParcelId = id;
+            st.selectedIndex = index;
+            st.selectedParcelId = id;
         }
         return true;
     }
+    /** @deprecated */ public static boolean handleSelect(int index) { return false; }
 
     public static boolean handleBuy(int index, Ref<EntityStore> ref, Store<EntityStore> store) {
-        if (index < 0 || index >= cachedAvailableIds.size()) return false;
-        String id = cachedAvailableIds.get(index);
+        UUID uuid = extractUUID(ref, store);
+        PropState st = getState(uuid);
+        if (index < 0 || index >= st.cachedAvailableIds.size()) return false;
+        String id = st.cachedAvailableIds.get(index);
         if (id == null || id.isEmpty()) return false;
 
         ParcelData parcel = ParcelManager.get(id);
@@ -460,8 +488,10 @@ public class ProprietesTab {
     }
 
     public static boolean handleRent(int index, Ref<EntityStore> ref, Store<EntityStore> store) {
-        if (index < 0 || index >= cachedAvailableIds.size()) return false;
-        String id = cachedAvailableIds.get(index);
+        UUID uuid = extractUUID(ref, store);
+        PropState st = getState(uuid);
+        if (index < 0 || index >= st.cachedAvailableIds.size()) return false;
+        String id = st.cachedAvailableIds.get(index);
         if (id == null || id.isEmpty()) return false;
 
         ParcelData parcel = ParcelManager.get(id);
@@ -493,8 +523,10 @@ public class ProprietesTab {
     }
 
     public static boolean handleRenew(Ref<EntityStore> ref, Store<EntityStore> store) {
-        if (selectedParcelId == null) return false;
-        ParcelData p = ParcelManager.get(selectedParcelId);
+        UUID uuid = extractUUID(ref, store);
+        PropState st = getState(uuid);
+        if (st.selectedParcelId == null) return false;
+        ParcelData p = ParcelManager.get(st.selectedParcelId);
         if (p == null || !p.isRented() || p.getRentPrice() <= 0) return false;
 
         try {
@@ -511,15 +543,16 @@ public class ProprietesTab {
             // Le net va au proprio (joueur) ou a la ville
             payOwnerOrCity(p, taxResult[0], "prolongation location");
 
-            ParcelEconomyManager.distributeTax(selectedParcelId, taxAmount);
-            ParcelManager.renewRent(selectedParcelId);
+            ParcelEconomyManager.distributeTax(st.selectedParcelId, taxAmount);
+            ParcelManager.renewRent(st.selectedParcelId);
             return true;
         } catch (Exception e) { return false; }
     }
 
-    public static boolean handleRentOut() {
-        if (selectedParcelId == null) return false;
-        ParcelData p = ParcelManager.get(selectedParcelId);
+    public static boolean handleRentOut(UUID uuid) {
+        PropState st = getState(uuid);
+        if (st.selectedParcelId == null) return false;
+        ParcelData p = ParcelManager.get(st.selectedParcelId);
         if (p == null) return false;
         // Met en location au prix actuel (ou 500 par defaut)
         long rentPrice = p.getRentPrice() > 0 ? p.getRentPrice() : 500;
@@ -533,13 +566,14 @@ public class ProprietesTab {
         return true;
     }
 
-    public static boolean handleInvite(int index) {
-        if (selectedParcelId == null) return false;
-        if (index < 0 || index >= cachedInviteNames.size()) return false;
-        String invName = cachedInviteNames.get(index);
+    public static boolean handleInvite(int index, UUID uuid) {
+        PropState st = getState(uuid);
+        if (st.selectedParcelId == null) return false;
+        if (index < 0 || index >= st.cachedInviteNames.size()) return false;
+        String invName = st.cachedInviteNames.get(index);
         if (invName == null || invName.isEmpty() || "???".equals(invName)) return false;
 
-        ParcelData p = ParcelManager.get(selectedParcelId);
+        ParcelData p = ParcelManager.get(st.selectedParcelId);
         if (p == null) return false;
 
         try {
@@ -559,28 +593,31 @@ public class ProprietesTab {
         }
     }
 
-    public static boolean handleCancelRent() {
-        if (selectedParcelId == null) return false;
-        ParcelData p = ParcelManager.get(selectedParcelId);
+    public static boolean handleCancelRent(UUID uuid) {
+        PropState st = getState(uuid);
+        if (st.selectedParcelId == null) return false;
+        ParcelData p = ParcelManager.get(st.selectedParcelId);
         if (p == null || !p.isForRent() || p.getRenterUUID() != null) return false;
         p.setForRent(false);
         ParcelManager.save();
         return true;
     }
 
-    public static boolean handleQuitRental() {
-        if (selectedParcelId == null) return false;
-        ParcelData p = ParcelManager.get(selectedParcelId);
+    public static boolean handleQuitRental(UUID uuid) {
+        PropState st = getState(uuid);
+        if (st.selectedParcelId == null) return false;
+        ParcelData p = ParcelManager.get(st.selectedParcelId);
         if (p == null || !p.isRented()) return false;
-        ParcelManager.quitRental(selectedParcelId);
-        selectedParcelId = null;
-        selectedIndex = -1;
+        ParcelManager.quitRental(st.selectedParcelId);
+        st.selectedParcelId = null;
+        st.selectedIndex = -1;
         return true;
     }
 
-    public static boolean handleSellSelected() {
-        if (selectedParcelId == null) return false;
-        ParcelData p = ParcelManager.get(selectedParcelId);
+    public static boolean handleSellSelected(UUID uuid) {
+        PropState st = getState(uuid);
+        if (st.selectedParcelId == null) return false;
+        ParcelData p = ParcelManager.get(st.selectedParcelId);
         if (p == null) return false;
         // Toggle vente
         if (p.isForSale()) {
@@ -594,26 +631,29 @@ public class ProprietesTab {
         return true;
     }
 
-    public static boolean handleDeleteSelected() {
-        if (selectedParcelId == null) return false;
-        ParcelManager.deleteParcel(selectedParcelId);
-        selectedParcelId = null;
-        selectedIndex = -1;
+    public static boolean handleDeleteSelected(UUID uuid) {
+        PropState st = getState(uuid);
+        if (st.selectedParcelId == null) return false;
+        ParcelManager.deleteParcel(st.selectedParcelId);
+        st.selectedParcelId = null;
+        st.selectedIndex = -1;
         return true;
     }
 
-    public static boolean handleToggleProtection() {
-        if (selectedParcelId == null) return false;
-        ParcelData p = ParcelManager.get(selectedParcelId);
+    public static boolean handleToggleProtection(UUID uuid) {
+        PropState st = getState(uuid);
+        if (st.selectedParcelId == null) return false;
+        ParcelData p = ParcelManager.get(st.selectedParcelId);
         if (p == null) return false;
         p.setProtectedByDefault(!p.isProtectedByDefault());
         ParcelManager.save();
         return true;
     }
 
-    public static boolean handleSetPrice(long price) {
-        if (selectedParcelId == null) return false;
-        ParcelData p = ParcelManager.get(selectedParcelId);
+    public static boolean handleSetPrice(long price, UUID uuid) {
+        PropState st = getState(uuid);
+        if (st.selectedParcelId == null) return false;
+        ParcelData p = ParcelManager.get(st.selectedParcelId);
         if (p == null) return false;
         p.setPrice(price);
         // Ne PAS mettre en vente automatiquement — juste configurer le prix
@@ -621,9 +661,10 @@ public class ProprietesTab {
         return true;
     }
 
-    public static boolean handleSetRentPrice(long rentPrice) {
-        if (selectedParcelId == null) return false;
-        ParcelData p = ParcelManager.get(selectedParcelId);
+    public static boolean handleSetRentPrice(long rentPrice, UUID uuid) {
+        PropState st = getState(uuid);
+        if (st.selectedParcelId == null) return false;
+        ParcelData p = ParcelManager.get(st.selectedParcelId);
         if (p == null) return false;
         p.setRentPrice(rentPrice);
         // Ne PAS mettre en location automatiquement — juste configurer le prix
@@ -631,24 +672,27 @@ public class ProprietesTab {
         return true;
     }
 
-    public static boolean handleAssignFamily(String familyId) {
-        if (selectedParcelId == null) return false;
-        ParcelManager.assignToFamily(selectedParcelId, familyId);
+    public static boolean handleAssignFamily(String familyId, UUID uuid) {
+        PropState st = getState(uuid);
+        if (st.selectedParcelId == null) return false;
+        ParcelManager.assignToFamily(st.selectedParcelId, familyId);
         return true;
     }
 
-    public static boolean handleDelete(int index) {
-        if (index < 0 || index >= cachedOwnedIds.size()) return false;
-        String id = cachedOwnedIds.get(index);
+    public static boolean handleDelete(int index, UUID uuid) {
+        PropState st = getState(uuid);
+        if (index < 0 || index >= st.cachedOwnedIds.size()) return false;
+        String id = st.cachedOwnedIds.get(index);
         if (id == null || id.isEmpty()) return false;
         ParcelManager.deleteParcel(id);
-        if (id.equals(selectedParcelId)) { selectedParcelId = null; selectedIndex = -1; }
+        if (id.equals(st.selectedParcelId)) { st.selectedParcelId = null; st.selectedIndex = -1; }
         return true;
     }
 
-    public static boolean handleSell(int index) {
-        if (index < 0 || index >= cachedOwnedIds.size()) return false;
-        String id = cachedOwnedIds.get(index);
+    public static boolean handleSell(int index, UUID uuid) {
+        PropState st = getState(uuid);
+        if (index < 0 || index >= st.cachedOwnedIds.size()) return false;
+        String id = st.cachedOwnedIds.get(index);
         if (id == null || id.isEmpty()) return false;
         ParcelData p = ParcelManager.get(id);
         if (p == null || !p.isBought()) return false;
@@ -698,8 +742,10 @@ public class ProprietesTab {
     }
 
     public static boolean handleBuyCity(int index, Ref<EntityStore> ref, Store<EntityStore> store) {
-        if (index < 0 || index >= cachedCityIds.size()) return false;
-        String id = cachedCityIds.get(index);
+        UUID uuid = extractUUID(ref, store);
+        PropState st = getState(uuid);
+        if (index < 0 || index >= st.cachedCityIds.size()) return false;
+        String id = st.cachedCityIds.get(index);
         if (id == null || id.isEmpty()) return false;
 
         ParcelData city = ParcelManager.get(id);
@@ -749,6 +795,20 @@ public class ProprietesTab {
             return false;
         }
     }
+
+    // Deprecated no-arg overloads for backward compatibility
+    /** @deprecated */ public static boolean handleRentOut() { return false; }
+    /** @deprecated */ public static boolean handleInvite(int index) { return false; }
+    /** @deprecated */ public static boolean handleCancelRent() { return false; }
+    /** @deprecated */ public static boolean handleQuitRental() { return false; }
+    /** @deprecated */ public static boolean handleSellSelected() { return false; }
+    /** @deprecated */ public static boolean handleDeleteSelected() { return false; }
+    /** @deprecated */ public static boolean handleToggleProtection() { return false; }
+    /** @deprecated */ public static boolean handleSetPrice(long price) { return false; }
+    /** @deprecated */ public static boolean handleSetRentPrice(long rentPrice) { return false; }
+    /** @deprecated */ public static boolean handleAssignFamily(String familyId) { return false; }
+    /** @deprecated */ public static boolean handleDelete(int index) { return false; }
+    /** @deprecated */ public static boolean handleSell(int index) { return false; }
 
     private static String getTypeColor(ParcelData p) {
         return switch (p.getType()) {

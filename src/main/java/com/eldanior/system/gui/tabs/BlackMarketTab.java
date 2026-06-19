@@ -22,7 +22,10 @@ import java.util.*;
 public class BlackMarketTab {
 
     public static final int MAX_SLOTS = 20;
-    private static int currentPage = 0;
+    private static final Map<UUID, Integer> playerPages = new java.util.concurrent.ConcurrentHashMap<>();
+
+    private static int getPage(UUID uuid) { return playerPages.getOrDefault(uuid, 0); }
+    private static void setPage(UUID uuid, int page) { playerPages.put(uuid, page); }
 
     public static void populate(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store) {
         UUID myUUID = getPlayerUUID(ref, store);
@@ -30,9 +33,11 @@ public class BlackMarketTab {
         boolean isAdmin = playerCheck != null && playerCheck.getPlayerRef().hasPermission(EldaniorLogger.ADMIN_PERMISSION);
         List<ShopListing> listings = ShopManager.getBlackMarketListings();
 
+        int currentPage = getPage(myUUID);
         int totalPages = Math.max(1, (int) Math.ceil((double) listings.size() / MAX_SLOTS));
         if (currentPage >= totalPages) currentPage = totalPages - 1;
         if (currentPage < 0) currentPage = 0;
+        setPage(myUUID, currentPage);
         int startIdx = currentPage * MAX_SLOTS;
 
         ui.set("#BMCount.Text", "MARCHE NOIR (" + listings.size() + " annonces)");
@@ -64,13 +69,13 @@ public class BlackMarketTab {
     public static boolean handleBuy(String slotIndex, Ref<EntityStore> ref, Store<EntityStore> store) {
         int slotIdx;
         try { slotIdx = Integer.parseInt(slotIndex); } catch (NumberFormatException e) { return false; }
-        int idx = currentPage * MAX_SLOTS + slotIdx;
+        UUID myUUID = getPlayerUUID(ref, store);
+        int idx = getPage(myUUID) * MAX_SLOTS + slotIdx;
 
         // Pre-checks before atomic buy (read-only, no race condition risk)
         ShopListing peekListing = ShopManager.getBlackMarketListing(idx);
         if (peekListing == null) return false;
 
-        UUID myUUID = getPlayerUUID(ref, store);
         if (myUUID == null || myUUID.equals(peekListing.getSellerUUID())) return false;
 
         ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
@@ -123,12 +128,12 @@ public class BlackMarketTab {
     public static boolean handleCancel(String slotIndex, Ref<EntityStore> ref, Store<EntityStore> store) {
         int slotIdx;
         try { slotIdx = Integer.parseInt(slotIndex); } catch (NumberFormatException e) { return false; }
-        int idx = currentPage * MAX_SLOTS + slotIdx;
+        UUID myUUID = getPlayerUUID(ref, store);
+        int idx = getPage(myUUID) * MAX_SLOTS + slotIdx;
 
         ShopListing listing = ShopManager.getBlackMarketListing(idx);
         if (listing == null) return false;
 
-        UUID myUUID = getPlayerUUID(ref, store);
         Player me = store.getComponent(ref, Player.getComponentType());
         if (myUUID == null || me == null) return false;
 
@@ -160,8 +165,8 @@ public class BlackMarketTab {
         return true;
     }
 
-    public static void nextPage() { currentPage++; }
-    public static void prevPage() { if (currentPage > 0) currentPage--; }
+    public static void nextPage(UUID uuid) { playerPages.merge(uuid, 1, Integer::sum); }
+    public static void prevPage(UUID uuid) { playerPages.compute(uuid, (k, v) -> v != null && v > 0 ? v - 1 : 0); }
 
     // Make getItemName and getItemRarity accessible - delegate to ShopTab
     static String getItemName(ItemStack item) { return ShopTab.getItemName(item); }

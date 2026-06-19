@@ -21,9 +21,20 @@ import java.util.*;
 public class CompetencesTab {
 
     public static final int MAX_SKILL_SLOTS = 20;
-    private static int currentPage = 0;
-    // false = passives, true = actives
-    private static boolean viewingActives = false;
+
+    /** Per-player state for pagination, tab view, and cooldowns */
+    private static final java.util.concurrent.ConcurrentHashMap<java.util.UUID, PlayerSkillState> playerStates = new java.util.concurrent.ConcurrentHashMap<>();
+
+    private static PlayerSkillState getState(java.util.UUID uuid) {
+        return playerStates.computeIfAbsent(uuid, k -> new PlayerSkillState());
+    }
+
+    private static class PlayerSkillState {
+        int currentPage = 0;
+        boolean viewingActives = false;
+        boolean hasCooldownActive = false;
+        final Map<Integer, CooldownEntry> activeCooldowns = new HashMap<>();
+    }
 
     // Rarity order: DIVINE (highest) -> COMMON (lowest)
     private static final List<String> RARITY_ORDER = List.of(
@@ -69,12 +80,20 @@ public class CompetencesTab {
         return idx >= 0 ? idx : RARITY_ORDER.size();
     }
 
+    private static java.util.UUID getPlayerUUID(Ref<EntityStore> ref, Store<EntityStore> store) {
+        com.hypixel.hytale.server.core.universe.PlayerRef pRef = store.getComponent(ref, com.hypixel.hytale.server.core.universe.PlayerRef.getComponentType());
+        if (pRef == null) return new java.util.UUID(0, 0);
+        try { return com.eldanior.system.config.UUIDExtractor.getUUID(pRef); } catch (Exception e) { return new java.util.UUID(0, 0); }
+    }
+
     public static void populate(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store) {
         ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
         PlayerLevelData data = store.getComponent(ref, type);
         if (data == null) return;
-        hasCooldownActive = false;
-        activeCooldowns.clear();
+        java.util.UUID playerUUID = getPlayerUUID(ref, store);
+        PlayerSkillState state = getState(playerUUID);
+        state.hasCooldownActive = false;
+        state.activeCooldowns.clear();
 
         List<String> allSkillIds = buildSkillList(data);
 
@@ -98,22 +117,22 @@ public class CompetencesTab {
         actives.sort(byRarity);
 
         // Select current list
-        List<SkillEntry> currentList = viewingActives ? actives : passives;
+        List<SkillEntry> currentList = state.viewingActives ? actives : passives;
         int totalItems = currentList.size();
         int totalPages = Math.max(1, (int) Math.ceil((double) totalItems / MAX_SKILL_SLOTS));
-        if (currentPage >= totalPages) currentPage = totalPages - 1;
-        if (currentPage < 0) currentPage = 0;
+        if (state.currentPage >= totalPages) state.currentPage = totalPages - 1;
+        if (state.currentPage < 0) state.currentPage = 0;
 
-        int startIdx = currentPage * MAX_SKILL_SLOTS;
+        int startIdx = state.currentPage * MAX_SKILL_SLOTS;
 
         // Header
-        String sectionName = viewingActives ? "ACTIVES" : "PASSIVES";
+        String sectionName = state.viewingActives ? "ACTIVES" : "PASSIVES";
         ui.set("#SkillCount.Text", "COMPETENCES " + sectionName + " (" + totalItems + ")");
-        ui.set("#SkillPage.Text", "Page " + (currentPage + 1) + " / " + totalPages);
+        ui.set("#SkillPage.Text", "Page " + (state.currentPage + 1) + " / " + totalPages);
 
         // Tab buttons highlight via background
-        ui.set("#SkillTabPassive.Background", viewingActives ? "#1a2a3a" : "#2a4a6a");
-        ui.set("#SkillTabActive.Background", viewingActives ? "#2a4a6a" : "#1a2a3a");
+        ui.set("#SkillTabPassive.Background", state.viewingActives ? "#1a2a3a" : "#2a4a6a");
+        ui.set("#SkillTabActive.Background", state.viewingActives ? "#2a4a6a" : "#1a2a3a");
 
         for (int i = 0; i < MAX_SKILL_SLOTS; i++) {
             int listIdx = startIdx + i;
@@ -185,8 +204,8 @@ public class CompetencesTab {
                     ui.set("#SkillToggleWrap" + i + ".Background", "#2a3040");
                 } else if (remainingCd > 0) {
                     // EN RECHARGE
-                    hasCooldownActive = true;
-                    activeCooldowns.put(i, new CooldownEntry(System.currentTimeMillis() + remainingCd));
+                    state.hasCooldownActive = true;
+                    state.activeCooldowns.put(i, new CooldownEntry(System.currentTimeMillis() + remainingCd));
                     ui.set("#SkillActiveBar" + i + ".Visible", false);
                     ui.set("#SkillStateBadge" + i + ".Visible", true);
                     ui.set("#SkillStateBadge" + i + ".Text", "RECHARGE");
@@ -230,6 +249,9 @@ public class CompetencesTab {
         PlayerLevelData data = store.getComponent(ref, type);
         if (data == null) return false;
 
+        java.util.UUID playerUUID = getPlayerUUID(ref, store);
+        PlayerSkillState state = getState(playerUUID);
+
         List<String> allSkillIds = buildSkillList(data);
 
         // Rebuild the same sorted list to find the correct skill
@@ -248,8 +270,8 @@ public class CompetencesTab {
         passives.sort(byRarity);
         actives.sort(byRarity);
 
-        List<SkillEntry> currentList = viewingActives ? actives : passives;
-        int realIdx = currentPage * MAX_SKILL_SLOTS + idx;
+        List<SkillEntry> currentList = state.viewingActives ? actives : passives;
+        int realIdx = state.currentPage * MAX_SKILL_SLOTS + idx;
         if (realIdx < 0 || realIdx >= currentList.size()) return false;
 
         String skillId = currentList.get(realIdx).skillId;
@@ -271,16 +293,25 @@ public class CompetencesTab {
         return true;
     }
 
-    // Cache des cooldowns actifs pour refresh sans relire le store
-    private static boolean hasCooldownActive = false;
-    private static final Map<Integer, CooldownEntry> activeCooldowns = new HashMap<>();
+    public static boolean hasCooldownActive() {
+        // Check if ANY player has active cooldowns (used by SystemScreen to decide timer)
+        for (PlayerSkillState s : playerStates.values()) {
+            if (s.hasCooldownActive) return true;
+        }
+        return false;
+    }
 
-    public static boolean hasCooldownActive() { return hasCooldownActive; }
+    public static boolean hasCooldownActive(java.util.UUID uuid) {
+        PlayerSkillState state = playerStates.get(uuid);
+        return state != null && state.hasCooldownActive;
+    }
 
-    // Met à jour UNIQUEMENT les timers cooldown (pas besoin du store)
-    public static void updateCooldownTimers(UICommandBuilder ui) {
+    // Met a jour UNIQUEMENT les timers cooldown (pas besoin du store)
+    public static void updateCooldownTimers(UICommandBuilder ui, java.util.UUID uuid) {
+        PlayerSkillState state = playerStates.get(uuid);
+        if (state == null) return;
         boolean anyActive = false;
-        for (var entry : activeCooldowns.entrySet()) {
+        for (var entry : state.activeCooldowns.entrySet()) {
             int slot = entry.getKey();
             CooldownEntry cd = entry.getValue();
             long remaining = cd.endTime - System.currentTimeMillis();
@@ -288,7 +319,7 @@ public class CompetencesTab {
                 ui.set("#SkillCdTimer" + slot + ".Text", formatCooldown(remaining));
                 anyActive = true;
             } else {
-                // Cooldown terminé — repasser en état ACTIF
+                // Cooldown termine -- repasser en etat ACTIF
                 ui.set("#SkillStateBadge" + slot + ".Visible", true);
                 ui.set("#SkillStateBadge" + slot + ".Text", "ACTIVE");
                 ui.set("#SkillStateBadge" + slot + ".Style.TextColor", "#7ed47e");
@@ -301,8 +332,16 @@ public class CompetencesTab {
             }
         }
         if (!anyActive) {
-            activeCooldowns.clear();
-            hasCooldownActive = false;
+            state.activeCooldowns.clear();
+            state.hasCooldownActive = false;
+        }
+    }
+
+    /** @deprecated Use updateCooldownTimers(ui, uuid) instead */
+    public static void updateCooldownTimers(UICommandBuilder ui) {
+        // Fallback: update all players (backward compat)
+        for (var entry : playerStates.entrySet()) {
+            updateCooldownTimers(ui, entry.getKey());
         }
     }
 
@@ -311,10 +350,19 @@ public class CompetencesTab {
         CooldownEntry(long endTime) { this.endTime = endTime; }
     }
 
-    public static void nextPage() { currentPage++; }
-    public static void prevPage() { if (currentPage > 0) currentPage--; }
-    public static void switchToPassives() { viewingActives = false; currentPage = 0; }
-    public static void switchToActives() { viewingActives = true; currentPage = 0; }
+    public static void nextPage(java.util.UUID uuid) { getState(uuid).currentPage++; }
+    public static void prevPage(java.util.UUID uuid) { PlayerSkillState s = getState(uuid); if (s.currentPage > 0) s.currentPage--; }
+    public static void switchToPassives(java.util.UUID uuid) { PlayerSkillState s = getState(uuid); s.viewingActives = false; s.currentPage = 0; }
+    public static void switchToActives(java.util.UUID uuid) { PlayerSkillState s = getState(uuid); s.viewingActives = true; s.currentPage = 0; }
+
+    /** @deprecated Use nextPage(uuid) */
+    public static void nextPage() { }
+    /** @deprecated Use prevPage(uuid) */
+    public static void prevPage() { }
+    /** @deprecated Use switchToPassives(uuid) */
+    public static void switchToPassives() { }
+    /** @deprecated Use switchToActives(uuid) */
+    public static void switchToActives() { }
 
     private static String getSkillRarityColor(String rarity) {
         return switch (rarity) {

@@ -22,7 +22,7 @@ import java.util.*;
 public class GuildeTab {
 
     public static final int MAX_INVITE_SLOTS = 10;
-    private static final List<String> cachedInviteNames = new ArrayList<>();
+    private static final java.util.concurrent.ConcurrentHashMap<UUID, List<String>> playerCachedInviteNames = new java.util.concurrent.ConcurrentHashMap<>();
 
     public static void populate(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store) {
         ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
@@ -184,6 +184,8 @@ public class GuildeTab {
     public static boolean handleInviteByIndex(String slotIndex, Ref<EntityStore> ref, Store<EntityStore> store) {
         int idx;
         try { idx = Integer.parseInt(slotIndex); } catch (NumberFormatException e) { return false; }
+        UUID myUUID = getPlayerUUID(ref, store);
+        List<String> cachedInviteNames = playerCachedInviteNames.getOrDefault(myUUID, new ArrayList<>());
         if (idx < 0 || idx >= cachedInviteNames.size()) return false;
 
         String targetName = cachedInviteNames.get(idx);
@@ -224,6 +226,7 @@ public class GuildeTab {
     }
 
     private static void populateInviteList(UICommandBuilder ui, Guild guild, UUID myUUID) {
+        List<String> cachedInviteNames = playerCachedInviteNames.computeIfAbsent(myUUID, k -> new ArrayList<>());
         cachedInviteNames.clear();
 
         List<PlayerRef> allPlayers = new ArrayList<>(Universe.get().getPlayers());

@@ -462,12 +462,12 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
 
         // Shop pagination
         if ("shop_prev".equals(eventData.action)) {
-            ShopTab.prevPage();
+            ShopTab.prevPage(getPlayerUUID(ref, store));
             refreshShopTab(ref, store);
             return;
         }
         if ("shop_next".equals(eventData.action)) {
-            ShopTab.nextPage();
+            ShopTab.nextPage(getPlayerUUID(ref, store));
             refreshShopTab(ref, store);
             return;
         }
@@ -483,8 +483,8 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         }
 
         // Black Market
-        if ("bm_prev".equals(eventData.action)) { BlackMarketTab.prevPage(); refreshBlackMarketTab(ref, store); return; }
-        if ("bm_next".equals(eventData.action)) { BlackMarketTab.nextPage(); refreshBlackMarketTab(ref, store); return; }
+        if ("bm_prev".equals(eventData.action)) { BlackMarketTab.prevPage(getPlayerUUID(ref, store)); refreshBlackMarketTab(ref, store); return; }
+        if ("bm_next".equals(eventData.action)) { BlackMarketTab.nextPage(getPlayerUUID(ref, store)); refreshBlackMarketTab(ref, store); return; }
         if ("bm_buy".equals(eventData.action) && eventData.param != null) {
             if (BlackMarketTab.handleBuy(eventData.param, ref, store)) refreshBlackMarketTab(ref, store); return;
         }
@@ -516,22 +516,22 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
 
         // Territoires - pagination
         if ("terr_prev".equals(eventData.action)) {
-            if (TerritoiresTab.handlePrev()) refreshTerritoiresTab(ref, store);
+            if (TerritoiresTab.handlePrev(getPlayerUUID(ref, store))) refreshTerritoiresTab(ref, store);
             return;
         }
         if ("terr_next".equals(eventData.action)) {
-            if (TerritoiresTab.handleNext()) refreshTerritoiresTab(ref, store);
+            if (TerritoiresTab.handleNext(getPlayerUUID(ref, store))) refreshTerritoiresTab(ref, store);
             return;
         }
         // Territoires - selection
         if ("terr_select".equals(eventData.action) && eventData.param != null) {
-            if (TerritoiresTab.handleSelect(EldaniorLogger.parseSafeInt(eventData.param, -1))) {
+            if (TerritoiresTab.handleSelect(EldaniorLogger.parseSafeInt(eventData.param, -1), getPlayerUUID(ref, store))) {
                 refreshTerritoiresTab(ref, store);
             }
             return;
         }
         if ("terr_prot".equals(eventData.action)) {
-            if (TerritoiresTab.handleToggleProtection()) refreshTerritoiresTab(ref, store);
+            if (TerritoiresTab.handleToggleProtection(getPlayerUUID(ref, store))) refreshTerritoiresTab(ref, store);
             return;
         }
         if ("terr_family".equals(eventData.action)) {
@@ -551,7 +551,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             return;
         }
         if ("terr_del".equals(eventData.action)) {
-            if (TerritoiresTab.handleDelete()) refreshTerritoiresTab(ref, store);
+            if (TerritoiresTab.handleDelete(getPlayerUUID(ref, store))) refreshTerritoiresTab(ref, store);
             return;
         }
         if ("terr_sell_city".equals(eventData.action)) {
@@ -562,11 +562,11 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             return;
         }
         if ("terr_pvp".equals(eventData.action)) {
-            if (TerritoiresTab.handleTogglePvp()) refreshTerritoiresTab(ref, store);
+            if (TerritoiresTab.handleTogglePvp(getPlayerUUID(ref, store))) refreshTerritoiresTab(ref, store);
             return;
         }
         if ("terr_tax".equals(eventData.action)) {
-            if (TerritoiresTab.handleCollectTax()) {
+            if (TerritoiresTab.handleCollectTax(getPlayerUUID(ref, store))) {
                 refreshTerritoiresTab(ref, store);
                 com.hypixel.hytale.server.core.entity.entities.Player p = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
                 if (p != null) p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§a§lImpots collectes !"));
@@ -574,7 +574,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             return;
         }
         if ("terr_transfer".equals(eventData.action)) {
-            if (TerritoiresTab.handleTransferTreasury()) {
+            if (TerritoiresTab.handleTransferTreasury(getPlayerUUID(ref, store))) {
                 refreshTerritoiresTab(ref, store);
                 com.hypixel.hytale.server.core.entity.entities.Player p = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
                 if (p != null) p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§a§lTresorerie transferee !"));
@@ -595,35 +595,35 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
 
         // Wiki - pagination
         if ("wiki_prev".equals(eventData.action)) {
-            if (WikiTab.handlePrev()) { switchTab("wiki", ref, store); }
+            if (WikiTab.handlePrev(getPlayerUUID(ref, store))) { switchTab("wiki", ref, store); }
             return;
         }
         if ("wiki_next".equals(eventData.action)) {
-            if (WikiTab.handleNext()) { switchTab("wiki", ref, store); }
+            if (WikiTab.handleNext(getPlayerUUID(ref, store))) { switchTab("wiki", ref, store); }
             return;
         }
 
         // Proprietes - pagination
         if ("prop_owned_prev".equals(eventData.action)) {
-            if (ProprietesTab.handleOwnedPrev()) refreshProprietesTab(ref, store);
+            if (ProprietesTab.handleOwnedPrev(getPlayerUUID(ref, store))) refreshProprietesTab(ref, store);
             return;
         }
         if ("prop_owned_next".equals(eventData.action)) {
-            if (ProprietesTab.handleOwnedNext()) refreshProprietesTab(ref, store);
+            if (ProprietesTab.handleOwnedNext(getPlayerUUID(ref, store))) refreshProprietesTab(ref, store);
             return;
         }
         if ("prop_avail_prev".equals(eventData.action)) {
-            if (ProprietesTab.handleAvailablePrev()) refreshProprietesTab(ref, store);
+            if (ProprietesTab.handleAvailablePrev(getPlayerUUID(ref, store))) refreshProprietesTab(ref, store);
             return;
         }
         if ("prop_avail_next".equals(eventData.action)) {
-            if (ProprietesTab.handleAvailableNext()) refreshProprietesTab(ref, store);
+            if (ProprietesTab.handleAvailableNext(getPlayerUUID(ref, store))) refreshProprietesTab(ref, store);
             return;
         }
 
         // Proprietes - selection d'un bien
         if ("prop_select".equals(eventData.action) && eventData.param != null) {
-            if (ProprietesTab.handleSelect(EldaniorLogger.parseSafeInt(eventData.param, -1))) {
+            if (ProprietesTab.handleSelect(EldaniorLogger.parseSafeInt(eventData.param, -1), getPlayerUUID(ref, store))) {
                 refreshProprietesTab(ref, store);
             }
             return;
@@ -653,7 +653,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         }
         // Proprietes - detail actions
         if ("prop_prot".equals(eventData.action)) {
-            if (ProprietesTab.handleToggleProtection()) refreshProprietesTab(ref, store);
+            if (ProprietesTab.handleToggleProtection(getPlayerUUID(ref, store))) refreshProprietesTab(ref, store);
             return;
         }
         if ("prop_family".equals(eventData.action)) {
@@ -666,7 +666,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             return;
         }
         if ("prop_quit".equals(eventData.action)) {
-            if (ProprietesTab.handleQuitRental()) {
+            if (ProprietesTab.handleQuitRental(getPlayerUUID(ref, store))) {
                 refreshProprietesTab(ref, store);
             }
             return;
@@ -679,31 +679,31 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             return;
         }
         if ("prop_rentout".equals(eventData.action)) {
-            if (ProprietesTab.handleRentOut()) {
+            if (ProprietesTab.handleRentOut(getPlayerUUID(ref, store))) {
                 refreshProprietesTab(ref, store);
             }
             return;
         }
         if ("prop_cancelrent".equals(eventData.action)) {
-            if (ProprietesTab.handleCancelRent()) {
+            if (ProprietesTab.handleCancelRent(getPlayerUUID(ref, store))) {
                 refreshProprietesTab(ref, store);
             }
             return;
         }
         if ("prop_sellback".equals(eventData.action)) {
-            if (ProprietesTab.handleSellSelected()) {
+            if (ProprietesTab.handleSellSelected(getPlayerUUID(ref, store))) {
                 refreshProprietesTab(ref, store);
             }
             return;
         }
         if ("prop_invite".equals(eventData.action) && eventData.param != null) {
-            if (ProprietesTab.handleInvite(EldaniorLogger.parseSafeInt(eventData.param, -1))) {
+            if (ProprietesTab.handleInvite(EldaniorLogger.parseSafeInt(eventData.param, -1), getPlayerUUID(ref, store))) {
                 refreshProprietesTab(ref, store);
             }
             return;
         }
         if ("prop_del".equals(eventData.action)) {
-            if (ProprietesTab.handleDeleteSelected()) {
+            if (ProprietesTab.handleDeleteSelected(getPlayerUUID(ref, store))) {
                 refreshProprietesTab(ref, store);
             }
             return;
@@ -713,7 +713,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         if (eventData.action.startsWith("rk_")) {
             String cat = eventData.action.substring(3);
             UICommandBuilder update = new UICommandBuilder();
-            ClassementsTab.switchCategory(cat, update);
+            ClassementsTab.switchCategory(cat, update, getPlayerUUID(ref, store));
             this.sendUpdate(update);
             return;
         }
@@ -726,23 +726,23 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
 
         // Skill pagination
         if ("skill_prev".equals(eventData.action)) {
-            CompetencesTab.prevPage();
+            CompetencesTab.prevPage(getPlayerUUID(ref, store));
             refreshCompetencesTab(ref, store);
             return;
         }
         if ("skill_next".equals(eventData.action)) {
-            CompetencesTab.nextPage();
+            CompetencesTab.nextPage(getPlayerUUID(ref, store));
             refreshCompetencesTab(ref, store);
             return;
         }
         // Skill tab switch (passive / active)
         if ("skill_tab_passive".equals(eventData.action)) {
-            CompetencesTab.switchToPassives();
+            CompetencesTab.switchToPassives(getPlayerUUID(ref, store));
             refreshCompetencesTab(ref, store);
             return;
         }
         if ("skill_tab_active".equals(eventData.action)) {
-            CompetencesTab.switchToActives();
+            CompetencesTab.switchToActives(getPlayerUUID(ref, store));
             refreshCompetencesTab(ref, store);
             return;
         }
@@ -1105,6 +1105,12 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
     private String getPlayerName(Ref<EntityStore> ref, Store<EntityStore> store) {
         PlayerRef info = store.getComponent(ref, PlayerRef.getComponentType());
         return info != null ? info.getUsername() : "Inconnu";
+    }
+
+    private java.util.UUID getPlayerUUID(Ref<EntityStore> ref, Store<EntityStore> store) {
+        PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
+        if (pRef == null) return null;
+        try { return UUIDExtractor.getUUID(pRef); } catch (Exception e) { return null; }
     }
 
     // deleteDataFile, cyclePrice, cycleRentPrice moved to AdminScreen.java
