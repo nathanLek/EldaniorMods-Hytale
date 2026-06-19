@@ -85,6 +85,9 @@ public class ESCommand extends AbstractCommandCollection {
 
         // Interface admin (OP uniquement)
         this.addSubCommand(new com.eldanior.system.gui.AdminCommand());
+
+        // Transactions (admin)
+        this.addSubCommand(new com.eldanior.system.economy.commands.TransactionsCommand());
     }
 
     @Override

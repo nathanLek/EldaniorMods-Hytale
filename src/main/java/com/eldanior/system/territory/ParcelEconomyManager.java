@@ -5,6 +5,8 @@ import com.eldanior.system.guild.GuildManager;
 import com.eldanior.system.guild.Guild;
 import com.eldanior.system.titles.nobility.family.FamilyManager;
 
+import com.eldanior.system.economy.TransactionLogger;
+
 import java.util.*;
 
 public class ParcelEconomyManager {
@@ -151,6 +153,8 @@ public class ParcelEconomyManager {
                         + child.getName() + " (" + child.getType().getLabel() + ")"
                         + " -> " + collector.getName() + " (" + collector.getType().getLabel() + ")"
                         + " [" + (int)(rate * 100) + "%]");
+                TransactionLogger.logTax(child.getName(), child.getType().getLabel(),
+                        amount, collector.getName());
             }
 
             if (totalCollected > 0) {
@@ -192,6 +196,7 @@ public class ParcelEconomyManager {
                     guild.addTreasury(amount);
                     parcel.addTreasury(-amount);
                     System.out.println("[Economy] " + parcel.getName() + " -> " + amount + " Or -> Guilde " + guild.getName());
+                    TransactionLogger.logGuildTreasury(guild.getName(), amount, "recoit (impot de " + parcel.getName() + ")");
                 }
             } catch (Exception e) {
                 System.err.println("[Economy] Erreur guilde: " + e.getMessage());
@@ -208,6 +213,7 @@ public class ParcelEconomyManager {
                     runtimeData.addTreasury(amount);
                     parcel.addTreasury(-amount);
                     System.out.println("[Economy] " + parcel.getName() + " -> " + amount + " Or -> Famille " + familyId);
+                    TransactionLogger.logFamilyTreasury(familyId, amount, parcel.getName());
                 }
             } catch (Exception e) {
                 System.err.println("[Economy] Erreur famille: " + e.getMessage());
@@ -243,6 +249,7 @@ public class ParcelEconomyManager {
             String parcelId = parcel.getId();
             System.out.println("[Economy] Location expiree: eviction de la parcelle "
                     + parcelName + " (id=" + parcelId + ")");
+            TransactionLogger.logRentEviction(parcelName, parcelId);
 
             ParcelManager.evict(parcelId);
             changed = true;

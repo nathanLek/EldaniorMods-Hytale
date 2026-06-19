@@ -22,6 +22,8 @@ import com.eldanior.system.territory.ParcelEconomyManager;
 import com.eldanior.system.territory.ParcelManager;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
 
+import com.eldanior.system.economy.TransactionLogger;
+
 import java.util.*;
 
 public class ShopTab {
@@ -174,6 +176,13 @@ public class ShopTab {
         }
 
         buyer.getPlayerRef().sendMessage(Message.raw("§aObjet achete pour " + price + " Or ! (taxe: " + taxAmount + " Or)"));
+
+        // Log transaction
+        TransactionLogger.logShopBuy(
+                buyer.getPlayerRef().getUsername(), listing.getSellerName(),
+                listing.getItem().getItemId(), listing.getItem().getQuantity(),
+                price, taxAmount);
+
         return true;
     }
 
@@ -202,6 +211,9 @@ public class ShopTab {
             }
             ShopManager.removeListing(idx);
             me.getPlayerRef().sendMessage(Message.raw("§7Annonce retiree, objet recupere."));
+            TransactionLogger.logShopCancel(me.getPlayerRef().getUsername(),
+                    listing.getItem().getItemId(), listing.getItem().getQuantity(),
+                    listing.getPrice(), false);
         } else {
             // Admin: retourne l'item au vendeur (en ligne ou pending)
             PlayerRef sellerRef = com.hypixel.hytale.server.core.universe.Universe.get().getPlayer(listing.getSellerUUID());
@@ -223,6 +235,9 @@ public class ShopTab {
             // On pourrait ajouter un systeme de pending items plus tard
             ShopManager.removeListing(idx);
             me.getPlayerRef().sendMessage(Message.raw("§eAnnonce de " + listing.getSellerName() + " retiree (admin)."));
+            TransactionLogger.logShopCancel(me.getPlayerRef().getUsername(),
+                    listing.getItem().getItemId(), listing.getItem().getQuantity(),
+                    listing.getPrice(), true);
         }
         return true;
     }
