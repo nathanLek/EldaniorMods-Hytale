@@ -33,16 +33,18 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
     private static final int HOLO_SLOTS = 10;
 
     private static final int PLAYERS_PER_PAGE = 20;
-    private static int playerPage = 0;
-    private static final java.util.List<String> allPlayerNames = new java.util.ArrayList<>();
-    private static String managedPlayerName = null;
     private static final int WORLD_SLOTS = 5;
-    private static int worldTerrPage = 0;
-    private static int worldParcelPage = 0;
-    private static final java.util.List<com.eldanior.system.territory.ParcelData> worldTerrList = new java.util.ArrayList<>();
-    private static final java.util.List<com.eldanior.system.territory.ParcelData> worldParcelList = new java.util.ArrayList<>();
-    private static String worldSelectedId = null;
-    private static boolean worldSelectedIsTerr = false;
+
+    /** Per-admin state to avoid sharing pagination between admins */
+    private int playerPage = 0;
+    private final java.util.List<String> allPlayerNames = new java.util.ArrayList<>();
+    private String managedPlayerName = null;
+    private int worldTerrPage = 0;
+    private int worldParcelPage = 0;
+    private final java.util.List<com.eldanior.system.territory.ParcelData> worldTerrList = new java.util.ArrayList<>();
+    private final java.util.List<com.eldanior.system.territory.ParcelData> worldParcelList = new java.util.ArrayList<>();
+    private String worldSelectedId = null;
+    private boolean worldSelectedIsTerr = false;
 
     public AdminScreen(@Nonnull PlayerRef playerRef) {
         super(playerRef, CustomPageLifetime.CanDismiss, AdminEventData.CODEC);
@@ -57,6 +59,7 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
         // Double-check permission
         Player player = store.getComponent(ref, Player.getComponentType());
         if (player == null || !player.getPlayerRef().hasPermission(EldaniorLogger.ADMIN_PERMISSION)) return;
+        AdminTab.setAdminContext(getAdminUUID(ref, store));
 
         // Populate dashboard
         AdminTab.populate(ui, ref, store);
@@ -181,10 +184,18 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
 
     // ==================== EVENT HANDLING ====================
 
+    private java.util.UUID getAdminUUID(Ref<EntityStore> ref, Store<EntityStore> store) {
+        PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
+        if (pRef == null) return new java.util.UUID(0, 0);
+        try { return UUIDExtractor.getUUID(pRef); } catch (Exception e) { return new java.util.UUID(0, 0); }
+    }
+
     @Override
     public void handleDataEvent(@Nonnull Ref<EntityStore> ref, @Nonnull Store<EntityStore> store,
                                 @Nonnull AdminEventData eventData) {
         if (eventData.action == null) return;
+        // Set admin context for AdminTab per-admin state
+        AdminTab.setAdminContext(getAdminUUID(ref, store));
         String action = eventData.action;
         String param = eventData.param;
 
@@ -1213,7 +1224,7 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
 
     // ==================== HOLOGRAMMES ====================
 
-    private static final java.util.List<String> cachedHoloIds = new java.util.ArrayList<>();
+    private final java.util.List<String> cachedHoloIds = new java.util.ArrayList<>();
 
     private void handleHologramAction(String action, String param, Ref<EntityStore> ref, Store<EntityStore> store) {
         if ("holo_delete".equals(action) && param != null) {

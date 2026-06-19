@@ -19,7 +19,7 @@ public class EchangesTab {
 
     public static final int MAX_TRADE_SLOTS = 8;
     private static final double MAX_DISTANCE = 15.0;
-    private static final List<String> cachedPlayerNames = new ArrayList<>();
+    private static final java.util.concurrent.ConcurrentHashMap<UUID, List<String>> playerCachedNames = new java.util.concurrent.ConcurrentHashMap<>();
 
     public static void populate(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store, boolean isAdmin) {
         // Recuperer l'UUID du joueur
@@ -35,6 +35,8 @@ public class EchangesTab {
         Vector3d myPos = myUUID != null ? PlayerPositionTracker.PLAYER_POSITIONS.get(myUUID) : null;
 
         // Lister les joueurs a proximite
+        UUID stateUUID = myUUID != null ? myUUID : new UUID(0, 0);
+        List<String> cachedPlayerNames = playerCachedNames.computeIfAbsent(stateUUID, k -> new ArrayList<>());
         cachedPlayerNames.clear();
         List<UUID> nearbyPlayers = new ArrayList<>();
 
@@ -82,6 +84,13 @@ public class EchangesTab {
     }
 
     public static boolean handleInvite(int index, Ref<EntityStore> ref, Store<EntityStore> store) {
+        UUID callerUUID = null;
+        try {
+            com.hypixel.hytale.server.core.universe.PlayerRef pRef = store.getComponent(ref, com.hypixel.hytale.server.core.universe.PlayerRef.getComponentType());
+            if (pRef != null) callerUUID = UUIDExtractor.getUUID(pRef);
+        } catch (Exception e) { /* skip */ }
+        UUID stateUUID = callerUUID != null ? callerUUID : new UUID(0, 0);
+        List<String> cachedPlayerNames = playerCachedNames.getOrDefault(stateUUID, new ArrayList<>());
         if (index < 0 || index >= cachedPlayerNames.size()) return false;
         String targetName = cachedPlayerNames.get(index);
         if (targetName == null || targetName.isEmpty()) return false;
@@ -116,6 +125,13 @@ public class EchangesTab {
     }
 
     public static boolean handleForceOpen(int index, Ref<EntityStore> ref, Store<EntityStore> store) {
+        UUID callerUUID = null;
+        try {
+            com.hypixel.hytale.server.core.universe.PlayerRef pRef = store.getComponent(ref, com.hypixel.hytale.server.core.universe.PlayerRef.getComponentType());
+            if (pRef != null) callerUUID = UUIDExtractor.getUUID(pRef);
+        } catch (Exception e) { /* skip */ }
+        UUID stateUUID = callerUUID != null ? callerUUID : new UUID(0, 0);
+        List<String> cachedPlayerNames = playerCachedNames.getOrDefault(stateUUID, new ArrayList<>());
         if (index < 0 || index >= cachedPlayerNames.size()) return false;
         String targetName = cachedPlayerNames.get(index);
         if (targetName == null || targetName.isEmpty()) return false;

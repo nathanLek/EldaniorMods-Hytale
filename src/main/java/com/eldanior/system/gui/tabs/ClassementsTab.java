@@ -11,14 +11,27 @@ import java.util.List;
 public class ClassementsTab {
 
     public static final int MAX_RANK_SLOTS = 10;
-    private static String currentCategory = "mobs";
+    private static final java.util.concurrent.ConcurrentHashMap<java.util.UUID, String> playerCategories = new java.util.concurrent.ConcurrentHashMap<>();
 
-    public static void populate(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store) {
-        populateCategory(ui, currentCategory);
+    private static java.util.UUID getPlayerUUID(Ref<EntityStore> ref, Store<EntityStore> store) {
+        com.hypixel.hytale.server.core.universe.PlayerRef pRef = store.getComponent(ref, com.hypixel.hytale.server.core.universe.PlayerRef.getComponentType());
+        if (pRef == null) return new java.util.UUID(0, 0);
+        try { return com.eldanior.system.config.UUIDExtractor.getUUID(pRef); } catch (Exception e) { return new java.util.UUID(0, 0); }
     }
 
+    public static void populate(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store) {
+        java.util.UUID uuid = getPlayerUUID(ref, store);
+        String category = playerCategories.getOrDefault(uuid, "mobs");
+        populateCategory(ui, category);
+    }
+
+    public static void switchCategory(String category, UICommandBuilder ui, java.util.UUID uuid) {
+        playerCategories.put(uuid, category);
+        populateCategory(ui, category);
+    }
+
+    /** @deprecated Use switchCategory(category, ui, uuid) */
     public static void switchCategory(String category, UICommandBuilder ui) {
-        currentCategory = category;
         populateCategory(ui, category);
     }
 

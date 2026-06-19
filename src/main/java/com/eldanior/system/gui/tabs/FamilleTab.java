@@ -21,13 +21,20 @@ public class FamilleTab {
 
     public static final int MAX_FAMILY_SLOTS = 9;
     public static final int MAX_INVITE_SLOTS = 8;
-    private static final List<String> cachedFamilyIds = new ArrayList<>();
-    private static final List<String> cachedInviteNames = new ArrayList<>();
+    private static final java.util.concurrent.ConcurrentHashMap<UUID, List<String>> playerCachedFamilyIds = new java.util.concurrent.ConcurrentHashMap<>();
+    private static final java.util.concurrent.ConcurrentHashMap<UUID, List<String>> playerCachedInviteNames = new java.util.concurrent.ConcurrentHashMap<>();
+
+    private static UUID getPlayerUUID(Ref<EntityStore> ref, Store<EntityStore> store) {
+        PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
+        if (pRef == null) return new UUID(0, 0);
+        try { return com.eldanior.system.config.UUIDExtractor.getUUID(pRef); } catch (Exception e) { return new UUID(0, 0); }
+    }
 
     public static void populate(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store) {
         ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
         PlayerLevelData data = store.getComponent(ref, type);
         if (data == null) return;
+        UUID uuid = getPlayerUUID(ref, store);
 
         String familyId = data.getNobleFamilyId();
         boolean hasFamily = familyId != null && !familyId.isEmpty();
@@ -62,7 +69,7 @@ public class FamilleTab {
                 boolean canInvite = data.isPatriarch() || data.isVicePatriarch();
                 ui.set("#FamInviteSection.Visible", canInvite);
                 if (canInvite) {
-                    populateInviteList(ui, data);
+                    populateInviteList(ui, data, uuid);
                 }
 
                 String status = data.getStatus();
@@ -76,6 +83,7 @@ public class FamilleTab {
             ui.set("#FamChooseTitle.Text", "CHOISIR VOTRE FAMILLE (" + rank.getDisplayName() + ")");
 
             List<NobleFamilyModel> available = FamilyManager.getAvailableFamiliesForRank(rank);
+            List<String> cachedFamilyIds = playerCachedFamilyIds.computeIfAbsent(uuid, k -> new ArrayList<>());
             cachedFamilyIds.clear();
 
             for (int i = 0; i < MAX_FAMILY_SLOTS; i++) {
@@ -187,6 +195,8 @@ public class FamilleTab {
     public static boolean handleInviteByIndex(String slotIndex, Ref<EntityStore> ref, Store<EntityStore> store) {
         int idx;
         try { idx = Integer.parseInt(slotIndex); } catch (NumberFormatException e) { return false; }
+        UUID uuid = getPlayerUUID(ref, store);
+        List<String> cachedInviteNames = playerCachedInviteNames.getOrDefault(uuid, new ArrayList<>());
         if (idx < 0 || idx >= cachedInviteNames.size()) return false;
 
         String targetName = cachedInviteNames.get(idx);
@@ -231,7 +241,8 @@ public class FamilleTab {
         return true;
     }
 
-    private static void populateInviteList(UICommandBuilder ui, PlayerLevelData ownerData) {
+    private static void populateInviteList(UICommandBuilder ui, PlayerLevelData ownerData, UUID uuid) {
+        List<String> cachedInviteNames = playerCachedInviteNames.computeIfAbsent(uuid, k -> new ArrayList<>());
         cachedInviteNames.clear();
         String famId = ownerData.getNobleFamilyId();
         NobleFamilyModel family = FamilyManager.get(famId);
@@ -276,6 +287,8 @@ public class FamilleTab {
     public static boolean handleChoose(String slotIndex, Ref<EntityStore> ref, Store<EntityStore> store) {
         int idx;
         try { idx = Integer.parseInt(slotIndex); } catch (NumberFormatException e) { return false; }
+        UUID uuid = getPlayerUUID(ref, store);
+        List<String> cachedFamilyIds = playerCachedFamilyIds.getOrDefault(uuid, new ArrayList<>());
         if (idx < 0 || idx >= cachedFamilyIds.size()) return false;
 
         String chosenId = cachedFamilyIds.get(idx);

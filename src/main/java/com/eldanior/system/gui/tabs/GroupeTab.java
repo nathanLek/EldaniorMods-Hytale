@@ -26,8 +26,8 @@ public class GroupeTab {
     public static final int MAX_MEMBER_SLOTS = 5;
     public static final int MAX_INVITE_SLOTS = 10;
 
-    // Cache des noms invitables pour le mapping index -> nom
-    private static final List<String> cachedInviteNames = new ArrayList<>();
+    // Cache des noms invitables pour le mapping index -> nom (per-player)
+    private static final java.util.concurrent.ConcurrentHashMap<UUID, List<String>> playerCachedInviteNames = new java.util.concurrent.ConcurrentHashMap<>();
 
     public static void populate(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store) {
         UUID playerUUID = getPlayerUUID(ref, store);
@@ -201,6 +201,8 @@ public class GroupeTab {
     public static boolean handleInviteByIndex(String slotIndex, Ref<EntityStore> ref, Store<EntityStore> store) {
         int idx;
         try { idx = Integer.parseInt(slotIndex); } catch (NumberFormatException e) { return false; }
+        UUID myUUID = getPlayerUUID(ref, store);
+        List<String> cachedInviteNames = playerCachedInviteNames.getOrDefault(myUUID, new ArrayList<>());
         if (idx < 0 || idx >= cachedInviteNames.size()) return false;
 
         String targetName = cachedInviteNames.get(idx);
@@ -233,6 +235,7 @@ public class GroupeTab {
     }
 
     private static void populateInviteList(UICommandBuilder ui, Party party, UUID myUUID) {
+        List<String> cachedInviteNames = playerCachedInviteNames.computeIfAbsent(myUUID, k -> new ArrayList<>());
         cachedInviteNames.clear();
 
         List<PlayerRef> allPlayers = new ArrayList<>(Universe.get().getPlayers());

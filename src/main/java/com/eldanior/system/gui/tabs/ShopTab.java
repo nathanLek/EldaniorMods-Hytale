@@ -29,15 +29,20 @@ import java.util.*;
 public class ShopTab {
 
     public static final int MAX_SHOP_SLOTS = 20;
-    private static int currentPage = 0;
+    private static final Map<UUID, Integer> playerPages = new java.util.concurrent.ConcurrentHashMap<>();
+
+    private static int getPage(UUID uuid) { return playerPages.getOrDefault(uuid, 0); }
+    private static void setPage(UUID uuid, int page) { playerPages.put(uuid, page); }
 
     public static void populate(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store) {
         UUID myUUID = getPlayerUUID(ref, store);
         List<ShopListing> listings = ShopManager.getListings();
 
+        int currentPage = getPage(myUUID);
         int totalPages = Math.max(1, (int) Math.ceil((double) listings.size() / MAX_SHOP_SLOTS));
         if (currentPage >= totalPages) currentPage = totalPages - 1;
         if (currentPage < 0) currentPage = 0;
+        setPage(myUUID, currentPage);
 
         int startIdx = currentPage * MAX_SHOP_SLOTS;
 
@@ -84,13 +89,13 @@ public class ShopTab {
     public static boolean handleBuy(String slotIndex, Ref<EntityStore> ref, Store<EntityStore> store) {
         int slotIdx;
         try { slotIdx = Integer.parseInt(slotIndex); } catch (NumberFormatException e) { return false; }
-        int idx = currentPage * MAX_SHOP_SLOTS + slotIdx;
+        UUID myUUID = getPlayerUUID(ref, store);
+        int idx = getPage(myUUID) * MAX_SHOP_SLOTS + slotIdx;
 
         // Pre-checks before atomic buy (read-only, no race condition risk)
         ShopListing peekListing = ShopManager.getListing(idx);
         if (peekListing == null) return false;
 
-        UUID myUUID = getPlayerUUID(ref, store);
         if (myUUID == null || myUUID.equals(peekListing.getSellerUUID())) return false;
 
         // PK ne peuvent pas acheter au shop normal
@@ -189,12 +194,12 @@ public class ShopTab {
     public static boolean handleCancel(String slotIndex, Ref<EntityStore> ref, Store<EntityStore> store) {
         int slotIdx;
         try { slotIdx = Integer.parseInt(slotIndex); } catch (NumberFormatException e) { return false; }
-        int idx = currentPage * MAX_SHOP_SLOTS + slotIdx;
+        UUID myUUID = getPlayerUUID(ref, store);
+        int idx = getPage(myUUID) * MAX_SHOP_SLOTS + slotIdx;
 
         ShopListing listing = ShopManager.getListing(idx);
         if (listing == null) return false;
 
-        UUID myUUID = getPlayerUUID(ref, store);
         Player me = store.getComponent(ref, Player.getComponentType());
         if (myUUID == null || me == null) return false;
 
@@ -242,8 +247,8 @@ public class ShopTab {
         return true;
     }
 
-    public static void nextPage() { currentPage++; }
-    public static void prevPage() { if (currentPage > 0) currentPage--; }
+    public static void nextPage(UUID uuid) { playerPages.merge(uuid, 1, Integer::sum); }
+    public static void prevPage(UUID uuid) { playerPages.compute(uuid, (k, v) -> v != null && v > 0 ? v - 1 : 0); }
 
     private static String getRarityColor(ItemStack item) {
         try {

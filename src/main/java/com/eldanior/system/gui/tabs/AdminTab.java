@@ -24,9 +24,26 @@ import java.util.*;
 public class AdminTab {
 
     public static final int MAX_PLAYER_SLOTS = 8;
-    private static final List<String> cachedPlayerNames = new ArrayList<>();
-    private static int selectedPlayer = -1;
-    private static String pendingCommand = "";
+
+    /** Per-admin state */
+    private static final java.util.concurrent.ConcurrentHashMap<UUID, AdminTabState> adminStates = new java.util.concurrent.ConcurrentHashMap<>();
+
+    private static AdminTabState getState() {
+        // AdminTab is only used by admins, so we use a single shared state keyed by "current admin"
+        // Since methods don't have UUID context, we keep a thread-local approach
+        return adminStates.computeIfAbsent(currentAdminUUID.get(), k -> new AdminTabState());
+    }
+
+    private static final ThreadLocal<UUID> currentAdminUUID = ThreadLocal.withInitial(() -> new UUID(0, 0));
+
+    /** Call this before any AdminTab operation to set context */
+    public static void setAdminContext(UUID uuid) { currentAdminUUID.set(uuid); }
+
+    private static class AdminTabState {
+        final List<String> cachedPlayerNames = new ArrayList<>();
+        int selectedPlayer = -1;
+        String pendingCommand = "";
+    }
 
     public static void populate(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store) {
         // Stats serveur
@@ -38,28 +55,29 @@ public class AdminTab {
         ui.set("#AdminStatQuetes.Text", String.valueOf(com.eldanior.system.quest.QuestManager.getAllQuests().size()));
         ui.set("#AdminStatPlayers.Text", String.valueOf(Universe.get().getPlayers().size()));
 
-        cachedPlayerNames.clear();
+        AdminTabState st = getState();
+        st.cachedPlayerNames.clear();
         for (PlayerRef pRef : Universe.get().getPlayers()) {
-            if (cachedPlayerNames.size() >= MAX_PLAYER_SLOTS) break;
-            cachedPlayerNames.add(pRef.getUsername());
+            if (st.cachedPlayerNames.size() >= MAX_PLAYER_SLOTS) break;
+            st.cachedPlayerNames.add(pRef.getUsername());
         }
 
         // Player selector buttons
         for (int i = 0; i < MAX_PLAYER_SLOTS; i++) {
-            if (i < cachedPlayerNames.size()) {
+            if (i < st.cachedPlayerNames.size()) {
                 ui.set("#ASelPlayer" + i + ".Visible", true);
-                ui.set("#ASelPlayer" + i + ".Text", cachedPlayerNames.get(i));
+                ui.set("#ASelPlayer" + i + ".Text", st.cachedPlayerNames.get(i));
             } else {
                 ui.set("#ASelPlayer" + i + ".Visible", false);
             }
         }
 
         // Show action panel if a player is selected
-        boolean hasSelection = selectedPlayer >= 0 && selectedPlayer < cachedPlayerNames.size();
+        boolean hasSelection = st.selectedPlayer >= 0 && st.selectedPlayer < st.cachedPlayerNames.size();
         ui.set("#AdminActionPanel.Visible", hasSelection);
 
         if (hasSelection) {
-            String name = cachedPlayerNames.get(selectedPlayer);
+            String name = st.cachedPlayerNames.get(st.selectedPlayer);
             ui.set("#AdminSelectedName.Text", "Joueur : " + name);
 
             // Load target player info
@@ -85,45 +103,49 @@ public class AdminTab {
     }
 
     public static void selectPlayer(int index) {
-        selectedPlayer = index;
-        pendingCommand = "";
+        AdminTabState st = getState();
+        st.selectedPlayer = index;
+        st.pendingCommand = "";
     }
 
     public static void selectPlayerByName(String name) {
+        AdminTabState st = getState();
         // Refresh cache and find the player
-        cachedPlayerNames.clear();
+        st.cachedPlayerNames.clear();
         for (com.hypixel.hytale.server.core.universe.PlayerRef pRef : com.hypixel.hytale.server.core.universe.Universe.get().getPlayers()) {
-            if (cachedPlayerNames.size() >= MAX_PLAYER_SLOTS) break;
-            cachedPlayerNames.add(pRef.getUsername());
+            if (st.cachedPlayerNames.size() >= MAX_PLAYER_SLOTS) break;
+            st.cachedPlayerNames.add(pRef.getUsername());
         }
-        for (int i = 0; i < cachedPlayerNames.size(); i++) {
-            if (cachedPlayerNames.get(i).equalsIgnoreCase(name)) {
-                selectedPlayer = i;
-                pendingCommand = "";
+        for (int i = 0; i < st.cachedPlayerNames.size(); i++) {
+            if (st.cachedPlayerNames.get(i).equalsIgnoreCase(name)) {
+                st.selectedPlayer = i;
+                st.pendingCommand = "";
                 return;
             }
         }
-        // Player not in first 8 — add them manually
-        if (cachedPlayerNames.size() < MAX_PLAYER_SLOTS) {
-            cachedPlayerNames.add(name);
-            selectedPlayer = cachedPlayerNames.size() - 1;
+        // Player not in first 8 -- add them manually
+        if (st.cachedPlayerNames.size() < MAX_PLAYER_SLOTS) {
+            st.cachedPlayerNames.add(name);
+            st.selectedPlayer = st.cachedPlayerNames.size() - 1;
         } else {
-            cachedPlayerNames.set(MAX_PLAYER_SLOTS - 1, name);
-            selectedPlayer = MAX_PLAYER_SLOTS - 1;
+            st.cachedPlayerNames.set(MAX_PLAYER_SLOTS - 1, name);
+            st.selectedPlayer = MAX_PLAYER_SLOTS - 1;
         }
-        pendingCommand = "";
+        st.pendingCommand = "";
     }
 
     public static void setPendingCommand(String template) {
+        AdminTabState st = getState();
         String playerName = getSelectedPlayerName();
-        pendingCommand = template.replace("<player>", playerName != null ? playerName : "???");
+        st.pendingCommand = template.replace("<player>", playerName != null ? playerName : "???");
     }
 
-    public static String getPendingCommand() { return pendingCommand; }
+    public static String getPendingCommand() { return getState().pendingCommand; }
 
     public static String getSelectedPlayerName() {
-        if (selectedPlayer < 0 || selectedPlayer >= cachedPlayerNames.size()) return null;
-        return cachedPlayerNames.get(selectedPlayer);
+        AdminTabState st = getState();
+        if (st.selectedPlayer < 0 || st.selectedPlayer >= st.cachedPlayerNames.size()) return null;
+        return st.cachedPlayerNames.get(st.selectedPlayer);
     }
 
     /**
@@ -131,6 +153,8 @@ public class AdminTab {
      * Verifie la permission admin avant execution.
      */
     public static boolean executePendingCommand(Ref<EntityStore> ref, Store<EntityStore> store) {
+        AdminTabState st = getState();
+        String pendingCommand = st.pendingCommand;
         if (pendingCommand == null || pendingCommand.isEmpty()) return false;
 
         // Verification permission admin
@@ -357,8 +381,9 @@ public class AdminTab {
     // ==================== UTILS ====================
 
     private static PlayerRef getSelectedTargetRef() {
-        if (selectedPlayer < 0 || selectedPlayer >= cachedPlayerNames.size()) return null;
-        return Universe.get().getPlayerByUsername(cachedPlayerNames.get(selectedPlayer),
+        AdminTabState st = getState();
+        if (st.selectedPlayer < 0 || st.selectedPlayer >= st.cachedPlayerNames.size()) return null;
+        return Universe.get().getPlayerByUsername(st.cachedPlayerNames.get(st.selectedPlayer),
                 com.hypixel.hytale.server.core.NameMatching.EXACT_IGNORE_CASE);
     }
 
