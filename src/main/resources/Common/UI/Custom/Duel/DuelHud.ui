@@ -1,0 +1,63 @@
+Group {
+    LayoutMode: Top;
+    Padding: (Top: 10);
+
+    Group {
+        LayoutMode: Left;
+        Anchor: (Height: 80);
+
+        Group { FlexWeight: 1; }
+
+        // === PANNEAU DUEL (centre haut) ===
+        Group #DuelPanel {
+            Anchor: (Width: 280, Height: 70);
+            Background: #1a0a0a(0.90);
+            LayoutMode: Top;
+            Padding: (Horizontal: 10, Vertical: 6);
+            Visible: false;
+
+            // Ligne 1 : titre DUEL + temps ecoule
+            Group {
+                LayoutMode: Left;
+                Anchor: (Height: 16);
+
+                Label #DuelTitle {
+                    Text: "DUEL";
+                    Style: (FontSize: 10, TextColor: #ff4444, RenderBold: true, RenderUppercase: true, LetterSpacing: 1);
+                    FlexWeight: 1;
+                }
+                Label #DuelTimer {
+                    Text: "0:00";
+                    Style: (FontSize: 10, TextColor: #ffaa44, RenderBold: true, HorizontalAlignment: End);
+                    Anchor: (Width: 50);
+                }
+            }
+
+            Group { Anchor: (Height: 3); }
+            Group { Anchor: (Height: 1); Background: #ff4444(0.3); }
+            Group { Anchor: (Height: 4); }
+
+            // Ligne 2 : nom adversaire
+            Label #DuelOpponentName {
+                Text: "";
+                Style: (FontSize: 12, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Center);
+                Anchor: (Height: 16);
+            }
+
+            Group { Anchor: (Height: 3); }
+
+            // Ligne 3 : barre de vie adversaire
+            Group {
+                Anchor: (Height: 10);
+                Background: #333a47;
+
+                ProgressBar #DuelOpponentHP {
+                    BarTexturePath: "HPFill.png";
+                    Value: 1.0;
+                }
+            }
+        }
+
+        Group { FlexWeight: 1; }
+    }
+}
