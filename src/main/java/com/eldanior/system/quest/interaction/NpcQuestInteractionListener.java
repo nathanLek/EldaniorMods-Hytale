@@ -26,8 +26,8 @@ public class NpcQuestInteractionListener {
     // NPCTypeId des PNJ qui donnent des quetes (doit correspondre au nom du role NPC)
     private static final Set<String> QUEST_NPC_IDS = Set.of(
             "Guild_Npc",
-            "Tavernier_Npc",
-            "tavernier_Npc"
+            "AncienConseiller_Npc",
+            "TavernierQuest_Npc"
     );
 
     public static void onPlayerInteract(PlayerInteractEvent event) {
