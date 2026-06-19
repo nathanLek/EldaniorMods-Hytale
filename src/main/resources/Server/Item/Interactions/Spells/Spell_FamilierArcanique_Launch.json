@@ -1,0 +1,33 @@
+{
+  "Type": "StatsCondition",
+  "Costs": { "SignatureEnergy": 1 },
+  "RunTime": 0.1,
+  "Next": {
+    "Type": "Parallel",
+    "Interactions": [
+      { "Interactions": [{ "Type": "ChangeStat", "StatModifiers": { "SignatureEnergy": 0 }, "Behaviour": "Set" }] },
+      { "Interactions": [
+        {
+          "Type": "Projectile",
+          "Config": "Projectile_Config_FamilierArcanique",
+          "Effects": {
+            "ItemAnimationId": "CastHurlCharged",
+            "WorldSoundEventId": "SFX_Portal_Neutral_Open",
+            "Particles": [
+              { "SystemId": "Flying_Orb", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 2.0, "Color": "#4ade80" },
+              { "SystemId": "GreenOrb", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 1.5, "Color": "#22c55e" }
+            ]
+          },
+          "Next": {
+            "Type": "Simple",
+            "RunTime": 0.3
+          }
+        }
+      ]}
+    ]
+  },
+  "Failed": {
+    "Type": "Simple", "RunTime": 0.3,
+    "Effects": { "ItemAnimationId": "Interact", "WorldSoundEventId": "SFX_Bow_No_Ammo" }
+  }
+}

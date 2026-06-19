@@ -2011,6 +2011,23 @@ public class SkillManager {
                 List.of(), List.of()
         ));
 
+        // --- INVOCATEUR ---
+        register("skill_page_familier_arcanique", new SkillModel(
+                "FAMILIER_ARCANIQUE", "Spell_FamilierArcanique", "Familier Arcanique", "mage, invocateur",
+                250, 0.0f, 1.2f, 6.0f, 4.0f, 12.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_totem_de_garde", new SkillModel(
+                "TOTEM_DE_GARDE", "Spell_TotemDeGarde", "Totem de Garde", "mage, invocateur",
+                300, 0.0f, 1.5f, 0.0f, 5.0f, 10.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_portail_dimensionnel", new SkillModel(
+                "PORTAIL_DIMENSIONNEL", "Spell_PortailDimensionnel", "Portail Dimensionnel", "mage, invocateur",
+                400, 0.0f, 1.0f, 0.0f, 0.0f, 6.0f,
+                List.of(), List.of()
+        ));
+
         // --- GEOMANCIEN ---
         register("skill_page_mur_de_pierre", new SkillModel(
                 "MUR_DE_PIERRE", "Spell_MurDePierre", "Mur de Pierre", "mage, elementaliste",
