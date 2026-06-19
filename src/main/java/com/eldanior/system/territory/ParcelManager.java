@@ -30,7 +30,7 @@ public class ParcelManager {
     // ==================== PENDING EARNINGS (ventes offline) ====================
 
     public static void addPendingEarnings(UUID playerUUID, long amount) {
-        pendingEarnings.merge(playerUUID, amount, Long::sum);
+        pendingEarnings.merge(playerUUID, amount, (a, b) -> { long s = a + b; return (s < a) ? Long.MAX_VALUE : s; });
     }
 
     public static Map<UUID, Long> getPendingEarningsMap() {

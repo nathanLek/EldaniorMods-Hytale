@@ -600,7 +600,7 @@ public class PlayerLevelData implements Component<EntityStore> {
     public void setLastPvPKillTime(long t) { this.lastPvPKillTime = t; }
 
     public void addPlayerKill() {
-        this.playerKills++;
+        if (this.playerKills < Integer.MAX_VALUE) this.playerKills++;
         this.killStreak++;
         if (this.killStreak > this.bestKillStreak) {
             this.bestKillStreak = this.killStreak;
