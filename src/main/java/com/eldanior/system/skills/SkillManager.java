@@ -1993,6 +1993,23 @@ public class SkillManager {
                 300, 0.0f, 1.0f, 8.0f, 15.0f, 5.0f,
                 List.of(), List.of()
         ));
+
+        // --- GUERISSEUR ---
+        register("skill_page_lumiere_guerisseuse", new SkillModel(
+                "LUMIERE_GUERISSEUSE", "Spell_LumiereGuerisseuse", "Lumiere Guerisseuse", "mage, guerisseur",
+                200, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_purification_sacree", new SkillModel(
+                "PURIFICATION_SACREE", "Spell_PurificationSacree", "Purification Sacree", "mage, guerisseur",
+                350, 0.0f, 1.5f, 0.0f, 6.0f, 3.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_souffle_de_vie", new SkillModel(
+                "SOUFFLE_DE_VIE", "Spell_SouffleDeVie", "Souffle de Vie", "mage, guerisseur",
+                600, 0.0f, 2.5f, 0.0f, 8.0f, 5.0f,
+                List.of(), List.of()
+        ));
     }
 
     private static void register(String itemId, SkillModel skill) {

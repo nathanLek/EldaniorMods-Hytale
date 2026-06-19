@@ -1,0 +1,60 @@
+{
+  "Type": "StatsCondition",
+  "Costs": { "SignatureEnergy": 1 },
+  "RunTime": 0.1,
+  "Next": {
+    "Type": "Serial",
+    "Interactions": [
+      { "Type": "ChangeStat", "StatModifiers": { "SignatureEnergy": 0 }, "Behaviour": "Set" },
+      { "Type": "ApplyEffect", "EffectId": "Purification_Sacree_Cleanse" },
+      {
+        "Type": "SpawnDeployableAtSelf",
+        "Config": {
+          "Type": "Aoe",
+          "Shape": "Cylinder",
+          "Id": "Purification_Sacree_Zone",
+          "LiveDuration": 3,
+          "ModelScale": 1.2,
+          "StartRadius": 1,
+          "EndRadius": 6,
+          "Height": 4,
+          "RadiusChangeTime": 0.5,
+          "DamageInterval": 1.0,
+          "DamageAmount": 0,
+          "ApplyEffects": ["Purification_Sacree_Cleanse"],
+          "Invulnerable": true,
+          "AttackOwner": false,
+          "AttackTeam": false,
+          "DeploySoundEventId": "SFX_Skeleton_Mage_Spellbook_Impact",
+          "DespawnSoundEventId": "SFX_Skeleton_Mage_Spellbook_Impact",
+          "SpawnParticles": [
+            { "SystemId": "Fire_ChargeWhite", "TargetEntityPart": "Entity", "Scale": 3.5, "Color": "#ffffcc" },
+            { "SystemId": "Rings_Rings", "TargetEntityPart": "Entity", "Scale": 4.0, "Color": "#ffffff" }
+          ],
+          "DespawnParticles": [
+            { "SystemId": "Mace_Signature_Cast", "TargetEntityPart": "Entity", "Scale": 2.0, "Color": "#ffffaa" }
+          ]
+        }
+      },
+      {
+        "Type": "Simple", "RunTime": 0.7,
+        "Effects": {
+          "ItemAnimationId": "CastHurlCharged",
+          "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Impact",
+          "Particles": [
+            { "SystemId": "Fire_ChargeWhite", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 2.5, "Color": "#ffffcc" },
+            { "SystemId": "Rings_Rings", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 4.0, "Color": "#ffffff" }
+          ]
+        }
+      },
+      {
+        "Type": "Simple", "RunTime": 0.1,
+        "Effects": { "ClearAnimationOnFinish": true, "ClearSoundEventOnFinish": true }
+      }
+    ]
+  },
+  "Failed": {
+    "Type": "Simple", "RunTime": 0.3,
+    "Effects": { "ItemAnimationId": "Interact", "WorldSoundEventId": "SFX_Bow_No_Ammo" }
+  }
+}
