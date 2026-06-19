@@ -54,11 +54,11 @@ public enum StatConfig {
             PlayerLevelData::getAgility, ClassModel::getBonusAgl),
 
     // 5. DEGATS FORCE : +0.032 dégâts par point
-    STRENGTH_DAMAGE(StatType.MECHANIC, -1, "Strength_Dmg", 0.0f, 0.072f, 0.0f, 0.0f,
+    STRENGTH_DAMAGE(StatType.MECHANIC, -1, "Strength_Dmg", 0.0f, 0.072f, 0.0f, 50.0f,
             PlayerLevelData::getStrength, ClassModel::getBonusStr),
 
     // 6. DEFENSE ENDURANCE : -0.3 dégâts reçus par point
-    ENDURANCE_DEFENSE(StatType.MECHANIC, -1, "Endurance_Def", 0.0f, 0.05f, 0.0f, 0.0f,
+    ENDURANCE_DEFENSE(StatType.MECHANIC, -1, "Endurance_Def", 0.0f, 0.05f, 0.0f, 35.0f,
             PlayerLevelData::getEndurance, ClassModel::getBonusEnd),
 
     // === MÉCANIQUES DE CHANCE (Nouveau !) ===
