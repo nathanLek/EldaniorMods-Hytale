@@ -1,0 +1,41 @@
+{
+  "Type": "StatsCondition",
+  "Costs": { "SignatureEnergy": 1 },
+  "RunTime": 0.1,
+  "Next": {
+    "Type": "Serial",
+    "Interactions": [
+      { "Type": "ChangeStat", "StatModifiers": { "SignatureEnergy": 0 }, "Behaviour": "Set" },
+      {
+        "Type": "Dash",
+        "RunTime": 0.15,
+        "DashForce": 25,
+        "DashDirection": "Forward",
+        "Effects": {
+          "ItemAnimationId": "CastPushCharged",
+          "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Impact",
+          "Particles": [
+            { "SystemId": "Portal", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 2.0 },
+            { "SystemId": "MagicBlast", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 1.5, "Color": "#4b0082" }
+          ]
+        }
+      },
+      {
+        "Type": "Simple", "RunTime": 0.3,
+        "Effects": {
+          "Particles": [
+            { "SystemId": "Portal", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 2.0 }
+          ]
+        }
+      },
+      {
+        "Type": "Simple", "RunTime": 0.1,
+        "Effects": { "ClearAnimationOnFinish": true, "ClearSoundEventOnFinish": true }
+      }
+    ]
+  },
+  "Failed": {
+    "Type": "Simple", "RunTime": 0.3,
+    "Effects": { "ItemAnimationId": "Interact", "WorldSoundEventId": "SFX_Bow_No_Ammo" }
+  }
+}

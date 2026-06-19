@@ -1,0 +1,32 @@
+{
+  "Type": "StatsCondition",
+  "Costs": { "SignatureEnergy": 1 },
+  "RunTime": 0.1,
+  "Next": {
+    "Type": "Serial",
+    "Interactions": [
+      { "Type": "ChangeStat", "StatModifiers": { "SignatureEnergy": 0 }, "Behaviour": "Set" },
+      { "Type": "ApplyEffect", "EffectId": "Luck_Buff" },
+      {
+        "Type": "Simple", "RunTime": 0.6,
+        "Effects": {
+          "ItemAnimationId": "CastPushCharged",
+          "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Impact",
+          "Particles": [
+            { "SystemId": "BlueBeam", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 2.0 },
+            { "SystemId": "Azure_Spiral", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 1.5 },
+            { "SystemId": "Rings_Rings", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 2.5, "Color": "#00bfff" }
+          ]
+        }
+      },
+      {
+        "Type": "Simple", "RunTime": 0.1,
+        "Effects": { "ClearAnimationOnFinish": true, "ClearSoundEventOnFinish": true }
+      }
+    ]
+  },
+  "Failed": {
+    "Type": "Simple", "RunTime": 0.3,
+    "Effects": { "ItemAnimationId": "Interact", "WorldSoundEventId": "SFX_Bow_No_Ammo" }
+  }
+}
