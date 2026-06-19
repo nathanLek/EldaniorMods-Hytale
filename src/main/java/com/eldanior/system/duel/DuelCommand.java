@@ -123,11 +123,14 @@ public class DuelCommand extends AbstractAsyncCommand {
                             return;
                         }
 
-                        DuelManager.sendChallenge(senderUUID, targetUUID);
+                        if (!DuelManager.sendChallenge(senderUUID, targetUUID)) {
+                            sender.getPlayerRef().sendMessage(Message.raw("§cVous avez deja un defi en attente ! Attendez qu'il expire ou soit accepte/refuse."));
+                            return;
+                        }
 
-                        sender.getPlayerRef().sendMessage(Message.raw("§6Defi envoye a " + targetRef.getUsername() + " !"));
+                        sender.getPlayerRef().sendMessage(Message.raw("§6Defi envoye a " + targetRef.getUsername() + " ! §7(expire dans 60s)"));
                         targetRef.sendMessage(Message.raw("§6§l" + sender.getPlayerRef().getUsername() + " vous defie en duel !"));
-                        targetRef.sendMessage(Message.raw("§7Tapez §f/es duel accept §7ou §f/es duel decline"));
+                        targetRef.sendMessage(Message.raw("§7Tapez §f/es duel accept §7ou §f/es duel decline §7(expire dans 60s)"));
                     }
                 }
             } catch (Exception e) { e.printStackTrace(); }
