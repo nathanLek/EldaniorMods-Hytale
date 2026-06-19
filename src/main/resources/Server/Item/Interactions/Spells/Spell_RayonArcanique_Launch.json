@@ -1,0 +1,28 @@
+{
+  "Type": "StatsCondition",
+  "Costs": { "SignatureEnergy": 1 },
+  "RunTime": 0.1,
+  "Next": {
+    "Type": "Parallel",
+    "Interactions": [
+      { "Interactions": [{ "Type": "ChangeStat", "StatModifiers": { "SignatureEnergy": 0 }, "Behaviour": "Set" }] },
+      { "Interactions": [{
+        "Type": "LaunchProjectile",
+        "RunTime": 0.2,
+        "Effects": {
+          "ItemAnimationId": "CastHurlCharged",
+          "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Impact",
+          "Particles": [
+            { "SystemId": "Lightning", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.6, "Color": "#00d4ff" },
+            { "SystemId": "MagicBlast", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.4, "Color": "#0ea5e9" }
+          ]
+        },
+        "ProjectileId": "Spell_RayonArcanique"
+      }]}
+    ]
+  },
+  "Failed": {
+    "Type": "Simple", "RunTime": 0.3,
+    "Effects": { "ItemAnimationId": "Interact", "WorldSoundEventId": "SFX_Bow_No_Ammo" }
+  }
+}

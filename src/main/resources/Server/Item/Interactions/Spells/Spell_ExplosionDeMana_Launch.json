@@ -1,0 +1,81 @@
+{
+  "Type": "StatsCondition",
+  "Costs": { "SignatureEnergy": 1 },
+  "RunTime": 0.1,
+  "Next": {
+    "Type": "Serial",
+    "Interactions": [
+      {
+        "Type": "ChangeStat",
+        "StatModifiers": { "SignatureEnergy": 0 },
+        "Behaviour": "Set"
+      },
+      {
+        "Type": "Parallel",
+        "Interactions": [
+          {
+            "Interactions": [
+              {
+                "Type": "Selector",
+                "Selector": {
+                  "Id": "AOECircle",
+                  "Range": 8
+                },
+                "Effects": {
+                  "Particles": [
+                    { "SystemId": "Explosion_Big", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 1.5, "Color": "#a855f7" },
+                    { "SystemId": "Rings_Rings", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 1.0, "Color": "#7c3aed" }
+                  ]
+                },
+                "HitEntity": {
+                  "Interactions": [
+                    {
+                      "Type": "DamageEntity",
+                      "DamageCalculator": {
+                        "BaseDamage": { "Projectile": 10 }
+                      },
+                      "DamageEffects": {
+                        "Knockback": {
+                          "Force": 6,
+                          "RelativeX": 0,
+                          "RelativeZ": -8,
+                          "VelocityY": 4
+                        },
+                        "WorldParticles": [
+                          { "SystemId": "MagicBlast", "Color": "#a855f7" },
+                          { "SystemId": "Explosion_Medium", "Color": "#7c3aed" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "Interactions": [
+              {
+                "Type": "Simple",
+                "RunTime": 0.8,
+                "Effects": {
+                  "ItemAnimationId": "CastPushCharged",
+                  "WorldSoundEventId": "SFX_Crystal_Break",
+                  "Particles": [
+                    { "SystemId": "Explosion_Big", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 2.0, "Color": "#a855f7" },
+                    { "SystemId": "Rings_Rings", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 1.5, "Color": "#7c3aed" },
+                    { "SystemId": "Mace_Signature_Ground_Hit", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 1.2, "Color": "#a855f7" },
+                    { "SystemId": "MagicBlast", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 1.5, "Color": "#7c3aed" }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "Failed": {
+    "Type": "Simple", "RunTime": 0.3,
+    "Effects": { "ItemAnimationId": "Interact", "WorldSoundEventId": "SFX_Bow_No_Ammo" }
+  }
+}

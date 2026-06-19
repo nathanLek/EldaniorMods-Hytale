@@ -2027,6 +2027,23 @@ public class SkillManager {
                 800, 0.0f, 2.5f, 5.0f, 6.0f, 12.0f,
                 List.of(), List.of()
         ));
+
+        // --- ARCANISTE ---
+        register("skill_page_rayon_arcanique", new SkillModel(
+                "RAYON_ARCANIQUE", "Spell_RayonArcanique", "Rayon Arcanique", "mage, arcaniste",
+                150, 0.0f, 0.8f, 12.0f, 40.0f, 2.5f,
+                List.of(), List.of()
+        ));
+        register("skill_page_explosion_de_mana", new SkillModel(
+                "EXPLOSION_DE_MANA", "Spell_ExplosionDeMana", "Explosion de Mana", "mage, arcaniste",
+                200, 0.0f, 1.2f, 10.0f, 8.0f, 4.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_vortex_aspirant", new SkillModel(
+                "VORTEX_ASPIRANT", "Spell_VortexAspirant", "Vortex Aspirant", "mage, arcaniste",
+                300, 0.0f, 1.5f, 3.0f, 15.0f, 5.0f,
+                List.of(), List.of()
+        ));
     }
 
     private static void register(String itemId, SkillModel skill) {

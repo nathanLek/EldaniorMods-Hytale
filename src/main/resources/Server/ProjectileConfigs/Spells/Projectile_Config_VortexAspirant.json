@@ -1,0 +1,105 @@
+{
+  "Model": "Spell_VortexAspirant",
+  "Physics": {
+    "Type": "Standard",
+    "Gravity": 3,
+    "TerminalVelocityAir": 40,
+    "TerminalVelocityWater": 20,
+    "SticksVertically": true,
+    "Bounciness": 0
+  },
+  "LaunchForce": 25,
+  "Interactions": {
+    "ProjectileHit": {
+      "Cooldown": { "Cooldown": 0 },
+      "Interactions": [
+        {
+          "Type": "DamageEntity",
+          "DamageCalculator": { "BaseDamage": { "Projectile": 5 } }
+        },
+        {
+          "Type": "ApplyEffect",
+          "Entity": "Target",
+          "EffectId": "Slow"
+        },
+        {
+          "Type": "SpawnDeployableAtHitLocation",
+          "Config": {
+            "Type": "Aoe",
+            "Shape": "Cylinder",
+            "Id": "Vortex_Aspirant_Zone",
+            "LiveDuration": 5,
+            "Model": "Deployable_Phantom",
+            "ModelScale": 0.5,
+            "StartRadius": 2,
+            "EndRadius": 7,
+            "Height": 6,
+            "RadiusChangeTime": 1.0,
+            "DamageInterval": 0.8,
+            "DamageAmount": 3,
+            "ApplyEffects": ["Slow"],
+            "Invulnerable": true,
+            "AttackOwner": false,
+            "AttackTeam": false,
+            "DeploySoundEventId": "SFX_Portal_Neutral_Open",
+            "DespawnSoundEventId": "SFX_Crystal_Break",
+            "SpawnParticles": [
+              { "SystemId": "Portal_Vortex", "TargetEntityPart": "Entity", "Scale": 5.0, "Color": "#6366f1" },
+              { "SystemId": "Rings_Rings", "TargetEntityPart": "Entity", "Scale": 4.0, "Color": "#4338ca" },
+              { "SystemId": "Block_Break_Crystal", "TargetEntityPart": "Entity", "Scale": 3.0, "Color": "#6366f1" }
+            ],
+            "DespawnParticles": [
+              { "SystemId": "Explosion_Medium", "TargetEntityPart": "Entity", "Scale": 2.0, "Color": "#6366f1" },
+              { "SystemId": "Rings_Rings", "TargetEntityPart": "Entity", "Scale": 2.0, "Color": "#4338ca" }
+            ]
+          }
+        },
+        {
+          "Type": "RemoveEntity",
+          "Entity": "User"
+        }
+      ]
+    },
+    "ProjectileMiss": {
+      "Cooldown": { "Cooldown": 0 },
+      "Interactions": [
+        {
+          "Type": "SpawnDeployableAtHitLocation",
+          "Config": {
+            "Type": "Aoe",
+            "Shape": "Cylinder",
+            "Id": "Vortex_Aspirant_Zone",
+            "LiveDuration": 5,
+            "Model": "Deployable_Phantom",
+            "ModelScale": 0.5,
+            "StartRadius": 2,
+            "EndRadius": 7,
+            "Height": 6,
+            "RadiusChangeTime": 1.0,
+            "DamageInterval": 0.8,
+            "DamageAmount": 3,
+            "ApplyEffects": ["Slow"],
+            "Invulnerable": true,
+            "AttackOwner": false,
+            "AttackTeam": false,
+            "DeploySoundEventId": "SFX_Portal_Neutral_Open",
+            "DespawnSoundEventId": "SFX_Crystal_Break",
+            "SpawnParticles": [
+              { "SystemId": "Portal_Vortex", "TargetEntityPart": "Entity", "Scale": 5.0, "Color": "#6366f1" },
+              { "SystemId": "Rings_Rings", "TargetEntityPart": "Entity", "Scale": 4.0, "Color": "#4338ca" },
+              { "SystemId": "Block_Break_Crystal", "TargetEntityPart": "Entity", "Scale": 3.0, "Color": "#6366f1" }
+            ],
+            "DespawnParticles": [
+              { "SystemId": "Explosion_Medium", "TargetEntityPart": "Entity", "Scale": 2.0, "Color": "#6366f1" },
+              { "SystemId": "Rings_Rings", "TargetEntityPart": "Entity", "Scale": 2.0, "Color": "#4338ca" }
+            ]
+          }
+        },
+        {
+          "Type": "RemoveEntity",
+          "Entity": "User"
+        }
+      ]
+    }
+  }
+}
