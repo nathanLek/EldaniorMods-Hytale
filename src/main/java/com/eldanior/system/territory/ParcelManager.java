@@ -550,6 +550,7 @@ public class ParcelManager {
         version++;
         try {
             Properties props = new Properties();
+            props.setProperty("_version", "1");
             for (ParcelData p : parcels.values()) {
                 String prefix = p.getId() + ".";
                 props.setProperty(prefix + "name", p.getName() != null ? p.getName() : "");
@@ -605,9 +606,16 @@ public class ParcelManager {
                 props.load(fis);
             }
 
+            // Version check
+            String fileVersion = props.getProperty("_version");
+            if (fileVersion == null) {
+                System.out.println("[ParcelManager] WARNING: parcels.properties n'a pas de _version — fichier ancien, migration future possible.");
+            }
+
             // Collecter les IDs uniques
             Set<String> ids = new HashSet<>();
             for (String key : props.stringPropertyNames()) {
+                if (key.startsWith("_") || !key.contains(".")) continue; // Skip meta-keys
                 ids.add(key.substring(0, key.indexOf('.')));
             }
 

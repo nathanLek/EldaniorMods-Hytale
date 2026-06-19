@@ -519,6 +519,7 @@ public class QuestManager {
         if (dataDir == null) return;
         try {
             Properties props = new Properties();
+            props.setProperty("_version", "1");
             for (Map.Entry<UUID, List<PlayerQuest>> entry : playerQuests.entrySet()) {
                 UUID uuid = entry.getKey();
                 String questData = serializePlayerQuests(uuid);
@@ -551,6 +552,11 @@ public class QuestManager {
             Properties props = new Properties();
             try (InputStream in = Files.newInputStream(file)) {
                 props.load(in);
+            }
+            // Version check
+            String fileVersion = props.getProperty("_version");
+            if (fileVersion == null) {
+                System.out.println("[QuestManager] WARNING: quest_shutdown.properties n'a pas de _version — fichier ancien, migration future possible.");
             }
             String questData = props.getProperty(playerUUID.toString() + ".quests");
             String cooldownData = props.getProperty(playerUUID.toString() + ".cooldowns");

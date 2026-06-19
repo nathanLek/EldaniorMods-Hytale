@@ -73,6 +73,7 @@ public class PersistenceManager {
 
     private static void saveGuilds() throws IOException {
         Properties props = new Properties();
+        props.setProperty("_version", "1");
         int count = 0;
         for (Guild guild : GuildManager.getAll()) {
             String prefix = guild.getId();
@@ -102,6 +103,7 @@ public class PersistenceManager {
 
     private static void saveFamilies() throws IOException {
         Properties props = new Properties();
+        props.setProperty("_version", "1");
         for (NobleFamilyModel family : FamilyManager.getAll()) {
             FamilyManager.FamilyRuntimeData runtime = FamilyManager.getRuntimeData(family.getId());
             props.setProperty(family.getId() + ".treasury", String.valueOf(runtime.getTreasury()));
@@ -121,6 +123,7 @@ public class PersistenceManager {
 
     private static void saveClassements() throws IOException {
         Properties props = new Properties();
+        props.setProperty("_version", "1");
         for (var entry : ClassementManager.getMobRanking(200)) {
             props.setProperty("mob." + entry.name(), String.valueOf(entry.value()));
         }
@@ -153,6 +156,22 @@ public class PersistenceManager {
         }
     }
 
+    private static final String CURRENT_VERSION = "1";
+
+    /**
+     * Verifie la version d'un fichier .properties charge.
+     * Logue un WARNING si absent (ancien fichier sans versioning).
+     * Retourne la version trouvee, ou "0" si absente.
+     */
+    private static String checkVersion(Properties props, String filename) {
+        String version = props.getProperty("_version");
+        if (version == null) {
+            System.out.println("[Persistence] WARNING: " + filename + " n'a pas de _version — fichier ancien, migration future possible.");
+            return "0";
+        }
+        return version;
+    }
+
     private static void loadGuilds() throws IOException {
         Path file = dataDir.resolve("guilds.properties");
         if (!Files.exists(file)) return;
@@ -161,6 +180,8 @@ public class PersistenceManager {
         try (InputStream in = Files.newInputStream(file)) {
             props.load(in);
         }
+
+        checkVersion(props, "guilds.properties");
 
         // Reconstruire les guildes depuis le fichier
         Set<String> guildIds = new HashSet<>();
@@ -218,6 +239,8 @@ public class PersistenceManager {
             props.load(in);
         }
 
+        checkVersion(props, "families.properties");
+
         // Charger directement dans runtimeData pour TOUTES les familles sauvegardees
         Set<String> familyIds = new HashSet<>();
         for (String key : props.stringPropertyNames()) {
@@ -259,7 +282,10 @@ public class PersistenceManager {
             props.load(in);
         }
 
+        checkVersion(props, "classements.properties");
+
         for (String key : props.stringPropertyNames()) {
+            if (key.startsWith("_")) continue; // Skip meta-keys like _version
             long val = Long.parseLong(props.getProperty(key));
             if (key.startsWith("mob.")) {
                 ClassementManager.updateMobKills(key.substring(4), val);
@@ -275,6 +301,7 @@ public class PersistenceManager {
 
     private static void saveHierarchies() throws IOException {
         Properties props = new Properties();
+        props.setProperty("_version", "1");
         com.eldanior.system.titles.nobility.NobilityManager.saveTo(props);
         com.eldanior.system.titles.church.ChurchManager.saveTo(props);
         PersistenceUtils.writeAtomicWithBackup(dataDir.resolve("hierarchies.properties"), props, "Nobility & Church hierarchies");
@@ -287,6 +314,7 @@ public class PersistenceManager {
         try (java.io.InputStream in = java.nio.file.Files.newInputStream(file)) {
             props.load(in);
         }
+        checkVersion(props, "hierarchies.properties");
         com.eldanior.system.titles.nobility.NobilityManager.loadFrom(props);
         com.eldanior.system.titles.church.ChurchManager.loadFrom(props);
         System.out.println("[Persistence] Hierarchies restaurees.");
@@ -301,6 +329,7 @@ public class PersistenceManager {
 
         // Save pending earnings in shop file
         Properties pendingProps = new Properties();
+        pendingProps.setProperty("_version", "1");
         for (var entry : ShopManager.getPendingEarningsMap().entrySet()) {
             pendingProps.setProperty(entry.getKey().toString(), String.valueOf(entry.getValue()));
         }
@@ -308,6 +337,7 @@ public class PersistenceManager {
 
         // Save pending parcel earnings
         Properties parcelPendingProps = new Properties();
+        parcelPendingProps.setProperty("_version", "1");
         for (var entry : ParcelManager.getPendingEarningsMap().entrySet()) {
             parcelPendingProps.setProperty(entry.getKey().toString(), String.valueOf(entry.getValue()));
         }
@@ -316,6 +346,7 @@ public class PersistenceManager {
 
     private static void saveMarketListings(String filename, List<ShopManager.ShopListing> listings) throws IOException {
         Properties props = new Properties();
+        props.setProperty("_version", "1");
         props.setProperty("count", String.valueOf(listings.size()));
 
         for (int i = 0; i < listings.size(); i++) {
@@ -342,7 +373,9 @@ public class PersistenceManager {
         if (Files.exists(pendingFile)) {
             Properties pp = new Properties();
             try (InputStream in = Files.newInputStream(pendingFile)) { pp.load(in); }
+            checkVersion(pp, "pending_earnings.properties");
             for (String key : pp.stringPropertyNames()) {
+                if (key.startsWith("_")) continue; // Skip meta-keys like _version
                 try {
                     UUID uuid = UUID.fromString(key);
                     long amount = Long.parseLong(pp.getProperty(key));
@@ -356,7 +389,9 @@ public class PersistenceManager {
         if (Files.exists(parcelPendingFile)) {
             Properties ppe = new Properties();
             try (InputStream in = Files.newInputStream(parcelPendingFile)) { ppe.load(in); }
+            checkVersion(ppe, "pending_parcel_earnings.properties");
             for (String key : ppe.stringPropertyNames()) {
+                if (key.startsWith("_")) continue; // Skip meta-keys like _version
                 try {
                     UUID uuid = UUID.fromString(key);
                     long amount = Long.parseLong(ppe.getProperty(key));
@@ -372,6 +407,8 @@ public class PersistenceManager {
 
         Properties props = new Properties();
         try (InputStream in = Files.newInputStream(file)) { props.load(in); }
+
+        checkVersion(props, filename);
 
         int count = Integer.parseInt(props.getProperty("count", "0"));
         for (int i = 0; i < count; i++) {
