@@ -200,6 +200,15 @@ public class NobilityManager {
             lordIdx++;
         }
         props.setProperty("nobility.lord.count", String.valueOf(lordIdx));
+
+        // Persist promotionCounts
+        int promoIdx = 0;
+        for (Map.Entry<String, Integer> e : promotionCounts.entrySet()) {
+            props.setProperty("nobility.promo." + promoIdx + ".key", e.getKey());
+            props.setProperty("nobility.promo." + promoIdx + ".val", String.valueOf(e.getValue()));
+            promoIdx++;
+        }
+        props.setProperty("nobility.promo.count", String.valueOf(promoIdx));
     }
 
     public static void loadFrom(java.util.Properties props) {
@@ -228,6 +237,17 @@ public class NobilityManager {
                     lordOf.put(knightUUID, lordUUID);
                     knightsOf.computeIfAbsent(lordUUID, k -> new ArrayList<>()).add(knightUUID);
                 } catch (Exception e) { /* skip invalid */ }
+            }
+        }
+
+        // Load promotionCounts
+        int promoCount = 0;
+        try { promoCount = Integer.parseInt(props.getProperty("nobility.promo.count", "0")); } catch (Exception e) { /* skip */ }
+        for (int i = 0; i < promoCount; i++) {
+            String key = props.getProperty("nobility.promo." + i + ".key");
+            String val = props.getProperty("nobility.promo." + i + ".val");
+            if (key != null && val != null) {
+                try { promotionCounts.put(key, Integer.parseInt(val)); } catch (Exception e) { /* skip */ }
             }
         }
     }

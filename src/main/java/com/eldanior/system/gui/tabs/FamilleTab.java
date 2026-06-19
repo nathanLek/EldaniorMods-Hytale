@@ -299,6 +299,9 @@ public class FamilleTab {
         PlayerLevelData data = store.getComponent(ref, type);
         if (data == null) return false;
 
+        // Check player doesn't already have a family
+        if (data.getNobleFamilyId() != null && !data.getNobleFamilyId().isEmpty()) return false;
+
         // Check rank matches
         NobilityRank rank = NobilityRank.fromString(data.getNobilityRank());
         if (rank == null || rank.ordinal() < family.getMinimumRank().ordinal()) return false;

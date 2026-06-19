@@ -6,16 +6,17 @@ import com.eldanior.system.titles.nobility.family.definitions.marquis.*;
 import com.eldanior.system.titles.nobility.family.definitions.royal.*;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class FamilyManager {
 
-    private static final Map<String, NobleFamilyModel> families = new HashMap<>();
+    private static final Map<String, NobleFamilyModel> families = new ConcurrentHashMap<>();
 
     // Familles prises (familyId -> UUID du patriarche sous forme de String)
-    private static final Set<String> takenFamilies = new HashSet<>();
+    private static final Set<String> takenFamilies = ConcurrentHashMap.newKeySet();
 
     // Donnees runtime par famille (tresorerie + contribution)
-    private static final Map<String, FamilyRuntimeData> runtimeData = new HashMap<>();
+    private static final Map<String, FamilyRuntimeData> runtimeData = new ConcurrentHashMap<>();
 
     public static FamilyRuntimeData getRuntimeData(String familyId) {
         return runtimeData.computeIfAbsent(familyId, k -> {
