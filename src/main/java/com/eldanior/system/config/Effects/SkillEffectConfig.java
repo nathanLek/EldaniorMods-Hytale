@@ -3,8 +3,12 @@ package com.eldanior.system.config.Effects;
 import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
 import com.eldanior.system.config.EldaniorLogger;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Mapping centralise : PassiveSkill -> EntityEffect ID de Hytale.
@@ -103,6 +107,78 @@ public class SkillEffectConfig {
         ATTACKER_EFFECTS.put(PassiveSkill.COSMIC_CONSTITUTION, "Food_Health_Boost_Large");
         ATTACKER_EFFECTS.put(PassiveSkill.CREATOR_CONSTITUTION, "Food_Health_Boost_Large");
     }
+
+    // --- Validation results (populated at startup) ---
+    private static int totalSkills = 0;
+    private static int skillsWithEffect = 0;
+    private static int skillsWithoutEffect = 0;
+    private static final List<String> missingAssets = new ArrayList<>();
+    private static final List<String> unmappedSkillNames = new ArrayList<>();
+    private static boolean validated = false;
+
+    /**
+     * Valide tous les mappings au demarrage du serveur.
+     * - WARNING pour les skills sans effet visuel
+     * - ERROR pour les assets references mais introuvables
+     */
+    public static void validateAtStartup() {
+        missingAssets.clear();
+        unmappedSkillNames.clear();
+
+        PassiveSkill[] allSkills = PassiveSkill.values();
+        totalSkills = allSkills.length;
+
+        // Collect all unique effect IDs referenced
+        Set<String> allEffectIds = new HashSet<>();
+        allEffectIds.addAll(ATTACKER_EFFECTS.values());
+        allEffectIds.addAll(VICTIM_EFFECTS.values());
+
+        // Check each referenced effect asset exists
+        for (String effectId : allEffectIds) {
+            if (EffectsManager.getEffectAsset(effectId) == null) {
+                missingAssets.add(effectId);
+                EldaniorLogger.error("SkillEffectConfig: Asset introuvable: \"" + effectId + "\"");
+            }
+        }
+
+        // Check each skill for effect mappings
+        Set<PassiveSkill> mappedSkills = new HashSet<>();
+        mappedSkills.addAll(ATTACKER_EFFECTS.keySet());
+        mappedSkills.addAll(VICTIM_EFFECTS.keySet());
+        skillsWithEffect = mappedSkills.size();
+        skillsWithoutEffect = totalSkills - skillsWithEffect;
+
+        // Log unmapped skills as warnings (group by first word for readability)
+        for (PassiveSkill skill : allSkills) {
+            if (!mappedSkills.contains(skill)) {
+                unmappedSkillNames.add(skill.name());
+            }
+        }
+
+        validated = true;
+
+        // Summary log
+        int coveragePct = totalSkills > 0 ? (skillsWithEffect * 100 / totalSkills) : 0;
+        EldaniorLogger.info("SkillEffectConfig: Validation terminee — "
+                + skillsWithEffect + "/" + totalSkills + " skills avec effet (" + coveragePct + "% couverture)"
+                + (missingAssets.isEmpty() ? "" : " | " + missingAssets.size() + " asset(s) introuvable(s)"));
+
+        if (!missingAssets.isEmpty()) {
+            EldaniorLogger.error("SkillEffectConfig: Assets manquants: " + missingAssets);
+        }
+        if (skillsWithoutEffect > 0) {
+            EldaniorLogger.warn("SkillEffectConfig: " + skillsWithoutEffect + " skills sans effet visuel");
+        }
+    }
+
+    /** Couverture pour le rapport admin */
+    public static int getTotalSkills() { return totalSkills; }
+    public static int getSkillsWithEffect() { return skillsWithEffect; }
+    public static int getSkillsWithoutEffect() { return skillsWithoutEffect; }
+    public static List<String> getMissingAssets() { return missingAssets; }
+    public static List<String> getUnmappedSkillNames() { return unmappedSkillNames; }
+    public static boolean isValidated() { return validated; }
+    public static int getMappingCount() { return ATTACKER_EFFECTS.size() + VICTIM_EFFECTS.size(); }
 
     /**
      * Retourne l'effet a jouer sur l'attaquant quand ce skill proc.

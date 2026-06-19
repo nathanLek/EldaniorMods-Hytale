@@ -131,6 +131,13 @@ public class EldaniorSystem extends JavaPlugin {
             LOGGER.atSevere().withCause(e).log("[ERREUR] Échec init Managers/Registres");
         }
 
+        // Validation des assets d'effets visuels (ELD-11)
+        try {
+            com.eldanior.system.config.Effects.SkillEffectConfig.validateAtStartup();
+        } catch (Exception e) {
+            LOGGER.atSevere().withCause(e).log("[ERREUR] Validation SkillEffectConfig");
+        }
+
         // 2. Enregistrement des Composants Joueurs (EntityStore)
         try {
             this.playerLevelDataType = this.getEntityStoreRegistry().registerComponent(
