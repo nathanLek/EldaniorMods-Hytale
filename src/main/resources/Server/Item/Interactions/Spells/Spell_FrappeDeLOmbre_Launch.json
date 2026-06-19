@@ -15,7 +15,7 @@
           "ItemAnimationId": "CastHurlCharged",
           "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Impact",
           "Particles": [
-            { "SystemId": "Portal", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 1.5 }
+            { "SystemId": "Spectre_Void_Head", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 1.5 }
           ]
         }
       },
@@ -28,8 +28,8 @@
         "RunTime": 0.3,
         "Effects": {
           "Particles": [
-            { "SystemId": "Portal", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 2.0 },
-            { "SystemId": "MagicBlast", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 1.5, "Color": "#4b0082" }
+            { "SystemId": "Spectre_Void_Head", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 2.0 },
+            { "SystemId": "Fire_Charge_Soak1", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 1.5, "Color": "#4b0082" }
           ]
         },
         "HitEntity": {

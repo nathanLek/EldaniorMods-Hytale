@@ -20,7 +20,7 @@
             "Shape": "Cylinder",
             "Id": "Totem_De_Garde_Buff",
             "LiveDuration": 10,
-            "Model": "Deployable_Totem",
+            "Model": "Deployable_Fire_Trap",
             "ModelScale": 1.5,
             "StartRadius": 5,
             "EndRadius": 5,
@@ -35,11 +35,11 @@
             "DeploySoundEventId": "SFX_Portal_Neutral_Open",
             "DespawnSoundEventId": "SFX_Crystal_Break",
             "SpawnParticles": [
-              { "SystemId": "MagicBlast", "TargetEntityPart": "Entity", "Scale": 3.0, "Color": "#fbbf24" },
+              { "SystemId": "Fire_Charge_Soak1", "TargetEntityPart": "Entity", "Scale": 3.0, "Color": "#fbbf24" },
               { "SystemId": "Torch_Fire", "TargetEntityPart": "Entity", "Scale": 2.5, "Color": "#f59e0b" }
             ],
             "ActiveParticles": [
-              { "SystemId": "Beam", "TargetEntityPart": "Entity", "Scale": 1.0, "Color": "#fbbf24" },
+              { "SystemId": "Fire_Charge_Charging_Constant", "TargetEntityPart": "Entity", "Scale": 1.0, "Color": "#fbbf24" },
               { "SystemId": "Fire_Charge_Soak1", "TargetEntityPart": "Entity", "Scale": 1.5, "Color": "#f59e0b" }
             ],
             "DespawnParticles": [
@@ -64,7 +64,7 @@
             "Shape": "Cylinder",
             "Id": "Totem_De_Garde_Buff",
             "LiveDuration": 10,
-            "Model": "Deployable_Totem",
+            "Model": "Deployable_Fire_Trap",
             "ModelScale": 1.5,
             "StartRadius": 5,
             "EndRadius": 5,
@@ -79,11 +79,11 @@
             "DeploySoundEventId": "SFX_Portal_Neutral_Open",
             "DespawnSoundEventId": "SFX_Crystal_Break",
             "SpawnParticles": [
-              { "SystemId": "MagicBlast", "TargetEntityPart": "Entity", "Scale": 3.0, "Color": "#fbbf24" },
+              { "SystemId": "Fire_Charge_Soak1", "TargetEntityPart": "Entity", "Scale": 3.0, "Color": "#fbbf24" },
               { "SystemId": "Torch_Fire", "TargetEntityPart": "Entity", "Scale": 2.5, "Color": "#f59e0b" }
             ],
             "ActiveParticles": [
-              { "SystemId": "Beam", "TargetEntityPart": "Entity", "Scale": 1.0, "Color": "#fbbf24" },
+              { "SystemId": "Fire_Charge_Charging_Constant", "TargetEntityPart": "Entity", "Scale": 1.0, "Color": "#fbbf24" },
               { "SystemId": "Fire_Charge_Soak1", "TargetEntityPart": "Entity", "Scale": 1.5, "Color": "#f59e0b" }
             ],
             "DespawnParticles": [

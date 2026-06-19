@@ -4,7 +4,7 @@
     "ItemAnimationId": "CastPushCharging",
     "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Charge",
     "Particles": [
-      { "SystemId": "BlueBeam", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.3 },
+      { "SystemId": "Fire_Charge_Charging_Constant", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.3 },
       { "SystemId": "Azure_Spiral", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.2 }
     ]
   },
@@ -26,7 +26,7 @@
               "ItemAnimationId": "CastPushCharged",
               "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Impact",
               "Particles": [
-                { "SystemId": "BlueBeam", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.5 }
+                { "SystemId": "Fire_Charge_Charging_Constant", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.5 }
               ]
             }
           }] }
