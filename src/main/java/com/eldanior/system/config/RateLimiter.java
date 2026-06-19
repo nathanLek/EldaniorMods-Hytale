@@ -20,10 +20,10 @@ public final class RateLimiter {
     public static boolean canExecute(UUID player, String action, long cooldownMs) {
         String key = player.toString() + ":" + action;
         long now = System.currentTimeMillis();
-        Long last = lastAction.get(key);
-        if (last != null && now - last < cooldownMs) return false;
-        lastAction.put(key, now);
-        return true;
+        Long prev = lastAction.putIfAbsent(key, now);
+        if (prev == null) return true; // premiere action
+        if (now - prev < cooldownMs) return false; // en cooldown
+        return lastAction.replace(key, prev, now); // CAS atomique
     }
 
     /** Nettoyage au disconnect pour eviter les leaks */

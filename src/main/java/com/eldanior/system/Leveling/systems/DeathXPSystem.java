@@ -64,8 +64,7 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
             if (uuidComp == null) return;
             UUID victimUUID = uuidComp.getUuid();
 
-            if (processedDeaths.containsKey(victimUUID)) return;
-            processedDeaths.put(victimUUID, true);
+            if (processedDeaths.putIfAbsent(victimUUID, true) != null) return;
 
             // Skip tout si la victime ou le tueur est en duel (gere par DuelManager)
             if (DuelManager.isInDuel(victimUUID)) return;
