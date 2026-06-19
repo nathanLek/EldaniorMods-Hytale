@@ -398,14 +398,18 @@ public class CombatStatsSystem extends DamageEventSystem {
         }
     }
 
+    private static SystemGroup<EntityStore> DAMAGE_GROUP_CACHE = null;
+
     @Nullable
     @Override
     @SuppressWarnings("unchecked")
     public SystemGroup<EntityStore> getGroup() {
+        if (DAMAGE_GROUP_CACHE != null) return DAMAGE_GROUP_CACHE;
         try {
             Class<?> mod = Class.forName("com.hypixel.hytale.server.core.modules.entity.damage.DamageModule");
             Object inst = mod.getMethod("get").invoke(null);
-            return (SystemGroup<EntityStore>) mod.getMethod("getFilterDamageGroup").invoke(inst);
+            DAMAGE_GROUP_CACHE = (SystemGroup<EntityStore>) mod.getMethod("getFilterDamageGroup").invoke(inst);
+            return DAMAGE_GROUP_CACHE;
         } catch (Throwable e) {
             LOGGER.atSevere().log("Erreur critique dans CombatStatsSystem : " + e.getMessage());
             return null;
