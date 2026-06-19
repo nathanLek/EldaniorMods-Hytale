@@ -4,7 +4,7 @@
     "ItemAnimationId": "CastHurlCharging",
     "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Charge",
     "Particles": [
-      { "SystemId": "Portal", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.3 },
+      { "SystemId": "Spectre_Void_Head", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.3 },
       { "SystemId": "GreenOrb", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.2 }
     ]
   },
@@ -26,7 +26,7 @@
               "ItemAnimationId": "CastHurlCharged",
               "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Impact",
               "Particles": [
-                { "SystemId": "Portal", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.5 }
+                { "SystemId": "Spectre_Void_Head", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.5 }
               ]
             }
           }] }

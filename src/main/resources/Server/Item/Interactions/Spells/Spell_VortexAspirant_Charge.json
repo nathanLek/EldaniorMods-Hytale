@@ -4,7 +4,7 @@
     "ItemAnimationId": "CastHurlCharging",
     "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Charge",
     "Particles": [
-      { "SystemId": "Portal_Vortex", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.2, "Color": "#6366f1" },
+      { "SystemId": "Rings_Rings", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.2, "Color": "#6366f1" },
       { "SystemId": "Rings_Rings", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 0.4, "Color": "#4338ca" }
     ]
   },
@@ -26,7 +26,7 @@
               "ItemAnimationId": "CastHurlCharged",
               "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Impact",
               "Particles": [
-                { "SystemId": "Portal_Vortex", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.4, "Color": "#6366f1" }
+                { "SystemId": "Rings_Rings", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.4, "Color": "#6366f1" }
               ]
             }
           }]}

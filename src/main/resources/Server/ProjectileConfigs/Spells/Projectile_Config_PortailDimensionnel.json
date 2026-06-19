@@ -20,7 +20,7 @@
             "Shape": "Cylinder",
             "Id": "Portail_Dimensionnel_Warp",
             "LiveDuration": 6,
-            "Model": "Deployable_Portal",
+            "Model": "Deployable_Fire_Trap",
             "ModelScale": 1.2,
             "StartRadius": 2,
             "EndRadius": 2,
@@ -36,7 +36,7 @@
             "DespawnSoundEventId": "SFX_Portal_Neutral_Open",
             "SpawnParticles": [
               { "SystemId": "Portal_Round_Blue", "TargetEntityPart": "Entity", "Scale": 4.0, "Color": "#60a5fa" },
-              { "SystemId": "BlueBeam", "TargetEntityPart": "Entity", "Scale": 3.0, "Color": "#3b82f6" }
+              { "SystemId": "Fire_Charge_Charging_Constant", "TargetEntityPart": "Entity", "Scale": 3.0, "Color": "#3b82f6" }
             ],
             "ActiveParticles": [
               { "SystemId": "Portal_Round_Blue", "TargetEntityPart": "Entity", "Scale": 2.0, "Color": "#60a5fa" },
@@ -68,7 +68,7 @@
             "Shape": "Cylinder",
             "Id": "Portail_Dimensionnel_Warp",
             "LiveDuration": 6,
-            "Model": "Deployable_Portal",
+            "Model": "Deployable_Fire_Trap",
             "ModelScale": 1.2,
             "StartRadius": 2,
             "EndRadius": 2,
@@ -84,7 +84,7 @@
             "DespawnSoundEventId": "SFX_Portal_Neutral_Open",
             "SpawnParticles": [
               { "SystemId": "Portal_Round_Blue", "TargetEntityPart": "Entity", "Scale": 4.0, "Color": "#60a5fa" },
-              { "SystemId": "BlueBeam", "TargetEntityPart": "Entity", "Scale": 3.0, "Color": "#3b82f6" }
+              { "SystemId": "Fire_Charge_Charging_Constant", "TargetEntityPart": "Entity", "Scale": 3.0, "Color": "#3b82f6" }
             ],
             "ActiveParticles": [
               { "SystemId": "Portal_Round_Blue", "TargetEntityPart": "Entity", "Scale": 2.0, "Color": "#60a5fa" },
