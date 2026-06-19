@@ -22,7 +22,7 @@ public class Merchant extends ClassModel {
                 List.of("master_artisan", "relic_hunter", "smuggler", "black_market_prince", "gold_baron", "guild_master", "prosperity_avatar", "underworld_king", "world_forger", "negociant", "caravanier", "prospecteur", "banquier", "marchand_divin", "roi_commerce"),
                 180,
                 false,
-                4, 2, 4, 4, 4, 20
+                4, 2, 4, 4, 4, 18
         );
     }
 }

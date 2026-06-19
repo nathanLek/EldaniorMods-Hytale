@@ -9,9 +9,9 @@ import com.eldanior.system.territory.ParcelType;
  *   Ville 15%, Duc 20%, Marquis 30%, Royaume 35% (= 100%)
  *
  * Collecte periodique des impots (prelevement sur la tresorerie des enfants) :
- *   Duche preleve 87.5% des villes
- *   Marquisat preleve 80% du Duche
- *   Royaume preleve 57% du Marquisat
+ *   Duche preleve 35% des villes
+ *   Marquisat preleve 30% du Duche
+ *   Royaume preleve 25% du Marquisat
  */
 public final class TaxConfig {
 
@@ -39,11 +39,11 @@ public final class TaxConfig {
     // ==================== COLLECTE D'IMPOTS PERIODIQUE ====================
 
     /** Taux de prelevement du Duche sur les villes */
-    public static final double DUCHY_COLLECTION_RATE = 0.875;
+    public static final double DUCHY_COLLECTION_RATE = 0.35;
     /** Taux de prelevement du Marquisat sur le Duche */
-    public static final double MARQUISATE_COLLECTION_RATE = 0.80;
+    public static final double MARQUISATE_COLLECTION_RATE = 0.30;
     /** Taux de prelevement du Royaume sur le Marquisat */
-    public static final double KINGDOM_COLLECTION_RATE = 0.57;
+    public static final double KINGDOM_COLLECTION_RATE = 0.25;
 
     /**
      * Retourne le taux de collecte periodique pour un type de parcelle.
