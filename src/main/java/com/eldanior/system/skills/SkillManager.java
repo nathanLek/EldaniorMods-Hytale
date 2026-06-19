@@ -1904,6 +1904,21 @@ public class SkillManager {
                 200, 0.0f, 1.2f, 0.0f, 0.0f, 10.0f,
                 List.of(), List.of()
         ));
+        register("skill_page_benediction_arcanique", new SkillModel(
+                "BENEDICTION_ARCANIQUE", "Spell_BenedictionArcanique", "Bénédiction Arcanique", "mage, enchanteur",
+                250, 0.0f, 1.2f, 0.0f, 0.0f, 12.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_bouclier_mystique", new SkillModel(
+                "BOUCLIER_MYSTIQUE", "Spell_BouclierMystique", "Bouclier Mystique", "mage, enchanteur",
+                350, 0.0f, 1.5f, 0.0f, 0.0f, 15.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_aura_de_puissance", new SkillModel(
+                "AURA_DE_PUISSANCE", "Spell_AuraDePuissance", "Aura de Puissance", "mage, enchanteur",
+                500, 0.0f, 1.8f, 0.0f, 8.0f, 8.0f,
+                List.of(), List.of()
+        ));
         register("skill_page_main_du_trepas", new SkillModel(
                 "MAIN_DU_TREPAS", "Spell_MainDuTrepas", "Main du Trépas", "mage, necromancien",
                 250, 0.0f, 1.5f, 20.0f, 30.0f, 6.0f,
