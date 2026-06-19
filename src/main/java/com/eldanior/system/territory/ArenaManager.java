@@ -88,6 +88,7 @@ public class ArenaManager {
     public static void save() {
         try {
             Properties props = new Properties();
+            props.setProperty("_version", "1");
             for (Map.Entry<String, Map<String, ArenaStats>> arena : arenaLeaderboards.entrySet()) {
                 for (Map.Entry<String, ArenaStats> entry : arena.getValue().entrySet()) {
                     String prefix = arena.getKey() + "." + entry.getKey() + ".";
@@ -111,6 +112,12 @@ public class ArenaManager {
             Properties props = new Properties();
             try (FileInputStream fis = new FileInputStream(file)) {
                 props.load(fis);
+            }
+
+            // Version check
+            String fileVersion = props.getProperty("_version");
+            if (fileVersion == null) {
+                System.out.println("[ArenaManager] WARNING: arena_stats.properties n'a pas de _version — fichier ancien, migration future possible.");
             }
 
             // Format: arenaId.playerName.kills / arenaId.playerName.deaths

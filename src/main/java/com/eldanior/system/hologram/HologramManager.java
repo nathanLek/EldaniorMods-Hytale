@@ -171,6 +171,7 @@ public class HologramManager {
         try {
             if (!Files.exists(dataDir)) Files.createDirectories(dataDir);
             Properties props = new Properties();
+            props.setProperty("_version", "1");
             props.setProperty("count", String.valueOf(holograms.size()));
             props.setProperty("nextId", String.valueOf(nextId.get()));
 
@@ -204,6 +205,12 @@ public class HologramManager {
             Properties props = new Properties();
             try (InputStream in = Files.newInputStream(file)) {
                 props.load(in);
+            }
+
+            // Version check
+            String fileVersion = props.getProperty("_version");
+            if (fileVersion == null) {
+                System.out.println("[HologramManager] WARNING: holograms.properties n'a pas de _version — fichier ancien, migration future possible.");
             }
 
             int count = Integer.parseInt(props.getProperty("count", "0"));
