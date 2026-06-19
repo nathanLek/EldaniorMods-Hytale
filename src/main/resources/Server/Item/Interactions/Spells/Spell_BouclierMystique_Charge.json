@@ -1,0 +1,41 @@
+{
+  "Type": "Charging",
+  "Effects": {
+    "ItemAnimationId": "CastHurlCharging",
+    "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Charge",
+    "Particles": [
+      { "SystemId": "Block_Break_Crystal", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.3, "Color": "#6a5acd" },
+      { "SystemId": "Plant_Eternal", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.2, "Color": "#8a2be2" }
+    ]
+  },
+  "AllowIndefiniteHold": false,
+  "HorizontalSpeedMultiplier": 0.5,
+  "Next": {
+    "1.5": {
+      "Type": "StatsCondition",
+      "Costs": { "Mana": 350 },
+      "RunTime": 0.2,
+      "Next": {
+        "Type": "Parallel",
+        "Interactions": [
+          { "Interactions": [{ "Type": "ChangeStat", "StatModifiers": { "Mana": -350 } }] },
+          { "Interactions": [{ "Type": "ChangeStat", "StatModifiers": { "SignatureEnergy": 1 }, "Behaviour": "Set" }] },
+          { "Interactions": [{
+            "Type": "Simple", "RunTime": 0.3,
+            "Effects": {
+              "ItemAnimationId": "CastHurlCharged",
+              "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Impact",
+              "Particles": [
+                { "SystemId": "Block_Break_Crystal", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.5, "Color": "#9370db" }
+              ]
+            }
+          }]}
+        ]
+      },
+      "Failed": {
+        "Type": "Simple", "RunTime": 0.3,
+        "Effects": { "ItemAnimationId": "Interact", "WorldSoundEventId": "SFX_Bow_No_Ammo" }
+      }
+    }
+  }
+}

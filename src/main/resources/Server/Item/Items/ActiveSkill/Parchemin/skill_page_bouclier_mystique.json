@@ -1,0 +1,17 @@
+{
+  "Id": "skill_page_bouclier_mystique",
+  "TranslationProperties": {
+    "Name": "Parchemin : Bouclier Mystique",
+    "Description": "Un parchemin entouré d'un halo violet protecteur. Utilisez-le pour apprendre le Bouclier Mystique, un sort défensif qui absorbe les dégâts."
+  },
+  "Icon": "Icons/ItemsGenerated/Recipe_Page.png",
+  "Quality": "Rare",
+  "Categories": ["Eldanior_System.Parchemin"],
+  "Tags": { "Type": ["Item", "Consumable"] },
+  "MaxStack": 1,
+  "PlayerAnimationsId": "Item",
+  "Model": "Items/Consumables/Recipes/Recipe.blockymodel",
+  "Texture": "Items/Consumables/Recipes/Recipe_Texture.png",
+  "IconProperties": { "Scale": 0.76, "Rotation": [135, 135, 0], "Translation": [-1, 5] },
+  "Interactions": { "Use": "Root_ConsumableItemSkillInteraction" }
+}
