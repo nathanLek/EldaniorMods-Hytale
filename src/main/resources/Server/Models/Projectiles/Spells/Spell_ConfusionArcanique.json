@@ -1,0 +1,60 @@
+{
+  "Model": "Items/Projectiles/Projectile.blockymodel",
+  "Texture": "Items/Projectiles/Projectile_default.png",
+  "HitBox": {
+    "Max": { "X": 0.2, "Y": 0.2, "Z": 0.2 },
+    "Min": { "X": -0.2, "Y": -0.2, "Z": -0.2 }
+  },
+  "MinScale": 1.2,
+  "MaxScale": 1.8,
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "Items/Animations/Spin_Roll/Spin_Roll_Left.blockyanim",
+          "BlendingDuration": 0
+        }
+      ]
+    }
+  },
+  "Particles": [
+    {
+      "SystemId": "Rings_Rings",
+      "TargetNodeName": "",
+      "Color": "#e879f9",
+      "Scale": 1.5
+    },
+    {
+      "SystemId": "Block_Break_Crystal",
+      "TargetNodeName": "",
+      "Color": "#d946ef",
+      "Scale": 2.0
+    }
+  ],
+  "Trails": [
+    {
+      "TargetNodeName": "Origin_Item",
+      "TrailId": "SkeletonMage"
+    },
+    {
+      "TargetNodeName": "Origin_Item",
+      "TrailId": "SkeletonMage",
+      "RotationOffset": { "Yaw": 120, "Pitch": 0, "Roll": 0 }
+    },
+    {
+      "TargetNodeName": "Origin_Item",
+      "TrailId": "SkeletonMage",
+      "RotationOffset": { "Yaw": 240, "Pitch": 0, "Roll": 0 }
+    }
+  ],
+  "DefaultAttachments": [
+    {
+      "Model": "Items/Projectiles/Fireball.blockymodel",
+      "Texture": "Items/Projectiles/Fireball_Textures/Void.png"
+    }
+  ],
+  "Light": {
+    "Color": "#e879f9",
+    "Radius": 10
+  }
+}

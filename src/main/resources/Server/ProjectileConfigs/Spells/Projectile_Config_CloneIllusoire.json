@@ -1,0 +1,94 @@
+{
+  "Model": "Projectile",
+  "Physics": {
+    "Type": "Standard",
+    "Gravity": 5,
+    "TerminalVelocityAir": 30,
+    "TerminalVelocityWater": 15,
+    "SticksVertically": true,
+    "Bounciness": 0
+  },
+  "LaunchForce": 20,
+  "Interactions": {
+    "ProjectileHit": {
+      "Cooldown": { "Cooldown": 0 },
+      "Interactions": [
+        {
+          "Type": "SpawnDeployableAtHitLocation",
+          "Config": {
+            "Type": "Aoe",
+            "Shape": "Cylinder",
+            "Id": "Clone_Illusoire_Leurre",
+            "LiveDuration": 8,
+            "Model": "Deployable_Phantom",
+            "ModelScale": 1.0,
+            "StartRadius": 3,
+            "EndRadius": 3,
+            "Height": 4,
+            "RadiusChangeTime": 0,
+            "DamageInterval": 1.0,
+            "DamageAmount": 0,
+            "ApplyEffects": ["Taunt"],
+            "Invulnerable": false,
+            "AttackOwner": false,
+            "AttackTeam": false,
+            "DeploySoundEventId": "SFX_Portal_Neutral_Open",
+            "DespawnSoundEventId": "SFX_Crystal_Break",
+            "SpawnParticles": [
+              { "SystemId": "Portal_Round_Blue", "TargetEntityPart": "Entity", "Scale": 2.5, "Color": "#c084fc" },
+              { "SystemId": "Spectre_Void_Head", "TargetEntityPart": "Entity", "Scale": 2.0, "Color": "#a855f7" }
+            ],
+            "DespawnParticles": [
+              { "SystemId": "Explosion_Medium", "TargetEntityPart": "Entity", "Scale": 1.5 },
+              { "SystemId": "Block_Break_Crystal", "TargetEntityPart": "Entity", "Scale": 2.0, "Color": "#c084fc" }
+            ]
+          }
+        },
+        {
+          "Type": "RemoveEntity",
+          "Entity": "User"
+        }
+      ]
+    },
+    "ProjectileMiss": {
+      "Cooldown": { "Cooldown": 0 },
+      "Interactions": [
+        {
+          "Type": "SpawnDeployableAtHitLocation",
+          "Config": {
+            "Type": "Aoe",
+            "Shape": "Cylinder",
+            "Id": "Clone_Illusoire_Leurre",
+            "LiveDuration": 8,
+            "Model": "Deployable_Phantom",
+            "ModelScale": 1.0,
+            "StartRadius": 3,
+            "EndRadius": 3,
+            "Height": 4,
+            "RadiusChangeTime": 0,
+            "DamageInterval": 1.0,
+            "DamageAmount": 0,
+            "ApplyEffects": ["Taunt"],
+            "Invulnerable": false,
+            "AttackOwner": false,
+            "AttackTeam": false,
+            "DeploySoundEventId": "SFX_Portal_Neutral_Open",
+            "DespawnSoundEventId": "SFX_Crystal_Break",
+            "SpawnParticles": [
+              { "SystemId": "Portal_Round_Blue", "TargetEntityPart": "Entity", "Scale": 2.5, "Color": "#c084fc" },
+              { "SystemId": "Spectre_Void_Head", "TargetEntityPart": "Entity", "Scale": 2.0, "Color": "#a855f7" }
+            ],
+            "DespawnParticles": [
+              { "SystemId": "Explosion_Medium", "TargetEntityPart": "Entity", "Scale": 1.5 },
+              { "SystemId": "Block_Break_Crystal", "TargetEntityPart": "Entity", "Scale": 2.0, "Color": "#c084fc" }
+            ]
+          }
+        },
+        {
+          "Type": "RemoveEntity",
+          "Entity": "User"
+        }
+      ]
+    }
+  }
+}
