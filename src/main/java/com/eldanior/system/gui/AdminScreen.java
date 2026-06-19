@@ -109,6 +109,7 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
         events.addEventBinding(CustomUIEventBindingType.Activating, "#APK", EventData.of("Action", "admin_pk"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#ATitleRst", EventData.of("Action", "admin_titlerst"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#ARelic", EventData.of("Action", "admin_relic"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#AInvasion", EventData.of("Action", "admin_invasion"));
 
         // Prefill buttons
         events.addEventBinding(CustomUIEventBindingType.Activating, "#APrefillTitleGrant", EventData.of("Action", "admin_prefill").append("Param", "titleadmin grant <player> <titleId>"));
@@ -167,6 +168,7 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
         events.addEventBinding(CustomUIEventBindingType.Activating, "#AWDetBtnDelete", EventData.of("Action", "world_ddelete"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#AWDetBtnTax", EventData.of("Action", "world_dtax"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#AWDetBtnTransfer", EventData.of("Action", "world_dtransfer"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#AWDetBtnInvasion", EventData.of("Action", "world_dinvasion"));
 
         // === RESETS ===
         events.addEventBinding(CustomUIEventBindingType.Activating, "#AResetAll", EventData.of("Action", "admin_resetall"));
@@ -285,6 +287,11 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
             }
             case "admin_relic" -> {
                 if (player != null) player.getPlayerRef().sendMessage(Message.raw("§eTapez : /es getrelic"));
+            }
+            case "admin_invasion" -> {
+                if (player != null) {
+                    triggerInvasion(player);
+                }
             }
             case "admin_prefill" -> {
                 if (param != null && player != null) {
@@ -531,6 +538,12 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
                     }
                 }
             }
+            case "world_dinvasion" -> {
+                com.eldanior.system.territory.ParcelData pi = getSelectedParcel();
+                if (pi != null && player != null) {
+                    triggerInvasionAtParcel(player, pi);
+                }
+            }
             case "world_dtransfer" -> {
                 com.eldanior.system.territory.ParcelData p = getSelectedParcel();
                 if (p != null && p.canTransferTreasury() && p.getTreasury() > 0) {
@@ -595,6 +608,7 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
         update.set("#WStatHousing.Text", String.valueOf(h));
         update.set("#WStatFarms.Text", String.valueOf(f));
         update.set("#WStatPvp.Text", String.valueOf(pvpCount));
+        update.set("#WStatTotal.Text", String.valueOf(com.eldanior.system.territory.ParcelManager.getAll().size()));
 
         // Territories section
         int ttPages = Math.max(1, (worldTerrList.size() + WORLD_SLOTS - 1) / WORLD_SLOTS);
@@ -723,7 +737,8 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
         int sX = Math.abs(p.getMaxX() - p.getMinX()) + 1;
         int sY = Math.abs(p.getMaxY() - p.getMinY()) + 1;
         int sZ = Math.abs(p.getMaxZ() - p.getMinZ()) + 1;
-        update.set("#AWDetCoords.Text", "Taille : " + sX + " x " + sZ + " (" + (sX * sZ) + " blocs)  |  Hauteur : " + sY);
+        update.set("#AWDetCoords.Text", "Taille : " + sX + " x " + sZ + " (" + (sX * sZ) + " blocs)  |  Hauteur : " + sY
+            + "   |   Min(" + p.getMinX() + "," + p.getMinY() + "," + p.getMinZ() + ") Max(" + p.getMaxX() + "," + p.getMaxY() + "," + p.getMaxZ() + ")");
 
         String parentText = "Parent : ";
         if (p.getParentId() != null && !p.getParentId().isEmpty()) {
@@ -1302,6 +1317,50 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
         for (int i = fi; i < 5; i++) {
             update.set("#EFamilyLine" + i + ".Visible", false);
         }
+    }
+
+    // ==================== INVASION ====================
+
+    /**
+     * Declenche une invasion globale : annonce a tous les joueurs connectes
+     * et guide l'admin vers les commandes de spawn natives.
+     */
+    private void triggerInvasion(Player adminPlayer) {
+        // Broadcast a tous les joueurs
+        for (com.hypixel.hytale.server.core.universe.PlayerRef pRef : com.hypixel.hytale.server.core.universe.Universe.get().getPlayers()) {
+            pRef.sendMessage(Message.raw(""));
+            pRef.sendMessage(Message.raw("§4§l=== INVASION EN COURS ==="));
+            pRef.sendMessage(Message.raw("§cDes creatures hostiles envahissent le monde !"));
+            pRef.sendMessage(Message.raw("§cPreparez-vous au combat !"));
+            pRef.sendMessage(Message.raw(""));
+        }
+        adminPlayer.getPlayerRef().sendMessage(Message.raw("§a[Admin] Invasion annoncee a tous les joueurs."));
+        adminPlayer.getPlayerRef().sendMessage(Message.raw("§6Utilisez les commandes de spawn du serveur pour faire apparaitre les mobs hostiles."));
+        adminPlayer.getPlayerRef().sendMessage(Message.raw("§7Exemple : §f/summon zombie §7ou §f/summon skeleton"));
+    }
+
+    /**
+     * Declenche une invasion ciblee sur une parcelle specifique.
+     * Annonce aux joueurs et indique les coordonnees a l'admin.
+     */
+    private void triggerInvasionAtParcel(Player adminPlayer, com.eldanior.system.territory.ParcelData parcel) {
+        int centerX = (parcel.getMinX() + parcel.getMaxX()) / 2;
+        int centerY = (parcel.getMinY() + parcel.getMaxY()) / 2;
+        int centerZ = (parcel.getMinZ() + parcel.getMaxZ()) / 2;
+
+        // Broadcast a tous les joueurs
+        for (com.hypixel.hytale.server.core.universe.PlayerRef pRef : com.hypixel.hytale.server.core.universe.Universe.get().getPlayers()) {
+            pRef.sendMessage(Message.raw(""));
+            pRef.sendMessage(Message.raw("§4§l=== INVASION ==="));
+            pRef.sendMessage(Message.raw("§c" + parcel.getName() + " est attaque par des creatures hostiles !"));
+            pRef.sendMessage(Message.raw("§cDefendez la zone !"));
+            pRef.sendMessage(Message.raw(""));
+        }
+
+        adminPlayer.getPlayerRef().sendMessage(Message.raw("§a[Admin] Invasion annoncee pour " + parcel.getName()));
+        adminPlayer.getPlayerRef().sendMessage(Message.raw("§6Coordonnees centre : §fX=" + centerX + " Y=" + centerY + " Z=" + centerZ));
+        adminPlayer.getPlayerRef().sendMessage(Message.raw("§6Tapez : §f/tp " + centerX + " " + centerY + " " + centerZ + " §7pour vous teleporter"));
+        adminPlayer.getPlayerRef().sendMessage(Message.raw("§6Puis spawnez des mobs avec les commandes serveur."));
     }
 
     // ==================== UTILITIES ====================

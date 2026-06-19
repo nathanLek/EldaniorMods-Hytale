@@ -1289,6 +1289,8 @@ Group {
                         TextButton #ATitleRst { Text: "RST TITRES"; Anchor: (Width: 80, Height: 20); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #C8A2C8, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1a2a(0.7); }
                         Group { Anchor: (Width: 2); }
                         TextButton #ARelic { Text: "RELIC"; Anchor: (Width: 48, Height: 20); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #C8A2C8, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1a2a(0.7); }
+                        Group { Anchor: (Width: 4); }
+                        TextButton #AInvasion { Text: "INVASION"; Anchor: (Width: 68, Height: 20); Style: (Default: (LabelStyle: (FontSize: 8, TextColor: #ff4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 8, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #3a0a0a(0.8); }
                     }
                 }
                 Label #AdminSelectedName { Text: ""; Visible: false; Anchor: (Height: 1); }
@@ -1363,6 +1365,11 @@ Group {
                     Group { FlexWeight: 1; Anchor: (Height: 34); Background: #2a0d0d(0.5); LayoutMode: Top; Padding: (Horizontal: 8, Vertical: 2);
                         Label { Text: "PvP Actif"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 12); }
                         Label #WStatPvp { Text: "0"; Style: (FontSize: 14, TextColor: #cc4444, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 34); Background: #1a1a2e(0.5); LayoutMode: Top; Padding: (Horizontal: 8, Vertical: 2);
+                        Label { Text: "Total"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 12); }
+                        Label #WStatTotal { Text: "0"; Style: (FontSize: 14, TextColor: #ffffff, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 18); }
                     }
                 }
                 Group { Anchor: (Height: 8); }
@@ -1552,6 +1559,8 @@ Group {
                         TextButton #AWDetBtnRentPrice { Text: "SET LOYER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #9C27B0, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1a2a(0.8); }
                         Group { Anchor: (Width: 3); }
                         TextButton #AWDetBtnTransfer { Text: "TRANSFERER"; Anchor: (Width: 90, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a1a(0.8); }
+                        Group { Anchor: (Width: 3); }
+                        TextButton #AWDetBtnInvasion { Text: "INVASION"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #ff4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #3a0a0a(0.8); }
                     }
                 }
 
