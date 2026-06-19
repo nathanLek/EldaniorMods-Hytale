@@ -74,16 +74,37 @@ public class WithdrawCommand extends AbstractPlayerCommand {
             return;
         }
 
-        data.removeMoney(amount);
-
-        StringBuilder summary = new StringBuilder("<color:green>Retrait de " + amount + " Eldan :</color>\n");
+        // Add items FIRST, then debit only the amount that was successfully given
+        long actualAmount = 0;
+        StringBuilder summary = new StringBuilder();
         for (Map.Entry<String, Integer> entry : breakdown.entrySet()) {
             ItemStack stack = new ItemStack(entry.getKey(), entry.getValue(), 0.0, 0.0, null);
-            combined.addItemStack(stack, true, false, true);
-            summary.append("  ").append(entry.getValue()).append("x ").append(getCoinLabel(entry.getKey())).append("\n");
+            ItemStackTransaction transaction = combined.addItemStack(stack, true, false, true);
+            if (transaction.succeeded()) {
+                long coinValue = COINS.get(entry.getKey());
+                actualAmount += coinValue * entry.getValue();
+                summary.append("  ").append(entry.getValue()).append("x ").append(getCoinLabel(entry.getKey())).append("\n");
+            }
         }
-        summary.append("Solde restant : ").append(data.getMoney()).append(" Eldan");
-        player.getPlayerRef().sendMessage(Message.raw(summary.toString()));
+
+        if (actualAmount <= 0) {
+            player.getPlayerRef().sendMessage(Message.raw("<color:red>Impossible d'ajouter les pieces a l'inventaire.</color>"));
+            return;
+        }
+
+        if (!data.removeMoney(actualAmount)) {
+            player.getPlayerRef().sendMessage(Message.raw("<color:red>Erreur lors du debit. Contactez un administrateur.</color>"));
+            return;
+        }
+
+        StringBuilder msg = new StringBuilder("<color:green>Retrait de " + actualAmount + " Eldan :</color>\n");
+        msg.append(summary);
+        msg.append("Solde restant : ").append(data.getMoney()).append(" Eldan");
+        if (actualAmount < amount) {
+            msg.append("\n<color:yellow>Attention : seulement ").append(actualAmount)
+               .append(" sur ").append(amount).append(" Eldan ont pu etre retires.</color>");
+        }
+        player.getPlayerRef().sendMessage(Message.raw(msg.toString()));
     }
 
     private LinkedHashMap<String, Integer> decompose(long amount) {
