@@ -18,6 +18,7 @@ public enum GuildRole {
     public String getFormattedName() { return colorCode + displayName; }
 
     public static GuildRole fromString(String name) {
+        if (name == null) return null;
         try {
             return valueOf(name.toUpperCase());
         } catch (IllegalArgumentException e) {

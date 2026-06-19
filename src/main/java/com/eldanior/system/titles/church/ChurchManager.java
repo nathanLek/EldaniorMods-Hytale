@@ -52,6 +52,11 @@ public class ChurchManager {
         churchCounts.put(rank, churchCounts.getOrDefault(rank, 0) + 1);
     }
 
+    public static void unrecordPopePromotion(ChurchRank rank) {
+        int current = churchCounts.getOrDefault(rank, 0);
+        if (current > 0) churchCounts.put(rank, current - 1);
+    }
+
     public static int getRemainingSlots(ChurchRank rank) {
         return rank.getMaxPerChurch() - churchCounts.getOrDefault(rank, 0);
     }

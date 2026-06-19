@@ -165,6 +165,11 @@ public class RankCommand extends AbstractAsyncCommand {
 
             if (currentRank == NobilityRank.CHEVALIER) NobilityManager.removeKnight(targetUUID);
 
+            // Liberer le slot de promotion du Roi pour les rangs nobles (hors Chevalier/Roi)
+            if (currentRank != NobilityRank.CHEVALIER && currentRank != NobilityRank.ROI) {
+                NobilityManager.unrecordKingPromotion(currentRank);
+            }
+
             NobilityRank newRank = currentRank.previous();
             PlayerLevelData copy = (PlayerLevelData) data.clone();
             if (copy == null) return;
