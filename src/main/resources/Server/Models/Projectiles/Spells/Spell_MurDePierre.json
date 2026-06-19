@@ -1,0 +1,42 @@
+{
+  "Model": "Items/Projectiles/Fireball.blockymodel",
+  "Texture": "Items/Projectiles/Fireball.png",
+  "HitBox": {
+    "Max": { "X": 2.0, "Y": 2.0, "Z": 2.0 },
+    "Min": { "X": -2.0, "Y": -2.0, "Z": -2.0 }
+  },
+  "MinScale": 8.0,
+  "MaxScale": 10.0,
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "Items/Animations/Spin_Roll/Spin_Roll_Left.blockyanim",
+          "BlendingDuration": 0
+        }
+      ]
+    }
+  },
+  "Particles": [
+    {
+      "SystemId": "Mace_Signature_Ground_Hit",
+      "TargetNodeName": "",
+      "Scale": 6.0
+    },
+    {
+      "SystemId": "Dust_Landing",
+      "TargetNodeName": "",
+      "Scale": 8.0
+    }
+  ],
+  "Trails": [
+    {
+      "TargetNodeName": "Origin_Item",
+      "TrailId": "Small_Default"
+    }
+  ],
+  "Light": {
+    "Color": "#a87",
+    "Radius": 20
+  }
+}
