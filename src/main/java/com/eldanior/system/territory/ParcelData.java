@@ -125,6 +125,9 @@ public class ParcelData {
         if (role == null) {
             if (!protectedByDefault) return true; // Zone ouverte
 
+            // PVP : autorise pour tous les non-membres si la zone a le PvP active
+            if (permission == ParcelPermission.PVP && pvpEnabled) return true;
+
             // Zones speciales : tout le monde peut entrer et interagir
             if (type == ParcelType.ARENA || type == ParcelType.DUNGEON || type == ParcelType.MINE) {
                 return permission == ParcelPermission.INTERACT || permission == ParcelPermission.ENTER;
