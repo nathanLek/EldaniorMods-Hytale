@@ -797,5 +797,9 @@ public class PlayerLevelData implements Component<EntityStore> {
         }
         this.money += amount;
     }
-    public void removeMoney(long amount) { this.money = Math.max(0, this.money - amount); }
+    public boolean removeMoney(long amount) {
+        if (amount < 0 || this.money < amount) return false;
+        this.money -= amount;
+        return true;
+    }
 }
