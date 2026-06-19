@@ -76,7 +76,7 @@ public class ClassementsTab {
         ui.set("#RkDuelSoon.Visible", false);
 
         for (int i = 0; i < MAX_RANK_SLOTS; i++) {
-            if (i < entries.size() && !"duel".equals(category)) {
+            if (i < entries.size()) {
                 ClassementManager.RankEntry entry = entries.get(i);
                 ui.set("#RkRow" + i + ".Visible", true);
 
