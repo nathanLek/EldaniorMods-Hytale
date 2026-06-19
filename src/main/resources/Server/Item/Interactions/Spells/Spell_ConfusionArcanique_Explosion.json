@@ -1,0 +1,17 @@
+{
+  "Parent": "Bomb_Explode",
+  "Config": {
+    "DamageBlocks": false,
+    "EntityDamage": 8.0,
+    "EntityDamageRadius": 7,
+    "EntityDamageFalloff": 0.4
+  },
+  "Effects": {
+    "WorldSoundEventId": "SFX_Portal_Neutral_Open",
+    "Particles": [
+      { "SystemId": "Rings_Rings", "TargetEntityPart": "Entity", "Scale": 4.0, "Color": "#e879f9" },
+      { "SystemId": "Block_Break_Crystal", "TargetEntityPart": "Entity", "Scale": 3.0, "Color": "#d946ef" },
+      { "SystemId": "Explosion_Medium", "TargetEntityPart": "Entity", "Scale": 2.0 }
+    ]
+  }
+}

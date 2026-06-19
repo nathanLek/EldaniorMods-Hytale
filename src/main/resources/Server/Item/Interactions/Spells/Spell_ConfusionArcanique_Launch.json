@@ -1,0 +1,33 @@
+{
+  "Type": "StatsCondition",
+  "Costs": { "SignatureEnergy": 2 },
+  "RunTime": 0.1,
+  "Next": {
+    "Type": "Parallel",
+    "Interactions": [
+      { "Interactions": [{ "Type": "ChangeStat", "StatModifiers": { "SignatureEnergy": 0 }, "Behaviour": "Set" }] },
+      { "Interactions": [
+        {
+          "Type": "Projectile",
+          "Config": "Projectile_Config_ConfusionArcanique",
+          "Effects": {
+            "ItemAnimationId": "CastHurlCharged",
+            "WorldSoundEventId": "SFX_Portal_Neutral_Open",
+            "Particles": [
+              { "SystemId": "Rings_Rings", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.6, "Color": "#e879f9" },
+              { "SystemId": "Block_Break_Crystal", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.4, "Color": "#d946ef" }
+            ]
+          },
+          "Next": {
+            "Type": "Simple",
+            "RunTime": 0.3
+          }
+        }
+      ]}
+    ]
+  },
+  "Failed": {
+    "Type": "Simple", "RunTime": 0.3,
+    "Effects": { "ItemAnimationId": "Interact", "WorldSoundEventId": "SFX_Bow_No_Ammo" }
+  }
+}

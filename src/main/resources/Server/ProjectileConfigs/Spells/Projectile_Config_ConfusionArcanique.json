@@ -1,0 +1,101 @@
+{
+  "Model": "Spell_ConfusionArcanique",
+  "Physics": {
+    "Type": "Standard",
+    "Gravity": 2,
+    "TerminalVelocityAir": 50,
+    "TerminalVelocityWater": 25,
+    "SticksVertically": true,
+    "Bounciness": 0
+  },
+  "LaunchForce": 35,
+  "Interactions": {
+    "ProjectileHit": {
+      "Cooldown": { "Cooldown": 0 },
+      "Interactions": [
+        {
+          "Type": "ApplyEffect",
+          "Entity": "Target",
+          "EffectId": "Confusion_Slow"
+        },
+        "Spell_ConfusionArcanique_Explosion",
+        {
+          "Type": "SpawnDeployableAtHitLocation",
+          "Config": {
+            "Type": "Aoe",
+            "Shape": "Cylinder",
+            "Id": "Confusion_Arcanique_Zone",
+            "LiveDuration": 5,
+            "Model": "Deployable_Phantom",
+            "ModelScale": 0.5,
+            "StartRadius": 2,
+            "EndRadius": 6,
+            "Height": 6,
+            "RadiusChangeTime": 0.8,
+            "DamageInterval": 1.0,
+            "DamageAmount": 2,
+            "ApplyEffects": ["Confusion_Slow"],
+            "Invulnerable": true,
+            "AttackOwner": false,
+            "AttackTeam": false,
+            "DeploySoundEventId": "SFX_Portal_Neutral_Open",
+            "DespawnSoundEventId": "SFX_Crystal_Break",
+            "SpawnParticles": [
+              { "SystemId": "Rings_Rings", "TargetEntityPart": "Entity", "Scale": 4.0, "Color": "#e879f9" },
+              { "SystemId": "Block_Break_Crystal", "TargetEntityPart": "Entity", "Scale": 3.0, "Color": "#d946ef" }
+            ],
+            "DespawnParticles": [
+              { "SystemId": "Explosion_Medium", "TargetEntityPart": "Entity", "Scale": 2.0 },
+              { "SystemId": "Rings_Rings", "TargetEntityPart": "Entity", "Scale": 2.0, "Color": "#e879f9" }
+            ]
+          }
+        },
+        {
+          "Type": "RemoveEntity",
+          "Entity": "User"
+        }
+      ]
+    },
+    "ProjectileMiss": {
+      "Cooldown": { "Cooldown": 0 },
+      "Interactions": [
+        "Spell_ConfusionArcanique_Explosion",
+        {
+          "Type": "SpawnDeployableAtHitLocation",
+          "Config": {
+            "Type": "Aoe",
+            "Shape": "Cylinder",
+            "Id": "Confusion_Arcanique_Zone",
+            "LiveDuration": 5,
+            "Model": "Deployable_Phantom",
+            "ModelScale": 0.5,
+            "StartRadius": 2,
+            "EndRadius": 6,
+            "Height": 6,
+            "RadiusChangeTime": 0.8,
+            "DamageInterval": 1.0,
+            "DamageAmount": 2,
+            "ApplyEffects": ["Confusion_Slow"],
+            "Invulnerable": true,
+            "AttackOwner": false,
+            "AttackTeam": false,
+            "DeploySoundEventId": "SFX_Portal_Neutral_Open",
+            "DespawnSoundEventId": "SFX_Crystal_Break",
+            "SpawnParticles": [
+              { "SystemId": "Rings_Rings", "TargetEntityPart": "Entity", "Scale": 4.0, "Color": "#e879f9" },
+              { "SystemId": "Block_Break_Crystal", "TargetEntityPart": "Entity", "Scale": 3.0, "Color": "#d946ef" }
+            ],
+            "DespawnParticles": [
+              { "SystemId": "Explosion_Medium", "TargetEntityPart": "Entity", "Scale": 2.0 },
+              { "SystemId": "Rings_Rings", "TargetEntityPart": "Entity", "Scale": 2.0, "Color": "#e879f9" }
+            ]
+          }
+        },
+        {
+          "Type": "RemoveEntity",
+          "Entity": "User"
+        }
+      ]
+    }
+  }
+}

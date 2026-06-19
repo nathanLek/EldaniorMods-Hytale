@@ -1959,6 +1959,21 @@ public class SkillManager {
                 180, 0.0f, 0.8f, 22.0f, 30.0f, 0.0f,
                 List.of(), List.of()
         ));
+        register("skill_page_clone_illusoire", new SkillModel(
+                "CLONE_ILLUSOIRE", "Spell_CloneIllusoire", "Clone Illusoire", "mage, illusionniste",
+                180, 0.0f, 1.2f, 0.0f, 0.0f, 8.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_voile_d_ombre", new SkillModel(
+                "VOILE_D_OMBRE", "Spell_VoileDOmbre", "Voile d'Ombre", "mage, illusionniste",
+                250, 0.0f, 1.5f, 0.0f, 0.0f, 7.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_confusion_arcanique", new SkillModel(
+                "CONFUSION_ARCANIQUE", "Spell_ConfusionArcanique", "Confusion Arcanique", "mage, illusionniste",
+                300, 0.0f, 1.0f, 8.0f, 15.0f, 5.0f,
+                List.of(), List.of()
+        ));
     }
 
     private static void register(String itemId, SkillModel skill) {
