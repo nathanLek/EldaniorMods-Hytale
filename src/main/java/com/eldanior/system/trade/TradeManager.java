@@ -7,6 +7,8 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
 import com.hypixel.hytale.server.core.Message;
 
+import com.eldanior.system.economy.TransactionLogger;
+
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -104,6 +106,12 @@ public class TradeManager {
             if (execute && session.isBothValidated()) {
                 // Transferer les items
                 transferItems(p1, p2, session);
+
+                // Log trade
+                TransactionLogger.logTrade(
+                        getPlayerName(p1), getPlayerName(p2),
+                        describeItems(session.getMyItems(p1)),
+                        describeItems(session.getMyItems(p2)));
             } else {
                 // Annulation : rendre les items à chaque joueur
                 returnItems(p1, session.getMyItems(p1));
@@ -183,6 +191,26 @@ public class TradeManager {
 
     private static void returnItems(UUID playerUUID, ItemStack[] items) {
         giveItems(playerUUID, items);
+    }
+
+    // ==================== LOGGING HELPERS ====================
+
+    private static String getPlayerName(UUID playerUUID) {
+        try {
+            PlayerRef ref = Universe.get().getPlayer(playerUUID);
+            if (ref != null) return ref.getUsername();
+        } catch (Exception ignored) {}
+        return playerUUID.toString().substring(0, 8);
+    }
+
+    private static String[] describeItems(ItemStack[] items) {
+        List<String> descriptions = new ArrayList<>();
+        for (ItemStack item : items) {
+            if (item != null && !item.isEmpty()) {
+                descriptions.add(item.getQuantity() + "x " + item.getItemId());
+            }
+        }
+        return descriptions.toArray(new String[0]);
     }
 
     // ==================== CLEANUP ====================

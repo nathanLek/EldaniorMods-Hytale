@@ -9,6 +9,7 @@ import com.eldanior.system.titles.nobility.family.FamilyManager;
 import com.eldanior.system.titles.nobility.family.NobleFamilyModel;
 import com.eldanior.system.config.EldaniorLogger;
 import com.eldanior.system.config.PersistenceUtils;
+import com.eldanior.system.economy.TransactionLogger;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 
 import java.io.*;
@@ -28,6 +29,9 @@ public class PersistenceManager {
             System.err.println("[Persistence] Impossible de creer le dossier: " + e.getMessage());
         }
         load();
+
+        // Initialiser le logger de transactions
+        TransactionLogger.init(dataDir);
 
         // Autosave toutes les 5 minutes
         autoSaveTimer = new java.util.Timer("EldaniorAutoSave", true);
