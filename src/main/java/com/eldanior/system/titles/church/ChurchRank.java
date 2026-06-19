@@ -44,6 +44,7 @@ public enum ChurchRank {
     }
 
     public static ChurchRank fromString(String name) {
+        if (name == null) return null;
         try {
             return valueOf(name.toUpperCase());
         } catch (IllegalArgumentException e) {

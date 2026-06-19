@@ -163,8 +163,16 @@ public class ChurchCommand extends AbstractAsyncCommand {
 
             if (currentRank == ChurchRank.RELIGIEUX) ChurchManager.removeAcolyte(targetUUID);
 
+            // Liberer le slot de promotion du Pape pour les rangs promus (hors Religieux/Pape)
+            if (currentRank != ChurchRank.RELIGIEUX && currentRank != ChurchRank.PAPE) {
+                ChurchManager.unrecordPopePromotion(currentRank);
+            }
+
             ChurchRank newRank = currentRank.previous();
-            // Skip SAINT en demote (passer directement de Cardinal a Archeveque au-dessus)
+            // Skip SAINT en demote (rang non-attribuable, uniquement via classe Saint)
+            if (newRank == ChurchRank.SAINT) {
+                newRank = newRank.previous();
+            }
             PlayerLevelData copy = (PlayerLevelData) data.clone();
             if (copy == null) return;
 

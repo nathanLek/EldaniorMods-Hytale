@@ -92,6 +92,7 @@ public enum NobilityRank {
     }
 
     public static NobilityRank fromString(String name) {
+        if (name == null) return null;
         try {
             return valueOf(name.toUpperCase());
         } catch (IllegalArgumentException e) {
