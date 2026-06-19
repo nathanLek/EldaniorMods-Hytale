@@ -252,6 +252,21 @@ public class DuelManager {
 
     // ==================== CLEANUP ====================
 
+    /**
+     * Retourne le nombre de duels actifs (chaque duel = 2 entrees dans la map).
+     */
+    public static int getActiveDuelCount() {
+        return activeDuels.size() / 2;
+    }
+
+    /**
+     * Retourne le ratio HP d'un joueur (0.0 a 1.0).
+     * Utilise par le DuelHud pour afficher les HP de l'adversaire.
+     */
+    public static float getPlayerHPRatio(PlayerRef playerRef) {
+        return getHPPercent(playerRef);
+    }
+
     public static void cancelAllDuels() {
         activeDuels.clear();
         pendingDuels.clear();

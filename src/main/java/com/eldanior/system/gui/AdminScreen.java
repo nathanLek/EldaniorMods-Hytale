@@ -1135,7 +1135,7 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
         }
         update.set("#DStatParties.Text", String.valueOf(activeParties / 2));
 
-        update.set("#DStatDuelsActive.Text", "0");
+        update.set("#DStatDuelsActive.Text", String.valueOf(com.eldanior.system.duel.DuelManager.getActiveDuelCount()));
 
         int chestsTotal = 0, chestsDonjon = 0, chestsDefault = 0, chestsLegend = 0, chestsOr = 0;
         try {
