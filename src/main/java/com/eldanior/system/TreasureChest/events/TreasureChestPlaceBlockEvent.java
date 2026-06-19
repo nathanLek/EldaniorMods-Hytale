@@ -38,6 +38,12 @@ public class TreasureChestPlaceBlockEvent extends EntityEventSystem<EntityStore,
         AUTO_REGISTER_CHESTS.put("ChestTreasureGold", "gold");
         AUTO_REGISTER_CHESTS.put("ChestTreasureDungeon", "donjon");
         AUTO_REGISTER_CHESTS.put("ChestTreasureLegendary", "legendary");
+        // Coffres de donjon par tier
+        AUTO_REGISTER_CHESTS.put("ChestTreasureDungeonTier1", "donjon_tier1");
+        AUTO_REGISTER_CHESTS.put("ChestTreasureDungeonTier2", "donjon_tier2");
+        AUTO_REGISTER_CHESTS.put("ChestTreasureDungeonTier3", "donjon_tier3");
+        AUTO_REGISTER_CHESTS.put("ChestTreasureDungeonTier4", "donjon_tier4");
+        AUTO_REGISTER_CHESTS.put("ChestTreasureDungeonBoss", "donjon_boss");
     }
 
     public static int getChestCount(String lootTableId) {

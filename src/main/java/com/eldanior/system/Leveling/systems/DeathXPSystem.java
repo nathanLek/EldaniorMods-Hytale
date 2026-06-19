@@ -11,6 +11,7 @@ import com.eldanior.system.party.Party;
 import com.eldanior.system.party.PartyManager;
 import com.eldanior.system.classement.ClassementManager;
 import com.eldanior.system.duel.DuelManager;
+import com.eldanior.system.dungeon.DungeonScaling;
 import com.eldanior.system.quest.QuestManager;
 import com.eldanior.system.titles.nobility.family.FamilyManager;
 import com.eldanior.system.titles.TitleManager;
@@ -145,6 +146,11 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
 
             // On applique le multiplicateur et on empêche l'XP de tomber sous 1 point
             xpAmount = (int) Math.max(1, Math.round(xpAmount * multiplier));
+
+            // --- DUNGEON SCALING : bonus XP en fonction du nombre de joueurs dans le groupe ---
+            if (isMob) {
+                xpAmount = DungeonScaling.scaleXP(xpAmount, killerUUID);
+            }
 
             // --- PK MODIFIERS ---
             boolean killerIsPK = killerDataRead != null && killerDataRead.isPK();
