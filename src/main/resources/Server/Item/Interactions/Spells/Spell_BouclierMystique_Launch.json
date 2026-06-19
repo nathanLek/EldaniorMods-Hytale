@@ -1,0 +1,32 @@
+{
+  "Type": "StatsCondition",
+  "Costs": { "SignatureEnergy": 1 },
+  "RunTime": 0.1,
+  "Next": {
+    "Type": "Serial",
+    "Interactions": [
+      { "Type": "ChangeStat", "StatModifiers": { "SignatureEnergy": 0 }, "Behaviour": "Set" },
+      { "Type": "ApplyEffect", "EffectId": "Bouclier_Mystique_Shield" },
+      {
+        "Type": "Simple", "RunTime": 0.6,
+        "Effects": {
+          "ItemAnimationId": "CastHurlCharged",
+          "WorldSoundEventId": "SFX_Ice_Break",
+          "Particles": [
+            { "SystemId": "Block_Break_Crystal", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 3.0, "Color": "#6a5acd" },
+            { "SystemId": "Rings_Rings", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 2.0, "Color": "#9370db" },
+            { "SystemId": "Weapon_Frost_Mist", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 1.5, "Color": "#8a2be2" }
+          ]
+        }
+      },
+      {
+        "Type": "Simple", "RunTime": 0.1,
+        "Effects": { "ClearAnimationOnFinish": true, "ClearSoundEventOnFinish": true }
+      }
+    ]
+  },
+  "Failed": {
+    "Type": "Simple", "RunTime": 0.3,
+    "Effects": { "ItemAnimationId": "Interact", "WorldSoundEventId": "SFX_Bow_No_Ammo" }
+  }
+}

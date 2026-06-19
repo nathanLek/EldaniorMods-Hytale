@@ -67,7 +67,22 @@ public class CombatStatsSystem extends DamageEventSystem {
                                     world, transform.getPosition().x, transform.getPosition().y, transform.getPosition().z);
                             if (parcel != null && !parcel.isPvpEnabled()) {
                                 damage.setCancelled(true);
+                                // Notification a l'attaquant : PvP desactive dans cette zone
+                                notifyPvpBlocked(attackerRef, store);
                                 return;
+                            }
+                            // Check ParcelPermission.PVP — meme si la zone a PvP active,
+                            // verifier que l'attaquant a la permission PVP dans cette parcelle
+                            if (parcel != null && parcel.isPvpEnabled()) {
+                                PlayerRef attackerPRef = store.getComponent(attackerRef, PlayerRef.getComponentType());
+                                if (attackerPRef != null) {
+                                    java.util.UUID attackerUUID = com.eldanior.system.config.UUIDExtractor.getUUID(attackerPRef);
+                                    if (attackerUUID != null && !parcel.hasPermission(attackerUUID, com.eldanior.system.territory.ParcelPermission.PVP)) {
+                                        damage.setCancelled(true);
+                                        notifyPvpBlocked(attackerRef, store);
+                                        return;
+                                    }
+                                }
                             }
                         }
                     } catch (Exception e) { EldaniorLogger.error("CombatStatsSystem", e); }
@@ -87,6 +102,31 @@ public class CombatStatsSystem extends DamageEventSystem {
 
         // 3. Gestion de la Victime (Endurance + Passifs)
         applyEnduranceDefense(victimRef, store, damage, commandBuffer);
+    }
+
+    /**
+     * Notifie l'attaquant que le PvP est bloque dans cette zone.
+     * Utilise un cooldown interne pour eviter le spam de notifications.
+     */
+    private static final java.util.Map<java.util.UUID, Long> pvpBlockedNotifCooldown = new java.util.concurrent.ConcurrentHashMap<>();
+    private static final long PVP_NOTIF_COOLDOWN_MS = 3000L; // 3 secondes entre chaque notification
+
+    private void notifyPvpBlocked(Ref<EntityStore> attackerRef, Store<EntityStore> store) {
+        try {
+            PlayerRef pRef = store.getComponent(attackerRef, PlayerRef.getComponentType());
+            if (pRef == null) return;
+            java.util.UUID uuid = com.eldanior.system.config.UUIDExtractor.getUUID(pRef);
+            if (uuid == null) return;
+
+            long now = System.currentTimeMillis();
+            Long lastNotif = pvpBlockedNotifCooldown.get(uuid);
+            if (lastNotif != null && now - lastNotif < PVP_NOTIF_COOLDOWN_MS) return;
+            pvpBlockedNotifCooldown.put(uuid, now);
+
+            NotificationHelper.sendNotification(pRef,
+                    "<color:red>PvP desactive dans cette zone !</color>",
+                    NotificationStyle.Warning);
+        } catch (Exception e) { EldaniorLogger.error("CombatStatsSystem:pvpNotif", e); }
     }
 
     private boolean tryDodge(Ref<EntityStore> victimRef, Store<EntityStore> store, Damage damage) {

@@ -283,11 +283,12 @@ public class EldaniorSystem extends JavaPlugin {
             this.getEventRegistry().registerGlobal(StartWorldEvent.class,
                     com.eldanior.system.territory.systems.ParcelMapSystem::onWorldStart);
 
-            // Donjon : init snapshots et timers 24h au demarrage du monde
+            // Fermes + Donjons : init snapshots et timers au demarrage du monde
             this.getEventRegistry().registerGlobal(StartWorldEvent.class, event -> {
                 if (event.getWorld() != null) {
                     // Delai de 5s pour laisser les chunks se charger
                     EldaniorLogger.SCHEDULER.schedule(() -> {
+                        com.eldanior.system.territory.systems.FarmRegenSystem.initFarmTimers(event.getWorld());
                         com.eldanior.system.territory.systems.FarmRegenSystem.initDungeonTimers(event.getWorld());
                     }, 5, java.util.concurrent.TimeUnit.SECONDS);
                 }

@@ -1,0 +1,32 @@
+{
+  "Type": "StatsCondition",
+  "Costs": { "SignatureEnergy": 1 },
+  "RunTime": 0.1,
+  "Next": {
+    "Type": "Serial",
+    "Interactions": [
+      { "Type": "ChangeStat", "StatModifiers": { "SignatureEnergy": 0 }, "Behaviour": "Set" },
+      { "Type": "ApplyEffect", "EffectId": "Benediction_Arcanique_Buff" },
+      {
+        "Type": "Simple", "RunTime": 0.5,
+        "Effects": {
+          "ItemAnimationId": "CastHurlCharged",
+          "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Impact",
+          "Particles": [
+            { "SystemId": "Rings_Rings", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 2.5 },
+            { "SystemId": "Mace_Signature_Cast", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 1.8 },
+            { "SystemId": "Fire_ChargeWhite", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 1.0 }
+          ]
+        }
+      },
+      {
+        "Type": "Simple", "RunTime": 0.1,
+        "Effects": { "ClearAnimationOnFinish": true, "ClearSoundEventOnFinish": true }
+      }
+    ]
+  },
+  "Failed": {
+    "Type": "Simple", "RunTime": 0.3,
+    "Effects": { "ItemAnimationId": "Interact", "WorldSoundEventId": "SFX_Bow_No_Ammo" }
+  }
+}
