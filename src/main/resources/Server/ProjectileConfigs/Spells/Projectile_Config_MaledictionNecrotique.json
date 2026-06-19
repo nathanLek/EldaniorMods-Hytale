@@ -1,0 +1,96 @@
+{
+  "Model": "Spell_MaledictionNecrotique",
+  "Physics": {
+    "Type": "Standard",
+    "Gravity": 3,
+    "TerminalVelocityAir": 45,
+    "TerminalVelocityWater": 20,
+    "SticksVertically": true,
+    "Bounciness": 0
+  },
+  "LaunchForce": 25,
+  "Interactions": {
+    "ProjectileHit": {
+      "Cooldown": { "Cooldown": 0 },
+      "Interactions": [
+        {
+          "Type": "DamageEntity",
+          "Entity": "Target",
+          "DamageCalculator": { "BaseDamage": { "Poison": 10 } }
+        },
+        {
+          "Type": "ApplyEffect",
+          "Entity": "Target",
+          "EffectId": "Elda_MaledictionNecrotique"
+        },
+        {
+          "Type": "SpawnDeployableAtHitLocation",
+          "Config": {
+            "Type": "Aoe",
+            "Shape": "Cylinder",
+            "Id": "Malediction_Necrotique_Zone",
+            "LiveDuration": 4,
+            "Model": "Deployable_Fire_Trap",
+            "ModelScale": 1.0,
+            "StartRadius": 1,
+            "EndRadius": 6,
+            "Height": 3,
+            "RadiusChangeTime": 0.3,
+            "DamageInterval": 2,
+            "DamageAmount": 0,
+            "ApplyEffects": ["Elda_MaledictionNecrotique"],
+            "Invulnerable": true,
+            "AttackOwner": false,
+            "AttackTeam": false,
+            "DeploySoundEventId": "SFX_Staff_Flame_Trap_Deploy",
+            "DespawnSoundEventId": "SFX_Staff_Flame_Trap_Despawn",
+            "SpawnParticles": [
+              { "SystemId": "VoidImpact", "TargetEntityPart": "Entity", "Scale": 2.0 },
+              { "SystemId": "Spectre_Void_Body", "TargetEntityPart": "Entity", "Scale": 1.0 }
+            ],
+            "DespawnParticles": [
+              { "SystemId": "VoidImpact", "TargetEntityPart": "Entity" }
+            ]
+          }
+        },
+        { "Type": "RemoveEntity", "Entity": "User" }
+      ]
+    },
+    "ProjectileMiss": {
+      "Cooldown": { "Cooldown": 0 },
+      "Interactions": [
+        {
+          "Type": "SpawnDeployableAtHitLocation",
+          "Config": {
+            "Type": "Aoe",
+            "Shape": "Cylinder",
+            "Id": "Malediction_Necrotique_Zone",
+            "LiveDuration": 4,
+            "Model": "Deployable_Fire_Trap",
+            "ModelScale": 1.0,
+            "StartRadius": 1,
+            "EndRadius": 6,
+            "Height": 3,
+            "RadiusChangeTime": 0.3,
+            "DamageInterval": 2,
+            "DamageAmount": 0,
+            "ApplyEffects": ["Elda_MaledictionNecrotique"],
+            "Invulnerable": true,
+            "AttackOwner": false,
+            "AttackTeam": false,
+            "DeploySoundEventId": "SFX_Staff_Flame_Trap_Deploy",
+            "DespawnSoundEventId": "SFX_Staff_Flame_Trap_Despawn",
+            "SpawnParticles": [
+              { "SystemId": "VoidImpact", "TargetEntityPart": "Entity", "Scale": 2.0 },
+              { "SystemId": "Spectre_Void_Body", "TargetEntityPart": "Entity", "Scale": 1.0 }
+            ],
+            "DespawnParticles": [
+              { "SystemId": "VoidImpact", "TargetEntityPart": "Entity" }
+            ]
+          }
+        },
+        { "Type": "RemoveEntity", "Entity": "User" }
+      ]
+    }
+  }
+}
