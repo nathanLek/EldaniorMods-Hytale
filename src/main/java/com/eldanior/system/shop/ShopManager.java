@@ -95,7 +95,7 @@ public class ShopManager {
 
     // Gains en attente
     public static void addPendingEarnings(UUID sellerUUID, long amount) {
-        pendingEarnings.merge(sellerUUID, amount, Long::sum);
+        pendingEarnings.merge(sellerUUID, amount, (a, b) -> { long s = a + b; return (s < a) ? Long.MAX_VALUE : s; });
     }
 
     public static Map<UUID, Long> getPendingEarningsMap() {

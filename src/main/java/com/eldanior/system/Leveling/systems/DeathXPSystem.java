@@ -194,7 +194,8 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
 
                 // --- BOUNTY : si le tueur est PK, augmenter sa prime ---
                 if (killerIsPK) {
-                    long bountyIncrease = 500 + (dataToWrite.getPlayerKills() * 100L);
+                    long kills = Math.max(0, (long) dataToWrite.getPlayerKills());
+                    long bountyIncrease = 500 + Math.min(kills * 100L, 1_000_000L);
                     dataToWrite.addBounty(bountyIncrease);
                     dataToWrite.setLastPvPKillTime(System.currentTimeMillis());
                 }
