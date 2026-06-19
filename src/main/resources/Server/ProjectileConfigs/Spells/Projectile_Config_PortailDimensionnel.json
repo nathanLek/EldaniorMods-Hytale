@@ -1,0 +1,110 @@
+{
+  "Model": "Projectile",
+  "Physics": {
+    "Type": "Standard",
+    "Gravity": 0,
+    "TerminalVelocityAir": 50,
+    "TerminalVelocityWater": 25,
+    "SticksVertically": false,
+    "Bounciness": 0
+  },
+  "LaunchForce": 40,
+  "Interactions": {
+    "ProjectileHit": {
+      "Cooldown": { "Cooldown": 0 },
+      "Interactions": [
+        {
+          "Type": "SpawnDeployableAtHitLocation",
+          "Config": {
+            "Type": "Aoe",
+            "Shape": "Cylinder",
+            "Id": "Portail_Dimensionnel_Warp",
+            "LiveDuration": 6,
+            "Model": "Deployable_Portal",
+            "ModelScale": 1.2,
+            "StartRadius": 2,
+            "EndRadius": 2,
+            "Height": 3,
+            "RadiusChangeTime": 0,
+            "DamageInterval": 0,
+            "DamageAmount": 0,
+            "ApplyEffects": [],
+            "Invulnerable": true,
+            "AttackOwner": false,
+            "AttackTeam": false,
+            "DeploySoundEventId": "SFX_Portal_Neutral_Open",
+            "DespawnSoundEventId": "SFX_Portal_Neutral_Open",
+            "SpawnParticles": [
+              { "SystemId": "Portal_Round_Blue", "TargetEntityPart": "Entity", "Scale": 4.0, "Color": "#60a5fa" },
+              { "SystemId": "BlueBeam", "TargetEntityPart": "Entity", "Scale": 3.0, "Color": "#3b82f6" }
+            ],
+            "ActiveParticles": [
+              { "SystemId": "Portal_Round_Blue", "TargetEntityPart": "Entity", "Scale": 2.0, "Color": "#60a5fa" },
+              { "SystemId": "Azure_Spiral", "TargetEntityPart": "Entity", "Scale": 1.5, "Color": "#3b82f6" }
+            ],
+            "DespawnParticles": [
+              { "SystemId": "Explosion_Medium", "TargetEntityPart": "Entity", "Scale": 2.0, "Color": "#60a5fa" },
+              { "SystemId": "Block_Break_Crystal", "TargetEntityPart": "Entity", "Scale": 3.0, "Color": "#3b82f6" }
+            ]
+          }
+        },
+        {
+          "Type": "TeleportEntityToHitLocation",
+          "Entity": "Owner"
+        },
+        {
+          "Type": "RemoveEntity",
+          "Entity": "User"
+        }
+      ]
+    },
+    "ProjectileMiss": {
+      "Cooldown": { "Cooldown": 0 },
+      "Interactions": [
+        {
+          "Type": "SpawnDeployableAtHitLocation",
+          "Config": {
+            "Type": "Aoe",
+            "Shape": "Cylinder",
+            "Id": "Portail_Dimensionnel_Warp",
+            "LiveDuration": 6,
+            "Model": "Deployable_Portal",
+            "ModelScale": 1.2,
+            "StartRadius": 2,
+            "EndRadius": 2,
+            "Height": 3,
+            "RadiusChangeTime": 0,
+            "DamageInterval": 0,
+            "DamageAmount": 0,
+            "ApplyEffects": [],
+            "Invulnerable": true,
+            "AttackOwner": false,
+            "AttackTeam": false,
+            "DeploySoundEventId": "SFX_Portal_Neutral_Open",
+            "DespawnSoundEventId": "SFX_Portal_Neutral_Open",
+            "SpawnParticles": [
+              { "SystemId": "Portal_Round_Blue", "TargetEntityPart": "Entity", "Scale": 4.0, "Color": "#60a5fa" },
+              { "SystemId": "BlueBeam", "TargetEntityPart": "Entity", "Scale": 3.0, "Color": "#3b82f6" }
+            ],
+            "ActiveParticles": [
+              { "SystemId": "Portal_Round_Blue", "TargetEntityPart": "Entity", "Scale": 2.0, "Color": "#60a5fa" },
+              { "SystemId": "Azure_Spiral", "TargetEntityPart": "Entity", "Scale": 1.5, "Color": "#3b82f6" }
+            ],
+            "DespawnParticles": [
+              { "SystemId": "Explosion_Medium", "TargetEntityPart": "Entity", "Scale": 2.0, "Color": "#60a5fa" },
+              { "SystemId": "Block_Break_Crystal", "TargetEntityPart": "Entity", "Scale": 3.0, "Color": "#3b82f6" }
+            ]
+          }
+        },
+        {
+          "Type": "TeleportEntityToHitLocation",
+          "Entity": "Owner"
+        },
+        {
+          "Type": "RemoveEntity",
+          "Entity": "User"
+        }
+      ]
+    }
+  }
+}

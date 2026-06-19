@@ -1,0 +1,42 @@
+{
+  "Type": "Charging",
+  "Effects": {
+    "ItemAnimationId": "CastHurlCharging",
+    "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Charge",
+    "Particles": [
+      { "SystemId": "Portal_Round_Blue", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.4, "Color": "#60a5fa" },
+      { "SystemId": "BlueBeam", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 0.3, "Color": "#3b82f6" }
+    ]
+  },
+  "AllowIndefiniteHold": false,
+  "HorizontalSpeedMultiplier": 0.3,
+  "Next": {
+    "1.0": {
+      "Type": "StatsCondition",
+      "Costs": { "Mana": 400 },
+      "RunTime": 0.2,
+      "Next": {
+        "Type": "Parallel",
+        "Interactions": [
+          { "Interactions": [{ "Type": "ChangeStat", "StatModifiers": { "Mana": -400 } }] },
+          { "Interactions": [{ "Type": "ChangeStat", "StatModifiers": { "SignatureEnergy": 1 }, "Behaviour": "Set" }] },
+          { "Interactions": [{
+            "Type": "Simple", "RunTime": 0.3,
+            "Effects": {
+              "ItemAnimationId": "CastHurlCharged",
+              "WorldSoundEventId": "SFX_Portal_Neutral_Open",
+              "Particles": [
+                { "SystemId": "Portal_Round_Blue", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.8, "Color": "#60a5fa" },
+                { "SystemId": "Portal_Round_Blue", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 1.0, "Color": "#3b82f6" }
+              ]
+            }
+          }]}
+        ]
+      },
+      "Failed": {
+        "Type": "Simple", "RunTime": 0.3,
+        "Effects": { "ItemAnimationId": "Interact", "WorldSoundEventId": "SFX_Bow_No_Ammo" }
+      }
+    }
+  }
+}

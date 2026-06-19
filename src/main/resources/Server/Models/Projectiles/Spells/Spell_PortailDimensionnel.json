@@ -1,0 +1,44 @@
+{
+  "Model": "Items/Projectiles/Projectile.blockymodel",
+  "Texture": "Items/Projectiles/Projectile_default.png",
+  "HitBox": {
+    "Max": { "X": 0.2, "Y": 0.2, "Z": 0.2 },
+    "Min": { "X": -0.2, "Y": -0.2, "Z": -0.2 }
+  },
+  "MinScale": 0.6,
+  "MaxScale": 1.0,
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "Items/Animations/Spin_Roll/Spin_Roll_Left.blockyanim",
+          "BlendingDuration": 0
+        }
+      ]
+    }
+  },
+  "Particles": [
+    {
+      "SystemId": "Portal_Round_Blue",
+      "TargetNodeName": "",
+      "Color": "#60a5fa",
+      "Scale": 2.5
+    },
+    {
+      "SystemId": "Azure_Spiral",
+      "TargetNodeName": "",
+      "Color": "#3b82f6",
+      "Scale": 1.5
+    }
+  ],
+  "Trails": [
+    {
+      "TargetNodeName": "Origin_Item",
+      "TrailId": "Lightning"
+    }
+  ],
+  "Light": {
+    "Color": "#60a5fa",
+    "Radius": 12
+  }
+}
