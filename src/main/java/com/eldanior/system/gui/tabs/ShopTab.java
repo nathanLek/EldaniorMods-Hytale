@@ -17,6 +17,11 @@ import com.hypixel.hytale.server.core.asset.type.item.config.ItemQuality;
 import com.hypixel.hytale.server.core.ui.builder.UICommandBuilder;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
+import com.eldanior.system.territory.ParcelData;
+import com.eldanior.system.territory.ParcelEconomyManager;
+import com.eldanior.system.territory.ParcelManager;
+import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
+
 import java.util.*;
 
 public class ShopTab {
@@ -127,7 +132,28 @@ public class ShopTab {
         data.removeMoney(listing.getPrice());
         store.putComponent(ref, type, data);
 
-        // Add money to seller (online or pending)
+        // Apply territorial tax
+        long price = listing.getPrice();
+        long[] taxResult = ParcelEconomyManager.calculateTax(price);
+        long netAmount = taxResult[0];
+        long taxAmount = taxResult[1];
+
+        // Distribute tax to territory hierarchy (based on buyer's location)
+        if (taxAmount > 0) {
+            try {
+                var transform = store.getComponent(ref, TransformComponent.getComponentType());
+                if (transform != null && buyer.getWorld() != null) {
+                    String world = buyer.getWorld().getName();
+                    ParcelData parcel = ParcelManager.getParcelAt(world,
+                            transform.getPosition().x, transform.getPosition().y, transform.getPosition().z);
+                    if (parcel != null) {
+                        ParcelEconomyManager.distributeTax(parcel.getId(), taxAmount);
+                    }
+                }
+            } catch (Exception e) { EldaniorLogger.error("ShopTab", e); }
+        }
+
+        // Add net amount to seller (online or pending)
         PlayerRef sellerRef = com.hypixel.hytale.server.core.universe.Universe.get().getPlayer(listing.getSellerUUID());
         if (sellerRef != null) {
             try {
@@ -136,18 +162,18 @@ public class ShopTab {
                     var sStore = sRef.getStore();
                     PlayerLevelData sData = sStore.getComponent(sRef, type);
                     if (sData != null) {
-                        sData.addMoney(listing.getPrice());
+                        sData.addMoney(netAmount);
                         sStore.putComponent(sRef, type, sData);
-                        sellerRef.sendMessage(Message.raw("§a" + buyer.getPlayerRef().getUsername() + " a achete votre objet pour " + listing.getPrice() + " Or !"));
+                        sellerRef.sendMessage(Message.raw("§a" + buyer.getPlayerRef().getUsername() + " a achete votre objet pour " + price + " Or ! (taxe: " + taxAmount + " Or)"));
                     }
                 }
             } catch (Exception e) { EldaniorLogger.error("ShopTab", e); }
         } else {
-            // Vendeur deconnecte -> gains en attente
-            ShopManager.addPendingEarnings(listing.getSellerUUID(), listing.getPrice());
+            // Vendeur deconnecte -> gains en attente (montant net apres taxe)
+            ShopManager.addPendingEarnings(listing.getSellerUUID(), netAmount);
         }
 
-        buyer.getPlayerRef().sendMessage(Message.raw("§aObjet achete pour " + listing.getPrice() + " Or !"));
+        buyer.getPlayerRef().sendMessage(Message.raw("§aObjet achete pour " + price + " Or ! (taxe: " + taxAmount + " Or)"));
         return true;
     }
 
