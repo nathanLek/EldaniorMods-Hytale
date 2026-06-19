@@ -28,7 +28,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * Systeme de regeneration des blocs dans les parcelles FARM, MINE, FOREST et DUNGEON.
  *
- * - FARM / MINE : regen simple par bloc (le bloc casse par le joueur est restaure apres le delai)
+ * - FARM : regen simple par bloc + regen periodique par snapshot (cycle 24h, batchee)
+ * - MINE : regen simple par bloc (le bloc casse par le joueur est restaure apres le delai)
  * - FOREST : regen par snapshot (detecte aussi les blocs tombes par gravite/physique)
  * - DUNGEON : regen automatique toutes les 24h par snapshot (reset complet du donjon)
  *
@@ -50,6 +51,13 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
     private static final long SCAN_COOLDOWN_MS = 3000;
     private static final long CASCADE_DELAY_MS = 2000;
     private static final int WARNING_BEFORE_SEC = 10;
+
+    // ==================== FARM : regen periodique par snapshot ====================
+
+    private static final Map<String, Map<String, String>> farmSnapshots = new ConcurrentHashMap<>();
+    private static final Set<String> farmTimersStarted = ConcurrentHashMap.newKeySet();
+    private static final long FARM_REGEN_INTERVAL_MS = 24L * 60 * 60 * 1000; // 24h
+    private static final int FARM_BATCH_SIZE = 50; // blocs restaures par batch pour eviter les lags
 
     // ==================== DUNGEON : regen auto 24h ====================
 
@@ -85,6 +93,10 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
 
         if (type == ParcelType.FARM || type == ParcelType.MINE) {
             handleSimpleRegen(target, worldName, parcel, world);
+            // S'assurer que le snapshot FARM est pris et le timer demarre
+            if (type == ParcelType.FARM) {
+                ensureFarmSnapshot(parcel, world);
+            }
         } else if (type == ParcelType.FOREST) {
             handleForestRegen(target, parcel, world);
         } else if (type == ParcelType.DUNGEON) {
@@ -277,6 +289,182 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
         }, delaySec, TimeUnit.SECONDS);
     }
 
+    // ==================== FARM : regen periodique par snapshot ====================
+
+    /**
+     * Prend le snapshot de la ferme si pas encore fait, et demarre le timer periodique.
+     */
+    private void ensureFarmSnapshot(ParcelData parcel, World world) {
+        String parcelId = parcel.getId();
+
+        if (!farmSnapshots.containsKey(parcelId)) {
+            takeFarmSnapshot(parcelId, parcel, world);
+        }
+
+        if (farmTimersStarted.add(parcelId)) {
+            startFarmRegenTimer(parcelId, parcel);
+            EldaniorLogger.info("[FarmRegen] Timer periodique demarre pour " + parcel.getName());
+        }
+    }
+
+    private static void takeFarmSnapshot(String parcelId, ParcelData parcel, World world) {
+        Map<String, String> snapshot = new ConcurrentHashMap<>();
+
+        try {
+            world.execute(() -> {
+                try {
+                    int count = 0;
+                    for (int x = parcel.getMinX(); x <= parcel.getMaxX(); x++) {
+                        for (int y = parcel.getMinY(); y <= parcel.getMaxY(); y++) {
+                            for (int z = parcel.getMinZ(); z <= parcel.getMaxZ(); z++) {
+                                BlockType bt = world.getBlockType(x, y, z);
+                                if (bt != null && bt != BlockType.EMPTY) {
+                                    String id = bt.getId();
+                                    if (id != null && !id.isEmpty()) {
+                                        snapshot.put(posKey(x, y, z), id);
+                                        count++;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    farmSnapshots.put(parcelId, snapshot);
+                    EldaniorLogger.info("[FarmRegen] Snapshot pris pour " + parcel.getName() +
+                            " : " + count + " blocs sauvegardes");
+                } catch (Exception e) {
+                    EldaniorLogger.error("FarmRegen.takeFarmSnapshot", e);
+                }
+            });
+        } catch (Exception e) {
+            EldaniorLogger.error("FarmRegen.takeFarmSnapshot.execute", e);
+        }
+    }
+
+    /**
+     * Demarre un timer periodique qui regenere la ferme.
+     * Utilise le regenDelaySec de la parcelle comme intervalle (converti en ms),
+     * avec un minimum de 24h pour eviter la surcharge.
+     */
+    private void startFarmRegenTimer(String parcelId, ParcelData parcel) {
+        long intervalMs = FARM_REGEN_INTERVAL_MS;
+
+        EldaniorLogger.SCHEDULER.scheduleAtFixedRate(() -> {
+            try {
+                regenFarm(parcelId, parcel);
+            } catch (Exception e) {
+                EldaniorLogger.error("FarmRegen.timer", e);
+            }
+        }, intervalMs, intervalMs, TimeUnit.MILLISECONDS);
+    }
+
+    /**
+     * Regenere une ferme depuis son snapshot, avec batching.
+     * Les blocs sont restaures par lots de FARM_BATCH_SIZE pour eviter les lags.
+     */
+    private void regenFarm(String parcelId, ParcelData parcel) {
+        Map<String, String> snapshot = farmSnapshots.get(parcelId);
+        if (snapshot == null || snapshot.isEmpty()) return;
+
+        World world = cachedWorld;
+        if (world == null) return;
+
+        EldaniorLogger.info("[FarmRegen] Regeneration periodique de " + parcel.getName() +
+                " dans " + WARNING_BEFORE_SEC + "s (" + snapshot.size() + " blocs)");
+
+        // Avertissement aux joueurs dans la ferme
+        notifyPlayersInParcel(parcel);
+
+        // Attendre puis restaurer par batch
+        EldaniorLogger.SCHEDULER.schedule(() -> {
+            try {
+                world.execute(() -> {
+                    // Collecter les blocs a restaurer
+                    List<Map.Entry<String, String>> toRestore = new ArrayList<>();
+                    for (Map.Entry<String, String> entry : snapshot.entrySet()) {
+                        try {
+                            int[] coords = parseKey(entry.getKey());
+                            if (coords == null) continue;
+
+                            BlockType currentType = world.getBlockType(coords[0], coords[1], coords[2]);
+                            String currentId = (currentType != null && currentType != BlockType.EMPTY)
+                                    ? currentType.getId() : null;
+
+                            if (!entry.getValue().equals(currentId)) {
+                                toRestore.add(entry);
+                            }
+                        } catch (Exception e) {
+                            // Chunk non charge, ignorer
+                        }
+                    }
+
+                    if (toRestore.isEmpty()) {
+                        EldaniorLogger.info("[FarmRegen] " + parcel.getName() + " : aucun bloc a restaurer");
+                        return;
+                    }
+
+                    // Restaurer le premier batch immediatement
+                    int totalToRestore = toRestore.size();
+                    int batches = (totalToRestore + FARM_BATCH_SIZE - 1) / FARM_BATCH_SIZE;
+
+                    EldaniorLogger.info("[FarmRegen] " + parcel.getName() +
+                            " : " + totalToRestore + " blocs a restaurer en " + batches + " batch(es)");
+
+                    for (int batchIdx = 0; batchIdx < batches; batchIdx++) {
+                        int start = batchIdx * FARM_BATCH_SIZE;
+                        int end = Math.min(start + FARM_BATCH_SIZE, totalToRestore);
+                        List<Map.Entry<String, String>> batch = toRestore.subList(start, end);
+                        int batchNum = batchIdx + 1;
+
+                        if (batchIdx == 0) {
+                            // Premier batch : restaurer immediatement
+                            int restored = restoreBatch(batch, world);
+                            EldaniorLogger.info("[FarmRegen] " + parcel.getName() +
+                                    " batch 1/" + batches + " : " + restored + " blocs restaures");
+                        } else {
+                            // Batches suivants : decaler de 1s chacun
+                            long delayMs = batchIdx * 1000L;
+                            // Copier la sous-liste car subList est liee a la liste originale
+                            List<Map.Entry<String, String>> batchCopy = new ArrayList<>(batch);
+                            EldaniorLogger.SCHEDULER.schedule(() -> {
+                                try {
+                                    world.execute(() -> {
+                                        int restored = restoreBatch(batchCopy, world);
+                                        EldaniorLogger.info("[FarmRegen] " + parcel.getName() +
+                                                " batch " + batchNum + "/" + batches +
+                                                " : " + restored + " blocs restaures");
+                                    });
+                                } catch (Exception e) {
+                                    EldaniorLogger.error("FarmRegen.batchRestore", e);
+                                }
+                            }, delayMs, TimeUnit.MILLISECONDS);
+                        }
+                    }
+                });
+            } catch (Exception e) {
+                EldaniorLogger.error("FarmRegen.regenFarm.execute", e);
+            }
+        }, WARNING_BEFORE_SEC, TimeUnit.SECONDS);
+    }
+
+    /**
+     * Restaure un lot de blocs. Retourne le nombre de blocs restaures.
+     */
+    private static int restoreBatch(List<Map.Entry<String, String>> batch, World world) {
+        int restored = 0;
+        for (Map.Entry<String, String> entry : batch) {
+            try {
+                int[] coords = parseKey(entry.getKey());
+                if (coords != null) {
+                    world.setBlock(coords[0], coords[1], coords[2], entry.getValue());
+                    restored++;
+                }
+            } catch (Exception e) {
+                EldaniorLogger.error("FarmRegen.restoreBatch", e);
+            }
+        }
+        return restored;
+    }
+
     // ==================== AVERTISSEMENT JOUEURS ====================
 
     /**
@@ -443,6 +631,135 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
      * Initialise les snapshots et timers pour tous les donjons existants.
      * A appeler au demarrage avec une reference au World.
      */
+    /**
+     * Initialise les snapshots et timers pour toutes les parcelles FARM existantes.
+     * A appeler au demarrage avec une reference au World.
+     * Prend un snapshot de chaque ferme et demarre un timer de regen periodique (24h).
+     */
+    public static void initFarmTimers(World world) {
+        cachedWorld = world;
+        int count = 0;
+        for (ParcelData parcel : ParcelManager.getAll()) {
+            if (parcel.getType() != ParcelType.FARM) continue;
+            String parcelId = parcel.getId();
+
+            if (!farmSnapshots.containsKey(parcelId)) {
+                takeFarmSnapshot(parcelId, parcel, world);
+            }
+
+            if (farmTimersStarted.add(parcelId)) {
+                long intervalMs = FARM_REGEN_INTERVAL_MS;
+
+                // Decaler les timers pour eviter que toutes les fermes se regenerent au meme instant
+                long offsetMs = count * 30_000L; // 30s entre chaque ferme
+                int farmIndex = count;
+
+                EldaniorLogger.SCHEDULER.scheduleAtFixedRate(() -> {
+                    try {
+                        Map<String, String> snap = farmSnapshots.get(parcelId);
+                        if (snap == null || snap.isEmpty() || cachedWorld == null) return;
+
+                        EldaniorLogger.info("[FarmRegen] Regen auto " + parcel.getName() +
+                                " dans " + WARNING_BEFORE_SEC + "s (" + snap.size() + " blocs)");
+
+                        // Avertissement
+                        String zoneName = parcel.getName();
+                        for (Map.Entry<UUID, Vector3d> e : PlayerPositionTracker.PLAYER_POSITIONS.entrySet()) {
+                            try {
+                                Vector3d pos = e.getValue();
+                                if (pos != null && parcel.contains(pos.x, pos.y, pos.z)) {
+                                    PlayerRef pRef = Universe.get().getPlayer(e.getKey());
+                                    if (pRef != null) {
+                                        NotificationHelper.sendNotification(pRef,
+                                                "<color:gold>La ferme " + zoneName.replace('_', ' ') +
+                                                        " se regenere dans " + WARNING_BEFORE_SEC + "s !</color>",
+                                                NotificationStyle.Warning);
+                                    }
+                                }
+                            } catch (Exception ignored) {}
+                        }
+
+                        // Restaurer par batch apres le delai d'avertissement
+                        EldaniorLogger.SCHEDULER.schedule(() -> {
+                            try {
+                                cachedWorld.execute(() -> {
+                                    // Collecter les blocs manquants
+                                    List<Map.Entry<String, String>> toRestore = new ArrayList<>();
+                                    for (Map.Entry<String, String> entry : snap.entrySet()) {
+                                        try {
+                                            int[] coords = parseKey(entry.getKey());
+                                            if (coords == null) continue;
+
+                                            BlockType currentType = cachedWorld.getBlockType(
+                                                    coords[0], coords[1], coords[2]);
+                                            String currentId = (currentType != null && currentType != BlockType.EMPTY)
+                                                    ? currentType.getId() : null;
+
+                                            if (!entry.getValue().equals(currentId)) {
+                                                toRestore.add(entry);
+                                            }
+                                        } catch (Exception ex) {
+                                            // Chunk non charge
+                                        }
+                                    }
+
+                                    if (toRestore.isEmpty()) {
+                                        EldaniorLogger.info("[FarmRegen] " + parcel.getName() +
+                                                " : aucun bloc a restaurer");
+                                        return;
+                                    }
+
+                                    // Batch restore
+                                    int total = toRestore.size();
+                                    int batches = (total + FARM_BATCH_SIZE - 1) / FARM_BATCH_SIZE;
+
+                                    // Premier batch immediatement
+                                    int end0 = Math.min(FARM_BATCH_SIZE, total);
+                                    int restored = restoreBatch(toRestore.subList(0, end0), cachedWorld);
+                                    EldaniorLogger.info("[FarmRegen] " + parcel.getName() +
+                                            " batch 1/" + batches + " : " + restored + " blocs");
+
+                                    // Batches suivants decales de 1s
+                                    for (int b = 1; b < batches; b++) {
+                                        int start = b * FARM_BATCH_SIZE;
+                                        int end = Math.min(start + FARM_BATCH_SIZE, total);
+                                        List<Map.Entry<String, String>> batchCopy = new ArrayList<>(
+                                                toRestore.subList(start, end));
+                                        int batchNum = b + 1;
+                                        int finalBatches = batches;
+                                        EldaniorLogger.SCHEDULER.schedule(() -> {
+                                            try {
+                                                cachedWorld.execute(() -> {
+                                                    int r = restoreBatch(batchCopy, cachedWorld);
+                                                    EldaniorLogger.info("[FarmRegen] " + parcel.getName() +
+                                                            " batch " + batchNum + "/" + finalBatches +
+                                                            " : " + r + " blocs");
+                                                });
+                                            } catch (Exception ex) {
+                                                EldaniorLogger.error("FarmRegen.batchRestore", ex);
+                                            }
+                                        }, b * 1000L, TimeUnit.MILLISECONDS);
+                                    }
+                                });
+                            } catch (Exception ex) {
+                                EldaniorLogger.error("FarmRegen.execute", ex);
+                            }
+                        }, WARNING_BEFORE_SEC, TimeUnit.SECONDS);
+                    } catch (Exception e) {
+                        EldaniorLogger.error("FarmRegen.timer", e);
+                    }
+                }, intervalMs + offsetMs, intervalMs, TimeUnit.MILLISECONDS);
+
+                EldaniorLogger.info("[FarmRegen] Timer periodique demarre pour " + parcel.getName() +
+                        " (offset=" + offsetMs / 1000 + "s)");
+                count++;
+            }
+        }
+        if (count > 0) {
+            EldaniorLogger.info("[FarmRegen] " + count + " ferme(s) initialisee(s) avec snapshot + timer");
+        }
+    }
+
     public static void initDungeonTimers(World world) {
         cachedWorld = world;
         // Les timers demarreront au premier break dans chaque donjon.
@@ -560,6 +877,7 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
         parcelSnapshots.remove(parcelId);
         pendingSnapshotRegen.remove(parcelId);
         lastScanTime.remove(parcelId);
+        farmSnapshots.remove(parcelId);
     }
 
     public static void cleanup() {
@@ -567,6 +885,8 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
         parcelSnapshots.clear();
         pendingSnapshotRegen.clear();
         lastScanTime.clear();
+        farmSnapshots.clear();
+        farmTimersStarted.clear();
         dungeonSnapshots.clear();
         dungeonTimersStarted.clear();
     }
@@ -578,7 +898,7 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
     }
 
     public static int getSnapshotCount() {
-        return parcelSnapshots.size();
+        return parcelSnapshots.size() + farmSnapshots.size() + dungeonSnapshots.size();
     }
 
     @Override
