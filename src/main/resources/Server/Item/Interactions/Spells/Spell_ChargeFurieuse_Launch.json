@@ -7,10 +7,10 @@
     "Interactions": [
       { "Type": "ChangeStat", "StatModifiers": { "SignatureEnergy": 0 }, "Behaviour": "Set" },
       {
-        "Type": "Dash",
+        "Type": "ApplyForce",
         "RunTime": 0.4,
-        "DashForce": 20,
-        "DashDirection": "Forward",
+        "Force": 20,
+        "Direction": "Forward",
         "Effects": {
           "ItemAnimationId": "CastPushCharged",
           "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Impact",
@@ -21,23 +21,33 @@
         }
       },
       {
-        "Type": "MeleeAttack",
-        "RunTime": 0.3,
-        "DamageCalculator": {
-          "BaseDamage": { "Melee": 12 }
-        },
+        "Type": "Selector",
         "Selector": {
           "Id": "AOECircle",
           "Range": 4
         },
-        "Knockback": {
-          "Type": "Point",
-          "Force": 5,
-          "VelocityType": "Set"
-        },
+        "RunTime": 0.3,
         "Effects": {
           "Particles": [
             { "SystemId": "Mace_Signature_Cast", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 3.0, "Color": "#ff4500" }
+          ]
+        },
+        "HitEntity": {
+          "Interactions": [
+            {
+              "Type": "DamageEntity",
+              "DamageCalculator": {
+                "BaseDamage": { "Melee": 12 }
+              },
+              "DamageEffects": {
+                "Knockback": {
+                  "Force": 5,
+                  "RelativeX": 0,
+                  "RelativeZ": -8,
+                  "VelocityY": 3
+                }
+              }
+            }
           ]
         }
       },

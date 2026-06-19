@@ -7,42 +7,58 @@
     "Interactions": [
       { "Type": "ChangeStat", "StatModifiers": { "SignatureEnergy": 0 }, "Behaviour": "Set" },
       {
-        "Type": "SpawnDeployableAtSelf",
-        "Config": {
-          "Type": "Aoe",
-          "Shape": "Cylinder",
-          "Id": "PluieDeFleches_Zone",
-          "LiveDuration": 5,
-          "ModelScale": 1.0,
-          "StartRadius": 2,
-          "EndRadius": 6,
-          "Height": 8,
-          "RadiusChangeTime": 0.5,
-          "DamageInterval": 0.8,
-          "DamageAmount": 8,
-          "Invulnerable": true,
-          "AttackOwner": false,
-          "AttackTeam": false,
-          "DeploySoundEventId": "SFX_Skeleton_Mage_Spellbook_Impact",
-          "DespawnSoundEventId": "SFX_Skeleton_Mage_Spellbook_Impact",
-          "SpawnParticles": [
-            { "SystemId": "Rings_Rings", "TargetEntityPart": "Entity", "Scale": 3.0, "Color": "#87ceeb" },
-            { "SystemId": "Flying_Orb", "TargetEntityPart": "Entity", "Scale": 2.0 }
-          ],
-          "DespawnParticles": [
-            { "SystemId": "Azure_Spiral", "TargetEntityPart": "Entity", "Scale": 1.5 }
-          ]
-        }
-      },
-      {
-        "Type": "Simple", "RunTime": 0.6,
-        "Effects": {
-          "ItemAnimationId": "CastPushCharged",
-          "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Impact",
-          "Particles": [
-            { "SystemId": "Rings_Rings", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 2.5, "Color": "#87ceeb" }
-          ]
-        }
+        "Type": "Parallel",
+        "Interactions": [
+          {
+            "Interactions": [
+              {
+                "Type": "Selector",
+                "Selector": {
+                  "Id": "AOECircle",
+                  "Range": 6
+                },
+                "Effects": {
+                  "Particles": [
+                    { "SystemId": "Rings_Rings", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 3.0, "Color": "#87ceeb" },
+                    { "SystemId": "Flying_Orb", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 2.0 }
+                  ]
+                },
+                "HitEntity": {
+                  "Interactions": [
+                    {
+                      "Type": "DamageEntity",
+                      "DamageCalculator": {
+                        "BaseDamage": { "Ranged": 8 }
+                      },
+                      "DamageEffects": {
+                        "Knockback": {
+                          "Force": 2,
+                          "RelativeX": 0,
+                          "RelativeZ": -3,
+                          "VelocityY": 1
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "Interactions": [
+              {
+                "Type": "Simple", "RunTime": 0.6,
+                "Effects": {
+                  "ItemAnimationId": "CastPushCharged",
+                  "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Impact",
+                  "Particles": [
+                    { "SystemId": "Rings_Rings", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 2.5, "Color": "#87ceeb" }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
       },
       {
         "Type": "Simple", "RunTime": 0.1,

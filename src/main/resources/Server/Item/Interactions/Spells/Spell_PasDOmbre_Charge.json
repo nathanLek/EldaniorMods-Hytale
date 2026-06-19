@@ -4,8 +4,8 @@
     "ItemAnimationId": "CastPushCharging",
     "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Charge",
     "Particles": [
-      { "SystemId": "Portal", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.4 },
-      { "SystemId": "MagicBlast", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.2, "Color": "#4b0082" }
+      { "SystemId": "Spectre_Void_Head", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.4 },
+      { "SystemId": "Fire_Charge_Soak1", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.2, "Color": "#4b0082" }
     ]
   },
   "AllowIndefiniteHold": false,
@@ -26,7 +26,7 @@
               "ItemAnimationId": "CastPushCharged",
               "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Impact",
               "Particles": [
-                { "SystemId": "Portal", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.6 }
+                { "SystemId": "Spectre_Void_Head", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.6 }
               ]
             }
           }] }

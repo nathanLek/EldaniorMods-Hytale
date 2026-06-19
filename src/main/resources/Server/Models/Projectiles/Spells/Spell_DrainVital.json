@@ -2,11 +2,11 @@
   "Model": "Items/Projectiles/Projectile.blockymodel",
   "Texture": "Items/Projectiles/Projectile_default.png",
   "HitBox": {
-    "Max": { "X": 0.2, "Y": 0.2, "Z": 0.2 },
-    "Min": { "X": -0.2, "Y": -0.2, "Z": -0.2 }
+    "Max": { "X": 0.15, "Y": 0.15, "Z": 0.15 },
+    "Min": { "X": -0.15, "Y": -0.15, "Z": -0.15 }
   },
-  "MinScale": 1.0,
-  "MaxScale": 1.5,
+  "MinScale": 0.8,
+  "MaxScale": 1.2,
   "AnimationSets": {
     "Idle": {
       "Animations": [
@@ -19,26 +19,30 @@
   },
   "Particles": [
     {
-      "SystemId": "Fire_Charge_Soak1",
+      "SystemId": "Spectre_Void_Body",
       "TargetNodeName": "",
-      "Color": "#fbbf24",
-      "Scale": 1.5
+      "Scale": 1.2
     },
     {
-      "SystemId": "Torch_Fire",
+      "SystemId": "GreenOrbTrail",
       "TargetNodeName": "",
-      "Color": "#f59e0b",
-      "Scale": 1.0
+      "Scale": 0.8
     }
   ],
   "Trails": [
     {
       "TargetNodeName": "Origin_Item",
-      "TrailId": "Small_Default"
+      "TrailId": "SkeletonMage"
+    }
+  ],
+  "DefaultAttachments": [
+    {
+      "Model": "Items/Projectiles/Fireball.blockymodel",
+      "Texture": "Items/Projectiles/Fireball_Textures/Void.png"
     }
   ],
   "Light": {
-    "Color": "#fbbf24",
-    "Radius": 10
+    "Color": "#4a0",
+    "Radius": 6
   }
 }
