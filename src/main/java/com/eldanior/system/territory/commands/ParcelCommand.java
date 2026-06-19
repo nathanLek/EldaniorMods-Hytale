@@ -525,63 +525,67 @@ public class ParcelCommand extends AbstractAsyncCommand {
         String worldStr = sender.getWorld().getName();
         ParcelData parcel = ParcelManager.getParcelAt(worldStr, transform.getPosition().x, transform.getPosition().y, transform.getPosition().z);
         if (parcel == null) { sender.getPlayerRef().sendMessage(Message.raw("§cAucune parcelle ici.")); return; }
-        if (!parcel.isForSale()) { sender.getPlayerRef().sendMessage(Message.raw("§cCette parcelle n'est pas en vente.")); return; }
-        if (parcel.isOwner(uuid)) { sender.getPlayerRef().sendMessage(Message.raw("§cVous etes deja proprietaire.")); return; }
 
-        PlayerLevelData data = store.getComponent(ref, EldaniorSystem.get().getPlayerLevelDataType());
-        if (data == null) return;
+        // Synchronized on the parcel object to prevent double-purchase race condition (ELD-82)
+        synchronized (parcel) {
+            if (!parcel.isForSale()) { sender.getPlayerRef().sendMessage(Message.raw("§cCette parcelle n'est pas en vente.")); return; }
+            if (parcel.isOwner(uuid)) { sender.getPlayerRef().sendMessage(Message.raw("§cVous etes deja proprietaire.")); return; }
 
-        if (data.getMoney() < parcel.getPrice()) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cPas assez d'or ! Il faut " + parcel.getPrice() + " Or."));
-            return;
-        }
+            PlayerLevelData data = store.getComponent(ref, EldaniorSystem.get().getPlayerLevelDataType());
+            if (data == null) return;
 
-        // Calcul taxe (meme logique que ProprietesTab)
-        long totalPrice = parcel.getPrice();
-        long[] taxResult = ParcelEconomyManager.calculateTax(totalPrice);
-        long netAmount = taxResult[0];
-        long taxAmount = taxResult[1];
+            // Calcul taxe (meme logique que ProprietesTab)
+            long totalPrice = parcel.getPrice();
+            long[] taxResult = ParcelEconomyManager.calculateTax(totalPrice);
+            long netAmount = taxResult[0];
+            long taxAmount = taxResult[1];
 
-        // Transfert — prelever le montant total au joueur
-        data.removeMoney(totalPrice);
-        store.putComponent(ref, EldaniorSystem.get().getPlayerLevelDataType(), data);
-
-        // Ancien proprietaire recoit le montant NET (apres taxe)
-        UUID oldOwner = parcel.getOwnerUUID();
-        if (oldOwner != null) {
-            PlayerRef oldRef = Universe.get().getPlayer(oldOwner);
-            if (oldRef != null) {
-                try {
-                    var oldEntRef = oldRef.getReference();
-                    if (oldEntRef != null) {
-                        var oldStore = oldEntRef.getStore();
-                        PlayerLevelData oldData = oldStore.getComponent(oldEntRef, EldaniorSystem.get().getPlayerLevelDataType());
-                        if (oldData != null) {
-                            oldData.addMoney(netAmount);
-                            oldStore.putComponent(oldEntRef, EldaniorSystem.get().getPlayerLevelDataType(), oldData);
-                        }
-                    }
-                    oldRef.sendMessage(Message.raw("§a" + sender.getPlayerRef().getUsername() + " a achete votre parcelle " + parcel.getName() + " pour " + totalPrice + " Or ! (net: " + netAmount + " Or, taxe: " + taxAmount + " Or)"));
-                } catch (Exception e) { EldaniorLogger.error("ParcelCommand", e); }
-            } else {
-                // Proprietaire offline — stocker les gains NET en attente
-                ParcelManager.addPendingEarnings(oldOwner, netAmount);
+            // Transfert — prelever le montant total au joueur (atomique, refuse si fonds insuffisants)
+            if (!data.removeMoney(totalPrice)) {
+                sender.getPlayerRef().sendMessage(Message.raw("§cPas assez d'or ! Il faut " + totalPrice + " Or."));
+                return;
             }
+            store.putComponent(ref, EldaniorSystem.get().getPlayerLevelDataType(), data);
+
+            // Marquer immediatement comme vendue pour empecher tout double achat
+            parcel.setForSale(false);
+
+            // Ancien proprietaire recoit le montant NET (apres taxe)
+            UUID oldOwner = parcel.getOwnerUUID();
+            if (oldOwner != null) {
+                PlayerRef oldRef = Universe.get().getPlayer(oldOwner);
+                if (oldRef != null) {
+                    try {
+                        var oldEntRef = oldRef.getReference();
+                        if (oldEntRef != null) {
+                            var oldStore = oldEntRef.getStore();
+                            PlayerLevelData oldData = oldStore.getComponent(oldEntRef, EldaniorSystem.get().getPlayerLevelDataType());
+                            if (oldData != null) {
+                                oldData.addMoney(netAmount);
+                                oldStore.putComponent(oldEntRef, EldaniorSystem.get().getPlayerLevelDataType(), oldData);
+                            }
+                        }
+                        oldRef.sendMessage(Message.raw("§a" + sender.getPlayerRef().getUsername() + " a achete votre parcelle " + parcel.getName() + " pour " + totalPrice + " Or ! (net: " + netAmount + " Or, taxe: " + taxAmount + " Or)"));
+                    } catch (Exception e) { EldaniorLogger.error("ParcelCommand", e); }
+                } else {
+                    // Proprietaire offline — stocker les gains NET en attente
+                    ParcelManager.addPendingEarnings(oldOwner, netAmount);
+                }
+            }
+
+            // Distribuer la taxe dans la hierarchie territoriale
+            if (taxAmount > 0) {
+                ParcelEconomyManager.distributeTax(parcel.getId(), taxAmount);
+            }
+
+            parcel.setOwnerUUID(uuid);
+            parcel.setOwnerName(sender.getPlayerRef().getUsername());
+            parcel.getMembers().clear();
+            parcel.addMember(uuid, ParcelRole.OWNER);
+            ParcelManager.save();
+
+            sender.getPlayerRef().sendMessage(Message.raw("§a§lParcelle achetee : §f" + parcel.getName() + " §apour §f" + totalPrice + " Or §7(taxe: " + taxAmount + " Or)§a !"));
         }
-
-        // Distribuer la taxe dans la hierarchie territoriale
-        if (taxAmount > 0) {
-            ParcelEconomyManager.distributeTax(parcel.getId(), taxAmount);
-        }
-
-        parcel.setOwnerUUID(uuid);
-        parcel.setOwnerName(sender.getPlayerRef().getUsername());
-        parcel.setForSale(false);
-        parcel.getMembers().clear();
-        parcel.addMember(uuid, ParcelRole.OWNER);
-        ParcelManager.save();
-
-        sender.getPlayerRef().sendMessage(Message.raw("§a§lParcelle achetee : §f" + parcel.getName() + " §apour §f" + totalPrice + " Or §7(taxe: " + taxAmount + " Or)§a !"));
     }
 
     // ==================== SET PRICE / RENT ====================
