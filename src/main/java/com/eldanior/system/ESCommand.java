@@ -88,6 +88,18 @@ public class ESCommand extends AbstractCommandCollection {
 
         // Transactions (admin)
         this.addSubCommand(new com.eldanior.system.economy.commands.TransactionsCommand());
+
+        // Eviction groupee (admin)
+        this.addSubCommand(new com.eldanior.system.territory.commands.EvictAllCommand());
+
+        // Audit des taxes (admin)
+        this.addSubCommand(new com.eldanior.system.territory.commands.TaxAuditCommand());
+
+        // Backup / Restore (admin)
+        this.addSubCommand(new com.eldanior.system.persistence.commands.BackupCommand());
+
+        // Mode debug (admin)
+        this.addSubCommand(new com.eldanior.system.config.commands.DebugCommand());
     }
 
     @Override
