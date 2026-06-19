@@ -1,0 +1,63 @@
+{
+  "Type": "StatsCondition",
+  "Costs": { "SignatureEnergy": 1 },
+  "RunTime": 0.1,
+  "Next": {
+    "Type": "Serial",
+    "Interactions": [
+      { "Type": "ChangeStat", "StatModifiers": { "SignatureEnergy": 0 }, "Behaviour": "Set" },
+      {
+        "Type": "Parallel",
+        "Interactions": [
+          {
+            "Interactions": [
+              {
+                "Type": "Simple",
+                "RunTime": 0.5,
+                "Effects": {
+                  "ItemAnimationId": "CastPushCharged",
+                  "WorldSoundEventId": "SFX_Ice_Break",
+                  "CameraEffect": "Mace_Explode",
+                  "Particles": [
+                    { "SystemId": "IceBall", "TargetEntityPart": "Entity", "Scale": 5.0 },
+                    { "SystemId": "Effect_Snow", "TargetEntityPart": "Entity", "Scale": 4.0 },
+                    { "SystemId": "Weapon_Frost_Mist", "TargetEntityPart": "Entity", "Scale": 4.0 },
+                    { "SystemId": "Mace_Signature_Ground_Hit", "TargetEntityPart": "Entity", "Scale": 2.5 }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "Interactions": [
+              {
+                "Type": "Selector",
+                "RunTime": 0.3,
+                "Selector": { "Id": "AOECircle", "Range": 8 },
+                "HitEntity": {
+                  "Interactions": [
+                    {
+                      "Type": "DamageEntity",
+                      "DamageCalculator": { "BaseDamage": { "Ice": 12 } }
+                    },
+                    {
+                      "Type": "ApplyEffect",
+                      "Entity": "Target",
+                      "EffectId": "Slow"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Type": "Simple",
+        "RunTime": 0.1,
+        "Effects": { "ClearAnimationOnFinish": true, "ClearSoundEventOnFinish": true }
+      }
+    ]
+  },
+  "Failed": { "Type": "Simple", "RunTime": 0.3, "Effects": { "ItemAnimationId": "Interact", "WorldSoundEventId": "SFX_Bow_No_Ammo" } }
+}
