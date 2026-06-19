@@ -97,6 +97,9 @@ public class CraftingProgressionSystem extends EntityEventSystem<EntityStore, Cr
                 data.addSkillProc(matchedSkill.name());
             }
 
+            // Persister les données modifiées dans le store ECS
+            commandBuffer.putComponent(playerEntityRef, EldaniorSystem.get().getPlayerLevelDataType(), data);
+
             // Notification progression
             if (netRef != null) {
                 float progress = (data.getSkillProcs(matchedSkill.name()) / 10000f) * 100f;
