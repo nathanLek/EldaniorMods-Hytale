@@ -15,6 +15,8 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
+import com.eldanior.system.persistence.PersistenceManager;
+
 import javax.annotation.Nonnull;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -110,6 +112,9 @@ public class SellCommand extends AbstractAsyncCommand {
                         if (translated != null) itemName = translated;
                     }
                 } catch (Exception e) { EldaniorLogger.error("SellCommand", e); }
+
+                // Persist shop state immediately to prevent data loss on crash (BUGS-12)
+                try { PersistenceManager.saveShop(); } catch (Exception e2) { EldaniorLogger.error("SellCommand", e2); }
 
                 senderRef.sendMessage(Message.raw("§a" + itemName + " §amis en vente pour §e" + price + " Or §a!"));
                 senderRef.sendMessage(Message.raw("§7Les joueurs peuvent l'acheter via §f/es system §7> Shop"));
