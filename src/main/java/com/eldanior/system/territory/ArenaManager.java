@@ -1,11 +1,14 @@
 package com.eldanior.system.territory;
 
+import com.eldanior.system.config.EldaniorLogger;
 import com.eldanior.system.config.PersistenceUtils;
 
 import java.io.*;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class ArenaManager {
@@ -16,6 +19,14 @@ public class ArenaManager {
 
     // Joueurs actuellement en arene: playerUUID -> arenaId
     private static final Map<UUID, String> playersInArena = new ConcurrentHashMap<>();
+
+    // Separateur pour le format properties ("|" au lieu de "." pour eviter le conflit avec les noms de joueurs)
+    private static final String SEP = "|";
+
+    // Debounce save : evite des dizaines d'ecritures/sec lors de kills rapides
+    private static final long SAVE_DEBOUNCE_MS = 30_000; // 30 secondes
+    private static volatile ScheduledFuture<?> pendingSave = null;
+    private static final Object saveLock = new Object();
 
     public static void init(Path pluginDataDir) {
         dataDir = pluginDataDir;
@@ -46,13 +57,32 @@ public class ArenaManager {
     public static void recordKill(String arenaId, String killerName) {
         ArenaStats stats = getOrCreateStats(arenaId, killerName);
         stats.kills++;
-        save();
+        scheduleSave();
     }
 
     public static void recordDeath(String arenaId, String victimName) {
         ArenaStats stats = getOrCreateStats(arenaId, victimName);
         stats.deaths++;
-        save();
+        scheduleSave();
+    }
+
+    /**
+     * Planifie une sauvegarde avec debounce de 30s.
+     * Si un save est deja planifie, il est annule et replanifie (debounce).
+     */
+    private static void scheduleSave() {
+        synchronized (saveLock) {
+            if (pendingSave != null && !pendingSave.isDone()) {
+                pendingSave.cancel(false);
+            }
+            pendingSave = EldaniorLogger.SCHEDULER.schedule(() -> {
+                try {
+                    save();
+                } catch (Exception e) {
+                    System.err.println("[ArenaManager] Erreur sauvegarde debounce: " + e.getMessage());
+                }
+            }, SAVE_DEBOUNCE_MS, TimeUnit.MILLISECONDS);
+        }
     }
 
     private static ArenaStats getOrCreateStats(String arenaId, String playerName) {
@@ -88,10 +118,10 @@ public class ArenaManager {
     public static void save() {
         try {
             Properties props = new Properties();
-            props.setProperty("_version", "1");
+            props.setProperty("_version", "2"); // v2: separateur "|" au lieu de "."
             for (Map.Entry<String, Map<String, ArenaStats>> arena : arenaLeaderboards.entrySet()) {
                 for (Map.Entry<String, ArenaStats> entry : arena.getValue().entrySet()) {
-                    String prefix = arena.getKey() + "." + entry.getKey() + ".";
+                    String prefix = arena.getKey() + SEP + entry.getKey() + SEP;
                     props.setProperty(prefix + "kills", String.valueOf(entry.getValue().kills));
                     props.setProperty(prefix + "deaths", String.valueOf(entry.getValue().deaths));
                 }
@@ -120,10 +150,18 @@ public class ArenaManager {
                 System.out.println("[ArenaManager] WARNING: arena_stats.properties n'a pas de _version — fichier ancien, migration future possible.");
             }
 
-            // Format: arenaId.playerName.kills / arenaId.playerName.deaths
+            // Format: arenaId|playerName|kills / arenaId|playerName|deaths
+            // Retro-compatible: supporte aussi l'ancien separateur "." si "|" absent
             Map<String, Map<String, int[]>> temp = new HashMap<>();
             for (String key : props.stringPropertyNames()) {
-                String[] parts = key.split("\\.");
+                if (key.startsWith("_")) continue; // skip metadata keys like _version
+                String[] parts;
+                if (key.contains(SEP)) {
+                    parts = key.split("\\|");
+                } else {
+                    // Ancien format avec "." — ne fonctionne que si le nom ne contient pas de "."
+                    parts = key.split("\\.");
+                }
                 if (parts.length != 3) continue;
                 String arenaId = parts[0];
                 String playerName = parts[1];
@@ -152,7 +190,15 @@ public class ArenaManager {
         }
     }
 
-    public static void saveAll() { save(); }
+    /** Force la sauvegarde immediate (annule le debounce en cours). */
+    public static void saveAll() {
+        synchronized (saveLock) {
+            if (pendingSave != null && !pendingSave.isDone()) {
+                pendingSave.cancel(false);
+            }
+        }
+        save();
+    }
 
     // ==================== INNER CLASS ====================
 
