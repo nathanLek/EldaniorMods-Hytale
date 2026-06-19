@@ -73,7 +73,7 @@ public class PartyManager {
             removeHudByUUID(member);
             playerParty.remove(member);
         }
-        party.getMembers().clear();
+        party.clearMembers();
     }
 
     // ==================== INVITATIONS ====================
