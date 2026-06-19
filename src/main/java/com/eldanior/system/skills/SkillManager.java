@@ -1914,6 +1914,21 @@ public class SkillManager {
                 80, 0.0f, 1.0f, 18.0f, 30.0f, 6.0f,
                 List.of(), List.of()
         ));
+        register("skill_page_flamme_elementaire", new SkillModel(
+                "FLAMME_ELEMENTAIRE", "Spell_FlammeElementaire", "Flamme Élémentaire", "mage, elementaliste",
+                120, 0.0f, 1.0f, 8.0f, 30.0f, 4.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_eclat_glacial", new SkillModel(
+                "ECLAT_GLACIAL", "Spell_EclatGlacial", "Éclat Glacial", "mage, elementaliste",
+                200, 0.0f, 1.2f, 12.0f, 8.0f, 5.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_arc_foudroyant", new SkillModel(
+                "ARC_FOUDROYANT", "Spell_ArcFoudroyant", "Arc Foudroyant", "mage, elementaliste",
+                180, 0.0f, 0.8f, 22.0f, 30.0f, 0.0f,
+                List.of(), List.of()
+        ));
     }
 
     private static void register(String itemId, SkillModel skill) {

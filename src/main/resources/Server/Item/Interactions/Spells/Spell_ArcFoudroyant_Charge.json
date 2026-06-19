@@ -1,0 +1,39 @@
+{
+  "Type": "Charging",
+  "Effects": {
+    "ItemAnimationId": "CastHurlCharging",
+    "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Charge",
+    "Particles": [
+      {
+        "SystemId": "Hedera_Scream",
+        "TargetEntityPart": "PrimaryItem",
+        "TargetNodeName": "Origin",
+        "Scale": 0.3
+      },
+      {
+        "SystemId": "Fire_ChargeOrange",
+        "TargetEntityPart": "PrimaryItem",
+        "TargetNodeName": "Origin",
+        "Scale": 0.4
+      }
+    ]
+  },
+  "AllowIndefiniteHold": false,
+  "HorizontalSpeedMultiplier": 0.5,
+  "Next": {
+    "0.8": {
+      "Type": "StatsCondition",
+      "Costs": { "Mana": 180 },
+      "RunTime": 0.15,
+      "Next": {
+        "Type": "Parallel",
+        "Interactions": [
+          { "Interactions": [{ "Type": "ChangeStat", "StatModifiers": { "Mana": -180 } }] },
+          { "Interactions": [{ "Type": "ChangeStat", "StatModifiers": { "SignatureEnergy": 1 }, "Behaviour": "Set" }] },
+          { "Interactions": [{ "Type": "Simple", "RunTime": 0.2, "Effects": { "ItemAnimationId": "CastHurlCharged", "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Impact", "Particles": [{ "SystemId": "Hedera_Scream", "TargetEntityPart": "PrimaryItem", "TargetNodeName": "Origin", "Scale": 0.5 }] } }] }
+        ]
+      },
+      "Failed": { "Type": "Simple", "RunTime": 0.3, "Effects": { "ItemAnimationId": "Interact", "WorldSoundEventId": "SFX_Bow_No_Ammo" } }
+    }
+  }
+}
