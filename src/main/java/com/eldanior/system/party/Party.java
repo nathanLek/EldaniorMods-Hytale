@@ -6,9 +6,9 @@ public class Party {
 
     public static final int MAX_MEMBERS = 5;
 
-    private UUID captainUUID;
-    private String captainName;
-    private final Map<UUID, String> members = new LinkedHashMap<>();
+    private volatile UUID captainUUID;
+    private volatile String captainName;
+    private final Map<UUID, String> members = Collections.synchronizedMap(new LinkedHashMap<>());
 
     public Party(UUID captainUUID, String captainName) {
         this.captainUUID = captainUUID;
@@ -22,32 +22,49 @@ public class Party {
     public boolean isMember(UUID uuid) { return members.containsKey(uuid); }
     public boolean isFull() { return members.size() >= MAX_MEMBERS; }
     public int getSize() { return members.size(); }
-    public Map<UUID, String> getMembers() { return members; }
+
+    /** Retourne une copie immuable snapshot des membres. */
+    public Map<UUID, String> getMembers() {
+        synchronized (members) {
+            return Collections.unmodifiableMap(new LinkedHashMap<>(members));
+        }
+    }
+
+    /** Vide la map interne des membres. */
+    public void clearMembers() { members.clear(); }
 
     public boolean addMember(UUID uuid, String name) {
-        if (isFull() || members.containsKey(uuid)) return false;
-        members.put(uuid, name);
-        return true;
+        synchronized (members) {
+            if (isFull() || members.containsKey(uuid)) return false;
+            members.put(uuid, name);
+            return true;
+        }
     }
 
     public void removeMember(UUID uuid) {
-        members.remove(uuid);
-        // Si le capitaine part et qu'il reste des membres, le premier devient capitaine
-        if (captainUUID.equals(uuid) && !members.isEmpty()) {
-            Map.Entry<UUID, String> first = members.entrySet().iterator().next();
-            captainUUID = first.getKey();
-            captainName = first.getValue();
+        synchronized (members) {
+            members.remove(uuid);
+            // Si le capitaine part et qu'il reste des membres, le premier devient capitaine
+            if (captainUUID.equals(uuid) && !members.isEmpty()) {
+                Map.Entry<UUID, String> first = members.entrySet().iterator().next();
+                captainUUID = first.getKey();
+                captainName = first.getValue();
+            }
         }
     }
 
     public void transferCaptain(UUID newCaptainUUID) {
-        if (!members.containsKey(newCaptainUUID)) return;
-        this.captainUUID = newCaptainUUID;
-        this.captainName = members.get(newCaptainUUID);
+        synchronized (members) {
+            if (!members.containsKey(newCaptainUUID)) return;
+            this.captainUUID = newCaptainUUID;
+            this.captainName = members.get(newCaptainUUID);
+        }
     }
 
     public List<UUID> getMemberUUIDs() {
-        return new ArrayList<>(members.keySet());
+        synchronized (members) {
+            return new ArrayList<>(members.keySet());
+        }
     }
 
     public String getMemberName(UUID uuid) {
