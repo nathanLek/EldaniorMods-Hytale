@@ -12,6 +12,8 @@ public class ParcelManager {
 
     private static final Map<String, ParcelData> parcels = new ConcurrentHashMap<>();
     private static final Map<UUID, int[]> playerSelections = new ConcurrentHashMap<>(); // pos1[3] + pos2[3]
+    private static final Set<UUID> pos1Set = ConcurrentHashMap.newKeySet();
+    private static final Set<UUID> pos2Set = ConcurrentHashMap.newKeySet();
     private static final Map<UUID, Long> pendingEarnings = new ConcurrentHashMap<>();
     private static Path dataDir;
     private static volatile long version = 0;
@@ -45,11 +47,13 @@ public class ParcelManager {
     public static void setPos1(UUID playerUUID, int x, int y, int z) {
         int[] sel = playerSelections.computeIfAbsent(playerUUID, k -> new int[6]);
         sel[0] = x; sel[1] = y; sel[2] = z;
+        pos1Set.add(playerUUID);
     }
 
     public static void setPos2(UUID playerUUID, int x, int y, int z) {
         int[] sel = playerSelections.computeIfAbsent(playerUUID, k -> new int[6]);
         sel[3] = x; sel[4] = y; sel[5] = z;
+        pos2Set.add(playerUUID);
     }
 
     public static int[] getSelection(UUID playerUUID) {
@@ -57,18 +61,21 @@ public class ParcelManager {
     }
 
     public static boolean hasFullSelection(UUID playerUUID) {
-        int[] sel = playerSelections.get(playerUUID);
-        return sel != null;
+        return pos1Set.contains(playerUUID) && pos2Set.contains(playerUUID);
     }
 
     public static void clearSelection(UUID playerUUID) {
         playerSelections.remove(playerUUID);
+        pos1Set.remove(playerUUID);
+        pos2Set.remove(playerUUID);
     }
 
     /** Nettoie les selections temporaires d'un joueur qui se deconnecte. */
     public static void handleDisconnect(UUID playerUUID) {
         if (playerUUID == null) return;
         playerSelections.remove(playerUUID);
+        pos1Set.remove(playerUUID);
+        pos2Set.remove(playerUUID);
     }
 
     // ==================== CRUD ====================
@@ -293,9 +300,14 @@ public class ParcelManager {
      * A utiliser pour un nettoyage complet (ex: reset).
      */
     public static void deleteParcelRecursive(String id) {
+        deleteParcelRecursiveInternal(id);
+        save();
+    }
+
+    private static void deleteParcelRecursiveInternal(String id) {
         List<String> children = getChildrenOf(id);
         for (String childId : children) {
-            deleteParcelRecursive(childId);
+            deleteParcelRecursiveInternal(childId);
         }
         parcels.remove(id);
     }
