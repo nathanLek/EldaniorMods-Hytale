@@ -22,8 +22,11 @@ public class DuelManager {
     // Duels actifs: joueur UUID -> ActiveDuel
     private static final Map<UUID, ActiveDuel> activeDuels = new ConcurrentHashMap<>();
 
-    // Invitations: cible UUID -> challenger UUID
-    private static final Map<UUID, UUID> pendingDuels = new ConcurrentHashMap<>();
+    // Invitations: cible UUID -> PendingChallenge (challenger + timestamp)
+    private static final Map<UUID, PendingChallenge> pendingDuels = new ConcurrentHashMap<>();
+
+    // Timeout des invitations en millisecondes (60 secondes)
+    private static final long CHALLENGE_TIMEOUT_MS = 60_000;
 
     // File d'attente de duels a terminer (pour eviter Store is currently processing)
     private static final Queue<UUID> pendingEndDuels = new java.util.concurrent.ConcurrentLinkedQueue<>();
@@ -39,6 +42,8 @@ public class DuelManager {
         while ((loser = pendingEndDuels.poll()) != null) {
             endDuel(loser);
         }
+        // Nettoyer les invitations expirees a chaque tick
+        cleanExpiredChallenges();
     }
 
     public static void init() {
@@ -49,20 +54,71 @@ public class DuelManager {
 
     // ==================== INVITATIONS ====================
 
-    public static void sendChallenge(UUID challengerUUID, UUID targetUUID) {
-        pendingDuels.put(targetUUID, challengerUUID);
+    public static boolean sendChallenge(UUID challengerUUID, UUID targetUUID) {
+        // Verifier que le challenger n'a pas deja un defi en attente
+        if (hasOutgoingChallenge(challengerUUID)) {
+            return false;
+        }
+        pendingDuels.put(targetUUID, new PendingChallenge(challengerUUID, System.currentTimeMillis()));
+        return true;
     }
 
     public static boolean hasPendingChallenge(UUID targetUUID) {
-        return pendingDuels.containsKey(targetUUID);
+        PendingChallenge challenge = pendingDuels.get(targetUUID);
+        if (challenge == null) return false;
+        // Verifier si l'invitation a expire
+        if (System.currentTimeMillis() - challenge.timestamp > CHALLENGE_TIMEOUT_MS) {
+            pendingDuels.remove(targetUUID);
+            return false;
+        }
+        return true;
     }
 
     public static UUID getPendingChallenger(UUID targetUUID) {
-        return pendingDuels.get(targetUUID);
+        PendingChallenge challenge = pendingDuels.get(targetUUID);
+        if (challenge == null) return null;
+        // Verifier si l'invitation a expire
+        if (System.currentTimeMillis() - challenge.timestamp > CHALLENGE_TIMEOUT_MS) {
+            pendingDuels.remove(targetUUID);
+            return null;
+        }
+        return challenge.challengerUUID;
     }
 
     public static void clearChallenge(UUID targetUUID) {
         pendingDuels.remove(targetUUID);
+    }
+
+    /**
+     * Verifie si un joueur a deja envoye un defi en attente (anti-spam).
+     */
+    public static boolean hasOutgoingChallenge(UUID challengerUUID) {
+        long now = System.currentTimeMillis();
+        for (PendingChallenge challenge : pendingDuels.values()) {
+            if (challenge.challengerUUID.equals(challengerUUID)
+                    && now - challenge.timestamp <= CHALLENGE_TIMEOUT_MS) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Nettoie les invitations expirees (appelé depuis le tick serveur).
+     */
+    private static void cleanExpiredChallenges() {
+        long now = System.currentTimeMillis();
+        pendingDuels.entrySet().removeIf(entry -> {
+            if (now - entry.getValue().timestamp > CHALLENGE_TIMEOUT_MS) {
+                // Notifier la cible que l'invitation a expire
+                PlayerRef targetRef = Universe.get().getPlayer(entry.getKey());
+                if (targetRef != null) {
+                    targetRef.sendMessage(Message.raw("§7Le defi de duel a expire."));
+                }
+                return true;
+            }
+            return false;
+        });
     }
 
     // ==================== DUEL ACTIF ====================
@@ -225,7 +281,7 @@ public class DuelManager {
         synchronized (DUEL_LOCK) {
             // 1. Retirer les invitations ou ce joueur est implique
             pendingDuels.remove(playerUUID); // en tant que cible
-            pendingDuels.values().removeIf(challenger -> challenger.equals(playerUUID)); // en tant que challenger
+            pendingDuels.values().removeIf(challenge -> challenge.challengerUUID.equals(playerUUID)); // en tant que challenger
 
             // 2. Retirer de la file d'attente de fin de duel
             pendingEndDuels.removeIf(uuid -> uuid.equals(playerUUID));
@@ -272,7 +328,20 @@ public class DuelManager {
         pendingDuels.clear();
     }
 
-    // ==================== INNER CLASS ====================
+    // ==================== INNER CLASSES ====================
+
+    /**
+     * Represente une invitation de duel en attente, avec timestamp pour expiration.
+     */
+    public static class PendingChallenge {
+        public final UUID challengerUUID;
+        public final long timestamp;
+
+        public PendingChallenge(UUID challengerUUID, long timestamp) {
+            this.challengerUUID = challengerUUID;
+            this.timestamp = timestamp;
+        }
+    }
 
     public static class ActiveDuel {
         private final UUID player1;
