@@ -1,0 +1,24 @@
+{
+  "Model": "Spell_RayonArcanique",
+  "Physics": {
+    "Type": "Standard",
+    "Gravity": 0,
+    "TerminalVelocityAir": 120,
+    "TerminalVelocityWater": 60,
+    "SticksVertically": false,
+    "Bounciness": 0
+  },
+  "LaunchForce": 90,
+  "Interactions": {
+    "ProjectileHit": {
+      "Cooldown": { "Cooldown": 0 },
+      "Interactions": [
+        {
+          "Type": "DamageEntity",
+          "DamageCalculator": { "BaseDamage": { "Projectile": 12 } }
+        },
+        "Common_Projectile_Despawn"
+      ]
+    }
+  }
+}
