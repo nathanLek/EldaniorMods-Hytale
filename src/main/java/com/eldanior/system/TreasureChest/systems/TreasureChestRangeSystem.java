@@ -103,21 +103,10 @@ public class TreasureChestRangeSystem extends EntityTickingSystem<EntityStore> {
                     if (!playerChestData.isDiscovered(x, y, z, worldName) && distSq < DISCOVERY_RADIUS_SQ) {
                         playerChestData.setDiscovered(x, y, z, worldName, true);
 
-                        // Incrementer le compteur de coffres decouverts + check titres
+                        // Check titres à la découverte visuelle (compteur et skills gérés dans InteractEvent)
                         PlayerLevelData levelData = deferredStore.getComponent(player.getReference(),
                                 EldaniorSystem.get().getPlayerLevelDataType());
                         if (levelData != null) {
-                            levelData.addChestDiscovered();
-                            // Progression skills à la découverte d'un coffre
-                            for (var passive : levelData.getActivePassives()) {
-                                String pName = passive.name();
-                                if ("GOOD_OMEN".equals(pName) || "TREASURE_HUNTER".equals(pName)) {
-                                    levelData.addSkillProc(pName);
-                                    com.eldanior.system.Leveling.utils.NotificationHelper.sendNotification(
-                                            playerRef, "<color:green>+" + pName + " progression</color>",
-                                            com.hypixel.hytale.protocol.packets.interface_.NotificationStyle.Success);
-                                }
-                            }
                             java.util.List<TitleModel> newTitles = TitleManager.checkTitleUnlocks(levelData);
                             for (TitleModel title : newTitles) {
                                 levelData.addTitle(title.getId());
