@@ -2011,6 +2011,23 @@ public class SkillManager {
                 List.of(), List.of()
         ));
 
+        // --- GEOMANCIEN ---
+        register("skill_page_mur_de_pierre", new SkillModel(
+                "MUR_DE_PIERRE", "Spell_MurDePierre", "Mur de Pierre", "mage, elementaliste",
+                300, 0.0f, 1.5f, 3.0f, 8.0f, 6.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_seisme", new SkillModel(
+                "SEISME", "Spell_Seisme", "Seisme", "mage, elementaliste",
+                500, 0.0f, 1.8f, 12.0f, 10.0f, 0.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_golem_de_terre", new SkillModel(
+                "GOLEM_DE_TERRE", "Spell_GolemDeTerre", "Golem de Terre", "mage, elementaliste",
+                800, 0.0f, 2.5f, 5.0f, 6.0f, 12.0f,
+                List.of(), List.of()
+        ));
+
         // --- ARCANISTE ---
         register("skill_page_rayon_arcanique", new SkillModel(
                 "RAYON_ARCANIQUE", "Spell_RayonArcanique", "Rayon Arcanique", "mage, arcaniste",

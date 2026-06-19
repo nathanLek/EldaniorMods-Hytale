@@ -1,0 +1,88 @@
+{
+  "Model": "Spell_MurDePierre",
+  "Physics": {
+    "Type": "Standard",
+    "Gravity": 15,
+    "TerminalVelocityAir": 30,
+    "TerminalVelocityWater": 15,
+    "SticksVertically": true,
+    "Bounciness": 0
+  },
+  "LaunchForce": 15,
+  "Interactions": {
+    "ProjectileHit": {
+      "Interactions": [
+        {
+          "Type": "SpawnDeployableAtHitLocation",
+          "Config": {
+            "Type": "Aoe",
+            "Shape": "Cylinder",
+            "Id": "Mur_De_Pierre_Zone",
+            "LiveDuration": 6,
+            "Model": "Deployable_Fire_Trap",
+            "ModelScale": 2.5,
+            "StartRadius": 1,
+            "EndRadius": 4,
+            "Height": 6,
+            "RadiusChangeTime": 0.3,
+            "DamageInterval": 1.0,
+            "DamageAmount": 3,
+            "ApplyEffects": [],
+            "Invulnerable": true,
+            "AttackOwner": false,
+            "AttackTeam": false,
+            "DeploySoundEventId": "SFX_Staff_Flame_Trap_Deploy",
+            "DespawnSoundEventId": "SFX_Staff_Flame_Trap_Despawn",
+            "AmbientSoundEventId": "SFX_Staff_Flame_Trap_Loop",
+            "SpawnParticles": [
+              { "SystemId": "Mace_Signature_Ground_Hit", "TargetEntityPart": "Entity", "Scale": 2.0 },
+              { "SystemId": "Dust_Landing", "TargetEntityPart": "Entity", "Scale": 2.5 }
+            ],
+            "DespawnParticles": [
+              { "SystemId": "Explosion_Medium", "TargetEntityPart": "Entity" },
+              { "SystemId": "Dust_Landing", "TargetEntityPart": "Entity", "Scale": 2.0 }
+            ]
+          }
+        },
+        { "Type": "RemoveEntity", "Entity": "User" }
+      ]
+    },
+    "ProjectileMiss": {
+      "Interactions": [
+        {
+          "Type": "SpawnDeployableAtHitLocation",
+          "Config": {
+            "Type": "Aoe",
+            "Shape": "Cylinder",
+            "Id": "Mur_De_Pierre_Zone",
+            "LiveDuration": 6,
+            "Model": "Deployable_Fire_Trap",
+            "ModelScale": 2.5,
+            "StartRadius": 1,
+            "EndRadius": 4,
+            "Height": 6,
+            "RadiusChangeTime": 0.3,
+            "DamageInterval": 1.0,
+            "DamageAmount": 3,
+            "ApplyEffects": [],
+            "Invulnerable": true,
+            "AttackOwner": false,
+            "AttackTeam": false,
+            "DeploySoundEventId": "SFX_Staff_Flame_Trap_Deploy",
+            "DespawnSoundEventId": "SFX_Staff_Flame_Trap_Despawn",
+            "AmbientSoundEventId": "SFX_Staff_Flame_Trap_Loop",
+            "SpawnParticles": [
+              { "SystemId": "Mace_Signature_Ground_Hit", "TargetEntityPart": "Entity", "Scale": 2.0 },
+              { "SystemId": "Dust_Landing", "TargetEntityPart": "Entity", "Scale": 2.5 }
+            ],
+            "DespawnParticles": [
+              { "SystemId": "Explosion_Medium", "TargetEntityPart": "Entity" },
+              { "SystemId": "Dust_Landing", "TargetEntityPart": "Entity", "Scale": 2.0 }
+            ]
+          }
+        },
+        { "Type": "RemoveEntity", "Entity": "User" }
+      ]
+    }
+  }
+}
