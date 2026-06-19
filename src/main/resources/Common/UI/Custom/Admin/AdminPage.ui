@@ -609,6 +609,33 @@ Group {
 
                 Group { Anchor: (Height: 8); }
 
+                // === SECTION: EFFETS VISUELS ===
+                Label { Text: "EFFETS VISUELS"; Style: (FontSize: 10, TextColor: #9B59B6, RenderBold: true, LetterSpacing: 1); Anchor: (Height: 14); }
+                Group { Anchor: (Height: 4); }
+                Group { LayoutMode: Left; Anchor: (Height: 38);
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #1a0d2a(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Couverture"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatEffectsCoverage { Text: "..."; Style: (FontSize: 16, TextColor: #9B59B6, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #1a0d2a(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Mappings"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatEffectsMappings { Text: "0"; Style: (FontSize: 16, TextColor: #9B59B6, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                    Group { Anchor: (Width: 3); }
+                    Group { FlexWeight: 1; Anchor: (Height: 38); Background: #1a0d2a(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                        Label { Text: "Sans effet"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                        Label #DStatEffectsUnmapped { Text: "0"; Style: (FontSize: 16, TextColor: #FF9800, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 22); }
+                    }
+                }
+                Group { Anchor: (Height: 3); }
+                Group { Anchor: (Height: 28); Background: #1a0d2a(0.4); LayoutMode: Top; Padding: (Horizontal: 6, Vertical: 3);
+                    Label { Text: "Assets manquants"; Style: (FontSize: 8, TextColor: #667788); Anchor: (Height: 11); }
+                    Label #DStatEffectsMissing { Text: "0"; Style: (FontSize: 12, TextColor: #4CAF50, RenderBold: true); Anchor: (Height: 14); }
+                }
+
+                Group { Anchor: (Height: 8); }
+
                 // === SECTION: PVP ===
                 Label { Text: "PVP"; Style: (FontSize: 10, TextColor: #cc4444, RenderBold: true, LetterSpacing: 1); Anchor: (Height: 14); }
                 Group { Anchor: (Height: 4); }

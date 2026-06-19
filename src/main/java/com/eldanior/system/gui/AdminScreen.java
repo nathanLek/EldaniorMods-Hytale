@@ -1172,6 +1172,22 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
         update.set("#DStatChestsLegend.Text", String.valueOf(chestsLegend));
         update.set("#DStatChestsOr.Text", String.valueOf(chestsOr));
 
+        // === EFFETS VISUELS — Rapport de couverture (ELD-11) ===
+        if (com.eldanior.system.config.Effects.SkillEffectConfig.isValidated()) {
+            int total = com.eldanior.system.config.Effects.SkillEffectConfig.getTotalSkills();
+            int mapped = com.eldanior.system.config.Effects.SkillEffectConfig.getSkillsWithEffect();
+            int unmapped = com.eldanior.system.config.Effects.SkillEffectConfig.getSkillsWithoutEffect();
+            int mappings = com.eldanior.system.config.Effects.SkillEffectConfig.getMappingCount();
+            int pct = total > 0 ? (mapped * 100 / total) : 0;
+            var missing = com.eldanior.system.config.Effects.SkillEffectConfig.getMissingAssets();
+
+            update.set("#DStatEffectsCoverage.Text", mapped + "/" + total + " (" + pct + "%)");
+            update.set("#DStatEffectsMappings.Text", String.valueOf(mappings));
+            update.set("#DStatEffectsUnmapped.Text", String.valueOf(unmapped));
+            update.set("#DStatEffectsMissing.Text", missing.isEmpty() ? "0" : missing.size() + " — " + String.join(", ", missing));
+            update.set("#DStatEffectsMissing.Style.TextColor", missing.isEmpty() ? "#4CAF50" : "#cc4444");
+        }
+
     }
 
     private static String formatMoney(long amount) {
