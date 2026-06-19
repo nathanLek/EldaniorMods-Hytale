@@ -49,8 +49,9 @@
           }
         },
         {
-          "Type": "TeleportEntityToHitLocation",
-          "Entity": "Owner"
+          "Type": "ApplyEffect",
+          "Entity": "Owner",
+          "EffectId": "Portail_Dimensionnel_Warp_Buff"
         },
         {
           "Type": "RemoveEntity",
@@ -97,8 +98,9 @@
           }
         },
         {
-          "Type": "TeleportEntityToHitLocation",
-          "Entity": "Owner"
+          "Type": "ApplyEffect",
+          "Entity": "Owner",
+          "EffectId": "Portail_Dimensionnel_Warp_Buff"
         },
         {
           "Type": "RemoveEntity",

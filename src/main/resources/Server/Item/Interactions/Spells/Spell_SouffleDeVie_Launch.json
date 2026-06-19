@@ -7,37 +7,7 @@
     "Interactions": [
       { "Type": "ChangeStat", "StatModifiers": { "SignatureEnergy": 0 }, "Behaviour": "Set" },
       { "Type": "ChangeStat", "StatModifiers": { "Health": 80 } },
-      {
-        "Type": "SpawnDeployableAtSelf",
-        "Config": {
-          "Type": "Aoe",
-          "Shape": "Cylinder",
-          "Id": "Souffle_De_Vie_Zone",
-          "LiveDuration": 5,
-          "ModelScale": 1.5,
-          "StartRadius": 1,
-          "EndRadius": 8,
-          "Height": 5,
-          "RadiusChangeTime": 1.0,
-          "DamageInterval": 1.5,
-          "DamageAmount": 0,
-          "HealAmount": 20,
-          "ApplyEffects": ["Souffle_De_Vie_Regen"],
-          "Invulnerable": true,
-          "AttackOwner": false,
-          "AttackTeam": false,
-          "DeploySoundEventId": "SFX_Skeleton_Mage_Spellbook_Impact",
-          "DespawnSoundEventId": "SFX_Skeleton_Mage_Spellbook_Impact",
-          "SpawnParticles": [
-            { "SystemId": "Fire_ChargeWhite", "TargetEntityPart": "Entity", "Scale": 4.0, "Color": "#ffee88" },
-            { "SystemId": "Rings_Rings", "TargetEntityPart": "Entity", "Scale": 5.0, "Color": "#ffcc00" },
-            { "SystemId": "Mace_Signature_Cast", "TargetEntityPart": "Entity", "Scale": 3.0, "Color": "#ffdd44" }
-          ],
-          "DespawnParticles": [
-            { "SystemId": "Fire_ChargeWhite", "TargetEntityPart": "Entity", "Scale": 2.5, "Color": "#ffee88" }
-          ]
-        }
-      },
+      { "Type": "ApplyEffect", "EffectId": "Souffle_De_Vie_Regen" },
       {
         "Type": "Simple", "RunTime": 0.8,
         "Effects": {

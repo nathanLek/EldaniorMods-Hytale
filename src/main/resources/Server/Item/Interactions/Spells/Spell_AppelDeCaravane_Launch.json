@@ -7,34 +7,6 @@
     "Interactions": [
       { "Type": "ChangeStat", "StatModifiers": { "SignatureEnergy": 0 }, "Behaviour": "Set" },
       {
-        "Type": "SpawnDeployableAtSelf",
-        "Config": {
-          "Type": "Aoe",
-          "Shape": "Cylinder",
-          "Id": "AppelDeCaravane_Zone",
-          "LiveDuration": 30,
-          "ModelScale": 1.0,
-          "StartRadius": 0.5,
-          "EndRadius": 2,
-          "Height": 3,
-          "RadiusChangeTime": 0.5,
-          "DamageInterval": 0,
-          "DamageAmount": 0,
-          "Invulnerable": true,
-          "AttackOwner": false,
-          "AttackTeam": false,
-          "DeploySoundEventId": "SFX_Skeleton_Mage_Spellbook_Impact",
-          "DespawnSoundEventId": "SFX_Skeleton_Mage_Spellbook_Impact",
-          "SpawnParticles": [
-            { "SystemId": "Rings_Rings", "TargetEntityPart": "Entity", "Scale": 2.0, "Color": "#daa520" },
-            { "SystemId": "Flying_Orb", "TargetEntityPart": "Entity", "Scale": 1.5 }
-          ],
-          "DespawnParticles": [
-            { "SystemId": "Fire_ChargeWhite", "TargetEntityPart": "Entity", "Scale": 1.5 }
-          ]
-        }
-      },
-      {
         "Type": "Simple", "RunTime": 0.6,
         "Effects": {
           "ItemAnimationId": "CastPushCharged",

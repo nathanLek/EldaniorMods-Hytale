@@ -7,15 +7,12 @@
     "Interactions": [
       { "Type": "ChangeStat", "StatModifiers": { "SignatureEnergy": 0 }, "Behaviour": "Set" },
       {
-        "Type": "MeleeAttack",
-        "RunTime": 0.5,
-        "DamageCalculator": {
-          "BaseDamage": { "Melee": 10 }
-        },
+        "Type": "Selector",
         "Selector": {
           "Id": "AOECircle",
           "Range": 5
         },
+        "RunTime": 0.5,
         "Effects": {
           "ItemAnimationId": "CastHurlCharged",
           "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Impact",
@@ -23,37 +20,69 @@
             { "SystemId": "Mace_Signature_Cast", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 3.5, "Color": "#c0c0c0" },
             { "SystemId": "Rings_Rings", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 3.0, "Color": "#c0c0c0" }
           ]
-        }
-      },
-      {
-        "Type": "MeleeAttack",
-        "RunTime": 0.5,
-        "DamageCalculator": {
-          "BaseDamage": { "Melee": 10 }
         },
-        "Selector": {
-          "Id": "AOECircle",
-          "Range": 5
-        },
-        "Effects": {
-          "Particles": [
-            { "SystemId": "Mace_Signature_Cast", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 3.5, "Color": "#c0c0c0" }
+        "HitEntity": {
+          "Interactions": [
+            {
+              "Type": "DamageEntity",
+              "DamageCalculator": {
+                "BaseDamage": { "Melee": 10 }
+              },
+              "DamageEffects": {
+                "Knockback": {
+                  "Force": 3,
+                  "RelativeX": 0,
+                  "RelativeZ": -5,
+                  "VelocityY": 2
+                }
+              }
+            }
           ]
         }
       },
       {
-        "Type": "MeleeAttack",
-        "RunTime": 0.5,
-        "DamageCalculator": {
-          "BaseDamage": { "Melee": 10 }
-        },
+        "Type": "Selector",
         "Selector": {
           "Id": "AOECircle",
           "Range": 5
         },
+        "RunTime": 0.5,
+        "Effects": {
+          "Particles": [
+            { "SystemId": "Mace_Signature_Cast", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 3.5, "Color": "#c0c0c0" }
+          ]
+        },
+        "HitEntity": {
+          "Interactions": [
+            {
+              "Type": "DamageEntity",
+              "DamageCalculator": {
+                "BaseDamage": { "Melee": 10 }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "Type": "Selector",
+        "Selector": {
+          "Id": "AOECircle",
+          "Range": 5
+        },
+        "RunTime": 0.5,
         "Effects": {
           "Particles": [
             { "SystemId": "Rings_Rings", "TargetEntityPart": "Entity", "TargetNodeName": "Pelvis", "Scale": 3.0, "Color": "#c0c0c0" }
+          ]
+        },
+        "HitEntity": {
+          "Interactions": [
+            {
+              "Type": "DamageEntity",
+              "DamageCalculator": {
+                "BaseDamage": { "Melee": 10 }
+              }
+            }
           ]
         }
       },

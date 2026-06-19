@@ -8,35 +8,6 @@
       { "Type": "ChangeStat", "StatModifiers": { "SignatureEnergy": 0 }, "Behaviour": "Set" },
       { "Type": "ApplyEffect", "EffectId": "Acceleration_Chrono_Buff" },
       {
-        "Type": "SpawnDeployableAtSelf",
-        "Config": {
-          "Type": "Aoe",
-          "Shape": "Cylinder",
-          "Id": "Acceleration_Chrono_Zone",
-          "LiveDuration": 8,
-          "ModelScale": 1.2,
-          "StartRadius": 1,
-          "EndRadius": 6,
-          "Height": 4,
-          "RadiusChangeTime": 0.5,
-          "DamageInterval": 2.0,
-          "DamageAmount": 0,
-          "ApplyEffects": ["Acceleration_Chrono_Buff"],
-          "Invulnerable": true,
-          "AttackOwner": true,
-          "AttackTeam": true,
-          "DeploySoundEventId": "SFX_Skeleton_Mage_Spellbook_Impact",
-          "DespawnSoundEventId": "SFX_Skeleton_Mage_Spellbook_Impact",
-          "SpawnParticles": [
-            { "SystemId": "Rings_Rings", "TargetEntityPart": "Entity", "Scale": 3.0, "Color": "#00ced1" },
-            { "SystemId": "Fire_ChargeWhite", "TargetEntityPart": "Entity", "Scale": 2.0 }
-          ],
-          "DespawnParticles": [
-            { "SystemId": "Rings_Rings", "TargetEntityPart": "Entity", "Scale": 1.5, "Color": "#00ced1" }
-          ]
-        }
-      },
-      {
         "Type": "Simple", "RunTime": 0.6,
         "Effects": {
           "ItemAnimationId": "CastHurlCharged",
