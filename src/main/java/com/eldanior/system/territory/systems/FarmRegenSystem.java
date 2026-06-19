@@ -64,7 +64,8 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
     private static final Map<String, Map<String, String>> dungeonSnapshots = new ConcurrentHashMap<>();
     private static final Set<String> dungeonTimersStarted = ConcurrentHashMap.newKeySet();
     private static final long DUNGEON_REGEN_INTERVAL_MS = 24L * 60 * 60 * 1000; // 24h
-    private static volatile World cachedWorld = null;
+    // World par parcelId (evite le bug multi-mondes avec un seul volatile static)
+    private static final Map<String, World> cachedWorlds = new ConcurrentHashMap<>();
 
     public FarmRegenSystem() { super(BreakBlockEvent.class); }
 
@@ -88,8 +89,8 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
         ParcelType type = parcel.getType();
         World world = player.getWorld();
 
-        // Stocker la reference au monde pour les timers donjon
-        cachedWorld = world;
+        // Stocker la reference au monde par parcelle (multi-mondes safe)
+        cachedWorlds.put(parcel.getId(), world);
 
         if (type == ParcelType.FARM || type == ParcelType.MINE) {
             handleSimpleRegen(target, worldName, parcel, world);
@@ -365,7 +366,7 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
         Map<String, String> snapshot = farmSnapshots.get(parcelId);
         if (snapshot == null || snapshot.isEmpty()) return;
 
-        World world = cachedWorld;
+        World world = cachedWorlds.get(parcelId);
         if (world == null) return;
 
         EldaniorLogger.info("[FarmRegen] Regeneration periodique de " + parcel.getName() +
@@ -586,7 +587,7 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
         Map<String, String> snapshot = dungeonSnapshots.get(parcelId);
         if (snapshot == null || snapshot.isEmpty()) return;
 
-        World world = cachedWorld;
+        World world = cachedWorlds.get(parcelId);
         if (world == null) return;
 
         EldaniorLogger.info("[DungeonRegen] Regeneration de " + parcel.getName() +
@@ -637,11 +638,13 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
      * Prend un snapshot de chaque ferme et demarre un timer de regen periodique (24h).
      */
     public static void initFarmTimers(World world) {
-        cachedWorld = world;
         int count = 0;
         for (ParcelData parcel : ParcelManager.getAll()) {
             if (parcel.getType() != ParcelType.FARM) continue;
             String parcelId = parcel.getId();
+
+            // Stocker le world par parcelle (multi-mondes safe)
+            cachedWorlds.put(parcelId, world);
 
             if (!farmSnapshots.containsKey(parcelId)) {
                 takeFarmSnapshot(parcelId, parcel, world);
@@ -652,12 +655,12 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
 
                 // Decaler les timers pour eviter que toutes les fermes se regenerent au meme instant
                 long offsetMs = count * 30_000L; // 30s entre chaque ferme
-                int farmIndex = count;
 
                 EldaniorLogger.SCHEDULER.scheduleAtFixedRate(() -> {
                     try {
                         Map<String, String> snap = farmSnapshots.get(parcelId);
-                        if (snap == null || snap.isEmpty() || cachedWorld == null) return;
+                        World w = cachedWorlds.get(parcelId);
+                        if (snap == null || snap.isEmpty() || w == null) return;
 
                         EldaniorLogger.info("[FarmRegen] Regen auto " + parcel.getName() +
                                 " dans " + WARNING_BEFORE_SEC + "s (" + snap.size() + " blocs)");
@@ -682,7 +685,7 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
                         // Restaurer par batch apres le delai d'avertissement
                         EldaniorLogger.SCHEDULER.schedule(() -> {
                             try {
-                                cachedWorld.execute(() -> {
+                                w.execute(() -> {
                                     // Collecter les blocs manquants
                                     List<Map.Entry<String, String>> toRestore = new ArrayList<>();
                                     for (Map.Entry<String, String> entry : snap.entrySet()) {
@@ -690,7 +693,7 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
                                             int[] coords = parseKey(entry.getKey());
                                             if (coords == null) continue;
 
-                                            BlockType currentType = cachedWorld.getBlockType(
+                                            BlockType currentType = w.getBlockType(
                                                     coords[0], coords[1], coords[2]);
                                             String currentId = (currentType != null && currentType != BlockType.EMPTY)
                                                     ? currentType.getId() : null;
@@ -715,7 +718,7 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
 
                                     // Premier batch immediatement
                                     int end0 = Math.min(FARM_BATCH_SIZE, total);
-                                    int restored = restoreBatch(toRestore.subList(0, end0), cachedWorld);
+                                    int restored = restoreBatch(toRestore.subList(0, end0), w);
                                     EldaniorLogger.info("[FarmRegen] " + parcel.getName() +
                                             " batch 1/" + batches + " : " + restored + " blocs");
 
@@ -729,8 +732,8 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
                                         int finalBatches = batches;
                                         EldaniorLogger.SCHEDULER.schedule(() -> {
                                             try {
-                                                cachedWorld.execute(() -> {
-                                                    int r = restoreBatch(batchCopy, cachedWorld);
+                                                w.execute(() -> {
+                                                    int r = restoreBatch(batchCopy, w);
                                                     EldaniorLogger.info("[FarmRegen] " + parcel.getName() +
                                                             " batch " + batchNum + "/" + finalBatches +
                                                             " : " + r + " blocs");
@@ -761,12 +764,15 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
     }
 
     public static void initDungeonTimers(World world) {
-        cachedWorld = world;
         // Les timers demarreront au premier break dans chaque donjon.
         // Pour forcer l'init au demarrage, on pourrait scanner toutes les parcelles DUNGEON ici.
         for (ParcelData parcel : ParcelManager.getAll()) {
             if (parcel.getType() == ParcelType.DUNGEON) {
                 String parcelId = parcel.getId();
+
+                // Stocker le world par parcelle (multi-mondes safe)
+                cachedWorlds.put(parcelId, world);
+
                 if (!dungeonSnapshots.containsKey(parcelId)) {
                     // Prendre le snapshot au demarrage
                     Map<String, String> snapshot = new ConcurrentHashMap<>();
@@ -805,7 +811,8 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
                     EldaniorLogger.SCHEDULER.scheduleAtFixedRate(() -> {
                         try {
                             Map<String, String> snap = dungeonSnapshots.get(parcelId);
-                            if (snap == null || snap.isEmpty() || cachedWorld == null) return;
+                            World w = cachedWorlds.get(parcelId);
+                            if (snap == null || snap.isEmpty() || w == null) return;
 
                             EldaniorLogger.info("[DungeonRegen] Regen auto " + parcel.getName() +
                                     " dans 10s (" + snap.size() + " blocs)");
@@ -830,13 +837,13 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
                             // Restaurer apres 10s
                             EldaniorLogger.SCHEDULER.schedule(() -> {
                                 try {
-                                    cachedWorld.execute(() -> {
+                                    w.execute(() -> {
                                         int restored = 0;
                                         for (Map.Entry<String, String> entry : snap.entrySet()) {
                                             try {
                                                 int[] coords = parseKey(entry.getKey());
                                                 if (coords == null) continue;
-                                                cachedWorld.setBlock(coords[0], coords[1], coords[2], entry.getValue());
+                                                w.setBlock(coords[0], coords[1], coords[2], entry.getValue());
                                                 restored++;
                                             } catch (Exception ex) {
                                                 EldaniorLogger.error("DungeonRegen.restore", ex);
@@ -889,6 +896,7 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
         farmTimersStarted.clear();
         dungeonSnapshots.clear();
         dungeonTimersStarted.clear();
+        cachedWorlds.clear();
     }
 
     public static int getPendingCount() {
