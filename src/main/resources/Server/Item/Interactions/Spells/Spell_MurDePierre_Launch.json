@@ -1,0 +1,69 @@
+{
+  "Type": "StatsCondition",
+  "Costs": {
+    "SignatureEnergy": 1
+  },
+  "RunTime": 0.1,
+  "Next": {
+    "Type": "Parallel",
+    "Interactions": [
+      {
+        "Interactions": [
+          {
+            "Type": "ChangeStat",
+            "StatModifiers": {
+              "SignatureEnergy": 0
+            },
+            "Behaviour": "Set"
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "Projectile",
+            "Config": "Projectile_Config_MurDePierre",
+            "Next": {
+              "Type": "Simple",
+              "RunTime": 0.1
+            }
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "Simple",
+            "RunTime": 0.6,
+            "Effects": {
+              "ItemAnimationId": "CastPushCharged",
+              "WorldSoundEventId": "SFX_Fireball_Death",
+              "Particles": [
+                {
+                  "SystemId": "Mace_Signature_Ground_Hit",
+                  "TargetEntityPart": "Entity",
+                  "TargetNodeName": "Pelvis",
+                  "Scale": 1.0
+                },
+                {
+                  "SystemId": "Dust_Landing",
+                  "TargetEntityPart": "Entity",
+                  "TargetNodeName": "Pelvis",
+                  "Scale": 1.2
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "Failed": {
+    "Type": "Simple",
+    "RunTime": 0.3,
+    "Effects": {
+      "ItemAnimationId": "Interact",
+      "WorldSoundEventId": "SFX_Bow_No_Ammo"
+    }
+  }
+}
