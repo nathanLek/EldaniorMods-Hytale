@@ -1959,6 +1959,23 @@ public class SkillManager {
                 180, 0.0f, 0.8f, 22.0f, 30.0f, 0.0f,
                 List.of(), List.of()
         ));
+
+        // --- CHRONOMANCIEN ---
+        register("skill_page_distorsion_temporelle", new SkillModel(
+                "DISTORSION_TEMPORELLE", "Spell_DistorsionTemporelle", "Distorsion Temporelle", "mage, chronomancien",
+                250, 0.0f, 1.4f, 0.0f, 8.0f, 6.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_acceleration_chrono", new SkillModel(
+                "ACCELERATION_CHRONO", "Spell_AccelerationChrono", "Acceleration Chrono", "mage, chronomancien",
+                180, 0.0f, 1.0f, 0.0f, 6.0f, 8.0f,
+                List.of(), List.of()
+        ));
+        register("skill_page_rembobinage", new SkillModel(
+                "REMBOBINAGE", "Spell_Rembobinage", "Rembobinage", "mage, chronomancien",
+                400, 0.0f, 2.0f, 0.0f, 0.0f, 0.0f,
+                List.of(), List.of()
+        ));
     }
 
     private static void register(String itemId, SkillModel skill) {
