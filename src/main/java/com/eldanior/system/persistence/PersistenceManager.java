@@ -322,7 +322,7 @@ public class PersistenceManager {
 
     // ==================== SHOP ====================
 
-    private static void saveShop() throws IOException {
+    public static void saveShop() throws IOException {
         // Save black market too
         saveMarketListings("shop.properties", ShopManager.getListings());
         saveMarketListings("blackmarket.properties", ShopManager.getBlackMarketListings());

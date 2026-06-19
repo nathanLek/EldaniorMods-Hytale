@@ -23,6 +23,7 @@ import com.eldanior.system.territory.ParcelManager;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
 
 import com.eldanior.system.economy.TransactionLogger;
+import com.eldanior.system.persistence.PersistenceManager;
 
 import java.util.*;
 
@@ -188,6 +189,9 @@ public class ShopTab {
                 listing.getItem().getItemId(), listing.getItem().getQuantity(),
                 price, taxAmount);
 
+        // Persist shop state immediately to prevent data loss on crash (BUGS-12)
+        try { PersistenceManager.saveShop(); } catch (Exception e) { EldaniorLogger.error("ShopTab", e); }
+
         return true;
     }
 
@@ -244,6 +248,10 @@ public class ShopTab {
                     listing.getItem().getItemId(), listing.getItem().getQuantity(),
                     listing.getPrice(), true);
         }
+
+        // Persist shop state immediately to prevent data loss on crash (BUGS-12)
+        try { PersistenceManager.saveShop(); } catch (Exception e) { EldaniorLogger.error("ShopTab", e); }
+
         return true;
     }
 

@@ -6,6 +6,7 @@ import com.eldanior.system.shop.ShopManager;
 import com.eldanior.system.shop.ShopManager.ShopListing;
 import com.eldanior.system.config.UUIDExtractor;
 import com.eldanior.system.config.EldaniorLogger;
+import com.eldanior.system.persistence.PersistenceManager;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
@@ -122,6 +123,10 @@ public class BlackMarketTab {
         }
 
         buyer.getPlayerRef().sendMessage(Message.raw("§aObjet achete au Marche Noir pour " + listing.getPrice() + " Or !"));
+
+        // Persist shop state immediately to prevent data loss on crash (BUGS-12)
+        try { PersistenceManager.saveShop(); } catch (Exception e) { EldaniorLogger.error("BlackMarketTab", e); }
+
         return true;
     }
 
@@ -162,6 +167,10 @@ public class BlackMarketTab {
             ShopManager.removeBlackMarketListing(idx);
             me.getPlayerRef().sendMessage(Message.raw("§eAnnonce retiree du Marche Noir (admin)."));
         }
+
+        // Persist shop state immediately to prevent data loss on crash (BUGS-12)
+        try { PersistenceManager.saveShop(); } catch (Exception e) { EldaniorLogger.error("BlackMarketTab", e); }
+
         return true;
     }
 
