@@ -56,6 +56,9 @@ public class ParcelCommand extends AbstractAsyncCommand {
         if (world == null) return CompletableFuture.completedFuture(null);
 
         String action = this.actionArg.get(ctx);
+        // Capturer TOUS les args optionnels avant le runAsync — le ctx sera invalide dans le lambda
+        String capturedArg1 = this.arg1.get(ctx);
+        String capturedArg2 = this.arg2.get(ctx);
 
         return CompletableFuture.runAsync(() -> {
             try {
@@ -71,33 +74,30 @@ public class ParcelCommand extends AbstractAsyncCommand {
                     case "pos1" -> handlePos1(sender, senderUUID);
                     case "pos2" -> handlePos2(sender, senderUUID);
                     case "create" -> {
-                        // Capturer les args AVANT l'appel async (ctx sera invalide dans le callback)
-                        String createType = arg1.get(ctx);
-                        String createName = arg2.get(ctx);
                         // KINGDOM utilise la position du joueur, pas de selection requise
-                        if ("KINGDOM".equalsIgnoreCase(createType)) {
-                            handleCreate(sender, senderUUID, createType, createName, isAdmin);
+                        if ("KINGDOM".equalsIgnoreCase(capturedArg1)) {
+                            handleCreate(sender, senderUUID, capturedArg1, capturedArg2, isAdmin);
                         } else {
                             // Autres types : capture la selection EditorTool puis cree la parcelle
                             captureEditorSelectionAsync(sender, senderUUID, () ->
-                                    handleCreate(sender, senderUUID, createType, createName, isAdmin));
+                                    handleCreate(sender, senderUUID, capturedArg1, capturedArg2, isAdmin));
                             return; // Le handleCreate sera appele dans le callback
                         }
                     }
-                    case "delete" -> handleDelete(sender, senderUUID, ctx, isAdmin);
+                    case "delete" -> handleDelete(sender, senderUUID, capturedArg1, isAdmin);
                     case "info" -> handleInfo(sender, senderUUID);
-                    case "invite" -> handleInvite(sender, senderUUID, ctx, isAdmin);
-                    case "kick" -> handleKick(sender, senderUUID, ctx, isAdmin);
-                    case "setperm" -> handleSetPerm(sender, senderUUID, ctx, isAdmin);
+                    case "invite" -> handleInvite(sender, senderUUID, capturedArg1, isAdmin);
+                    case "kick" -> handleKick(sender, senderUUID, capturedArg1, isAdmin);
+                    case "setperm" -> handleSetPerm(sender, senderUUID, capturedArg1, capturedArg2, isAdmin);
                     case "list" -> handleList(sender, senderUUID, isAdmin);
-                    case "sell" -> handleSell(sender, senderUUID, ctx, isAdmin);
+                    case "sell" -> handleSell(sender, senderUUID, capturedArg1, isAdmin);
                     case "buy" -> handleBuy(sender, senderUUID);
-                    case "setprice" -> handleSetPrice(sender, senderUUID, ctx, isAdmin);
-                    case "setrent" -> handleSetRent(sender, senderUUID, ctx, isAdmin);
-                    case "assign" -> handleAssignFamily(sender, senderUUID, ctx, isAdmin);
-                    case "assignguild" -> handleAssignGuild(sender, senderUUID, ctx, isAdmin);
-                    case "setrank" -> handleSetRank(sender, senderUUID, ctx, isAdmin);
-                    case "setregen" -> handleSetRegen(sender, senderUUID, ctx, isAdmin);
+                    case "setprice" -> handleSetPrice(sender, senderUUID, capturedArg1, isAdmin);
+                    case "setrent" -> handleSetRent(sender, senderUUID, capturedArg1, isAdmin);
+                    case "assign" -> handleAssignFamily(sender, senderUUID, capturedArg1, isAdmin);
+                    case "assignguild" -> handleAssignGuild(sender, senderUUID, capturedArg1, isAdmin);
+                    case "setrank" -> handleSetRank(sender, senderUUID, capturedArg1, capturedArg2, isAdmin);
+                    case "setregen" -> handleSetRegen(sender, senderUUID, capturedArg1, isAdmin);
                     default -> sender.getPlayerRef().sendMessage(Message.raw("§cUsage: /es parcel <pos1|pos2|create|delete|info|invite|kick|setperm|list|sell|buy|setrank|setregen>"));
                 }
             } catch (Exception e) {
@@ -289,8 +289,7 @@ public class ParcelCommand extends AbstractAsyncCommand {
 
     // ==================== DELETE ====================
 
-    private void handleDelete(Player sender, UUID uuid, CommandContext ctx, boolean isAdmin) {
-        String idOrName = this.arg1.get(ctx);
+    private void handleDelete(Player sender, UUID uuid, String idOrName, boolean isAdmin) {
         if (idOrName == null || idOrName.isEmpty()) {
             sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es parcel delete <id_ou_nom>"));
             return;
@@ -349,8 +348,7 @@ public class ParcelCommand extends AbstractAsyncCommand {
 
     // ==================== INVITE ====================
 
-    private void handleInvite(Player sender, UUID uuid, CommandContext ctx, boolean isAdmin) {
-        String playerName = this.arg1.get(ctx);
+    private void handleInvite(Player sender, UUID uuid, String playerName, boolean isAdmin) {
         if (playerName == null || playerName.isEmpty()) {
             sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es parcel invite <joueur>"));
             return;
@@ -388,8 +386,7 @@ public class ParcelCommand extends AbstractAsyncCommand {
 
     // ==================== KICK ====================
 
-    private void handleKick(Player sender, UUID uuid, CommandContext ctx, boolean isAdmin) {
-        String playerName = this.arg1.get(ctx);
+    private void handleKick(Player sender, UUID uuid, String playerName, boolean isAdmin) {
         if (playerName == null || playerName.isEmpty()) {
             sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es parcel kick <joueur>"));
             return;
@@ -425,10 +422,8 @@ public class ParcelCommand extends AbstractAsyncCommand {
 
     // ==================== SETPERM ====================
 
-    private void handleSetPerm(Player sender, UUID uuid, CommandContext ctx, boolean isAdmin) {
+    private void handleSetPerm(Player sender, UUID uuid, String rolePermStr, String valueStr, boolean isAdmin) {
         // /es parcel setperm <role:permission> <true|false>
-        String rolePermStr = this.arg1.get(ctx);
-        String valueStr = this.arg2.get(ctx);
         if (rolePermStr == null || rolePermStr.isEmpty() || valueStr == null || valueStr.isEmpty()) {
             sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es parcel setperm <ROLE:PERMISSION> <true|false>"));
             return;
@@ -489,8 +484,7 @@ public class ParcelCommand extends AbstractAsyncCommand {
 
     // ==================== SELL ====================
 
-    private void handleSell(Player sender, UUID uuid, CommandContext ctx, boolean isAdmin) {
-        String priceStr = this.arg1.get(ctx);
+    private void handleSell(Player sender, UUID uuid, String priceStr, boolean isAdmin) {
         if (priceStr == null || priceStr.isEmpty()) {
             sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es parcel sell <prix>"));
             return;
@@ -596,8 +590,7 @@ public class ParcelCommand extends AbstractAsyncCommand {
 
     // ==================== SET PRICE / RENT ====================
 
-    private void handleSetPrice(Player sender, UUID uuid, CommandContext ctx, boolean isAdmin) {
-        String priceStr = this.arg1.get(ctx);
+    private void handleSetPrice(Player sender, UUID uuid, String priceStr, boolean isAdmin) {
         if (priceStr == null || priceStr.isEmpty()) {
             sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es parcel setprice <prix>"));
             return;
@@ -615,8 +608,7 @@ public class ParcelCommand extends AbstractAsyncCommand {
         sender.getPlayerRef().sendMessage(Message.raw("§aPrix de vente defini : §f" + price + " Or" + (price == 0 ? " (retire de la vente)" : "")));
     }
 
-    private void handleSetRent(Player sender, UUID uuid, CommandContext ctx, boolean isAdmin) {
-        String priceStr = this.arg1.get(ctx);
+    private void handleSetRent(Player sender, UUID uuid, String priceStr, boolean isAdmin) {
         if (priceStr == null || priceStr.isEmpty()) {
             sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es parcel setrent <prix>"));
             return;
@@ -636,13 +628,12 @@ public class ParcelCommand extends AbstractAsyncCommand {
 
     // ==================== ASSIGN FAMILY ====================
 
-    private void handleAssignFamily(Player sender, UUID uuid, CommandContext ctx, boolean isAdmin) {
+    private void handleAssignFamily(Player sender, UUID uuid, String familyId, boolean isAdmin) {
         if (!isAdmin) {
             sender.getPlayerRef().sendMessage(Message.raw("§cCommande admin uniquement."));
             return;
         }
 
-        String familyId = this.arg1.get(ctx);
         if (familyId == null || familyId.isEmpty()) {
             sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es parcel assign <familyId>"));
             return;
@@ -664,13 +655,12 @@ public class ParcelCommand extends AbstractAsyncCommand {
         sender.getPlayerRef().sendMessage(Message.raw("§a" + parcel.getType().getLabel() + " §f" + parcel.getName() + " §aassigne a la famille §f" + familyId));
     }
 
-    private void handleAssignGuild(Player sender, UUID uuid, CommandContext ctx, boolean isAdmin) {
+    private void handleAssignGuild(Player sender, UUID uuid, String guildIdOrName, boolean isAdmin) {
         if (!isAdmin) {
             sender.getPlayerRef().sendMessage(Message.raw("§cCommande admin uniquement."));
             return;
         }
 
-        String guildIdOrName = this.arg1.get(ctx);
         if (guildIdOrName == null || guildIdOrName.isEmpty()) {
             sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es parcel assignguild <guilde>"));
             return;
@@ -716,12 +706,11 @@ public class ParcelCommand extends AbstractAsyncCommand {
 
     // ==================== SETRANK (donjon) ====================
 
-    private void handleSetRank(Player sender, UUID senderUUID, CommandContext ctx, boolean isAdmin) {
+    private void handleSetRank(Player sender, UUID senderUUID, String rankStr, String unused, boolean isAdmin) {
         if (!isAdmin) {
             sender.getPlayerRef().sendMessage(Message.raw("§cCommande admin uniquement."));
             return;
         }
-        String rankStr = this.arg1.get(ctx);
         if (rankStr == null || rankStr.isEmpty() || !java.util.Set.of("E", "D", "C", "B", "A", "S").contains(rankStr.toUpperCase())) {
             sender.getPlayerRef().sendMessage(Message.raw("§cUsage: /es parcel setrank <E|D|C|B|A|S>"));
             return;
@@ -743,12 +732,11 @@ public class ParcelCommand extends AbstractAsyncCommand {
 
     // ==================== SETREGEN (mine/farm/forest) ====================
 
-    private void handleSetRegen(Player sender, UUID senderUUID, CommandContext ctx, boolean isAdmin) {
+    private void handleSetRegen(Player sender, UUID senderUUID, String delayStr, boolean isAdmin) {
         if (!isAdmin) {
             sender.getPlayerRef().sendMessage(Message.raw("§cCommande admin uniquement."));
             return;
         }
-        String delayStr = this.arg1.get(ctx);
         if (delayStr == null || delayStr.isEmpty()) {
             sender.getPlayerRef().sendMessage(Message.raw("§cUsage: /es parcel setregen <secondes>"));
             return;
