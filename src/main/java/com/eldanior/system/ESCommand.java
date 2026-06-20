@@ -76,6 +76,7 @@ public class ESCommand extends AbstractCommandCollection {
 
         // Parcelles / Territoires
         this.addSubCommand(new com.eldanior.system.territory.commands.ParcelCommand());
+        this.addSubCommand(new com.eldanior.system.territory.commands.ParcelCreateCommand());
 
         // Interface unifiee
         this.addSubCommand(new SystemCommand());
