@@ -48,27 +48,43 @@ public class ParcelCommand extends AbstractAsyncCommand {
     @Nonnull
     @Override
     public CompletableFuture<Void> executeAsync(@Nonnull CommandContext ctx) {
+        System.out.println("[Parcel] executeAsync called");
         Ref<EntityStore> senderEntityRef = ctx.senderAsPlayerRef();
-        if (senderEntityRef == null || !senderEntityRef.isValid()) return CompletableFuture.completedFuture(null);
+        if (senderEntityRef == null || !senderEntityRef.isValid()) {
+            System.out.println("[Parcel] ABORT: senderEntityRef null or invalid");
+            return CompletableFuture.completedFuture(null);
+        }
 
         Store<EntityStore> senderStore = senderEntityRef.getStore();
         World world = ((EntityStore) senderStore.getExternalData()).getWorld();
-        if (world == null) return CompletableFuture.completedFuture(null);
+        if (world == null) {
+            System.out.println("[Parcel] ABORT: world is null");
+            return CompletableFuture.completedFuture(null);
+        }
 
         String action = this.actionArg.get(ctx);
         // Capturer TOUS les args optionnels avant le runAsync — le ctx sera invalide dans le lambda
         String capturedArg1 = this.arg1.get(ctx);
         String capturedArg2 = this.arg2.get(ctx);
+        System.out.println("[Parcel] action=" + action + " arg1=" + capturedArg1 + " arg2=" + capturedArg2);
 
         return CompletableFuture.runAsync(() -> {
             try {
+                System.out.println("[Parcel] runAsync started");
                 PlayerRef senderRef = senderStore.getComponent(senderEntityRef, PlayerRef.getComponentType());
                 Player sender = senderStore.getComponent(senderEntityRef, Player.getComponentType());
-                if (senderRef == null || sender == null) return;
+                if (senderRef == null || sender == null) {
+                    System.out.println("[Parcel] ABORT: senderRef=" + senderRef + " sender=" + sender);
+                    return;
+                }
 
                 UUID senderUUID = UUIDExtractor.getUUID(senderRef);
-                if (senderUUID == null) return;
+                if (senderUUID == null) {
+                    System.out.println("[Parcel] ABORT: senderUUID is null");
+                    return;
+                }
                 boolean isAdmin = senderRef.hasPermission(EldaniorLogger.ADMIN_PERMISSION);
+                System.out.println("[Parcel] isAdmin=" + isAdmin + " switching on action=" + action);
 
                 switch (action.toLowerCase()) {
                     case "pos1" -> handlePos1(sender, senderUUID);
