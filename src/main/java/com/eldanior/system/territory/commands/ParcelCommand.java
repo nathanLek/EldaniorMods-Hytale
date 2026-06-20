@@ -74,10 +74,15 @@ public class ParcelCommand extends AbstractAsyncCommand {
                         // Capturer les args AVANT l'appel async (ctx sera invalide dans le callback)
                         String createType = arg1.get(ctx);
                         String createName = arg2.get(ctx);
-                        // Capture la selection EditorTool puis cree la parcelle
-                        captureEditorSelectionAsync(sender, senderUUID, () ->
-                                handleCreate(sender, senderUUID, createType, createName, isAdmin));
-                        return; // Le handleCreate sera appele dans le callback
+                        // KINGDOM utilise la position du joueur, pas de selection requise
+                        if ("KINGDOM".equalsIgnoreCase(createType)) {
+                            handleCreate(sender, senderUUID, createType, createName, isAdmin);
+                        } else {
+                            // Autres types : capture la selection EditorTool puis cree la parcelle
+                            captureEditorSelectionAsync(sender, senderUUID, () ->
+                                    handleCreate(sender, senderUUID, createType, createName, isAdmin));
+                            return; // Le handleCreate sera appele dans le callback
+                        }
                     }
                     case "delete" -> handleDelete(sender, senderUUID, ctx, isAdmin);
                     case "info" -> handleInfo(sender, senderUUID);
