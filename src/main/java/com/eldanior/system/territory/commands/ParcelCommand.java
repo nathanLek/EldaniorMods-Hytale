@@ -14,7 +14,6 @@ import com.hypixel.hytale.server.core.prefab.selection.SelectionManager;
 import com.hypixel.hytale.server.core.prefab.selection.SelectionProvider;
 import com.hypixel.hytale.server.core.NameMatching;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
-import com.hypixel.hytale.server.core.command.system.arguments.system.OptionalArg;
 import com.hypixel.hytale.server.core.command.system.arguments.system.RequiredArg;
 import com.hypixel.hytale.server.core.command.system.arguments.types.ArgTypes;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractAsyncCommand;
@@ -32,14 +31,10 @@ import java.util.concurrent.CompletableFuture;
 public class ParcelCommand extends AbstractAsyncCommand {
 
     private final RequiredArg<String> actionArg;
-    private final OptionalArg<String> arg1;
-    private final OptionalArg<String> arg2;
 
     public ParcelCommand() {
-        super("parcel", "Gestion des parcelles (pos1|pos2|create|delete|info|invite|kick|setperm|list|sell|buy)");
-        this.actionArg = this.withRequiredArg("action", "pos1|pos2|create|delete|info|invite|kick|setperm|list|sell|buy", ArgTypes.STRING);
-        this.arg1 = this.withOptionalArg("arg1", "type/nom/joueur", ArgTypes.STRING);
-        this.arg2 = this.withOptionalArg("arg2", "nom/valeur", ArgTypes.STRING);
+        super("parcel", "Gestion des parcelles (pos1|pos2|info|list|buy)");
+        this.actionArg = this.withRequiredArg("action", "pos1|pos2|info|list|buy", ArgTypes.STRING);
     }
 
     @Override
@@ -48,73 +43,33 @@ public class ParcelCommand extends AbstractAsyncCommand {
     @Nonnull
     @Override
     public CompletableFuture<Void> executeAsync(@Nonnull CommandContext ctx) {
-        System.out.println("[Parcel] executeAsync called");
         Ref<EntityStore> senderEntityRef = ctx.senderAsPlayerRef();
-        if (senderEntityRef == null || !senderEntityRef.isValid()) {
-            System.out.println("[Parcel] ABORT: senderEntityRef null or invalid");
-            return CompletableFuture.completedFuture(null);
-        }
+        if (senderEntityRef == null || !senderEntityRef.isValid()) return CompletableFuture.completedFuture(null);
 
         Store<EntityStore> senderStore = senderEntityRef.getStore();
         World world = ((EntityStore) senderStore.getExternalData()).getWorld();
-        if (world == null) {
-            System.out.println("[Parcel] ABORT: world is null");
-            return CompletableFuture.completedFuture(null);
-        }
+        if (world == null) return CompletableFuture.completedFuture(null);
 
         String action = this.actionArg.get(ctx);
-        // Capturer TOUS les args optionnels avant le runAsync — le ctx sera invalide dans le lambda
-        String capturedArg1 = this.arg1.get(ctx);
-        String capturedArg2 = this.arg2.get(ctx);
-        System.out.println("[Parcel] action=" + action + " arg1=" + capturedArg1 + " arg2=" + capturedArg2);
 
         return CompletableFuture.runAsync(() -> {
             try {
-                System.out.println("[Parcel] runAsync started");
                 PlayerRef senderRef = senderStore.getComponent(senderEntityRef, PlayerRef.getComponentType());
                 Player sender = senderStore.getComponent(senderEntityRef, Player.getComponentType());
-                if (senderRef == null || sender == null) {
-                    System.out.println("[Parcel] ABORT: senderRef=" + senderRef + " sender=" + sender);
-                    return;
-                }
+                if (senderRef == null || sender == null) return;
 
                 UUID senderUUID = UUIDExtractor.getUUID(senderRef);
-                if (senderUUID == null) {
-                    System.out.println("[Parcel] ABORT: senderUUID is null");
-                    return;
-                }
+                if (senderUUID == null) return;
                 boolean isAdmin = senderRef.hasPermission(EldaniorLogger.ADMIN_PERMISSION);
-                System.out.println("[Parcel] isAdmin=" + isAdmin + " switching on action=" + action);
 
                 switch (action.toLowerCase()) {
                     case "pos1" -> handlePos1(sender, senderUUID);
                     case "pos2" -> handlePos2(sender, senderUUID);
-                    case "create" -> {
-                        // KINGDOM utilise la position du joueur, pas de selection requise
-                        if ("KINGDOM".equalsIgnoreCase(capturedArg1)) {
-                            handleCreate(sender, senderUUID, capturedArg1, capturedArg2, isAdmin);
-                        } else {
-                            // Autres types : capture la selection EditorTool puis cree la parcelle
-                            captureEditorSelectionAsync(sender, senderUUID, () ->
-                                    handleCreate(sender, senderUUID, capturedArg1, capturedArg2, isAdmin));
-                            return; // Le handleCreate sera appele dans le callback
-                        }
-                    }
-                    case "delete" -> handleDelete(sender, senderUUID, capturedArg1, isAdmin);
                     case "info" -> handleInfo(sender, senderUUID);
-                    case "invite" -> handleInvite(sender, senderUUID, capturedArg1, isAdmin);
-                    case "kick" -> handleKick(sender, senderUUID, capturedArg1, isAdmin);
-                    case "setperm" -> handleSetPerm(sender, senderUUID, capturedArg1, capturedArg2, isAdmin);
                     case "list" -> handleList(sender, senderUUID, isAdmin);
-                    case "sell" -> handleSell(sender, senderUUID, capturedArg1, isAdmin);
                     case "buy" -> handleBuy(sender, senderUUID);
-                    case "setprice" -> handleSetPrice(sender, senderUUID, capturedArg1, isAdmin);
-                    case "setrent" -> handleSetRent(sender, senderUUID, capturedArg1, isAdmin);
-                    case "assign" -> handleAssignFamily(sender, senderUUID, capturedArg1, isAdmin);
-                    case "assignguild" -> handleAssignGuild(sender, senderUUID, capturedArg1, isAdmin);
-                    case "setrank" -> handleSetRank(sender, senderUUID, capturedArg1, capturedArg2, isAdmin);
-                    case "setregen" -> handleSetRegen(sender, senderUUID, capturedArg1, isAdmin);
-                    default -> sender.getPlayerRef().sendMessage(Message.raw("§cUsage: /es parcel <pos1|pos2|create|delete|info|invite|kick|setperm|list|sell|buy|setrank|setregen>"));
+                    default -> sender.getPlayerRef().sendMessage(Message.raw("§cUsage: /es parcel <pos1|pos2|info|list|buy>"));
+                    // Pour create/delete/invite/sell/etc → voir /es pcreate, /es pdelete, etc.
                 }
             } catch (Exception e) {
                 e.printStackTrace();
