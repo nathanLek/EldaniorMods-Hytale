@@ -71,9 +71,12 @@ public class ParcelCommand extends AbstractAsyncCommand {
                     case "pos1" -> handlePos1(sender, senderUUID);
                     case "pos2" -> handlePos2(sender, senderUUID);
                     case "create" -> {
+                        // Capturer les args AVANT l'appel async (ctx sera invalide dans le callback)
+                        String createType = arg1.get(ctx);
+                        String createName = arg2.get(ctx);
                         // Capture la selection EditorTool puis cree la parcelle
                         captureEditorSelectionAsync(sender, senderUUID, () ->
-                                handleCreate(sender, senderUUID, ctx, isAdmin));
+                                handleCreate(sender, senderUUID, createType, createName, isAdmin));
                         return; // Le handleCreate sera appele dans le callback
                     }
                     case "delete" -> handleDelete(sender, senderUUID, ctx, isAdmin);
@@ -165,9 +168,7 @@ public class ParcelCommand extends AbstractAsyncCommand {
 
     // ==================== CREATE ====================
 
-    private void handleCreate(Player sender, UUID uuid, CommandContext ctx, boolean isAdmin) {
-        String typeStr = this.arg1.get(ctx);
-        String name = this.arg2.get(ctx);
+    private void handleCreate(Player sender, UUID uuid, String typeStr, String name, boolean isAdmin) {
         if (typeStr == null || typeStr.isEmpty() || name == null || name.isEmpty()) {
             sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es parcel create <type> <nom>"));
             return;
