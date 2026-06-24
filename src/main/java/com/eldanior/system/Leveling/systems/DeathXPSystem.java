@@ -168,6 +168,11 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
 
             assert dataToWrite != null;
             int oldLvl = dataToWrite.getLevel();
+
+            // Bonus XP Diligence (+20%)
+            if (dataToWrite.getActivePassives().contains(com.eldanior.system.skills.skillsInteraction.PassiveSkill.ANGE_DILIGENCE)) {
+                xpAmount = (int)(xpAmount * 1.20f);
+            }
             dataToWrite.addExperience(xpAmount);
 
             // --- GUILD STATS TRACKING ---

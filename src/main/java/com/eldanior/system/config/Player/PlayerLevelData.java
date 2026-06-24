@@ -3,6 +3,7 @@ package com.eldanior.system.config.Player;
 import com.eldanior.system.classes.ClassManager;
 import com.eldanior.system.classes.models.ClassModel;
 import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
+import com.eldanior.system.titles.church.ChurchRank;
 import com.eldanior.system.titles.TitleManager;
 import com.eldanior.system.titles.models.TitleBonus;
 import com.eldanior.system.titles.models.TitleModel;
@@ -94,6 +95,7 @@ public class PlayerLevelData implements Component<EntityStore> {
     private List<String> unlockedSkills = new ArrayList<>();
     private Set<String> enabledSkills = new HashSet<>();
     private Set<String> disabledSkills = new HashSet<>();
+    private String divineSkill = ""; // Le skill divin unique équipé (PECHE_xxx ou ANGE_xxx)
     private transient Map<String, Long> cooldowns = new HashMap<>();
 
     // Kill tracking par type de mob (ex: "goblin_scrapper" -> 150)
@@ -263,6 +265,7 @@ public class PlayerLevelData implements Component<EntityStore> {
                     data.disabledSkills.addAll(Arrays.asList(value.split(",")));
                 }
             }, (data) -> String.join(",", data.disabledSkills)).add()
+            .append(new KeyedCodec<>("DivineSkill", Codec.STRING), (data, v) -> data.divineSkill = (v != null ? v : ""), data -> (data.divineSkill != null ? data.divineSkill : "")).add()
             .append(new KeyedCodec<>("UnlockedTitles", Codec.STRING), (data, value) -> {
                 data.unlockedTitles = new ArrayList<>();
                 if (value != null && !value.isEmpty()) {
@@ -375,6 +378,7 @@ public class PlayerLevelData implements Component<EntityStore> {
 
         copy.enabledSkills = new HashSet<>(this.enabledSkills);
         copy.disabledSkills = new HashSet<>(this.disabledSkills);
+        copy.divineSkill = this.divineSkill;
         if (this.unlockedTitles != null) {
             copy.unlockedTitles = new ArrayList<>(this.unlockedTitles);
         }
@@ -437,6 +441,9 @@ public class PlayerLevelData implements Component<EntityStore> {
     }
     public String getActiveSkillId() { return activeSkillId; }
     public void setActiveSkillId(String id) { this.activeSkillId = id; }
+    public String getDivineSkill() { return divineSkill; }
+    public void setDivineSkill(String skill) { this.divineSkill = (skill != null ? skill : ""); }
+    public boolean hasDivineSkill() { return divineSkill != null && !divineSkill.isEmpty(); }
 
     // === NOUVEAU GETTER DYNAMIQUE DES PASSIFS ===
     // Retourne uniquement les passifs qui ne sont PAS désactivés manuellement.
@@ -460,6 +467,15 @@ public class PlayerLevelData implements Component<EntityStore> {
         for (String skillId : this.unlockedSkills) {
             PassiveSkill learnedPassive = PassiveSkill.fromName(skillId.toUpperCase());
             if (learnedPassive != null && !activePassives.contains(learnedPassive) && !disabledSkills.contains(skillId.toUpperCase())) {
+                // Filtrage des skills divins
+                if (learnedPassive.isPeche()) {
+                    // Péchés : PK only
+                    if (!isPK()) continue;
+                } else if (learnedPassive.isAnge()) {
+                    // Anges : Église RELIGIEUX+ only
+                    ChurchRank rank = ChurchRank.fromString(this.churchRank);
+                    if (rank == null || rank.ordinal() < ChurchRank.RELIGIEUX.ordinal()) continue;
+                }
                 activePassives.add(learnedPassive);
             }
         }

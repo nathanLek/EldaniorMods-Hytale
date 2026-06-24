@@ -2129,6 +2129,66 @@ public class SkillManager {
                 100, 0.0f, 1.0f, 0.0f, 0.0f, 8.0f,
                 List.of(), List.of()
         ));
+
+        // ===================== SKILLS DIVINS — 7 PÉCHÉS CAPITAUX =====================
+        register("skill_page_peche_orgueil", new SkillModel(
+                "PECHE_ORGUEIL", null, "Orgueil", "all",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, List.of(), List.of()
+        ));
+        register("skill_page_peche_colere", new SkillModel(
+                "PECHE_COLERE", null, "Colère", "all",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, List.of(), List.of()
+        ));
+        register("skill_page_peche_avarice", new SkillModel(
+                "PECHE_AVARICE", null, "Avarice", "all",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, List.of(), List.of()
+        ));
+        register("skill_page_peche_envie", new SkillModel(
+                "PECHE_ENVIE", null, "Envie", "all",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, List.of(), List.of()
+        ));
+        register("skill_page_peche_luxure", new SkillModel(
+                "PECHE_LUXURE", null, "Luxure", "all",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, List.of(), List.of()
+        ));
+        register("skill_page_peche_gourmandise", new SkillModel(
+                "PECHE_GOURMANDISE", null, "Gourmandise", "all",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, List.of(), List.of()
+        ));
+        register("skill_page_peche_paresse", new SkillModel(
+                "PECHE_PARESSE", null, "Paresse", "all",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, List.of(), List.of()
+        ));
+
+        // ===================== SKILLS DIVINS — 7 ANGES =====================
+        register("skill_page_ange_humilite", new SkillModel(
+                "ANGE_HUMILITE", null, "Humilité (Michaël)", "all",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, List.of(), List.of()
+        ));
+        register("skill_page_ange_patience", new SkillModel(
+                "ANGE_PATIENCE", null, "Patience (Raphaël)", "all",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, List.of(), List.of()
+        ));
+        register("skill_page_ange_temperance", new SkillModel(
+                "ANGE_TEMPERANCE", null, "Tempérance (Uriel)", "all",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, List.of(), List.of()
+        ));
+        register("skill_page_ange_charite", new SkillModel(
+                "ANGE_CHARITE", null, "Charité (Gabriel)", "all",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, List.of(), List.of()
+        ));
+        register("skill_page_ange_bienveillance", new SkillModel(
+                "ANGE_BIENVEILLANCE", null, "Bienveillance (Chamuel)", "all",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, List.of(), List.of()
+        ));
+        register("skill_page_ange_chastete", new SkillModel(
+                "ANGE_CHASTETE", null, "Chasteté (Azraël)", "all",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, List.of(), List.of()
+        ));
+        register("skill_page_ange_diligence", new SkillModel(
+                "ANGE_DILIGENCE", null, "Diligence (Métatron)", "all",
+                0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, List.of(), List.of()
+        ));
     }
 
     private static void register(String itemId, SkillModel skill) {

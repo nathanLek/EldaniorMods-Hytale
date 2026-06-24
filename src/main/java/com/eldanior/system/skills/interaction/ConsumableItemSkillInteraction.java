@@ -3,8 +3,10 @@ package com.eldanior.system.skills.interaction;
 import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.skills.SkillManager;
+import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
 import com.eldanior.system.classes.ClassManager;
 import com.eldanior.system.classes.models.ClassModel;
+import com.eldanior.system.titles.church.ChurchRank;
 import com.eldanior.system.config.EldaniorLogger;
 
 import com.hypixel.hytale.codec.builder.BuilderCodec;
@@ -64,6 +66,31 @@ public class ConsumableItemSkillInteraction extends SimpleInteraction {
             List<String> playerSkills = data.getUnlockedSkills();
             String newSkillId = skill.skillId();
 
+            // 0. Validation des skills divins
+            if (PassiveSkill.isDivineSkill(newSkillId)) {
+                // Vérifier prérequis PK pour péchés
+                if (PassiveSkill.isPecheSkill(newSkillId) && !data.isPK()) {
+                    player.getPlayerRef().sendMessage(Message.raw("§cSeuls les PK peuvent maîtriser un Péché Capital !")
+                            .color(Color.RED));
+                    return;
+                }
+                // Vérifier prérequis Église pour anges
+                if (PassiveSkill.isAngeSkill(newSkillId)) {
+                    ChurchRank rank = ChurchRank.fromString(data.getChurchRank());
+                    if (rank == null || rank.ordinal() < ChurchRank.RELIGIEUX.ordinal()) {
+                        player.getPlayerRef().sendMessage(Message.raw("§cSeuls les Religieux et au-dessus peuvent recevoir la bénédiction d'un Ange !")
+                                .color(Color.RED));
+                        return;
+                    }
+                }
+                // Vérifier max 1 skill divin
+                if (data.hasDivineSkill() && !data.getDivineSkill().equals(newSkillId)) {
+                    player.getPlayerRef().sendMessage(Message.raw("§cVous possédez déjà un pouvoir divin (" + data.getDivineSkill() + "). Vous ne pouvez en avoir qu'un seul !")
+                            .color(Color.RED));
+                    return;
+                }
+            }
+
             // 1. Possède-t-il DÉJÀ exactement cette compétence ?
             if (playerSkills.contains(newSkillId)) {
                 player.getPlayerRef().sendMessage(Message.raw("Vous maîtrisez déjà ce savoir !").color(Color.RED));
@@ -110,6 +137,11 @@ public class ConsumableItemSkillInteraction extends SimpleInteraction {
 
                 player.getPlayerRef().sendMessage(Message.raw("Savoir acquis : " + skill.displayName())
                         .color(Color.CYAN).bold(true));
+            }
+
+            // Track divine skill
+            if (PassiveSkill.isDivineSkill(newSkillId)) {
+                data.setDivineSkill(newSkillId);
             }
 
             // Suppression du parchemin

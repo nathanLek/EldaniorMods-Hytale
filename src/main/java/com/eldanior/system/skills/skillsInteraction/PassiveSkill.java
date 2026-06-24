@@ -81,8 +81,11 @@ import com.eldanior.system.skills.skills.passives.Unique.Resistance.*;
 import com.eldanior.system.skills.skills.passives.Unique.Vie.*;
 import com.eldanior.system.skills.skills.passives.Unique.Maitrise.*;
 import com.eldanior.system.skills.skills.passives.Family.*;
+import com.eldanior.system.skills.skills.passives.Divin.Peche.*;
+import com.eldanior.system.skills.skills.passives.Divin.Ange.*;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.HashMap;
 import java.util.Collections;
 
@@ -581,7 +584,25 @@ public enum PassiveSkill {
     DIGNITY_AURA_2("DIGNITY_AURA_2", "Aura de Dignite", "Votre aura s'intensifie, ralentissant les ennemis dans un rayon accru.", new com.eldanior.system.skills.skills.passives.Dignity.DignityAuraPassive()),
     DIGNITY_AURA_3("DIGNITY_AURA_3", "Aura Imposante", "Votre presence impose le respect. Les ennemis proches sont fortement ralentis.", new com.eldanior.system.skills.skills.passives.Dignity.DignityAuraPassive()),
     DIGNITY_AURA_4("DIGNITY_AURA_4", "Aura Absolue", "Une aura ecrasante vous entoure. Peu osent s'approcher de vous.", new com.eldanior.system.skills.skills.passives.Dignity.DignityAuraPassive()),
-    DIGNITY_AURA_5("DIGNITY_AURA_5", "Aura Draconique", "La puissance d'un dragon coule en vous. Votre aura terrorise tous ceux qui vous entourent.", new com.eldanior.system.skills.skills.passives.Dignity.DignityAuraPassive());
+    DIGNITY_AURA_5("DIGNITY_AURA_5", "Aura Draconique", "La puissance d'un dragon coule en vous. Votre aura terrorise tous ceux qui vous entourent.", new com.eldanior.system.skills.skills.passives.Dignity.DignityAuraPassive()),
+
+    // ===================== SKILLS DIVINS — 7 PÉCHÉS CAPITAUX (PK only, PVP/Duel only) =====================
+    PECHE_ORGUEIL("PECHE_ORGUEIL", "Orgueil", "+10% puissance de combat par item équipé.", new Orgueil()),
+    PECHE_COLERE("PECHE_COLERE", "Colère", "+200% force, agilité et endurance si HP > 80%.", new Colere()),
+    PECHE_AVARICE("PECHE_AVARICE", "Avarice", "5% de chance de voler 1 item de la hotbar du joueur tué. CD: 2 jours.", 0, 172800f, new Avarice()),
+    PECHE_ENVIE("PECHE_ENVIE", "Envie", "Plus vous perdez de HP, plus vos dégâts augmentent. 50% HP = +100%.", new Envie()),
+    PECHE_LUXURE("PECHE_LUXURE", "Luxure", "5% de chance de voler 10% de l'or du joueur tué. CD: 2 jours.", 0, 172800f, new Luxure()),
+    PECHE_GOURMANDISE("PECHE_GOURMANDISE", "Gourmandise", "5% de chance de copier 1 compétence du joueur tué. CD: 2 jours.", 0, 172800f, new Gourmandise()),
+    PECHE_PARESSE("PECHE_PARESSE", "Paresse", "Aura de ralentissement dans un rayon de 15 blocs.", new Paresse()),
+
+    // ===================== SKILLS DIVINS — 7 ANGES (Église RELIGIEUX+) =====================
+    ANGE_HUMILITE("ANGE_HUMILITE", "Humilité (Michaël)", "Moins d'armure = plus de dégâts et santé. 0 armure = +200%.", new Humilite()),
+    ANGE_PATIENCE("ANGE_PATIENCE", "Patience (Raphaël)", "+20% HP et force aux alliés du groupe dans un rayon de 15 blocs.", new Patience()),
+    ANGE_TEMPERANCE("ANGE_TEMPERANCE", "Tempérance (Uriel)", "Combat à mains nues = +200% HP et dégâts.", new Temperance()),
+    ANGE_CHARITE("ANGE_CHARITE", "Charité (Gabriel)", "+150% HP. Soigne les alliés blessés avec sa propre vie.", new Charite()),
+    ANGE_BIENVEILLANCE("ANGE_BIENVEILLANCE", "Bienveillance (Chamuel)", "10% de l'argent ramassé redistribué aux alliés du groupe.", new Bienveillance()),
+    ANGE_CHASTETE("ANGE_CHASTETE", "Chasteté (Azraël)", "+150% dégâts contre les mobs.", new Chastete()),
+    ANGE_DILIGENCE("ANGE_DILIGENCE", "Diligence (Métatron)", "+20% XP, progression skills x5, +100% agilité.", new Diligence());
 
     private final String id;
     private final String displayName;
@@ -650,5 +671,35 @@ public enum PassiveSkill {
     public static PassiveSkill fromName(String name) {
         return LOOKUP.get(name);
     }
+
+    // --- Skills Divins : péchés et anges ---
+    private static final Set<String> DIVINE_SKILL_IDS;
+    private static final Set<String> PECHE_SKILL_IDS;
+    private static final Set<String> ANGE_SKILL_IDS;
+
+    static {
+        Set<String> divine = new java.util.HashSet<>();
+        Set<String> peches = new java.util.HashSet<>();
+        Set<String> anges = new java.util.HashSet<>();
+        for (PassiveSkill ps : values()) {
+            if (ps.name().startsWith("PECHE_")) {
+                peches.add(ps.name());
+                divine.add(ps.name());
+            } else if (ps.name().startsWith("ANGE_")) {
+                anges.add(ps.name());
+                divine.add(ps.name());
+            }
+        }
+        DIVINE_SKILL_IDS = Collections.unmodifiableSet(divine);
+        PECHE_SKILL_IDS = Collections.unmodifiableSet(peches);
+        ANGE_SKILL_IDS = Collections.unmodifiableSet(anges);
+    }
+
+    public static boolean isDivineSkill(String skillId) { return DIVINE_SKILL_IDS.contains(skillId); }
+    public static boolean isPecheSkill(String skillId) { return PECHE_SKILL_IDS.contains(skillId); }
+    public static boolean isAngeSkill(String skillId) { return ANGE_SKILL_IDS.contains(skillId); }
+    public boolean isDivine() { return DIVINE_SKILL_IDS.contains(this.name()); }
+    public boolean isPeche() { return PECHE_SKILL_IDS.contains(this.name()); }
+    public boolean isAnge() { return ANGE_SKILL_IDS.contains(this.name()); }
 }
 

@@ -272,7 +272,9 @@ public class CombatStatsSystem extends DamageEventSystem {
                         realMana -= manaCost;
                         attackerStatMap.setStatValue(DefaultEntityStatTypes.getMana(), realMana);
                     }
-                    attackerData.addSkillProc(skill.getId());
+                    // Diligence : progression x5
+                    int procCount = attackerData.getActivePassives().contains(PassiveSkill.ANGE_DILIGENCE) ? 5 : 1;
+                    for (int p = 0; p < procCount; p++) attackerData.addSkillProc(skill.getId());
                     LOGGER.atInfo().log("[Passive] " + skill.getId() + " PROC! Mana: " + (int)realMana + " (-" + manaCost + ") | Progression: " + String.format("%.2f", attackerData.getSkillProgression(skill.getId())) + "% | Mastered: " + mastered);
                     if (skill.getCooldownSeconds() > 0) {
                         attackerData.applyCooldown(skill.getId(), skill.getCooldownSeconds());
@@ -350,7 +352,9 @@ public class CombatStatsSystem extends DamageEventSystem {
 
                 // Si le skill a proc : incrémenter progression + appliquer cooldown
                 if (procced) {
-                    victimData.addSkillProc(skill.getId());
+                    // Diligence : progression x5
+                    int defProcCount = victimData.getActivePassives().contains(PassiveSkill.ANGE_DILIGENCE) ? 5 : 1;
+                    for (int p = 0; p < defProcCount; p++) victimData.addSkillProc(skill.getId());
                     if (skill.getCooldownSeconds() > 0) {
                         victimData.applyCooldown(skill.getId(), skill.getCooldownSeconds());
                     }
