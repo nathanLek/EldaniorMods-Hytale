@@ -484,6 +484,22 @@ public enum LootTableConfig {
             new LootEntry("skill_page_heart_of_creation",            1, 1, 1, 0.02),
             new LootEntry("skill_page_true_immortality",             1, 1, 1, 0.02),
 
+            // --- Skills Divins : 7 Péchés Capitaux + 7 Anges (0.01%) ---
+            new LootEntry("skill_page_peche_orgueil",          1, 1, 1, 0.01),
+            new LootEntry("skill_page_peche_colere",           1, 1, 1, 0.01),
+            new LootEntry("skill_page_peche_avarice",          1, 1, 1, 0.01),
+            new LootEntry("skill_page_peche_envie",            1, 1, 1, 0.01),
+            new LootEntry("skill_page_peche_luxure",           1, 1, 1, 0.01),
+            new LootEntry("skill_page_peche_gourmandise",      1, 1, 1, 0.01),
+            new LootEntry("skill_page_peche_paresse",          1, 1, 1, 0.01),
+            new LootEntry("skill_page_ange_humilite",          1, 1, 1, 0.01),
+            new LootEntry("skill_page_ange_patience",          1, 1, 1, 0.01),
+            new LootEntry("skill_page_ange_temperance",        1, 1, 1, 0.01),
+            new LootEntry("skill_page_ange_charite",           1, 1, 1, 0.01),
+            new LootEntry("skill_page_ange_bienveillance",     1, 1, 1, 0.01),
+            new LootEntry("skill_page_ange_chastete",          1, 1, 1, 0.01),
+            new LootEntry("skill_page_ange_diligence",         1, 1, 1, 0.01),
+
             // --- Consommables stats ---
             new LootEntry("Consomable_Stat_Force_One",         1, 1, 1, 2),
             new LootEntry("Consomable_Stat_Vitalite_One",      1, 1, 1, 2),
@@ -1046,6 +1062,22 @@ public enum LootTableConfig {
             new LootEntry("skill_page_heart_of_creation",            1, 1, 1, 0.01),
             new LootEntry("skill_page_true_immortality",             1, 1, 1, 0.01),
 
+            // --- Skills Divins : Péchés + Anges (0.005%) ---
+            new LootEntry("skill_page_peche_orgueil",          1, 1, 1, 0.005),
+            new LootEntry("skill_page_peche_colere",           1, 1, 1, 0.005),
+            new LootEntry("skill_page_peche_avarice",          1, 1, 1, 0.005),
+            new LootEntry("skill_page_peche_envie",            1, 1, 1, 0.005),
+            new LootEntry("skill_page_peche_luxure",           1, 1, 1, 0.005),
+            new LootEntry("skill_page_peche_gourmandise",      1, 1, 1, 0.005),
+            new LootEntry("skill_page_peche_paresse",          1, 1, 1, 0.005),
+            new LootEntry("skill_page_ange_humilite",          1, 1, 1, 0.005),
+            new LootEntry("skill_page_ange_patience",          1, 1, 1, 0.005),
+            new LootEntry("skill_page_ange_temperance",        1, 1, 1, 0.005),
+            new LootEntry("skill_page_ange_charite",           1, 1, 1, 0.005),
+            new LootEntry("skill_page_ange_bienveillance",     1, 1, 1, 0.005),
+            new LootEntry("skill_page_ange_chastete",          1, 1, 1, 0.005),
+            new LootEntry("skill_page_ange_diligence",         1, 1, 1, 0.005),
+
             // --- Consommables stats ---
             new LootEntry("Consomable_Stat_Force_One",         1, 1, 1, 3),
             new LootEntry("Consomable_Stat_Vitalite_One",      1, 1, 1, 3),
@@ -1515,6 +1547,22 @@ public enum LootTableConfig {
             new LootEntry("skill_page_fate_dodge",           1, 1, 1, 0.01),
             new LootEntry("skill_page_heart_of_creation",    1, 1, 1, 0.01),
             new LootEntry("skill_page_true_immortality",     1, 1, 1, 0.01),
+
+            // --- Skills Divins : 7 Péchés Capitaux + 7 Anges (0.005%) ---
+            new LootEntry("skill_page_peche_orgueil",          1, 1, 1, 0.005),
+            new LootEntry("skill_page_peche_colere",           1, 1, 1, 0.005),
+            new LootEntry("skill_page_peche_avarice",          1, 1, 1, 0.005),
+            new LootEntry("skill_page_peche_envie",            1, 1, 1, 0.005),
+            new LootEntry("skill_page_peche_luxure",           1, 1, 1, 0.005),
+            new LootEntry("skill_page_peche_gourmandise",      1, 1, 1, 0.005),
+            new LootEntry("skill_page_peche_paresse",          1, 1, 1, 0.005),
+            new LootEntry("skill_page_ange_humilite",          1, 1, 1, 0.005),
+            new LootEntry("skill_page_ange_patience",          1, 1, 1, 0.005),
+            new LootEntry("skill_page_ange_temperance",        1, 1, 1, 0.005),
+            new LootEntry("skill_page_ange_charite",           1, 1, 1, 0.005),
+            new LootEntry("skill_page_ange_bienveillance",     1, 1, 1, 0.005),
+            new LootEntry("skill_page_ange_chastete",          1, 1, 1, 0.005),
+            new LootEntry("skill_page_ange_diligence",         1, 1, 1, 0.005),
 
             // --- Consommables stats ---
             new LootEntry("Consomable_Stat_Force_One",         1, 1, 1, 5),
@@ -2074,6 +2122,22 @@ public enum LootTableConfig {
             new LootEntry("skill_page_fate_dodge",                   1, 1, 1, 0.01),
             new LootEntry("skill_page_heart_of_creation",            1, 1, 1, 0.01),
             new LootEntry("skill_page_true_immortality",             1, 1, 1, 0.01),
+
+            // --- Skills Divins : Péchés + Anges (0.005%) ---
+            new LootEntry("skill_page_peche_orgueil",          1, 1, 1, 0.005),
+            new LootEntry("skill_page_peche_colere",           1, 1, 1, 0.005),
+            new LootEntry("skill_page_peche_avarice",          1, 1, 1, 0.005),
+            new LootEntry("skill_page_peche_envie",            1, 1, 1, 0.005),
+            new LootEntry("skill_page_peche_luxure",           1, 1, 1, 0.005),
+            new LootEntry("skill_page_peche_gourmandise",      1, 1, 1, 0.005),
+            new LootEntry("skill_page_peche_paresse",          1, 1, 1, 0.005),
+            new LootEntry("skill_page_ange_humilite",          1, 1, 1, 0.005),
+            new LootEntry("skill_page_ange_patience",          1, 1, 1, 0.005),
+            new LootEntry("skill_page_ange_temperance",        1, 1, 1, 0.005),
+            new LootEntry("skill_page_ange_charite",           1, 1, 1, 0.005),
+            new LootEntry("skill_page_ange_bienveillance",     1, 1, 1, 0.005),
+            new LootEntry("skill_page_ange_chastete",          1, 1, 1, 0.005),
+            new LootEntry("skill_page_ange_diligence",         1, 1, 1, 0.005),
 
             // --- Consommables stats ---
             new LootEntry("Consomable_Stat_Force_One",         1, 1, 1, 1),
