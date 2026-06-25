@@ -6,6 +6,8 @@ import com.eldanior.system.guild.GuildManager;
 import com.eldanior.system.shop.ShopManager;
 import com.eldanior.system.territory.ParcelManager;
 import com.eldanior.system.titles.nobility.family.FamilyManager;
+import com.eldanior.system.titles.nobility.family.KnightOrder;
+import com.eldanior.system.titles.nobility.family.KnightOrderManager;
 import com.eldanior.system.titles.nobility.family.NobleFamilyModel;
 import com.eldanior.system.config.EldaniorLogger;
 import com.eldanior.system.config.PersistenceUtils;
@@ -58,6 +60,7 @@ public class PersistenceManager {
         try {
             saveGuilds();
             saveFamilies();
+            saveKnightOrders();
             saveClassements();
             saveShop();
             saveHierarchies();
@@ -123,6 +126,43 @@ public class PersistenceManager {
         PersistenceUtils.writeAtomicWithBackup(dataDir.resolve("families.properties"), props, "Family treasury & contribution data");
     }
 
+    private static void saveKnightOrders() throws IOException {
+        Properties props = new Properties();
+        props.setProperty("_version", "1");
+        int count = 0;
+        for (KnightOrder order : KnightOrderManager.getAll()) {
+            String prefix = order.getId();
+            props.setProperty(prefix + ".name", order.getName());
+            props.setProperty(prefix + ".motto", order.getMotto());
+            props.setProperty(prefix + ".familyId", order.getFamilyId());
+            props.setProperty(prefix + ".capitaineUUID", order.getCapitaineUUID().toString());
+            props.setProperty(prefix + ".capitaineName", order.getCapitaineName());
+            props.setProperty(prefix + ".totalKills", String.valueOf(order.getTotalKills()));
+
+            UUID ltUUID = order.getLieutenantUUID();
+            if (ltUUID != null) {
+                props.setProperty(prefix + ".lieutenantUUID", ltUUID.toString());
+                props.setProperty(prefix + ".lieutenantName", order.getLieutenantName() != null ? order.getLieutenantName() : "");
+            }
+
+            String territory = order.getTerritoryId();
+            if (territory != null) {
+                props.setProperty(prefix + ".territoryId", territory);
+            }
+
+            // Members as comma-separated UUIDs
+            StringBuilder members = new StringBuilder();
+            for (UUID uuid : order.getMembers()) {
+                if (members.length() > 0) members.append(",");
+                members.append(uuid.toString());
+            }
+            props.setProperty(prefix + ".members", members.toString());
+            count++;
+        }
+        props.setProperty("_count", String.valueOf(count));
+        PersistenceUtils.writeAtomicWithBackup(dataDir.resolve("knightorders.properties"), props, "Knight Order data");
+    }
+
     private static void saveClassements() throws IOException {
         Properties props = new Properties();
         props.setProperty("_version", "1");
@@ -149,6 +189,9 @@ public class PersistenceManager {
         }
         try { loadFamilies(); } catch (Exception e) {
             System.out.println("[Persistence] Familles: " + e.getMessage());
+        }
+        try { loadKnightOrders(); } catch (Exception e) {
+            System.out.println("[Persistence] Ordres: " + e.getMessage());
         }
         try { loadClassements(); } catch (Exception e) {
             System.out.println("[Persistence] Classements: " + e.getMessage());
@@ -297,6 +340,73 @@ public class PersistenceManager {
             } else if (key.startsWith("duel.")) {
                 ClassementManager.updateDuelWins(key.substring(5), val);
             }
+        }
+    }
+
+    private static void loadKnightOrders() throws IOException {
+        Path file = dataDir.resolve("knightorders.properties");
+        if (!Files.exists(file)) return;
+
+        Properties props = new Properties();
+        try (InputStream in = Files.newInputStream(file)) {
+            props.load(in);
+        }
+
+        checkVersion(props, "knightorders.properties");
+
+        // Collect order IDs
+        Set<String> orderIds = new HashSet<>();
+        for (String key : props.stringPropertyNames()) {
+            if (key.contains(".") && !key.startsWith("_")) {
+                orderIds.add(key.substring(0, key.indexOf('.')));
+            }
+        }
+
+        for (String orderId : orderIds) {
+            String name = props.getProperty(orderId + ".name");
+            String motto = props.getProperty(orderId + ".motto", "");
+            String familyId = props.getProperty(orderId + ".familyId");
+            String capitaineUUIDStr = props.getProperty(orderId + ".capitaineUUID");
+            String capitaineName = props.getProperty(orderId + ".capitaineName", "?");
+
+            if (name == null || familyId == null || capitaineUUIDStr == null) continue;
+
+            // Skip if already exists
+            if (KnightOrderManager.get(orderId) != null) continue;
+
+            UUID capitaineUUID = UUID.fromString(capitaineUUIDStr);
+            KnightOrder order = KnightOrderManager.createOrder(name, motto, familyId, capitaineUUID, capitaineName);
+            if (order == null) continue;
+
+            // Restore kills
+            int kills = Integer.parseInt(props.getProperty(orderId + ".totalKills", "0"));
+            for (int k = 0; k < kills; k++) order.addKill();
+
+            // Restore lieutenant
+            String ltUUIDStr = props.getProperty(orderId + ".lieutenantUUID");
+            if (ltUUIDStr != null && !ltUUIDStr.isEmpty()) {
+                String ltName = props.getProperty(orderId + ".lieutenantName", "");
+                order.setLieutenant(UUID.fromString(ltUUIDStr), ltName);
+            }
+
+            // Restore territory
+            String territory = props.getProperty(orderId + ".territoryId");
+            if (territory != null) order.setTerritoryId(territory);
+
+            // Restore members
+            String membersStr = props.getProperty(orderId + ".members", "");
+            if (!membersStr.isEmpty()) {
+                for (String uuidStr : membersStr.split(",")) {
+                    try {
+                        UUID memberUUID = UUID.fromString(uuidStr.trim());
+                        if (!memberUUID.equals(capitaineUUID)) {
+                            KnightOrderManager.joinOrder(memberUUID, order);
+                        }
+                    } catch (Exception e) { EldaniorLogger.error("PersistenceManager", e); }
+                }
+            }
+
+            System.out.println("[Persistence] Ordre restaure: " + name + " (famille=" + familyId + ", cap=" + capitaineName + ", membres=" + order.getMemberCount() + ", kills=" + kills + ")");
         }
     }
 

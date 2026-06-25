@@ -65,6 +65,9 @@ public class ESCommand extends AbstractCommandCollection {
         this.addSubCommand(new FamilyCommand());
         this.addSubCommand(new FamilySetCommand());
 
+        // Ordres de Chevalier
+        this.addSubCommand(new com.eldanior.system.titles.nobility.family.commands.OrdreCommand());
+
         // Duel
         this.addSubCommand(new DuelCommand());
 
