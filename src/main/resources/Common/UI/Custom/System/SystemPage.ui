@@ -1242,6 +1242,34 @@ Group {
                         Style: (FontSize: 11, TextColor: #445566, HorizontalAlignment: Center);
                         Anchor: (Height: 18);
                     }
+
+                    // --- GUILDES EN RECRUTEMENT OUVERT ---
+                    Group #GuildeOpenGuildSection {
+                        LayoutMode: Top;
+                        Visible: false;
+
+                        Group { Anchor: (Height: 16); }
+                        Group { Anchor: (Height: 1); Background: #4488cc(0.3); }
+                        Group { Anchor: (Height: 8); }
+
+                        Label {
+                            Text: "GUILDES EN RECRUTEMENT OUVERT";
+                            Style: (FontSize: 12, TextColor: #4488cc, RenderBold: true, RenderUppercase: true, LetterSpacing: 1, HorizontalAlignment: Center);
+                            Anchor: (Height: 18);
+                        }
+
+                        Group { Anchor: (Height: 6); }
+
+                        Group #GOpenGuild0 { Anchor: (Height: 34); Background: #1a2030(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false; Label #GOpenGuildName0 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } TextButton #GOpenGuildBtn0 { Text: "REJOINDRE"; Anchor: (Width: 100, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #4488cc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a3a(0.8); } }
+                        Group { Anchor: (Height: 3); }
+                        Group #GOpenGuild1 { Anchor: (Height: 34); Background: #1a2030(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false; Label #GOpenGuildName1 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } TextButton #GOpenGuildBtn1 { Text: "REJOINDRE"; Anchor: (Width: 100, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #4488cc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a3a(0.8); } }
+                        Group { Anchor: (Height: 3); }
+                        Group #GOpenGuild2 { Anchor: (Height: 34); Background: #1a2030(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false; Label #GOpenGuildName2 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } TextButton #GOpenGuildBtn2 { Text: "REJOINDRE"; Anchor: (Width: 100, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #4488cc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a3a(0.8); } }
+                        Group { Anchor: (Height: 3); }
+                        Group #GOpenGuild3 { Anchor: (Height: 34); Background: #1a2030(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false; Label #GOpenGuildName3 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } TextButton #GOpenGuildBtn3 { Text: "REJOINDRE"; Anchor: (Width: 100, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #4488cc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a3a(0.8); } }
+                        Group { Anchor: (Height: 3); }
+                        Group #GOpenGuild4 { Anchor: (Height: 34); Background: #1a2030(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false; Label #GOpenGuildName4 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } TextButton #GOpenGuildBtn4 { Text: "REJOINDRE"; Anchor: (Width: 100, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #4488cc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a3a(0.8); } }
+                    }
                 }
 
                 // --- A UNE GUILDE ---
@@ -1498,6 +1526,36 @@ Group {
                         Group #GInvitePlayer8 { Anchor: (Height: 34); Background: #1a2a1a(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false; Label #GInviteName8 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } TextButton #GInviteBtn8 { Text: "INVITER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); } }
                         Group { Anchor: (Height: 3); }
                         Group #GInvitePlayer9 { Anchor: (Height: 34); Background: #1a2a1a(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false; Label #GInviteName9 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } TextButton #GInviteBtn9 { Text: "INVITER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); } }
+                    }
+
+                    // --- RECRUTEMENT OUVERT/FERME (Chef only) ---
+                    Group #GuildeRecruitmentSection {
+                        LayoutMode: Top;
+                        Visible: false;
+
+                        Group { Anchor: (Height: 12); }
+                        Group { Anchor: (Height: 1); Background: #4488cc(0.3); }
+                        Group { Anchor: (Height: 8); }
+
+                        Label #GuildeRecruitmentStatus {
+                            Text: "Recrutement : Ferme";
+                            Style: (FontSize: 13, TextColor: #8899aa, HorizontalAlignment: Center, RenderBold: true);
+                            Anchor: (Height: 20);
+                        }
+
+                        Group { Anchor: (Height: 6); }
+
+                        Group {
+                            LayoutMode: Center;
+                            Anchor: (Height: 36);
+
+                            TextButton #GuildeBtnToggleRecruitment {
+                                Text: "CHANGER LE RECRUTEMENT";
+                                Anchor: (Width: 240, Height: 34);
+                                Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #4488cc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)));
+                                Background: #1a2a3a(0.7);
+                            }
+                        }
                     }
                 }
             }
