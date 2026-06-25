@@ -55,12 +55,13 @@ public class TitleListCommand extends AbstractAsyncCommand {
                     return;
                 }
 
-                sender.getPlayerRef().sendMessage(Message.raw("§6=== Vos Titres ==="));
+                sender.getPlayerRef().sendMessage(Message.raw("§6=== Vos Titres (" + data.getUnlockedTitles().size() + ") ==="));
+                sender.getPlayerRef().sendMessage(Message.raw("§7Tous les bonus se cumulent automatiquement."));
                 String currentTitleId = data.getCurrentTitle();
                 for (String titleId : data.getUnlockedTitles()) {
                     TitleModel title = TitleManager.get(titleId);
                     if (title != null) {
-                        String prefix = titleId.equals(currentTitleId) ? "§a[EQUIPE] " : "§7 - ";
+                        String prefix = titleId.equals(currentTitleId) ? "§a[AFFICHE] " : "§7 - ";
                         sender.getPlayerRef().sendMessage(Message.raw(prefix + title.getFormattedName() + " §8(" + title.getId() + ")"));
                     } else {
                         sender.getPlayerRef().sendMessage(Message.raw("§7 - §8" + titleId + " (inconnu)"));

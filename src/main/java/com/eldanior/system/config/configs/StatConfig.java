@@ -120,11 +120,35 @@ public enum StatConfig {
 
     // --- MÉTHODES UTILES ---
 
-    // Récupère les points totaux (Joueur + Classe)
+    // Récupère les points totaux (Joueur + Classe + Titres cumulés)
     public int getTotalPoints(PlayerLevelData data, ClassModel model) {
         int playerPoints = playerProvider.applyAsInt(data);
         int classPoints = (model != null && classProvider != null) ? classProvider.applyAsInt(model) : 0;
-        return playerPoints + classPoints;
+        // Bonus titres cumulés : on utilise le même provider pour extraire le bon champ du TitleBonus
+        int titlePoints = 0;
+        if (data != null && data.getUnlockedTitles() != null) {
+            for (String titleId : data.getUnlockedTitles()) {
+                com.eldanior.system.titles.models.TitleModel title = com.eldanior.system.titles.TitleManager.get(titleId);
+                if (title != null && title.getBonus() != null) {
+                    com.eldanior.system.titles.models.TitleBonus b = title.getBonus();
+                    titlePoints += getTitleBonusForStat(b);
+                }
+            }
+        }
+        return playerPoints + classPoints + titlePoints;
+    }
+
+    private int getTitleBonusForStat(com.eldanior.system.titles.models.TitleBonus b) {
+        return switch (this) {
+            case VITALITY -> b.vitality();
+            case INTELLIGENCE -> b.intelligence();
+            case ENDURANCE, ENDURANCE_DEFENSE -> b.endurance();
+            case STRENGTH_DAMAGE -> b.strength();
+            case AGILITY_SPEED, AGILITY_JUMP, AGILITY_FALL_RESISTANCE, ATTACK_SPEED, DODGE_CHANCE,
+                 DETECTION_RANGE, STEALTH_DETECTION -> b.agility();
+            case LUCK_CRITICAL, LUCK_LOOT, LUCK_EVENT, THREAT_AWARENESS,
+                 LOW_LIGHT_VISIBILITY, TRACKING_EVIDENCE -> b.luck();
+        };
     }
 
     // Calcule la valeur finale (Base + (Points * Ratio)), en respectant le CAP

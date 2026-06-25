@@ -23,18 +23,20 @@ public class TitresTab {
         PlayerLevelData data = store.getComponent(ref, type);
         if (data == null) return;
 
-        // Titre actuel
+        // Titre affiché (cosmétique)
         String currentId = data.getCurrentTitle();
         TitleModel currentTitle = TitleManager.get(currentId);
         if (currentTitle != null) {
             ui.set("#TitreActuelName.Text", currentTitle.getDisplayName());
             ui.set("#TitreActuelDesc.Text", currentTitle.getDescription());
-            ui.set("#TitreActuelBonus.Text", formatBonus(currentTitle.getBonus()));
         } else {
             ui.set("#TitreActuelName.Text", currentId != null ? currentId : "Aucun");
             ui.set("#TitreActuelDesc.Text", "");
-            ui.set("#TitreActuelBonus.Text", "");
         }
+
+        // Bonus cumulé de TOUS les titres débloqués
+        TitleBonus cumulBonus = computeCumulativeBonus(data.getUnlockedTitles());
+        ui.set("#TitreActuelBonus.Text", formatBonus(cumulBonus));
 
         // Liste des titres possedes
         List<String> unlockedIds = data.getUnlockedTitles();
@@ -57,8 +59,8 @@ public class TitresTab {
                 ui.set("#TitleDesc" + i + ".Text", title.getDescription());
                 ui.set("#TitleBonus" + i + ".Text", formatBonus(title.getBonus()));
 
-                // Bouton equiper : texte different si deja equipe
-                ui.set("#TitleBtn" + i + ".Text", isEquipped ? "EQUIPE" : "EQUIPER");
+                // Bouton afficher : texte different si deja affiché
+                ui.set("#TitleBtn" + i + ".Text", isEquipped ? "AFFICHE" : "AFFICHER");
             } else {
                 ui.set("#TitleRow" + i + ".Visible", false);
             }
@@ -89,6 +91,24 @@ public class TitresTab {
 
         com.eldanior.system.Leveling.utils.StatCalculator.updatePlayerStats(ref, store, data);
         return true;
+    }
+
+    private static TitleBonus computeCumulativeBonus(List<String> unlockedIds) {
+        if (unlockedIds == null || unlockedIds.isEmpty()) return TitleBonus.NONE;
+        int str = 0, vit = 0, intel = 0, end = 0, agl = 0, lck = 0;
+        for (String id : unlockedIds) {
+            TitleModel t = TitleManager.get(id);
+            if (t != null) {
+                TitleBonus b = t.getBonus();
+                str += b.strength();
+                vit += b.vitality();
+                intel += b.intelligence();
+                end += b.endurance();
+                agl += b.agility();
+                lck += b.luck();
+            }
+        }
+        return new TitleBonus(str, vit, intel, end, agl, lck);
     }
 
     private static String formatBonus(TitleBonus bonus) {
