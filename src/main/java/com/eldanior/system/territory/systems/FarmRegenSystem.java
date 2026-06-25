@@ -99,15 +99,19 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
                     com.eldanior.system.config.Player.PlayerLevelData> dataType = com.eldanior.system.EldaniorSystem.get().getPlayerLevelDataType();
             com.eldanior.system.config.Player.PlayerLevelData data = store.getComponent(playerRef, dataType);
             if (data != null) {
+                int levelBefore = data.getLevel();
                 data.addExperience(1);
                 commandBuffer.run(deferredStore -> deferredStore.putComponent(playerRef, dataType, data));
-                // Notification XP
                 try {
                     PlayerRef pRef = store.getComponent(playerRef, PlayerRef.getComponentType());
                     if (pRef != null) {
                         NotificationHelper.sendNotification(pRef,
                                 "<color:green>+1 XP</color>",
                                 com.hypixel.hytale.protocol.packets.interface_.NotificationStyle.Success);
+                        // Level up ?
+                        if (data.getLevel() > levelBefore) {
+                            NotificationHelper.showLevelUpTitle(pRef, data.getLevel());
+                        }
                     }
                 } catch (Exception e) { /* skip */ }
             }
