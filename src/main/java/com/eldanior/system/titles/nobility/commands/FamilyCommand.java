@@ -63,7 +63,7 @@ public class FamilyCommand extends AbstractAsyncCommand {
                     case "choose" -> handleChoose(sender, ctx, world);
                     case "invite" -> handleInvite(sender, ctx, world);
                     case "info" -> handleInfo(sender, ctx);
-                    default -> senderRef.sendMessage(Message.raw("§cUsage : /es family <choose|invite|info> <familyId/joueur>"));
+                    default -> senderRef.sendMessage(Message.raw("Usage : /es family <choose|invite|info> <familyId/joueur>"));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -77,13 +77,13 @@ public class FamilyCommand extends AbstractAsyncCommand {
 
         NobleFamilyModel family = FamilyManager.get(familyId);
         if (family == null) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cFamille '" + familyId + "' inconnue."));
-            sender.getPlayerRef().sendMessage(Message.raw("§7Disponibles : " + FamilyManager.getAvailableIds()));
+            sender.getPlayerRef().sendMessage(Message.raw("Famille '" + familyId + "' inconnue."));
+            sender.getPlayerRef().sendMessage(Message.raw("Disponibles : " + FamilyManager.getAvailableIds()));
             return;
         }
 
         if (FamilyManager.isFamilyTaken(familyId)) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cCette famille est deja prise."));
+            sender.getPlayerRef().sendMessage(Message.raw("Cette famille est deja prise."));
             return;
         }
 
@@ -97,18 +97,18 @@ public class FamilyCommand extends AbstractAsyncCommand {
 
             NobilityRank rank = NobilityRank.fromString(data.getNobilityRank());
             if (rank == null || (rank != NobilityRank.MARQUIS && rank != NobilityRank.DUC)) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cSeuls les Marquis et Ducs peuvent choisir une famille."));
+                sender.getPlayerRef().sendMessage(Message.raw("Seuls les Marquis et Ducs peuvent choisir une famille."));
                 return;
             }
 
             if (data.getNobleFamilyId() != null && !data.getNobleFamilyId().isEmpty()) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cVous appartenez deja a une famille."));
+                sender.getPlayerRef().sendMessage(Message.raw("Vous appartenez deja a une famille."));
                 return;
             }
 
             if (family.getMinimumRank() != rank) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cCette famille est reservee aux " + family.getMinimumRank().getFormattedName() + "§c."));
-                sender.getPlayerRef().sendMessage(Message.raw("§7Pour votre rang : §e" + FamilyManager.getAvailableFamilyIdsForRank(rank)));
+                sender.getPlayerRef().sendMessage(Message.raw("Cette famille est reservee aux " + family.getMinimumRank().getFormattedName() + "."));
+                sender.getPlayerRef().sendMessage(Message.raw("Pour votre rang : " + FamilyManager.getAvailableFamilyIdsForRank(rank)));
                 return;
             }
 
@@ -123,9 +123,9 @@ public class FamilyCommand extends AbstractAsyncCommand {
             // Verifier titres en temps reel apres choix de famille
             com.eldanior.system.titles.TitleManager.checkAndUnlockTitles(ref, store, copy, sender.getPlayerRef());
 
-            sender.getPlayerRef().sendMessage(Message.raw("§aVous etes Patriarche de la famille " + family.getFormattedName() + " §a!"));
-            sender.getPlayerRef().sendMessage(Message.raw("§7Devise : §o" + family.getMotto()));
-            sender.getPlayerRef().sendMessage(Message.raw("§7Competence : §e" + family.getFamilyPassive().getDisplayName()));
+            sender.getPlayerRef().sendMessage(Message.raw("Vous etes Patriarche de la famille " + family.getFormattedName() + " !"));
+            sender.getPlayerRef().sendMessage(Message.raw("Devise : " + family.getMotto()));
+            sender.getPlayerRef().sendMessage(Message.raw("Competence : " + family.getFamilyPassive().getDisplayName()));
         } catch (Exception e) { e.printStackTrace(); }
     }
 
@@ -142,25 +142,25 @@ public class FamilyCommand extends AbstractAsyncCommand {
             if (senderData == null) return;
 
             if (!senderData.canInviteToFamily()) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cSeul le Patriarche ou le Vice-Patriarche peut inviter."));
+                sender.getPlayerRef().sendMessage(Message.raw("Seul le Patriarche ou le Vice-Patriarche peut inviter."));
                 return;
             }
 
             String familyId = senderData.getNobleFamilyId();
             if (familyId == null || familyId.isEmpty()) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cVous n'appartenez a aucune famille."));
+                sender.getPlayerRef().sendMessage(Message.raw("Vous n'appartenez a aucune famille."));
                 return;
             }
 
             NobleFamilyModel family = FamilyManager.get(familyId);
-            if (family == null) { sender.getPlayerRef().sendMessage(Message.raw("§cFamille introuvable.")); return; }
+            if (family == null) { sender.getPlayerRef().sendMessage(Message.raw("Famille introuvable.")); return; }
 
             PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
-            if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable.")); return; }
+            if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("Joueur introuvable.")); return; }
 
             UUID targetUUID = extractUUID(targetRef);
             PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
-            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
+            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("Le joueur doit etre connecte.")); return; }
 
             var ref = targetPlayer.getReference();
             if (ref == null) return;
@@ -169,13 +169,13 @@ public class FamilyCommand extends AbstractAsyncCommand {
             if (data == null) data = new PlayerLevelData();
 
             if (data.getNobleFamilyId() != null && !data.getNobleFamilyId().isEmpty()) {
-                sender.getPlayerRef().sendMessage(Message.raw("§c" + targetName + " appartient deja a une famille."));
+                sender.getPlayerRef().sendMessage(Message.raw("" + targetName + " appartient deja a une famille."));
                 return;
             }
 
             NobilityRank targetRank = NobilityRank.fromString(data.getNobilityRank());
             if (targetRank == null || !targetRank.isNoble()) {
-                sender.getPlayerRef().sendMessage(Message.raw("§c" + targetName + " n'est pas noble."));
+                sender.getPlayerRef().sendMessage(Message.raw("" + targetName + " n'est pas noble."));
                 return;
             }
 
@@ -188,8 +188,8 @@ public class FamilyCommand extends AbstractAsyncCommand {
             // Verifier titres en temps reel apres avoir rejoint une famille
             com.eldanior.system.titles.TitleManager.checkAndUnlockTitles(ref, store, copy, targetPlayer);
 
-            sender.getPlayerRef().sendMessage(Message.raw("§a" + targetName + " a rejoint " + family.getFormattedName() + " §aen tant que Membre."));
-            targetPlayer.sendMessage(Message.raw("§eVous avez rejoint la famille " + family.getFormattedName() + " §7- §o" + family.getMotto()));
+            sender.getPlayerRef().sendMessage(Message.raw("" + targetName + " a rejoint " + family.getFormattedName() + " en tant que Membre."));
+            targetPlayer.sendMessage(Message.raw("Vous avez rejoint la famille " + family.getFormattedName() + " - " + family.getMotto()));
         } catch (Exception e) { e.printStackTrace(); }
     }
 
@@ -199,18 +199,18 @@ public class FamilyCommand extends AbstractAsyncCommand {
 
         NobleFamilyModel family = FamilyManager.get(familyId);
         if (family == null) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cFamille '" + familyId + "' inconnue."));
-            sender.getPlayerRef().sendMessage(Message.raw("§7Disponibles : " + FamilyManager.getAvailableIds()));
+            sender.getPlayerRef().sendMessage(Message.raw("Famille '" + familyId + "' inconnue."));
+            sender.getPlayerRef().sendMessage(Message.raw("Disponibles : " + FamilyManager.getAvailableIds()));
             return;
         }
 
-        sender.getPlayerRef().sendMessage(Message.raw("§6=== " + family.getFormattedName() + " §6==="));
-        sender.getPlayerRef().sendMessage(Message.raw("§7Devise : §o" + family.getMotto()));
-        sender.getPlayerRef().sendMessage(Message.raw("§7Rarete : " + family.getRarity().getDisplayName()));
-        sender.getPlayerRef().sendMessage(Message.raw("§7Rang requis : " + family.getMinimumRank().getFormattedName()));
-        sender.getPlayerRef().sendMessage(Message.raw("§7Competence : §e" + family.getFamilyPassive().getDisplayName()
-                + " §8(" + family.getFamilyPassive().getDescription() + ")"));
-        sender.getPlayerRef().sendMessage(Message.raw("§7Disponible : " + (FamilyManager.isFamilyTaken(familyId) ? "§cNon (prise)" : "§aOui")));
+        sender.getPlayerRef().sendMessage(Message.raw("=== " + family.getFormattedName() + " ==="));
+        sender.getPlayerRef().sendMessage(Message.raw("Devise : " + family.getMotto()));
+        sender.getPlayerRef().sendMessage(Message.raw("Rarete : " + family.getRarity().getDisplayName()));
+        sender.getPlayerRef().sendMessage(Message.raw("Rang requis : " + family.getMinimumRank().getFormattedName()));
+        sender.getPlayerRef().sendMessage(Message.raw("Competence : " + family.getFamilyPassive().getDisplayName()
+                + " (" + family.getFamilyPassive().getDescription() + ")"));
+        sender.getPlayerRef().sendMessage(Message.raw("Disponible : " + (FamilyManager.isFamilyTaken(familyId) ? "Non (prise)" : "Oui")));
     }
 
     private UUID extractUUID(PlayerRef playerRef) throws Exception {

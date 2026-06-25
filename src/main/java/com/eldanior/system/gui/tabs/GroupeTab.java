@@ -122,7 +122,7 @@ public class GroupeTab {
         for (UUID memberUUID : party.getMemberUUIDs()) {
             PlayerRef memberRef = Universe.get().getPlayer(memberUUID);
             if (memberRef != null) {
-                memberRef.sendMessage(Message.raw("§cLe groupe a ete dissout."));
+                memberRef.sendMessage(Message.raw("Le groupe a ete dissout."));
             }
         }
 
@@ -151,7 +151,7 @@ public class GroupeTab {
 
         PlayerRef targetRef = Universe.get().getPlayer(targetUUID);
         if (targetRef != null) {
-            targetRef.sendMessage(Message.raw("§cVous avez ete exclu du groupe."));
+            targetRef.sendMessage(Message.raw("Vous avez ete exclu du groupe."));
         }
 
         // Notify remaining
@@ -160,7 +160,7 @@ public class GroupeTab {
             for (UUID m : updatedParty.getMemberUUIDs()) {
                 PlayerRef mRef = Universe.get().getPlayer(m);
                 if (mRef != null) {
-                    mRef.sendMessage(Message.raw("§e" + targetName + " a ete exclu du groupe."));
+                    mRef.sendMessage(Message.raw("" + targetName + " a ete exclu du groupe."));
                 }
             }
         }
@@ -189,11 +189,11 @@ public class GroupeTab {
         // Notify
         PlayerRef targetRef = Universe.get().getPlayer(targetUUID);
         if (targetRef != null) {
-            targetRef.sendMessage(Message.raw("§6Vous etes maintenant le Capitaine du groupe !"));
+            targetRef.sendMessage(Message.raw("Vous etes maintenant le Capitaine du groupe !"));
         }
         Player player = store.getComponent(ref, Player.getComponentType());
         if (player != null) {
-            player.getPlayerRef().sendMessage(Message.raw("§eVous avez donne le role de Capitaine a " + members.get(idx).getValue()));
+            player.getPlayerRef().sendMessage(Message.raw("Vous avez donne le role de Capitaine a " + members.get(idx).getValue()));
         }
         return true;
     }
@@ -227,10 +227,10 @@ public class GroupeTab {
 
         Player player = store.getComponent(ref, Player.getComponentType());
         if (player != null) {
-            player.getPlayerRef().sendMessage(Message.raw("§aInvitation envoyee a " + targetName));
+            player.getPlayerRef().sendMessage(Message.raw("Invitation envoyee a " + targetName));
         }
-        targetRef.sendMessage(Message.raw("§eVous avez ete invite a rejoindre un groupe !"));
-        targetRef.sendMessage(Message.raw("§7Tapez §f/es party accept _ §7pour accepter."));
+        targetRef.sendMessage(Message.raw("Vous avez ete invite a rejoindre un groupe !"));
+        targetRef.sendMessage(Message.raw("Tapez /es party accept _ pour accepter."));
         return true;
     }
 

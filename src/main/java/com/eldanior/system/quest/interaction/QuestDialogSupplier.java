@@ -59,7 +59,7 @@ public class QuestDialogSupplier implements OpenCustomUIInteraction.CustomPageSu
 
         // Pas de quete dialogue -> envoyer un message
         if (playerRef != null) {
-            playerRef.sendMessage(com.hypixel.hytale.server.core.Message.raw("§6[PNJ] §7Je n'ai rien pour vous pour le moment."));
+            playerRef.sendMessage(com.hypixel.hytale.server.core.Message.raw("[PNJ] Je n'ai rien pour vous pour le moment."));
         }
         return null;
     }

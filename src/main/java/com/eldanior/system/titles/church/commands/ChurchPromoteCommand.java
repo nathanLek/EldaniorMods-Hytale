@@ -60,30 +60,30 @@ public class ChurchPromoteCommand extends AbstractAsyncCommand {
                 ChurchRank newRank = ChurchRank.fromString(rankStr);
                 if (newRank == null || newRank == ChurchRank.PAPE || newRank == ChurchRank.LAIQUE
                         || newRank == ChurchRank.RELIGIEUX || newRank == ChurchRank.SAINT) {
-                    senderRef.sendMessage(Message.raw("§cRang invalide. Utilisez : pretre, archeveque, cardinal"));
+                    senderRef.sendMessage(Message.raw("Rang invalide. Utilisez : pretre, archeveque, cardinal"));
                     return;
                 }
 
                 UUID senderUUID = getSenderUUID(sender);
                 if (senderUUID == null || !senderUUID.equals(ChurchManager.getCurrentPopeUUID())) {
                     if (!sender.getPlayerRef().hasPermission("eldanior.command.church.promote")) {
-                        sender.getPlayerRef().sendMessage(Message.raw("§cSeul le Pape ou un Admin peut promouvoir."));
+                        sender.getPlayerRef().sendMessage(Message.raw("Seul le Pape ou un Admin peut promouvoir."));
                         return;
                     }
                 }
 
                 if (!ChurchManager.canPopePromote(newRank)) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cPlus de places pour " + newRank.getFormattedName()
-                            + " §c(" + ChurchManager.getRemainingSlots(newRank) + "/" + newRank.getMaxPerChurch() + ")"));
+                    sender.getPlayerRef().sendMessage(Message.raw("Plus de places pour " + newRank.getFormattedName()
+                            + " (" + ChurchManager.getRemainingSlots(newRank) + "/" + newRank.getMaxPerChurch() + ")"));
                     return;
                 }
 
                 PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
-                if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable.")); return; }
+                if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("Joueur introuvable.")); return; }
 
                 UUID targetUUID = extractUUID(targetRef);
                 PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
-                if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
+                if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("Le joueur doit etre connecte.")); return; }
 
                 var ref = targetPlayer.getReference();
                 if (ref == null) return;
@@ -100,7 +100,7 @@ public class ChurchPromoteCommand extends AbstractAsyncCommand {
 
                 ChurchManager.recordPopePromotion(newRank);
 
-                sender.getPlayerRef().sendMessage(Message.raw("§a" + targetName + " promu au rang de " + newRank.getFormattedName()));
+                sender.getPlayerRef().sendMessage(Message.raw("" + targetName + " promu au rang de " + newRank.getFormattedName()));
                 com.eldanior.system.Leveling.utils.NotificationHelper.showEventTitle(targetPlayer,
                         "PROMOTION EGLISE", newRank.getFormattedName(), true);
             } catch (Exception e) { e.printStackTrace(); }

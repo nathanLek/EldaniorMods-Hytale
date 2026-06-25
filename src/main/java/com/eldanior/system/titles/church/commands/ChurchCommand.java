@@ -62,7 +62,7 @@ public class ChurchCommand extends AbstractAsyncCommand {
                     case "ordain" -> handleOrdain(sender, ctx);
                     case "info" -> handleInfo(sender, ctx);
                     case "status" -> handleStatus(sender);
-                    default -> senderRef.sendMessage(Message.raw("§cUsage : /es church <setpope|demote|ordain|info|status> <joueur>"));
+                    default -> senderRef.sendMessage(Message.raw("Usage : /es church <setpope|demote|ordain|info|status> <joueur>"));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -73,18 +73,18 @@ public class ChurchCommand extends AbstractAsyncCommand {
     // ==================== SET POPE (Admin only) ====================
     private void handleSetPope(Player sender, CommandContext ctx) {
         if (!sender.getPlayerRef().hasPermission("eldanior.command.church.setpope")) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cErreur : Pas de permission (Admin requis)."));
+            sender.getPlayerRef().sendMessage(Message.raw("Erreur : Pas de permission (Admin requis)."));
             return;
         }
 
         String targetName = this.playerArg.get(ctx);
         PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
-        if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable.")); return; }
+        if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("Joueur introuvable.")); return; }
 
         try {
             UUID targetUUID = extractUUID(targetRef);
             PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
-            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
+            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("Le joueur doit etre connecte.")); return; }
 
             var ref = targetPlayer.getReference();
             if (ref == null) return;
@@ -106,7 +106,7 @@ public class ChurchCommand extends AbstractAsyncCommand {
                                 oldCopy.setChurchRank(ChurchRank.CARDINAL.name());
                                 oldCopy.setFaith(ChurchRank.CARDINAL.getBaseFaith());
                                 oldStore.putComponent(oldRef, type, oldCopy);
-                                oldPopeRef.sendMessage(Message.raw("§eVous avez ete retrogade au rang de §5Cardinal§e."));
+                                oldPopeRef.sendMessage(Message.raw("Vous avez ete retrogade au rang de Cardinal."));
                             }
                         }
                     }
@@ -124,8 +124,8 @@ public class ChurchCommand extends AbstractAsyncCommand {
 
             ChurchManager.setPope(targetUUID, targetName);
 
-            sender.getPlayerRef().sendMessage(Message.raw("§a" + targetName + " est maintenant " + ChurchRank.PAPE.getFormattedName() + " §a!"));
-            targetPlayer.sendMessage(Message.raw("§6§lVous etes desormais le " + ChurchRank.PAPE.getFormattedName() + " §6§l!"));
+            sender.getPlayerRef().sendMessage(Message.raw("" + targetName + " est maintenant " + ChurchRank.PAPE.getFormattedName() + " !"));
+            targetPlayer.sendMessage(Message.raw("Vous etes desormais le " + ChurchRank.PAPE.getFormattedName() + " !"));
         } catch (Exception e) { e.printStackTrace(); }
     }
 
@@ -135,7 +135,7 @@ public class ChurchCommand extends AbstractAsyncCommand {
             UUID senderUUID;
             try { senderUUID = getSenderUUID(sender); } catch (Exception e) { return; }
             if (senderUUID == null || !senderUUID.equals(ChurchManager.getCurrentPopeUUID())) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cSeul le Pape ou un Admin peut retrograder.")); return;
+                sender.getPlayerRef().sendMessage(Message.raw("Seul le Pape ou un Admin peut retrograder.")); return;
             }
         }
 
@@ -143,11 +143,11 @@ public class ChurchCommand extends AbstractAsyncCommand {
 
         try {
             PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
-            if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable.")); return; }
+            if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("Joueur introuvable.")); return; }
 
             UUID targetUUID = extractUUID(targetRef);
             PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
-            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
+            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("Le joueur doit etre connecte.")); return; }
 
             var ref = targetPlayer.getReference();
             if (ref == null) return;
@@ -158,7 +158,7 @@ public class ChurchCommand extends AbstractAsyncCommand {
 
             ChurchRank currentRank = ChurchRank.fromString(data.getChurchRank());
             if (currentRank == null || currentRank == ChurchRank.LAIQUE) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cCe joueur est deja Laique.")); return;
+                sender.getPlayerRef().sendMessage(Message.raw("Ce joueur est deja Laique.")); return;
             }
 
             if (currentRank == ChurchRank.RELIGIEUX) ChurchManager.removeAcolyte(targetUUID);
@@ -180,8 +180,8 @@ public class ChurchCommand extends AbstractAsyncCommand {
             copy.setFaith(newRank.getBaseFaith());
             store.putComponent(ref, type, copy);
 
-            sender.getPlayerRef().sendMessage(Message.raw("§a" + targetName + " retrogade a " + newRank.getFormattedName()));
-            targetPlayer.sendMessage(Message.raw("§cVous avez ete retrogade a " + newRank.getFormattedName()));
+            sender.getPlayerRef().sendMessage(Message.raw("" + targetName + " retrogade a " + newRank.getFormattedName()));
+            targetPlayer.sendMessage(Message.raw("Vous avez ete retrogade a " + newRank.getFormattedName()));
         } catch (Exception e) { e.printStackTrace(); }
     }
 
@@ -200,18 +200,18 @@ public class ChurchCommand extends AbstractAsyncCommand {
 
             ChurchRank senderRank = ChurchRank.fromString(senderData.getChurchRank());
             if (senderRank == null || !senderRank.isClergy() || senderRank == ChurchRank.RELIGIEUX) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cVous devez etre au moins Pretre pour ordonner.")); return;
+                sender.getPlayerRef().sendMessage(Message.raw("Vous devez etre au moins Pretre pour ordonner.")); return;
             }
             if (!ChurchManager.canPromoteAcolyte(senderUUID, senderRank)) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cLimite d'acolytes atteinte (" + senderRank.getMaxAcolytes() + " max).")); return;
+                sender.getPlayerRef().sendMessage(Message.raw("Limite d'acolytes atteinte (" + senderRank.getMaxAcolytes() + " max).")); return;
             }
 
             PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
-            if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable.")); return; }
+            if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("Joueur introuvable.")); return; }
 
             UUID targetUUID = extractUUID(targetRef);
             PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
-            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
+            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("Le joueur doit etre connecte.")); return; }
 
             var ref = targetPlayer.getReference();
             if (ref == null) return;
@@ -221,7 +221,7 @@ public class ChurchCommand extends AbstractAsyncCommand {
 
             ChurchRank targetRank = ChurchRank.fromString(data.getChurchRank());
             if (targetRank != null && targetRank != ChurchRank.LAIQUE) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cCe joueur a deja un rang d'eglise.")); return;
+                sender.getPlayerRef().sendMessage(Message.raw("Ce joueur a deja un rang d'eglise.")); return;
             }
 
             PlayerLevelData copy = (PlayerLevelData) data.clone();
@@ -231,8 +231,8 @@ public class ChurchCommand extends AbstractAsyncCommand {
             store.putComponent(ref, type, copy);
             ChurchManager.addAcolyte(senderUUID, targetUUID);
 
-            sender.getPlayerRef().sendMessage(Message.raw("§a" + targetName + " est maintenant " + ChurchRank.RELIGIEUX.getFormattedName()));
-            targetPlayer.sendMessage(Message.raw("§eVous avez ete ordonne " + ChurchRank.RELIGIEUX.getFormattedName() + " §epar " + sender.getPlayerRef().getUsername() + " !"));
+            sender.getPlayerRef().sendMessage(Message.raw("" + targetName + " est maintenant " + ChurchRank.RELIGIEUX.getFormattedName()));
+            targetPlayer.sendMessage(Message.raw("Vous avez ete ordonne " + ChurchRank.RELIGIEUX.getFormattedName() + " par " + sender.getPlayerRef().getUsername() + " !"));
         } catch (Exception e) { e.printStackTrace(); }
     }
 
@@ -242,38 +242,38 @@ public class ChurchCommand extends AbstractAsyncCommand {
 
         try {
             PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
-            if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable.")); return; }
+            if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("Joueur introuvable.")); return; }
 
             UUID targetUUID = extractUUID(targetRef);
             PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
-            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
+            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("Le joueur doit etre connecte.")); return; }
 
             var ref = targetPlayer.getReference();
             if (ref == null) return;
             Store<EntityStore> store = ref.getStore();
             ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
             PlayerLevelData data = store.getComponent(ref, type);
-            if (data == null) { sender.getPlayerRef().sendMessage(Message.raw("§cAucune donnee.")); return; }
+            if (data == null) { sender.getPlayerRef().sendMessage(Message.raw("Aucune donnee.")); return; }
 
             ChurchRank rank = ChurchRank.fromString(data.getChurchRank());
             if (rank == null) rank = ChurchRank.LAIQUE;
 
-            sender.getPlayerRef().sendMessage(Message.raw("§6=== Eglise - " + targetName + " ==="));
-            sender.getPlayerRef().sendMessage(Message.raw("§7Rang : " + rank.getFormattedName()));
-            sender.getPlayerRef().sendMessage(Message.raw("§7Foi : §e" + data.getFaith()));
+            sender.getPlayerRef().sendMessage(Message.raw("=== Eglise - " + targetName + " ==="));
+            sender.getPlayerRef().sendMessage(Message.raw("Rang : " + rank.getFormattedName()));
+            sender.getPlayerRef().sendMessage(Message.raw("Foi : " + data.getFaith()));
 
             if (rank == ChurchRank.RELIGIEUX) {
                 UUID master = ChurchManager.getMasterOf(targetUUID);
                 if (master != null) {
                     PlayerRef masterRef = Universe.get().getPlayer(master);
                     String masterName = (masterRef != null) ? masterRef.getUsername() : "Inconnu";
-                    sender.getPlayerRef().sendMessage(Message.raw("§7Ordonne par : §e" + masterName));
+                    sender.getPlayerRef().sendMessage(Message.raw("Ordonne par : " + masterName));
                 }
             }
 
             if (rank.getMaxAcolytes() > 0 && rank != ChurchRank.RELIGIEUX) {
                 int count = ChurchManager.getAcolytesOf(targetUUID).size();
-                sender.getPlayerRef().sendMessage(Message.raw("§7Acolytes : §e" + count + "/" + rank.getMaxAcolytes()));
+                sender.getPlayerRef().sendMessage(Message.raw("Acolytes : " + count + "/" + rank.getMaxAcolytes()));
             }
         } catch (Exception e) { e.printStackTrace(); }
     }
@@ -281,13 +281,13 @@ public class ChurchCommand extends AbstractAsyncCommand {
     // ==================== STATUS ====================
     private void handleStatus(Player sender) {
         String popeName = ChurchManager.getCurrentPopeName();
-        if (popeName.isEmpty()) { sender.getPlayerRef().sendMessage(Message.raw("§7Aucun Pape n'a ete nomme.")); return; }
+        if (popeName.isEmpty()) { sender.getPlayerRef().sendMessage(Message.raw("Aucun Pape n'a ete nomme.")); return; }
 
-        sender.getPlayerRef().sendMessage(Message.raw("§6=== Eglise ==="));
-        sender.getPlayerRef().sendMessage(Message.raw("§6Pape : §f" + popeName));
+        sender.getPlayerRef().sendMessage(Message.raw("=== Eglise ==="));
+        sender.getPlayerRef().sendMessage(Message.raw("Pape : " + popeName));
         for (ChurchRank rank : new ChurchRank[]{ChurchRank.CARDINAL, ChurchRank.ARCHEVEQUE, ChurchRank.PRETRE}) {
             int remaining = ChurchManager.getRemainingSlots(rank);
-            sender.getPlayerRef().sendMessage(Message.raw("§7" + rank.getDisplayName() + " : " + rank.getColorCode() + remaining + "/" + rank.getMaxPerChurch() + " places"));
+            sender.getPlayerRef().sendMessage(Message.raw("" + rank.getDisplayName() + " : " + rank.getColorCode() + remaining + "/" + rank.getMaxPerChurch() + " places"));
         }
     }
 

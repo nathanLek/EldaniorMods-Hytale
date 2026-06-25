@@ -60,13 +60,13 @@ public class SetClassCommand extends AbstractAsyncCommand {
                 if (senderRef == null || sender == null) return;
 
                 if (!senderRef.hasPermission("eldanior.command.setclass")) {
-                    senderRef.sendMessage(Message.raw("§cErreur : Pas de permission."));
+                    senderRef.sendMessage(Message.raw("Erreur : Pas de permission."));
                     return;
                 }
 
                 PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
                 if (targetRef == null) {
-                    senderRef.sendMessage(Message.raw("§cErreur : Joueur '" + targetName + "' introuvable."));
+                    senderRef.sendMessage(Message.raw("Erreur : Joueur '" + targetName + "' introuvable."));
                     return;
                 }
 
@@ -74,7 +74,7 @@ public class SetClassCommand extends AbstractAsyncCommand {
 
                 PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
                 if (targetPlayer == null) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cErreur : Le joueur doit être connecté."));
+                    sender.getPlayerRef().sendMessage(Message.raw("Erreur : Le joueur doit être connecté."));
                     return;
                 }
 
@@ -89,8 +89,8 @@ public class SetClassCommand extends AbstractAsyncCommand {
 
                 ClassModel model = ClassManager.get(classId.toLowerCase());
                 if (model == null) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cErreur : Classe '" + classId + "' inconnue."));
-                    sender.getPlayerRef().sendMessage(Message.raw("§7IDs réellement chargés : " + ClassManager.getAvailableIds()));
+                    sender.getPlayerRef().sendMessage(Message.raw("Erreur : Classe '" + classId + "' inconnue."));
+                    sender.getPlayerRef().sendMessage(Message.raw("IDs réellement chargés : " + ClassManager.getAvailableIds()));
                     return;
                 }
 
@@ -104,8 +104,8 @@ public class SetClassCommand extends AbstractAsyncCommand {
                 store.putComponent(ref, type, data);
                 StatCalculator.updatePlayerStats(ref, store, data);
 
-                sender.getPlayerRef().sendMessage(Message.raw("§aSuccès : " + targetName + " est maintenant " + model.getDisplayName() + " (Skills mis à jour)"));
-                targetPlayer.sendMessage(Message.raw("§eVotre classe a été changée en : §6" + model.getDisplayName()));
+                sender.getPlayerRef().sendMessage(Message.raw("Succès : " + targetName + " est maintenant " + model.getDisplayName() + " (Skills mis à jour)"));
+                targetPlayer.sendMessage(Message.raw("Votre classe a été changée en : " + model.getDisplayName()));
 
             } catch (Exception e) {
                 e.printStackTrace();

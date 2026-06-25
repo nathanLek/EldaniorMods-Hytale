@@ -58,16 +58,16 @@ public class ParcelSetRentCommand extends AbstractAsyncCommand {
 
                 long rentPrice;
                 try { rentPrice = Long.parseLong(capturedPrice); }
-                catch (Exception e) { sender.getPlayerRef().sendMessage(Message.raw("§cPrix invalide.")); return; }
+                catch (Exception e) { sender.getPlayerRef().sendMessage(Message.raw("Prix invalide.")); return; }
 
                 ParcelData parcel = getParcelAtPlayer(sender);
-                if (parcel == null) { sender.getPlayerRef().sendMessage(Message.raw("§cVous n'etes dans aucune parcelle.")); return; }
-                if (!isAdmin && !parcel.isOwner(senderUUID)) { sender.getPlayerRef().sendMessage(Message.raw("§cPas proprietaire.")); return; }
+                if (parcel == null) { sender.getPlayerRef().sendMessage(Message.raw("Vous n'etes dans aucune parcelle.")); return; }
+                if (!isAdmin && !parcel.isOwner(senderUUID)) { sender.getPlayerRef().sendMessage(Message.raw("Pas proprietaire.")); return; }
 
                 parcel.setRentPrice(rentPrice);
                 parcel.setForRent(rentPrice > 0);
                 ParcelManager.save();
-                sender.getPlayerRef().sendMessage(Message.raw("§aPrix de location defini : §f" + rentPrice + " Or/7j" + (rentPrice == 0 ? " (retire de la location)" : "")));
+                sender.getPlayerRef().sendMessage(Message.raw("Prix de location defini : " + rentPrice + " Or/7j" + (rentPrice == 0 ? " (retire de la location)" : "")));
             } catch (Exception e) {
                 e.printStackTrace();
             }

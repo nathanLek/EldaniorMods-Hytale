@@ -54,13 +54,13 @@ public class GuildDisbandCommand extends AbstractAsyncCommand {
                 ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
                 PlayerLevelData data = store.getComponent(ref, type);
                 if (data == null || !data.isGuildChef()) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cSeul le Chef peut dissoudre la guilde."));
+                    sender.getPlayerRef().sendMessage(Message.raw("Seul le Chef peut dissoudre la guilde."));
                     return;
                 }
 
                 UUID senderUUID = getSenderUUID(sender);
                 Guild guild = GuildManager.getPlayerGuild(senderUUID);
-                if (guild == null) { sender.getPlayerRef().sendMessage(Message.raw("§cVous n'etes dans aucune guilde.")); return; }
+                if (guild == null) { sender.getPlayerRef().sendMessage(Message.raw("Vous n'etes dans aucune guilde.")); return; }
 
                 String guildName = guild.getFormattedName();
 
@@ -74,7 +74,7 @@ public class GuildDisbandCommand extends AbstractAsyncCommand {
                 // Dissoudre (retire tous les membres du map)
                 GuildManager.disbandGuild(guild.getId());
 
-                sender.getPlayerRef().sendMessage(Message.raw("§cLa guilde " + guildName + " §ca ete dissoute."));
+                sender.getPlayerRef().sendMessage(Message.raw("La guilde " + guildName + " a ete dissoute."));
             } catch (Exception e) { e.printStackTrace(); }
         }, world);
     }

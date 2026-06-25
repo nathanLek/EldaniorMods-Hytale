@@ -37,13 +37,13 @@ public class DeleteTreasureCommand extends AbstractPlayerCommand {
 
         // Vérification permission admin
         if (!playerRef.hasPermission(EldaniorLogger.ADMIN_PERMISSION)) {
-            executor.getPlayerRef().sendMessage(Message.raw("§cVous n'avez pas la permission d'utiliser cette commande."));
+            executor.getPlayerRef().sendMessage(Message.raw("Vous n'avez pas la permission d'utiliser cette commande."));
             return;
         }
 
         Vector3i pos = TargetUtil.getTargetBlock(ref, 10.0, store);
         if (pos == null) {
-            executor.getPlayerRef().sendMessage(Message.raw("§cRegardez le coffre que vous voulez supprimer."));
+            executor.getPlayerRef().sendMessage(Message.raw("Regardez le coffre que vous voulez supprimer."));
             return;
         }
 
@@ -55,7 +55,7 @@ public class DeleteTreasureCommand extends AbstractPlayerCommand {
         );
 
         if (container == null) {
-            executor.getPlayerRef().sendMessage(Message.raw("§cCe bloc n'est pas un conteneur."));
+            executor.getPlayerRef().sendMessage(Message.raw("Ce bloc n'est pas un conteneur."));
             return;
         }
 
@@ -63,9 +63,9 @@ public class DeleteTreasureCommand extends AbstractPlayerCommand {
         if (template != null && template.hasTemplate(pos.x(), pos.y(), pos.z())) {
             template.removeTemplate(pos.x(), pos.y(), pos.z());
             cleanupPlayerData(executor, pos, world.getName(), store);
-            executor.getPlayerRef().sendMessage(Message.raw("§aLe coffre au trésor a été supprimé avec succès."));
+            executor.getPlayerRef().sendMessage(Message.raw("Le coffre au trésor a été supprimé avec succès."));
         } else {
-            executor.getPlayerRef().sendMessage(Message.raw("§eCe coffre n'est pas enregistré comme un coffre au trésor."));
+            executor.getPlayerRef().sendMessage(Message.raw("Ce coffre n'est pas enregistré comme un coffre au trésor."));
         }
     }
 
@@ -76,7 +76,7 @@ public class DeleteTreasureCommand extends AbstractPlayerCommand {
         try {
             allPlayers = storage.getPlayers();
         } catch (Exception e) {
-            executor.getPlayerRef().sendMessage(Message.raw("§6[Avertissement] Nettoyage partiel : impossible de lire la liste des joueurs hors-ligne."));
+            executor.getPlayerRef().sendMessage(Message.raw("[Avertissement] Nettoyage partiel : impossible de lire la liste des joueurs hors-ligne."));
             return;
         }
 

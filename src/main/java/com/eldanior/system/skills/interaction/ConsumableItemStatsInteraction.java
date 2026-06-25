@@ -53,7 +53,7 @@ public class ConsumableItemStatsInteraction extends SimpleInteraction {
                     hasSkill = classModel != null && classModel.getActiveSkillIds().contains(skillOpt.get().skillId());
                 }
                 if (!hasSkill) {
-                    player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§cVous n'avez pas appris cette competence !"));
+                    player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("Vous n'avez pas appris cette competence !"));
                     return;
                 }
             }

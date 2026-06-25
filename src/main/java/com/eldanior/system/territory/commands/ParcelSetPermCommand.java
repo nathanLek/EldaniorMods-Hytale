@@ -60,16 +60,16 @@ public class ParcelSetPermCommand extends AbstractAsyncCommand {
                 boolean isAdmin = senderRef.hasPermission(EldaniorLogger.ADMIN_PERMISSION);
 
                 ParcelData parcel = getParcelAtPlayer(sender);
-                if (parcel == null) { sender.getPlayerRef().sendMessage(Message.raw("§cVous n'etes dans aucune parcelle.")); return; }
+                if (parcel == null) { sender.getPlayerRef().sendMessage(Message.raw("Vous n'etes dans aucune parcelle.")); return; }
                 if (!isAdmin && !parcel.isOwner(senderUUID)) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cSeul le proprietaire peut changer les permissions.")); return;
+                    sender.getPlayerRef().sendMessage(Message.raw("Seul le proprietaire peut changer les permissions.")); return;
                 }
 
                 String[] parts = capturedRolePerm.split(":");
                 if (parts.length != 2) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cFormat: /es psetperm <ROLE:PERMISSION> <true|false>"));
-                    sender.getPlayerRef().sendMessage(Message.raw("§7Roles: OWNER, OFFICER, MEMBER, VISITOR"));
-                    sender.getPlayerRef().sendMessage(Message.raw("§7Permissions: BUILD, BREAK, INTERACT, PVP, ENTER"));
+                    sender.getPlayerRef().sendMessage(Message.raw("Format: /es psetperm <ROLE:PERMISSION> <true|false>"));
+                    sender.getPlayerRef().sendMessage(Message.raw("Roles: OWNER, OFFICER, MEMBER, VISITOR"));
+                    sender.getPlayerRef().sendMessage(Message.raw("Permissions: BUILD, BREAK, INTERACT, PVP, ENTER"));
                     return;
                 }
 
@@ -81,9 +81,9 @@ public class ParcelSetPermCommand extends AbstractAsyncCommand {
                     parcel.setRolePermission(role, perm, allowed);
                     ParcelManager.save();
 
-                    sender.getPlayerRef().sendMessage(Message.raw("§aPermission " + perm.name() + " pour " + role.name() + " = " + (allowed ? "§aOUI" : "§cNON")));
+                    sender.getPlayerRef().sendMessage(Message.raw("Permission " + perm.name() + " pour " + role.name() + " = " + (allowed ? "OUI" : "NON")));
                 } catch (Exception e) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cRole ou permission invalide."));
+                    sender.getPlayerRef().sendMessage(Message.raw("Role ou permission invalide."));
                 }
             } catch (Exception e) {
                 e.printStackTrace();

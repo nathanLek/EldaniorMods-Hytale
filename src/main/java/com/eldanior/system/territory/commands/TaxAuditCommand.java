@@ -50,11 +50,11 @@ public class TaxAuditCommand extends AbstractAsyncCommand {
                 if (playerRef == null) return;
 
                 if (!playerRef.hasPermission(EldaniorLogger.ADMIN_PERMISSION)) {
-                    playerRef.sendMessage(Message.raw("§cVous n'avez pas la permission."));
+                    playerRef.sendMessage(Message.raw("Vous n'avez pas la permission."));
                     return;
                 }
 
-                playerRef.sendMessage(Message.raw("§6=== Audit des taxes ==="));
+                playerRef.sendMessage(Message.raw("=== Audit des taxes ==="));
 
                 int count = 0;
                 for (ParcelData parcel : ParcelManager.getAll()) {
@@ -70,19 +70,19 @@ public class TaxAuditCommand extends AbstractAsyncCommand {
                     String dateStr = lastTime > 0 ? DATE_FMT.format(new Date(lastTime)) : "jamais";
 
                     playerRef.sendMessage(Message.raw(
-                            "§e" + parcel.getName() + " §7(" + typeLabel + ")"
-                            + " §fTresor: §a" + treasury + " Or"
-                            + " §fDerniere collecte: §b" + lastAmount + " Or"
-                            + " §7(" + dateStr + ")"
-                            + (rate > 0 ? " §7[taux: " + (int)(rate * 100) + "%]" : "")
+                            "" + parcel.getName() + " (" + typeLabel + ")"
+                            + " Tresor: " + treasury + " Or"
+                            + " Derniere collecte: " + lastAmount + " Or"
+                            + " (" + dateStr + ")"
+                            + (rate > 0 ? " [taux: " + (int)(rate * 100) + "%]" : "")
                     ));
                     count++;
                 }
 
                 if (count == 0) {
-                    playerRef.sendMessage(Message.raw("§7Aucune parcelle avec historique de taxe."));
+                    playerRef.sendMessage(Message.raw("Aucune parcelle avec historique de taxe."));
                 }
-                playerRef.sendMessage(Message.raw("§6=== " + count + " parcelle(s) ==="));
+                playerRef.sendMessage(Message.raw("=== " + count + " parcelle(s) ==="));
             } catch (Exception e) {
                 EldaniorLogger.error("TaxAuditCommand", e);
             }

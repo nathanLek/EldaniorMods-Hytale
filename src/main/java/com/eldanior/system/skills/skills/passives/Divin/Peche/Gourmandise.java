@@ -71,7 +71,7 @@ public class Gourmandise implements IPassiveCombatSkill {
 
             if (candidateSkills.isEmpty()) {
                 attackerPlayer.getPlayerRef().sendMessage(
-                        Message.raw("§c[Gourmandise] §fÉchec de la Prédation — aucune compétence compatible.").color(Color.RED));
+                        Message.raw("[Gourmandise] Échec de la Prédation — aucune compétence compatible.").color(Color.RED));
                 return true;
             }
 
@@ -87,7 +87,7 @@ public class Gourmandise implements IPassiveCombatSkill {
                         attackerData.removeSkill(lowerSkill);
                         attackerData.learnSkill(copiedSkillId);
                         attackerPlayer.getPlayerRef().sendMessage(
-                                Message.raw("§5[Gourmandise] §fPrédation réussie ! Évolution : §e" + copiedSkillId).color(Color.MAGENTA));
+                                Message.raw("[Gourmandise] Prédation réussie ! Évolution : " + copiedSkillId).color(Color.MAGENTA));
                         return true;
                     }
                 }
@@ -96,7 +96,7 @@ public class Gourmandise implements IPassiveCombatSkill {
             // Learn new skill
             attackerData.learnSkill(copiedSkillId);
             attackerPlayer.getPlayerRef().sendMessage(
-                    Message.raw("§5[Gourmandise] §fPrédation réussie ! Compétence copiée : §e" + copiedSkillId).color(Color.MAGENTA));
+                    Message.raw("[Gourmandise] Prédation réussie ! Compétence copiée : " + copiedSkillId).color(Color.MAGENTA));
             return true;
 
         } catch (Exception e) {

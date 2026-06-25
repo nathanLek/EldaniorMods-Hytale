@@ -56,17 +56,17 @@ public class GuildCreateCommand extends AbstractAsyncCommand {
                 if (senderRef == null || sender == null) return;
 
                 if (tag.length() < 2 || tag.length() > 5) {
-                    senderRef.sendMessage(Message.raw("§cLe tag doit faire entre 2 et 5 caracteres."));
+                    senderRef.sendMessage(Message.raw("Le tag doit faire entre 2 et 5 caracteres."));
                     return;
                 }
 
                 if (GuildManager.guildExists(name)) {
-                    senderRef.sendMessage(Message.raw("§cUne guilde avec ce nom existe deja."));
+                    senderRef.sendMessage(Message.raw("Une guilde avec ce nom existe deja."));
                     return;
                 }
 
                 if (GuildManager.tagExists(tag)) {
-                    senderRef.sendMessage(Message.raw("§cCe tag est deja utilise."));
+                    senderRef.sendMessage(Message.raw("Ce tag est deja utilise."));
                     return;
                 }
 
@@ -79,18 +79,18 @@ public class GuildCreateCommand extends AbstractAsyncCommand {
 
                 // Verifications
                 if (data.getLevel() < 120) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cNiveau minimum requis : 120 (vous etes niveau " + data.getLevel() + ")"));
+                    sender.getPlayerRef().sendMessage(Message.raw("Niveau minimum requis : 120 (vous etes niveau " + data.getLevel() + ")"));
                     return;
                 }
                 if (data.getMoney() < 150000) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cArgent minimum requis : 150,000 (vous avez " + data.getMoney() + ")"));
+                    sender.getPlayerRef().sendMessage(Message.raw("Argent minimum requis : 150,000 (vous avez " + data.getMoney() + ")"));
                     return;
                 }
                 if (!data.canJoinGuild()) {
                     if (data.hasGuild()) {
-                        sender.getPlayerRef().sendMessage(Message.raw("§cVous etes deja dans une guilde."));
+                        sender.getPlayerRef().sendMessage(Message.raw("Vous etes deja dans une guilde."));
                     } else {
-                        sender.getPlayerRef().sendMessage(Message.raw("§cVous faites partie d'une famille noble. Les nobles ne peuvent pas creer de guilde."));
+                        sender.getPlayerRef().sendMessage(Message.raw("Vous faites partie d'une famille noble. Les nobles ne peuvent pas creer de guilde."));
                     }
                     return;
                 }
@@ -106,7 +106,7 @@ public class GuildCreateCommand extends AbstractAsyncCommand {
                 // Creer la guilde
                 Guild guild = GuildManager.createGuild(name, tag, senderUUID, sender.getPlayerRef().getUsername());
                 if (guild == null) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cNom ou tag invalide (3-24 chars, tag 2-5 lettres, pas de doublon)."));
+                    sender.getPlayerRef().sendMessage(Message.raw("Nom ou tag invalide (3-24 chars, tag 2-5 lettres, pas de doublon)."));
                     return;
                 }
                 copy.setGuildId(guild.getId());
@@ -115,9 +115,9 @@ public class GuildCreateCommand extends AbstractAsyncCommand {
                 // Verifier titres en temps reel apres creation de guilde
                 com.eldanior.system.titles.TitleManager.checkAndUnlockTitles(ref, store, copy, sender.getPlayerRef());
 
-                sender.getPlayerRef().sendMessage(Message.raw("§a§lGuilde " + guild.getFormattedName() + " " + guild.getFormattedTag() + " §a§lcreee !"));
-                sender.getPlayerRef().sendMessage(Message.raw("§7Vous etes le Chef. -150,000 or."));
-                sender.getPlayerRef().sendMessage(Message.raw("§7Invitez des membres avec §f/es guild invite <joueur>"));
+                sender.getPlayerRef().sendMessage(Message.raw("Guilde " + guild.getFormattedName() + " " + guild.getFormattedTag() + " creee !"));
+                sender.getPlayerRef().sendMessage(Message.raw("Vous etes le Chef. -150,000 or."));
+                sender.getPlayerRef().sendMessage(Message.raw("Invitez des membres avec /es guild invite <joueur>"));
             } catch (Exception e) { e.printStackTrace(); }
         }, world);
     }

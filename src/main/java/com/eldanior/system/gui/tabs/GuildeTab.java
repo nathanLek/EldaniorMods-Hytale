@@ -80,7 +80,7 @@ public class GuildeTab {
 
         // Recrutement ouvert/ferme
         ui.set("#GuildeRecruitmentSection.Visible", isChef);
-        ui.set("#GuildeRecruitmentStatus.Text", guild.isOpenRecruitment() ? "§aRecrutement : Ouvert" : "§7Recrutement : Ferme");
+        ui.set("#GuildeRecruitmentStatus.Text", guild.isOpenRecruitment() ? "Recrutement : Ouvert" : "Recrutement : Ferme");
 
         // Invite list (chef + officer)
         if (isChef || isOfficer) {
@@ -105,7 +105,7 @@ public class GuildeTab {
                 // Can't leave as chef with members
                 Player player = store.getComponent(ref, Player.getComponentType());
                 if (player != null) {
-                    player.getPlayerRef().sendMessage(Message.raw("§cTransferez le role de Chef ou dissolvez la guilde."));
+                    player.getPlayerRef().sendMessage(Message.raw("Transferez le role de Chef ou dissolvez la guilde."));
                 }
                 return false;
             }
@@ -149,7 +149,7 @@ public class GuildeTab {
                         }
                     }
                 }
-                memberRef.sendMessage(Message.raw("§cLa guilde a ete dissoute."));
+                memberRef.sendMessage(Message.raw("La guilde a ete dissoute."));
             }
         }
 
@@ -170,7 +170,7 @@ public class GuildeTab {
         store.putComponent(ref, type, data);
 
         Player player = store.getComponent(ref, Player.getComponentType());
-        if (player != null) player.getPlayerRef().sendMessage(Message.raw("§e-1000 Or retire de la tresorerie !"));
+        if (player != null) player.getPlayerRef().sendMessage(Message.raw("-1000 Or retire de la tresorerie !"));
         return true;
     }
 
@@ -189,7 +189,7 @@ public class GuildeTab {
         guild.addTreasury(1000);
 
         Player player = store.getComponent(ref, Player.getComponentType());
-        if (player != null) player.getPlayerRef().sendMessage(Message.raw("§a+1000 Or depose dans la tresorerie !"));
+        if (player != null) player.getPlayerRef().sendMessage(Message.raw("+1000 Or depose dans la tresorerie !"));
         return true;
     }
 
@@ -230,10 +230,10 @@ public class GuildeTab {
 
         Player player = store.getComponent(ref, Player.getComponentType());
         if (player != null) {
-            player.getPlayerRef().sendMessage(Message.raw("§aInvitation envoyee a " + targetName));
+            player.getPlayerRef().sendMessage(Message.raw("Invitation envoyee a " + targetName));
         }
-        targetRef.sendMessage(Message.raw("§eVous etes invite a rejoindre la guilde " + guild.getFormattedName()));
-        targetRef.sendMessage(Message.raw("§7Tapez §f/es guild accept _ §7pour accepter."));
+        targetRef.sendMessage(Message.raw("Vous etes invite a rejoindre la guilde " + guild.getFormattedName()));
+        targetRef.sendMessage(Message.raw("Tapez /es guild accept _ pour accepter."));
         return true;
     }
 
@@ -251,9 +251,9 @@ public class GuildeTab {
         Player player = store.getComponent(ref, Player.getComponentType());
         if (player != null) {
             if (guild.isOpenRecruitment()) {
-                player.getPlayerRef().sendMessage(Message.raw("§aRecrutement ouvert !"));
+                player.getPlayerRef().sendMessage(Message.raw("Recrutement ouvert !"));
             } else {
-                player.getPlayerRef().sendMessage(Message.raw("§7Recrutement ferme."));
+                player.getPlayerRef().sendMessage(Message.raw("Recrutement ferme."));
             }
         }
         return true;
@@ -286,7 +286,7 @@ public class GuildeTab {
         Player player = store.getComponent(ref, Player.getComponentType());
         if (player != null) {
             com.eldanior.system.titles.TitleManager.checkAndUnlockTitles(ref, store, copy, player.getPlayerRef());
-            player.getPlayerRef().sendMessage(Message.raw("§aVous avez rejoint la guilde " + guild.getFormattedName() + " §a!"));
+            player.getPlayerRef().sendMessage(Message.raw("Vous avez rejoint la guilde " + guild.getFormattedName() + " !"));
         }
         return true;
     }
@@ -303,7 +303,7 @@ public class GuildeTab {
                 Guild g = openGuilds.get(i);
                 cachedIds.add(g.getId());
                 ui.set("#GOpenGuild" + i + ".Visible", true);
-                ui.set("#GOpenGuildName" + i + ".Text", g.getName() + " " + g.getFormattedTag() + " §7(" + g.getMemberCount() + " membres)");
+                ui.set("#GOpenGuildName" + i + ".Text", g.getName() + " " + g.getFormattedTag() + " (" + g.getMemberCount() + " membres)");
             } else {
                 ui.set("#GOpenGuild" + i + ".Visible", false);
             }

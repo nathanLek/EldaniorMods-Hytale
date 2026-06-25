@@ -58,18 +58,18 @@ public class ParcelDeleteCommand extends AbstractAsyncCommand {
 
                 ParcelData parcel = findParcel(capturedIdOrName);
                 if (parcel == null) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cParcelle introuvable: " + capturedIdOrName));
+                    sender.getPlayerRef().sendMessage(Message.raw("Parcelle introuvable: " + capturedIdOrName));
                     return;
                 }
 
                 if (!isAdmin && !parcel.isOwner(senderUUID)) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cVous n'etes pas proprietaire de cette parcelle."));
+                    sender.getPlayerRef().sendMessage(Message.raw("Vous n'etes pas proprietaire de cette parcelle."));
                     return;
                 }
 
                 String name = parcel.getName();
                 ParcelManager.deleteParcel(parcel.getId());
-                sender.getPlayerRef().sendMessage(Message.raw("§cParcelle supprimee : §f" + name));
+                sender.getPlayerRef().sendMessage(Message.raw("Parcelle supprimee : " + name));
             } catch (Exception e) {
                 e.printStackTrace();
             }

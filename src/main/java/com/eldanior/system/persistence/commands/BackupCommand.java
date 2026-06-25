@@ -51,7 +51,7 @@ public class BackupCommand extends AbstractAsyncCommand {
                 if (playerRef == null) return;
 
                 if (!playerRef.hasPermission(EldaniorLogger.ADMIN_PERMISSION)) {
-                    playerRef.sendMessage(Message.raw("§cVous n'avez pas la permission."));
+                    playerRef.sendMessage(Message.raw("Vous n'avez pas la permission."));
                     return;
                 }
 
@@ -59,17 +59,17 @@ public class BackupCommand extends AbstractAsyncCommand {
                     long start = System.currentTimeMillis();
                     PersistenceManager.saveAll();
                     long elapsed = System.currentTimeMillis() - start;
-                    playerRef.sendMessage(Message.raw("§aSauvegarde manuelle terminee en " + elapsed + "ms."));
+                    playerRef.sendMessage(Message.raw("Sauvegarde manuelle terminee en " + elapsed + "ms."));
                     EldaniorLogger.info("Sauvegarde manuelle declenchee par " + playerRef.getUsername());
                 } else if ("restore".equalsIgnoreCase(action)) {
                     long start = System.currentTimeMillis();
                     PersistenceManager.load();
                     long elapsed = System.currentTimeMillis() - start;
-                    playerRef.sendMessage(Message.raw("§aRestauration terminee en " + elapsed + "ms."));
-                    playerRef.sendMessage(Message.raw("§7Note: les donnees joueurs en memoire restent inchangees jusqu'a reconnexion."));
+                    playerRef.sendMessage(Message.raw("Restauration terminee en " + elapsed + "ms."));
+                    playerRef.sendMessage(Message.raw("Note: les donnees joueurs en memoire restent inchangees jusqu'a reconnexion."));
                     EldaniorLogger.info("Restauration manuelle declenchee par " + playerRef.getUsername());
                 } else {
-                    playerRef.sendMessage(Message.raw("§cUsage: /es backup <save|restore>"));
+                    playerRef.sendMessage(Message.raw("Usage: /es backup <save|restore>"));
                 }
             } catch (Exception e) {
                 EldaniorLogger.error("BackupCommand", e);

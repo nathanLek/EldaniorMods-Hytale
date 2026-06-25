@@ -59,20 +59,20 @@ public class ParcelKickCommand extends AbstractAsyncCommand {
                 boolean isAdmin = senderRef.hasPermission(EldaniorLogger.ADMIN_PERMISSION);
 
                 ParcelData parcel = getParcelAtPlayer(sender);
-                if (parcel == null) { sender.getPlayerRef().sendMessage(Message.raw("§cVous n'etes dans aucune parcelle.")); return; }
+                if (parcel == null) { sender.getPlayerRef().sendMessage(Message.raw("Vous n'etes dans aucune parcelle.")); return; }
                 if (!isAdmin && !parcel.isOwner(senderUUID)) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cSeul le proprietaire peut exclure.")); return;
+                    sender.getPlayerRef().sendMessage(Message.raw("Seul le proprietaire peut exclure.")); return;
                 }
 
                 PlayerRef targetRef = Universe.get().getPlayerByUsername(capturedPlayerName, NameMatching.EXACT_IGNORE_CASE);
-                if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable.")); return; }
+                if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("Joueur introuvable.")); return; }
 
                 UUID targetUUID = UUIDExtractor.getUUID(targetRef);
 
                 parcel.removeMember(targetUUID);
                 ParcelManager.save();
 
-                sender.getPlayerRef().sendMessage(Message.raw("§a" + capturedPlayerName + " retire de la parcelle."));
+                sender.getPlayerRef().sendMessage(Message.raw("" + capturedPlayerName + " retire de la parcelle."));
             } catch (Exception e) {
                 e.printStackTrace();
             }

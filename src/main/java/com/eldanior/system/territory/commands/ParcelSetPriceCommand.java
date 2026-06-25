@@ -58,16 +58,16 @@ public class ParcelSetPriceCommand extends AbstractAsyncCommand {
 
                 long price;
                 try { price = Long.parseLong(capturedPrice); }
-                catch (Exception e) { sender.getPlayerRef().sendMessage(Message.raw("§cPrix invalide.")); return; }
+                catch (Exception e) { sender.getPlayerRef().sendMessage(Message.raw("Prix invalide.")); return; }
 
                 ParcelData parcel = getParcelAtPlayer(sender);
-                if (parcel == null) { sender.getPlayerRef().sendMessage(Message.raw("§cVous n'etes dans aucune parcelle.")); return; }
-                if (!isAdmin && !parcel.isOwner(senderUUID)) { sender.getPlayerRef().sendMessage(Message.raw("§cPas proprietaire.")); return; }
+                if (parcel == null) { sender.getPlayerRef().sendMessage(Message.raw("Vous n'etes dans aucune parcelle.")); return; }
+                if (!isAdmin && !parcel.isOwner(senderUUID)) { sender.getPlayerRef().sendMessage(Message.raw("Pas proprietaire.")); return; }
 
                 parcel.setPrice(price);
                 parcel.setForSale(price > 0);
                 ParcelManager.save();
-                sender.getPlayerRef().sendMessage(Message.raw("§aPrix de vente defini : §f" + price + " Or" + (price == 0 ? " (retire de la vente)" : "")));
+                sender.getPlayerRef().sendMessage(Message.raw("Prix de vente defini : " + price + " Or" + (price == 0 ? " (retire de la vente)" : "")));
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -55,7 +55,7 @@ public class DuelCommand extends AbstractAsyncCommand {
                 switch (action.toLowerCase()) {
                     case "accept" -> {
                         if (!DuelManager.hasPendingChallenge(senderUUID)) {
-                            sender.getPlayerRef().sendMessage(Message.raw("§cAucun defi en attente."));
+                            sender.getPlayerRef().sendMessage(Message.raw("Aucun defi en attente."));
                             return;
                         }
 
@@ -64,33 +64,33 @@ public class DuelCommand extends AbstractAsyncCommand {
 
                         PlayerRef challengerRef = Universe.get().getPlayer(challengerUUID);
                         if (challengerRef == null) {
-                            sender.getPlayerRef().sendMessage(Message.raw("§cLe joueur n'est plus connecte."));
+                            sender.getPlayerRef().sendMessage(Message.raw("Le joueur n'est plus connecte."));
                             return;
                         }
 
                         if (DuelManager.isInDuel(challengerUUID) || DuelManager.isInDuel(senderUUID)) {
-                            sender.getPlayerRef().sendMessage(Message.raw("§cUn des joueurs est deja en duel."));
+                            sender.getPlayerRef().sendMessage(Message.raw("Un des joueurs est deja en duel."));
                             return;
                         }
 
                         // Lancer le duel
                         DuelManager.startDuel(senderUUID, challengerUUID);
 
-                        sender.getPlayerRef().sendMessage(Message.raw("§6§lDUEL COMMENCE ! §7Battez-vous !"));
-                        challengerRef.sendMessage(Message.raw("§6§lDUEL COMMENCE ! §7" + sender.getPlayerRef().getUsername() + " a accepte !"));
+                        sender.getPlayerRef().sendMessage(Message.raw("DUEL COMMENCE ! Battez-vous !"));
+                        challengerRef.sendMessage(Message.raw("DUEL COMMENCE ! " + sender.getPlayerRef().getUsername() + " a accepte !"));
                     }
                     case "decline" -> {
                         if (!DuelManager.hasPendingChallenge(senderUUID)) {
-                            sender.getPlayerRef().sendMessage(Message.raw("§cAucun defi en attente."));
+                            sender.getPlayerRef().sendMessage(Message.raw("Aucun defi en attente."));
                             return;
                         }
                         UUID challengerUUID = DuelManager.getPendingChallenger(senderUUID);
                         DuelManager.clearChallenge(senderUUID);
 
-                        sender.getPlayerRef().sendMessage(Message.raw("§7Defi refuse."));
+                        sender.getPlayerRef().sendMessage(Message.raw("Defi refuse."));
                         PlayerRef challengerRef = Universe.get().getPlayer(challengerUUID);
                         if (challengerRef != null) {
-                            challengerRef.sendMessage(Message.raw("§c" + sender.getPlayerRef().getUsername() + " a refuse votre defi."));
+                            challengerRef.sendMessage(Message.raw("" + sender.getPlayerRef().getUsername() + " a refuse votre defi."));
                         }
                     }
                     default -> {
@@ -98,39 +98,39 @@ public class DuelCommand extends AbstractAsyncCommand {
                         String targetName = action;
                         PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
                         if (targetRef == null) {
-                            sender.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable : " + targetName));
+                            sender.getPlayerRef().sendMessage(Message.raw("Joueur introuvable : " + targetName));
                             return;
                         }
 
                         UUID targetUUID = UUIDExtractor.getUUID(targetRef);
                         if (targetUUID == null) {
-                            sender.getPlayerRef().sendMessage(Message.raw("§cErreur : impossible d'identifier ce joueur."));
+                            sender.getPlayerRef().sendMessage(Message.raw("Erreur : impossible d'identifier ce joueur."));
                             return;
                         }
 
                         if (targetUUID.equals(senderUUID)) {
-                            sender.getPlayerRef().sendMessage(Message.raw("§cVous ne pouvez pas vous defier vous-meme."));
+                            sender.getPlayerRef().sendMessage(Message.raw("Vous ne pouvez pas vous defier vous-meme."));
                             return;
                         }
 
                         if (DuelManager.isInDuel(senderUUID)) {
-                            sender.getPlayerRef().sendMessage(Message.raw("§cVous etes deja en duel."));
+                            sender.getPlayerRef().sendMessage(Message.raw("Vous etes deja en duel."));
                             return;
                         }
 
                         if (DuelManager.isInDuel(targetUUID)) {
-                            sender.getPlayerRef().sendMessage(Message.raw("§c" + targetName + " est deja en duel."));
+                            sender.getPlayerRef().sendMessage(Message.raw("" + targetName + " est deja en duel."));
                             return;
                         }
 
                         if (!DuelManager.sendChallenge(senderUUID, targetUUID)) {
-                            sender.getPlayerRef().sendMessage(Message.raw("§cVous avez deja un defi en attente ! Attendez qu'il expire ou soit accepte/refuse."));
+                            sender.getPlayerRef().sendMessage(Message.raw("Vous avez deja un defi en attente ! Attendez qu'il expire ou soit accepte/refuse."));
                             return;
                         }
 
-                        sender.getPlayerRef().sendMessage(Message.raw("§6Defi envoye a " + targetRef.getUsername() + " ! §7(expire dans 60s)"));
-                        targetRef.sendMessage(Message.raw("§6§l" + sender.getPlayerRef().getUsername() + " vous defie en duel !"));
-                        targetRef.sendMessage(Message.raw("§7Tapez §f/es duel accept §7ou §f/es duel decline §7(expire dans 60s)"));
+                        sender.getPlayerRef().sendMessage(Message.raw("Defi envoye a " + targetRef.getUsername() + " ! (expire dans 60s)"));
+                        targetRef.sendMessage(Message.raw("" + sender.getPlayerRef().getUsername() + " vous defie en duel !"));
+                        targetRef.sendMessage(Message.raw("Tapez /es duel accept ou /es duel decline (expire dans 60s)"));
                     }
                 }
             } catch (Exception e) { e.printStackTrace(); }

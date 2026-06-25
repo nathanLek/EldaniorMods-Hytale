@@ -541,16 +541,16 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         if ("terr_family".equals(eventData.action)) {
             com.hypixel.hytale.server.core.entity.entities.Player p = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
             if (p != null) {
-                p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§6Tapez dans le chat :"));
-                p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§f/es parcel assign <familyId> _"));
+                p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("Tapez dans le chat :"));
+                p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("/es parcel assign <familyId> _"));
             }
             return;
         }
         if ("terr_guild".equals(eventData.action)) {
             com.hypixel.hytale.server.core.entity.entities.Player p = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
             if (p != null) {
-                p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§6Tapez dans le chat :"));
-                p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§f/es parcel assignguild <guildId> _"));
+                p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("Tapez dans le chat :"));
+                p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("/es parcel assignguild <guildId> _"));
             }
             return;
         }
@@ -573,7 +573,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             if (TerritoiresTab.handleCollectTax(getPlayerUUID(ref, store))) {
                 refreshTerritoiresTab(ref, store);
                 com.hypixel.hytale.server.core.entity.entities.Player p = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
-                if (p != null) p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§a§lImpots collectes !"));
+                if (p != null) p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("Impots collectes !"));
             }
             return;
         }
@@ -581,7 +581,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             if (TerritoiresTab.handleTransferTreasury(getPlayerUUID(ref, store))) {
                 refreshTerritoiresTab(ref, store);
                 com.hypixel.hytale.server.core.entity.entities.Player p = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
-                if (p != null) p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§a§lTresorerie transferee !"));
+                if (p != null) p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("Tresorerie transferee !"));
             }
             return;
         }
@@ -593,7 +593,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         }
         if ("terr_invasion".equals(eventData.action)) {
             com.hypixel.hytale.server.core.entity.entities.Player p = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
-            if (p != null) p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§c§lINVASION LANCEE ! §7(fonctionnalite en cours de developpement)"));
+            if (p != null) p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("INVASION LANCEE ! (fonctionnalite en cours de developpement)"));
             return;
         }
 
@@ -664,8 +664,8 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             // Prefill la commande dans le chat
             com.hypixel.hytale.server.core.entity.entities.Player p = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
             if (p != null) {
-                p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§6Tapez dans le chat :"));
-                p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§f/es parcel assign <familyId> _"));
+                p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("Tapez dans le chat :"));
+                p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("/es parcel assign <familyId> _"));
             }
             return;
         }
@@ -762,7 +762,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         if ("guild_create".equals(eventData.action)) {
             com.hypixel.hytale.server.core.entity.entities.Player player = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
             if (player != null) {
-                player.getPlayerRef().sendMessage(Message.raw("§eTapez dans le chat : §f/es guildcreate <nom> <tag>"));
+                player.getPlayerRef().sendMessage(Message.raw("Tapez dans le chat : /es guildcreate <nom> <tag>"));
             }
             return;
         }

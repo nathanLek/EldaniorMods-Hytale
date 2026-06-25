@@ -113,7 +113,7 @@ public class DuelManager {
                 // Notifier la cible que l'invitation a expire
                 PlayerRef targetRef = Universe.get().getPlayer(entry.getKey());
                 if (targetRef != null) {
-                    targetRef.sendMessage(Message.raw("§7Le defi de duel a expire."));
+                    targetRef.sendMessage(Message.raw("Le defi de duel a expire."));
                 }
                 return true;
             }
@@ -176,10 +176,10 @@ public class DuelManager {
             String loserName = loserRef != null ? loserRef.getUsername() : "?";
 
             if (winnerRef != null) {
-                winnerRef.sendMessage(Message.raw("§a§lDuel gagne ! §7Vous avez battu " + loserName));
+                winnerRef.sendMessage(Message.raw("Duel gagne ! Vous avez battu " + loserName));
             }
             if (loserRef != null) {
-                loserRef.sendMessage(Message.raw("§c§lDuel perdu ! §7" + winnerName + " vous a vaincu."));
+                loserRef.sendMessage(Message.raw("Duel perdu ! " + winnerName + " vous a vaincu."));
             }
         }
     }
@@ -219,7 +219,7 @@ public class DuelManager {
                                     ClassementManager.updateDuelWins(winnerRef.getUsername(), wData.getDuelWins());
                                     QuestManager.onDuelWin(winnerUUID);
 
-                                    winnerRef.sendMessage(Message.raw("§a+" + xpLost + " XP (mise du duel)"));
+                                    winnerRef.sendMessage(Message.raw("+" + xpLost + " XP (mise du duel)"));
 
                                     // Verifier titres en temps reel apres victoire en duel
                                     com.eldanior.system.titles.TitleManager.checkAndUnlockTitles(wRef, wStore, wData, winnerRef);
@@ -227,7 +227,7 @@ public class DuelManager {
                             }
                         }
 
-                        loserRef.sendMessage(Message.raw("§c-" + xpLost + " XP (mise du duel)"));
+                        loserRef.sendMessage(Message.raw("-" + xpLost + " XP (mise du duel)"));
                     }
                 }
             }
@@ -298,7 +298,7 @@ public class DuelManager {
                 healFull(opponentRef);
 
                 if (opponentRef != null) {
-                    opponentRef.sendMessage(Message.raw("§e§lDuel annule ! §7Votre adversaire s'est deconnecte."));
+                    opponentRef.sendMessage(Message.raw("Duel annule ! Votre adversaire s'est deconnecte."));
                 }
 
                 EldaniorLogger.info("[DuelManager] Duel annule (deconnexion de " + playerUUID + ")");

@@ -195,7 +195,7 @@ public class HologramCommand extends AbstractAsyncCommand {
                 if (senderRef == null || sender == null) return;
 
                 if (!senderRef.hasPermission(EldaniorLogger.ADMIN_PERMISSION)) {
-                    senderRef.sendMessage(Message.raw("§cPermission refusee."));
+                    senderRef.sendMessage(Message.raw("Permission refusee."));
                     return;
                 }
 
@@ -224,7 +224,7 @@ public class HologramCommand extends AbstractAsyncCommand {
 
     private void handleCreate(Player sender, String text) {
         if (text == null || text.isEmpty() || "_".equals(text)) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cUsage: /es hologram create <texte> (utilisez _ pour les espaces)"));
+            sender.getPlayerRef().sendMessage(Message.raw("Usage: /es hologram create <texte> (utilisez _ pour les espaces)"));
             return;
         }
         // _ = espace, | = nouvelle ligne
@@ -236,7 +236,7 @@ public class HologramCommand extends AbstractAsyncCommand {
 
         var transform = store.getComponent(ref, TransformComponent.getComponentType());
         if (transform == null) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cPosition introuvable."));
+            sender.getPlayerRef().sendMessage(Message.raw("Position introuvable."));
             return;
         }
 
@@ -256,7 +256,7 @@ public class HologramCommand extends AbstractAsyncCommand {
         HologramData data = HologramManager.create(text, x, y, z, worldName);
         HologramManager.spawnHologram(data);
 
-        sender.getPlayerRef().sendMessage(Message.raw("§aHologramme cree ! ID: §f" + data.getId() + " §7| " + data.getLocationString()));
+        sender.getPlayerRef().sendMessage(Message.raw("Hologramme cree ! ID: " + data.getId() + " | " + data.getLocationString()));
     }
 
     private void handlePresetMultiline(Player sender, String[] lines) {
@@ -283,32 +283,32 @@ public class HologramCommand extends AbstractAsyncCommand {
         HologramData data = HologramManager.create(java.util.List.of(lines), x, y, z, worldName);
         HologramManager.spawnHologram(data);
 
-        sender.getPlayerRef().sendMessage(Message.raw("§aHologramme cree ! ID: §f" + data.getId() + " §7(" + lines.length + " lignes)"));
+        sender.getPlayerRef().sendMessage(Message.raw("Hologramme cree ! ID: " + data.getId() + " (" + lines.length + " lignes)"));
     }
 
     private void handleDelete(Player sender, String id) {
         if (id == null || id.isEmpty() || "_".equals(id)) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cUsage: /es hologram delete <id>"));
+            sender.getPlayerRef().sendMessage(Message.raw("Usage: /es hologram delete <id>"));
             return;
         }
 
         if (HologramManager.delete(id)) {
-            sender.getPlayerRef().sendMessage(Message.raw("§aHologramme §f" + id + " §asupprime ! (restart pour despawn)"));
+            sender.getPlayerRef().sendMessage(Message.raw("Hologramme " + id + " supprime ! (restart pour despawn)"));
         } else {
-            sender.getPlayerRef().sendMessage(Message.raw("§cHologramme introuvable: " + id));
+            sender.getPlayerRef().sendMessage(Message.raw("Hologramme introuvable: " + id));
         }
     }
 
     private void handleList(Player sender) {
         var all = HologramManager.getAll();
         if (all.isEmpty()) {
-            sender.getPlayerRef().sendMessage(Message.raw("§7Aucun hologramme."));
+            sender.getPlayerRef().sendMessage(Message.raw("Aucun hologramme."));
             return;
         }
 
-        sender.getPlayerRef().sendMessage(Message.raw("§6=== Hologrammes (" + all.size() + ") ==="));
+        sender.getPlayerRef().sendMessage(Message.raw("=== Hologrammes (" + all.size() + ") ==="));
         for (HologramData h : all) {
-            sender.getPlayerRef().sendMessage(Message.raw("§f" + h.getId() + " §7| §e" + h.getText() + " §7| " + h.getLocationString()));
+            sender.getPlayerRef().sendMessage(Message.raw("" + h.getId() + " | " + h.getText() + " | " + h.getLocationString()));
         }
     }
 
@@ -327,7 +327,7 @@ public class HologramCommand extends AbstractAsyncCommand {
                 worldName, pos.x, pos.y, pos.z);
 
         if (arena == null || arena.getType() != com.eldanior.system.territory.ParcelType.ARENA) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cVous devez etre dans une arene !"));
+            sender.getPlayerRef().sendMessage(Message.raw("Vous devez etre dans une arene !"));
             return;
         }
 
@@ -335,30 +335,30 @@ public class HologramCommand extends AbstractAsyncCommand {
                 arena.getId(), pos.x, pos.y + 2.0, pos.z, worldName);
 
         if (holoId != null) {
-            sender.getPlayerRef().sendMessage(Message.raw("§a§lHologramme d'arene cree ! §7(" + holoId + ")"));
-            sender.getPlayerRef().sendMessage(Message.raw("§7Classement top 5 de §f" + arena.getName().replace('_', ' ')));
-            sender.getPlayerRef().sendMessage(Message.raw("§7Mise a jour automatique toutes les 60 secondes."));
+            sender.getPlayerRef().sendMessage(Message.raw("Hologramme d'arene cree ! (" + holoId + ")"));
+            sender.getPlayerRef().sendMessage(Message.raw("Classement top 5 de " + arena.getName().replace('_', ' ')));
+            sender.getPlayerRef().sendMessage(Message.raw("Mise a jour automatique toutes les 60 secondes."));
         } else {
-            sender.getPlayerRef().sendMessage(Message.raw("§cErreur lors de la creation de l'hologramme."));
+            sender.getPlayerRef().sendMessage(Message.raw("Erreur lors de la creation de l'hologramme."));
         }
     }
 
     private void sendHelp(Player sender) {
-        sender.getPlayerRef().sendMessage(Message.raw("§6=== Hologrammes ==="));
-        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram create <texte> §7— Cree (_ = espace, | = ligne)"));
-        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram delete <id> §7— Supprime"));
-        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram list §7— Liste"));
-        sender.getPlayerRef().sendMessage(Message.raw("§6--- Presets ---"));
-        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram welcome §7— Bienvenue"));
-        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram classes §7— Maitre des Classes"));
-        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram guilde §7— Hall des Guildes"));
-        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram noblesse §7— Palais Royal"));
-        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram eglise §7— Cathedrale Sacree"));
-        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram marche §7— Place du Marche"));
-        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram combat §7— Arene de Combat"));
-        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram quetes §7— Panneau des Quetes"));
-        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram competences §7— Tour des Competences"));
-        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram famille §7— Manoir des Familles"));
-        sender.getPlayerRef().sendMessage(Message.raw("§f/es hologram donjon §7— Portail de Donjon"));
+        sender.getPlayerRef().sendMessage(Message.raw("=== Hologrammes ==="));
+        sender.getPlayerRef().sendMessage(Message.raw("/es hologram create <texte> — Cree (_ = espace, | = ligne)"));
+        sender.getPlayerRef().sendMessage(Message.raw("/es hologram delete <id> — Supprime"));
+        sender.getPlayerRef().sendMessage(Message.raw("/es hologram list — Liste"));
+        sender.getPlayerRef().sendMessage(Message.raw("--- Presets ---"));
+        sender.getPlayerRef().sendMessage(Message.raw("/es hologram welcome — Bienvenue"));
+        sender.getPlayerRef().sendMessage(Message.raw("/es hologram classes — Maitre des Classes"));
+        sender.getPlayerRef().sendMessage(Message.raw("/es hologram guilde — Hall des Guildes"));
+        sender.getPlayerRef().sendMessage(Message.raw("/es hologram noblesse — Palais Royal"));
+        sender.getPlayerRef().sendMessage(Message.raw("/es hologram eglise — Cathedrale Sacree"));
+        sender.getPlayerRef().sendMessage(Message.raw("/es hologram marche — Place du Marche"));
+        sender.getPlayerRef().sendMessage(Message.raw("/es hologram combat — Arene de Combat"));
+        sender.getPlayerRef().sendMessage(Message.raw("/es hologram quetes — Panneau des Quetes"));
+        sender.getPlayerRef().sendMessage(Message.raw("/es hologram competences — Tour des Competences"));
+        sender.getPlayerRef().sendMessage(Message.raw("/es hologram famille — Manoir des Familles"));
+        sender.getPlayerRef().sendMessage(Message.raw("/es hologram donjon — Portail de Donjon"));
     }
 }

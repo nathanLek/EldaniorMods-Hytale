@@ -112,7 +112,7 @@ public class TreasureChestPlaceBlockEvent extends EntityEventSystem<EntityStore,
         }
 
         template.saveTemplate(pos.x(), pos.y(), pos.z(), loot, dropListName);
-        player.getPlayerRef().sendMessage(Message.raw("§2✔ [Eldanior] Coffre au trésor enregistré automatiquement !"));
+        player.getPlayerRef().sendMessage(Message.raw("✔ [Eldanior] Coffre au trésor enregistré automatiquement !"));
     }
 
     // ✅ Update 4 : BlockModule.getComponent() remplace player.getWorld().getState()

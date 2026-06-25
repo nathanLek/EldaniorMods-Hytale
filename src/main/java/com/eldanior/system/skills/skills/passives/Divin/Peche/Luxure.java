@@ -58,7 +58,7 @@ public class Luxure implements IPassiveCombatSkill {
             Player attackerPlayer = store.getComponent(attackerRef, Player.getComponentType());
             if (attackerPlayer != null) {
                 attackerPlayer.getPlayerRef().sendMessage(
-                        Message.raw("§d[Luxure] §fVous avez volé §e" + stolenAmount + " or §fà votre victime !").color(Color.MAGENTA));
+                        Message.raw("[Luxure] Vous avez volé " + stolenAmount + " or à votre victime !").color(Color.MAGENTA));
             }
 
             return true;

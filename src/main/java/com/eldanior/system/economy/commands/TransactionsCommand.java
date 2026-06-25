@@ -53,21 +53,21 @@ public class TransactionsCommand extends AbstractAsyncCommand {
 
                 // Admin only
                 if (!playerRef.hasPermission(EldaniorLogger.ADMIN_PERMISSION)) {
-                    playerRef.sendMessage(Message.raw("§cVous n'avez pas la permission."));
+                    playerRef.sendMessage(Message.raw("Vous n'avez pas la permission."));
                     return;
                 }
 
                 List<String> lines = TransactionLogger.getRecentLines(count);
                 if (lines.isEmpty()) {
-                    playerRef.sendMessage(Message.raw("§7Aucune transaction enregistree."));
+                    playerRef.sendMessage(Message.raw("Aucune transaction enregistree."));
                     return;
                 }
 
-                playerRef.sendMessage(Message.raw("§6=== Transactions recentes (" + lines.size() + ") ==="));
+                playerRef.sendMessage(Message.raw("=== Transactions recentes (" + lines.size() + ") ==="));
                 for (String line : lines) {
-                    playerRef.sendMessage(Message.raw("§7" + line));
+                    playerRef.sendMessage(Message.raw("" + line));
                 }
-                playerRef.sendMessage(Message.raw("§6=== Fin ==="));
+                playerRef.sendMessage(Message.raw("=== Fin ==="));
             } catch (Exception e) {
                 EldaniorLogger.error("TransactionsCommand", e);
             }

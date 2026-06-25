@@ -67,16 +67,16 @@ public class NpcQuestInteraction {
                     }
                 } else {
                     // Quete simple sans dialogue
-                    playerRef.sendMessage(Message.raw("§6[PNJ] §eNouvelle quete : §f" + quest.getName()));
-                    playerRef.sendMessage(Message.raw("§7" + quest.getDescription()));
-                    playerRef.sendMessage(Message.raw("§7Objectif : §f" + quest.getObjectiveText()));
-                    playerRef.sendMessage(Message.raw("§7Recompense : §e" + quest.getRewardText()));
+                    playerRef.sendMessage(Message.raw("[PNJ] Nouvelle quete : " + quest.getName()));
+                    playerRef.sendMessage(Message.raw("" + quest.getDescription()));
+                    playerRef.sendMessage(Message.raw("Objectif : " + quest.getObjectiveText()));
+                    playerRef.sendMessage(Message.raw("Recompense : " + quest.getRewardText()));
 
                     QuestManager.acceptQuest(playerUUID, quest.getId());
                     if (QuestManager.getActiveQuest(playerUUID) == null) {
                         QuestManager.activateQuest(playerUUID, quest.getId());
                     }
-                    playerRef.sendMessage(Message.raw("§aQuete acceptee !"));
+                    playerRef.sendMessage(Message.raw("Quete acceptee !"));
                 }
                 hasInteraction = true;
 
@@ -89,7 +89,7 @@ public class NpcQuestInteraction {
                                 new DialogueScreen(playerRef, dialogueQuest));
                     }
                 } else {
-                    playerRef.sendMessage(Message.raw("§6[PNJ] §aQuete terminee : §f" + quest.getName() + " !"));
+                    playerRef.sendMessage(Message.raw("[PNJ] Quete terminee : " + quest.getName() + " !"));
                     giveRewards(playerRef, store, playerEntityRef, quest);
                 }
                 hasInteraction = true;
@@ -103,15 +103,15 @@ public class NpcQuestInteraction {
                                 new DialogueScreen(playerRef, dialogueQuest));
                     }
                 } else {
-                    playerRef.sendMessage(Message.raw("§6[PNJ] §7Quete en cours : §f" + quest.getName()));
-                    playerRef.sendMessage(Message.raw("§7Progression : §e" + pq.getProgress() + " / " + quest.getTargetAmount()));
+                    playerRef.sendMessage(Message.raw("[PNJ] Quete en cours : " + quest.getName()));
+                    playerRef.sendMessage(Message.raw("Progression : " + pq.getProgress() + " / " + quest.getTargetAmount()));
                 }
                 hasInteraction = true;
             }
         }
 
         if (!hasInteraction) {
-            playerRef.sendMessage(Message.raw("§6[PNJ] §7Je n'ai rien pour vous pour le moment."));
+            playerRef.sendMessage(Message.raw("[PNJ] Je n'ai rien pour vous pour le moment."));
         }
     }
 
@@ -127,19 +127,19 @@ public class NpcQuestInteraction {
 
             if (quest.getRewardTitleId() != null) {
                 data.addTitle(quest.getRewardTitleId());
-                playerRef.sendMessage(Message.raw("§6Titre debloque : " + quest.getRewardTitleId()));
+                playerRef.sendMessage(Message.raw("Titre debloque : " + quest.getRewardTitleId()));
             }
 
             store.putComponent(ref, type, data);
 
-            playerRef.sendMessage(Message.raw("§a+" + quest.getRewardXP() + " XP"));
+            playerRef.sendMessage(Message.raw("+" + quest.getRewardXP() + " XP"));
             if (quest.getRewardGold() > 0) {
-                playerRef.sendMessage(Message.raw("§a+" + quest.getRewardGold() + " Or"));
+                playerRef.sendMessage(Message.raw("+" + quest.getRewardGold() + " Or"));
             }
 
             // Debloquer la quete suivante si chainee
             if (quest.getNextQuestId() != null) {
-                playerRef.sendMessage(Message.raw("§eNouvelle quete disponible : parlez au PNJ !"));
+                playerRef.sendMessage(Message.raw("Nouvelle quete disponible : parlez au PNJ !"));
             }
         } catch (Exception e) {
             e.printStackTrace();

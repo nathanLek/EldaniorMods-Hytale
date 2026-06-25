@@ -23,7 +23,7 @@ public class GiveRelicCommand extends CommandBase {
 
         // Vérification permission admin
         if (!player.getPlayerRef().hasPermission(EldaniorLogger.ADMIN_PERMISSION)) {
-            player.getPlayerRef().sendMessage(Message.raw("§cVous n'avez pas la permission d'utiliser cette commande."));
+            player.getPlayerRef().sendMessage(Message.raw("Vous n'avez pas la permission d'utiliser cette commande."));
             return;
         }
 

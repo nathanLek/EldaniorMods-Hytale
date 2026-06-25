@@ -51,20 +51,20 @@ public class TitleListCommand extends AbstractAsyncCommand {
                 PlayerLevelData data = store.getComponent(ref, type);
 
                 if (data == null) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cAucune donnee trouvee."));
+                    sender.getPlayerRef().sendMessage(Message.raw("Aucune donnee trouvee."));
                     return;
                 }
 
-                sender.getPlayerRef().sendMessage(Message.raw("§6=== Vos Titres (" + data.getUnlockedTitles().size() + ") ==="));
-                sender.getPlayerRef().sendMessage(Message.raw("§7Tous les bonus se cumulent automatiquement."));
+                sender.getPlayerRef().sendMessage(Message.raw("=== Vos Titres (" + data.getUnlockedTitles().size() + ") ==="));
+                sender.getPlayerRef().sendMessage(Message.raw("Tous les bonus se cumulent automatiquement."));
                 String currentTitleId = data.getCurrentTitle();
                 for (String titleId : data.getUnlockedTitles()) {
                     TitleModel title = TitleManager.get(titleId);
                     if (title != null) {
-                        String prefix = titleId.equals(currentTitleId) ? "§a[AFFICHE] " : "§7 - ";
-                        sender.getPlayerRef().sendMessage(Message.raw(prefix + title.getFormattedName() + " §8(" + title.getId() + ")"));
+                        String prefix = titleId.equals(currentTitleId) ? "[AFFICHE] " : " - ";
+                        sender.getPlayerRef().sendMessage(Message.raw(prefix + title.getFormattedName() + " (" + title.getId() + ")"));
                     } else {
-                        sender.getPlayerRef().sendMessage(Message.raw("§7 - §8" + titleId + " (inconnu)"));
+                        sender.getPlayerRef().sendMessage(Message.raw(" - " + titleId + " (inconnu)"));
                     }
                 }
             } catch (Exception e) {

@@ -179,12 +179,12 @@ public class AdminTab {
                         String target = parts[2];
                         String titleId = parts[3];
                         PlayerRef targetRef = Universe.get().getPlayerByUsername(target, com.hypixel.hytale.server.core.NameMatching.EXACT_IGNORE_CASE);
-                        if (targetRef == null) { player.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable: " + target)); return false; }
+                        if (targetRef == null) { player.getPlayerRef().sendMessage(Message.raw("Joueur introuvable: " + target)); return false; }
 
                         return executeOnTarget(targetRef, (tRef, tStore, data) -> {
-                            if ("grant".equals(action)) { data.addTitle(titleId); targetRef.sendMessage(Message.raw("§aTitre accorde: " + titleId)); }
-                            else if ("remove".equals(action)) { data.removeTitle(titleId); targetRef.sendMessage(Message.raw("§cTitre retire: " + titleId)); }
-                            else if ("reset".equals(action)) { data.resetTitles(); targetRef.sendMessage(Message.raw("§cTitres reinitialises")); }
+                            if ("grant".equals(action)) { data.addTitle(titleId); targetRef.sendMessage(Message.raw("Titre accorde: " + titleId)); }
+                            else if ("remove".equals(action)) { data.removeTitle(titleId); targetRef.sendMessage(Message.raw("Titre retire: " + titleId)); }
+                            else if ("reset".equals(action)) { data.resetTitles(); targetRef.sendMessage(Message.raw("Titres reinitialises")); }
                         });
                     }
                 }
@@ -193,13 +193,13 @@ public class AdminTab {
                         String target = parts[1];
                         String familyId = parts[2];
                         PlayerRef targetRef = Universe.get().getPlayerByUsername(target, com.hypixel.hytale.server.core.NameMatching.EXACT_IGNORE_CASE);
-                        if (targetRef == null) { player.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable: " + target)); return false; }
+                        if (targetRef == null) { player.getPlayerRef().sendMessage(Message.raw("Joueur introuvable: " + target)); return false; }
 
                         return executeOnTarget(targetRef, (tRef, tStore, data) -> {
                             data.setNobleFamilyId(familyId);
                             data.setStatus("PATRIARCH");
                             com.eldanior.system.titles.nobility.family.FamilyManager.claimFamily(familyId);
-                            targetRef.sendMessage(Message.raw("§eFamille assignee: " + familyId));
+                            targetRef.sendMessage(Message.raw("Famille assignee: " + familyId));
                         });
                     }
                 }
@@ -213,7 +213,7 @@ public class AdminTab {
                             int old = data.getLevel(); data.setLevel(level); data.setExperience(0);
                             int gained = Math.max(0, level - old) * 3;
                             if (gained > 0) data.setAttributePoints(data.getAttributePoints() + gained);
-                            targetRef.sendMessage(Message.raw("§eNiveau: " + level));
+                            targetRef.sendMessage(Message.raw("Niveau: " + level));
                         });
                     }
                 }
@@ -225,30 +225,30 @@ public class AdminTab {
                         if (targetRef == null) return false;
                         return executeOnTarget(targetRef, (tRef, tStore, data) -> {
                             data.addExperience(amount);
-                            targetRef.sendMessage(Message.raw("§a+" + amount + " XP"));
+                            targetRef.sendMessage(Message.raw("+" + amount + " XP"));
                         });
                     }
                 }
                 case "guildcreate" -> {
                     if (parts.length >= 3) {
-                        player.getPlayerRef().sendMessage(Message.raw("§eTapez dans le chat: /es guildcreate " + parts[1] + " " + parts[2]));
+                        player.getPlayerRef().sendMessage(Message.raw("Tapez dans le chat: /es guildcreate " + parts[1] + " " + parts[2]));
                     }
                 }
                 case "guilddisband" -> {
-                    player.getPlayerRef().sendMessage(Message.raw("§eTapez dans le chat: /es guilddisband"));
+                    player.getPlayerRef().sendMessage(Message.raw("Tapez dans le chat: /es guilddisband"));
                 }
                 case "bankGive" -> {
                     if (parts.length >= 2) {
-                        player.getPlayerRef().sendMessage(Message.raw("§eTapez dans le chat: /es bankGive " + parts[1]));
+                        player.getPlayerRef().sendMessage(Message.raw("Tapez dans le chat: /es bankGive " + parts[1]));
                     }
                 }
                 default -> {
-                    player.getPlayerRef().sendMessage(Message.raw("§cCommande inconnue: " + parts[0]));
+                    player.getPlayerRef().sendMessage(Message.raw("Commande inconnue: " + parts[0]));
                     return false;
                 }
             }
         } catch (Exception e) {
-            player.getPlayerRef().sendMessage(Message.raw("§cErreur: " + e.getMessage()));
+            player.getPlayerRef().sendMessage(Message.raw("Erreur: " + e.getMessage()));
             return false;
         }
         return true;
@@ -321,7 +321,7 @@ public class AdminTab {
                 }
             } catch (Exception e) { EldaniorLogger.error("AdminTab", e); }
 
-            targetRef.sendMessage(Message.raw("§cPersonnage reinitialise (Niveau 1)."));
+            targetRef.sendMessage(Message.raw("Personnage reinitialise (Niveau 1)."));
         });
     }
 
@@ -330,7 +330,7 @@ public class AdminTab {
         if (targetRef == null) return false;
         return executeOnTarget(targetRef, (tRef, tStore, data) -> {
             data.addExperience(amount);
-            targetRef.sendMessage(Message.raw("§a+" + amount + " XP !"));
+            targetRef.sendMessage(Message.raw("+" + amount + " XP !"));
         });
     }
 
@@ -342,7 +342,7 @@ public class AdminTab {
             data.setLevel(level); data.setExperience(0);
             int gained = Math.max(0, level - oldLevel) * 3;
             if (gained > 0) data.setAttributePoints(data.getAttributePoints() + gained);
-            targetRef.sendMessage(Message.raw("§eNiveau defini a " + level));
+            targetRef.sendMessage(Message.raw("Niveau defini a " + level));
         });
     }
 
@@ -351,7 +351,7 @@ public class AdminTab {
         if (targetRef == null) return false;
         return executeOnTarget(targetRef, (tRef, tStore, data) -> {
             data.addMoney(amount);
-            targetRef.sendMessage(Message.raw("§a+" + amount + " Or !"));
+            targetRef.sendMessage(Message.raw("+" + amount + " Or !"));
         });
     }
 
@@ -360,7 +360,7 @@ public class AdminTab {
         if (targetRef == null) return false;
         return executeOnTarget(targetRef, (tRef, tStore, data) -> {
             data.setForcePK(!data.isForcePK());
-            targetRef.sendMessage(Message.raw(data.isPK() ? "§c§lVous etes maintenant PK !" : "§aPK retire."));
+            targetRef.sendMessage(Message.raw(data.isPK() ? "Vous etes maintenant PK !" : "PK retire."));
         });
     }
 
@@ -369,7 +369,7 @@ public class AdminTab {
         if (targetRef == null) return false;
         return executeOnTarget(targetRef, (tRef, tStore, data) -> {
             data.resetTitles();
-            targetRef.sendMessage(Message.raw("§cTitres reinitialises !"));
+            targetRef.sendMessage(Message.raw("Titres reinitialises !"));
         });
     }
 
@@ -381,7 +381,7 @@ public class AdminTab {
         return executeOnTarget(targetRef, (tRef, tStore, data) -> {
             data.setPlayerClassId(classId); data.setPlayerClass(model.getDisplayName());
             data.forgetAllSkills();
-            targetRef.sendMessage(Message.raw("§eClasse: " + model.getDisplayName()));
+            targetRef.sendMessage(Message.raw("Classe: " + model.getDisplayName()));
         });
     }
 
@@ -393,7 +393,7 @@ public class AdminTab {
         return executeOnTarget(targetRef, (tRef, tStore, data) -> {
             data.setNobilityRank(newRank.name()); data.setDignity(newRank.getBaseDignity());
             NobilityManager.recordKingPromotion(newRank);
-            targetRef.sendMessage(Message.raw("§eRang: " + newRank.getFormattedName()));
+            targetRef.sendMessage(Message.raw("Rang: " + newRank.getFormattedName()));
         });
     }
 
@@ -405,7 +405,7 @@ public class AdminTab {
         return executeOnTarget(targetRef, (tRef, tStore, data) -> {
             data.setChurchRank(newRank.name()); data.setFaith(newRank.getBaseFaith());
             ChurchManager.recordPopePromotion(newRank);
-            targetRef.sendMessage(Message.raw("§eEglise: " + newRank.getFormattedName()));
+            targetRef.sendMessage(Message.raw("Eglise: " + newRank.getFormattedName()));
         });
     }
 
