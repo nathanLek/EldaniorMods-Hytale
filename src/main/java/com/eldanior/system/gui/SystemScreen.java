@@ -141,6 +141,10 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         for (int i = 0; i < GuildeTab.MAX_INVITE_SLOTS; i++) {
             events.addEventBinding(CustomUIEventBindingType.Activating, "#GInviteBtn" + i, EventData.of("Action", "guild_invite").append("Param", String.valueOf(i)));
         }
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#GuildeBtnToggleRecruitment", EventData.of("Action", "guild_toggle_recruitment"));
+        for (int i = 0; i < GuildeTab.MAX_OPEN_GUILD_SLOTS; i++) {
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#GOpenGuildBtn" + i, EventData.of("Action", "guild_join").append("Param", String.valueOf(i)));
+        }
 
         // Populate groupe tab
         GroupeTab.populate(ui, ref, store);
@@ -772,6 +776,14 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         }
         if ("guild_invite".equals(eventData.action) && eventData.param != null) {
             if (GuildeTab.handleInviteByIndex(eventData.param, ref, store)) refreshGuildeTab(ref, store);
+            return;
+        }
+        if ("guild_toggle_recruitment".equals(eventData.action)) {
+            if (GuildeTab.handleToggleRecruitment(ref, store)) refreshGuildeTab(ref, store);
+            return;
+        }
+        if ("guild_join".equals(eventData.action) && eventData.param != null) {
+            if (GuildeTab.handleJoinByIndex(eventData.param, ref, store)) refreshGuildeTab(ref, store);
             return;
         }
 
