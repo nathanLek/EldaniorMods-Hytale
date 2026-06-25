@@ -61,13 +61,11 @@ public class TitleCheckSystem extends EntityTickingSystem<EntityStore> {
             }
         }
 
-        // Recalculer les stats avec les nouveaux bonus cumulés
-        StatCalculator.updatePlayerStats(ref, store, data);
-
-        // Utiliser commandBuffer.run() pour ecrire via le deferred store,
-        // ce qui evite les ecrasements par d'autres systemes
+        // Utiliser commandBuffer.run() pour ecrire via le deferred store
+        // ET recalculer les stats (putComponent interdit dans un tick direct)
         commandBuffer.run(deferredStore -> {
             deferredStore.putComponent(ref, type, data);
+            StatCalculator.updatePlayerStats(ref, deferredStore, data);
         });
     }
 
