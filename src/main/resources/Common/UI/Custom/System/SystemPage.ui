@@ -1117,444 +1117,399 @@ Group {
             Group #TabGuilde {
                 LayoutMode: Top;
                 Visible: false;
+                Padding: (Horizontal: 14, Vertical: 10);
 
-                // --- NOBLE: NE PEUT PAS REJOINDRE ---
+                // === STATE 1: NOBLE BLOCKED ===
                 Group #GuildeNobleBlock {
                     LayoutMode: Top;
                     Visible: false;
-
                     Group { Anchor: (Height: 80); }
-
-                    Label {
-                        Text: "GUILDE INDISPONIBLE";
-                        Style: (FontSize: 20, TextColor: #cc4444, HorizontalAlignment: Center, RenderBold: true);
-                        Anchor: (Height: 28);
-                    }
-
+                    Label { Text: "GUILDE INDISPONIBLE"; Style: (FontSize: 20, TextColor: #c44545, HorizontalAlignment: Center, RenderBold: true); Anchor: (Height: 28); }
                     Group { Anchor: (Height: 10); }
-
-                    Label {
-                        Text: "Les membres d'une famille noble ne peuvent pas";
-                        Style: (FontSize: 14, TextColor: #8899aa, HorizontalAlignment: Center);
-                        Anchor: (Height: 20);
-                    }
-                    Label {
-                        Text: "creer ou rejoindre une guilde.";
-                        Style: (FontSize: 14, TextColor: #8899aa, HorizontalAlignment: Center);
-                        Anchor: (Height: 20);
-                    }
-
+                    Label { Text: "Les membres d'une famille noble ne peuvent pas"; Style: (FontSize: 14, TextColor: #7d8fa3, HorizontalAlignment: Center); Anchor: (Height: 20); }
+                    Label { Text: "creer ou rejoindre une guilde."; Style: (FontSize: 14, TextColor: #7d8fa3, HorizontalAlignment: Center); Anchor: (Height: 20); }
                     Group { Anchor: (Height: 8); }
-
-                    Label {
-                        Text: "Quittez votre famille pour acceder aux guildes.";
-                        Style: (FontSize: 12, TextColor: #556677, HorizontalAlignment: Center);
-                        Anchor: (Height: 18);
-                    }
+                    Label { Text: "Quittez votre famille pour acceder aux guildes."; Style: (FontSize: 12, TextColor: #5a6a7d, HorizontalAlignment: Center); Anchor: (Height: 18); }
                 }
 
-                // --- PAS DE GUILDE ---
+                // === STATE 2: NO GUILD ===
                 Group #GuildeNoGuild {
                     LayoutMode: Top;
                     Visible: true;
 
-                    Group { Anchor: (Height: 80); }
-
-                    Label {
-                        Text: "VOUS N'ETES DANS AUCUNE GUILDE";
-                        Style: (FontSize: 18, TextColor: #667788, HorizontalAlignment: Center, RenderBold: true);
-                        Anchor: (Height: 28);
-                    }
-
+                    Group { Anchor: (Height: 60); }
+                    Label { Text: "VOUS N'ETES DANS AUCUNE GUILDE"; Style: (FontSize: 18, TextColor: #7d8fa3, HorizontalAlignment: Center, RenderBold: true); Anchor: (Height: 28); }
                     Group { Anchor: (Height: 8); }
-
-                    Label {
-                        Text: "Creez une guilde ou attendez une invitation !";
-                        Style: (FontSize: 13, TextColor: #556677, HorizontalAlignment: Center);
-                        Anchor: (Height: 20);
-                    }
-
+                    Label { Text: "Creez une guilde ou attendez une invitation !"; Style: (FontSize: 13, TextColor: #5a6a7d, HorizontalAlignment: Center); Anchor: (Height: 20); }
                     Group { Anchor: (Height: 20); }
 
-                    Group {
-                        LayoutMode: Center;
-                        Anchor: (Height: 44);
-
-                        TextButton #GuildeBtnCreate {
-                            Text: "CREER UNE GUILDE";
-                            Anchor: (Width: 260, Height: 44);
-                            Style: (Default: (LabelStyle: (FontSize: 16, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 16, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)));
-                            Background: #1a1208(0.8);
-                        }
+                    // Create button
+                    Group { LayoutMode: Center; Anchor: (Height: 44);
+                        TextButton #GuildeBtnCreate { Text: "CREER UNE GUILDE"; Anchor: (Width: 260, Height: 44); Style: (Default: (LabelStyle: (FontSize: 16, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 16, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.8); }
                     }
 
                     Group { Anchor: (Height: 12); }
 
-                    Group {
-                        LayoutMode: Left;
-                        Anchor: (Height: 34);
-
+                    // Info cards (level + cost)
+                    Group { LayoutMode: Left; Anchor: (Height: 34);
                         Group { FlexWeight: 1; }
-
-                        Group {
-                            Background: #1a2030(0.6);
-                            LayoutMode: Left;
-                            Padding: (Horizontal: 14, Vertical: 4);
-                            Anchor: (Width: 200, Height: 34);
-
-                            Label {
-                                Text: "NIVEAU REQUIS";
-                                Style: (FontSize: 10, TextColor: #8899aa, RenderBold: true, VerticalAlignment: Center);
-                                Anchor: (Width: 120);
-                            }
-                            Label {
-                                Text: "120";
-                                Style: (FontSize: 16, TextColor: #FFD700, VerticalAlignment: Center, RenderBold: true);
-                            }
+                        Group { Background: #162030(0.6); LayoutMode: Left; Padding: (Horizontal: 14, Vertical: 4); Anchor: (Width: 200, Height: 34);
+                            Label { Text: "NIVEAU REQUIS"; Style: (FontSize: 10, TextColor: #7d8fa3, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 120); }
+                            Label { Text: "120"; Style: (FontSize: 16, TextColor: #FFD700, VerticalAlignment: Center, RenderBold: true); }
                         }
-
                         Group { Anchor: (Width: 8); }
-
-                        Group {
-                            Background: #1a2030(0.6);
-                            LayoutMode: Left;
-                            Padding: (Horizontal: 14, Vertical: 4);
-                            Anchor: (Width: 200, Height: 34);
-
-                            Label {
-                                Text: "COUT";
-                                Style: (FontSize: 10, TextColor: #8899aa, RenderBold: true, VerticalAlignment: Center);
-                                Anchor: (Width: 60);
-                            }
-                            Label {
-                                Text: "150 000 Or";
-                                Style: (FontSize: 16, TextColor: #D4AF37, VerticalAlignment: Center, RenderBold: true);
-                            }
+                        Group { Background: #162030(0.6); LayoutMode: Left; Padding: (Horizontal: 14, Vertical: 4); Anchor: (Width: 200, Height: 34);
+                            Label { Text: "COUT"; Style: (FontSize: 10, TextColor: #7d8fa3, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 60); }
+                            Label { Text: "150 000 Or"; Style: (FontSize: 16, TextColor: #FFD700, VerticalAlignment: Center, RenderBold: true); }
                         }
-
                         Group { FlexWeight: 1; }
                     }
 
                     Group { Anchor: (Height: 8); }
+                    Label { Text: "Usage : /es guildcreate <nom> <tag>"; Style: (FontSize: 11, TextColor: #5a6a7d, HorizontalAlignment: Center); Anchor: (Height: 18); }
 
-                    Label {
-                        Text: "Usage : /es guildcreate <nom> <tag>";
-                        Style: (FontSize: 11, TextColor: #445566, HorizontalAlignment: Center);
-                        Anchor: (Height: 18);
-                    }
-
-                    // --- GUILDES EN RECRUTEMENT OUVERT ---
-                    Group #GuildeOpenGuildSection {
-                        LayoutMode: Top;
-                        Visible: false;
-
+                    // === OPEN GUILDS LIST (paginated) ===
+                    Group #GuildeOpenGuildSection { LayoutMode: Top; Visible: false;
                         Group { Anchor: (Height: 16); }
-                        Group { Anchor: (Height: 1); Background: #4488cc(0.3); }
+                        Group { Anchor: (Height: 1); Background: #5b9bd5(0.3); }
                         Group { Anchor: (Height: 8); }
 
-                        Label {
-                            Text: "GUILDES EN RECRUTEMENT OUVERT";
-                            Style: (FontSize: 12, TextColor: #4488cc, RenderBold: true, RenderUppercase: true, LetterSpacing: 1, HorizontalAlignment: Center);
-                            Anchor: (Height: 18);
+                        // Header with pagination
+                        Group { LayoutMode: Left; Anchor: (Height: 24);
+                            Label { Text: "GUILDES EN RECRUTEMENT OUVERT"; Style: (FontSize: 12, TextColor: #5b9bd5, RenderBold: true, RenderUppercase: true, LetterSpacing: 1); FlexWeight: 1; }
+                            TextButton #GOpenBtnPrev { Text: "< PREC."; Anchor: (Width: 70, Height: 22); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #5b9bd5, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.6); }
+                            Group { Anchor: (Width: 4); }
+                            Label #GOpenPage { Text: "1/1"; Style: (FontSize: 10, TextColor: #5a6a7d, HorizontalAlignment: Center, VerticalAlignment: Center); Anchor: (Width: 40); }
+                            Group { Anchor: (Width: 4); }
+                            TextButton #GOpenBtnNext { Text: "SUIV. >"; Anchor: (Width: 70, Height: 22); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #5b9bd5, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.6); }
                         }
 
                         Group { Anchor: (Height: 6); }
 
-                        Group #GOpenGuild0 { Anchor: (Height: 34); Background: #1a2030(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false; Label #GOpenGuildName0 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } TextButton #GOpenGuildBtn0 { Text: "REJOINDRE"; Anchor: (Width: 100, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #4488cc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a3a(0.8); } }
+                        // 5 guild slots
+                        Group #GOpenGuild0 { Anchor: (Height: 36); Background: #162030(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false;
+                            Label #GOpenGuildName0 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; }
+                            Label #GOpenGuildMembers0 { Text: ""; Style: (FontSize: 11, TextColor: #7d8fa3, VerticalAlignment: Center); Anchor: (Width: 80); }
+                            TextButton #GOpenGuildBtn0 { Text: "REJOINDRE"; Anchor: (Width: 100, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #5fc77e, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); }
+                        }
                         Group { Anchor: (Height: 3); }
-                        Group #GOpenGuild1 { Anchor: (Height: 34); Background: #1a2030(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false; Label #GOpenGuildName1 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } TextButton #GOpenGuildBtn1 { Text: "REJOINDRE"; Anchor: (Width: 100, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #4488cc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a3a(0.8); } }
+                        Group #GOpenGuild1 { Anchor: (Height: 36); Background: #162030(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false;
+                            Label #GOpenGuildName1 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; }
+                            Label #GOpenGuildMembers1 { Text: ""; Style: (FontSize: 11, TextColor: #7d8fa3, VerticalAlignment: Center); Anchor: (Width: 80); }
+                            TextButton #GOpenGuildBtn1 { Text: "REJOINDRE"; Anchor: (Width: 100, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #5fc77e, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); }
+                        }
                         Group { Anchor: (Height: 3); }
-                        Group #GOpenGuild2 { Anchor: (Height: 34); Background: #1a2030(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false; Label #GOpenGuildName2 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } TextButton #GOpenGuildBtn2 { Text: "REJOINDRE"; Anchor: (Width: 100, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #4488cc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a3a(0.8); } }
+                        Group #GOpenGuild2 { Anchor: (Height: 36); Background: #162030(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false;
+                            Label #GOpenGuildName2 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; }
+                            Label #GOpenGuildMembers2 { Text: ""; Style: (FontSize: 11, TextColor: #7d8fa3, VerticalAlignment: Center); Anchor: (Width: 80); }
+                            TextButton #GOpenGuildBtn2 { Text: "REJOINDRE"; Anchor: (Width: 100, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #5fc77e, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); }
+                        }
                         Group { Anchor: (Height: 3); }
-                        Group #GOpenGuild3 { Anchor: (Height: 34); Background: #1a2030(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false; Label #GOpenGuildName3 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } TextButton #GOpenGuildBtn3 { Text: "REJOINDRE"; Anchor: (Width: 100, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #4488cc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a3a(0.8); } }
+                        Group #GOpenGuild3 { Anchor: (Height: 36); Background: #162030(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false;
+                            Label #GOpenGuildName3 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; }
+                            Label #GOpenGuildMembers3 { Text: ""; Style: (FontSize: 11, TextColor: #7d8fa3, VerticalAlignment: Center); Anchor: (Width: 80); }
+                            TextButton #GOpenGuildBtn3 { Text: "REJOINDRE"; Anchor: (Width: 100, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #5fc77e, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); }
+                        }
                         Group { Anchor: (Height: 3); }
-                        Group #GOpenGuild4 { Anchor: (Height: 34); Background: #1a2030(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false; Label #GOpenGuildName4 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } TextButton #GOpenGuildBtn4 { Text: "REJOINDRE"; Anchor: (Width: 100, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #4488cc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a3a(0.8); } }
+                        Group #GOpenGuild4 { Anchor: (Height: 36); Background: #162030(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false;
+                            Label #GOpenGuildName4 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; }
+                            Label #GOpenGuildMembers4 { Text: ""; Style: (FontSize: 11, TextColor: #7d8fa3, VerticalAlignment: Center); Anchor: (Width: 80); }
+                            TextButton #GOpenGuildBtn4 { Text: "REJOINDRE"; Anchor: (Width: 100, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #5fc77e, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); }
+                        }
                     }
                 }
 
-                // --- A UNE GUILDE ---
+                // === STATE 3: HAS GUILD ===
                 Group #GuildeHasGuild {
                     LayoutMode: Top;
                     Visible: false;
 
-                    // Header
-                    Label #GuildeName {
-                        Text: "";
-                        Style: (FontSize: 22, TextColor: #FFD700, RenderBold: true, HorizontalAlignment: Center, LetterSpacing: 1);
-                        Anchor: (Height: 30);
-                    }
+                    // 1. HEADER
+                    Label #GuildeName { Text: ""; Style: (FontSize: 20, TextColor: #FFD700, RenderBold: true, HorizontalAlignment: Center, LetterSpacing: 1); Anchor: (Height: 28); }
+                    Group { Anchor: (Height: 4); }
+                    Label #GuildeRecruitStatus { Text: ""; Style: (FontSize: 12, TextColor: #5fc77e, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    Group { Anchor: (Height: 10); }
 
+                    // 2. THREE INFO CARDS (with gold left border)
+                    Group { LayoutMode: Left; Anchor: (Height: 44);
+                        // Card: Fondateur
+                        Group { FlexWeight: 1; Background: #162030; LayoutMode: Left;
+                            Group { Anchor: (Width: 3, Height: 44); Background: #FFD700; }
+                            Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 10, Vertical: 4);
+                                Label { Text: "FONDATEUR"; Style: (FontSize: 9, TextColor: #7d8fa3, RenderBold: true, RenderUppercase: true); Anchor: (Height: 14); }
+                                Label #GuildeFounder { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc); Anchor: (Height: 18); }
+                            }
+                        }
+                        Group { Anchor: (Width: 4); }
+                        // Card: Role
+                        Group { FlexWeight: 1; Background: #162030; LayoutMode: Left;
+                            Group { Anchor: (Width: 3, Height: 44); Background: #FFD700; }
+                            Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 10, Vertical: 4);
+                                Label { Text: "VOTRE ROLE"; Style: (FontSize: 9, TextColor: #7d8fa3, RenderBold: true, RenderUppercase: true); Anchor: (Height: 14); }
+                                Label #GuildeRole { Text: ""; Style: (FontSize: 13, TextColor: #FFD700, RenderBold: true); Anchor: (Height: 18); }
+                            }
+                        }
+                        Group { Anchor: (Width: 4); }
+                        // Card: Membres
+                        Group { FlexWeight: 1; Background: #162030; LayoutMode: Left;
+                            Group { Anchor: (Width: 3, Height: 44); Background: #FFD700; }
+                            Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 10, Vertical: 4);
+                                Label { Text: "MEMBRES"; Style: (FontSize: 9, TextColor: #7d8fa3, RenderBold: true, RenderUppercase: true); Anchor: (Height: 14); }
+                                Label #GuildeMemberCount { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc); Anchor: (Height: 18); }
+                            }
+                        }
+                    }
                     Group { Anchor: (Height: 8); }
 
-                    // Infos
-                    Group {
-                        LayoutMode: Left;
-                        Anchor: (Height: 32);
-
-                        Group {
-                            FlexWeight: 1;
-                            Background: #1a2030(0.6);
-                            LayoutMode: CenterMiddle;
-
-                            Label #GuildeFounder {
-                                Text: "";
-                                Style: (FontSize: 12, TextColor: #aabbcc, HorizontalAlignment: Center, VerticalAlignment: Center);
+                    // 3. TREASURY + CONTRIBUTION (green left border)
+                    Group { LayoutMode: Left; Anchor: (Height: 44);
+                        // Treasury card
+                        Group { FlexWeight: 1; Background: #162030; LayoutMode: Left;
+                            Group { Anchor: (Width: 3, Height: 44); Background: #5fc77e; }
+                            Group { LayoutMode: Left; FlexWeight: 1; Padding: (Horizontal: 10, Vertical: 6);
+                                Label { Text: "TRESORERIE"; Style: (FontSize: 10, TextColor: #7d8fa3, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 100); }
+                                Label #GuildeTreasury { Text: "0 Or"; Style: (FontSize: 16, TextColor: #FFD700, VerticalAlignment: Center, RenderBold: true); FlexWeight: 1; }
+                                TextButton #GuildeBtnDeposit { Text: "+1000"; Anchor: (Width: 65, Height: 26); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #5fc77e, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); }
+                                Group { Anchor: (Width: 4); }
+                                TextButton #GuildeBtnWithdraw { Text: "-1000"; Anchor: (Width: 65, Height: 26); Visible: false; Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #c44545, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.8); }
                             }
                         }
-
                         Group { Anchor: (Width: 4); }
-
-                        Group {
-                            FlexWeight: 1;
-                            Background: #1a2030(0.6);
-                            LayoutMode: CenterMiddle;
-
-                            Label #GuildeRole {
-                                Text: "";
-                                Style: (FontSize: 12, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true);
-                            }
-                        }
-
-                        Group { Anchor: (Width: 4); }
-
-                        Group {
-                            FlexWeight: 1;
-                            Background: #1a2030(0.6);
-                            LayoutMode: CenterMiddle;
-
-                            Label #GuildeMemberCount {
-                                Text: "";
-                                Style: (FontSize: 12, TextColor: #aabbcc, HorizontalAlignment: Center, VerticalAlignment: Center);
+                        // Contribution card
+                        Group { FlexWeight: 1; Background: #162030; LayoutMode: Left;
+                            Group { Anchor: (Width: 3, Height: 44); Background: #5fc77e; }
+                            Group { LayoutMode: Left; FlexWeight: 1; Padding: (Horizontal: 10, Vertical: 6);
+                                Label { Text: "CONTRIBUTION"; Style: (FontSize: 10, TextColor: #7d8fa3, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 110); }
+                                Label #GuildeContribution { Text: "0"; Style: (FontSize: 16, TextColor: #5fc77e, VerticalAlignment: Center, RenderBold: true); }
                             }
                         }
                     }
+                    Group { Anchor: (Height: 10); }
 
-                    Group { Anchor: (Height: 12); }
-
-                    // Tresorerie & Contribution
-                    Group {
-                        LayoutMode: Left;
-                        Anchor: (Height: 44);
-
-                        Group {
-                            FlexWeight: 1;
-                            Background: #1a1208(0.7);
-                            LayoutMode: Left;
-                            Padding: (Horizontal: 14, Vertical: 6);
-
-                            Label {
-                                Text: "TRESORERIE";
-                                Style: (FontSize: 11, TextColor: #8899aa, RenderBold: true, VerticalAlignment: Center);
-                                Anchor: (Width: 110);
+                    // 4. STATISTICS BLOCK
+                    Group { Background: #11192680; Padding: (Horizontal: 12, Vertical: 8); LayoutMode: Top;
+                        Label { Text: "STATISTIQUES DE GUILDE"; Style: (FontSize: 11, TextColor: #7d8fa3, RenderBold: true, RenderUppercase: true, LetterSpacing: 1, HorizontalAlignment: Center); Anchor: (Height: 16); }
+                        Group { Anchor: (Height: 6); }
+                        Group { LayoutMode: Left; Anchor: (Height: 32);
+                            Group { FlexWeight: 1; LayoutMode: Left; Padding: (Horizontal: 8);
+                                Label { Text: "MOB KILLS"; Style: (FontSize: 10, TextColor: #7d8fa3, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 80); }
+                                Label #GuildeStatMobs { Text: "0"; Style: (FontSize: 14, TextColor: #5fc77e, VerticalAlignment: Center, RenderBold: true); }
                             }
-                            Label #GuildeTreasury {
-                                Text: "0";
-                                Style: (FontSize: 18, TextColor: #D4AF37, VerticalAlignment: Center, RenderBold: true);
-                                FlexWeight: 1;
+                            Group { FlexWeight: 1; LayoutMode: Left; Padding: (Horizontal: 8);
+                                Label { Text: "PVP KILLS"; Style: (FontSize: 10, TextColor: #7d8fa3, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 80); }
+                                Label #GuildeStatPvP { Text: "0"; Style: (FontSize: 14, TextColor: #c44545, VerticalAlignment: Center, RenderBold: true); }
                             }
-                            TextButton #GuildeBtnDeposit {
-                                Text: "+1000";
-                                Anchor: (Width: 65, Height: 26);
-                                Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)));
-                                Background: #1a3a1a(0.8);
+                            Group { FlexWeight: 1; LayoutMode: Left; Padding: (Horizontal: 8);
+                                Label { Text: "MORTS"; Style: (FontSize: 10, TextColor: #7d8fa3, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 80); }
+                                Label #GuildeStatDeaths { Text: "0"; Style: (FontSize: 14, TextColor: #aabbcc, VerticalAlignment: Center, RenderBold: true); }
                             }
+                        }
+                    }
+                    Group { Anchor: (Height: 10); }
+
+                    // 5. ACCORDION: MEMBERS
+                    TextButton #GuildeBtnToggleMembers { Text: "> MEMBRES (0)"; Anchor: (Height: 28); Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #FFD700, RenderBold: true, RenderUppercase: true, LetterSpacing: 1, VerticalAlignment: Center)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, RenderBold: true, RenderUppercase: true, LetterSpacing: 1, VerticalAlignment: Center))); Background: #141d2b(0.8); }
+
+                    Group #GuildeMembersContent { LayoutMode: Top; Visible: false; Padding: (Top: 4);
+                        // Column headers
+                        Group { LayoutMode: Left; Anchor: (Height: 20); Padding: (Horizontal: 8);
+                            Label { Text: ""; Style: (FontSize: 9, TextColor: #5a6a7d, RenderBold: true); Anchor: (Width: 20); }
+                            Label { Text: "JOUEUR"; Style: (FontSize: 9, TextColor: #5a6a7d, RenderBold: true); FlexWeight: 1; }
+                            Label { Text: "ROLE"; Style: (FontSize: 9, TextColor: #5a6a7d, RenderBold: true); Anchor: (Width: 70); }
+                            Label { Text: "CONTRIB."; Style: (FontSize: 9, TextColor: #5a6a7d, RenderBold: true); Anchor: (Width: 70); }
+                            Label { Text: "ACTIONS"; Style: (FontSize: 9, TextColor: #5a6a7d, RenderBold: true); Anchor: (Width: 180); }
+                        }
+
+                        // Member slot 0
+                        Group #GMemberSlot0 { Anchor: (Height: 34); Background: #162030(0.5); LayoutMode: Left; Padding: (Horizontal: 8, Vertical: 3); Visible: false;
+                            Label #GMemberStatus0 { Text: "●"; Style: (FontSize: 10, TextColor: #5fc77e, VerticalAlignment: Center); Anchor: (Width: 20); }
+                            Label #GMemberName0 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; }
+                            Label #GMemberRole0 { Text: ""; Style: (FontSize: 10, TextColor: #7d8fa3, VerticalAlignment: Center, RenderBold: true); Anchor: (Width: 70); }
+                            Label #GMemberContrib0 { Text: ""; Style: (FontSize: 11, TextColor: #5fc77e, VerticalAlignment: Center); Anchor: (Width: 70); }
+                            Group { Anchor: (Width: 180); LayoutMode: Left;
+                                TextButton #GMemberBtnPromote0 { Text: "↑ OFF."; Anchor: (Width: 55, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #5b9bd5, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a3a(0.8); }
+                                Group { Anchor: (Width: 3); }
+                                TextButton #GMemberBtnDemote0 { Text: "↓"; Anchor: (Width: 30, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #5a6a7d, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.8); }
+                                Group { Anchor: (Width: 3); }
+                                TextButton #GMemberBtnKick0 { Text: "EXCLURE"; Anchor: (Width: 65, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #c44545, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.8); }
+                            }
+                        }
+                        Group { Anchor: (Height: 2); }
+                        // Member slot 1
+                        Group #GMemberSlot1 { Anchor: (Height: 34); Background: #162030(0.5); LayoutMode: Left; Padding: (Horizontal: 8, Vertical: 3); Visible: false;
+                            Label #GMemberStatus1 { Text: "●"; Style: (FontSize: 10, TextColor: #5fc77e, VerticalAlignment: Center); Anchor: (Width: 20); }
+                            Label #GMemberName1 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; }
+                            Label #GMemberRole1 { Text: ""; Style: (FontSize: 10, TextColor: #7d8fa3, VerticalAlignment: Center, RenderBold: true); Anchor: (Width: 70); }
+                            Label #GMemberContrib1 { Text: ""; Style: (FontSize: 11, TextColor: #5fc77e, VerticalAlignment: Center); Anchor: (Width: 70); }
+                            Group { Anchor: (Width: 180); LayoutMode: Left;
+                                TextButton #GMemberBtnPromote1 { Text: "↑ OFF."; Anchor: (Width: 55, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #5b9bd5, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a3a(0.8); }
+                                Group { Anchor: (Width: 3); }
+                                TextButton #GMemberBtnDemote1 { Text: "↓"; Anchor: (Width: 30, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #5a6a7d, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.8); }
+                                Group { Anchor: (Width: 3); }
+                                TextButton #GMemberBtnKick1 { Text: "EXCLURE"; Anchor: (Width: 65, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #c44545, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.8); }
+                            }
+                        }
+                        Group { Anchor: (Height: 2); }
+                        // Member slot 2
+                        Group #GMemberSlot2 { Anchor: (Height: 34); Background: #162030(0.5); LayoutMode: Left; Padding: (Horizontal: 8, Vertical: 3); Visible: false;
+                            Label #GMemberStatus2 { Text: "●"; Style: (FontSize: 10, TextColor: #5fc77e, VerticalAlignment: Center); Anchor: (Width: 20); }
+                            Label #GMemberName2 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; }
+                            Label #GMemberRole2 { Text: ""; Style: (FontSize: 10, TextColor: #7d8fa3, VerticalAlignment: Center, RenderBold: true); Anchor: (Width: 70); }
+                            Label #GMemberContrib2 { Text: ""; Style: (FontSize: 11, TextColor: #5fc77e, VerticalAlignment: Center); Anchor: (Width: 70); }
+                            Group { Anchor: (Width: 180); LayoutMode: Left;
+                                TextButton #GMemberBtnPromote2 { Text: "↑ OFF."; Anchor: (Width: 55, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #5b9bd5, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a3a(0.8); }
+                                Group { Anchor: (Width: 3); }
+                                TextButton #GMemberBtnDemote2 { Text: "↓"; Anchor: (Width: 30, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #5a6a7d, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.8); }
+                                Group { Anchor: (Width: 3); }
+                                TextButton #GMemberBtnKick2 { Text: "EXCLURE"; Anchor: (Width: 65, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #c44545, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.8); }
+                            }
+                        }
+                        Group { Anchor: (Height: 2); }
+                        // Member slot 3
+                        Group #GMemberSlot3 { Anchor: (Height: 34); Background: #162030(0.5); LayoutMode: Left; Padding: (Horizontal: 8, Vertical: 3); Visible: false;
+                            Label #GMemberStatus3 { Text: "●"; Style: (FontSize: 10, TextColor: #5fc77e, VerticalAlignment: Center); Anchor: (Width: 20); }
+                            Label #GMemberName3 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; }
+                            Label #GMemberRole3 { Text: ""; Style: (FontSize: 10, TextColor: #7d8fa3, VerticalAlignment: Center, RenderBold: true); Anchor: (Width: 70); }
+                            Label #GMemberContrib3 { Text: ""; Style: (FontSize: 11, TextColor: #5fc77e, VerticalAlignment: Center); Anchor: (Width: 70); }
+                            Group { Anchor: (Width: 180); LayoutMode: Left;
+                                TextButton #GMemberBtnPromote3 { Text: "↑ OFF."; Anchor: (Width: 55, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #5b9bd5, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a3a(0.8); }
+                                Group { Anchor: (Width: 3); }
+                                TextButton #GMemberBtnDemote3 { Text: "↓"; Anchor: (Width: 30, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #5a6a7d, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.8); }
+                                Group { Anchor: (Width: 3); }
+                                TextButton #GMemberBtnKick3 { Text: "EXCLURE"; Anchor: (Width: 65, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #c44545, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.8); }
+                            }
+                        }
+                        Group { Anchor: (Height: 2); }
+                        // Member slot 4
+                        Group #GMemberSlot4 { Anchor: (Height: 34); Background: #162030(0.5); LayoutMode: Left; Padding: (Horizontal: 8, Vertical: 3); Visible: false;
+                            Label #GMemberStatus4 { Text: "●"; Style: (FontSize: 10, TextColor: #5fc77e, VerticalAlignment: Center); Anchor: (Width: 20); }
+                            Label #GMemberName4 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; }
+                            Label #GMemberRole4 { Text: ""; Style: (FontSize: 10, TextColor: #7d8fa3, VerticalAlignment: Center, RenderBold: true); Anchor: (Width: 70); }
+                            Label #GMemberContrib4 { Text: ""; Style: (FontSize: 11, TextColor: #5fc77e, VerticalAlignment: Center); Anchor: (Width: 70); }
+                            Group { Anchor: (Width: 180); LayoutMode: Left;
+                                TextButton #GMemberBtnPromote4 { Text: "↑ OFF."; Anchor: (Width: 55, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #5b9bd5, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a3a(0.8); }
+                                Group { Anchor: (Width: 3); }
+                                TextButton #GMemberBtnDemote4 { Text: "↓"; Anchor: (Width: 30, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #5a6a7d, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.8); }
+                                Group { Anchor: (Width: 3); }
+                                TextButton #GMemberBtnKick4 { Text: "EXCLURE"; Anchor: (Width: 65, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #c44545, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.8); }
+                            }
+                        }
+
+                        // Pagination
+                        Group { Anchor: (Height: 4); }
+                        Group { LayoutMode: Left; Anchor: (Height: 24);
+                            Group { FlexWeight: 1; }
+                            TextButton #GMemberBtnPrev { Text: "< PREC."; Anchor: (Width: 70, Height: 22); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #5b9bd5, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.6); }
                             Group { Anchor: (Width: 4); }
-                            TextButton #GuildeBtnWithdraw {
-                                Text: "-1000";
-                                Anchor: (Width: 65, Height: 26);
-                                Visible: false;
-                                Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #cc6644, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)));
-                                Background: #2a1a1a(0.8);
-                            }
-                        }
-
-                        Group { Anchor: (Width: 6); }
-
-                        Group {
-                            FlexWeight: 1;
-                            Background: #1a2a1a(0.5);
-                            LayoutMode: Left;
-                            Padding: (Horizontal: 14, Vertical: 6);
-
-                            Label {
-                                Text: "CONTRIBUTION";
-                                Style: (FontSize: 11, TextColor: #8899aa, RenderBold: true, VerticalAlignment: Center);
-                                Anchor: (Width: 120);
-                            }
-                            Label #GuildeContribution {
-                                Text: "0";
-                                Style: (FontSize: 18, TextColor: #4CAF50, VerticalAlignment: Center, RenderBold: true);
-                            }
+                            Label #GMemberPage { Text: "1/1"; Style: (FontSize: 10, TextColor: #5a6a7d, HorizontalAlignment: Center, VerticalAlignment: Center); Anchor: (Width: 40); }
+                            Group { Anchor: (Width: 4); }
+                            TextButton #GMemberBtnNext { Text: "SUIV. >"; Anchor: (Width: 70, Height: 22); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #5b9bd5, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.6); }
+                            Group { FlexWeight: 1; }
                         }
                     }
-
-                    Group { Anchor: (Height: 12); }
-
-                    // Stats guilde
-                    Label {
-                        Text: "STATISTIQUES DE GUILDE";
-                        Style: (FontSize: 12, TextColor: #8899aa, RenderBold: true, RenderUppercase: true, LetterSpacing: 1, HorizontalAlignment: Center);
-                        Anchor: (Height: 18);
-                    }
-
                     Group { Anchor: (Height: 6); }
 
-                    Group {
-                        LayoutMode: Left;
-                        Anchor: (Height: 40);
+                    // 6. ACCORDION: INVITE
+                    Group #GuildeInviteAccordion { LayoutMode: Top; Visible: false;
+                        TextButton #GuildeBtnToggleInvite { Text: "> INVITER UN JOUEUR"; Anchor: (Height: 28); Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #5fc77e, RenderBold: true, RenderUppercase: true, LetterSpacing: 1, VerticalAlignment: Center)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, RenderBold: true, RenderUppercase: true, LetterSpacing: 1, VerticalAlignment: Center))); Background: #141d2b(0.8); }
 
-                        Group {
-                            FlexWeight: 1;
-                            Background: #1a2030(0.6);
-                            LayoutMode: Left;
-                            Padding: (Horizontal: 14, Vertical: 4);
-
-                            Label {
-                                Text: "MOBS";
-                                Style: (FontSize: 12, TextColor: #8899aa, RenderBold: true, VerticalAlignment: Center);
-                                Anchor: (Width: 70);
+                        Group #GuildeInviteContent { LayoutMode: Top; Visible: false; Padding: (Top: 4);
+                            // Invite slot 0
+                            Group #GInviteSlot0 { Anchor: (Height: 32); Background: #162030(0.4); LayoutMode: Left; Padding: (Horizontal: 10, Vertical: 3); Visible: false;
+                                Label #GInviteName0 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; }
+                                TextButton #GInviteBtn0 { Text: "INVITER"; Anchor: (Width: 80, Height: 24); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #5fc77e, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); }
                             }
-                            Label #GuildeStatMobs {
-                                Text: "0";
-                                Style: (FontSize: 16, TextColor: #4CAF50, VerticalAlignment: Center, RenderBold: true);
+                            Group { Anchor: (Height: 2); }
+                            // Invite slot 1
+                            Group #GInviteSlot1 { Anchor: (Height: 32); Background: #162030(0.4); LayoutMode: Left; Padding: (Horizontal: 10, Vertical: 3); Visible: false;
+                                Label #GInviteName1 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; }
+                                TextButton #GInviteBtn1 { Text: "INVITER"; Anchor: (Width: 80, Height: 24); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #5fc77e, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); }
                             }
-                        }
-
-                        Group { Anchor: (Width: 4); }
-
-                        Group {
-                            FlexWeight: 1;
-                            Background: #1a2030(0.6);
-                            LayoutMode: Left;
-                            Padding: (Horizontal: 14, Vertical: 4);
-
-                            Label {
-                                Text: "PVP";
-                                Style: (FontSize: 12, TextColor: #8899aa, RenderBold: true, VerticalAlignment: Center);
-                                Anchor: (Width: 50);
+                            Group { Anchor: (Height: 2); }
+                            // Invite slot 2
+                            Group #GInviteSlot2 { Anchor: (Height: 32); Background: #162030(0.4); LayoutMode: Left; Padding: (Horizontal: 10, Vertical: 3); Visible: false;
+                                Label #GInviteName2 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; }
+                                TextButton #GInviteBtn2 { Text: "INVITER"; Anchor: (Width: 80, Height: 24); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #5fc77e, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); }
                             }
-                            Label #GuildeStatPvP {
-                                Text: "0";
-                                Style: (FontSize: 16, TextColor: #cc4444, VerticalAlignment: Center, RenderBold: true);
+                            Group { Anchor: (Height: 2); }
+                            // Invite slot 3
+                            Group #GInviteSlot3 { Anchor: (Height: 32); Background: #162030(0.4); LayoutMode: Left; Padding: (Horizontal: 10, Vertical: 3); Visible: false;
+                                Label #GInviteName3 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; }
+                                TextButton #GInviteBtn3 { Text: "INVITER"; Anchor: (Width: 80, Height: 24); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #5fc77e, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); }
                             }
-                        }
-
-                        Group { Anchor: (Width: 4); }
-
-                        Group {
-                            FlexWeight: 1;
-                            Background: #1a2030(0.6);
-                            LayoutMode: Left;
-                            Padding: (Horizontal: 14, Vertical: 4);
-
-                            Label {
-                                Text: "MORTS";
-                                Style: (FontSize: 12, TextColor: #8899aa, RenderBold: true, VerticalAlignment: Center);
-                                Anchor: (Width: 70);
+                            Group { Anchor: (Height: 2); }
+                            // Invite slot 4
+                            Group #GInviteSlot4 { Anchor: (Height: 32); Background: #162030(0.4); LayoutMode: Left; Padding: (Horizontal: 10, Vertical: 3); Visible: false;
+                                Label #GInviteName4 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; }
+                                TextButton #GInviteBtn4 { Text: "INVITER"; Anchor: (Width: 80, Height: 24); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #5fc77e, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); }
                             }
-                            Label #GuildeStatDeaths {
-                                Text: "0";
-                                Style: (FontSize: 16, TextColor: #aabbcc, VerticalAlignment: Center, RenderBold: true);
+                            Group { Anchor: (Height: 2); }
+                            // Invite slot 5
+                            Group #GInviteSlot5 { Anchor: (Height: 32); Background: #162030(0.4); LayoutMode: Left; Padding: (Horizontal: 10, Vertical: 3); Visible: false;
+                                Label #GInviteName5 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; }
+                                TextButton #GInviteBtn5 { Text: "INVITER"; Anchor: (Width: 80, Height: 24); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #5fc77e, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); }
                             }
-                        }
-                    }
+                            Group { Anchor: (Height: 2); }
+                            // Invite slot 6
+                            Group #GInviteSlot6 { Anchor: (Height: 32); Background: #162030(0.4); LayoutMode: Left; Padding: (Horizontal: 10, Vertical: 3); Visible: false;
+                                Label #GInviteName6 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; }
+                                TextButton #GInviteBtn6 { Text: "INVITER"; Anchor: (Width: 80, Height: 24); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #5fc77e, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); }
+                            }
+                            Group { Anchor: (Height: 2); }
+                            // Invite slot 7
+                            Group #GInviteSlot7 { Anchor: (Height: 32); Background: #162030(0.4); LayoutMode: Left; Padding: (Horizontal: 10, Vertical: 3); Visible: false;
+                                Label #GInviteName7 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; }
+                                TextButton #GInviteBtn7 { Text: "INVITER"; Anchor: (Width: 80, Height: 24); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #5fc77e, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); }
+                            }
+                            Group { Anchor: (Height: 2); }
+                            // Invite slot 8
+                            Group #GInviteSlot8 { Anchor: (Height: 32); Background: #162030(0.4); LayoutMode: Left; Padding: (Horizontal: 10, Vertical: 3); Visible: false;
+                                Label #GInviteName8 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; }
+                                TextButton #GInviteBtn8 { Text: "INVITER"; Anchor: (Width: 80, Height: 24); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #5fc77e, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); }
+                            }
+                            Group { Anchor: (Height: 2); }
+                            // Invite slot 9
+                            Group #GInviteSlot9 { Anchor: (Height: 32); Background: #162030(0.4); LayoutMode: Left; Padding: (Horizontal: 10, Vertical: 3); Visible: false;
+                                Label #GInviteName9 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; }
+                                TextButton #GInviteBtn9 { Text: "INVITER"; Anchor: (Width: 80, Height: 24); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #5fc77e, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); }
+                            }
 
-                    Group { Anchor: (Height: 14); }
-
-                    // Chef actions: dissoudre
-                    Group #GuildeChefActions {
-                        LayoutMode: Center;
-                        Anchor: (Height: 40);
-                        Visible: false;
-
-                        TextButton #GuildeBtnDisband {
-                            Text: "DISSOUDRE LA GUILDE";
-                            Anchor: (Width: 240, Height: 38);
-                            Style: (Default: (LabelStyle: (FontSize: 13, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 13, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)));
-                            Background: #2a1a1a(0.7);
-                        }
-                    }
-
-                    Group { Anchor: (Height: 6); }
-
-                    // Quitter
-                    Group {
-                        LayoutMode: Center;
-                        Anchor: (Height: 40);
-
-                        TextButton #GuildeBtnLeave {
-                            Text: "QUITTER LA GUILDE";
-                            Anchor: (Width: 220, Height: 38);
-                            Style: (Default: (LabelStyle: (FontSize: 13, TextColor: #cc6644, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 13, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)));
-                            Background: #2a1a1a(0.5);
+                            // Pagination
+                            Group { Anchor: (Height: 4); }
+                            Group { LayoutMode: Left; Anchor: (Height: 24);
+                                Group { FlexWeight: 1; }
+                                TextButton #GInviteBtnPrev { Text: "< PREC."; Anchor: (Width: 70, Height: 22); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #5b9bd5, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.6); }
+                                Group { Anchor: (Width: 4); }
+                                Label #GInvitePage { Text: "1/1"; Style: (FontSize: 10, TextColor: #5a6a7d, HorizontalAlignment: Center, VerticalAlignment: Center); Anchor: (Width: 40); }
+                                Group { Anchor: (Width: 4); }
+                                TextButton #GInviteBtnNext { Text: "SUIV. >"; Anchor: (Width: 70, Height: 22); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #5b9bd5, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.6); }
+                                Group { FlexWeight: 1; }
+                            }
                         }
                     }
+                    Group { Anchor: (Height: 8); }
 
-                    // --- INVITER (joueurs en ligne) ---
-                    Group #GuildeInviteSection {
-                        LayoutMode: Top;
-                        Visible: false;
-
-                        Group { Anchor: (Height: 12); }
-                        Group { Anchor: (Height: 1); Background: #4CAF50(0.3); }
+                    // 7. TOGGLE RECRUITMENT (Chef only)
+                    Group #GuildeRecruitmentSection { LayoutMode: Top; Visible: false;
+                        Group { Anchor: (Height: 1); Background: #5b9bd5(0.3); }
                         Group { Anchor: (Height: 8); }
-
-                        Label {
-                            Text: "INVITER UN JOUEUR";
-                            Style: (FontSize: 12, TextColor: #4CAF50, RenderBold: true, RenderUppercase: true, LetterSpacing: 1, HorizontalAlignment: Center);
-                            Anchor: (Height: 18);
-                        }
-
+                        Label #GuildeRecruitmentStatus { Text: "Recrutement : Ferme"; Style: (FontSize: 13, TextColor: #7d8fa3, HorizontalAlignment: Center, RenderBold: true); Anchor: (Height: 20); }
                         Group { Anchor: (Height: 6); }
-
-                        Group #GInvitePlayer0 { Anchor: (Height: 34); Background: #1a2a1a(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false; Label #GInviteName0 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } TextButton #GInviteBtn0 { Text: "INVITER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); } }
-                        Group { Anchor: (Height: 3); }
-                        Group #GInvitePlayer1 { Anchor: (Height: 34); Background: #1a2a1a(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false; Label #GInviteName1 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } TextButton #GInviteBtn1 { Text: "INVITER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); } }
-                        Group { Anchor: (Height: 3); }
-                        Group #GInvitePlayer2 { Anchor: (Height: 34); Background: #1a2a1a(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false; Label #GInviteName2 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } TextButton #GInviteBtn2 { Text: "INVITER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); } }
-                        Group { Anchor: (Height: 3); }
-                        Group #GInvitePlayer3 { Anchor: (Height: 34); Background: #1a2a1a(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false; Label #GInviteName3 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } TextButton #GInviteBtn3 { Text: "INVITER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); } }
-                        Group { Anchor: (Height: 3); }
-                        Group #GInvitePlayer4 { Anchor: (Height: 34); Background: #1a2a1a(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false; Label #GInviteName4 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } TextButton #GInviteBtn4 { Text: "INVITER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); } }
-                        Group { Anchor: (Height: 3); }
-                        Group #GInvitePlayer5 { Anchor: (Height: 34); Background: #1a2a1a(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false; Label #GInviteName5 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } TextButton #GInviteBtn5 { Text: "INVITER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); } }
-                        Group { Anchor: (Height: 3); }
-                        Group #GInvitePlayer6 { Anchor: (Height: 34); Background: #1a2a1a(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false; Label #GInviteName6 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } TextButton #GInviteBtn6 { Text: "INVITER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); } }
-                        Group { Anchor: (Height: 3); }
-                        Group #GInvitePlayer7 { Anchor: (Height: 34); Background: #1a2a1a(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false; Label #GInviteName7 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } TextButton #GInviteBtn7 { Text: "INVITER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); } }
-                        Group { Anchor: (Height: 3); }
-                        Group #GInvitePlayer8 { Anchor: (Height: 34); Background: #1a2a1a(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false; Label #GInviteName8 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } TextButton #GInviteBtn8 { Text: "INVITER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); } }
-                        Group { Anchor: (Height: 3); }
-                        Group #GInvitePlayer9 { Anchor: (Height: 34); Background: #1a2a1a(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false; Label #GInviteName9 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } TextButton #GInviteBtn9 { Text: "INVITER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); } }
+                        Group { LayoutMode: Center; Anchor: (Height: 36);
+                            TextButton #GuildeBtnToggleRecruitment { Text: "CHANGER LE RECRUTEMENT"; Anchor: (Width: 240, Height: 34); Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #5b9bd5, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a3a(0.7); }
+                        }
                     }
+                    Group { Anchor: (Height: 10); }
 
-                    // --- RECRUTEMENT OUVERT/FERME (Chef only) ---
-                    Group #GuildeRecruitmentSection {
-                        LayoutMode: Top;
-                        Visible: false;
-
-                        Group { Anchor: (Height: 12); }
-                        Group { Anchor: (Height: 1); Background: #4488cc(0.3); }
+                    // 8. DANGER ZONE
+                    Group #GuildeDangerZone { LayoutMode: Top; Background: #c44545(0.08); Padding: (Horizontal: 14, Vertical: 10);
+                        // Red top border
+                        Group { Anchor: (Height: 1); Background: #c44545(0.3); }
                         Group { Anchor: (Height: 8); }
-
-                        Label #GuildeRecruitmentStatus {
-                            Text: "Recrutement : Ferme";
-                            Style: (FontSize: 13, TextColor: #8899aa, HorizontalAlignment: Center, RenderBold: true);
-                            Anchor: (Height: 20);
-                        }
-
-                        Group { Anchor: (Height: 6); }
-
-                        Group {
-                            LayoutMode: Center;
-                            Anchor: (Height: 36);
-
-                            TextButton #GuildeBtnToggleRecruitment {
-                                Text: "CHANGER LE RECRUTEMENT";
-                                Anchor: (Width: 240, Height: 34);
-                                Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #4488cc, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)));
-                                Background: #1a2a3a(0.7);
-                            }
+                        Group { LayoutMode: Center; Anchor: (Height: 38);
+                            TextButton #GuildeBtnLeave { Text: "QUITTER LA GUILDE"; Anchor: (Width: 200, Height: 36); Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #c44545, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                            Group { Anchor: (Width: 8); }
+                            TextButton #GuildeBtnDisband { Text: "DISSOUDRE"; Anchor: (Width: 140, Height: 36); Visible: false; Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #c44545, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
                         }
                     }
                 }
@@ -1811,226 +1766,389 @@ Group {
             Group #TabFamille {
                 LayoutMode: Top;
                 Visible: false;
+                Padding: (Horizontal: 14, Vertical: 10);
 
-                // --- A UNE FAMILLE ---
+                // === STATE: NOT NOBLE ===
+                Group #FamilleNotNoble {
+                    LayoutMode: Top; Visible: false;
+                    Group { Anchor: (Height: 80); }
+                    Label { Text: "FAMILLE INDISPONIBLE"; Style: (FontSize: 20, TextColor: #c44545, HorizontalAlignment: Center, RenderBold: true); Anchor: (Height: 28); }
+                    Group { Anchor: (Height: 10); }
+                    Label { Text: "Devenez noble pour acceder aux familles."; Style: (FontSize: 14, TextColor: #7d8fa3, HorizontalAlignment: Center); Anchor: (Height: 20); }
+                    Label { Text: "Rang minimum : Duc"; Style: (FontSize: 12, TextColor: #5a6a7d, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                }
+
+                // === STATE: NO FAMILY (list of 14 families) ===
+                Group #FamilleNoFamily {
+                    LayoutMode: Top; Visible: false;
+                    Label #FamChooseTitle { Text: "CHOISIR VOTRE FAMILLE"; Style: (FontSize: 16, TextColor: #FFD700, HorizontalAlignment: Center, RenderBold: true, LetterSpacing: 1); Anchor: (Height: 24); }
+                    Group { Anchor: (Height: 8); }
+
+                    Group #FamChoice0 { Anchor: (Height: 90); Background: #162030(0.6); LayoutMode: Left; Padding: (Horizontal: 14, Vertical: 8); Visible: false; Group { LayoutMode: Top; FlexWeight: 1; Label #FamCName0 { Text: ""; Style: (FontSize: 15, TextColor: #ffffff, RenderBold: true); Anchor: (Height: 18); } Label #FamCRarity0 { Text: ""; Style: (FontSize: 10, TextColor: #c98ce0, RenderUppercase: true, RenderBold: true); Anchor: (Height: 14); } Label #FamCMotto0 { Text: ""; Style: (FontSize: 10, TextColor: #aabbcc); Anchor: (Height: 14); } Label #FamCPassive0 { Text: ""; Style: (FontSize: 10, TextColor: #5fc77e, RenderBold: true); Anchor: (Height: 14); } Label #FamCHistory0 { Text: ""; Visible: false; Style: (FontSize: 9, TextColor: #7d8fa3, Wrap: true); Anchor: (Height: 24); } } Group { LayoutMode: Top; Anchor: (Width: 110); Padding: (Vertical: 4); Label #FamCPriceLabel0 { Text: ""; Visible: false; Style: (FontSize: 11, TextColor: #FFD700, HorizontalAlignment: Center, RenderBold: true); Anchor: (Height: 16); } Group { Anchor: (Height: 4); } TextButton #FamBtn0 { Text: "CHOISIR"; Anchor: (Height: 30); Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.8); } Group { FlexWeight: 1; } } }
+                    Group { Anchor: (Height: 3); }
+                    Group #FamChoice1 { Anchor: (Height: 90); Background: #162030(0.6); LayoutMode: Left; Padding: (Horizontal: 14, Vertical: 8); Visible: false; Group { LayoutMode: Top; FlexWeight: 1; Label #FamCName1 { Text: ""; Style: (FontSize: 15, TextColor: #ffffff, RenderBold: true); Anchor: (Height: 18); } Label #FamCRarity1 { Text: ""; Style: (FontSize: 10, TextColor: #c98ce0, RenderUppercase: true, RenderBold: true); Anchor: (Height: 14); } Label #FamCMotto1 { Text: ""; Style: (FontSize: 10, TextColor: #aabbcc); Anchor: (Height: 14); } Label #FamCPassive1 { Text: ""; Style: (FontSize: 10, TextColor: #5fc77e, RenderBold: true); Anchor: (Height: 14); } Label #FamCHistory1 { Text: ""; Visible: false; Style: (FontSize: 9, TextColor: #7d8fa3, Wrap: true); Anchor: (Height: 24); } } Group { LayoutMode: Top; Anchor: (Width: 110); Padding: (Vertical: 4); Label #FamCPriceLabel1 { Text: ""; Visible: false; Style: (FontSize: 11, TextColor: #FFD700, HorizontalAlignment: Center, RenderBold: true); Anchor: (Height: 16); } Group { Anchor: (Height: 4); } TextButton #FamBtn1 { Text: "CHOISIR"; Anchor: (Height: 30); Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.8); } Group { FlexWeight: 1; } } }
+                    Group { Anchor: (Height: 3); }
+                    Group #FamChoice2 { Anchor: (Height: 90); Background: #162030(0.6); LayoutMode: Left; Padding: (Horizontal: 14, Vertical: 8); Visible: false; Group { LayoutMode: Top; FlexWeight: 1; Label #FamCName2 { Text: ""; Style: (FontSize: 15, TextColor: #ffffff, RenderBold: true); Anchor: (Height: 18); } Label #FamCRarity2 { Text: ""; Style: (FontSize: 10, TextColor: #c98ce0, RenderUppercase: true, RenderBold: true); Anchor: (Height: 14); } Label #FamCMotto2 { Text: ""; Style: (FontSize: 10, TextColor: #aabbcc); Anchor: (Height: 14); } Label #FamCPassive2 { Text: ""; Style: (FontSize: 10, TextColor: #5fc77e, RenderBold: true); Anchor: (Height: 14); } Label #FamCHistory2 { Text: ""; Visible: false; Style: (FontSize: 9, TextColor: #7d8fa3, Wrap: true); Anchor: (Height: 24); } } Group { LayoutMode: Top; Anchor: (Width: 110); Padding: (Vertical: 4); Label #FamCPriceLabel2 { Text: ""; Visible: false; Style: (FontSize: 11, TextColor: #FFD700, HorizontalAlignment: Center, RenderBold: true); Anchor: (Height: 16); } Group { Anchor: (Height: 4); } TextButton #FamBtn2 { Text: "CHOISIR"; Anchor: (Height: 30); Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.8); } Group { FlexWeight: 1; } } }
+                    Group { Anchor: (Height: 3); }
+                    Group #FamChoice3 { Anchor: (Height: 90); Background: #162030(0.6); LayoutMode: Left; Padding: (Horizontal: 14, Vertical: 8); Visible: false; Group { LayoutMode: Top; FlexWeight: 1; Label #FamCName3 { Text: ""; Style: (FontSize: 15, TextColor: #ffffff, RenderBold: true); Anchor: (Height: 18); } Label #FamCRarity3 { Text: ""; Style: (FontSize: 10, TextColor: #c98ce0, RenderUppercase: true, RenderBold: true); Anchor: (Height: 14); } Label #FamCMotto3 { Text: ""; Style: (FontSize: 10, TextColor: #aabbcc); Anchor: (Height: 14); } Label #FamCPassive3 { Text: ""; Style: (FontSize: 10, TextColor: #5fc77e, RenderBold: true); Anchor: (Height: 14); } Label #FamCHistory3 { Text: ""; Visible: false; Style: (FontSize: 9, TextColor: #7d8fa3, Wrap: true); Anchor: (Height: 24); } } Group { LayoutMode: Top; Anchor: (Width: 110); Padding: (Vertical: 4); Label #FamCPriceLabel3 { Text: ""; Visible: false; Style: (FontSize: 11, TextColor: #FFD700, HorizontalAlignment: Center, RenderBold: true); Anchor: (Height: 16); } Group { Anchor: (Height: 4); } TextButton #FamBtn3 { Text: "CHOISIR"; Anchor: (Height: 30); Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.8); } Group { FlexWeight: 1; } } }
+                    Group { Anchor: (Height: 3); }
+                    Group #FamChoice4 { Anchor: (Height: 90); Background: #162030(0.6); LayoutMode: Left; Padding: (Horizontal: 14, Vertical: 8); Visible: false; Group { LayoutMode: Top; FlexWeight: 1; Label #FamCName4 { Text: ""; Style: (FontSize: 15, TextColor: #ffffff, RenderBold: true); Anchor: (Height: 18); } Label #FamCRarity4 { Text: ""; Style: (FontSize: 10, TextColor: #c98ce0, RenderUppercase: true, RenderBold: true); Anchor: (Height: 14); } Label #FamCMotto4 { Text: ""; Style: (FontSize: 10, TextColor: #aabbcc); Anchor: (Height: 14); } Label #FamCPassive4 { Text: ""; Style: (FontSize: 10, TextColor: #5fc77e, RenderBold: true); Anchor: (Height: 14); } Label #FamCHistory4 { Text: ""; Visible: false; Style: (FontSize: 9, TextColor: #7d8fa3, Wrap: true); Anchor: (Height: 24); } } Group { LayoutMode: Top; Anchor: (Width: 110); Padding: (Vertical: 4); Label #FamCPriceLabel4 { Text: ""; Visible: false; Style: (FontSize: 11, TextColor: #FFD700, HorizontalAlignment: Center, RenderBold: true); Anchor: (Height: 16); } Group { Anchor: (Height: 4); } TextButton #FamBtn4 { Text: "CHOISIR"; Anchor: (Height: 30); Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.8); } Group { FlexWeight: 1; } } }
+                    Group { Anchor: (Height: 3); }
+                    Group #FamChoice5 { Anchor: (Height: 90); Background: #162030(0.6); LayoutMode: Left; Padding: (Horizontal: 14, Vertical: 8); Visible: false; Group { LayoutMode: Top; FlexWeight: 1; Label #FamCName5 { Text: ""; Style: (FontSize: 15, TextColor: #ffffff, RenderBold: true); Anchor: (Height: 18); } Label #FamCRarity5 { Text: ""; Style: (FontSize: 10, TextColor: #c98ce0, RenderUppercase: true, RenderBold: true); Anchor: (Height: 14); } Label #FamCMotto5 { Text: ""; Style: (FontSize: 10, TextColor: #aabbcc); Anchor: (Height: 14); } Label #FamCPassive5 { Text: ""; Style: (FontSize: 10, TextColor: #5fc77e, RenderBold: true); Anchor: (Height: 14); } Label #FamCHistory5 { Text: ""; Visible: false; Style: (FontSize: 9, TextColor: #7d8fa3, Wrap: true); Anchor: (Height: 24); } } Group { LayoutMode: Top; Anchor: (Width: 110); Padding: (Vertical: 4); Label #FamCPriceLabel5 { Text: ""; Visible: false; Style: (FontSize: 11, TextColor: #FFD700, HorizontalAlignment: Center, RenderBold: true); Anchor: (Height: 16); } Group { Anchor: (Height: 4); } TextButton #FamBtn5 { Text: "CHOISIR"; Anchor: (Height: 30); Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.8); } Group { FlexWeight: 1; } } }
+                    Group { Anchor: (Height: 3); }
+                    Group #FamChoice6 { Anchor: (Height: 90); Background: #162030(0.6); LayoutMode: Left; Padding: (Horizontal: 14, Vertical: 8); Visible: false; Group { LayoutMode: Top; FlexWeight: 1; Label #FamCName6 { Text: ""; Style: (FontSize: 15, TextColor: #ffffff, RenderBold: true); Anchor: (Height: 18); } Label #FamCRarity6 { Text: ""; Style: (FontSize: 10, TextColor: #c98ce0, RenderUppercase: true, RenderBold: true); Anchor: (Height: 14); } Label #FamCMotto6 { Text: ""; Style: (FontSize: 10, TextColor: #aabbcc); Anchor: (Height: 14); } Label #FamCPassive6 { Text: ""; Style: (FontSize: 10, TextColor: #5fc77e, RenderBold: true); Anchor: (Height: 14); } Label #FamCHistory6 { Text: ""; Visible: false; Style: (FontSize: 9, TextColor: #7d8fa3, Wrap: true); Anchor: (Height: 24); } } Group { LayoutMode: Top; Anchor: (Width: 110); Padding: (Vertical: 4); Label #FamCPriceLabel6 { Text: ""; Visible: false; Style: (FontSize: 11, TextColor: #FFD700, HorizontalAlignment: Center, RenderBold: true); Anchor: (Height: 16); } Group { Anchor: (Height: 4); } TextButton #FamBtn6 { Text: "CHOISIR"; Anchor: (Height: 30); Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.8); } Group { FlexWeight: 1; } } }
+                    Group { Anchor: (Height: 3); }
+                    Group #FamChoice7 { Anchor: (Height: 90); Background: #162030(0.6); LayoutMode: Left; Padding: (Horizontal: 14, Vertical: 8); Visible: false; Group { LayoutMode: Top; FlexWeight: 1; Label #FamCName7 { Text: ""; Style: (FontSize: 15, TextColor: #ffffff, RenderBold: true); Anchor: (Height: 18); } Label #FamCRarity7 { Text: ""; Style: (FontSize: 10, TextColor: #c98ce0, RenderUppercase: true, RenderBold: true); Anchor: (Height: 14); } Label #FamCMotto7 { Text: ""; Style: (FontSize: 10, TextColor: #aabbcc); Anchor: (Height: 14); } Label #FamCPassive7 { Text: ""; Style: (FontSize: 10, TextColor: #5fc77e, RenderBold: true); Anchor: (Height: 14); } Label #FamCHistory7 { Text: ""; Visible: false; Style: (FontSize: 9, TextColor: #7d8fa3, Wrap: true); Anchor: (Height: 24); } } Group { LayoutMode: Top; Anchor: (Width: 110); Padding: (Vertical: 4); Label #FamCPriceLabel7 { Text: ""; Visible: false; Style: (FontSize: 11, TextColor: #FFD700, HorizontalAlignment: Center, RenderBold: true); Anchor: (Height: 16); } Group { Anchor: (Height: 4); } TextButton #FamBtn7 { Text: "CHOISIR"; Anchor: (Height: 30); Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.8); } Group { FlexWeight: 1; } } }
+                    Group { Anchor: (Height: 3); }
+                    Group #FamChoice8 { Anchor: (Height: 90); Background: #162030(0.6); LayoutMode: Left; Padding: (Horizontal: 14, Vertical: 8); Visible: false; Group { LayoutMode: Top; FlexWeight: 1; Label #FamCName8 { Text: ""; Style: (FontSize: 15, TextColor: #ffffff, RenderBold: true); Anchor: (Height: 18); } Label #FamCRarity8 { Text: ""; Style: (FontSize: 10, TextColor: #c98ce0, RenderUppercase: true, RenderBold: true); Anchor: (Height: 14); } Label #FamCMotto8 { Text: ""; Style: (FontSize: 10, TextColor: #aabbcc); Anchor: (Height: 14); } Label #FamCPassive8 { Text: ""; Style: (FontSize: 10, TextColor: #5fc77e, RenderBold: true); Anchor: (Height: 14); } Label #FamCHistory8 { Text: ""; Visible: false; Style: (FontSize: 9, TextColor: #7d8fa3, Wrap: true); Anchor: (Height: 24); } } Group { LayoutMode: Top; Anchor: (Width: 110); Padding: (Vertical: 4); Label #FamCPriceLabel8 { Text: ""; Visible: false; Style: (FontSize: 11, TextColor: #FFD700, HorizontalAlignment: Center, RenderBold: true); Anchor: (Height: 16); } Group { Anchor: (Height: 4); } TextButton #FamBtn8 { Text: "CHOISIR"; Anchor: (Height: 30); Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.8); } Group { FlexWeight: 1; } } }
+                }
+
+                // === STATE: HAS FAMILY (main panel) ===
                 Group #FamilleHasFamily {
-                    LayoutMode: Top;
-                    Visible: false;
+                    LayoutMode: Top; Visible: false;
 
-                    Label #FamName {
-                        Text: "";
-                        Style: (FontSize: 24, TextColor: #FFD700, RenderBold: true, HorizontalAlignment: Center, LetterSpacing: 1);
-                        Anchor: (Height: 32);
-                    }
-
+                    // 1. HEADER
+                    Label #FamName { Text: ""; Style: (FontSize: 20, TextColor: #FFD700, RenderBold: true, HorizontalAlignment: Center, LetterSpacing: 1); Anchor: (Height: 28); }
                     Group { Anchor: (Height: 4); }
-
-                    Label #FamMotto {
-                        Text: "";
-                        Style: (FontSize: 13, TextColor: #aabbcc, HorizontalAlignment: Center);
-                        Anchor: (Height: 20);
-                    }
-
+                    Label #FamMotto { Text: ""; Style: (FontSize: 12, TextColor: #7d8fa3, HorizontalAlignment: Center); Anchor: (Height: 18); }
                     Group { Anchor: (Height: 10); }
 
-                    Group {
-                        LayoutMode: Left;
-                        Anchor: (Height: 34);
-
-                        Group { FlexWeight: 1; Background: #1a2030(0.6); LayoutMode: CenterMiddle;
-                            Label #FamRarity { Text: ""; Style: (FontSize: 13, TextColor: #C8A2C8, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true, RenderUppercase: true); }
+                    // 2. THREE INFO CARDS
+                    Group { LayoutMode: Left; Anchor: (Height: 44);
+                        // Rarity (violet border)
+                        Group { FlexWeight: 1; Background: #162030; LayoutMode: Left;
+                            Group { Anchor: (Width: 3, Height: 44); Background: #c98ce0; }
+                            Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 10, Vertical: 4);
+                                Label { Text: "RARETE"; Style: (FontSize: 9, TextColor: #7d8fa3, RenderBold: true, RenderUppercase: true); Anchor: (Height: 14); }
+                                Label #FamRarity { Text: ""; Style: (FontSize: 13, TextColor: #c98ce0, RenderBold: true); Anchor: (Height: 18); }
+                            }
                         }
                         Group { Anchor: (Width: 4); }
-                        Group { FlexWeight: 1; Background: #1a2030(0.6); LayoutMode: CenterMiddle;
-                            Label #FamRank { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, HorizontalAlignment: Center, VerticalAlignment: Center); }
+                        // Rank (blue border)
+                        Group { FlexWeight: 1; Background: #162030; LayoutMode: Left;
+                            Group { Anchor: (Width: 3, Height: 44); Background: #5b9bd5; }
+                            Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 10, Vertical: 4);
+                                Label { Text: "RANG MINIMUM"; Style: (FontSize: 9, TextColor: #7d8fa3, RenderBold: true, RenderUppercase: true); Anchor: (Height: 14); }
+                                Label #FamRank { Text: ""; Style: (FontSize: 13, TextColor: #5b9bd5); Anchor: (Height: 18); }
+                            }
                         }
                         Group { Anchor: (Width: 4); }
-                        Group { FlexWeight: 1; Background: #1a2030(0.6); LayoutMode: CenterMiddle;
-                            Label #FamStatus { Text: ""; Style: (FontSize: 13, TextColor: #D4AF37, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true, RenderUppercase: true); }
+                        // Role (gold border)
+                        Group { FlexWeight: 1; Background: #162030; LayoutMode: Left;
+                            Group { Anchor: (Width: 3, Height: 44); Background: #FFD700; }
+                            Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 10, Vertical: 4);
+                                Label { Text: "VOTRE ROLE"; Style: (FontSize: 9, TextColor: #7d8fa3, RenderBold: true, RenderUppercase: true); Anchor: (Height: 14); }
+                                Label #FamStatus { Text: ""; Style: (FontSize: 13, TextColor: #FFD700, RenderBold: true); Anchor: (Height: 18); }
+                            }
                         }
                     }
+                    Group { Anchor: (Height: 8); }
 
-                    Group { Anchor: (Height: 12); }
-                    Group { Anchor: (Height: 1); Background: #FFD700(0.2); }
+                    // 3. TREASURY + CONTRIBUTION (green border)
+                    Group { LayoutMode: Left; Anchor: (Height: 44);
+                        Group { FlexWeight: 1; Background: #162030; LayoutMode: Left;
+                            Group { Anchor: (Width: 3, Height: 44); Background: #5fc77e; }
+                            Group { LayoutMode: Left; FlexWeight: 1; Padding: (Horizontal: 10, Vertical: 6);
+                                Label { Text: "TRESORERIE"; Style: (FontSize: 10, TextColor: #7d8fa3, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 100); }
+                                Label #FamTreasury { Text: "0 Or"; Style: (FontSize: 16, TextColor: #FFD700, VerticalAlignment: Center, RenderBold: true); FlexWeight: 1; }
+                                TextButton #FamBtnDeposit { Text: "+1000"; Anchor: (Width: 65, Height: 26); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #5fc77e, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); }
+                                Group { Anchor: (Width: 4); }
+                                TextButton #FamBtnWithdraw { Text: "-1000"; Anchor: (Width: 65, Height: 26); Visible: false; Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #c44545, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.8); }
+                            }
+                        }
+                        Group { Anchor: (Width: 4); }
+                        Group { FlexWeight: 1; Background: #162030; LayoutMode: Left;
+                            Group { Anchor: (Width: 3, Height: 44); Background: #5fc77e; }
+                            Group { LayoutMode: Left; FlexWeight: 1; Padding: (Horizontal: 10, Vertical: 6);
+                                Label { Text: "CONTRIBUTION"; Style: (FontSize: 10, TextColor: #7d8fa3, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 110); }
+                                Label #FamContribution { Text: "0"; Style: (FontSize: 16, TextColor: #5fc77e, VerticalAlignment: Center, RenderBold: true); }
+                            }
+                        }
+                    }
+                    Group { Anchor: (Height: 8); }
+
+                    // 4. FAMILY PASSIVE (green border)
+                    Group { Background: #162030; LayoutMode: Left;
+                        Group { Anchor: (Width: 3, Height: 50); Background: #5fc77e; }
+                        Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 10, Vertical: 6);
+                            Label { Text: "PASSIF FAMILIAL"; Style: (FontSize: 9, TextColor: #7d8fa3, RenderBold: true, RenderUppercase: true); Anchor: (Height: 14); }
+                            Label #FamPassiveName { Text: ""; Style: (FontSize: 13, TextColor: #5fc77e, RenderBold: true); Anchor: (Height: 18); }
+                            Label #FamPassiveDesc { Text: ""; Style: (FontSize: 11, TextColor: #aabbcc, Wrap: true); Anchor: (Height: 16); }
+                        }
+                    }
+                    Group { Anchor: (Height: 8); }
+
+                    // 5. HISTORY (gray border)
+                    Group #FamHistoryCard { Background: #141d2b; LayoutMode: Left; Visible: true;
+                        Group { Anchor: (Width: 3, Height: 60); Background: #5a6a7d; }
+                        Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 10, Vertical: 6);
+                            Label { Text: "HISTOIRE"; Style: (FontSize: 9, TextColor: #5a6a7d, RenderBold: true, RenderUppercase: true); Anchor: (Height: 14); }
+                            Label #FamHistory { Text: ""; Style: (FontSize: 11, TextColor: #7d8fa3, Wrap: true); }
+                        }
+                    }
                     Group { Anchor: (Height: 10); }
 
-                    // Tresorerie & Contribution (AU DESSUS du passif)
-                    Group {
-                        LayoutMode: Left;
-                        Anchor: (Height: 44);
+                    // 6. ACCORDION: MEMBERS
+                    TextButton #FamBtnToggleMembers { Text: "> MEMBRES DE LA FAMILLE (0)"; Anchor: (Height: 28); Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #FFD700, RenderBold: true, RenderUppercase: true, LetterSpacing: 1, VerticalAlignment: Center)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, RenderBold: true, RenderUppercase: true, LetterSpacing: 1, VerticalAlignment: Center))); Background: #141d2b(0.8); }
 
-                        Group {
-                            FlexWeight: 1;
-                            Background: #1a1208(0.7);
-                            LayoutMode: Left;
-                            Padding: (Horizontal: 12, Vertical: 6);
+                    Group #FamMembersContent { LayoutMode: Top; Visible: false; Padding: (Top: 4);
+                        // Column headers
+                        Group { LayoutMode: Left; Anchor: (Height: 20); Padding: (Horizontal: 8);
+                            Label { Text: ""; Style: (FontSize: 9, TextColor: #5a6a7d, RenderBold: true); Anchor: (Width: 20); }
+                            Label { Text: "JOUEUR"; Style: (FontSize: 9, TextColor: #5a6a7d, RenderBold: true); FlexWeight: 1; }
+                            Label { Text: "ROLE"; Style: (FontSize: 9, TextColor: #5a6a7d, RenderBold: true); Anchor: (Width: 80); }
+                            Label { Text: "RANG"; Style: (FontSize: 9, TextColor: #5a6a7d, RenderBold: true); Anchor: (Width: 70); }
+                            Label { Text: "ACTIONS"; Style: (FontSize: 9, TextColor: #5a6a7d, RenderBold: true); Anchor: (Width: 170); }
+                        }
 
-                            Label {
-                                Text: "TRESORERIE";
-                                Style: (FontSize: 11, TextColor: #8899aa, RenderBold: true, VerticalAlignment: Center);
-                                Anchor: (Width: 100);
-                            }
-                            Label #FamTreasury {
-                                Text: "0";
-                                Style: (FontSize: 16, TextColor: #D4AF37, VerticalAlignment: Center, RenderBold: true);
-                                FlexWeight: 1;
-                            }
-                            TextButton #FamBtnDeposit {
-                                Text: "+1000";
-                                Anchor: (Width: 65, Height: 26);
-                                Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)));
-                                Background: #1a3a1a(0.8);
-                            }
+                        Group #FMemberSlot0 { Anchor: (Height: 34); Background: #162030(0.5); LayoutMode: Left; Padding: (Horizontal: 8, Vertical: 3); Visible: false; Label #FMemberStatus0 { Text: "●"; Style: (FontSize: 10, TextColor: #5fc77e, VerticalAlignment: Center); Anchor: (Width: 20); } Label #FMemberName0 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } Label #FMemberRole0 { Text: ""; Style: (FontSize: 10, TextColor: #7d8fa3, VerticalAlignment: Center, RenderBold: true); Anchor: (Width: 80); } Label #FMemberNobRank0 { Text: ""; Style: (FontSize: 10, TextColor: #5b9bd5, VerticalAlignment: Center); Anchor: (Width: 70); } Group { Anchor: (Width: 170); LayoutMode: Left; TextButton #FMemberBtnPromote0 { Text: "↑ VICE"; Anchor: (Width: 55, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #c98ce0, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a3a(0.8); } Group { Anchor: (Width: 3); } TextButton #FMemberBtnDemote0 { Text: "↓"; Anchor: (Width: 30, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #5a6a7d, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.8); } Group { Anchor: (Width: 3); } TextButton #FMemberBtnKick0 { Text: "EXCLURE"; Anchor: (Width: 65, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #c44545, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.8); } } }
+                        Group { Anchor: (Height: 2); }
+                        Group #FMemberSlot1 { Anchor: (Height: 34); Background: #162030(0.5); LayoutMode: Left; Padding: (Horizontal: 8, Vertical: 3); Visible: false; Label #FMemberStatus1 { Text: "●"; Style: (FontSize: 10, TextColor: #5fc77e, VerticalAlignment: Center); Anchor: (Width: 20); } Label #FMemberName1 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } Label #FMemberRole1 { Text: ""; Style: (FontSize: 10, TextColor: #7d8fa3, VerticalAlignment: Center, RenderBold: true); Anchor: (Width: 80); } Label #FMemberNobRank1 { Text: ""; Style: (FontSize: 10, TextColor: #5b9bd5, VerticalAlignment: Center); Anchor: (Width: 70); } Group { Anchor: (Width: 170); LayoutMode: Left; TextButton #FMemberBtnPromote1 { Text: "↑ VICE"; Anchor: (Width: 55, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #c98ce0, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a3a(0.8); } Group { Anchor: (Width: 3); } TextButton #FMemberBtnDemote1 { Text: "↓"; Anchor: (Width: 30, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #5a6a7d, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.8); } Group { Anchor: (Width: 3); } TextButton #FMemberBtnKick1 { Text: "EXCLURE"; Anchor: (Width: 65, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #c44545, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.8); } } }
+                        Group { Anchor: (Height: 2); }
+                        Group #FMemberSlot2 { Anchor: (Height: 34); Background: #162030(0.5); LayoutMode: Left; Padding: (Horizontal: 8, Vertical: 3); Visible: false; Label #FMemberStatus2 { Text: "●"; Style: (FontSize: 10, TextColor: #5fc77e, VerticalAlignment: Center); Anchor: (Width: 20); } Label #FMemberName2 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } Label #FMemberRole2 { Text: ""; Style: (FontSize: 10, TextColor: #7d8fa3, VerticalAlignment: Center, RenderBold: true); Anchor: (Width: 80); } Label #FMemberNobRank2 { Text: ""; Style: (FontSize: 10, TextColor: #5b9bd5, VerticalAlignment: Center); Anchor: (Width: 70); } Group { Anchor: (Width: 170); LayoutMode: Left; TextButton #FMemberBtnPromote2 { Text: "↑ VICE"; Anchor: (Width: 55, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #c98ce0, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a3a(0.8); } Group { Anchor: (Width: 3); } TextButton #FMemberBtnDemote2 { Text: "↓"; Anchor: (Width: 30, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #5a6a7d, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.8); } Group { Anchor: (Width: 3); } TextButton #FMemberBtnKick2 { Text: "EXCLURE"; Anchor: (Width: 65, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #c44545, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.8); } } }
+                        Group { Anchor: (Height: 2); }
+                        Group #FMemberSlot3 { Anchor: (Height: 34); Background: #162030(0.5); LayoutMode: Left; Padding: (Horizontal: 8, Vertical: 3); Visible: false; Label #FMemberStatus3 { Text: "●"; Style: (FontSize: 10, TextColor: #5fc77e, VerticalAlignment: Center); Anchor: (Width: 20); } Label #FMemberName3 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } Label #FMemberRole3 { Text: ""; Style: (FontSize: 10, TextColor: #7d8fa3, VerticalAlignment: Center, RenderBold: true); Anchor: (Width: 80); } Label #FMemberNobRank3 { Text: ""; Style: (FontSize: 10, TextColor: #5b9bd5, VerticalAlignment: Center); Anchor: (Width: 70); } Group { Anchor: (Width: 170); LayoutMode: Left; TextButton #FMemberBtnPromote3 { Text: "↑ VICE"; Anchor: (Width: 55, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #c98ce0, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a3a(0.8); } Group { Anchor: (Width: 3); } TextButton #FMemberBtnDemote3 { Text: "↓"; Anchor: (Width: 30, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #5a6a7d, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.8); } Group { Anchor: (Width: 3); } TextButton #FMemberBtnKick3 { Text: "EXCLURE"; Anchor: (Width: 65, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #c44545, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.8); } } }
+                        Group { Anchor: (Height: 2); }
+                        Group #FMemberSlot4 { Anchor: (Height: 34); Background: #162030(0.5); LayoutMode: Left; Padding: (Horizontal: 8, Vertical: 3); Visible: false; Label #FMemberStatus4 { Text: "●"; Style: (FontSize: 10, TextColor: #5fc77e, VerticalAlignment: Center); Anchor: (Width: 20); } Label #FMemberName4 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } Label #FMemberRole4 { Text: ""; Style: (FontSize: 10, TextColor: #7d8fa3, VerticalAlignment: Center, RenderBold: true); Anchor: (Width: 80); } Label #FMemberNobRank4 { Text: ""; Style: (FontSize: 10, TextColor: #5b9bd5, VerticalAlignment: Center); Anchor: (Width: 70); } Group { Anchor: (Width: 170); LayoutMode: Left; TextButton #FMemberBtnPromote4 { Text: "↑ VICE"; Anchor: (Width: 55, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #c98ce0, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a3a(0.8); } Group { Anchor: (Width: 3); } TextButton #FMemberBtnDemote4 { Text: "↓"; Anchor: (Width: 30, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #5a6a7d, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.8); } Group { Anchor: (Width: 3); } TextButton #FMemberBtnKick4 { Text: "EXCLURE"; Anchor: (Width: 65, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #c44545, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.8); } } }
+
+                        // Pagination
+                        Group { Anchor: (Height: 4); }
+                        Group { LayoutMode: Left; Anchor: (Height: 24);
+                            Group { FlexWeight: 1; }
+                            TextButton #FMemberBtnPrev { Text: "< PREC."; Anchor: (Width: 70, Height: 22); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #5b9bd5, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.6); }
                             Group { Anchor: (Width: 4); }
-                            TextButton #FamBtnWithdraw {
-                                Text: "-1000";
-                                Anchor: (Width: 65, Height: 26);
-                                Visible: false;
-                                Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #cc6644, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)));
-                                Background: #2a1a1a(0.8);
-                            }
-                        }
-
-                        Group { Anchor: (Width: 6); }
-
-                        Group {
-                            FlexWeight: 1;
-                            Background: #1a2a1a(0.5);
-                            LayoutMode: Left;
-                            Padding: (Horizontal: 14, Vertical: 6);
-
-                            Label {
-                                Text: "CONTRIBUTION";
-                                Style: (FontSize: 11, TextColor: #8899aa, RenderBold: true, VerticalAlignment: Center);
-                                Anchor: (Width: 120);
-                            }
-                            Label #FamContribution {
-                                Text: "0";
-                                Style: (FontSize: 18, TextColor: #4CAF50, VerticalAlignment: Center, RenderBold: true);
-                            }
+                            Label #FMemberPage { Text: "1/1"; Style: (FontSize: 10, TextColor: #5a6a7d, HorizontalAlignment: Center, VerticalAlignment: Center); Anchor: (Width: 40); }
+                            Group { Anchor: (Width: 4); }
+                            TextButton #FMemberBtnNext { Text: "SUIV. >"; Anchor: (Width: 70, Height: 22); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #5b9bd5, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.6); }
+                            Group { FlexWeight: 1; }
                         }
                     }
-
-                    Group { Anchor: (Height: 12); }
-
-                    // Passif familial
-                    Label {
-                        Text: "PASSIF FAMILIAL";
-                        Style: (FontSize: 12, TextColor: #8899aa, RenderBold: true, RenderUppercase: true, LetterSpacing: 1, HorizontalAlignment: Center);
-                        Anchor: (Height: 18);
-                    }
-
                     Group { Anchor: (Height: 6); }
 
-                    Group {
-                        Anchor: (Height: 50);
-                        Background: #1a2030(0.6);
-                        LayoutMode: CenterMiddle;
-                        Padding: (Horizontal: 16);
+                    // 7. ACCORDION: KNIGHT ORDERS
+                    TextButton #FamBtnToggleOrdres { Text: "v ORDRES DE CHEVALIER (0/3)"; Anchor: (Height: 28); Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #c98ce0, RenderBold: true, RenderUppercase: true, LetterSpacing: 1, VerticalAlignment: Center)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, RenderBold: true, RenderUppercase: true, LetterSpacing: 1, VerticalAlignment: Center))); Background: #141d2b(0.8); }
 
-                        Label #FamPassive {
-                            Text: "";
-                            Style: (FontSize: 13, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, Wrap: true);
+                    Group #FamOrdresContent { LayoutMode: Top; Visible: true; Padding: (Top: 4);
+                        // Card 0 (blue border)
+                        Group #OrdreCard0 { Anchor: (Height: 56); Background: #162030(0.6); LayoutMode: Left; Visible: false;
+                            Group { Anchor: (Width: 3, Height: 56); Background: #5b9bd5; }
+                            Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 10, Vertical: 6);
+                                Group { LayoutMode: Left; Anchor: (Height: 18);
+                                    Label #OrdreName0 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, RenderBold: true); FlexWeight: 1; }
+                                    TextButton #OrdreBtnDetail0 { Text: "›"; Anchor: (Width: 24, Height: 18); Style: (Default: (LabelStyle: (FontSize: 16, TextColor: #5a6a7d, HorizontalAlignment: Center, VerticalAlignment: Center)), Hovered: (LabelStyle: (FontSize: 16, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center))); Background: #162030(0.0); }
+                                }
+                                Label #OrdreMotto0 { Text: ""; Style: (FontSize: 10, TextColor: #7d8fa3); Anchor: (Height: 14); }
+                                Group { LayoutMode: Left; Anchor: (Height: 14);
+                                    Label #OrdreMembers0 { Text: ""; Style: (FontSize: 10, TextColor: #5b9bd5); Anchor: (Width: 80); }
+                                    Label #OrdreStats0 { Text: ""; Style: (FontSize: 10, TextColor: #5a6a7d); FlexWeight: 1; }
+                                }
+                            }
                         }
-                    }
-
-                    // Histoire de la famille
-                    Group { Anchor: (Height: 6); }
-                    Group {
-                        Anchor: (Height: 80);
-                        Background: #0d1520(0.6);
-                        LayoutMode: TopScrolling;
-                        Padding: (Horizontal: 14, Vertical: 8);
-
-                        Label { Text: "HISTOIRE"; Style: (FontSize: 10, TextColor: #D4AF37, RenderBold: true, RenderUppercase: true, LetterSpacing: 1, HorizontalAlignment: Start); Anchor: (Height: 14); }
                         Group { Anchor: (Height: 3); }
-                        Label #FamHistory {
-                            Text: "";
-                            Visible: false;
-                            Style: (FontSize: 11, TextColor: #99aabb, HorizontalAlignment: Start, Wrap: true);
+
+                        // Card 1 (violet border)
+                        Group #OrdreCard1 { Anchor: (Height: 56); Background: #162030(0.6); LayoutMode: Left; Visible: false;
+                            Group { Anchor: (Width: 3, Height: 56); Background: #c98ce0; }
+                            Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 10, Vertical: 6);
+                                Group { LayoutMode: Left; Anchor: (Height: 18);
+                                    Label #OrdreName1 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, RenderBold: true); FlexWeight: 1; }
+                                    TextButton #OrdreBtnDetail1 { Text: "›"; Anchor: (Width: 24, Height: 18); Style: (Default: (LabelStyle: (FontSize: 16, TextColor: #5a6a7d, HorizontalAlignment: Center, VerticalAlignment: Center)), Hovered: (LabelStyle: (FontSize: 16, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center))); Background: #162030(0.0); }
+                                }
+                                Label #OrdreMotto1 { Text: ""; Style: (FontSize: 10, TextColor: #7d8fa3); Anchor: (Height: 14); }
+                                Group { LayoutMode: Left; Anchor: (Height: 14);
+                                    Label #OrdreMembers1 { Text: ""; Style: (FontSize: 10, TextColor: #c98ce0); Anchor: (Width: 80); }
+                                    Label #OrdreStats1 { Text: ""; Style: (FontSize: 10, TextColor: #5a6a7d); FlexWeight: 1; }
+                                }
+                            }
                         }
-                    }
+                        Group { Anchor: (Height: 3); }
 
-                    // Invite section (Patriarch + Vice)
-                    Group #FamInviteSection {
-                        LayoutMode: Top;
-                        Visible: false;
-
-                        Group { Anchor: (Height: 12); }
-                        Group { Anchor: (Height: 1); Background: #4CAF50(0.3); }
-                        Group { Anchor: (Height: 8); }
-
-                        Label {
-                            Text: "INVITER DANS LA FAMILLE";
-                            Style: (FontSize: 12, TextColor: #4CAF50, RenderBold: true, RenderUppercase: true, LetterSpacing: 1, HorizontalAlignment: Center);
-                            Anchor: (Height: 18);
+                        // Card 2 (gold border)
+                        Group #OrdreCard2 { Anchor: (Height: 56); Background: #162030(0.6); LayoutMode: Left; Visible: false;
+                            Group { Anchor: (Width: 3, Height: 56); Background: #FFD700; }
+                            Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 10, Vertical: 6);
+                                Group { LayoutMode: Left; Anchor: (Height: 18);
+                                    Label #OrdreName2 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, RenderBold: true); FlexWeight: 1; }
+                                    TextButton #OrdreBtnDetail2 { Text: "›"; Anchor: (Width: 24, Height: 18); Style: (Default: (LabelStyle: (FontSize: 16, TextColor: #5a6a7d, HorizontalAlignment: Center, VerticalAlignment: Center)), Hovered: (LabelStyle: (FontSize: 16, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center))); Background: #162030(0.0); }
+                                }
+                                Label #OrdreMotto2 { Text: ""; Style: (FontSize: 10, TextColor: #7d8fa3); Anchor: (Height: 14); }
+                                Group { LayoutMode: Left; Anchor: (Height: 14);
+                                    Label #OrdreMembers2 { Text: ""; Style: (FontSize: 10, TextColor: #FFD700); Anchor: (Width: 80); }
+                                    Label #OrdreStats2 { Text: ""; Style: (FontSize: 10, TextColor: #5a6a7d); FlexWeight: 1; }
+                                }
+                            }
                         }
 
                         Group { Anchor: (Height: 6); }
-
-                        Group #FamInvPlayer0 { Anchor: (Height: 34); Background: #1a2a1a(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false; Label #FamInvName0 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } TextButton #FamInvBtn0 { Text: "INVITER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); } }
-                        Group { Anchor: (Height: 3); }
-                        Group #FamInvPlayer1 { Anchor: (Height: 34); Background: #1a2a1a(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false; Label #FamInvName1 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } TextButton #FamInvBtn1 { Text: "INVITER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); } }
-                        Group { Anchor: (Height: 3); }
-                        Group #FamInvPlayer2 { Anchor: (Height: 34); Background: #1a2a1a(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false; Label #FamInvName2 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } TextButton #FamInvBtn2 { Text: "INVITER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); } }
-                        Group { Anchor: (Height: 3); }
-                        Group #FamInvPlayer3 { Anchor: (Height: 34); Background: #1a2a1a(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false; Label #FamInvName3 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } TextButton #FamInvBtn3 { Text: "INVITER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); } }
-                        Group { Anchor: (Height: 3); }
-                        Group #FamInvPlayer4 { Anchor: (Height: 34); Background: #1a2a1a(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false; Label #FamInvName4 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } TextButton #FamInvBtn4 { Text: "INVITER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); } }
-                        Group { Anchor: (Height: 3); }
-                        Group #FamInvPlayer5 { Anchor: (Height: 34); Background: #1a2a1a(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false; Label #FamInvName5 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } TextButton #FamInvBtn5 { Text: "INVITER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); } }
-                        Group { Anchor: (Height: 3); }
-                        Group #FamInvPlayer6 { Anchor: (Height: 34); Background: #1a2a1a(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false; Label #FamInvName6 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } TextButton #FamInvBtn6 { Text: "INVITER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); } }
-                        Group { Anchor: (Height: 3); }
-                        Group #FamInvPlayer7 { Anchor: (Height: 34); Background: #1a2a1a(0.5); LayoutMode: Left; Padding: (Horizontal: 12, Vertical: 4); Visible: false; Label #FamInvName7 { Text: ""; Style: (FontSize: 13, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } TextButton #FamInvBtn7 { Text: "INVITER"; Anchor: (Width: 80, Height: 26); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #4CAF50, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); } }
+                        // Create order button
+                        Group { LayoutMode: Center; Anchor: (Height: 32);
+                            TextButton #FamBtnCreateOrdre { Text: "+ CREER UN ORDRE"; Anchor: (Width: 200, Height: 30); Visible: false; Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #c98ce0, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a3a(0.7); }
+                        }
                     }
+                    Group { Anchor: (Height: 6); }
 
-                    Group { Anchor: (Height: 14); }
+                    // 8. ACCORDION: INVITE NOBLE
+                    Group #FamInviteAccordion { LayoutMode: Top; Visible: false;
+                        TextButton #FamBtnToggleInvite { Text: "> INVITER UN NOBLE"; Anchor: (Height: 28); Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #5fc77e, RenderBold: true, RenderUppercase: true, LetterSpacing: 1, VerticalAlignment: Center)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, RenderBold: true, RenderUppercase: true, LetterSpacing: 1, VerticalAlignment: Center))); Background: #141d2b(0.8); }
 
-                    // Quitter / Dissoudre
-                    Group {
-                        LayoutMode: Center;
-                        Anchor: (Height: 40);
+                        Group #FamInviteContent { LayoutMode: Top; Visible: false; Padding: (Top: 4);
+                            Group #FInviteSlot0 { Anchor: (Height: 32); Background: #162030(0.4); LayoutMode: Left; Padding: (Horizontal: 10, Vertical: 3); Visible: false; Label #FInviteName0 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } Label #FInviteRank0 { Text: ""; Style: (FontSize: 10, TextColor: #5b9bd5, VerticalAlignment: Center, RenderBold: true); Anchor: (Width: 70); } TextButton #FInviteBtn0 { Text: "INVITER"; Anchor: (Width: 80, Height: 24); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #5fc77e, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); } }
+                            Group { Anchor: (Height: 2); }
+                            Group #FInviteSlot1 { Anchor: (Height: 32); Background: #162030(0.4); LayoutMode: Left; Padding: (Horizontal: 10, Vertical: 3); Visible: false; Label #FInviteName1 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } Label #FInviteRank1 { Text: ""; Style: (FontSize: 10, TextColor: #5b9bd5, VerticalAlignment: Center, RenderBold: true); Anchor: (Width: 70); } TextButton #FInviteBtn1 { Text: "INVITER"; Anchor: (Width: 80, Height: 24); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #5fc77e, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); } }
+                            Group { Anchor: (Height: 2); }
+                            Group #FInviteSlot2 { Anchor: (Height: 32); Background: #162030(0.4); LayoutMode: Left; Padding: (Horizontal: 10, Vertical: 3); Visible: false; Label #FInviteName2 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } Label #FInviteRank2 { Text: ""; Style: (FontSize: 10, TextColor: #5b9bd5, VerticalAlignment: Center, RenderBold: true); Anchor: (Width: 70); } TextButton #FInviteBtn2 { Text: "INVITER"; Anchor: (Width: 80, Height: 24); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #5fc77e, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); } }
+                            Group { Anchor: (Height: 2); }
+                            Group #FInviteSlot3 { Anchor: (Height: 32); Background: #162030(0.4); LayoutMode: Left; Padding: (Horizontal: 10, Vertical: 3); Visible: false; Label #FInviteName3 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } Label #FInviteRank3 { Text: ""; Style: (FontSize: 10, TextColor: #5b9bd5, VerticalAlignment: Center, RenderBold: true); Anchor: (Width: 70); } TextButton #FInviteBtn3 { Text: "INVITER"; Anchor: (Width: 80, Height: 24); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #5fc77e, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); } }
+                            Group { Anchor: (Height: 2); }
+                            Group #FInviteSlot4 { Anchor: (Height: 32); Background: #162030(0.4); LayoutMode: Left; Padding: (Horizontal: 10, Vertical: 3); Visible: false; Label #FInviteName4 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } Label #FInviteRank4 { Text: ""; Style: (FontSize: 10, TextColor: #5b9bd5, VerticalAlignment: Center, RenderBold: true); Anchor: (Width: 70); } TextButton #FInviteBtn4 { Text: "INVITER"; Anchor: (Width: 80, Height: 24); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #5fc77e, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); } }
+                            Group { Anchor: (Height: 2); }
+                            Group #FInviteSlot5 { Anchor: (Height: 32); Background: #162030(0.4); LayoutMode: Left; Padding: (Horizontal: 10, Vertical: 3); Visible: false; Label #FInviteName5 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } Label #FInviteRank5 { Text: ""; Style: (FontSize: 10, TextColor: #5b9bd5, VerticalAlignment: Center, RenderBold: true); Anchor: (Width: 70); } TextButton #FInviteBtn5 { Text: "INVITER"; Anchor: (Width: 80, Height: 24); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #5fc77e, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); } }
+                            Group { Anchor: (Height: 2); }
+                            Group #FInviteSlot6 { Anchor: (Height: 32); Background: #162030(0.4); LayoutMode: Left; Padding: (Horizontal: 10, Vertical: 3); Visible: false; Label #FInviteName6 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } Label #FInviteRank6 { Text: ""; Style: (FontSize: 10, TextColor: #5b9bd5, VerticalAlignment: Center, RenderBold: true); Anchor: (Width: 70); } TextButton #FInviteBtn6 { Text: "INVITER"; Anchor: (Width: 80, Height: 24); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #5fc77e, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); } }
+                            Group { Anchor: (Height: 2); }
+                            Group #FInviteSlot7 { Anchor: (Height: 32); Background: #162030(0.4); LayoutMode: Left; Padding: (Horizontal: 10, Vertical: 3); Visible: false; Label #FInviteName7 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } Label #FInviteRank7 { Text: ""; Style: (FontSize: 10, TextColor: #5b9bd5, VerticalAlignment: Center, RenderBold: true); Anchor: (Width: 70); } TextButton #FInviteBtn7 { Text: "INVITER"; Anchor: (Width: 80, Height: 24); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #5fc77e, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.8); } }
 
-                        TextButton #FamBtnLeave {
-                            Text: "QUITTER LA FAMILLE";
-                            Anchor: (Width: 240, Height: 38);
-                            Style: (Default: (LabelStyle: (FontSize: 13, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 13, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)));
-                            Background: #2a1a1a(0.6);
+                            // Pagination
+                            Group { Anchor: (Height: 4); }
+                            Group { LayoutMode: Left; Anchor: (Height: 24);
+                                Group { FlexWeight: 1; }
+                                TextButton #FInviteBtnPrev { Text: "< PREC."; Anchor: (Width: 70, Height: 22); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #5b9bd5, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.6); }
+                                Group { Anchor: (Width: 4); }
+                                Label #FInvitePage { Text: "1/1"; Style: (FontSize: 10, TextColor: #5a6a7d, HorizontalAlignment: Center, VerticalAlignment: Center); Anchor: (Width: 40); }
+                                Group { Anchor: (Width: 4); }
+                                TextButton #FInviteBtnNext { Text: "SUIV. >"; Anchor: (Width: 70, Height: 22); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #5b9bd5, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.6); }
+                                Group { FlexWeight: 1; }
+                            }
+                        }
+                    }
+                    Group { Anchor: (Height: 10); }
+
+                    // 9. DANGER ZONE
+                    Group #FamDangerZone { LayoutMode: Top; Background: #c44545(0.08); Padding: (Horizontal: 14, Vertical: 10);
+                        Group { Anchor: (Height: 1); Background: #c44545(0.3); }
+                        Group { Anchor: (Height: 8); }
+                        Group { LayoutMode: Center; Anchor: (Height: 38);
+                            TextButton #FamBtnLeave { Text: "QUITTER LA FAMILLE"; Anchor: (Width: 200, Height: 36); Visible: true; Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #c44545, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                            Group { Anchor: (Width: 8); }
+                            TextButton #FamBtnDisband { Text: "DISSOUDRE"; Anchor: (Width: 140, Height: 36); Visible: false; Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #c44545, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
                         }
                     }
                 }
 
-                // --- PAS DE FAMILLE (choisir) ---
-                Group #FamilleNoFamily {
-                    LayoutMode: Top;
-                    Visible: true;
+                // === ORDER DETAIL VIEW ===
+                Group #OrdreDetailView {
+                    LayoutMode: Top; Visible: false; Padding: (Horizontal: 14, Vertical: 10);
 
-                    Label #FamChooseTitle {
-                        Text: "CHOISIR VOTRE FAMILLE";
-                        Style: (FontSize: 16, TextColor: #FFD700, RenderBold: true, RenderUppercase: true, LetterSpacing: 1, HorizontalAlignment: Center);
-                        Anchor: (Height: 24);
-                    }
-
+                    // Back button
+                    TextButton #OrdreBtnBack { Text: "< FAMILLE"; Anchor: (Width: 120, Height: 28); Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #5b9bd5, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.6); }
                     Group { Anchor: (Height: 8); }
 
-                    Group #FamChoice0 { Anchor: (Height: 105); Background: #1a2030(0.6); LayoutMode: Left; Padding: (Horizontal: 14, Vertical: 8); Visible: false; Group { LayoutMode: Top; FlexWeight: 1; Label #FamCName0 { Text: ""; Style: (FontSize: 16, TextColor: #ffffff, RenderBold: true); Anchor: (Height: 20); } Label #FamCRarity0 { Text: ""; Style: (FontSize: 10, TextColor: #C8A2C8, RenderUppercase: true, RenderBold: true); Anchor: (Height: 14); } Label #FamCMotto0 { Text: ""; Style: (FontSize: 10, TextColor: #aabbcc); Anchor: (Height: 14); } Label #FamCPassive0 { Text: ""; Style: (FontSize: 10, TextColor: #4CAF50, RenderBold: true); Anchor: (Height: 14); } Label #FamCHistory0 { Text: ""; Visible: false; Style: (FontSize: 9, TextColor: #778899, Wrap: true); Anchor: (Height: 28); } } Group { LayoutMode: Top; Anchor: (Width: 110); Padding: (Vertical: 4); Label #FamCPriceLabel0 { Text: ""; Visible: false; Style: (FontSize: 11, TextColor: #D4AF37, HorizontalAlignment: Center, RenderBold: true); Anchor: (Height: 16); } Group { Anchor: (Height: 4); } TextButton #FamBtn0 { Text: "CHOISIR"; Anchor: (Height: 30); Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1208(0.8); } Group { FlexWeight: 1; } } }
+                    // Header
+                    Label #OrdreDetailName { Text: ""; Style: (FontSize: 20, TextColor: #FFD700, RenderBold: true, HorizontalAlignment: Center, LetterSpacing: 1); Anchor: (Height: 28); }
                     Group { Anchor: (Height: 4); }
-                    Group #FamChoice1 { Anchor: (Height: 105); Background: #1a2030(0.6); LayoutMode: Left; Padding: (Horizontal: 14, Vertical: 8); Visible: false; Group { LayoutMode: Top; FlexWeight: 1; Label #FamCName1 { Text: ""; Style: (FontSize: 16, TextColor: #ffffff, RenderBold: true); Anchor: (Height: 20); } Label #FamCRarity1 { Text: ""; Style: (FontSize: 10, TextColor: #C8A2C8, RenderUppercase: true, RenderBold: true); Anchor: (Height: 14); } Label #FamCMotto1 { Text: ""; Style: (FontSize: 10, TextColor: #aabbcc); Anchor: (Height: 14); } Label #FamCPassive1 { Text: ""; Style: (FontSize: 10, TextColor: #4CAF50, RenderBold: true); Anchor: (Height: 14); } Label #FamCHistory1 { Text: ""; Visible: false; Style: (FontSize: 9, TextColor: #778899, Wrap: true); Anchor: (Height: 28); } } Group { LayoutMode: Top; Anchor: (Width: 110); Padding: (Vertical: 4); Label #FamCPriceLabel1 { Text: ""; Visible: false; Style: (FontSize: 11, TextColor: #D4AF37, HorizontalAlignment: Center, RenderBold: true); Anchor: (Height: 16); } Group { Anchor: (Height: 4); } TextButton #FamBtn1 { Text: "CHOISIR"; Anchor: (Height: 30); Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1208(0.8); } Group { FlexWeight: 1; } } }
+                    Label #OrdreDetailMotto { Text: ""; Style: (FontSize: 12, TextColor: #7d8fa3, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    Group { Anchor: (Height: 10); }
+
+                    // 4 info cards
+                    Group { LayoutMode: Left; Anchor: (Height: 44);
+                        Group { FlexWeight: 1; Background: #162030; LayoutMode: Left;
+                            Group { Anchor: (Width: 3, Height: 44); Background: #FFD700; }
+                            Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 10, Vertical: 4);
+                                Label { Text: "CAPITAINE"; Style: (FontSize: 9, TextColor: #7d8fa3, RenderBold: true, RenderUppercase: true); Anchor: (Height: 14); }
+                                Label #OrdreDetailCapitaine { Text: ""; Style: (FontSize: 13, TextColor: #FFD700, RenderBold: true); Anchor: (Height: 18); }
+                            }
+                        }
+                        Group { Anchor: (Width: 4); }
+                        Group { FlexWeight: 1; Background: #162030; LayoutMode: Left;
+                            Group { Anchor: (Width: 3, Height: 44); Background: #5b9bd5; }
+                            Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 10, Vertical: 4);
+                                Label { Text: "LIEUTENANT"; Style: (FontSize: 9, TextColor: #7d8fa3, RenderBold: true, RenderUppercase: true); Anchor: (Height: 14); }
+                                Label #OrdreDetailLieutenant { Text: "Aucun"; Style: (FontSize: 13, TextColor: #5b9bd5); Anchor: (Height: 18); }
+                            }
+                        }
+                        Group { Anchor: (Width: 4); }
+                        Group { FlexWeight: 1; Background: #162030; LayoutMode: Left;
+                            Group { Anchor: (Width: 3, Height: 44); Background: #c98ce0; }
+                            Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 10, Vertical: 4);
+                                Label { Text: "MEMBRES"; Style: (FontSize: 9, TextColor: #7d8fa3, RenderBold: true, RenderUppercase: true); Anchor: (Height: 14); }
+                                Label #OrdreDetailMemberCount { Text: "0/10"; Style: (FontSize: 13, TextColor: #aabbcc); Anchor: (Height: 18); }
+                            }
+                        }
+                        Group { Anchor: (Width: 4); }
+                        Group { FlexWeight: 1; Background: #162030; LayoutMode: Left;
+                            Group { Anchor: (Width: 3, Height: 44); Background: #5a6a7d; }
+                            Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 10, Vertical: 4);
+                                Label { Text: "TERRITOIRE"; Style: (FontSize: 9, TextColor: #7d8fa3, RenderBold: true, RenderUppercase: true); Anchor: (Height: 14); }
+                                Label #OrdreDetailTerritory { Text: "Non assigne"; Style: (FontSize: 13, TextColor: #aabbcc); Anchor: (Height: 18); }
+                            }
+                        }
+                    }
+                    Group { Anchor: (Height: 8); }
+
+                    // Stats block
+                    Group { Background: #11192680; Padding: (Horizontal: 12, Vertical: 8); LayoutMode: Top;
+                        Label { Text: "STATISTIQUES DE L'ORDRE"; Style: (FontSize: 11, TextColor: #7d8fa3, RenderBold: true, RenderUppercase: true, LetterSpacing: 1, HorizontalAlignment: Center); Anchor: (Height: 16); }
+                        Group { Anchor: (Height: 6); }
+                        Group { LayoutMode: Left; Anchor: (Height: 32);
+                            Group { FlexWeight: 1; LayoutMode: Left; Padding: (Horizontal: 8);
+                                Label { Text: "KILLS"; Style: (FontSize: 10, TextColor: #7d8fa3, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 50); }
+                                Label #OrdreDetailKills { Text: "0"; Style: (FontSize: 14, TextColor: #c44545, VerticalAlignment: Center, RenderBold: true); }
+                            }
+                            Group { FlexWeight: 1; LayoutMode: Left; Padding: (Horizontal: 8);
+                                Label { Text: "CONTRIBUTION"; Style: (FontSize: 10, TextColor: #7d8fa3, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 100); }
+                                Label #OrdreDetailMissions { Text: "0"; Style: (FontSize: 14, TextColor: #5fc77e, VerticalAlignment: Center, RenderBold: true); }
+                            }
+                            Group { FlexWeight: 1; LayoutMode: Left; Padding: (Horizontal: 8);
+                                Label { Text: "RANG"; Style: (FontSize: 10, TextColor: #7d8fa3, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 50); }
+                                Label #OrdreDetailRank { Text: "-"; Style: (FontSize: 14, TextColor: #c98ce0, VerticalAlignment: Center, RenderBold: true); }
+                            }
+                        }
+                    }
+                    Group { Anchor: (Height: 10); }
+
+                    // Member list
+                    Label { Text: "MEMBRES DE L'ORDRE"; Style: (FontSize: 11, TextColor: #7d8fa3, RenderBold: true, RenderUppercase: true, LetterSpacing: 1); Anchor: (Height: 18); }
                     Group { Anchor: (Height: 4); }
-                    Group #FamChoice2 { Anchor: (Height: 105); Background: #1a2030(0.6); LayoutMode: Left; Padding: (Horizontal: 14, Vertical: 8); Visible: false; Group { LayoutMode: Top; FlexWeight: 1; Label #FamCName2 { Text: ""; Style: (FontSize: 16, TextColor: #ffffff, RenderBold: true); Anchor: (Height: 20); } Label #FamCRarity2 { Text: ""; Style: (FontSize: 10, TextColor: #C8A2C8, RenderUppercase: true, RenderBold: true); Anchor: (Height: 14); } Label #FamCMotto2 { Text: ""; Style: (FontSize: 10, TextColor: #aabbcc); Anchor: (Height: 14); } Label #FamCPassive2 { Text: ""; Style: (FontSize: 10, TextColor: #4CAF50, RenderBold: true); Anchor: (Height: 14); } Label #FamCHistory2 { Text: ""; Visible: false; Style: (FontSize: 9, TextColor: #778899, Wrap: true); Anchor: (Height: 28); } } Group { LayoutMode: Top; Anchor: (Width: 110); Padding: (Vertical: 4); Label #FamCPriceLabel2 { Text: ""; Visible: false; Style: (FontSize: 11, TextColor: #D4AF37, HorizontalAlignment: Center, RenderBold: true); Anchor: (Height: 16); } Group { Anchor: (Height: 4); } TextButton #FamBtn2 { Text: "CHOISIR"; Anchor: (Height: 30); Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1208(0.8); } Group { FlexWeight: 1; } } }
+
+                    Group #OMemberSlot0 { Anchor: (Height: 34); Background: #162030(0.5); LayoutMode: Left; Padding: (Horizontal: 8, Vertical: 3); Visible: false; Label #OMemberName0 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } Label #OMemberRole0 { Text: ""; Style: (FontSize: 10, TextColor: #7d8fa3, VerticalAlignment: Center, RenderBold: true); Anchor: (Width: 80); } Group { Anchor: (Width: 160); LayoutMode: Left; TextButton #OMemberBtnLt0 { Text: "↑ LT"; Anchor: (Width: 45, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #5b9bd5, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a3a(0.8); } Group { Anchor: (Width: 3); } TextButton #OMemberBtnDemote0 { Text: "↓"; Anchor: (Width: 30, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #5a6a7d, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.8); } Group { Anchor: (Width: 3); } TextButton #OMemberBtnKick0 { Text: "EXCLURE"; Anchor: (Width: 65, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #c44545, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.8); } } }
+                    Group { Anchor: (Height: 2); }
+                    Group #OMemberSlot1 { Anchor: (Height: 34); Background: #162030(0.5); LayoutMode: Left; Padding: (Horizontal: 8, Vertical: 3); Visible: false; Label #OMemberName1 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } Label #OMemberRole1 { Text: ""; Style: (FontSize: 10, TextColor: #7d8fa3, VerticalAlignment: Center, RenderBold: true); Anchor: (Width: 80); } Group { Anchor: (Width: 160); LayoutMode: Left; TextButton #OMemberBtnLt1 { Text: "↑ LT"; Anchor: (Width: 45, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #5b9bd5, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a3a(0.8); } Group { Anchor: (Width: 3); } TextButton #OMemberBtnDemote1 { Text: "↓"; Anchor: (Width: 30, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #5a6a7d, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.8); } Group { Anchor: (Width: 3); } TextButton #OMemberBtnKick1 { Text: "EXCLURE"; Anchor: (Width: 65, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #c44545, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.8); } } }
+                    Group { Anchor: (Height: 2); }
+                    Group #OMemberSlot2 { Anchor: (Height: 34); Background: #162030(0.5); LayoutMode: Left; Padding: (Horizontal: 8, Vertical: 3); Visible: false; Label #OMemberName2 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } Label #OMemberRole2 { Text: ""; Style: (FontSize: 10, TextColor: #7d8fa3, VerticalAlignment: Center, RenderBold: true); Anchor: (Width: 80); } Group { Anchor: (Width: 160); LayoutMode: Left; TextButton #OMemberBtnLt2 { Text: "↑ LT"; Anchor: (Width: 45, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #5b9bd5, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a3a(0.8); } Group { Anchor: (Width: 3); } TextButton #OMemberBtnDemote2 { Text: "↓"; Anchor: (Width: 30, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #5a6a7d, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.8); } Group { Anchor: (Width: 3); } TextButton #OMemberBtnKick2 { Text: "EXCLURE"; Anchor: (Width: 65, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #c44545, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.8); } } }
+                    Group { Anchor: (Height: 2); }
+                    Group #OMemberSlot3 { Anchor: (Height: 34); Background: #162030(0.5); LayoutMode: Left; Padding: (Horizontal: 8, Vertical: 3); Visible: false; Label #OMemberName3 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } Label #OMemberRole3 { Text: ""; Style: (FontSize: 10, TextColor: #7d8fa3, VerticalAlignment: Center, RenderBold: true); Anchor: (Width: 80); } Group { Anchor: (Width: 160); LayoutMode: Left; TextButton #OMemberBtnLt3 { Text: "↑ LT"; Anchor: (Width: 45, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #5b9bd5, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a3a(0.8); } Group { Anchor: (Width: 3); } TextButton #OMemberBtnDemote3 { Text: "↓"; Anchor: (Width: 30, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #5a6a7d, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.8); } Group { Anchor: (Width: 3); } TextButton #OMemberBtnKick3 { Text: "EXCLURE"; Anchor: (Width: 65, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #c44545, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.8); } } }
+                    Group { Anchor: (Height: 2); }
+                    Group #OMemberSlot4 { Anchor: (Height: 34); Background: #162030(0.5); LayoutMode: Left; Padding: (Horizontal: 8, Vertical: 3); Visible: false; Label #OMemberName4 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, VerticalAlignment: Center); FlexWeight: 1; } Label #OMemberRole4 { Text: ""; Style: (FontSize: 10, TextColor: #7d8fa3, VerticalAlignment: Center, RenderBold: true); Anchor: (Width: 80); } Group { Anchor: (Width: 160); LayoutMode: Left; TextButton #OMemberBtnLt4 { Text: "↑ LT"; Anchor: (Width: 45, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #5b9bd5, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a3a(0.8); } Group { Anchor: (Width: 3); } TextButton #OMemberBtnDemote4 { Text: "↓"; Anchor: (Width: 30, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #5a6a7d, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.8); } Group { Anchor: (Width: 3); } TextButton #OMemberBtnKick4 { Text: "EXCLURE"; Anchor: (Width: 65, Height: 24); Visible: false; Style: (Default: (LabelStyle: (FontSize: 9, TextColor: #c44545, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 9, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.8); } } }
+
+                    // Pagination
                     Group { Anchor: (Height: 4); }
-                    Group #FamChoice3 { Anchor: (Height: 105); Background: #1a2030(0.6); LayoutMode: Left; Padding: (Horizontal: 14, Vertical: 8); Visible: false; Group { LayoutMode: Top; FlexWeight: 1; Label #FamCName3 { Text: ""; Style: (FontSize: 16, TextColor: #ffffff, RenderBold: true); Anchor: (Height: 20); } Label #FamCRarity3 { Text: ""; Style: (FontSize: 10, TextColor: #C8A2C8, RenderUppercase: true, RenderBold: true); Anchor: (Height: 14); } Label #FamCMotto3 { Text: ""; Style: (FontSize: 10, TextColor: #aabbcc); Anchor: (Height: 14); } Label #FamCPassive3 { Text: ""; Style: (FontSize: 10, TextColor: #4CAF50, RenderBold: true); Anchor: (Height: 14); } Label #FamCHistory3 { Text: ""; Visible: false; Style: (FontSize: 9, TextColor: #778899, Wrap: true); Anchor: (Height: 28); } } Group { LayoutMode: Top; Anchor: (Width: 110); Padding: (Vertical: 4); Label #FamCPriceLabel3 { Text: ""; Visible: false; Style: (FontSize: 11, TextColor: #D4AF37, HorizontalAlignment: Center, RenderBold: true); Anchor: (Height: 16); } Group { Anchor: (Height: 4); } TextButton #FamBtn3 { Text: "CHOISIR"; Anchor: (Height: 30); Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1208(0.8); } Group { FlexWeight: 1; } } }
-                    Group { Anchor: (Height: 4); }
-                    Group #FamChoice4 { Anchor: (Height: 105); Background: #1a2030(0.6); LayoutMode: Left; Padding: (Horizontal: 14, Vertical: 8); Visible: false; Group { LayoutMode: Top; FlexWeight: 1; Label #FamCName4 { Text: ""; Style: (FontSize: 16, TextColor: #ffffff, RenderBold: true); Anchor: (Height: 20); } Label #FamCRarity4 { Text: ""; Style: (FontSize: 10, TextColor: #C8A2C8, RenderUppercase: true, RenderBold: true); Anchor: (Height: 14); } Label #FamCMotto4 { Text: ""; Style: (FontSize: 10, TextColor: #aabbcc); Anchor: (Height: 14); } Label #FamCPassive4 { Text: ""; Style: (FontSize: 10, TextColor: #4CAF50, RenderBold: true); Anchor: (Height: 14); } Label #FamCHistory4 { Text: ""; Visible: false; Style: (FontSize: 9, TextColor: #778899, Wrap: true); Anchor: (Height: 28); } } Group { LayoutMode: Top; Anchor: (Width: 110); Padding: (Vertical: 4); Label #FamCPriceLabel4 { Text: ""; Visible: false; Style: (FontSize: 11, TextColor: #D4AF37, HorizontalAlignment: Center, RenderBold: true); Anchor: (Height: 16); } Group { Anchor: (Height: 4); } TextButton #FamBtn4 { Text: "CHOISIR"; Anchor: (Height: 30); Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1208(0.8); } Group { FlexWeight: 1; } } }
-                    Group { Anchor: (Height: 4); }
-                    Group #FamChoice5 { Anchor: (Height: 105); Background: #1a2030(0.6); LayoutMode: Left; Padding: (Horizontal: 14, Vertical: 8); Visible: false; Group { LayoutMode: Top; FlexWeight: 1; Label #FamCName5 { Text: ""; Style: (FontSize: 16, TextColor: #ffffff, RenderBold: true); Anchor: (Height: 20); } Label #FamCRarity5 { Text: ""; Style: (FontSize: 10, TextColor: #C8A2C8, RenderUppercase: true, RenderBold: true); Anchor: (Height: 14); } Label #FamCMotto5 { Text: ""; Style: (FontSize: 10, TextColor: #aabbcc); Anchor: (Height: 14); } Label #FamCPassive5 { Text: ""; Style: (FontSize: 10, TextColor: #4CAF50, RenderBold: true); Anchor: (Height: 14); } Label #FamCHistory5 { Text: ""; Visible: false; Style: (FontSize: 9, TextColor: #778899, Wrap: true); Anchor: (Height: 28); } } Group { LayoutMode: Top; Anchor: (Width: 110); Padding: (Vertical: 4); Label #FamCPriceLabel5 { Text: ""; Visible: false; Style: (FontSize: 11, TextColor: #D4AF37, HorizontalAlignment: Center, RenderBold: true); Anchor: (Height: 16); } Group { Anchor: (Height: 4); } TextButton #FamBtn5 { Text: "CHOISIR"; Anchor: (Height: 30); Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1208(0.8); } Group { FlexWeight: 1; } } }
-                    Group { Anchor: (Height: 4); }
-                    Group #FamChoice6 { Anchor: (Height: 105); Background: #1a2030(0.6); LayoutMode: Left; Padding: (Horizontal: 14, Vertical: 8); Visible: false; Group { LayoutMode: Top; FlexWeight: 1; Label #FamCName6 { Text: ""; Style: (FontSize: 16, TextColor: #ffffff, RenderBold: true); Anchor: (Height: 20); } Label #FamCRarity6 { Text: ""; Style: (FontSize: 10, TextColor: #C8A2C8, RenderUppercase: true, RenderBold: true); Anchor: (Height: 14); } Label #FamCMotto6 { Text: ""; Style: (FontSize: 10, TextColor: #aabbcc); Anchor: (Height: 14); } Label #FamCPassive6 { Text: ""; Style: (FontSize: 10, TextColor: #4CAF50, RenderBold: true); Anchor: (Height: 14); } Label #FamCHistory6 { Text: ""; Visible: false; Style: (FontSize: 9, TextColor: #778899, Wrap: true); Anchor: (Height: 28); } } Group { LayoutMode: Top; Anchor: (Width: 110); Padding: (Vertical: 4); Label #FamCPriceLabel6 { Text: ""; Visible: false; Style: (FontSize: 11, TextColor: #D4AF37, HorizontalAlignment: Center, RenderBold: true); Anchor: (Height: 16); } Group { Anchor: (Height: 4); } TextButton #FamBtn6 { Text: "CHOISIR"; Anchor: (Height: 30); Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1208(0.8); } Group { FlexWeight: 1; } } }
-                    Group { Anchor: (Height: 4); }
-                    Group #FamChoice7 { Anchor: (Height: 105); Background: #1a2030(0.6); LayoutMode: Left; Padding: (Horizontal: 14, Vertical: 8); Visible: false; Group { LayoutMode: Top; FlexWeight: 1; Label #FamCName7 { Text: ""; Style: (FontSize: 16, TextColor: #ffffff, RenderBold: true); Anchor: (Height: 20); } Label #FamCRarity7 { Text: ""; Style: (FontSize: 10, TextColor: #C8A2C8, RenderUppercase: true, RenderBold: true); Anchor: (Height: 14); } Label #FamCMotto7 { Text: ""; Style: (FontSize: 10, TextColor: #aabbcc); Anchor: (Height: 14); } Label #FamCPassive7 { Text: ""; Style: (FontSize: 10, TextColor: #4CAF50, RenderBold: true); Anchor: (Height: 14); } Label #FamCHistory7 { Text: ""; Visible: false; Style: (FontSize: 9, TextColor: #778899, Wrap: true); Anchor: (Height: 28); } } Group { LayoutMode: Top; Anchor: (Width: 110); Padding: (Vertical: 4); Label #FamCPriceLabel7 { Text: ""; Visible: false; Style: (FontSize: 11, TextColor: #D4AF37, HorizontalAlignment: Center, RenderBold: true); Anchor: (Height: 16); } Group { Anchor: (Height: 4); } TextButton #FamBtn7 { Text: "CHOISIR"; Anchor: (Height: 30); Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1208(0.8); } Group { FlexWeight: 1; } } }
-                    Group { Anchor: (Height: 4); }
-                    Group #FamChoice8 { Anchor: (Height: 105); Background: #1a2030(0.6); LayoutMode: Left; Padding: (Horizontal: 14, Vertical: 8); Visible: false; Group { LayoutMode: Top; FlexWeight: 1; Label #FamCName8 { Text: ""; Style: (FontSize: 16, TextColor: #ffffff, RenderBold: true); Anchor: (Height: 20); } Label #FamCRarity8 { Text: ""; Style: (FontSize: 10, TextColor: #C8A2C8, RenderUppercase: true, RenderBold: true); Anchor: (Height: 14); } Label #FamCMotto8 { Text: ""; Style: (FontSize: 10, TextColor: #aabbcc); Anchor: (Height: 14); } Label #FamCPassive8 { Text: ""; Style: (FontSize: 10, TextColor: #4CAF50, RenderBold: true); Anchor: (Height: 14); } Label #FamCHistory8 { Text: ""; Visible: false; Style: (FontSize: 9, TextColor: #778899, Wrap: true); Anchor: (Height: 28); } } Group { LayoutMode: Top; Anchor: (Width: 110); Padding: (Vertical: 4); Label #FamCPriceLabel8 { Text: ""; Visible: false; Style: (FontSize: 11, TextColor: #D4AF37, HorizontalAlignment: Center, RenderBold: true); Anchor: (Height: 16); } Group { Anchor: (Height: 4); } TextButton #FamBtn8 { Text: "CHOISIR"; Anchor: (Height: 30); Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a1208(0.8); } Group { FlexWeight: 1; } } }
+                    Group { LayoutMode: Left; Anchor: (Height: 24);
+                        Group { FlexWeight: 1; }
+                        TextButton #OMemberBtnPrev { Text: "< PREC."; Anchor: (Width: 70, Height: 22); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #5b9bd5, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.6); }
+                        Group { Anchor: (Width: 4); }
+                        Label #OMemberPage { Text: "1/1"; Style: (FontSize: 10, TextColor: #5a6a7d, HorizontalAlignment: Center, VerticalAlignment: Center); Anchor: (Width: 40); }
+                        Group { Anchor: (Width: 4); }
+                        TextButton #OMemberBtnNext { Text: "SUIV. >"; Anchor: (Width: 70, Height: 22); Style: (Default: (LabelStyle: (FontSize: 10, TextColor: #5b9bd5, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 10, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.6); }
+                        Group { FlexWeight: 1; }
+                    }
+                    Group { Anchor: (Height: 8); }
+
+                    // Invite button (Captain only) + Join button (members)
+                    Group { LayoutMode: Center; Anchor: (Height: 32);
+                        TextButton #OrdreBtnInvite { Text: "+ INVITER UN CHEVALIER"; Anchor: (Width: 220, Height: 30); Visible: false; Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #5fc77e, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a3a1a(0.7); }
+                        Group { Anchor: (Width: 8); }
+                        TextButton #OrdreBtnJoin { Text: "REJOINDRE L'ORDRE"; Anchor: (Width: 200, Height: 30); Visible: false; Style: (Default: (LabelStyle: (FontSize: 11, TextColor: #5b9bd5, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 11, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #1a2a3a(0.7); }
+                    }
+                    Group { Anchor: (Height: 10); }
+
+                    // Danger zone
+                    Group { LayoutMode: Top; Background: #c44545(0.08); Padding: (Horizontal: 14, Vertical: 10);
+                        Group { Anchor: (Height: 1); Background: #c44545(0.3); }
+                        Group { Anchor: (Height: 8); }
+                        Group { LayoutMode: Center; Anchor: (Height: 38);
+                            TextButton #OrdreBtnDisband { Text: "DISSOUDRE L'ORDRE"; Anchor: (Width: 200, Height: 36); Visible: false; Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #c44545, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #2a1a1a(0.7); }
+                        }
+                    }
                 }
             }
 

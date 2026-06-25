@@ -146,6 +146,29 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             events.addEventBinding(CustomUIEventBindingType.Activating, "#GOpenGuildBtn" + i, EventData.of("Action", "guild_join").append("Param", String.valueOf(i)));
         }
 
+        // Guild accordion toggles
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#GuildeBtnToggleMembers", EventData.of("Action", "guild_toggle_members"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#GuildeBtnToggleInvite", EventData.of("Action", "guild_toggle_invite"));
+
+        // Guild member pagination
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#GMemberBtnPrev", EventData.of("Action", "guild_member_prev"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#GMemberBtnNext", EventData.of("Action", "guild_member_next"));
+
+        // Guild member actions (5 slots)
+        for (int i = 0; i < GuildeTab.MAX_MEMBER_SLOTS; i++) {
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#GMemberBtnPromote" + i, EventData.of("Action", "guild_promote").append("Param", String.valueOf(i)));
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#GMemberBtnDemote" + i, EventData.of("Action", "guild_demote").append("Param", String.valueOf(i)));
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#GMemberBtnKick" + i, EventData.of("Action", "guild_kick").append("Param", String.valueOf(i)));
+        }
+
+        // Guild invite pagination
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#GInviteBtnPrev", EventData.of("Action", "guild_invite_prev"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#GInviteBtnNext", EventData.of("Action", "guild_invite_next"));
+
+        // Guild open guilds pagination
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#GOpenBtnPrev", EventData.of("Action", "guild_open_prev"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#GOpenBtnNext", EventData.of("Action", "guild_open_next"));
+
         // Populate groupe tab
         GroupeTab.populate(ui, ref, store);
 
@@ -181,8 +204,54 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         }
         // Famille invite buttons
         for (int i = 0; i < FamilleTab.MAX_INVITE_SLOTS; i++) {
-            events.addEventBinding(CustomUIEventBindingType.Activating, "#FamInvBtn" + i,
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#FInviteBtn" + i,
                     EventData.of("Action", "fam_invite").append("Param", String.valueOf(i)));
+        }
+
+        // Famille accordion toggles
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#FamBtnToggleMembers", EventData.of("Action", "fam_toggle_members"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#FamBtnToggleOrdres", EventData.of("Action", "fam_toggle_ordres"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#FamBtnToggleInvite", EventData.of("Action", "fam_toggle_invite"));
+
+        // Famille member pagination
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#FMemberBtnPrev", EventData.of("Action", "fam_member_prev"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#FMemberBtnNext", EventData.of("Action", "fam_member_next"));
+
+        // Famille member actions (5 slots)
+        for (int i = 0; i < FamilleTab.MAX_MEMBER_SLOTS; i++) {
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#FMemberBtnPromote" + i, EventData.of("Action", "fam_promote").append("Param", String.valueOf(i)));
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#FMemberBtnDemote" + i, EventData.of("Action", "fam_demote").append("Param", String.valueOf(i)));
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#FMemberBtnKick" + i, EventData.of("Action", "fam_kick").append("Param", String.valueOf(i)));
+        }
+
+        // Famille invite pagination
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#FInviteBtnPrev", EventData.of("Action", "fam_invite_prev"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#FInviteBtnNext", EventData.of("Action", "fam_invite_next"));
+
+        // Famille disband button
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#FamBtnDisband", EventData.of("Action", "fam_disband"));
+
+        // Knight Order cards (3 max)
+        for (int i = 0; i < 3; i++) {
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#OrdreBtnDetail" + i, EventData.of("Action", "fam_ordre_detail").append("Param", String.valueOf(i)));
+        }
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#FamBtnCreateOrdre", EventData.of("Action", "fam_create_ordre"));
+
+        // Order detail view
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#OrdreBtnBack", EventData.of("Action", "fam_ordre_back"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#OrdreBtnInvite", EventData.of("Action", "ordre_invite"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#OrdreBtnDisband", EventData.of("Action", "ordre_disband"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#OrdreBtnJoin", EventData.of("Action", "ordre_join"));
+
+        // Order member pagination
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#OMemberBtnPrev", EventData.of("Action", "ordre_member_prev"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#OMemberBtnNext", EventData.of("Action", "ordre_member_next"));
+
+        // Order member actions (5 slots)
+        for (int i = 0; i < 5; i++) {
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#OMemberBtnLt" + i, EventData.of("Action", "ordre_promote_lt").append("Param", String.valueOf(i)));
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#OMemberBtnDemote" + i, EventData.of("Action", "ordre_demote").append("Param", String.valueOf(i)));
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#OMemberBtnKick" + i, EventData.of("Action", "ordre_kick").append("Param", String.valueOf(i)));
         }
 
         // Populate quest tab
@@ -434,6 +503,131 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             if (FamilleTab.handleChoose(eventData.param, ref, store)) {
                 refreshFamilleTab(ref, store);
                 refreshProfilTab(ref, store);
+            }
+            return;
+        }
+
+        // Famille accordion toggles
+        if ("fam_toggle_members".equals(eventData.action)) {
+            FamilleTab.handleToggleMembers(getPlayerUUID(ref, store));
+            refreshFamilleTab(ref, store);
+            return;
+        }
+        if ("fam_toggle_ordres".equals(eventData.action)) {
+            FamilleTab.handleToggleOrdres(getPlayerUUID(ref, store));
+            refreshFamilleTab(ref, store);
+            return;
+        }
+        if ("fam_toggle_invite".equals(eventData.action)) {
+            FamilleTab.handleToggleInvite(getPlayerUUID(ref, store));
+            refreshFamilleTab(ref, store);
+            return;
+        }
+
+        // Famille member pagination
+        if ("fam_member_prev".equals(eventData.action)) {
+            FamilleTab.handleMemberPrev(getPlayerUUID(ref, store));
+            refreshFamilleTab(ref, store);
+            return;
+        }
+        if ("fam_member_next".equals(eventData.action)) {
+            FamilleTab.handleMemberNext(getPlayerUUID(ref, store));
+            refreshFamilleTab(ref, store);
+            return;
+        }
+
+        // Famille invite pagination
+        if ("fam_invite_prev".equals(eventData.action)) {
+            FamilleTab.handleInvitePrev(getPlayerUUID(ref, store));
+            refreshFamilleTab(ref, store);
+            return;
+        }
+        if ("fam_invite_next".equals(eventData.action)) {
+            FamilleTab.handleInviteNext(getPlayerUUID(ref, store));
+            refreshFamilleTab(ref, store);
+            return;
+        }
+
+        // Famille member actions
+        if ("fam_promote".equals(eventData.action) && eventData.param != null) {
+            if (FamilleTab.handlePromote(eventData.param, ref, store)) refreshFamilleTab(ref, store);
+            return;
+        }
+        if ("fam_demote".equals(eventData.action) && eventData.param != null) {
+            if (FamilleTab.handleDemote(eventData.param, ref, store)) refreshFamilleTab(ref, store);
+            return;
+        }
+        if ("fam_kick".equals(eventData.action) && eventData.param != null) {
+            if (FamilleTab.handleKick(eventData.param, ref, store)) refreshFamilleTab(ref, store);
+            return;
+        }
+
+        // Famille disband
+        if ("fam_disband".equals(eventData.action)) {
+            if (FamilleTab.handleDisband(ref, store)) {
+                refreshFamilleTab(ref, store);
+                refreshProfilTab(ref, store);
+            }
+            return;
+        }
+
+        // Knight Order navigation
+        if ("fam_ordre_detail".equals(eventData.action) && eventData.param != null) {
+            if (FamilleTab.handleOrdreDetail(eventData.param, getPlayerUUID(ref, store))) refreshFamilleTab(ref, store);
+            return;
+        }
+        if ("fam_ordre_back".equals(eventData.action)) {
+            if (FamilleTab.handleOrdreBack(getPlayerUUID(ref, store))) refreshFamilleTab(ref, store);
+            return;
+        }
+        if ("fam_create_ordre".equals(eventData.action)) {
+            // Tell player to use chat command for now
+            com.hypixel.hytale.server.core.entity.entities.Player player = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
+            if (player != null) {
+                player.getPlayerRef().sendMessage(Message.raw("Tapez dans le chat : /es ordre create <nom> <devise>"));
+            }
+            return;
+        }
+
+        // Order member pagination
+        if ("ordre_member_prev".equals(eventData.action)) {
+            FamilleTab.handleOrdreMemberPrev(getPlayerUUID(ref, store));
+            refreshFamilleTab(ref, store);
+            return;
+        }
+        if ("ordre_member_next".equals(eventData.action)) {
+            FamilleTab.handleOrdreMemberNext(getPlayerUUID(ref, store));
+            refreshFamilleTab(ref, store);
+            return;
+        }
+
+        // Order member actions
+        if ("ordre_promote_lt".equals(eventData.action) && eventData.param != null) {
+            if (FamilleTab.handleOrdrePromoteLt(eventData.param, ref, store)) refreshFamilleTab(ref, store);
+            return;
+        }
+        if ("ordre_demote".equals(eventData.action) && eventData.param != null) {
+            if (FamilleTab.handleOrdreDemote(eventData.param, ref, store)) refreshFamilleTab(ref, store);
+            return;
+        }
+        if ("ordre_kick".equals(eventData.action) && eventData.param != null) {
+            if (FamilleTab.handleOrdreKick(eventData.param, ref, store)) refreshFamilleTab(ref, store);
+            return;
+        }
+
+        // Order management
+        if ("ordre_disband".equals(eventData.action)) {
+            if (FamilleTab.handleOrdreDisband(ref, store)) refreshFamilleTab(ref, store);
+            return;
+        }
+        if ("ordre_join".equals(eventData.action)) {
+            if (FamilleTab.handleOrdreJoin(ref, store)) refreshFamilleTab(ref, store);
+            return;
+        }
+        if ("ordre_invite".equals(eventData.action)) {
+            com.hypixel.hytale.server.core.entity.entities.Player player = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
+            if (player != null) {
+                player.getPlayerRef().sendMessage(Message.raw("Tapez dans le chat : /es ordre invite <joueur>"));
             }
             return;
         }
@@ -755,6 +949,68 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             if (CompetencesTab.handleToggle(eventData.param, ref, store)) {
                 refreshCompetencesTab(ref, store);
             }
+            return;
+        }
+
+        // Guild accordion toggles
+        if ("guild_toggle_members".equals(eventData.action)) {
+            GuildeTab.handleToggleMembers(getPlayerUUID(ref, store));
+            refreshGuildeTab(ref, store);
+            return;
+        }
+        if ("guild_toggle_invite".equals(eventData.action)) {
+            GuildeTab.handleToggleInvite(getPlayerUUID(ref, store));
+            refreshGuildeTab(ref, store);
+            return;
+        }
+
+        // Guild member pagination
+        if ("guild_member_prev".equals(eventData.action)) {
+            GuildeTab.handleMemberPrev(getPlayerUUID(ref, store));
+            refreshGuildeTab(ref, store);
+            return;
+        }
+        if ("guild_member_next".equals(eventData.action)) {
+            GuildeTab.handleMemberNext(getPlayerUUID(ref, store));
+            refreshGuildeTab(ref, store);
+            return;
+        }
+
+        // Guild invite pagination
+        if ("guild_invite_prev".equals(eventData.action)) {
+            GuildeTab.handleInvitePrev(getPlayerUUID(ref, store));
+            refreshGuildeTab(ref, store);
+            return;
+        }
+        if ("guild_invite_next".equals(eventData.action)) {
+            GuildeTab.handleInviteNext(getPlayerUUID(ref, store));
+            refreshGuildeTab(ref, store);
+            return;
+        }
+
+        // Guild open guilds pagination
+        if ("guild_open_prev".equals(eventData.action)) {
+            GuildeTab.handleOpenPrev(getPlayerUUID(ref, store));
+            refreshGuildeTab(ref, store);
+            return;
+        }
+        if ("guild_open_next".equals(eventData.action)) {
+            GuildeTab.handleOpenNext(getPlayerUUID(ref, store));
+            refreshGuildeTab(ref, store);
+            return;
+        }
+
+        // Guild member actions
+        if ("guild_promote".equals(eventData.action) && eventData.param != null) {
+            if (GuildeTab.handlePromote(eventData.param, ref, store)) refreshGuildeTab(ref, store);
+            return;
+        }
+        if ("guild_demote".equals(eventData.action) && eventData.param != null) {
+            if (GuildeTab.handleDemote(eventData.param, ref, store)) refreshGuildeTab(ref, store);
+            return;
+        }
+        if ("guild_kick".equals(eventData.action) && eventData.param != null) {
+            if (GuildeTab.handleKick(eventData.param, ref, store)) refreshGuildeTab(ref, store);
             return;
         }
 
