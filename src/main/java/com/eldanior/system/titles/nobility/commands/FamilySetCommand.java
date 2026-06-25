@@ -107,6 +107,10 @@ public class FamilySetCommand extends AbstractAsyncCommand {
 
                 FamilyManager.claimFamily(family.getId());
 
+                // Assigner la propriete des parcelles famille au nouveau Patriarche
+                com.eldanior.system.territory.ParcelManager.transferFamilyParcelsOwnership(
+                        family.getId(), targetUUID, targetName);
+
                 // Verifier titres en temps reel apres attribution de famille
                 com.eldanior.system.titles.TitleManager.checkAndUnlockTitles(ref, store, copy, targetPlayer);
 

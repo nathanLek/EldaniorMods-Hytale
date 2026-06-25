@@ -525,8 +525,15 @@ public class ParcelManager {
         if (parcel == null) return;
         parcel.setFamilyId(familyId);
 
-        // Mettre le nom de la famille comme proprietaire si pas de joueur proprio
-        if (parcel.getOwnerUUID() == null) {
+        // Chercher le Patriarche de la famille pour l'assigner comme proprietaire
+        UUID patriarchUUID = findPatriarchUUID(familyId);
+        if (patriarchUUID != null) {
+            String patriarchName = findPatriarchName(patriarchUUID);
+            parcel.setOwnerUUID(patriarchUUID);
+            parcel.setOwnerName(patriarchName != null ? patriarchName : "Patriarche");
+            parcel.addMember(patriarchUUID, ParcelRole.OWNER);
+        } else {
+            // Pas de Patriarche — mettre le nom de la famille
             com.eldanior.system.titles.nobility.family.NobleFamilyModel family =
                     com.eldanior.system.titles.nobility.family.FamilyManager.get(familyId);
             if (family != null) {
@@ -534,6 +541,68 @@ public class ParcelManager {
             }
         }
         save();
+    }
+
+    /**
+     * Transfere la propriete de toutes les parcelles d'une famille a un nouveau joueur.
+     */
+    public static void transferFamilyParcelsOwnership(String familyId, UUID newOwnerUUID, String newOwnerName) {
+        for (ParcelData p : getByFamily(familyId)) {
+            // Retirer l'ancien owner des membres
+            UUID oldOwner = p.getOwnerUUID();
+            if (oldOwner != null) {
+                p.removeMember(oldOwner);
+            }
+            p.setOwnerUUID(newOwnerUUID);
+            p.setOwnerName(newOwnerName);
+            p.addMember(newOwnerUUID, ParcelRole.OWNER);
+        }
+        save();
+    }
+
+    /**
+     * Retire le proprietaire joueur de toutes les parcelles d'une famille
+     * et remet le nom de la famille comme proprietaire.
+     */
+    public static void clearFamilyParcelsOwnership(String familyId) {
+        com.eldanior.system.titles.nobility.family.NobleFamilyModel family =
+                com.eldanior.system.titles.nobility.family.FamilyManager.get(familyId);
+        String familyName = family != null ? "Famille " + family.getDisplayName() : "Famille";
+        for (ParcelData p : getByFamily(familyId)) {
+            UUID oldOwner = p.getOwnerUUID();
+            if (oldOwner != null) {
+                p.removeMember(oldOwner);
+            }
+            p.setOwnerUUID(null);
+            p.setOwnerName(familyName);
+        }
+        save();
+    }
+
+    /**
+     * Trouve le UUID du Patriarche d'une famille parmi les joueurs en ligne.
+     */
+    private static UUID findPatriarchUUID(String familyId) {
+        for (com.hypixel.hytale.server.core.universe.PlayerRef pRef :
+                com.hypixel.hytale.server.core.universe.Universe.get().getPlayers()) {
+            try {
+                var ref = pRef.getReference();
+                if (ref == null) continue;
+                var store = ref.getStore();
+                com.eldanior.system.config.Player.PlayerLevelData data = store.getComponent(ref,
+                        com.eldanior.system.EldaniorSystem.get().getPlayerLevelDataType());
+                if (data != null && familyId.equals(data.getNobleFamilyId()) && "PATRIARCH".equals(data.getStatus())) {
+                    return com.eldanior.system.config.UUIDExtractor.getUUID(pRef);
+                }
+            } catch (Exception e) { /* skip */ }
+        }
+        return null;
+    }
+
+    private static String findPatriarchName(UUID uuid) {
+        com.hypixel.hytale.server.core.universe.PlayerRef pRef =
+                com.hypixel.hytale.server.core.universe.Universe.get().getPlayer(uuid);
+        return pRef != null ? pRef.getUsername() : null;
     }
 
     // ==================== HIERARCHY VALIDATION ====================
