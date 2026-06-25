@@ -11,7 +11,7 @@ public class DivineParry implements IPassiveCombatSkill {
     @Override
     public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
         if (damage.isCancelled()) return false;
-        if (Math.random() <= 0.35f) {
+        if (Math.random() <= 0.50f) {
             damage.setAmount(damage.getAmount() * 0.65f);
         }
         return false;

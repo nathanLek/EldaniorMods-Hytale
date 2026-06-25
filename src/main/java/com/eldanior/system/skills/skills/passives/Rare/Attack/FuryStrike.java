@@ -17,7 +17,7 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 public class FuryStrike implements IPassiveCombatSkill {
 
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
-    private static final float CHANCE = 0.12f; // 12% de chance
+    private static final float CHANCE = 0.20f; // 12% de chance
     private static final float BONUS_MULTIPLIER = 1.25f; // +25% dégâts
 
     @Override

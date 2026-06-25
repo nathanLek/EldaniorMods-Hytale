@@ -11,7 +11,7 @@ public class ArcaneGenesis implements IPassiveCombatSkill {
     @Override
     public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
         if (damage.isCancelled() || attackerRef == null) return false;
-        if (Math.random() <= 0.45f) {
+        if (Math.random() <= 0.70f) {
             damage.setAmount(damage.getAmount() + 40.0f);
         }
         return false;

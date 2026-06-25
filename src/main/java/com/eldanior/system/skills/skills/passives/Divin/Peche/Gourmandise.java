@@ -29,7 +29,7 @@ import java.util.List;
  */
 public class Gourmandise implements IPassiveCombatSkill {
 
-    private static final float COPY_CHANCE = 0.05f;
+    private static final float COPY_CHANCE = 0.10f;
     private static final float COOLDOWN_SECONDS = 172800f; // 2 jours
 
     @Override

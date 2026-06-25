@@ -16,7 +16,7 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 public class CombatVigor implements IPassiveCombatSkill {
 
-    private static final float CHANCE = 0.20f;
+    private static final float CHANCE = 0.30f;
     private static final float RESTORE = 5.0f;
     private static final float RESTORE_MASTERED = 5.5f;
 

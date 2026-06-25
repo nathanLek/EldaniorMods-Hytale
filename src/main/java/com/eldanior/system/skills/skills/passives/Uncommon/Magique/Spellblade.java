@@ -14,7 +14,7 @@ public class Spellblade implements IPassiveCombatSkill {
         if (damage.isCancelled() || attackerRef == null) return false;
 
         // 25% de chance d'ajouter 12 dégâts arcaniques
-        if (Math.random() <= 0.25f) {
+        if (Math.random() <= 0.40f) {
             damage.setAmount(damage.getAmount() + 12.0f);
         }
         return false;

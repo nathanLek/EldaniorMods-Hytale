@@ -14,7 +14,7 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 public class InstinctiveStrike implements IPassiveCombatSkill {
 
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
-    private static final float CHANCE = 0.05f;
+    private static final float CHANCE = 0.10f;
     private static final float BONUS_MULTIPLIER = 1.10f;
     private static final float BONUS_MULTIPLIER_MASTERED = 1.11f;
 

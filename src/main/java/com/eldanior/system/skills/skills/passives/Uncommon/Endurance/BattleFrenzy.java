@@ -18,7 +18,7 @@ public class BattleFrenzy implements IPassiveCombatSkill {
         if (damage.isCancelled() || attackerRef == null) return false;
 
         // 30% de chance de restaurer 8 endurance en attaquant
-        if (Math.random() <= 0.30f) {
+        if (Math.random() <= 0.45f) {
             EntityStatMap statMap = store.getComponent(attackerRef, EntityStatsModule.get().getEntityStatMapComponentType());
             if (statMap == null) return false;
 

@@ -12,7 +12,7 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 public class ArcaneStrike implements IPassiveCombatSkill {
 
-    private static final float CHANCE = 0.20f;
+    private static final float CHANCE = 0.30f;
     private static final float BONUS = 8.0f;
     private static final float BONUS_MASTERED = 8.8f;
 

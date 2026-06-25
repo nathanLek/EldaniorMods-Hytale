@@ -13,7 +13,7 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 public class CellularRegeneration implements IPassiveCombatSkill {
 
-    private static final float CHANCE = 0.15f;
+    private static final float CHANCE = 0.20f;
     private static final float HEAL_PERCENT = 0.05f;
     private static final float HEAL_PERCENT_MASTERED = 0.055f;
 

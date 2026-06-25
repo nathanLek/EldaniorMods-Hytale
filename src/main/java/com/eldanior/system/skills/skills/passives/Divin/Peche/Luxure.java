@@ -22,7 +22,7 @@ import java.awt.Color;
  */
 public class Luxure implements IPassiveCombatSkill {
 
-    private static final float STEAL_CHANCE = 0.05f;
+    private static final float STEAL_CHANCE = 0.10f;
     private static final float GOLD_STEAL_PERCENT = 0.10f;
     private static final float COOLDOWN_SECONDS = 172800f; // 2 jours
 

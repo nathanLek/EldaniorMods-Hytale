@@ -15,7 +15,7 @@ public class RageFrenzy implements IPassiveCombatSkill {
     @Override
     public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
         if (damage.isCancelled() || attackerRef == null) return false;
-        if (Math.random() <= 0.60f) {
+        if (Math.random() <= 0.70f) {
             EntityStatMap statMap = store.getComponent(attackerRef, EntityStatsModule.get().getEntityStatMapComponentType());
             if (statMap == null) return false;
             EntityStatValue enduranceStat = statMap.get(StatConfig.ENDURANCE.getStatId());

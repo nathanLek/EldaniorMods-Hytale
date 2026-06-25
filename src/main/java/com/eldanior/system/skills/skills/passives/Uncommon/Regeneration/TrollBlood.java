@@ -18,7 +18,7 @@ public class TrollBlood implements IPassiveCombatSkill {
         if (damage.isCancelled() || victimRef == null) return false;
 
         // 20% de chance de se soigner de 8% vie max
-        if (Math.random() <= 0.20f) {
+        if (Math.random() <= 0.30f) {
             EntityStatMap statMap = store.getComponent(victimRef, EntityStatsModule.get().getEntityStatMapComponentType());
             if (statMap == null) return false;
 

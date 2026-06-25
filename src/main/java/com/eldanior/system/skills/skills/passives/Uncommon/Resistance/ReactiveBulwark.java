@@ -14,7 +14,7 @@ public class ReactiveBulwark implements IPassiveCombatSkill {
         if (damage.isCancelled()) return false;
 
         // 15% de chance de réduire un coup de 30%
-        if (Math.random() <= 0.15f) {
+        if (Math.random() <= 0.20f) {
             damage.setAmount(damage.getAmount() * 0.70f);
         }
         return false;

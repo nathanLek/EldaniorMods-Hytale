@@ -14,7 +14,7 @@ public class ExpertParry implements IPassiveCombatSkill {
         if (damage.isCancelled()) return false;
 
         // 20% de chance de bloquer 20% des dégâts
-        if (Math.random() <= 0.20f) {
+        if (Math.random() <= 0.30f) {
             damage.setAmount(damage.getAmount() * 0.80f);
         }
         return false;

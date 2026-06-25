@@ -24,7 +24,7 @@ public class MauvaisPresage implements IPassiveCombatSkill {
         if (damage.isCancelled() || attackerRef == null || victimRef == null) return false;
 
         // 10% de chance de déclencher la malédiction
-        if (Math.random() <= 0.10f) {
+        if (Math.random() <= 0.15f) {
 
             EntityStatMap victimStatMap = store.getComponent(victimRef, EntityStatsModule.get().getEntityStatMapComponentType());
             if (victimStatMap == null) return false;

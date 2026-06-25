@@ -11,7 +11,7 @@ public class CelestialParry implements IPassiveCombatSkill {
     @Override
     public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
         if (damage.isCancelled()) return false;
-        if (Math.random() <= 0.40f) {
+        if (Math.random() <= 0.60f) {
             damage.setAmount(damage.getAmount() * 0.60f);
         }
         return false;

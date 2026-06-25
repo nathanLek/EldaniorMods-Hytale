@@ -15,7 +15,7 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 public class MysticVeil implements IPassiveCombatSkill {
 
-    private static final float CHANCE = 0.05f;
+    private static final float CHANCE = 0.10f;
     private static final float REDUCTION = 0.75f;
     private static final float REDUCTION_MASTERED = 0.725f;
     private static final float MANA_COST = 20.0f;

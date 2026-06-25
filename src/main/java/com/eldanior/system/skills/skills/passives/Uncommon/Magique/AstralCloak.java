@@ -14,7 +14,7 @@ public class AstralCloak implements IPassiveCombatSkill {
         if (damage.isCancelled()) return false;
 
         // 20% de chance de réduire les dégâts de 35%
-        if (Math.random() <= 0.20f) {
+        if (Math.random() <= 0.30f) {
             damage.setAmount(damage.getAmount() * 0.65f);
         }
         return false;

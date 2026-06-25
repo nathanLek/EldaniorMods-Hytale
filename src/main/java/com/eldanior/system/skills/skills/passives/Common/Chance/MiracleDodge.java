@@ -15,7 +15,7 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 public class MiracleDodge implements IPassiveCombatSkill {
 
-    private static final float CHANCE = 0.03f;
+    private static final float CHANCE = 0.05f;
     private static final float CHANCE_MASTERED = 0.033f;
     private static final float ENDURANCE_COST = 0.15f; // 15%
 

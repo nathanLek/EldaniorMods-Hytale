@@ -11,7 +11,7 @@ public class ShadowDodge implements IPassiveCombatSkill {
     @Override
     public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
         if (damage.isCancelled()) return false;
-        if (Math.random() <= 0.08f) {
+        if (Math.random() <= 0.10f) {
             damage.setCancelled(true);
         }
         return false;
