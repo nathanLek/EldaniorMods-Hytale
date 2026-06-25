@@ -113,7 +113,7 @@ public class PlayerLevelData implements Component<EntityStore> {
         this.currentTitle = "novice";
     }
 
-    public static final int MAX_LEVEL = 500;
+    public static final int MAX_LEVEL = 999;
 
     public int getRequiredExperience() {
         return (int) (10 + 14.0 * (level - 1) + 0.5 * (level - 1) * (level - 1));
