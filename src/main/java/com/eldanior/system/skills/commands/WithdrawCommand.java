@@ -37,9 +37,12 @@ public class WithdrawCommand extends AbstractPlayerCommand {
     private final RequiredArg<Integer> amountArg;
 
     public WithdrawCommand() {
-        super("bankGive", "Retire de l'argent de ta banque sous forme de pieces");
+        super("retirer", "Retire de l'argent de ta banque sous forme de pieces");
         this.amountArg = this.withRequiredArg("montant", "Montant a retirer", ArgTypes.INTEGER);
     }
+
+    @Override
+    protected boolean canGeneratePermission() { return false; }
 
     @Override
     protected void execute(@Nonnull CommandContext ctx, @Nonnull Store<EntityStore> store, @Nonnull Ref<EntityStore> ref, @Nonnull PlayerRef playerRef, @Nonnull World world) {

@@ -678,11 +678,23 @@ public class PlayerLevelData implements Component<EntityStore> {
         return model != null ? model.getBonusLck() : 0;
     }
 
-    // Utilitaires internes pour recuperer le bonus de titre
+    // Utilitaires internes pour recuperer le bonus CUMULE de TOUS les titres debloqués
     private TitleBonus getTitleBonus() {
-        if (currentTitle == null || currentTitle.isEmpty()) return TitleBonus.NONE;
-        TitleModel title = TitleManager.get(currentTitle);
-        return title != null ? title.getBonus() : TitleBonus.NONE;
+        if (unlockedTitles == null || unlockedTitles.isEmpty()) return TitleBonus.NONE;
+        int str = 0, vit = 0, intel = 0, end = 0, agl = 0, lck = 0;
+        for (String titleId : unlockedTitles) {
+            TitleModel title = TitleManager.get(titleId);
+            if (title != null) {
+                TitleBonus b = title.getBonus();
+                str += b.strength();
+                vit += b.vitality();
+                intel += b.intelligence();
+                end += b.endurance();
+                agl += b.agility();
+                lck += b.luck();
+            }
+        }
+        return new TitleBonus(str, vit, intel, end, agl, lck);
     }
     private int getTitleBonusStr() { return getTitleBonus().strength(); }
     private int getTitleBonusVit() { return getTitleBonus().vitality(); }

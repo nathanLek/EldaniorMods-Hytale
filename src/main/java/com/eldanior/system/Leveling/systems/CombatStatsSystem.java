@@ -293,25 +293,22 @@ public class CombatStatsSystem extends DamageEventSystem {
             commandBuffer.putComponent(attackerRef, EldaniorSystem.get().getPlayerLevelDataType(), attackerData);
         }
 
-        // --- TITLE EFFECTS (bonus degats vs mob type) ---
+        // --- TITLE EFFECTS (bonus degats vs mob type) — cumul de TOUS les titres debloqués ---
         if (!damage.isCancelled()) {
-            String currentTitleId = attackerData.getCurrentTitle();
-            if (currentTitleId != null && !currentTitleId.isEmpty()) {
-                TitleModel title = TitleManager.get(currentTitleId);
-                if (title != null && !title.getEffects().isEmpty()) {
-                    // Identifier le type de mob victime
-                    String victimMobType = null;
-                    if (victimRef != null) {
-                        NPCEntity npc = store.getComponent(victimRef, NPCEntity.getComponentType());
-                        if (npc != null) {
-                            victimMobType = npc.getNPCTypeId().toLowerCase();
-                        }
-                    }
+            String victimMobType = null;
+            if (victimRef != null) {
+                NPCEntity npc = store.getComponent(victimRef, NPCEntity.getComponentType());
+                if (npc != null) {
+                    victimMobType = npc.getNPCTypeId().toLowerCase();
+                }
+            }
 
+            for (String titleId : attackerData.getUnlockedTitles()) {
+                TitleModel title = TitleManager.get(titleId);
+                if (title != null && !title.getEffects().isEmpty()) {
                     for (TitleEffect effect : title.getEffects()) {
                         if (effect.type() == TitleEffect.TitleEffectType.DAMAGE_BONUS_VS_MOB) {
                             String target = effect.target();
-                            // "all" = bonus contre tout, sinon on verifie si le mob match
                             if ("all".equals(target) || (victimMobType != null && victimMobType.contains(target))) {
                                 damage.setAmount(damage.getAmount() * (1.0f + (float) effect.value()));
                             }
@@ -371,20 +368,19 @@ public class CombatStatsSystem extends DamageEventSystem {
             commandBuffer.putComponent(victimRef, EldaniorSystem.get().getPlayerLevelDataType(), victimData);
         }
 
-        // --- TITLE EFFECTS (reduction degats from mob type) ---
+        // --- TITLE EFFECTS (reduction degats from mob type) — cumul de TOUS les titres debloqués ---
         if (!damage.isCancelled()) {
-            String currentTitleId = victimData.getCurrentTitle();
-            if (currentTitleId != null && !currentTitleId.isEmpty()) {
-                TitleModel title = TitleManager.get(currentTitleId);
-                if (title != null && !title.getEffects().isEmpty()) {
-                    String attackerMobType = null;
-                    if (attackerRef != null) {
-                        NPCEntity npc = store.getComponent(attackerRef, NPCEntity.getComponentType());
-                        if (npc != null) {
-                            attackerMobType = npc.getNPCTypeId().toLowerCase();
-                        }
-                    }
+            String attackerMobType = null;
+            if (attackerRef != null) {
+                NPCEntity npc = store.getComponent(attackerRef, NPCEntity.getComponentType());
+                if (npc != null) {
+                    attackerMobType = npc.getNPCTypeId().toLowerCase();
+                }
+            }
 
+            for (String titleId : victimData.getUnlockedTitles()) {
+                TitleModel title = TitleManager.get(titleId);
+                if (title != null && !title.getEffects().isEmpty()) {
                     for (TitleEffect effect : title.getEffects()) {
                         if (effect.type() == TitleEffect.TitleEffectType.DAMAGE_REDUCTION_FROM_MOB) {
                             String target = effect.target();
