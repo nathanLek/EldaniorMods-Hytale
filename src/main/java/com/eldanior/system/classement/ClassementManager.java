@@ -70,8 +70,9 @@ public class ClassementManager {
             }
         }
 
-        // Familles: score = contribution + tresorerie / 100
+        // Familles: score = contribution + tresorerie / 100 (uniquement les familles prises)
         for (NobleFamilyModel family : FamilyManager.getAll()) {
+            if (!FamilyManager.isFamilyTaken(family.getId())) continue;
             FamilyManager.FamilyRuntimeData runtime = FamilyManager.getRuntimeData(family.getId());
             long score = runtime.getContribution() + (runtime.getTreasury() / 100);
             if (score > 0) {
