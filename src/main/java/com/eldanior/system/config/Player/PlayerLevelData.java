@@ -116,7 +116,7 @@ public class PlayerLevelData implements Component<EntityStore> {
     public static final int MAX_LEVEL = 500;
 
     public int getRequiredExperience() {
-        return (int) (100 + 140 * (level - 1) + 5L * (level - 1) * (level - 1));
+        return (int) (10 + 14.0 * (level - 1) + 0.5 * (level - 1) * (level - 1));
     }
 
     public void addExperience(int amount) {
