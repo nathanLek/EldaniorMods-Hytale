@@ -92,9 +92,20 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
         // Stocker la reference au monde par parcelle (multi-mondes safe)
         cachedWorlds.put(parcel.getId(), world);
 
+        // +1 XP par bloc casse dans une zone de farm/mine/forest
+        if (type == ParcelType.FARM || type == ParcelType.MINE || type == ParcelType.FOREST) {
+            Ref<EntityStore> playerRef = chunk.getReferenceTo(index);
+            com.hypixel.hytale.component.ComponentType<com.hypixel.hytale.server.core.universe.world.storage.EntityStore,
+                    com.eldanior.system.config.Player.PlayerLevelData> dataType = com.eldanior.system.EldaniorSystem.get().getPlayerLevelDataType();
+            com.eldanior.system.config.Player.PlayerLevelData data = store.getComponent(playerRef, dataType);
+            if (data != null) {
+                data.addExperience(1);
+                commandBuffer.run(deferredStore -> deferredStore.putComponent(playerRef, dataType, data));
+            }
+        }
+
         if (type == ParcelType.FARM || type == ParcelType.MINE) {
             handleSimpleRegen(target, worldName, parcel, world);
-            // S'assurer que le snapshot FARM est pris et le timer demarre
             if (type == ParcelType.FARM) {
                 ensureFarmSnapshot(parcel, world);
             }
