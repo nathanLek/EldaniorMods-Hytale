@@ -1,9 +1,9 @@
 package com.eldanior.system.guild;
 
 public enum GuildRole {
-    CHEF("Chef", "§6"),
-    OFFICER("Officier", "§e"),
-    MEMBER("Membre", "§7");
+    CHEF("Chef", ""),
+    OFFICER("Officier", ""),
+    MEMBER("Membre", "");
 
     private final String displayName;
     private final String colorCode;
