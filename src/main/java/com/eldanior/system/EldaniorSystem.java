@@ -252,6 +252,8 @@ public class EldaniorSystem extends JavaPlugin {
 
                     // DignityAuraSystem (slowedPlayers + activeEmitters)
                     DignityAuraSystem.handleDisconnect(uuid);
+                    // DivineAuraSystem (previousHP tracking)
+                    com.eldanior.system.skills.system.DivineAuraSystem.handleDisconnect(uuid);
                 } catch (Exception e) { EldaniorLogger.error("EldaniorSystem", e); }
             });
             this.getEntityStoreRegistry().registerSystem(new TreasureChestBreakBlockEvent());
@@ -270,6 +272,7 @@ public class EldaniorSystem extends JavaPlugin {
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.duel.DuelProtectionSystem());
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.quest.QuestHudUpdateSystem());
             this.getEntityStoreRegistry().registerSystem(new DignityAuraSystem());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.skills.system.DivineAuraSystem());
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.titles.systems.TitleCheckSystem());
 
             // Territoire / Parcelles

@@ -11,7 +11,7 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 /**
  * Tempérance (Uriel) — Combat à mains nues = +200% HP et dégâts.
- * Vérifie que le slot actif de la hotbar est vide.
+ * "Mains nues" = le joueur n'a pas d'item dans sa main active (slot actif de la hotbar).
  * Église RELIGIEUX+ only.
  */
 public class Temperance implements IPassiveCombatSkill {
@@ -35,7 +35,6 @@ public class Temperance implements IPassiveCombatSkill {
     public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store,
                            Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
         if (damage.isCancelled()) return false;
-
         Player victimPlayer = store.getComponent(victimRef, Player.getComponentType());
         if (victimPlayer == null) return false;
 
@@ -48,13 +47,9 @@ public class Temperance implements IPassiveCombatSkill {
 
     private boolean isUnarmed(Player player) {
         try {
-            // Check all hotbar slots - true "unarmed" means nothing in hotbar
-            var hotbar = player.getInventory().getHotbar();
-            for (short i = 0; i < 9; i++) {
-                ItemStack item = hotbar.getItemStack(i);
-                if (item != null && !item.isEmpty()) return false;
-            }
-            return true;
+            // Vérifie si le slot actif de la hotbar est vide (= mains nues)
+            ItemStack activeItem = player.getInventory().getActiveHotbarItem();
+            return activeItem == null || activeItem.isEmpty();
         } catch (Exception e) {
             return false;
         }

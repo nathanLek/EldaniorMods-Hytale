@@ -10,18 +10,16 @@ import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 /**
- * Orgueil (Pride) — +10% puissance de combat par item équipé dans la hotbar.
- * Ex: 7 items = +70%. PK only, PVP/Duel only.
+ * Orgueil — +10% puissance de combat par item équipé. 7 items = +70%.
+ * PK only, PVP/Duel only. Aucun bonus permanent.
  */
 public class Orgueil implements IPassiveCombatSkill {
 
     private static final float BONUS_PER_ITEM = 0.10f;
-    private static final int HOTBAR_SIZE = 9;
 
     @Override
     public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store,
                            Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
-        // PVP only check
         Player victimPlayer = store.getComponent(victimRef, Player.getComponentType());
         if (victimPlayer == null) return false;
 
@@ -31,7 +29,7 @@ public class Orgueil implements IPassiveCombatSkill {
         int equippedCount = 0;
         try {
             var hotbar = attackerPlayer.getInventory().getHotbar();
-            for (short i = 0; i < HOTBAR_SIZE; i++) {
+            for (short i = 0; i < 9; i++) {
                 ItemStack item = hotbar.getItemStack(i);
                 if (item != null && !item.isEmpty()) equippedCount++;
             }

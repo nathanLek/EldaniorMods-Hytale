@@ -7,10 +7,9 @@
     "Interactions": [
       { "Type": "ChangeStat", "StatModifiers": { "SignatureEnergy": 0 }, "Behaviour": "Set" },
       {
-        "Type": "Dash",
+        "Type": "ApplyForce",
         "RunTime": 0.15,
-        "DashForce": 25,
-        "DashDirection": "Forward",
+        "Force": 25,
         "Effects": {
           "ItemAnimationId": "CastPushCharged",
           "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Impact",

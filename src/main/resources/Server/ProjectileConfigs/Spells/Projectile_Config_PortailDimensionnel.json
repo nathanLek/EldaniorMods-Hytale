@@ -49,10 +49,6 @@
           }
         },
         {
-          "Type": "TeleportEntityToHitLocation",
-          "Entity": "Owner"
-        },
-        {
           "Type": "RemoveEntity",
           "Entity": "User"
         }
@@ -95,10 +91,6 @@
               { "SystemId": "Block_Break_Crystal", "TargetEntityPart": "Entity", "Scale": 3.0, "Color": "#3b82f6" }
             ]
           }
-        },
-        {
-          "Type": "TeleportEntityToHitLocation",
-          "Entity": "Owner"
         },
         {
           "Type": "RemoveEntity",

@@ -438,6 +438,7 @@ public class PlayerLevelData implements Component<EntityStore> {
         unlockedSkills.clear();
         enabledSkills.clear();
         disabledSkills.clear();
+        divineSkill = "";
     }
     public String getActiveSkillId() { return activeSkillId; }
     public void setActiveSkillId(String id) { this.activeSkillId = id; }

@@ -13,8 +13,8 @@ import com.hypixel.hytale.server.core.modules.entitystats.EntityStatsModule;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 /**
- * Colère (Wrath) — +200% force, agilité et endurance si le joueur est au-dessus de 80% de vie.
- * PK only, PVP/Duel only.
+ * Colère — +200% force, agilité et endurance si HP > 80%.
+ * PK only, PVP/Duel only. Aucun bonus permanent — uniquement actif en combat si HP > 80%.
  */
 public class Colere implements IPassiveCombatSkill {
 
@@ -23,19 +23,16 @@ public class Colere implements IPassiveCombatSkill {
     @Override
     public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store,
                            Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
-        // PVP only check
         Player victimPlayer = store.getComponent(victimRef, Player.getComponentType());
         if (victimPlayer == null) return false;
 
-        // Check if attacker HP > 80%
         EntityStatMap statMap = store.getComponent(attackerRef, EntityStatsModule.get().getEntityStatMapComponentType());
         if (statMap == null) return false;
 
         EntityStatValue healthStat = statMap.get(StatConfig.VITALITY.getStatId());
         if (healthStat == null) return false;
 
-        float hpPercent = healthStat.get() / healthStat.getMax();
-        if (hpPercent > 0.80f) {
+        if (healthStat.get() / healthStat.getMax() > 0.80f) {
             damage.setAmount(damage.getAmount() * DAMAGE_MULTIPLIER);
             return true;
         }

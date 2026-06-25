@@ -10,7 +10,6 @@
         "Type": "ApplyForce",
         "RunTime": 0.4,
         "Force": 20,
-        "Direction": "Forward",
         "Effects": {
           "ItemAnimationId": "CastPushCharged",
           "WorldSoundEventId": "SFX_Skeleton_Mage_Spellbook_Impact",
@@ -37,7 +36,7 @@
             {
               "Type": "DamageEntity",
               "DamageCalculator": {
-                "BaseDamage": { "Melee": 12 }
+                "BaseDamage": { "Projectile": 12 }
               },
               "DamageEffects": {
                 "Knockback": {

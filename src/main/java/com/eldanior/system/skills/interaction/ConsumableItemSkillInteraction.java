@@ -144,6 +144,9 @@ public class ConsumableItemSkillInteraction extends SimpleInteraction {
                 data.setDivineSkill(newSkillId);
             }
 
+            // Recalculer les stats après apprentissage (applique les bonus getStatMultiplier/getFlatStatBonus)
+            com.eldanior.system.Leveling.utils.StatCalculator.updatePlayerStats(playerRef, playerRef.getStore(), data);
+
             // Suppression du parchemin
             int slot = context.getHeldItemSlot();
             EldaniorLogger.SCHEDULER.schedule(() -> {

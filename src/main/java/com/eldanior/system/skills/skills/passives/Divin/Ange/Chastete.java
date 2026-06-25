@@ -9,7 +9,8 @@ import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 /**
- * Chasteté (Azraël) — +150% dégâts contre les mobs.
+ * Chasteté (Azraël) — +150% dégâts contre les mobs (combat only).
+ * Aucun bonus permanent — uniquement en combat vs entités non-joueurs.
  * Église RELIGIEUX+ only.
  */
 public class Chastete implements IPassiveCombatSkill {
@@ -19,11 +20,9 @@ public class Chastete implements IPassiveCombatSkill {
     @Override
     public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store,
                            Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
-        // Check if victim is NOT a player (= is a mob)
         Player victimPlayer = store.getComponent(victimRef, Player.getComponentType());
-        if (victimPlayer != null) return false; // It's a player, no bonus
+        if (victimPlayer != null) return false;
 
-        // Target is a mob → apply bonus
         damage.setAmount(damage.getAmount() * MOB_DAMAGE_MULTIPLIER);
         return true;
     }
