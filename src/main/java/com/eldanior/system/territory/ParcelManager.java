@@ -525,15 +525,23 @@ public class ParcelManager {
         if (parcel == null) return;
         parcel.setFamilyId(familyId);
 
-        // Chercher le Patriarche de la famille pour l'assigner comme proprietaire
-        UUID patriarchUUID = findPatriarchUUID(familyId);
-        if (patriarchUUID != null) {
-            String patriarchName = findPatriarchName(patriarchUUID);
-            parcel.setOwnerUUID(patriarchUUID);
-            parcel.setOwnerName(patriarchName != null ? patriarchName : "Patriarche");
-            parcel.addMember(patriarchUUID, ParcelRole.OWNER);
+        // Seuls les HOUSING sont assignes au Patriarche comme proprietaire
+        if (parcel.getType() == ParcelType.HOUSING) {
+            UUID patriarchUUID = findPatriarchUUID(familyId);
+            if (patriarchUUID != null) {
+                String patriarchName = findPatriarchName(patriarchUUID);
+                parcel.setOwnerUUID(patriarchUUID);
+                parcel.setOwnerName(patriarchName != null ? patriarchName : "Patriarche");
+                parcel.addMember(patriarchUUID, ParcelRole.OWNER);
+            } else {
+                com.eldanior.system.titles.nobility.family.NobleFamilyModel family =
+                        com.eldanior.system.titles.nobility.family.FamilyManager.get(familyId);
+                if (family != null) {
+                    parcel.setOwnerName("Famille " + family.getDisplayName());
+                }
+            }
         } else {
-            // Pas de Patriarche — mettre le nom de la famille
+            // Autres types : proprietaire = famille
             com.eldanior.system.titles.nobility.family.NobleFamilyModel family =
                     com.eldanior.system.titles.nobility.family.FamilyManager.get(familyId);
             if (family != null) {
@@ -544,10 +552,12 @@ public class ParcelManager {
     }
 
     /**
-     * Transfere la propriete de toutes les parcelles d'une famille a un nouveau joueur.
+     * Transfere la propriete des parcelles HOUSING d'une famille a un nouveau joueur.
+     * Les autres types (TERRITORY, GRAND_TERRITORY, etc.) restent en propriete famille.
      */
     public static void transferFamilyParcelsOwnership(String familyId, UUID newOwnerUUID, String newOwnerName) {
         for (ParcelData p : getByFamily(familyId)) {
+            if (p.getType() != ParcelType.HOUSING) continue;
             // Retirer l'ancien owner des membres
             UUID oldOwner = p.getOwnerUUID();
             if (oldOwner != null) {
@@ -561,7 +571,7 @@ public class ParcelManager {
     }
 
     /**
-     * Retire le proprietaire joueur de toutes les parcelles d'une famille
+     * Retire le proprietaire joueur des parcelles HOUSING d'une famille
      * et remet le nom de la famille comme proprietaire.
      */
     public static void clearFamilyParcelsOwnership(String familyId) {
@@ -569,6 +579,7 @@ public class ParcelManager {
                 com.eldanior.system.titles.nobility.family.FamilyManager.get(familyId);
         String familyName = family != null ? "Famille " + family.getDisplayName() : "Famille";
         for (ParcelData p : getByFamily(familyId)) {
+            if (p.getType() != ParcelType.HOUSING) continue;
             UUID oldOwner = p.getOwnerUUID();
             if (oldOwner != null) {
                 p.removeMember(oldOwner);
