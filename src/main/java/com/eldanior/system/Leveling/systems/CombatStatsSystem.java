@@ -67,8 +67,6 @@ public class CombatStatsSystem extends DamageEventSystem {
                                     world, transform.getPosition().x, transform.getPosition().y, transform.getPosition().z);
                             if (parcel != null && !parcel.isPvpEnabled()) {
                                 damage.setCancelled(true);
-                                // Notification a l'attaquant : PvP desactive dans cette zone
-                                notifyPvpBlocked(attackerRef, store);
                                 return;
                             }
                             // Check ParcelPermission.PVP — meme si la zone a PvP active,
@@ -79,7 +77,6 @@ public class CombatStatsSystem extends DamageEventSystem {
                                     java.util.UUID attackerUUID = com.eldanior.system.config.UUIDExtractor.getUUID(attackerPRef);
                                     if (attackerUUID != null && !parcel.hasPermission(attackerUUID, com.eldanior.system.territory.ParcelPermission.PVP)) {
                                         damage.setCancelled(true);
-                                        notifyPvpBlocked(attackerRef, store);
                                         return;
                                     }
                                 }
