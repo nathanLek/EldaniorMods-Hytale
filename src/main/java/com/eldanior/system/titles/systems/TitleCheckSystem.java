@@ -12,6 +12,8 @@ import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
+import com.eldanior.system.Leveling.utils.StatCalculator;
+
 import javax.annotation.Nonnull;
 import java.util.List;
 
@@ -58,6 +60,9 @@ public class TitleCheckSystem extends EntityTickingSystem<EntityStore> {
                         "TITRE DEBLOQUE", title.getDisplayName(), true);
             }
         }
+
+        // Recalculer les stats avec les nouveaux bonus cumulés
+        StatCalculator.updatePlayerStats(ref, store, data);
 
         // Utiliser commandBuffer.run() pour ecrire via le deferred store,
         // ce qui evite les ecrasements par d'autres systemes

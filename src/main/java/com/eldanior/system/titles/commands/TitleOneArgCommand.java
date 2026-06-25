@@ -94,7 +94,8 @@ public class TitleOneArgCommand extends AbstractAsyncCommand {
             data.setCurrentTitle(title.getId());
             store.putComponent(ref, type, data);
 
-            sender.getPlayerRef().sendMessage(Message.raw("§aTitre equipe : " + title.getFormattedName()));
+            sender.getPlayerRef().sendMessage(Message.raw("§aTitre affiche : " + title.getFormattedName()));
+            sender.getPlayerRef().sendMessage(Message.raw("§7Les bonus de tous vos titres sont actifs automatiquement."));
 
         } catch (Exception e) {
             e.printStackTrace();

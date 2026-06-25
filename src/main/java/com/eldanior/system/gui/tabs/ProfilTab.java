@@ -28,20 +28,25 @@ public class ProfilTab {
         int cAgl = classModel != null ? classModel.getBonusAgl() : 0;
         int cLck = classModel != null ? classModel.getBonusLck() : 0;
 
-        // Bonus titre
-        com.eldanior.system.titles.models.TitleBonus tb = com.eldanior.system.titles.models.TitleBonus.NONE;
-        String tId = data.getCurrentTitle();
-        if (tId != null && !tId.isEmpty()) {
-            com.eldanior.system.titles.models.TitleModel tm = com.eldanior.system.titles.TitleManager.get(tId);
-            if (tm != null && tm.getBonus() != null) tb = tm.getBonus();
+        // Bonus titre CUMULE de TOUS les titres débloqués
+        int tStr = 0, tVit = 0, tInt = 0, tEnd = 0, tAgl = 0, tLck = 0;
+        if (data.getUnlockedTitles() != null) {
+            for (String tid : data.getUnlockedTitles()) {
+                com.eldanior.system.titles.models.TitleModel tm = com.eldanior.system.titles.TitleManager.get(tid);
+                if (tm != null && tm.getBonus() != null) {
+                    com.eldanior.system.titles.models.TitleBonus b = tm.getBonus();
+                    tStr += b.strength(); tVit += b.vitality(); tInt += b.intelligence();
+                    tEnd += b.endurance(); tAgl += b.agility(); tLck += b.luck();
+                }
+            }
         }
 
-        int bStr = cStr + tb.strength();
-        int bVit = cVit + tb.vitality();
-        int bInt = cInt + tb.intelligence();
-        int bEnd = cEnd + tb.endurance();
-        int bAgl = cAgl + tb.agility();
-        int bLck = cLck + tb.luck();
+        int bStr = cStr + tStr;
+        int bVit = cVit + tVit;
+        int bInt = cInt + tInt;
+        int bEnd = cEnd + tEnd;
+        int bAgl = cAgl + tAgl;
+        int bLck = cLck + tLck;
 
         // Nom + famille noble
         String displayName = playerName;
