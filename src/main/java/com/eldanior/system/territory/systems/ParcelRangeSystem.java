@@ -145,35 +145,10 @@ public class ParcelRangeSystem extends EntityTickingSystem<EntityStore> {
             if (currentId != null) playerCurrentParcel.put(playerUUID, currentId);
             else playerCurrentParcel.remove(playerUUID);
 
-            // === NOTIFICATION PVP ENTREE/SORTIE ===
-            try {
-                boolean wasPvp = Boolean.TRUE.equals(playerInPvpZone.get(playerUUID));
-                boolean nowPvp = currentParcel != null && currentParcel.isPvpEnabled();
-
-                if (nowPvp != wasPvp) {
-                    PlayerRef pvpRef = store.getComponent(ref, PlayerRef.getComponentType());
-                    if (pvpRef != null) {
-                        if (nowPvp) {
-                            NotificationHelper.showEventTitle(pvpRef,
-                                    "<color:red>ZONE PVP</color>",
-                                    "<color:red>Les combats entre joueurs sont autorises</color>", false);
-                            NotificationHelper.sendNotification(pvpRef,
-                                    "<color:red>Attention ! Vous entrez en zone PvP.</color>",
-                                    NotificationStyle.Danger);
-                        } else {
-                            NotificationHelper.showEventTitle(pvpRef,
-                                    "<color:green>ZONE SURE</color>",
-                                    "<color:green>Les combats entre joueurs sont desactives</color>", false);
-                            NotificationHelper.sendNotification(pvpRef,
-                                    "<color:green>Vous quittez la zone PvP.</color>",
-                                    NotificationStyle.Success);
-                        }
-                    }
-                }
-
-                if (nowPvp) playerInPvpZone.put(playerUUID, true);
-                else playerInPvpZone.remove(playerUUID);
-            } catch (Exception e) { EldaniorLogger.error("ParcelRangeSystem:pvp", e); }
+            // Track PvP zone (sans notification)
+            boolean nowPvp = currentParcel != null && currentParcel.isPvpEnabled();
+            if (nowPvp) playerInPvpZone.put(playerUUID, true);
+            else playerInPvpZone.remove(playerUUID);
         }
     }
 
@@ -249,10 +224,8 @@ public class ParcelRangeSystem extends EntityTickingSystem<EntityStore> {
         String title = fmt(parcel.getName());
         String subtitle = parcel.getType().getLabel().toUpperCase();
 
-        // Afficher l'indicateur PvP pour toutes les zones (pas seulement CITY)
-        if (parcel.isPvpEnabled()) {
-            subtitle += " — <color:red>PvP Active</color>";
-        } else {
+        // Afficher "Zone Sure" uniquement pour les villes
+        if (parcel.getType() == com.eldanior.system.territory.ParcelType.CITY && !parcel.isPvpEnabled()) {
             subtitle += " — <color:green>Zone Sure</color>";
         }
 
