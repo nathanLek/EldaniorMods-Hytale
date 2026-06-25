@@ -57,7 +57,7 @@ public class ClassInfoCommand extends AbstractAsyncCommand {
                 PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
 
                 if (targetRef == null) {
-                    senderRef.sendMessage(Message.raw("§cJoueur introuvable."));
+                    senderRef.sendMessage(Message.raw("Joueur introuvable."));
                     return;
                 }
 
@@ -76,13 +76,13 @@ public class ClassInfoCommand extends AbstractAsyncCommand {
                 PlayerLevelData data = store.getComponent(ref, type);
 
                 if (data != null) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§e--- Info : " + targetName + " ---"));
-                    sender.getPlayerRef().sendMessage(Message.raw("§fClasse : " + data.getPlayerClass()));
-                    sender.getPlayerRef().sendMessage(Message.raw("§fID : §7" + data.getPlayerClassId()));
-                    sender.getPlayerRef().sendMessage(Message.raw("§fNiveau : " + data.getLevel()));
-                    sender.getPlayerRef().sendMessage(Message.raw("§fMana Max : " + (int)data.getMaxMana()));
+                    sender.getPlayerRef().sendMessage(Message.raw("--- Info : " + targetName + " ---"));
+                    sender.getPlayerRef().sendMessage(Message.raw("Classe : " + data.getPlayerClass()));
+                    sender.getPlayerRef().sendMessage(Message.raw("ID : " + data.getPlayerClassId()));
+                    sender.getPlayerRef().sendMessage(Message.raw("Niveau : " + data.getLevel()));
+                    sender.getPlayerRef().sendMessage(Message.raw("Mana Max : " + (int)data.getMaxMana()));
                 } else {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cPas de données pour ce joueur."));
+                    sender.getPlayerRef().sendMessage(Message.raw("Pas de données pour ce joueur."));
                 }
             } catch (Exception e) {
                 e.printStackTrace();

@@ -54,12 +54,12 @@ public class SellCommand extends AbstractAsyncCommand {
                 if (senderRef == null || sender == null) return;
 
                 if (price <= 0) {
-                    senderRef.sendMessage(Message.raw("§cLe prix doit etre superieur a 0."));
+                    senderRef.sendMessage(Message.raw("Le prix doit etre superieur a 0."));
                     return;
                 }
 
                 if (price > MAX_SELL_PRICE) {
-                    senderRef.sendMessage(Message.raw("§cPrix maximum autorise : 10 000 000 Or."));
+                    senderRef.sendMessage(Message.raw("Prix maximum autorise : 10 000 000 Or."));
                     return;
                 }
 
@@ -68,7 +68,7 @@ public class SellCommand extends AbstractAsyncCommand {
                 ItemStack item = inventory.getActiveHotbarItem();
 
                 if (item == null || item.isEmpty()) {
-                    senderRef.sendMessage(Message.raw("§cVous n'avez rien en main !"));
+                    senderRef.sendMessage(Message.raw("Vous n'avez rien en main !"));
                     return;
                 }
 
@@ -87,7 +87,7 @@ public class SellCommand extends AbstractAsyncCommand {
                             ? ShopManager.getBlackMarketPlayerListingCount(sellerUUID)
                             : ShopManager.getPlayerListingCount(sellerUUID);
                     if (currentListings >= ShopManager.MAX_LISTINGS_PER_PLAYER) {
-                        senderRef.sendMessage(Message.raw("§cLimite atteinte ! Vous avez deja " + ShopManager.MAX_LISTINGS_PER_PLAYER + " objets en vente."));
+                        senderRef.sendMessage(Message.raw("Limite atteinte ! Vous avez deja " + ShopManager.MAX_LISTINGS_PER_PLAYER + " objets en vente."));
                         return;
                     }
                 }
@@ -116,8 +116,8 @@ public class SellCommand extends AbstractAsyncCommand {
                 // Persist shop state immediately to prevent data loss on crash (BUGS-12)
                 try { PersistenceManager.saveShop(); } catch (Exception e2) { EldaniorLogger.error("SellCommand", e2); }
 
-                senderRef.sendMessage(Message.raw("§a" + itemName + " §amis en vente pour §e" + price + " Or §a!"));
-                senderRef.sendMessage(Message.raw("§7Les joueurs peuvent l'acheter via §f/es system §7> Shop"));
+                senderRef.sendMessage(Message.raw("" + itemName + " mis en vente pour " + price + " Or !"));
+                senderRef.sendMessage(Message.raw("Les joueurs peuvent l'acheter via /es system > Shop"));
 
             } catch (Exception e) {
                 e.printStackTrace();

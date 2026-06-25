@@ -57,23 +57,23 @@ public class ParcelAssignFamilyCommand extends AbstractAsyncCommand {
                 boolean isAdmin = senderRef.hasPermission(EldaniorLogger.ADMIN_PERMISSION);
 
                 if (!isAdmin) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cCommande admin uniquement."));
+                    sender.getPlayerRef().sendMessage(Message.raw("Commande admin uniquement."));
                     return;
                 }
 
                 ParcelData parcel = getParcelAtPlayer(sender);
                 if (parcel == null) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cVous n'etes dans aucune parcelle."));
+                    sender.getPlayerRef().sendMessage(Message.raw("Vous n'etes dans aucune parcelle."));
                     return;
                 }
 
                 if (parcel.getType() == ParcelType.PLOT) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cLes plots ne peuvent pas etre assignes a une famille."));
+                    sender.getPlayerRef().sendMessage(Message.raw("Les plots ne peuvent pas etre assignes a une famille."));
                     return;
                 }
 
                 ParcelManager.assignToFamily(parcel.getId(), capturedFamilyId);
-                sender.getPlayerRef().sendMessage(Message.raw("§a" + parcel.getType().getLabel() + " §f" + parcel.getName() + " §aassigne a la famille §f" + capturedFamilyId));
+                sender.getPlayerRef().sendMessage(Message.raw("" + parcel.getType().getLabel() + " " + parcel.getName() + " assigne a la famille " + capturedFamilyId));
             } catch (Exception e) {
                 e.printStackTrace();
             }

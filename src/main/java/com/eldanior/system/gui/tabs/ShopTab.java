@@ -104,7 +104,7 @@ public class ShopTab {
         PlayerLevelData dataCheck = store.getComponent(ref, typeCheck);
         if (dataCheck != null && dataCheck.isPK()) {
             Player p = store.getComponent(ref, Player.getComponentType());
-            if (p != null) p.getPlayerRef().sendMessage(Message.raw("§cLes criminels n'ont pas acces au Marche ! Utilisez le Marche Noir."));
+            if (p != null) p.getPlayerRef().sendMessage(Message.raw("Les criminels n'ont pas acces au Marche ! Utilisez le Marche Noir."));
             return false;
         }
 
@@ -113,7 +113,7 @@ public class ShopTab {
         PlayerLevelData data = store.getComponent(ref, type);
         if (data == null || data.getMoney() < peekListing.getPrice()) {
             Player player = store.getComponent(ref, Player.getComponentType());
-            if (player != null) player.getPlayerRef().sendMessage(Message.raw("§cPas assez d'or ! (besoin de " + peekListing.getPrice() + ")"));
+            if (player != null) player.getPlayerRef().sendMessage(Message.raw("Pas assez d'or ! (besoin de " + peekListing.getPrice() + ")"));
             return false;
         }
 
@@ -123,7 +123,7 @@ public class ShopTab {
         // Atomic buy: remove listing in one synchronized operation to prevent duplication
         ShopListing listing = ShopManager.buyListing(idx);
         if (listing == null) {
-            buyer.getPlayerRef().sendMessage(Message.raw("§cCet objet a deja ete achete !"));
+            buyer.getPlayerRef().sendMessage(Message.raw("Cet objet a deja ete achete !"));
             return false;
         }
 
@@ -132,7 +132,7 @@ public class ShopTab {
         if (!result.succeeded()) {
             // Re-add listing since we already removed it but can't give the item
             ShopManager.addListing(listing.getSellerUUID(), listing.getSellerName(), listing.getItem(), listing.getPrice());
-            buyer.getPlayerRef().sendMessage(Message.raw("§cInventaire plein !"));
+            buyer.getPlayerRef().sendMessage(Message.raw("Inventaire plein !"));
             return false;
         }
 
@@ -172,7 +172,7 @@ public class ShopTab {
                     if (sData != null) {
                         sData.addMoney(netAmount);
                         sStore.putComponent(sRef, type, sData);
-                        sellerRef.sendMessage(Message.raw("§a" + buyer.getPlayerRef().getUsername() + " a achete votre objet pour " + price + " Or ! (taxe: " + taxAmount + " Or)"));
+                        sellerRef.sendMessage(Message.raw("" + buyer.getPlayerRef().getUsername() + " a achete votre objet pour " + price + " Or ! (taxe: " + taxAmount + " Or)"));
                     }
                 }
             } catch (Exception e) { EldaniorLogger.error("ShopTab", e); }
@@ -181,7 +181,7 @@ public class ShopTab {
             ShopManager.addPendingEarnings(listing.getSellerUUID(), netAmount);
         }
 
-        buyer.getPlayerRef().sendMessage(Message.raw("§aObjet achete pour " + price + " Or ! (taxe: " + taxAmount + " Or)"));
+        buyer.getPlayerRef().sendMessage(Message.raw("Objet achete pour " + price + " Or ! (taxe: " + taxAmount + " Or)"));
 
         // Log transaction
         TransactionLogger.logShopBuy(
@@ -215,11 +215,11 @@ public class ShopTab {
             // Owner: retourne l'item directement
             var result = me.getInventory().getHotbar().addItemStack(listing.getItem());
             if (!result.succeeded()) {
-                me.getPlayerRef().sendMessage(Message.raw("§cInventaire plein !"));
+                me.getPlayerRef().sendMessage(Message.raw("Inventaire plein !"));
                 return false;
             }
             ShopManager.removeListing(idx);
-            me.getPlayerRef().sendMessage(Message.raw("§7Annonce retiree, objet recupere."));
+            me.getPlayerRef().sendMessage(Message.raw("Annonce retiree, objet recupere."));
             TransactionLogger.logShopCancel(me.getPlayerRef().getUsername(),
                     listing.getItem().getItemId(), listing.getItem().getQuantity(),
                     listing.getPrice(), false);
@@ -235,7 +235,7 @@ public class ShopTab {
                         var sPlayer = sStore.getComponent(sRef, Player.getComponentType());
                         if (sPlayer != null) {
                             sPlayer.getInventory().getHotbar().addItemStack(listing.getItem());
-                            sellerRef.sendMessage(Message.raw("§eUn admin a retire votre annonce. Objet restitue."));
+                            sellerRef.sendMessage(Message.raw("Un admin a retire votre annonce. Objet restitue."));
                         }
                     }
                 } catch (Exception e) { EldaniorLogger.error("ShopTab", e); }
@@ -243,7 +243,7 @@ public class ShopTab {
             // Note: si vendeur deconnecte, l'item est perdu (pas de pending items system)
             // On pourrait ajouter un systeme de pending items plus tard
             ShopManager.removeListing(idx);
-            me.getPlayerRef().sendMessage(Message.raw("§eAnnonce de " + listing.getSellerName() + " retiree (admin)."));
+            me.getPlayerRef().sendMessage(Message.raw("Annonce de " + listing.getSellerName() + " retiree (admin)."));
             TransactionLogger.logShopCancel(me.getPlayerRef().getUsername(),
                     listing.getItem().getItemId(), listing.getItem().getQuantity(),
                     listing.getPrice(), true);

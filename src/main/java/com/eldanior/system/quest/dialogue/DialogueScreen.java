@@ -176,7 +176,7 @@ public class DialogueScreen extends InteractiveCustomUIPage<DialogueScreen.Dialo
             }
 
             if (alreadyAccepted) {
-                if (player != null) player.getPlayerRef().sendMessage(Message.raw("§eQuete deja en cours !"));
+                if (player != null) player.getPlayerRef().sendMessage(Message.raw("Quete deja en cours !"));
                 this.close();
                 return;
             }

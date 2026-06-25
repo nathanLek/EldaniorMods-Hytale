@@ -158,7 +158,7 @@ public class PlayerLoginSystem extends EntityTickingSystem<EntityStore> {
             });
             com.hypixel.hytale.server.core.universe.PlayerRef pRefShop = store.getComponent(playerRef, com.hypixel.hytale.server.core.universe.PlayerRef.getComponentType());
             if (pRefShop != null) {
-                pRefShop.sendMessage(com.hypixel.hytale.server.core.Message.raw("§a+" + pendingGold + " Or recu de ventes au marche !"));
+                pRefShop.sendMessage(com.hypixel.hytale.server.core.Message.raw(com.eldanior.system.config.MessageConfig.SHOP_EARNINGS.format(pendingGold)));
             }
         }
 
@@ -173,7 +173,7 @@ public class PlayerLoginSystem extends EntityTickingSystem<EntityStore> {
             });
             com.hypixel.hytale.server.core.universe.PlayerRef pRefParcel = store.getComponent(playerRef, com.hypixel.hytale.server.core.universe.PlayerRef.getComponentType());
             if (pRefParcel != null) {
-                pRefParcel.sendMessage(com.hypixel.hytale.server.core.Message.raw("§a+" + parcelGold + " Or recu de ventes de parcelles !"));
+                pRefParcel.sendMessage(com.hypixel.hytale.server.core.Message.raw(com.eldanior.system.config.MessageConfig.PARCEL_EARNINGS.format(parcelGold)));
             }
         }
 
@@ -198,6 +198,18 @@ public class PlayerLoginSystem extends EntityTickingSystem<EntityStore> {
         ClassementManager.updateDuelWins(playerName, data.getDuelWins());
 
         initializedPlayers.add(uuid);
+
+        // Message de bienvenue
+        try {
+            com.hypixel.hytale.server.core.universe.PlayerRef pRefWelcome = store.getComponent(playerRef, com.hypixel.hytale.server.core.universe.PlayerRef.getComponentType());
+            if (pRefWelcome != null) {
+                String welcomeMsg = com.eldanior.system.config.MessageConfig.LOGIN_WELCOME.format(
+                        playerName, data.getLevel(), data.getPlayerClass());
+                com.eldanior.system.Leveling.utils.NotificationHelper.sendNotification(
+                        pRefWelcome, "<color:gold>" + welcomeMsg + "</color>",
+                        com.hypixel.hytale.protocol.packets.interface_.NotificationStyle.Success);
+            }
+        } catch (Exception e) { /* skip */ }
     }
 
     public void invalidate(UUID uuid) {

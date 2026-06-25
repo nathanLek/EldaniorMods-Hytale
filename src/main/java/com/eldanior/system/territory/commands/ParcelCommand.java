@@ -64,7 +64,7 @@ public class ParcelCommand extends AbstractAsyncCommand {
                     case "info" -> handleInfo(sender, senderUUID);
                     case "list" -> handleList(sender, senderUUID, isAdmin);
                     case "buy" -> handleBuy(sender, senderUUID);
-                    default -> sender.getPlayerRef().sendMessage(Message.raw("§cUsage: /es parcel <pos1|pos2|info|list|buy>"));
+                    default -> sender.getPlayerRef().sendMessage(Message.raw("Usage: /es parcel <pos1|pos2|info|list|buy>"));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -87,7 +87,7 @@ public class ParcelCommand extends AbstractAsyncCommand {
         int z = (int) Math.floor(pos.z);
 
         ParcelManager.setPos1(uuid, x, y, z);
-        sender.getPlayerRef().sendMessage(Message.raw("§aPosition 1 definie : §f" + x + ", " + y + ", " + z));
+        sender.getPlayerRef().sendMessage(Message.raw("Position 1 definie : " + x + ", " + y + ", " + z));
     }
 
     private void handlePos2(Player sender, UUID uuid) {
@@ -103,7 +103,7 @@ public class ParcelCommand extends AbstractAsyncCommand {
         int z = (int) Math.floor(pos.z);
 
         ParcelManager.setPos2(uuid, x, y, z);
-        sender.getPlayerRef().sendMessage(Message.raw("§aPosition 2 definie : §f" + x + ", " + y + ", " + z));
+        sender.getPlayerRef().sendMessage(Message.raw("Position 2 definie : " + x + ", " + y + ", " + z));
     }
 
     // ==================== INFO ====================
@@ -120,26 +120,26 @@ public class ParcelCommand extends AbstractAsyncCommand {
         ParcelData parcel = ParcelManager.getParcelAt(worldStr, pos.x, pos.y, pos.z);
 
         if (parcel == null) {
-            sender.getPlayerRef().sendMessage(Message.raw("§7Vous etes en zone sauvage (aucune parcelle)."));
+            sender.getPlayerRef().sendMessage(Message.raw("Vous etes en zone sauvage (aucune parcelle)."));
             return;
         }
 
-        sender.getPlayerRef().sendMessage(Message.raw("§6=== " + parcel.getType().getLabel() + " : " + parcel.getName() + " ==="));
-        sender.getPlayerRef().sendMessage(Message.raw("§7ID: §f" + parcel.getId()));
-        sender.getPlayerRef().sendMessage(Message.raw("§7Proprietaire: §e" + parcel.getOwnerName()));
-        sender.getPlayerRef().sendMessage(Message.raw("§7Protection: " + (parcel.isProtectedByDefault() ? "§aActivee" : "§cDesactivee")));
-        sender.getPlayerRef().sendMessage(Message.raw("§7Membres: §f" + parcel.getMembers().size()));
+        sender.getPlayerRef().sendMessage(Message.raw("=== " + parcel.getType().getLabel() + " : " + parcel.getName() + " ==="));
+        sender.getPlayerRef().sendMessage(Message.raw("ID: " + parcel.getId()));
+        sender.getPlayerRef().sendMessage(Message.raw("Proprietaire: " + parcel.getOwnerName()));
+        sender.getPlayerRef().sendMessage(Message.raw("Protection: " + (parcel.isProtectedByDefault() ? "Activee" : "Desactivee")));
+        sender.getPlayerRef().sendMessage(Message.raw("Membres: " + parcel.getMembers().size()));
 
         int sizeX = parcel.getMaxX() - parcel.getMinX() + 1;
         int sizeY = parcel.getMaxY() - parcel.getMinY() + 1;
         int sizeZ = parcel.getMaxZ() - parcel.getMinZ() + 1;
-        sender.getPlayerRef().sendMessage(Message.raw("§7Taille: §f" + sizeX + "x" + sizeY + "x" + sizeZ));
+        sender.getPlayerRef().sendMessage(Message.raw("Taille: " + sizeX + "x" + sizeY + "x" + sizeZ));
 
-        if (parcel.isForSale()) sender.getPlayerRef().sendMessage(Message.raw("§eEn vente : " + parcel.getPrice() + " Or"));
-        if (parcel.isForRent()) sender.getPlayerRef().sendMessage(Message.raw("§eEn location : " + parcel.getRentPrice() + " Or/7j"));
+        if (parcel.isForSale()) sender.getPlayerRef().sendMessage(Message.raw("En vente : " + parcel.getPrice() + " Or"));
+        if (parcel.isForRent()) sender.getPlayerRef().sendMessage(Message.raw("En location : " + parcel.getRentPrice() + " Or/7j"));
 
         ParcelRole myRole = parcel.getRole(uuid);
-        sender.getPlayerRef().sendMessage(Message.raw("§7Votre role: §f" + (myRole != null ? myRole.name() : "Aucun")));
+        sender.getPlayerRef().sendMessage(Message.raw("Votre role: " + (myRole != null ? myRole.name() : "Aucun")));
     }
 
     // ==================== LIST ====================
@@ -148,14 +148,14 @@ public class ParcelCommand extends AbstractAsyncCommand {
         List<ParcelData> myParcels = ParcelManager.getParcelsOwnedBy(uuid);
 
         if (isAdmin) {
-            sender.getPlayerRef().sendMessage(Message.raw("§6=== Toutes les parcelles (" + ParcelManager.getAll().size() + ") ==="));
+            sender.getPlayerRef().sendMessage(Message.raw("=== Toutes les parcelles (" + ParcelManager.getAll().size() + ") ==="));
             for (ParcelData p : ParcelManager.getAll()) {
-                sender.getPlayerRef().sendMessage(Message.raw("§7[" + p.getType().getLabel() + "] §f" + p.getName() + " §7par §e" + p.getOwnerName() + " §7(ID: " + p.getId() + ")"));
+                sender.getPlayerRef().sendMessage(Message.raw("[" + p.getType().getLabel() + "] " + p.getName() + " par " + p.getOwnerName() + " (ID: " + p.getId() + ")"));
             }
         } else {
-            sender.getPlayerRef().sendMessage(Message.raw("§6=== Mes parcelles (" + myParcels.size() + ") ==="));
+            sender.getPlayerRef().sendMessage(Message.raw("=== Mes parcelles (" + myParcels.size() + ") ==="));
             for (ParcelData p : myParcels) {
-                sender.getPlayerRef().sendMessage(Message.raw("§7[" + p.getType().getLabel() + "] §f" + p.getName() + " §7(ID: " + p.getId() + ")"));
+                sender.getPlayerRef().sendMessage(Message.raw("[" + p.getType().getLabel() + "] " + p.getName() + " (ID: " + p.getId() + ")"));
             }
         }
     }
@@ -171,12 +171,12 @@ public class ParcelCommand extends AbstractAsyncCommand {
 
         String worldStr = sender.getWorld().getName();
         ParcelData parcel = ParcelManager.getParcelAt(worldStr, transform.getPosition().x, transform.getPosition().y, transform.getPosition().z);
-        if (parcel == null) { sender.getPlayerRef().sendMessage(Message.raw("§cAucune parcelle ici.")); return; }
+        if (parcel == null) { sender.getPlayerRef().sendMessage(Message.raw("Aucune parcelle ici.")); return; }
 
         // Synchronized on the parcel object to prevent double-purchase race condition (ELD-82)
         synchronized (parcel) {
-            if (!parcel.isForSale()) { sender.getPlayerRef().sendMessage(Message.raw("§cCette parcelle n'est pas en vente.")); return; }
-            if (parcel.isOwner(uuid)) { sender.getPlayerRef().sendMessage(Message.raw("§cVous etes deja proprietaire.")); return; }
+            if (!parcel.isForSale()) { sender.getPlayerRef().sendMessage(Message.raw("Cette parcelle n'est pas en vente.")); return; }
+            if (parcel.isOwner(uuid)) { sender.getPlayerRef().sendMessage(Message.raw("Vous etes deja proprietaire.")); return; }
 
             PlayerLevelData data = store.getComponent(ref, EldaniorSystem.get().getPlayerLevelDataType());
             if (data == null) return;
@@ -189,7 +189,7 @@ public class ParcelCommand extends AbstractAsyncCommand {
 
             // Transfert — prelever le montant total au joueur (atomique, refuse si fonds insuffisants)
             if (!data.removeMoney(totalPrice)) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cPas assez d'or ! Il faut " + totalPrice + " Or."));
+                sender.getPlayerRef().sendMessage(Message.raw("Pas assez d'or ! Il faut " + totalPrice + " Or."));
                 return;
             }
             store.putComponent(ref, EldaniorSystem.get().getPlayerLevelDataType(), data);
@@ -212,7 +212,7 @@ public class ParcelCommand extends AbstractAsyncCommand {
                                 oldStore.putComponent(oldEntRef, EldaniorSystem.get().getPlayerLevelDataType(), oldData);
                             }
                         }
-                        oldRef.sendMessage(Message.raw("§a" + sender.getPlayerRef().getUsername() + " a achete votre parcelle " + parcel.getName() + " pour " + totalPrice + " Or ! (net: " + netAmount + " Or, taxe: " + taxAmount + " Or)"));
+                        oldRef.sendMessage(Message.raw("" + sender.getPlayerRef().getUsername() + " a achete votre parcelle " + parcel.getName() + " pour " + totalPrice + " Or ! (net: " + netAmount + " Or, taxe: " + taxAmount + " Or)"));
                     } catch (Exception e) { EldaniorLogger.error("ParcelCommand", e); }
                 } else {
                     // Proprietaire offline — stocker les gains NET en attente
@@ -231,7 +231,7 @@ public class ParcelCommand extends AbstractAsyncCommand {
             parcel.addMember(uuid, ParcelRole.OWNER);
             ParcelManager.save();
 
-            sender.getPlayerRef().sendMessage(Message.raw("§a§lParcelle achetee : §f" + parcel.getName() + " §apour §f" + totalPrice + " Or §7(taxe: " + taxAmount + " Or)§a !"));
+            sender.getPlayerRef().sendMessage(Message.raw("Parcelle achetee : " + parcel.getName() + " pour " + totalPrice + " Or (taxe: " + taxAmount + " Or) !"));
         }
     }
 }

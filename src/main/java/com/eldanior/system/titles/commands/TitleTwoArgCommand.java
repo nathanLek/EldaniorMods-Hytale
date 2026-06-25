@@ -62,7 +62,7 @@ public class TitleTwoArgCommand extends AbstractAsyncCommand {
                     case "grant" -> handleGrant(sender, ctx);
                     case "remove" -> handleRemove(sender, ctx);
                     case "reset" -> handleReset(sender, ctx);
-                    default -> senderRef.sendMessage(Message.raw("§cUsage : /es titleadmin <grant|remove|reset> <joueur> <titleId>"));
+                    default -> senderRef.sendMessage(Message.raw("Usage : /es titleadmin <grant|remove|reset> <joueur> <titleId>"));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -72,7 +72,7 @@ public class TitleTwoArgCommand extends AbstractAsyncCommand {
 
     private void handleGrant(Player sender, CommandContext ctx) {
         if (!sender.getPlayerRef().hasPermission("eldanior.command.title.grant")) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cErreur : Pas de permission."));
+            sender.getPlayerRef().sendMessage(Message.raw("Erreur : Pas de permission."));
             return;
         }
 
@@ -81,14 +81,14 @@ public class TitleTwoArgCommand extends AbstractAsyncCommand {
 
         TitleModel title = TitleManager.get(titleId.toLowerCase());
         if (title == null) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cErreur : Titre '" + titleId + "' inconnu."));
-            sender.getPlayerRef().sendMessage(Message.raw("§7Titres disponibles : " + TitleManager.getAvailableIds()));
+            sender.getPlayerRef().sendMessage(Message.raw("Erreur : Titre '" + titleId + "' inconnu."));
+            sender.getPlayerRef().sendMessage(Message.raw("Titres disponibles : " + TitleManager.getAvailableIds()));
             return;
         }
 
         PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
         if (targetRef == null) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cErreur : Joueur '" + targetName + "' introuvable."));
+            sender.getPlayerRef().sendMessage(Message.raw("Erreur : Joueur '" + targetName + "' introuvable."));
             return;
         }
 
@@ -97,7 +97,7 @@ public class TitleTwoArgCommand extends AbstractAsyncCommand {
 
             PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
             if (targetPlayer == null) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cErreur : Le joueur doit etre connecte."));
+                sender.getPlayerRef().sendMessage(Message.raw("Erreur : Le joueur doit etre connecte."));
                 return;
             }
 
@@ -113,8 +113,8 @@ public class TitleTwoArgCommand extends AbstractAsyncCommand {
             data.addTitle(title.getId());
             store.putComponent(ref, type, data);
 
-            sender.getPlayerRef().sendMessage(Message.raw("§aSucces : Titre " + title.getFormattedName() + " §aaccorde a " + targetName));
-            targetPlayer.sendMessage(Message.raw("§eNouveau titre debloque : " + title.getFormattedName()));
+            sender.getPlayerRef().sendMessage(Message.raw("Succes : Titre " + title.getFormattedName() + " accorde a " + targetName));
+            targetPlayer.sendMessage(Message.raw("Nouveau titre debloque : " + title.getFormattedName()));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -123,7 +123,7 @@ public class TitleTwoArgCommand extends AbstractAsyncCommand {
 
     private void handleRemove(Player sender, CommandContext ctx) {
         if (!sender.getPlayerRef().hasPermission("eldanior.command.title.remove")) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cErreur : Pas de permission."));
+            sender.getPlayerRef().sendMessage(Message.raw("Erreur : Pas de permission."));
             return;
         }
 
@@ -131,13 +131,13 @@ public class TitleTwoArgCommand extends AbstractAsyncCommand {
         String titleId = this.titleIdArg.get(ctx).toLowerCase();
 
         if (titleId.equals("novice")) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cErreur : Le titre 'novice' ne peut pas etre retire."));
+            sender.getPlayerRef().sendMessage(Message.raw("Erreur : Le titre 'novice' ne peut pas etre retire."));
             return;
         }
 
         PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
         if (targetRef == null) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cErreur : Joueur '" + targetName + "' introuvable."));
+            sender.getPlayerRef().sendMessage(Message.raw("Erreur : Joueur '" + targetName + "' introuvable."));
             return;
         }
 
@@ -146,7 +146,7 @@ public class TitleTwoArgCommand extends AbstractAsyncCommand {
 
             PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
             if (targetPlayer == null) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cErreur : Le joueur doit etre connecte."));
+                sender.getPlayerRef().sendMessage(Message.raw("Erreur : Le joueur doit etre connecte."));
                 return;
             }
 
@@ -160,15 +160,15 @@ public class TitleTwoArgCommand extends AbstractAsyncCommand {
             if (data == null) data = new PlayerLevelData();
 
             if (!data.getUnlockedTitles().contains(titleId)) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cErreur : " + targetName + " ne possede pas le titre '" + titleId + "'."));
+                sender.getPlayerRef().sendMessage(Message.raw("Erreur : " + targetName + " ne possede pas le titre '" + titleId + "'."));
                 return;
             }
 
             data.removeTitle(titleId);
             store.putComponent(ref, type, data);
 
-            sender.getPlayerRef().sendMessage(Message.raw("§aSucces : Titre '" + titleId + "' retire a " + targetName));
-            targetPlayer.sendMessage(Message.raw("§cTitre retire : " + titleId));
+            sender.getPlayerRef().sendMessage(Message.raw("Succes : Titre '" + titleId + "' retire a " + targetName));
+            targetPlayer.sendMessage(Message.raw("Titre retire : " + titleId));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -177,7 +177,7 @@ public class TitleTwoArgCommand extends AbstractAsyncCommand {
 
     private void handleReset(Player sender, CommandContext ctx) {
         if (!sender.getPlayerRef().hasPermission("eldanior.command.title.reset")) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cErreur : Pas de permission."));
+            sender.getPlayerRef().sendMessage(Message.raw("Erreur : Pas de permission."));
             return;
         }
 
@@ -185,7 +185,7 @@ public class TitleTwoArgCommand extends AbstractAsyncCommand {
 
         PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
         if (targetRef == null) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cErreur : Joueur '" + targetName + "' introuvable."));
+            sender.getPlayerRef().sendMessage(Message.raw("Erreur : Joueur '" + targetName + "' introuvable."));
             return;
         }
 
@@ -194,7 +194,7 @@ public class TitleTwoArgCommand extends AbstractAsyncCommand {
 
             PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
             if (targetPlayer == null) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cErreur : Le joueur doit etre connecte."));
+                sender.getPlayerRef().sendMessage(Message.raw("Erreur : Le joueur doit etre connecte."));
                 return;
             }
 
@@ -210,8 +210,8 @@ public class TitleTwoArgCommand extends AbstractAsyncCommand {
             data.resetTitles();
             store.putComponent(ref, type, data);
 
-            sender.getPlayerRef().sendMessage(Message.raw("§aSucces : Titres et kills de " + targetName + " reinitialises."));
-            targetPlayer.sendMessage(Message.raw("§cVos titres et statistiques de kills ont ete reinitialises."));
+            sender.getPlayerRef().sendMessage(Message.raw("Succes : Titres et kills de " + targetName + " reinitialises."));
+            targetPlayer.sendMessage(Message.raw("Vos titres et statistiques de kills ont ete reinitialises."));
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -244,60 +244,60 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
             }
             case "admin_reset" -> {
                 if (AdminTab.handleResetLevel(ref, store)) {
-                    if (player != null) player.getPlayerRef().sendMessage(Message.raw("§aJoueur reset !"));
+                    if (player != null) player.getPlayerRef().sendMessage(Message.raw("Joueur reset !"));
                     refreshDashboard(ref, store);
                 }
             }
             case "admin_xp" -> {
                 if (param != null && AdminTab.handleAddXP(EldaniorLogger.parseSafeInt(param, 0), ref, store)) {
-                    if (player != null) player.getPlayerRef().sendMessage(Message.raw("§a+" + param + " XP !"));
+                    if (player != null) player.getPlayerRef().sendMessage(Message.raw("+" + param + " XP !"));
                     refreshDashboard(ref, store);
                 }
             }
             case "admin_setlv" -> {
                 if (param != null && AdminTab.handleSetLevel(EldaniorLogger.parseSafeInt(param, 1), ref, store)) {
-                    if (player != null) player.getPlayerRef().sendMessage(Message.raw("§aNiveau defini a " + param));
+                    if (player != null) player.getPlayerRef().sendMessage(Message.raw("Niveau defini a " + param));
                     refreshDashboard(ref, store);
                 }
             }
             case "admin_gold" -> {
                 if (param != null && AdminTab.handleGiveGold(EldaniorLogger.parseSafeLong(param, 0L), ref, store)) {
-                    if (player != null) player.getPlayerRef().sendMessage(Message.raw("§a+" + param + " Or !"));
+                    if (player != null) player.getPlayerRef().sendMessage(Message.raw("+" + param + " Or !"));
                     refreshDashboard(ref, store);
                 }
             }
             case "admin_class" -> {
                 if (param != null && AdminTab.handleSetClass(param, ref, store)) {
-                    if (player != null) player.getPlayerRef().sendMessage(Message.raw("§aClasse: " + param));
+                    if (player != null) player.getPlayerRef().sendMessage(Message.raw("Classe: " + param));
                     refreshDashboard(ref, store);
                 }
             }
             case "admin_nob" -> {
                 if (param != null && AdminTab.handleNobilityPromote(param, ref, store)) {
-                    if (player != null) player.getPlayerRef().sendMessage(Message.raw("§aRang: " + param));
+                    if (player != null) player.getPlayerRef().sendMessage(Message.raw("Rang: " + param));
                     refreshDashboard(ref, store);
                 }
             }
             case "admin_ch" -> {
                 if (param != null && AdminTab.handleChurchPromote(param, ref, store)) {
-                    if (player != null) player.getPlayerRef().sendMessage(Message.raw("§aEglise: " + param));
+                    if (player != null) player.getPlayerRef().sendMessage(Message.raw("Eglise: " + param));
                     refreshDashboard(ref, store);
                 }
             }
             case "admin_pk" -> {
                 if (AdminTab.handleSetPK(ref, store)) {
-                    if (player != null) player.getPlayerRef().sendMessage(Message.raw("§ePK toggle !"));
+                    if (player != null) player.getPlayerRef().sendMessage(Message.raw("PK toggle !"));
                     refreshDashboard(ref, store);
                 }
             }
             case "admin_titlerst" -> {
                 if (AdminTab.handleResetTitles(ref, store)) {
-                    if (player != null) player.getPlayerRef().sendMessage(Message.raw("§aTitres reset !"));
+                    if (player != null) player.getPlayerRef().sendMessage(Message.raw("Titres reset !"));
                     refreshDashboard(ref, store);
                 }
             }
             case "admin_relic" -> {
-                if (player != null) player.getPlayerRef().sendMessage(Message.raw("§eTapez : /es getrelic"));
+                if (player != null) player.getPlayerRef().sendMessage(Message.raw("Tapez : /es getrelic"));
             }
             case "admin_invasion" -> {
                 if (player != null) {
@@ -308,15 +308,15 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
                 if (param != null && player != null) {
                     String name = AdminTab.getSelectedPlayerName();
                     String cmd = param.replace("<player>", name != null ? name : "<player>");
-                    player.getPlayerRef().sendMessage(Message.raw("§6Tapez dans le chat :"));
-                    player.getPlayerRef().sendMessage(Message.raw("§f/es " + cmd));
+                    player.getPlayerRef().sendMessage(Message.raw("Tapez dans le chat :"));
+                    player.getPlayerRef().sendMessage(Message.raw("/es " + cmd));
                 }
             }
             case "admin_reset_guilds" -> {
                 if (player != null) {
                     com.eldanior.system.guild.GuildManager.init();
                     deleteDataFile("guilds.properties");
-                    player.getPlayerRef().sendMessage(Message.raw("§c§lGuildes reinitialises !"));
+                    player.getPlayerRef().sendMessage(Message.raw("Guildes reinitialises !"));
                 }
             }
             case "admin_reset_families" -> {
@@ -325,7 +325,7 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
                     com.eldanior.system.titles.nobility.NobilityManager.init();
                     deleteDataFile("families.properties");
                     deleteDataFile("hierarchies.properties");
-                    player.getPlayerRef().sendMessage(Message.raw("§c§lFamilles et Noblesse reinitialises !"));
+                    player.getPlayerRef().sendMessage(Message.raw("Familles et Noblesse reinitialises !"));
                 }
             }
             case "admin_reset_parcels" -> {
@@ -337,7 +337,7 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
                     } catch (Exception e) { EldaniorLogger.error("AdminScreen", e); }
                     com.eldanior.system.territory.ParcelManager.init(com.eldanior.system.EldaniorSystem.get().getDataDirectory());
                     com.eldanior.system.territory.systems.ParcelMapSystem.refreshMap(player.getWorld());
-                    player.getPlayerRef().sendMessage(Message.raw("§c§lParcelles reinitialises !"));
+                    player.getPlayerRef().sendMessage(Message.raw("Parcelles reinitialises !"));
                 }
             }
             case "admin_reset_shop" -> {
@@ -345,14 +345,14 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
                     com.eldanior.system.shop.ShopManager.init();
                     deleteDataFile("shop.properties");
                     deleteDataFile("blackmarket.properties");
-                    player.getPlayerRef().sendMessage(Message.raw("§c§lShop et Marche Noir reinitialises !"));
+                    player.getPlayerRef().sendMessage(Message.raw("Shop et Marche Noir reinitialises !"));
                 }
             }
             case "admin_reset_classements" -> {
                 if (player != null) {
                     com.eldanior.system.classement.ClassementManager.init();
                     deleteDataFile("classements.properties");
-                    player.getPlayerRef().sendMessage(Message.raw("§c§lClassements reinitialises !"));
+                    player.getPlayerRef().sendMessage(Message.raw("Classements reinitialises !"));
                 }
             }
             case "admin_resetall" -> {
@@ -373,9 +373,9 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
                             }
                         }
                     } catch (Exception e) { EldaniorLogger.error("AdminScreen", e); }
-                    player.getPlayerRef().sendMessage(Message.raw("§c§l=== RESET COMPLET ==="));
-                    player.getPlayerRef().sendMessage(Message.raw("§cGuildes, Familles, Parcelles, Classements, Shop reinitialises !"));
-                    player.getPlayerRef().sendMessage(Message.raw("§7Redemarrez le serveur pour finaliser."));
+                    player.getPlayerRef().sendMessage(Message.raw("=== RESET COMPLET ==="));
+                    player.getPlayerRef().sendMessage(Message.raw("Guildes, Familles, Parcelles, Classements, Shop reinitialises !"));
+                    player.getPlayerRef().sendMessage(Message.raw("Redemarrez le serveur pour finaliser."));
                 }
             }
         }
@@ -468,56 +468,56 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
             case "world_dpvp" -> {
                 com.eldanior.system.territory.ParcelData p = getSelectedParcel();
                 if (p != null) { p.setPvpEnabled(!p.isPvpEnabled()); com.eldanior.system.territory.ParcelManager.saveAll();
-                    if (player != null) player.getPlayerRef().sendMessage(Message.raw("§ePVP " + (p.isPvpEnabled() ? "active" : "desactive") + " pour " + p.getName()));
+                    if (player != null) player.getPlayerRef().sendMessage(Message.raw("PVP " + (p.isPvpEnabled() ? "active" : "desactive") + " pour " + p.getName()));
                     refreshWorldAll(); }
             }
             case "world_dprotect" -> {
                 com.eldanior.system.territory.ParcelData p = getSelectedParcel();
                 if (p != null) { p.setProtectedByDefault(!p.isProtectedByDefault()); com.eldanior.system.territory.ParcelManager.saveAll();
-                    if (player != null) player.getPlayerRef().sendMessage(Message.raw("§eProtection " + (p.isProtectedByDefault() ? "activee" : "desactivee") + " pour " + p.getName()));
+                    if (player != null) player.getPlayerRef().sendMessage(Message.raw("Protection " + (p.isProtectedByDefault() ? "activee" : "desactivee") + " pour " + p.getName()));
                     refreshWorldAll(); }
             }
             case "world_dsale" -> {
                 com.eldanior.system.territory.ParcelData p = getSelectedParcel();
                 if (p != null) { p.setForSale(!p.isForSale()); com.eldanior.system.territory.ParcelManager.saveAll();
-                    if (player != null) player.getPlayerRef().sendMessage(Message.raw("§eVente " + (p.isForSale() ? "activee" : "desactivee") + " pour " + p.getName()));
+                    if (player != null) player.getPlayerRef().sendMessage(Message.raw("Vente " + (p.isForSale() ? "activee" : "desactivee") + " pour " + p.getName()));
                     refreshWorldAll(); }
             }
             case "world_dclearowner" -> {
                 com.eldanior.system.territory.ParcelData p = getSelectedParcel();
                 if (p != null) { p.clearOwnership(); com.eldanior.system.territory.ParcelManager.saveAll();
-                    if (player != null) player.getPlayerRef().sendMessage(Message.raw("§eProprietaire retire pour " + p.getName()));
+                    if (player != null) player.getPlayerRef().sendMessage(Message.raw("Proprietaire retire pour " + p.getName()));
                     refreshWorldAll(); }
             }
             case "world_dguild" -> {
                 com.eldanior.system.territory.ParcelData p = getSelectedParcel();
-                if (p != null && player != null) { player.getPlayerRef().sendMessage(Message.raw("§6Tapez : §f/es parcel assignguild " + p.getId() + " <guildId>")); }
+                if (p != null && player != null) { player.getPlayerRef().sendMessage(Message.raw("Tapez : /es parcel assignguild " + p.getId() + " <guildId>")); }
             }
             case "world_dfamily" -> {
                 com.eldanior.system.territory.ParcelData p = getSelectedParcel();
                 if (p != null && player != null) {
-                    player.getPlayerRef().sendMessage(Message.raw("§6Familles : §f" + com.eldanior.system.titles.nobility.family.FamilyManager.getAvailableIds()));
-                    player.getPlayerRef().sendMessage(Message.raw("§6Tapez : §f/es parcel assignfamily " + p.getId() + " <familyId>"));
+                    player.getPlayerRef().sendMessage(Message.raw("Familles : " + com.eldanior.system.titles.nobility.family.FamilyManager.getAvailableIds()));
+                    player.getPlayerRef().sendMessage(Message.raw("Tapez : /es parcel assignfamily " + p.getId() + " <familyId>"));
                 }
             }
             case "world_dprice" -> {
                 com.eldanior.system.territory.ParcelData p = getSelectedParcel();
-                if (p != null && player != null) { player.getPlayerRef().sendMessage(Message.raw("§6Tapez : §f/es parcel setprice " + p.getId() + " <montant>")); }
+                if (p != null && player != null) { player.getPlayerRef().sendMessage(Message.raw("Tapez : /es parcel setprice " + p.getId() + " <montant>")); }
             }
             case "world_drentprice" -> {
                 com.eldanior.system.territory.ParcelData p = getSelectedParcel();
-                if (p != null && player != null) { player.getPlayerRef().sendMessage(Message.raw("§6Tapez : §f/es parcel setrent " + p.getId() + " <montant>")); }
+                if (p != null && player != null) { player.getPlayerRef().sendMessage(Message.raw("Tapez : /es parcel setrent " + p.getId() + " <montant>")); }
             }
             case "world_dtreasury" -> {
                 com.eldanior.system.territory.ParcelData p = getSelectedParcel();
                 if (p != null) { p.addTreasury(10000); com.eldanior.system.territory.ParcelManager.saveAll();
-                    if (player != null) player.getPlayerRef().sendMessage(Message.raw("§a+10,000 Or au tresor de " + p.getName()));
+                    if (player != null) player.getPlayerRef().sendMessage(Message.raw("+10,000 Or au tresor de " + p.getName()));
                     refreshWorldAll(); }
             }
             case "world_ddelete" -> {
                 com.eldanior.system.territory.ParcelData p = getSelectedParcel();
                 if (p != null) { String name = p.getName(); com.eldanior.system.territory.ParcelManager.deleteParcel(p.getId());
-                    worldSelectedId = null; if (player != null) player.getPlayerRef().sendMessage(Message.raw("§c" + name + " supprime !"));
+                    worldSelectedId = null; if (player != null) player.getPlayerRef().sendMessage(Message.raw("" + name + " supprime !"));
                     buildWorldLists(); refreshWorldAll(); }
             }
             case "world_dtax" -> {
@@ -544,7 +544,7 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
                         p.setLastTaxCollection(System.currentTimeMillis());
                         p.setLastTaxAmount(totalCollected);
                         com.eldanior.system.territory.ParcelManager.saveAll();
-                        if (player != null) player.getPlayerRef().sendMessage(Message.raw("§a" + formatMoney(totalCollected) + " Or d'impots collectes pour " + p.getName()));
+                        if (player != null) player.getPlayerRef().sendMessage(Message.raw("" + formatMoney(totalCollected) + " Or d'impots collectes pour " + p.getName()));
                         refreshWorldAll();
                     }
                 }
@@ -572,7 +572,7 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
                     if (transferred) {
                         p.setLastTreasuryTransfer(System.currentTimeMillis());
                         com.eldanior.system.territory.ParcelManager.saveAll();
-                        if (player != null) player.getPlayerRef().sendMessage(Message.raw("§a" + formatMoney(transferAmount) + " Or transferes depuis " + p.getName()));
+                        if (player != null) player.getPlayerRef().sendMessage(Message.raw("" + formatMoney(transferAmount) + " Or transferes depuis " + p.getName()));
                         refreshWorldAll();
                     }
                 }
@@ -1233,7 +1233,7 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
                 String holoId = cachedHoloIds.get(idx);
                 com.eldanior.system.hologram.HologramManager.delete(holoId);
                 Player player = store.getComponent(ref, Player.getComponentType());
-                if (player != null) player.getPlayerRef().sendMessage(Message.raw("§aHologramme " + holoId + " supprime !"));
+                if (player != null) player.getPlayerRef().sendMessage(Message.raw("Hologramme " + holoId + " supprime !"));
                 // Refresh
                 UICommandBuilder update = new UICommandBuilder();
                 populateHologramsTab(update);
@@ -1340,14 +1340,14 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
         // Broadcast a tous les joueurs
         for (com.hypixel.hytale.server.core.universe.PlayerRef pRef : com.hypixel.hytale.server.core.universe.Universe.get().getPlayers()) {
             pRef.sendMessage(Message.raw(""));
-            pRef.sendMessage(Message.raw("§4§l=== INVASION EN COURS ==="));
-            pRef.sendMessage(Message.raw("§cDes creatures hostiles envahissent le monde !"));
-            pRef.sendMessage(Message.raw("§cPreparez-vous au combat !"));
+            pRef.sendMessage(Message.raw("=== INVASION EN COURS ==="));
+            pRef.sendMessage(Message.raw("Des creatures hostiles envahissent le monde !"));
+            pRef.sendMessage(Message.raw("Preparez-vous au combat !"));
             pRef.sendMessage(Message.raw(""));
         }
-        adminPlayer.getPlayerRef().sendMessage(Message.raw("§a[Admin] Invasion annoncee a tous les joueurs."));
-        adminPlayer.getPlayerRef().sendMessage(Message.raw("§6Utilisez les commandes de spawn du serveur pour faire apparaitre les mobs hostiles."));
-        adminPlayer.getPlayerRef().sendMessage(Message.raw("§7Exemple : §f/summon zombie §7ou §f/summon skeleton"));
+        adminPlayer.getPlayerRef().sendMessage(Message.raw("[Admin] Invasion annoncee a tous les joueurs."));
+        adminPlayer.getPlayerRef().sendMessage(Message.raw("Utilisez les commandes de spawn du serveur pour faire apparaitre les mobs hostiles."));
+        adminPlayer.getPlayerRef().sendMessage(Message.raw("Exemple : /summon zombie ou /summon skeleton"));
     }
 
     /**
@@ -1362,16 +1362,16 @@ public class AdminScreen extends InteractiveCustomUIPage<AdminScreen.AdminEventD
         // Broadcast a tous les joueurs
         for (com.hypixel.hytale.server.core.universe.PlayerRef pRef : com.hypixel.hytale.server.core.universe.Universe.get().getPlayers()) {
             pRef.sendMessage(Message.raw(""));
-            pRef.sendMessage(Message.raw("§4§l=== INVASION ==="));
-            pRef.sendMessage(Message.raw("§c" + parcel.getName() + " est attaque par des creatures hostiles !"));
-            pRef.sendMessage(Message.raw("§cDefendez la zone !"));
+            pRef.sendMessage(Message.raw("=== INVASION ==="));
+            pRef.sendMessage(Message.raw("" + parcel.getName() + " est attaque par des creatures hostiles !"));
+            pRef.sendMessage(Message.raw("Defendez la zone !"));
             pRef.sendMessage(Message.raw(""));
         }
 
-        adminPlayer.getPlayerRef().sendMessage(Message.raw("§a[Admin] Invasion annoncee pour " + parcel.getName()));
-        adminPlayer.getPlayerRef().sendMessage(Message.raw("§6Coordonnees centre : §fX=" + centerX + " Y=" + centerY + " Z=" + centerZ));
-        adminPlayer.getPlayerRef().sendMessage(Message.raw("§6Tapez : §f/tp " + centerX + " " + centerY + " " + centerZ + " §7pour vous teleporter"));
-        adminPlayer.getPlayerRef().sendMessage(Message.raw("§6Puis spawnez des mobs avec les commandes serveur."));
+        adminPlayer.getPlayerRef().sendMessage(Message.raw("[Admin] Invasion annoncee pour " + parcel.getName()));
+        adminPlayer.getPlayerRef().sendMessage(Message.raw("Coordonnees centre : X=" + centerX + " Y=" + centerY + " Z=" + centerZ));
+        adminPlayer.getPlayerRef().sendMessage(Message.raw("Tapez : /tp " + centerX + " " + centerY + " " + centerZ + " pour vous teleporter"));
+        adminPlayer.getPlayerRef().sendMessage(Message.raw("Puis spawnez des mobs avec les commandes serveur."));
     }
 
     // ==================== UTILITIES ====================

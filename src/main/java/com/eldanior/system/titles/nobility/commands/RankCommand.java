@@ -63,7 +63,7 @@ public class RankCommand extends AbstractAsyncCommand {
                     case "demote" -> handleDemote(sender, ctx, world);
                     case "knight" -> handleKnight(sender, ctx, world);
                     case "info" -> handleInfo(sender, ctx, world);
-                    default -> senderRef.sendMessage(Message.raw("§cUsage : /es rank <setking|demote|knight|info> <joueur>"));
+                    default -> senderRef.sendMessage(Message.raw("Usage : /es rank <setking|demote|knight|info> <joueur>"));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -73,21 +73,21 @@ public class RankCommand extends AbstractAsyncCommand {
 
     private void handleSetKing(Player sender, CommandContext ctx, World world) {
         if (!sender.getPlayerRef().hasPermission("eldanior.command.rank.setking")) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cErreur : Pas de permission (Admin requis)."));
+            sender.getPlayerRef().sendMessage(Message.raw("Erreur : Pas de permission (Admin requis)."));
             return;
         }
 
         String targetName = this.playerArg.get(ctx);
         PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
         if (targetRef == null) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cErreur : Joueur '" + targetName + "' introuvable."));
+            sender.getPlayerRef().sendMessage(Message.raw("Erreur : Joueur '" + targetName + "' introuvable."));
             return;
         }
 
         try {
             UUID targetUUID = extractUUID(targetRef);
             PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
-            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
+            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("Le joueur doit etre connecte.")); return; }
 
             var ref = targetPlayer.getReference();
             if (ref == null) return;
@@ -108,7 +108,7 @@ public class RankCommand extends AbstractAsyncCommand {
                                 oldCopy.setNobilityRank(NobilityRank.MARQUIS.name());
                                 oldCopy.setDignity(NobilityRank.MARQUIS.getBaseDignity());
                                 oldStore.putComponent(oldRef, type, oldCopy);
-                                oldKingRef.sendMessage(Message.raw("§eVous avez ete retrogade au rang de §6Marquis§e."));
+                                oldKingRef.sendMessage(Message.raw("Vous avez ete retrogade au rang de Marquis."));
                             }
                         }
                     }
@@ -126,8 +126,8 @@ public class RankCommand extends AbstractAsyncCommand {
 
             NobilityManager.setKing(targetUUID, targetName);
 
-            sender.getPlayerRef().sendMessage(Message.raw("§a" + targetName + " est maintenant " + NobilityRank.ROI.getFormattedName() + " §a!"));
-            targetPlayer.sendMessage(Message.raw("§6§lVous etes desormais le " + NobilityRank.ROI.getFormattedName() + " §6§l!"));
+            sender.getPlayerRef().sendMessage(Message.raw("" + targetName + " est maintenant " + NobilityRank.ROI.getFormattedName() + " !"));
+            targetPlayer.sendMessage(Message.raw("Vous etes desormais le " + NobilityRank.ROI.getFormattedName() + " !"));
         } catch (Exception e) { e.printStackTrace(); }
     }
 
@@ -136,7 +136,7 @@ public class RankCommand extends AbstractAsyncCommand {
             UUID senderUUID;
             try { senderUUID = getSenderUUID(sender); } catch (Exception e) { return; }
             if (senderUUID == null || !senderUUID.equals(NobilityManager.getCurrentKingUUID())) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cSeul le Roi ou un Admin peut retrograder."));
+                sender.getPlayerRef().sendMessage(Message.raw("Seul le Roi ou un Admin peut retrograder."));
                 return;
             }
         }
@@ -145,11 +145,11 @@ public class RankCommand extends AbstractAsyncCommand {
 
         try {
             PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
-            if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable.")); return; }
+            if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("Joueur introuvable.")); return; }
 
             UUID targetUUID = extractUUID(targetRef);
             PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
-            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
+            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("Le joueur doit etre connecte.")); return; }
 
             var ref = targetPlayer.getReference();
             if (ref == null) return;
@@ -160,7 +160,7 @@ public class RankCommand extends AbstractAsyncCommand {
 
             NobilityRank currentRank = NobilityRank.fromString(data.getNobilityRank());
             if (currentRank == null || currentRank == NobilityRank.ROTURIER) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cCe joueur est deja Roturier.")); return;
+                sender.getPlayerRef().sendMessage(Message.raw("Ce joueur est deja Roturier.")); return;
             }
 
             if (currentRank == NobilityRank.CHEVALIER) NobilityManager.removeKnight(targetUUID);
@@ -186,8 +186,8 @@ public class RankCommand extends AbstractAsyncCommand {
             }
             store.putComponent(ref, type, copy);
 
-            sender.getPlayerRef().sendMessage(Message.raw("§a" + targetName + " retrogade a " + newRank.getFormattedName()));
-            targetPlayer.sendMessage(Message.raw("§cVous avez ete retrogade a " + newRank.getFormattedName()));
+            sender.getPlayerRef().sendMessage(Message.raw("" + targetName + " retrogade a " + newRank.getFormattedName()));
+            targetPlayer.sendMessage(Message.raw("Vous avez ete retrogade a " + newRank.getFormattedName()));
         } catch (Exception e) { e.printStackTrace(); }
     }
 
@@ -205,18 +205,18 @@ public class RankCommand extends AbstractAsyncCommand {
 
             NobilityRank senderRank = NobilityRank.fromString(senderData.getNobilityRank());
             if (senderRank == null || !senderRank.isNoble() || senderRank == NobilityRank.CHEVALIER) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cVous devez etre au moins Baron pour adouber.")); return;
+                sender.getPlayerRef().sendMessage(Message.raw("Vous devez etre au moins Baron pour adouber.")); return;
             }
             if (!NobilityManager.canPromoteKnight(senderUUID, senderRank)) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cLimite de Chevaliers atteinte (" + senderRank.getMaxKnights() + " max).")); return;
+                sender.getPlayerRef().sendMessage(Message.raw("Limite de Chevaliers atteinte (" + senderRank.getMaxKnights() + " max).")); return;
             }
 
             PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
-            if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable.")); return; }
+            if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("Joueur introuvable.")); return; }
 
             UUID targetUUID = extractUUID(targetRef);
             PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
-            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
+            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("Le joueur doit etre connecte.")); return; }
 
             var ref = targetPlayer.getReference();
             if (ref == null) return;
@@ -226,7 +226,7 @@ public class RankCommand extends AbstractAsyncCommand {
 
             NobilityRank targetRank = NobilityRank.fromString(data.getNobilityRank());
             if (targetRank != null && targetRank != NobilityRank.ROTURIER) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cCe joueur a deja un rang.")); return;
+                sender.getPlayerRef().sendMessage(Message.raw("Ce joueur a deja un rang.")); return;
             }
 
             PlayerLevelData copy = (PlayerLevelData) data.clone();
@@ -240,8 +240,8 @@ public class RankCommand extends AbstractAsyncCommand {
             store.putComponent(ref, type, copy);
             NobilityManager.addKnight(senderUUID, targetUUID);
 
-            sender.getPlayerRef().sendMessage(Message.raw("§a" + targetName + " est maintenant votre " + NobilityRank.CHEVALIER.getFormattedName()));
-            targetPlayer.sendMessage(Message.raw("§eVous avez ete adoube " + NobilityRank.CHEVALIER.getFormattedName() + " §epar " + sender.getPlayerRef().getUsername() + " !"));
+            sender.getPlayerRef().sendMessage(Message.raw("" + targetName + " est maintenant votre " + NobilityRank.CHEVALIER.getFormattedName()));
+            targetPlayer.sendMessage(Message.raw("Vous avez ete adoube " + NobilityRank.CHEVALIER.getFormattedName() + " par " + sender.getPlayerRef().getUsername() + " !"));
         } catch (Exception e) { e.printStackTrace(); }
     }
 
@@ -250,44 +250,44 @@ public class RankCommand extends AbstractAsyncCommand {
 
         try {
             PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
-            if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable.")); return; }
+            if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("Joueur introuvable.")); return; }
 
             UUID targetUUID = extractUUID(targetRef);
             PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
-            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
+            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("Le joueur doit etre connecte.")); return; }
 
             var ref = targetPlayer.getReference();
             if (ref == null) return;
             Store<EntityStore> store = ref.getStore();
             ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
             PlayerLevelData data = store.getComponent(ref, type);
-            if (data == null) { sender.getPlayerRef().sendMessage(Message.raw("§cAucune donnee.")); return; }
+            if (data == null) { sender.getPlayerRef().sendMessage(Message.raw("Aucune donnee.")); return; }
 
             NobilityRank rank = NobilityRank.fromString(data.getNobilityRank());
             if (rank == null) rank = NobilityRank.ROTURIER;
 
-            sender.getPlayerRef().sendMessage(Message.raw("§6=== " + targetName + " ==="));
-            sender.getPlayerRef().sendMessage(Message.raw("§7Rang : " + rank.getFormattedName()));
-            sender.getPlayerRef().sendMessage(Message.raw("§7Dignite : §e" + data.getDignity()));
+            sender.getPlayerRef().sendMessage(Message.raw("=== " + targetName + " ==="));
+            sender.getPlayerRef().sendMessage(Message.raw("Rang : " + rank.getFormattedName()));
+            sender.getPlayerRef().sendMessage(Message.raw("Dignite : " + data.getDignity()));
 
             String status = data.getStatus();
             if (status != null && !status.isEmpty()) {
                 String statusDisplay = switch (status) {
-                    case "PATRIARCH" -> "§6Patriarche";
-                    case "VICE" -> "§eVice-Patriarche";
-                    case "MEMBER" -> "§7Membre";
-                    default -> "§7" + status;
+                    case "PATRIARCH" -> "Patriarche";
+                    case "VICE" -> "Vice-Patriarche";
+                    case "MEMBER" -> "Membre";
+                    default -> "" + status;
                 };
-                sender.getPlayerRef().sendMessage(Message.raw("§7Status : " + statusDisplay));
+                sender.getPlayerRef().sendMessage(Message.raw("Status : " + statusDisplay));
             }
 
             String familyId = data.getNobleFamilyId();
             if (familyId != null && !familyId.isEmpty()) {
                 NobleFamilyModel family = FamilyManager.get(familyId);
                 if (family != null) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§7Famille : " + family.getFormattedName()));
-                    sender.getPlayerRef().sendMessage(Message.raw("§7Devise : §o" + family.getMotto()));
-                    sender.getPlayerRef().sendMessage(Message.raw("§7Competence : §e" + family.getFamilyPassive().getDisplayName()));
+                    sender.getPlayerRef().sendMessage(Message.raw("Famille : " + family.getFormattedName()));
+                    sender.getPlayerRef().sendMessage(Message.raw("Devise : " + family.getMotto()));
+                    sender.getPlayerRef().sendMessage(Message.raw("Competence : " + family.getFamilyPassive().getDisplayName()));
                 }
             }
 
@@ -296,13 +296,13 @@ public class RankCommand extends AbstractAsyncCommand {
                 if (lord != null) {
                     PlayerRef lordRef = Universe.get().getPlayer(lord);
                     String lordName = (lordRef != null) ? lordRef.getUsername() : "Inconnu";
-                    sender.getPlayerRef().sendMessage(Message.raw("§7Seigneur : §e" + lordName));
+                    sender.getPlayerRef().sendMessage(Message.raw("Seigneur : " + lordName));
                 }
             }
 
             if (rank.getMaxKnights() > 0 && rank != NobilityRank.CHEVALIER) {
                 int knightCount = NobilityManager.getKnightsOf(targetUUID).size();
-                sender.getPlayerRef().sendMessage(Message.raw("§7Chevaliers : §e" + knightCount + "/" + rank.getMaxKnights()));
+                sender.getPlayerRef().sendMessage(Message.raw("Chevaliers : " + knightCount + "/" + rank.getMaxKnights()));
             }
         } catch (Exception e) { e.printStackTrace(); }
     }

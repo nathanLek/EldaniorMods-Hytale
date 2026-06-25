@@ -60,30 +60,30 @@ public class RankPromoteCommand extends AbstractAsyncCommand {
 
                 NobilityRank newRank = NobilityRank.fromString(rankStr);
                 if (newRank == null || newRank == NobilityRank.ROI || newRank == NobilityRank.ROTURIER || newRank == NobilityRank.CHEVALIER) {
-                    senderRef.sendMessage(Message.raw("§cRang invalide. Utilisez : baron, comte, duc, marquis"));
+                    senderRef.sendMessage(Message.raw("Rang invalide. Utilisez : baron, comte, duc, marquis"));
                     return;
                 }
 
                 UUID senderUUID = getSenderUUID(sender);
                 if (senderUUID == null || !senderUUID.equals(NobilityManager.getCurrentKingUUID())) {
                     if (!sender.getPlayerRef().hasPermission("eldanior.command.rank.promote")) {
-                        sender.getPlayerRef().sendMessage(Message.raw("§cSeul le Roi ou un Admin peut promouvoir."));
+                        sender.getPlayerRef().sendMessage(Message.raw("Seul le Roi ou un Admin peut promouvoir."));
                         return;
                     }
                 }
 
                 if (!NobilityManager.canKingPromote(newRank)) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cPlus de places pour " + newRank.getFormattedName()
-                            + " §c(" + NobilityManager.getRemainingSlots(newRank) + "/" + newRank.getMaxPerKingdom() + ")"));
+                    sender.getPlayerRef().sendMessage(Message.raw("Plus de places pour " + newRank.getFormattedName()
+                            + " (" + NobilityManager.getRemainingSlots(newRank) + "/" + newRank.getMaxPerKingdom() + ")"));
                     return;
                 }
 
                 PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
-                if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable.")); return; }
+                if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("Joueur introuvable.")); return; }
 
                 UUID targetUUID = extractUUID(targetRef);
                 PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
-                if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
+                if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("Le joueur doit etre connecte.")); return; }
 
                 var ref = targetPlayer.getReference();
                 if (ref == null) return;
@@ -103,14 +103,14 @@ public class RankPromoteCommand extends AbstractAsyncCommand {
                 // Verifier titres en temps reel apres promotion de rang
                 com.eldanior.system.titles.TitleManager.checkAndUnlockTitles(ref, store, copy, targetPlayer);
 
-                sender.getPlayerRef().sendMessage(Message.raw("§a" + targetName + " promu au rang de " + newRank.getFormattedName()));
+                sender.getPlayerRef().sendMessage(Message.raw("" + targetName + " promu au rang de " + newRank.getFormattedName()));
                 com.eldanior.system.Leveling.utils.NotificationHelper.showEventTitle(targetPlayer,
                         "PROMOTION NOBLESSE", newRank.getFormattedName(), true);
 
                 if (newRank == NobilityRank.MARQUIS || newRank == NobilityRank.DUC) {
                     String available = FamilyManager.getAvailableFamilyIdsForRank(newRank);
-                    targetPlayer.sendMessage(Message.raw("§6Choisissez votre famille : §f/es family choose <familyId>"));
-                    targetPlayer.sendMessage(Message.raw("§7Disponibles : §e" + available));
+                    targetPlayer.sendMessage(Message.raw("Choisissez votre famille : /es family choose <familyId>"));
+                    targetPlayer.sendMessage(Message.raw("Disponibles : " + available));
                 }
             } catch (Exception e) { e.printStackTrace(); }
         }, world);

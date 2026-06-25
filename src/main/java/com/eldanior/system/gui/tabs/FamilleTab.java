@@ -177,7 +177,7 @@ public class FamilleTab {
                         mData.setNobleFamilyId("");
                         mData.setStatus("");
                         s.putComponent(eRef, type, mData);
-                        pRef.sendMessage(Message.raw("§cLa famille a ete dissoute par le Patriarch."));
+                        pRef.sendMessage(Message.raw("La famille a ete dissoute par le Patriarch."));
                     }
                 } catch (Exception e) { EldaniorLogger.error("FamilleTab", e); }
             }
@@ -237,7 +237,7 @@ public class FamilleTab {
             }
         }
 
-        targetRef.sendMessage(Message.raw("§eVous avez rejoint la famille Von " + family.getDisplayName() + " !"));
+        targetRef.sendMessage(Message.raw("Vous avez rejoint la famille Von " + family.getDisplayName() + " !"));
         return true;
     }
 
@@ -317,7 +317,7 @@ public class FamilleTab {
                 try {
                     PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
                     if (pRef != null) {
-                        pRef.sendMessage(Message.raw("§cPas assez d'Or ! Il faut " + String.format("%,d", price) + " Or pour acheter ce territoire."));
+                        pRef.sendMessage(Message.raw("Pas assez d'Or ! Il faut " + String.format("%,d", price) + " Or pour acheter ce territoire."));
                     }
                 } catch (Exception e) { EldaniorLogger.error("FamilleTab", e); }
                 return false;

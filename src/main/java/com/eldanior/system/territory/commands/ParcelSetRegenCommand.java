@@ -58,14 +58,14 @@ public class ParcelSetRegenCommand extends AbstractAsyncCommand {
                 boolean isAdmin = senderRef.hasPermission(EldaniorLogger.ADMIN_PERMISSION);
 
                 if (!isAdmin) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cCommande admin uniquement."));
+                    sender.getPlayerRef().sendMessage(Message.raw("Commande admin uniquement."));
                     return;
                 }
 
                 int delaySec;
                 try { delaySec = Integer.parseInt(capturedDelay); }
                 catch (NumberFormatException e) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cUsage: /es psetregen <secondes>"));
+                    sender.getPlayerRef().sendMessage(Message.raw("Usage: /es psetregen <secondes>"));
                     return;
                 }
 
@@ -76,12 +76,12 @@ public class ParcelSetRegenCommand extends AbstractAsyncCommand {
                 Vector3d pos = transform.getPosition();
                 ParcelData parcel = ParcelManager.getParcelAt(sender.getWorld().getName(), pos.x, pos.y, pos.z);
                 if (parcel == null || (parcel.getType() != ParcelType.FARM && parcel.getType() != ParcelType.MINE && parcel.getType() != ParcelType.FOREST)) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cVous devez etre dans une mine, farm ou foret."));
+                    sender.getPlayerRef().sendMessage(Message.raw("Vous devez etre dans une mine, farm ou foret."));
                     return;
                 }
                 parcel.setRegenDelaySec(delaySec);
                 ParcelManager.save();
-                sender.getPlayerRef().sendMessage(Message.raw("§aDelai de regeneration de §e" + parcel.getName() + "§a defini a §6" + delaySec + "s"));
+                sender.getPlayerRef().sendMessage(Message.raw("Delai de regeneration de " + parcel.getName() + " defini a " + delaySec + "s"));
             } catch (Exception e) {
                 e.printStackTrace();
             }

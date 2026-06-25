@@ -104,14 +104,14 @@ public class ParcelCreateCommand extends AbstractAsyncCommand {
 
     private void handleCreate(Player sender, UUID uuid, String typeStr, String name, boolean isAdmin) {
         if (typeStr == null || typeStr.isEmpty() || name == null || name.isEmpty()) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es pcreate <type> <nom>"));
+            sender.getPlayerRef().sendMessage(Message.raw("Usage : /es pcreate <type> <nom>"));
             return;
         }
 
         ParcelType type;
         try { type = ParcelType.valueOf(typeStr.toUpperCase()); }
         catch (Exception e) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cType invalide. Valides: KINGDOM, TERRITORY, CITY, PLOT, HOUSING, ROOM, FARM"));
+            sender.getPlayerRef().sendMessage(Message.raw("Type invalide. Valides: KINGDOM, TERRITORY, CITY, PLOT, HOUSING, ROOM, FARM"));
             return;
         }
 
@@ -130,7 +130,7 @@ public class ParcelCreateCommand extends AbstractAsyncCommand {
             };
 
             if (!allowed) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cVous n'avez pas le rang requis pour creer un " + type.getLabel() + "."));
+                sender.getPlayerRef().sendMessage(Message.raw("Vous n'avez pas le rang requis pour creer un " + type.getLabel() + "."));
                 return;
             }
         }
@@ -156,9 +156,9 @@ public class ParcelCreateCommand extends AbstractAsyncCommand {
 
         // Autres types : selection manuelle requise
         if (!ParcelManager.hasFullSelection(uuid)) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cAucune selection detectee !"));
-            sender.getPlayerRef().sendMessage(Message.raw("§7Utilisez le §fSelection Tool §7dans le jeu, ou :"));
-            sender.getPlayerRef().sendMessage(Message.raw("§f/es parcel pos1 §7puis §f/es parcel pos2"));
+            sender.getPlayerRef().sendMessage(Message.raw("Aucune selection detectee !"));
+            sender.getPlayerRef().sendMessage(Message.raw("Utilisez le Selection Tool dans le jeu, ou :"));
+            sender.getPlayerRef().sendMessage(Message.raw("/es parcel pos1 puis /es parcel pos2"));
             return;
         }
 
@@ -177,11 +177,11 @@ public class ParcelCreateCommand extends AbstractAsyncCommand {
             if (ParcelManager.isValidParent(parentParcel.getId(), type)) {
                 parentId = parentParcel.getId();
             } else {
-                sender.getPlayerRef().sendMessage(Message.raw("§cUn " + type.getLabel() + " ne peut pas etre cree dans un " + parentParcel.getType().getLabel() + "."));
+                sender.getPlayerRef().sendMessage(Message.raw("Un " + type.getLabel() + " ne peut pas etre cree dans un " + parentParcel.getType().getLabel() + "."));
                 return;
             }
         } else if (type != ParcelType.TERRITORY && type != ParcelType.CITY) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cUn " + type.getLabel() + " doit etre cree dans une zone existante."));
+            sender.getPlayerRef().sendMessage(Message.raw("Un " + type.getLabel() + " doit etre cree dans une zone existante."));
             return;
         }
 
@@ -200,12 +200,12 @@ public class ParcelCreateCommand extends AbstractAsyncCommand {
         int sizeY = Math.abs(sel[4] - sel[1]) + 1;
         int sizeZ = Math.abs(sel[5] - sel[2]) + 1;
 
-        sender.getPlayerRef().sendMessage(Message.raw("§a§l" + type.getLabel() + " cree ! §f" + name));
-        sender.getPlayerRef().sendMessage(Message.raw("§7ID: " + id + " | Taille: " + sizeX + "x" + sizeY + "x" + sizeZ));
+        sender.getPlayerRef().sendMessage(Message.raw("" + type.getLabel() + " cree ! " + name));
+        sender.getPlayerRef().sendMessage(Message.raw("ID: " + id + " | Taille: " + sizeX + "x" + sizeY + "x" + sizeZ));
 
         if (parentId != null) {
             ParcelData parent = ParcelManager.get(parentId);
-            sender.getPlayerRef().sendMessage(Message.raw("§7Parent: " + (parent != null ? parent.getName() : parentId)));
+            sender.getPlayerRef().sendMessage(Message.raw("Parent: " + (parent != null ? parent.getName() : parentId)));
         }
     }
 
@@ -223,14 +223,14 @@ public class ParcelCreateCommand extends AbstractAsyncCommand {
                 null, "", worldStr, kx1, yMin, kz1, kx2, yMax, kz2, null);
         ParcelManager.assignToFamily(kingdomId, "eldanior");
 
-        sender.getPlayerRef().sendMessage(Message.raw("§6§l=== CREATION DU ROYAUME ==="));
-        sender.getPlayerRef().sendMessage(Message.raw("§a§lRoyaume §f" + kingdomName + " §a§lcree ! §7(Famille Eldanior)"));
-        sender.getPlayerRef().sendMessage(Message.raw("§7Centre: " + cx + ", " + cz + " | 10000x10000"));
+        sender.getPlayerRef().sendMessage(Message.raw("=== CREATION DU ROYAUME ==="));
+        sender.getPlayerRef().sendMessage(Message.raw("Royaume " + kingdomName + " cree ! (Famille Eldanior)"));
+        sender.getPlayerRef().sendMessage(Message.raw("Centre: " + cx + ", " + cz + " | 10000x10000"));
 
         String royalId = ParcelManager.createParcel("Domaine_Royal", ParcelType.TERRITORY,
                 null, "", worldStr, cx - N, yMin, cz - N, cx + N, yMax, cz + N, kingdomId);
         ParcelManager.assignToFamily(royalId, "eldanior");
-        sender.getPlayerRef().sendMessage(Message.raw("§e  Domaine Royal §7(Famille Eldanior)"));
+        sender.getPlayerRef().sendMessage(Message.raw("  Domaine Royal (Famille Eldanior)"));
 
         String marqNO = ParcelManager.createParcel("Marquisat_Zippel", ParcelType.GRAND_TERRITORY,
                 null, "", worldStr, kx1, yMin, kz1, kx1 + M, yMax, kz1 + M, kingdomId);
@@ -248,7 +248,7 @@ public class ParcelCreateCommand extends AbstractAsyncCommand {
                 null, "", worldStr, kx2 - M, yMin, kz2 - M, kx2, yMax, kz2, kingdomId);
         ParcelManager.assignToFamily(marqSE, "valmontis");
 
-        sender.getPlayerRef().sendMessage(Message.raw("§e  4 Marquisats §7(Zippel, Runkandel, Luminara, Valmontis)"));
+        sender.getPlayerRef().sendMessage(Message.raw("  4 Marquisats (Zippel, Runkandel, Luminara, Valmontis)"));
 
         int duchW = 1500;
         int gap = 1000;
@@ -285,10 +285,10 @@ public class ParcelCreateCommand extends AbstractAsyncCommand {
                 kx2 - duchW, yMin, kz2 - M, kx2, yMax, kz2, marqSE);
         ParcelManager.assignToFamily(dSE2, "silkroad");
 
-        sender.getPlayerRef().sendMessage(Message.raw("§e  8 Duches §7(familles assignees automatiquement)"));
-        sender.getPlayerRef().sendMessage(Message.raw("§e  4 Zones Neutres §7(bras de la croix, terres de la couronne)"));
-        sender.getPlayerRef().sendMessage(Message.raw("§e  1 Domaine Royal §7(Famille Eldanior)"));
-        sender.getPlayerRef().sendMessage(Message.raw("§6§l=== 14 parcelles creees ! ==="));
+        sender.getPlayerRef().sendMessage(Message.raw("  8 Duches (familles assignees automatiquement)"));
+        sender.getPlayerRef().sendMessage(Message.raw("  4 Zones Neutres (bras de la croix, terres de la couronne)"));
+        sender.getPlayerRef().sendMessage(Message.raw("  1 Domaine Royal (Famille Eldanior)"));
+        sender.getPlayerRef().sendMessage(Message.raw("=== 14 parcelles creees ! ==="));
 
         ParcelManager.optimizeHierarchy();
     }

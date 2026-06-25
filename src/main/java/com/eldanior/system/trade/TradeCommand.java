@@ -55,7 +55,7 @@ public class TradeCommand extends AbstractAsyncCommand {
                     case "accept" -> handleAccept(sender, senderUUID);
                     case "decline" -> handleDecline(sender, senderUUID);
                     case "cancel" -> handleCancel(sender, senderUUID);
-                    default -> senderRef.sendMessage(Message.raw("§cUsage : /es trade <accept|decline|cancel>"));
+                    default -> senderRef.sendMessage(Message.raw("Usage : /es trade <accept|decline|cancel>"));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -65,12 +65,12 @@ public class TradeCommand extends AbstractAsyncCommand {
 
     private void handleAccept(Player sender, UUID senderUUID) {
         if (!TradeManager.hasPendingInvite(senderUUID)) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cAucune demande d'echange en attente."));
+            sender.getPlayerRef().sendMessage(Message.raw("Aucune demande d'echange en attente."));
             return;
         }
 
         if (TradeManager.isInTrade(senderUUID)) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cVous etes deja en echange."));
+            sender.getPlayerRef().sendMessage(Message.raw("Vous etes deja en echange."));
             TradeManager.clearInvite(senderUUID);
             return;
         }
@@ -80,13 +80,13 @@ public class TradeCommand extends AbstractAsyncCommand {
 
         PlayerRef inviterRef = Universe.get().getPlayer(inviterUUID);
         if (inviterRef == null) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cLe marchand n'est plus connecte."));
+            sender.getPlayerRef().sendMessage(Message.raw("Le marchand n'est plus connecte."));
             TradeManager.clearInvite(senderUUID);
             return;
         }
 
         if (TradeManager.isInTrade(inviterUUID)) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cLe marchand est deja en echange."));
+            sender.getPlayerRef().sendMessage(Message.raw("Le marchand est deja en echange."));
             TradeManager.clearInvite(senderUUID);
             return;
         }
@@ -94,7 +94,7 @@ public class TradeCommand extends AbstractAsyncCommand {
         // Demarrer l'echange
         TradeSession session = TradeManager.startTrade(inviterUUID, senderUUID);
         if (session == null) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cImpossible de demarrer l'echange."));
+            sender.getPlayerRef().sendMessage(Message.raw("Impossible de demarrer l'echange."));
             TradeManager.clearInvite(senderUUID);
             return;
         }
@@ -103,25 +103,25 @@ public class TradeCommand extends AbstractAsyncCommand {
         openTradeScreen(sender, senderUUID, session);
         openTradeScreenForRef(inviterRef, inviterUUID, session);
 
-        sender.getPlayerRef().sendMessage(Message.raw("§a§lEchange commence !"));
-        inviterRef.sendMessage(Message.raw("§a§l" + sender.getPlayerRef().getUsername() + " a accepte l'echange !"));
+        sender.getPlayerRef().sendMessage(Message.raw("Echange commence !"));
+        inviterRef.sendMessage(Message.raw("" + sender.getPlayerRef().getUsername() + " a accepte l'echange !"));
     }
 
     private void handleDecline(Player sender, UUID senderUUID) {
         if (!TradeManager.hasPendingInvite(senderUUID)) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cAucune demande d'echange en attente."));
+            sender.getPlayerRef().sendMessage(Message.raw("Aucune demande d'echange en attente."));
             return;
         }
 
         UUID inviterUUID = TradeManager.getPendingInviter(senderUUID);
         TradeManager.clearInvite(senderUUID);
 
-        sender.getPlayerRef().sendMessage(Message.raw("§7Demande d'echange refusee."));
+        sender.getPlayerRef().sendMessage(Message.raw("Demande d'echange refusee."));
 
         if (inviterUUID != null) {
             PlayerRef inviterRef = Universe.get().getPlayer(inviterUUID);
             if (inviterRef != null) {
-                inviterRef.sendMessage(Message.raw("§c" + sender.getPlayerRef().getUsername() + " a refuse votre demande d'echange."));
+                inviterRef.sendMessage(Message.raw("" + sender.getPlayerRef().getUsername() + " a refuse votre demande d'echange."));
             }
         }
     }
@@ -136,13 +136,13 @@ public class TradeCommand extends AbstractAsyncCommand {
             UUID otherUUID = session.getOther(senderUUID);
             TradeManager.endTrade(session, false);
 
-            sender.getPlayerRef().sendMessage(Message.raw("§7Echange annule."));
+            sender.getPlayerRef().sendMessage(Message.raw("Echange annule."));
             PlayerRef otherRef = Universe.get().getPlayer(otherUUID);
             if (otherRef != null) {
-                otherRef.sendMessage(Message.raw("§c" + sender.getPlayerRef().getUsername() + " a annule l'echange."));
+                otherRef.sendMessage(Message.raw("" + sender.getPlayerRef().getUsername() + " a annule l'echange."));
             }
         } else {
-            sender.getPlayerRef().sendMessage(Message.raw("§7Invitation annulee."));
+            sender.getPlayerRef().sendMessage(Message.raw("Invitation annulee."));
         }
     }
 

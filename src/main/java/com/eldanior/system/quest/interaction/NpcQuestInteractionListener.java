@@ -83,7 +83,7 @@ public class NpcQuestInteractionListener {
                     new DialogueScreen(playerRef, dialogueQuest));
             LOGGER.atInfo().log("[QUEST-NPC] DialogueScreen opened for quest: " + quest.getId());
         } else {
-            playerRef.sendMessage(Message.raw("§6[PNJ] §7Je n'ai rien pour vous pour le moment."));
+            playerRef.sendMessage(Message.raw("[PNJ] Je n'ai rien pour vous pour le moment."));
             LOGGER.atInfo().log("[QUEST-NPC] No dialogue quest found for NPC: " + npcTypeId);
         }
     }

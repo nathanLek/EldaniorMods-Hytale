@@ -44,16 +44,16 @@ public class KingdomCommand extends AbstractAsyncCommand {
 
                 String kingName = NobilityManager.getCurrentKingName();
                 if (kingName.isEmpty()) {
-                    senderRef.sendMessage(Message.raw("§7Aucun Roi n'a ete nomme."));
+                    senderRef.sendMessage(Message.raw("Aucun Roi n'a ete nomme."));
                     return;
                 }
 
-                senderRef.sendMessage(Message.raw("§6=== Royaume ==="));
-                senderRef.sendMessage(Message.raw("§cRoi : §f" + kingName));
+                senderRef.sendMessage(Message.raw("=== Royaume ==="));
+                senderRef.sendMessage(Message.raw("Roi : " + kingName));
 
                 for (NobilityRank rank : new NobilityRank[]{NobilityRank.MARQUIS, NobilityRank.DUC, NobilityRank.COMTE, NobilityRank.BARON}) {
                     int remaining = NobilityManager.getRemainingSlots(rank);
-                    senderRef.sendMessage(Message.raw("§7" + rank.getDisplayName() + " : " + rank.getColorCode()
+                    senderRef.sendMessage(Message.raw("" + rank.getDisplayName() + " : " + rank.getColorCode()
                             + remaining + "/" + rank.getMaxPerKingdom() + " places"));
                 }
             } catch (Exception e) {

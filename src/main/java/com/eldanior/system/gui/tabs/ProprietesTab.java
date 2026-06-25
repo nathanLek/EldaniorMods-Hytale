@@ -585,7 +585,7 @@ public class ProprietesTab {
             ParcelManager.save();
 
             targetRef.sendMessage(com.hypixel.hytale.server.core.Message.raw(
-                    "§eVous avez ete invite dans la parcelle §f" + p.getName()));
+                    "Vous avez ete invite dans la parcelle " + p.getName()));
             return true;
         } catch (Exception e) {
             System.err.println("[Proprietes] Erreur invite: " + e.getMessage());
@@ -720,7 +720,7 @@ public class ProprietesTab {
                         }
                     }
                     ownerRef.sendMessage(com.hypixel.hytale.server.core.Message.raw(
-                            "§a+" + netAmount + " Or §7(" + reason + ")"));
+                            "+" + netAmount + " Or (" + reason + ")"));
                 }
             } catch (Exception e) { EldaniorLogger.error("ProprietesTab", e); }
         } else {
@@ -767,7 +767,7 @@ public class ProprietesTab {
 
             // Verifier argent
             if (data.getMoney() < ParcelManager.CITY_PRICE) {
-                pRef.sendMessage(Message.raw("§cPas assez d'Or ! Il faut " + String.format("%,d", ParcelManager.CITY_PRICE) + " Or."));
+                pRef.sendMessage(Message.raw("Pas assez d'Or ! Il faut " + String.format("%,d", ParcelManager.CITY_PRICE) + " Or."));
                 return false;
             }
 
@@ -788,7 +788,7 @@ public class ProprietesTab {
 
             ParcelManager.save();
 
-            pRef.sendMessage(Message.raw("§a§lVille achetee : §f" + city.getName() + " §a§l! Associee a votre guilde."));
+            pRef.sendMessage(Message.raw("Ville achetee : " + city.getName() + " ! Associee a votre guilde."));
             return true;
         } catch (Exception e) {
             EldaniorLogger.error("ProprietesTab:buyCity", e);

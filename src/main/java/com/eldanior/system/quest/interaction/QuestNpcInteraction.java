@@ -61,10 +61,10 @@ public class QuestNpcInteraction extends SimpleInteraction {
             player.getPageManager().openCustomPage(entityRef, store,
                     new DialogueScreen(playerRef, dialogueQuest));
         } else if (quest != null) {
-            playerRef.sendMessage(Message.raw("§6[PNJ] §eQuete : §f" + quest.getName()));
-            playerRef.sendMessage(Message.raw("§7" + quest.getDescription()));
+            playerRef.sendMessage(Message.raw("[PNJ] Quete : " + quest.getName()));
+            playerRef.sendMessage(Message.raw("" + quest.getDescription()));
         } else {
-            playerRef.sendMessage(Message.raw("§6[PNJ] §7Je n'ai rien pour vous pour le moment."));
+            playerRef.sendMessage(Message.raw("[PNJ] Je n'ai rien pour vous pour le moment."));
         }
     }
 }

@@ -69,7 +69,7 @@ public class GuildCommand extends AbstractAsyncCommand {
                     case "decline" -> handleDecline(sender);
                     case "recruitment" -> handleRecruitment(sender, ctx);
                     case "join" -> handleJoin(sender, ctx);
-                    default -> senderRef.sendMessage(Message.raw("§cUsage : /es guild <invite|kick|promote|demote|info|leave|accept|decline|recruitment|join> <arg>"));
+                    default -> senderRef.sendMessage(Message.raw("Usage : /es guild <invite|kick|promote|demote|info|leave|accept|decline|recruitment|join> <arg>"));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -81,7 +81,7 @@ public class GuildCommand extends AbstractAsyncCommand {
     private void handleInvite(Player sender, CommandContext ctx) {
         String targetName = this.arg1.get(ctx);
         if (targetName == null || targetName.isEmpty()) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es guild invite <joueur>"));
+            sender.getPlayerRef().sendMessage(Message.raw("Usage : /es guild invite <joueur>"));
             return;
         }
 
@@ -94,20 +94,20 @@ public class GuildCommand extends AbstractAsyncCommand {
             if (senderData == null) return;
 
             if (!senderData.canInviteToGuild()) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cSeul le Chef ou un Officier peut inviter."));
+                sender.getPlayerRef().sendMessage(Message.raw("Seul le Chef ou un Officier peut inviter."));
                 return;
             }
 
             UUID senderUUID = getSenderUUID(sender);
             Guild guild = GuildManager.getPlayerGuild(senderUUID);
-            if (guild == null) { sender.getPlayerRef().sendMessage(Message.raw("§cVous n'etes dans aucune guilde.")); return; }
+            if (guild == null) { sender.getPlayerRef().sendMessage(Message.raw("Vous n'etes dans aucune guilde.")); return; }
 
             PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
-            if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable.")); return; }
+            if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("Joueur introuvable.")); return; }
 
             UUID targetUUID = extractUUID(targetRef);
             PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
-            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
+            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("Le joueur doit etre connecte.")); return; }
 
             var ref = targetPlayer.getReference();
             if (ref == null) return;
@@ -117,18 +117,18 @@ public class GuildCommand extends AbstractAsyncCommand {
 
             if (!targetData.canJoinGuild()) {
                 if (targetData.hasGuild()) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§c" + targetName + " est deja dans une guilde."));
+                    sender.getPlayerRef().sendMessage(Message.raw("" + targetName + " est deja dans une guilde."));
                 } else {
-                    sender.getPlayerRef().sendMessage(Message.raw("§c" + targetName + " fait partie d'une famille noble et ne peut pas rejoindre une guilde."));
+                    sender.getPlayerRef().sendMessage(Message.raw("" + targetName + " fait partie d'une famille noble et ne peut pas rejoindre une guilde."));
                 }
                 return;
             }
 
             GuildManager.sendInvite(targetUUID, senderUUID);
 
-            sender.getPlayerRef().sendMessage(Message.raw("§aInvitation envoyee a " + targetName + " pour rejoindre " + guild.getFormattedName()));
-            targetPlayer.sendMessage(Message.raw("§e" + sender.getPlayerRef().getUsername() + " vous invite a rejoindre la guilde " + guild.getFormattedName()));
-            targetPlayer.sendMessage(Message.raw("§7Tapez §f/es guild accept §7pour accepter ou §f/es guild decline §7pour refuser."));
+            sender.getPlayerRef().sendMessage(Message.raw("Invitation envoyee a " + targetName + " pour rejoindre " + guild.getFormattedName()));
+            targetPlayer.sendMessage(Message.raw("" + sender.getPlayerRef().getUsername() + " vous invite a rejoindre la guilde " + guild.getFormattedName()));
+            targetPlayer.sendMessage(Message.raw("Tapez /es guild accept pour accepter ou /es guild decline pour refuser."));
         } catch (Exception e) { e.printStackTrace(); }
     }
 
@@ -137,12 +137,12 @@ public class GuildCommand extends AbstractAsyncCommand {
         try {
             UUID senderUUID = getSenderUUID(sender);
             if (!GuildManager.hasPendingInvite(senderUUID)) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cAucune invitation en attente.")); return;
+                sender.getPlayerRef().sendMessage(Message.raw("Aucune invitation en attente.")); return;
             }
 
             UUID fromUUID = GuildManager.getPendingInvite(senderUUID);
             Guild guild = GuildManager.getPlayerGuild(fromUUID);
-            if (guild == null) { sender.getPlayerRef().sendMessage(Message.raw("§cLa guilde n'existe plus.")); GuildManager.clearInvite(senderUUID); return; }
+            if (guild == null) { sender.getPlayerRef().sendMessage(Message.raw("La guilde n'existe plus.")); GuildManager.clearInvite(senderUUID); return; }
 
             var ref = sender.getReference();
             if (ref == null) return;
@@ -152,7 +152,7 @@ public class GuildCommand extends AbstractAsyncCommand {
             if (data == null) return;
 
             if (!data.canJoinGuild()) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cVous ne pouvez pas rejoindre de guilde.")); return;
+                sender.getPlayerRef().sendMessage(Message.raw("Vous ne pouvez pas rejoindre de guilde.")); return;
             }
 
             PlayerLevelData copy = (PlayerLevelData) data.clone();
@@ -167,7 +167,7 @@ public class GuildCommand extends AbstractAsyncCommand {
             // Verifier titres en temps reel apres avoir rejoint une guilde
             com.eldanior.system.titles.TitleManager.checkAndUnlockTitles(ref, store, copy, sender.getPlayerRef());
 
-            sender.getPlayerRef().sendMessage(Message.raw("§aVous avez rejoint la guilde " + guild.getFormattedName() + " §a!"));
+            sender.getPlayerRef().sendMessage(Message.raw("Vous avez rejoint la guilde " + guild.getFormattedName() + " !"));
         } catch (Exception e) { e.printStackTrace(); }
     }
 
@@ -176,10 +176,10 @@ public class GuildCommand extends AbstractAsyncCommand {
         try {
             UUID senderUUID = getSenderUUID(sender);
             if (!GuildManager.hasPendingInvite(senderUUID)) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cAucune invitation en attente.")); return;
+                sender.getPlayerRef().sendMessage(Message.raw("Aucune invitation en attente.")); return;
             }
             GuildManager.clearInvite(senderUUID);
-            sender.getPlayerRef().sendMessage(Message.raw("§7Invitation refusee."));
+            sender.getPlayerRef().sendMessage(Message.raw("Invitation refusee."));
         } catch (Exception e) { e.printStackTrace(); }
     }
 
@@ -187,7 +187,7 @@ public class GuildCommand extends AbstractAsyncCommand {
     private void handleKick(Player sender, CommandContext ctx) {
         String targetName = this.arg1.get(ctx);
         if (targetName == null || targetName.isEmpty()) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es guild kick <joueur>"));
+            sender.getPlayerRef().sendMessage(Message.raw("Usage : /es guild kick <joueur>"));
             return;
         }
 
@@ -199,18 +199,18 @@ public class GuildCommand extends AbstractAsyncCommand {
             ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
             PlayerLevelData senderData = senderStore.getComponent(senderRef, type);
             if (senderData == null || !senderData.isGuildChef()) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cSeul le Chef peut exclure un membre.")); return;
+                sender.getPlayerRef().sendMessage(Message.raw("Seul le Chef peut exclure un membre.")); return;
             }
 
             Guild guild = GuildManager.getPlayerGuild(senderUUID);
             if (guild == null) return;
 
             PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
-            if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable.")); return; }
+            if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("Joueur introuvable.")); return; }
 
             UUID targetUUID = extractUUID(targetRef);
             if (!guild.hasMember(targetUUID)) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cCe joueur n'est pas dans votre guilde.")); return;
+                sender.getPlayerRef().sendMessage(Message.raw("Ce joueur n'est pas dans votre guilde.")); return;
             }
 
             PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
@@ -228,11 +228,11 @@ public class GuildCommand extends AbstractAsyncCommand {
                         }
                     }
                 }
-                targetPlayer.sendMessage(Message.raw("§cVous avez ete exclu de la guilde " + guild.getFormattedName()));
+                targetPlayer.sendMessage(Message.raw("Vous avez ete exclu de la guilde " + guild.getFormattedName()));
             }
 
             GuildManager.leaveGuild(targetUUID);
-            sender.getPlayerRef().sendMessage(Message.raw("§a" + targetName + " a ete exclu de la guilde."));
+            sender.getPlayerRef().sendMessage(Message.raw("" + targetName + " a ete exclu de la guilde."));
         } catch (Exception e) { e.printStackTrace(); }
     }
 
@@ -240,7 +240,7 @@ public class GuildCommand extends AbstractAsyncCommand {
     private void handlePromote(Player sender, CommandContext ctx) {
         String targetName = this.arg1.get(ctx);
         if (targetName == null || targetName.isEmpty()) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es guild promote <joueur>"));
+            sender.getPlayerRef().sendMessage(Message.raw("Usage : /es guild promote <joueur>"));
             return;
         }
 
@@ -251,15 +251,15 @@ public class GuildCommand extends AbstractAsyncCommand {
             ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
             PlayerLevelData senderData = senderStore.getComponent(senderRef, type);
             if (senderData == null || !senderData.isGuildChef()) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cSeul le Chef peut promouvoir.")); return;
+                sender.getPlayerRef().sendMessage(Message.raw("Seul le Chef peut promouvoir.")); return;
             }
 
             PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
-            if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable.")); return; }
+            if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("Joueur introuvable.")); return; }
 
             UUID targetUUID = extractUUID(targetRef);
             PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
-            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
+            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("Le joueur doit etre connecte.")); return; }
 
             var ref = targetPlayer.getReference();
             if (ref == null) return;
@@ -268,7 +268,7 @@ public class GuildCommand extends AbstractAsyncCommand {
             if (targetData == null) return;
 
             if (!"MEMBER".equals(targetData.getGuildRole())) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cCe joueur est deja Officier ou Chef.")); return;
+                sender.getPlayerRef().sendMessage(Message.raw("Ce joueur est deja Officier ou Chef.")); return;
             }
 
             PlayerLevelData copy = (PlayerLevelData) targetData.clone();
@@ -279,8 +279,8 @@ public class GuildCommand extends AbstractAsyncCommand {
             // Verifier titres en temps reel apres promotion dans la guilde
             com.eldanior.system.titles.TitleManager.checkAndUnlockTitles(ref, store, copy, targetPlayer);
 
-            sender.getPlayerRef().sendMessage(Message.raw("§a" + targetName + " est maintenant " + GuildRole.OFFICER.getFormattedName()));
-            targetPlayer.sendMessage(Message.raw("§eVous etes maintenant " + GuildRole.OFFICER.getFormattedName() + " §ede votre guilde !"));
+            sender.getPlayerRef().sendMessage(Message.raw("" + targetName + " est maintenant " + GuildRole.OFFICER.getFormattedName()));
+            targetPlayer.sendMessage(Message.raw("Vous etes maintenant " + GuildRole.OFFICER.getFormattedName() + " de votre guilde !"));
         } catch (Exception e) { e.printStackTrace(); }
     }
 
@@ -288,7 +288,7 @@ public class GuildCommand extends AbstractAsyncCommand {
     private void handleDemote(Player sender, CommandContext ctx) {
         String targetName = this.arg1.get(ctx);
         if (targetName == null || targetName.isEmpty()) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es guild demote <joueur>"));
+            sender.getPlayerRef().sendMessage(Message.raw("Usage : /es guild demote <joueur>"));
             return;
         }
 
@@ -299,15 +299,15 @@ public class GuildCommand extends AbstractAsyncCommand {
             ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
             PlayerLevelData senderData = senderStore.getComponent(senderRef, type);
             if (senderData == null || !senderData.isGuildChef()) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cSeul le Chef peut retrograder.")); return;
+                sender.getPlayerRef().sendMessage(Message.raw("Seul le Chef peut retrograder.")); return;
             }
 
             PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
-            if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable.")); return; }
+            if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("Joueur introuvable.")); return; }
 
             UUID targetUUID = extractUUID(targetRef);
             PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
-            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
+            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("Le joueur doit etre connecte.")); return; }
 
             var ref = targetPlayer.getReference();
             if (ref == null) return;
@@ -316,7 +316,7 @@ public class GuildCommand extends AbstractAsyncCommand {
             if (targetData == null) return;
 
             if (!"OFFICER".equals(targetData.getGuildRole())) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cCe joueur n'est pas Officier.")); return;
+                sender.getPlayerRef().sendMessage(Message.raw("Ce joueur n'est pas Officier.")); return;
             }
 
             PlayerLevelData copy = (PlayerLevelData) targetData.clone();
@@ -324,8 +324,8 @@ public class GuildCommand extends AbstractAsyncCommand {
             copy.setGuildRole("MEMBER");
             store.putComponent(ref, type, copy);
 
-            sender.getPlayerRef().sendMessage(Message.raw("§a" + targetName + " retrogade a " + GuildRole.MEMBER.getFormattedName()));
-            targetPlayer.sendMessage(Message.raw("§cVous avez ete retrogade a " + GuildRole.MEMBER.getFormattedName()));
+            sender.getPlayerRef().sendMessage(Message.raw("" + targetName + " retrogade a " + GuildRole.MEMBER.getFormattedName()));
+            targetPlayer.sendMessage(Message.raw("Vous avez ete retrogade a " + GuildRole.MEMBER.getFormattedName()));
         } catch (Exception e) { e.printStackTrace(); }
     }
 
@@ -339,15 +339,15 @@ public class GuildCommand extends AbstractAsyncCommand {
             ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
             PlayerLevelData data = store.getComponent(ref, type);
             if (data == null || !data.hasGuild()) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cVous n'etes dans aucune guilde.")); return;
+                sender.getPlayerRef().sendMessage(Message.raw("Vous n'etes dans aucune guilde.")); return;
             }
 
             Guild guild = GuildManager.getPlayerGuild(senderUUID);
 
             if (data.isGuildChef()) {
                 if (guild != null && guild.getMemberCount() > 1) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cVous devez transferer le role de Chef ou dissoudre la guilde avant de partir."));
-                    sender.getPlayerRef().sendMessage(Message.raw("§7Utilisez §f/es guilddisband §7pour dissoudre."));
+                    sender.getPlayerRef().sendMessage(Message.raw("Vous devez transferer le role de Chef ou dissoudre la guilde avant de partir."));
+                    sender.getPlayerRef().sendMessage(Message.raw("Utilisez /es guilddisband pour dissoudre."));
                     return;
                 }
                 // Seul membre, on dissout
@@ -361,7 +361,7 @@ public class GuildCommand extends AbstractAsyncCommand {
             store.putComponent(ref, type, copy);
 
             GuildManager.leaveGuild(senderUUID);
-            sender.getPlayerRef().sendMessage(Message.raw("§7Vous avez quitte votre guilde."));
+            sender.getPlayerRef().sendMessage(Message.raw("Vous avez quitte votre guilde."));
         } catch (Exception e) { e.printStackTrace(); }
     }
 
@@ -369,7 +369,7 @@ public class GuildCommand extends AbstractAsyncCommand {
     private void handleInfo(Player sender, CommandContext ctx) {
         String guildName = this.arg1.get(ctx);
         if (guildName == null || guildName.isEmpty()) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es guild info <nom_guilde>"));
+            sender.getPlayerRef().sendMessage(Message.raw("Usage : /es guild info <nom_guilde>"));
             return;
         }
 
@@ -378,22 +378,22 @@ public class GuildCommand extends AbstractAsyncCommand {
         if (guild == null) guild = GuildManager.get(guildName.toLowerCase().replace(" ", "_"));
 
         if (guild == null) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cGuilde '" + guildName + "' introuvable.")); return;
+            sender.getPlayerRef().sendMessage(Message.raw("Guilde '" + guildName + "' introuvable.")); return;
         }
 
-        sender.getPlayerRef().sendMessage(Message.raw("§6=== " + guild.getFormattedName() + " " + guild.getFormattedTag() + " §6==="));
-        sender.getPlayerRef().sendMessage(Message.raw("§7Fondateur : §e" + guild.getFounderName()));
-        sender.getPlayerRef().sendMessage(Message.raw("§7Membres : §e" + guild.getMemberCount()));
-        sender.getPlayerRef().sendMessage(Message.raw("§7Mob Kills : §e" + guild.getTotalMobKills()));
-        sender.getPlayerRef().sendMessage(Message.raw("§7PvP Kills : §e" + guild.getTotalPlayerKills()));
-        sender.getPlayerRef().sendMessage(Message.raw("§7Morts : §e" + guild.getTotalDeaths()));
+        sender.getPlayerRef().sendMessage(Message.raw("=== " + guild.getFormattedName() + " " + guild.getFormattedTag() + " ==="));
+        sender.getPlayerRef().sendMessage(Message.raw("Fondateur : " + guild.getFounderName()));
+        sender.getPlayerRef().sendMessage(Message.raw("Membres : " + guild.getMemberCount()));
+        sender.getPlayerRef().sendMessage(Message.raw("Mob Kills : " + guild.getTotalMobKills()));
+        sender.getPlayerRef().sendMessage(Message.raw("PvP Kills : " + guild.getTotalPlayerKills()));
+        sender.getPlayerRef().sendMessage(Message.raw("Morts : " + guild.getTotalDeaths()));
     }
 
     // ==================== RECRUITMENT ====================
     private void handleRecruitment(Player sender, CommandContext ctx) {
         String mode = this.arg1.get(ctx);
         if (mode == null || (!mode.equalsIgnoreCase("on") && !mode.equalsIgnoreCase("off"))) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es guild recruitment <on|off>"));
+            sender.getPlayerRef().sendMessage(Message.raw("Usage : /es guild recruitment <on|off>"));
             return;
         }
 
@@ -404,21 +404,21 @@ public class GuildCommand extends AbstractAsyncCommand {
             ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
             PlayerLevelData senderData = senderStore.getComponent(senderRef, type);
             if (senderData == null || !senderData.isGuildChef()) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cSeul le Chef peut changer le mode de recrutement."));
+                sender.getPlayerRef().sendMessage(Message.raw("Seul le Chef peut changer le mode de recrutement."));
                 return;
             }
 
             UUID senderUUID = getSenderUUID(sender);
             Guild guild = GuildManager.getPlayerGuild(senderUUID);
-            if (guild == null) { sender.getPlayerRef().sendMessage(Message.raw("§cVous n'etes dans aucune guilde.")); return; }
+            if (guild == null) { sender.getPlayerRef().sendMessage(Message.raw("Vous n'etes dans aucune guilde.")); return; }
 
             boolean open = mode.equalsIgnoreCase("on");
             guild.setOpenRecruitment(open);
 
             if (open) {
-                sender.getPlayerRef().sendMessage(Message.raw("§aRecrutement ouvert ! Les joueurs peuvent maintenant rejoindre votre guilde librement."));
+                sender.getPlayerRef().sendMessage(Message.raw("Recrutement ouvert ! Les joueurs peuvent maintenant rejoindre votre guilde librement."));
             } else {
-                sender.getPlayerRef().sendMessage(Message.raw("§7Recrutement ferme. Les joueurs doivent etre invites pour rejoindre."));
+                sender.getPlayerRef().sendMessage(Message.raw("Recrutement ferme. Les joueurs doivent etre invites pour rejoindre."));
             }
         } catch (Exception e) { e.printStackTrace(); }
     }
@@ -427,7 +427,7 @@ public class GuildCommand extends AbstractAsyncCommand {
     private void handleJoin(Player sender, CommandContext ctx) {
         String guildName = this.arg1.get(ctx);
         if (guildName == null || guildName.isEmpty()) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es guild join <nom_guilde>"));
+            sender.getPlayerRef().sendMessage(Message.raw("Usage : /es guild join <nom_guilde>"));
             return;
         }
 
@@ -441,9 +441,9 @@ public class GuildCommand extends AbstractAsyncCommand {
 
             if (!data.canJoinGuild()) {
                 if (data.hasGuild()) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cVous etes deja dans une guilde."));
+                    sender.getPlayerRef().sendMessage(Message.raw("Vous etes deja dans une guilde."));
                 } else {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cVous faites partie d'une famille noble et ne pouvez pas rejoindre une guilde."));
+                    sender.getPlayerRef().sendMessage(Message.raw("Vous faites partie d'une famille noble et ne pouvez pas rejoindre une guilde."));
                 }
                 return;
             }
@@ -453,11 +453,11 @@ public class GuildCommand extends AbstractAsyncCommand {
             if (guild == null) guild = GuildManager.get(guildName.toLowerCase().replace(" ", "_"));
 
             if (guild == null) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cGuilde '" + guildName + "' introuvable.")); return;
+                sender.getPlayerRef().sendMessage(Message.raw("Guilde '" + guildName + "' introuvable.")); return;
             }
 
             if (!guild.isOpenRecruitment()) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cCette guilde n'est pas en recrutement ouvert. Demandez une invitation.")); return;
+                sender.getPlayerRef().sendMessage(Message.raw("Cette guilde n'est pas en recrutement ouvert. Demandez une invitation.")); return;
             }
 
             UUID senderUUID = getSenderUUID(sender);
@@ -473,12 +473,12 @@ public class GuildCommand extends AbstractAsyncCommand {
             // Verifier titres en temps reel
             com.eldanior.system.titles.TitleManager.checkAndUnlockTitles(senderRef, senderStore, copy, sender.getPlayerRef());
 
-            sender.getPlayerRef().sendMessage(Message.raw("§aVous avez rejoint la guilde " + guild.getFormattedName() + " §a!"));
+            sender.getPlayerRef().sendMessage(Message.raw("Vous avez rejoint la guilde " + guild.getFormattedName() + " !"));
 
             // Notifier le fondateur s'il est en ligne
             PlayerRef founderRef = Universe.get().getPlayer(guild.getFounderUUID());
             if (founderRef != null) {
-                founderRef.sendMessage(Message.raw("§e" + sender.getPlayerRef().getUsername() + " a rejoint votre guilde via recrutement ouvert."));
+                founderRef.sendMessage(Message.raw("" + sender.getPlayerRef().getUsername() + " a rejoint votre guilde via recrutement ouvert."));
             }
         } catch (Exception e) { e.printStackTrace(); }
     }

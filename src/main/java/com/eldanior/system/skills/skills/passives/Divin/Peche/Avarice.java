@@ -71,7 +71,7 @@ public class Avarice implements IPassiveCombatSkill {
             attackerHotbar.addItemStack(stolenItem);
 
             attackerPlayer.getPlayerRef().sendMessage(
-                    Message.raw("§5[Avarice] §fVous avez volé un objet à votre victime !").color(Color.MAGENTA));
+                    Message.raw("[Avarice] Vous avez volé un objet à votre victime !").color(Color.MAGENTA));
 
             return true;
         } catch (Exception e) {

@@ -70,7 +70,7 @@ public class ConsumableItemSkillInteraction extends SimpleInteraction {
             if (PassiveSkill.isDivineSkill(newSkillId)) {
                 // Vérifier prérequis PK pour péchés
                 if (PassiveSkill.isPecheSkill(newSkillId) && !data.isPK()) {
-                    player.getPlayerRef().sendMessage(Message.raw("§cSeuls les PK peuvent maîtriser un Péché Capital !")
+                    player.getPlayerRef().sendMessage(Message.raw("Seuls les PK peuvent maîtriser un Péché Capital !")
                             .color(Color.RED));
                     return;
                 }
@@ -78,14 +78,14 @@ public class ConsumableItemSkillInteraction extends SimpleInteraction {
                 if (PassiveSkill.isAngeSkill(newSkillId)) {
                     ChurchRank rank = ChurchRank.fromString(data.getChurchRank());
                     if (rank == null || rank.ordinal() < ChurchRank.RELIGIEUX.ordinal()) {
-                        player.getPlayerRef().sendMessage(Message.raw("§cSeuls les Religieux et au-dessus peuvent recevoir la bénédiction d'un Ange !")
+                        player.getPlayerRef().sendMessage(Message.raw("Seuls les Religieux et au-dessus peuvent recevoir la bénédiction d'un Ange !")
                                 .color(Color.RED));
                         return;
                     }
                 }
                 // Vérifier max 1 skill divin
                 if (data.hasDivineSkill() && !data.getDivineSkill().equals(newSkillId)) {
-                    player.getPlayerRef().sendMessage(Message.raw("§cVous possédez déjà un pouvoir divin (" + data.getDivineSkill() + "). Vous ne pouvez en avoir qu'un seul !")
+                    player.getPlayerRef().sendMessage(Message.raw("Vous possédez déjà un pouvoir divin (" + data.getDivineSkill() + "). Vous ne pouvez en avoir qu'un seul !")
                             .color(Color.RED));
                     return;
                 }

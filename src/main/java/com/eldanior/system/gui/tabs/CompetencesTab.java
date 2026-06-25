@@ -384,22 +384,22 @@ public class CompetencesTab {
             if (player == null) return false;
 
             if (playerHasItem(player, catalystId)) {
-                player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§cVous possedez deja cet item !"));
+                player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("Vous possedez deja cet item !"));
                 return false;
             }
 
             if (personalChestHasItem(ref, store, catalystId)) {
-                player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§cCet item est deja dans votre coffre personnel !"));
+                player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("Cet item est deja dans votre coffre personnel !"));
                 return false;
             }
 
             var itemStack = new com.hypixel.hytale.server.core.inventory.ItemStack(catalystId, 1);
             var result = player.getInventory().getHotbar().addItemStack(itemStack);
             if (result.succeeded()) {
-                player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§aItem obtenu : " + catalystId));
+                player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("Item obtenu : " + catalystId));
                 return true;
             } else {
-                player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§cInventaire plein !"));
+                player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("Inventaire plein !"));
             }
         } catch (Exception e) {
             e.printStackTrace();

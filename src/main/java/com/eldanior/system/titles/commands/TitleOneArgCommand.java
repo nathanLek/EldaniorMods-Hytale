@@ -56,7 +56,7 @@ public class TitleOneArgCommand extends AbstractAsyncCommand {
                 switch (action.toLowerCase()) {
                     case "equip" -> handleEquip(sender, ctx);
                     case "info" -> handleInfo(sender, ctx);
-                    default -> senderRef.sendMessage(Message.raw("§cUsage : /es title <equip|info> <titleId>"));
+                    default -> senderRef.sendMessage(Message.raw("Usage : /es title <equip|info> <titleId>"));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -76,26 +76,26 @@ public class TitleOneArgCommand extends AbstractAsyncCommand {
             PlayerLevelData data = store.getComponent(ref, type);
 
             if (data == null) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cAucune donnee trouvee."));
+                sender.getPlayerRef().sendMessage(Message.raw("Aucune donnee trouvee."));
                 return;
             }
 
             if (!data.getUnlockedTitles().contains(titleId.toLowerCase())) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cVous ne possedez pas ce titre."));
+                sender.getPlayerRef().sendMessage(Message.raw("Vous ne possedez pas ce titre."));
                 return;
             }
 
             TitleModel title = TitleManager.get(titleId.toLowerCase());
             if (title == null) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cTitre '" + titleId + "' inconnu dans le registre."));
+                sender.getPlayerRef().sendMessage(Message.raw("Titre '" + titleId + "' inconnu dans le registre."));
                 return;
             }
 
             data.setCurrentTitle(title.getId());
             store.putComponent(ref, type, data);
 
-            sender.getPlayerRef().sendMessage(Message.raw("§aTitre affiche : " + title.getFormattedName()));
-            sender.getPlayerRef().sendMessage(Message.raw("§7Les bonus de tous vos titres sont actifs automatiquement."));
+            sender.getPlayerRef().sendMessage(Message.raw("Titre affiche : " + title.getFormattedName()));
+            sender.getPlayerRef().sendMessage(Message.raw("Les bonus de tous vos titres sont actifs automatiquement."));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -107,29 +107,29 @@ public class TitleOneArgCommand extends AbstractAsyncCommand {
 
         TitleModel title = TitleManager.get(titleId.toLowerCase());
         if (title == null) {
-            sender.getPlayerRef().sendMessage(Message.raw("§cTitre '" + titleId + "' inconnu."));
+            sender.getPlayerRef().sendMessage(Message.raw("Titre '" + titleId + "' inconnu."));
             return;
         }
 
-        sender.getPlayerRef().sendMessage(Message.raw("§6=== " + title.getFormattedName() + " §6==="));
-        sender.getPlayerRef().sendMessage(Message.raw("§7" + title.getDescription()));
-        sender.getPlayerRef().sendMessage(Message.raw("§7Rarete : " + title.getRarity().getDisplayName()));
-        sender.getPlayerRef().sendMessage(Message.raw("§7Categorie : " + title.getCategory().getDisplayName()));
+        sender.getPlayerRef().sendMessage(Message.raw("=== " + title.getFormattedName() + " ==="));
+        sender.getPlayerRef().sendMessage(Message.raw("" + title.getDescription()));
+        sender.getPlayerRef().sendMessage(Message.raw("Rarete : " + title.getRarity().getDisplayName()));
+        sender.getPlayerRef().sendMessage(Message.raw("Categorie : " + title.getCategory().getDisplayName()));
 
         var bonus = title.getBonus();
         if (bonus.strength() != 0 || bonus.vitality() != 0 || bonus.intelligence() != 0
                 || bonus.endurance() != 0 || bonus.agility() != 0 || bonus.luck() != 0) {
-            sender.getPlayerRef().sendMessage(Message.raw("§eBonus de stats :"));
-            if (bonus.strength() != 0) sender.getPlayerRef().sendMessage(Message.raw("§7  STR +" + bonus.strength()));
-            if (bonus.vitality() != 0) sender.getPlayerRef().sendMessage(Message.raw("§7  VIT +" + bonus.vitality()));
-            if (bonus.intelligence() != 0) sender.getPlayerRef().sendMessage(Message.raw("§7  INT +" + bonus.intelligence()));
-            if (bonus.endurance() != 0) sender.getPlayerRef().sendMessage(Message.raw("§7  END +" + bonus.endurance()));
-            if (bonus.agility() != 0) sender.getPlayerRef().sendMessage(Message.raw("§7  AGL +" + bonus.agility()));
-            if (bonus.luck() != 0) sender.getPlayerRef().sendMessage(Message.raw("§7  LCK +" + bonus.luck()));
+            sender.getPlayerRef().sendMessage(Message.raw("Bonus de stats :"));
+            if (bonus.strength() != 0) sender.getPlayerRef().sendMessage(Message.raw("  STR +" + bonus.strength()));
+            if (bonus.vitality() != 0) sender.getPlayerRef().sendMessage(Message.raw("  VIT +" + bonus.vitality()));
+            if (bonus.intelligence() != 0) sender.getPlayerRef().sendMessage(Message.raw("  INT +" + bonus.intelligence()));
+            if (bonus.endurance() != 0) sender.getPlayerRef().sendMessage(Message.raw("  END +" + bonus.endurance()));
+            if (bonus.agility() != 0) sender.getPlayerRef().sendMessage(Message.raw("  AGL +" + bonus.agility()));
+            if (bonus.luck() != 0) sender.getPlayerRef().sendMessage(Message.raw("  LCK +" + bonus.luck()));
         }
 
         if (!title.getEffects().isEmpty()) {
-            sender.getPlayerRef().sendMessage(Message.raw("§eEffets speciaux :"));
+            sender.getPlayerRef().sendMessage(Message.raw("Effets speciaux :"));
             for (TitleEffect effect : title.getEffects()) {
                 String desc = switch (effect.type()) {
                     case DAMAGE_BONUS_VS_MOB -> "+" + (int)(effect.value() * 100) + "% degats vs " + effect.target();
@@ -139,7 +139,7 @@ public class TitleOneArgCommand extends AbstractAsyncCommand {
                     case HEALTH_BONUS_FLAT -> "+" + (int) effect.value() + " PV";
                     case MANA_BONUS_FLAT -> "+" + (int) effect.value() + " Mana";
                 };
-                sender.getPlayerRef().sendMessage(Message.raw("§7  " + desc));
+                sender.getPlayerRef().sendMessage(Message.raw("  " + desc));
             }
         }
     }

@@ -41,7 +41,7 @@ public class AdminCommand extends AbstractAsyncCommand {
 
                 // Verification OP
                 if (!playerRef.hasPermission(EldaniorLogger.ADMIN_PERMISSION)) {
-                    playerRef.sendMessage(Message.raw("§cVous n'avez pas la permission d'utiliser cette commande."));
+                    playerRef.sendMessage(Message.raw("Vous n'avez pas la permission d'utiliser cette commande."));
                     return;
                 }
 

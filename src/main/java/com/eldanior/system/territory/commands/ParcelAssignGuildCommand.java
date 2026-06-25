@@ -57,24 +57,24 @@ public class ParcelAssignGuildCommand extends AbstractAsyncCommand {
                 boolean isAdmin = senderRef.hasPermission(EldaniorLogger.ADMIN_PERMISSION);
 
                 if (!isAdmin) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cCommande admin uniquement."));
+                    sender.getPlayerRef().sendMessage(Message.raw("Commande admin uniquement."));
                     return;
                 }
 
                 ParcelData parcel = getParcelAtPlayer(sender);
                 if (parcel == null) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cVous n'etes dans aucune parcelle."));
+                    sender.getPlayerRef().sendMessage(Message.raw("Vous n'etes dans aucune parcelle."));
                     return;
                 }
 
                 if (parcel.getType() != ParcelType.CITY) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cSeules les villes peuvent etre assignees a une guilde."));
+                    sender.getPlayerRef().sendMessage(Message.raw("Seules les villes peuvent etre assignees a une guilde."));
                     return;
                 }
 
                 parcel.setGuildId(capturedGuild);
                 ParcelManager.save();
-                sender.getPlayerRef().sendMessage(Message.raw("§aVille §f" + parcel.getName() + " §aassignee a la guilde §f" + capturedGuild));
+                sender.getPlayerRef().sendMessage(Message.raw("Ville " + parcel.getName() + " assignee a la guilde " + capturedGuild));
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -59,11 +59,11 @@ public class ParcelSetRankCommand extends AbstractAsyncCommand {
                 boolean isAdmin = senderRef.hasPermission(EldaniorLogger.ADMIN_PERMISSION);
 
                 if (!isAdmin) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cCommande admin uniquement."));
+                    sender.getPlayerRef().sendMessage(Message.raw("Commande admin uniquement."));
                     return;
                 }
                 if (capturedRank == null || capturedRank.isEmpty() || !Set.of("E", "D", "C", "B", "A", "S").contains(capturedRank.toUpperCase())) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cUsage: /es psetrank <E|D|C|B|A|S>"));
+                    sender.getPlayerRef().sendMessage(Message.raw("Usage: /es psetrank <E|D|C|B|A|S>"));
                     return;
                 }
 
@@ -74,12 +74,12 @@ public class ParcelSetRankCommand extends AbstractAsyncCommand {
                 Vector3d pos = transform.getPosition();
                 ParcelData parcel = ParcelManager.getParcelAt(sender.getWorld().getName(), pos.x, pos.y, pos.z);
                 if (parcel == null || parcel.getType() != ParcelType.DUNGEON) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cVous devez etre dans un donjon."));
+                    sender.getPlayerRef().sendMessage(Message.raw("Vous devez etre dans un donjon."));
                     return;
                 }
                 parcel.setDungeonRank(capturedRank.toUpperCase());
                 ParcelManager.save();
-                sender.getPlayerRef().sendMessage(Message.raw("§aRank du donjon §e" + parcel.getName() + "§a defini a §6" + capturedRank.toUpperCase()));
+                sender.getPlayerRef().sendMessage(Message.raw("Rank du donjon " + parcel.getName() + " defini a " + capturedRank.toUpperCase()));
             } catch (Exception e) {
                 e.printStackTrace();
             }

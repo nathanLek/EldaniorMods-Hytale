@@ -129,7 +129,7 @@ public class TradeScreen extends InteractiveCustomUIPage<TradeScreen.TradeEventD
         synchronized (session) {
             // Verifier qu'il y a de la place dans la hotbar avant de reprendre
             if (TradeManager.countEmptySlots(myUUID) <= 0) {
-                player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§cVotre hotbar est pleine !"));
+                player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("Votre hotbar est pleine !"));
                 return;
             }
 
@@ -156,12 +156,12 @@ public class TradeScreen extends InteractiveCustomUIPage<TradeScreen.TradeEventD
                 // Les deux ont valide → executer l'echange (ferme aussi les fenetres)
                 TradeManager.endTrade(session, true);
 
-                player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§a§lEchange effectue avec succes !"));
+                player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("Echange effectue avec succes !"));
 
                 UUID otherUUID = session.getOther(myUUID);
                 PlayerRef otherRef = Universe.get().getPlayer(otherUUID);
                 if (otherRef != null) {
-                    otherRef.sendMessage(com.hypixel.hytale.server.core.Message.raw("§a§lEchange effectue avec succes !"));
+                    otherRef.sendMessage(com.hypixel.hytale.server.core.Message.raw("Echange effectue avec succes !"));
                 }
             } else {
                 UICommandBuilder update = new UICommandBuilder();
@@ -179,10 +179,10 @@ public class TradeScreen extends InteractiveCustomUIPage<TradeScreen.TradeEventD
         // endTrade ferme les fenetres des deux joueurs
         TradeManager.endTrade(session, false);
 
-        player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§7Echange annule."));
+        player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("Echange annule."));
         PlayerRef otherRef = Universe.get().getPlayer(otherUUID);
         if (otherRef != null) {
-            otherRef.sendMessage(com.hypixel.hytale.server.core.Message.raw("§c" + player.getPlayerRef().getUsername() + " a annule l'echange."));
+            otherRef.sendMessage(com.hypixel.hytale.server.core.Message.raw("" + player.getPlayerRef().getUsername() + " a annule l'echange."));
         }
     }
 

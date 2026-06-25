@@ -103,17 +103,17 @@ public class DuelTab {
         if (!DuelManager.sendChallenge(myUUID, targetUUID)) {
             Player player2 = store.getComponent(ref, Player.getComponentType());
             if (player2 != null) {
-                player2.getPlayerRef().sendMessage(Message.raw("§cVous avez deja un defi en attente ! Attendez qu'il expire ou soit accepte/refuse."));
+                player2.getPlayerRef().sendMessage(Message.raw("Vous avez deja un defi en attente ! Attendez qu'il expire ou soit accepte/refuse."));
             }
             return false;
         }
 
         Player player = store.getComponent(ref, Player.getComponentType());
         if (player != null) {
-            player.getPlayerRef().sendMessage(Message.raw("§6Defi envoye a " + targetName + " ! §7(expire dans 60s)"));
+            player.getPlayerRef().sendMessage(Message.raw("Defi envoye a " + targetName + " ! (expire dans 60s)"));
         }
-        targetRef.sendMessage(Message.raw("§6§l" + (player != null ? player.getPlayerRef().getUsername() : "?") + " vous defie en duel !"));
-        targetRef.sendMessage(Message.raw("§7Tapez §f/es duel accept §7ou §f/es duel decline §7(expire dans 60s)"));
+        targetRef.sendMessage(Message.raw("" + (player != null ? player.getPlayerRef().getUsername() : "?") + " vous defie en duel !"));
+        targetRef.sendMessage(Message.raw("Tapez /es duel accept ou /es duel decline (expire dans 60s)"));
 
         return true;
     }

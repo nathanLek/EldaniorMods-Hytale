@@ -59,21 +59,21 @@ public class ParcelInviteCommand extends AbstractAsyncCommand {
                 boolean isAdmin = senderRef.hasPermission(EldaniorLogger.ADMIN_PERMISSION);
 
                 ParcelData parcel = getParcelAtPlayer(sender);
-                if (parcel == null) { sender.getPlayerRef().sendMessage(Message.raw("§cVous n'etes dans aucune parcelle.")); return; }
+                if (parcel == null) { sender.getPlayerRef().sendMessage(Message.raw("Vous n'etes dans aucune parcelle.")); return; }
                 if (!isAdmin && !parcel.isOwner(senderUUID) && parcel.getRole(senderUUID) != ParcelRole.OFFICER) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cVous n'avez pas les droits pour inviter.")); return;
+                    sender.getPlayerRef().sendMessage(Message.raw("Vous n'avez pas les droits pour inviter.")); return;
                 }
 
                 PlayerRef targetRef = Universe.get().getPlayerByUsername(capturedPlayerName, NameMatching.EXACT_IGNORE_CASE);
-                if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable.")); return; }
+                if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("Joueur introuvable.")); return; }
 
                 UUID targetUUID = UUIDExtractor.getUUID(targetRef);
 
                 parcel.addMember(targetUUID, ParcelRole.MEMBER);
                 ParcelManager.save();
 
-                sender.getPlayerRef().sendMessage(Message.raw("§a" + capturedPlayerName + " ajoute a la parcelle " + parcel.getName()));
-                targetRef.sendMessage(Message.raw("§eVous avez ete ajoute a la parcelle §f" + parcel.getName() + " §epar §f" + sender.getPlayerRef().getUsername()));
+                sender.getPlayerRef().sendMessage(Message.raw("" + capturedPlayerName + " ajoute a la parcelle " + parcel.getName()));
+                targetRef.sendMessage(Message.raw("Vous avez ete ajoute a la parcelle " + parcel.getName() + " par " + sender.getPlayerRef().getUsername()));
             } catch (Exception e) {
                 e.printStackTrace();
             }

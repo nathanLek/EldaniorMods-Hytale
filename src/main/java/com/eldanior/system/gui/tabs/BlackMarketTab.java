@@ -83,7 +83,7 @@ public class BlackMarketTab {
         PlayerLevelData data = store.getComponent(ref, type);
         if (data == null || data.getMoney() < peekListing.getPrice()) {
             Player p = store.getComponent(ref, Player.getComponentType());
-            if (p != null) p.getPlayerRef().sendMessage(Message.raw("§cPas assez d'or !"));
+            if (p != null) p.getPlayerRef().sendMessage(Message.raw("Pas assez d'or !"));
             return false;
         }
 
@@ -93,7 +93,7 @@ public class BlackMarketTab {
         // Atomic buy: remove listing in one synchronized operation to prevent duplication
         ShopListing listing = ShopManager.buyBlackMarketListing(idx);
         if (listing == null) {
-            buyer.getPlayerRef().sendMessage(Message.raw("§cCet objet a deja ete achete !"));
+            buyer.getPlayerRef().sendMessage(Message.raw("Cet objet a deja ete achete !"));
             return false;
         }
 
@@ -101,7 +101,7 @@ public class BlackMarketTab {
         if (!result.succeeded()) {
             // Re-add listing since we already removed it but can't give the item
             ShopManager.addBlackMarketListing(listing.getSellerUUID(), listing.getSellerName(), listing.getItem(), listing.getPrice());
-            buyer.getPlayerRef().sendMessage(Message.raw("§cInventaire plein !"));
+            buyer.getPlayerRef().sendMessage(Message.raw("Inventaire plein !"));
             return false;
         }
 
@@ -115,14 +115,14 @@ public class BlackMarketTab {
                 var sStore = sRef.getStore();
                 PlayerLevelData sData = sStore.getComponent(sRef, type);
                 if (sData != null) { sData.addMoney(listing.getPrice()); sStore.putComponent(sRef, type, sData);
-                    sellerRef.sendMessage(Message.raw("§a" + buyer.getPlayerRef().getUsername() + " a achete votre objet (Marche Noir) pour " + listing.getPrice() + " Or !"));
+                    sellerRef.sendMessage(Message.raw("" + buyer.getPlayerRef().getUsername() + " a achete votre objet (Marche Noir) pour " + listing.getPrice() + " Or !"));
                 }
             } catch (Exception e) { EldaniorLogger.error("BlackMarketTab", e); }
         } else {
             ShopManager.addPendingEarnings(listing.getSellerUUID(), listing.getPrice());
         }
 
-        buyer.getPlayerRef().sendMessage(Message.raw("§aObjet achete au Marche Noir pour " + listing.getPrice() + " Or !"));
+        buyer.getPlayerRef().sendMessage(Message.raw("Objet achete au Marche Noir pour " + listing.getPrice() + " Or !"));
 
         // Persist shop state immediately to prevent data loss on crash (BUGS-12)
         try { PersistenceManager.saveShop(); } catch (Exception e) { EldaniorLogger.error("BlackMarketTab", e); }
@@ -148,9 +148,9 @@ public class BlackMarketTab {
 
         if (isOwner) {
             var result = me.getInventory().getHotbar().addItemStack(listing.getItem());
-            if (!result.succeeded()) { me.getPlayerRef().sendMessage(Message.raw("§cInventaire plein !")); return false; }
+            if (!result.succeeded()) { me.getPlayerRef().sendMessage(Message.raw("Inventaire plein !")); return false; }
             ShopManager.removeBlackMarketListing(idx);
-            me.getPlayerRef().sendMessage(Message.raw("§7Annonce retiree du Marche Noir."));
+            me.getPlayerRef().sendMessage(Message.raw("Annonce retiree du Marche Noir."));
         } else {
             PlayerRef sellerRef = com.hypixel.hytale.server.core.universe.Universe.get().getPlayer(listing.getSellerUUID());
             if (sellerRef != null) {
@@ -159,13 +159,13 @@ public class BlackMarketTab {
                         var sStore = sRef.getStore();
                         var sPlayer = sStore.getComponent(sRef, Player.getComponentType());
                         if (sPlayer != null) { sPlayer.getInventory().getHotbar().addItemStack(listing.getItem());
-                            sellerRef.sendMessage(Message.raw("§eAdmin a retire votre annonce du Marche Noir."));
+                            sellerRef.sendMessage(Message.raw("Admin a retire votre annonce du Marche Noir."));
                         }
                     }
                 } catch (Exception e) { EldaniorLogger.error("BlackMarketTab", e); }
             }
             ShopManager.removeBlackMarketListing(idx);
-            me.getPlayerRef().sendMessage(Message.raw("§eAnnonce retiree du Marche Noir (admin)."));
+            me.getPlayerRef().sendMessage(Message.raw("Annonce retiree du Marche Noir (admin)."));
         }
 
         // Persist shop state immediately to prevent data loss on crash (BUGS-12)

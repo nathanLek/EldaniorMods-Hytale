@@ -57,7 +57,7 @@ public class NobilityStatusCommand extends AbstractAsyncCommand {
                 switch (action.toLowerCase()) {
                     case "setvice" -> handleSetVice(sender, ctx);
                     case "info" -> handleStatusInfo(sender, ctx);
-                    default -> senderRef.sendMessage(Message.raw("§cUsage : /es nstatus <setvice|info> <joueur>"));
+                    default -> senderRef.sendMessage(Message.raw("Usage : /es nstatus <setvice|info> <joueur>"));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -77,18 +77,18 @@ public class NobilityStatusCommand extends AbstractAsyncCommand {
             if (senderData == null) return;
 
             if (!senderData.isPatriarch()) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cSeul le Patriarche peut nommer un Vice-Patriarche."));
+                sender.getPlayerRef().sendMessage(Message.raw("Seul le Patriarche peut nommer un Vice-Patriarche."));
                 return;
             }
 
             String familyId = senderData.getNobleFamilyId();
 
             PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
-            if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable.")); return; }
+            if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("Joueur introuvable.")); return; }
 
             UUID targetUUID = extractUUID(targetRef);
             PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
-            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
+            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("Le joueur doit etre connecte.")); return; }
 
             var ref = targetPlayer.getReference();
             if (ref == null) return;
@@ -97,7 +97,7 @@ public class NobilityStatusCommand extends AbstractAsyncCommand {
             if (data == null) return;
 
             if (!familyId.equals(data.getNobleFamilyId())) {
-                sender.getPlayerRef().sendMessage(Message.raw("§c" + targetName + " n'est pas dans votre famille."));
+                sender.getPlayerRef().sendMessage(Message.raw("" + targetName + " n'est pas dans votre famille."));
                 return;
             }
 
@@ -106,8 +106,8 @@ public class NobilityStatusCommand extends AbstractAsyncCommand {
             copy.setStatus("VICE");
             store.putComponent(ref, type, copy);
 
-            sender.getPlayerRef().sendMessage(Message.raw("§a" + targetName + " est maintenant Vice-Patriarche."));
-            targetPlayer.sendMessage(Message.raw("§eVous etes maintenant Vice-Patriarche !"));
+            sender.getPlayerRef().sendMessage(Message.raw("" + targetName + " est maintenant Vice-Patriarche."));
+            targetPlayer.sendMessage(Message.raw("Vous etes maintenant Vice-Patriarche !"));
         } catch (Exception e) { e.printStackTrace(); }
     }
 
@@ -116,32 +116,32 @@ public class NobilityStatusCommand extends AbstractAsyncCommand {
 
         try {
             PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
-            if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable.")); return; }
+            if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("Joueur introuvable.")); return; }
 
             UUID targetUUID = extractUUID(targetRef);
             PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
-            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
+            if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("Le joueur doit etre connecte.")); return; }
 
             var ref = targetPlayer.getReference();
             if (ref == null) return;
             Store<EntityStore> store = ref.getStore();
             ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
             PlayerLevelData data = store.getComponent(ref, type);
-            if (data == null) { sender.getPlayerRef().sendMessage(Message.raw("§cAucune donnee.")); return; }
+            if (data == null) { sender.getPlayerRef().sendMessage(Message.raw("Aucune donnee.")); return; }
 
             String status = data.getStatus();
-            String statusDisplay = "§7Aucun";
+            String statusDisplay = "Aucun";
             if (status != null && !status.isEmpty()) {
                 statusDisplay = switch (status) {
-                    case "PATRIARCH" -> "§6Patriarche";
-                    case "VICE" -> "§eVice-Patriarche";
-                    case "MEMBER" -> "§7Membre";
-                    default -> "§7" + status;
+                    case "PATRIARCH" -> "Patriarche";
+                    case "VICE" -> "Vice-Patriarche";
+                    case "MEMBER" -> "Membre";
+                    default -> "" + status;
                 };
             }
 
-            sender.getPlayerRef().sendMessage(Message.raw("§6=== Status de " + targetName + " ==="));
-            sender.getPlayerRef().sendMessage(Message.raw("§7Status : " + statusDisplay));
+            sender.getPlayerRef().sendMessage(Message.raw("=== Status de " + targetName + " ==="));
+            sender.getPlayerRef().sendMessage(Message.raw("Status : " + statusDisplay));
         } catch (Exception e) { e.printStackTrace(); }
     }
 

@@ -458,7 +458,7 @@ public class TerritoiresTab {
                     com.eldanior.system.titles.nobility.NobilityRank.fromString(rank);
             if (nRank != null && !com.eldanior.system.titles.nobility.NobilityManager.canKingPromote(nRank)) {
                 player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw(
-                        "§cLimite atteinte pour le rang " + rank + " !"));
+                        "Limite atteinte pour le rang " + rank + " !"));
                 return false;
             }
 
@@ -480,10 +480,10 @@ public class TerritoiresTab {
                     com.eldanior.system.titles.nobility.NobilityManager.recordKingPromotion(nRank);
                 }
                 player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw(
-                        "§6§lDecret Royal recu ! §7Donnez-le a un joueur pour le nommer §e" + rank));
+                        "Decret Royal recu ! Donnez-le a un joueur pour le nommer " + rank));
                 return true;
             } else {
-                player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("§cInventaire plein !"));
+                player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("Inventaire plein !"));
             }
         } catch (Exception e) {
             System.err.println("[Territoire] Erreur decret: " + e.getMessage());
@@ -520,7 +520,7 @@ public class TerritoiresTab {
             ParcelManager.save();
 
             pRef.sendMessage(com.hypixel.hytale.server.core.Message.raw(
-                    "§eVille revendue ! +" + String.format("%,d", refund) + " Or (50% du prix)."));
+                    "Ville revendue ! +" + String.format("%,d", refund) + " Or (50% du prix)."));
 
             st.selectedTerrId = null;
             st.selectedIndex = -1;

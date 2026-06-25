@@ -47,7 +47,7 @@ public class EvictAllCommand extends AbstractAsyncCommand {
                 if (playerRef == null) return;
 
                 if (!playerRef.hasPermission(EldaniorLogger.ADMIN_PERMISSION)) {
-                    playerRef.sendMessage(Message.raw("§cVous n'avez pas la permission."));
+                    playerRef.sendMessage(Message.raw("Vous n'avez pas la permission."));
                     return;
                 }
 
@@ -64,11 +64,11 @@ public class EvictAllCommand extends AbstractAsyncCommand {
                 }
 
                 if (evicted.isEmpty()) {
-                    playerRef.sendMessage(Message.raw("§7Aucune location expiree a evincer."));
+                    playerRef.sendMessage(Message.raw("Aucune location expiree a evincer."));
                 } else {
-                    playerRef.sendMessage(Message.raw("§a" + evicted.size() + " locataire(s) evince(s) :"));
+                    playerRef.sendMessage(Message.raw("" + evicted.size() + " locataire(s) evince(s) :"));
                     for (String name : evicted) {
-                        playerRef.sendMessage(Message.raw("§7  - " + name));
+                        playerRef.sendMessage(Message.raw("  - " + name));
                     }
                 }
             } catch (Exception e) {

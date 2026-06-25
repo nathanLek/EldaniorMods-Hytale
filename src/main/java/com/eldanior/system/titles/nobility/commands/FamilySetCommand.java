@@ -63,28 +63,28 @@ public class FamilySetCommand extends AbstractAsyncCommand {
                     UUID senderUUID;
                     try { senderUUID = getSenderUUID(sender); } catch (Exception e) { return; }
                     if (senderUUID == null || !senderUUID.equals(NobilityManager.getCurrentKingUUID())) {
-                        senderRef.sendMessage(Message.raw("§cSeul le Roi ou un Admin peut forcer une famille."));
+                        senderRef.sendMessage(Message.raw("Seul le Roi ou un Admin peut forcer une famille."));
                         return;
                     }
                 }
 
                 NobleFamilyModel family = FamilyManager.get(familyId);
                 if (family == null) {
-                    senderRef.sendMessage(Message.raw("§cFamille '" + familyId + "' inconnue."));
-                    senderRef.sendMessage(Message.raw("§7Disponibles : " + FamilyManager.getAvailableIds()));
+                    senderRef.sendMessage(Message.raw("Famille '" + familyId + "' inconnue."));
+                    senderRef.sendMessage(Message.raw("Disponibles : " + FamilyManager.getAvailableIds()));
                     return;
                 }
 
                 if (FamilyManager.isFamilyTaken(familyId)) {
-                    senderRef.sendMessage(Message.raw("§eAttention : Cette famille est deja prise. Attribution forcee (Admin)."));
+                    senderRef.sendMessage(Message.raw("Attention : Cette famille est deja prise. Attribution forcee (Admin)."));
                 }
 
                 PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
-                if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("§cJoueur introuvable.")); return; }
+                if (targetRef == null) { sender.getPlayerRef().sendMessage(Message.raw("Joueur introuvable.")); return; }
 
                 UUID targetUUID = extractUUID(targetRef);
                 PlayerRef targetPlayer = Universe.get().getPlayer(targetUUID);
-                if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("§cLe joueur doit etre connecte.")); return; }
+                if (targetPlayer == null) { sender.getPlayerRef().sendMessage(Message.raw("Le joueur doit etre connecte.")); return; }
 
                 var ref = targetPlayer.getReference();
                 if (ref == null) return;
@@ -95,7 +95,7 @@ public class FamilySetCommand extends AbstractAsyncCommand {
 
                 NobilityRank rank = NobilityRank.fromString(data.getNobilityRank());
                 if (rank == null || !rank.isNoble()) {
-                    sender.getPlayerRef().sendMessage(Message.raw("§cCe joueur n'est pas noble."));
+                    sender.getPlayerRef().sendMessage(Message.raw("Ce joueur n'est pas noble."));
                     return;
                 }
 
@@ -110,8 +110,8 @@ public class FamilySetCommand extends AbstractAsyncCommand {
                 // Verifier titres en temps reel apres attribution de famille
                 com.eldanior.system.titles.TitleManager.checkAndUnlockTitles(ref, store, copy, targetPlayer);
 
-                sender.getPlayerRef().sendMessage(Message.raw("§a" + targetName + " est Patriarche de " + family.getFormattedName()));
-                targetPlayer.sendMessage(Message.raw("§eVous etes Patriarche de " + family.getFormattedName() + " §7- §o" + family.getMotto()));
+                sender.getPlayerRef().sendMessage(Message.raw("" + targetName + " est Patriarche de " + family.getFormattedName()));
+                targetPlayer.sendMessage(Message.raw("Vous etes Patriarche de " + family.getFormattedName() + " - " + family.getMotto()));
             } catch (Exception e) { e.printStackTrace(); }
         }, world);
     }

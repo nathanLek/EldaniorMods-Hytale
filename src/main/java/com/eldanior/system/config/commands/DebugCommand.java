@@ -43,7 +43,7 @@ public class DebugCommand extends AbstractAsyncCommand {
                 if (playerRef == null) return;
 
                 if (!playerRef.hasPermission(EldaniorLogger.ADMIN_PERMISSION)) {
-                    playerRef.sendMessage(Message.raw("§cVous n'avez pas la permission."));
+                    playerRef.sendMessage(Message.raw("Vous n'avez pas la permission."));
                     return;
                 }
 
@@ -51,9 +51,9 @@ public class DebugCommand extends AbstractAsyncCommand {
                 EldaniorLogger.setDebugMode(newState);
 
                 if (newState) {
-                    playerRef.sendMessage(Message.raw("§aMode debug ACTIVE. Les messages debug sont affiches dans la console."));
+                    playerRef.sendMessage(Message.raw("Mode debug ACTIVE. Les messages debug sont affiches dans la console."));
                 } else {
-                    playerRef.sendMessage(Message.raw("§7Mode debug DESACTIVE."));
+                    playerRef.sendMessage(Message.raw("Mode debug DESACTIVE."));
                 }
             } catch (Exception e) {
                 EldaniorLogger.error("DebugCommand", e);

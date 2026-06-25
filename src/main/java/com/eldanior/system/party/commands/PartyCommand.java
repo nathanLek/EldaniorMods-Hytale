@@ -63,7 +63,7 @@ public class PartyCommand extends AbstractAsyncCommand {
                     case "accept" -> handleAccept(sender);
                     case "decline" -> handleDecline(sender);
                     case "list" -> handleList(sender);
-                    default -> senderRef.sendMessage(Message.raw("§cUsage : /es party <create|invite|kick|leave|disband|accept|decline|list> <joueur>"));
+                    default -> senderRef.sendMessage(Message.raw("Usage : /es party <create|invite|kick|leave|disband|accept|decline|list> <joueur>"));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -76,18 +76,18 @@ public class PartyCommand extends AbstractAsyncCommand {
         try {
             UUID senderUUID = getSenderUUID(sender);
             if (PartyManager.hasParty(senderUUID)) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cVous etes deja dans un groupe."));
+                sender.getPlayerRef().sendMessage(Message.raw("Vous etes deja dans un groupe."));
                 return;
             }
 
             Party party = PartyManager.createParty(senderUUID, sender.getPlayerRef().getUsername());
             if (party == null) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cImpossible de creer le groupe."));
+                sender.getPlayerRef().sendMessage(Message.raw("Impossible de creer le groupe."));
                 return;
             }
 
-            sender.getPlayerRef().sendMessage(Message.raw("§a§lGroupe cree ! §7Vous etes le Capitaine."));
-            sender.getPlayerRef().sendMessage(Message.raw("§7Invitez des joueurs avec §f/es party invite <joueur>"));
+            sender.getPlayerRef().sendMessage(Message.raw("Groupe cree ! Vous etes le Capitaine."));
+            sender.getPlayerRef().sendMessage(Message.raw("Invitez des joueurs avec /es party invite <joueur>"));
 
             // Afficher le HUD
             PartyManager.showHudForPlayer(sender, senderUUID);
@@ -101,43 +101,43 @@ public class PartyCommand extends AbstractAsyncCommand {
             Party party = PartyManager.getParty(senderUUID);
 
             if (party == null) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cVous n'etes dans aucun groupe. Creez-en un avec §f/es party create"));
+                sender.getPlayerRef().sendMessage(Message.raw("Vous n'etes dans aucun groupe. Creez-en un avec /es party create"));
                 return;
             }
 
             if (!party.isCaptain(senderUUID)) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cSeul le Capitaine peut inviter."));
+                sender.getPlayerRef().sendMessage(Message.raw("Seul le Capitaine peut inviter."));
                 return;
             }
 
             if (party.isFull()) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cGroupe plein (max " + Party.MAX_MEMBERS + " membres)."));
+                sender.getPlayerRef().sendMessage(Message.raw("Groupe plein (max " + Party.MAX_MEMBERS + " membres)."));
                 return;
             }
 
             String targetName = this.playerArg.get(ctx);
             if (targetName == null || targetName.isEmpty()) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es party invite <joueur>"));
+                sender.getPlayerRef().sendMessage(Message.raw("Usage : /es party invite <joueur>"));
                 return;
             }
             PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
             if (targetRef == null) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cJoueur '" + targetName + "' introuvable."));
+                sender.getPlayerRef().sendMessage(Message.raw("Joueur '" + targetName + "' introuvable."));
                 return;
             }
 
             UUID targetUUID = extractUUID(targetRef);
 
             if (PartyManager.hasParty(targetUUID)) {
-                sender.getPlayerRef().sendMessage(Message.raw("§c" + targetName + " est deja dans un groupe."));
+                sender.getPlayerRef().sendMessage(Message.raw("" + targetName + " est deja dans un groupe."));
                 return;
             }
 
             PartyManager.sendInvite(targetUUID, senderUUID);
 
-            sender.getPlayerRef().sendMessage(Message.raw("§aInvitation envoyee a " + targetName));
-            targetRef.sendMessage(Message.raw("§e" + sender.getPlayerRef().getUsername() + " vous invite a rejoindre son groupe !"));
-            targetRef.sendMessage(Message.raw("§7Tapez §f/es party accept §7pour accepter ou §f/es party decline §7pour refuser."));
+            sender.getPlayerRef().sendMessage(Message.raw("Invitation envoyee a " + targetName));
+            targetRef.sendMessage(Message.raw("" + sender.getPlayerRef().getUsername() + " vous invite a rejoindre son groupe !"));
+            targetRef.sendMessage(Message.raw("Tapez /es party accept pour accepter ou /es party decline pour refuser."));
         } catch (Exception e) { e.printStackTrace(); }
     }
 
@@ -147,12 +147,12 @@ public class PartyCommand extends AbstractAsyncCommand {
             UUID senderUUID = getSenderUUID(sender);
 
             if (!PartyManager.hasPendingInvite(senderUUID)) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cAucune invitation en attente."));
+                sender.getPlayerRef().sendMessage(Message.raw("Aucune invitation en attente."));
                 return;
             }
 
             if (PartyManager.hasParty(senderUUID)) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cVous etes deja dans un groupe."));
+                sender.getPlayerRef().sendMessage(Message.raw("Vous etes deja dans un groupe."));
                 PartyManager.clearInvite(senderUUID);
                 return;
             }
@@ -161,13 +161,13 @@ public class PartyCommand extends AbstractAsyncCommand {
             Party party = PartyManager.getParty(captainUUID);
 
             if (party == null) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cLe groupe n'existe plus."));
+                sender.getPlayerRef().sendMessage(Message.raw("Le groupe n'existe plus."));
                 PartyManager.clearInvite(senderUUID);
                 return;
             }
 
             if (party.isFull()) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cLe groupe est plein."));
+                sender.getPlayerRef().sendMessage(Message.raw("Le groupe est plein."));
                 PartyManager.clearInvite(senderUUID);
                 return;
             }
@@ -179,7 +179,7 @@ public class PartyCommand extends AbstractAsyncCommand {
             for (UUID memberUUID : party.getMemberUUIDs()) {
                 PlayerRef memberRef = Universe.get().getPlayer(memberUUID);
                 if (memberRef != null) {
-                    memberRef.sendMessage(Message.raw("§a" + sender.getPlayerRef().getUsername() + " a rejoint le groupe ! (" + party.getSize() + "/" + Party.MAX_MEMBERS + ")"));
+                    memberRef.sendMessage(Message.raw("" + sender.getPlayerRef().getUsername() + " a rejoint le groupe ! (" + party.getSize() + "/" + Party.MAX_MEMBERS + ")"));
                 }
             }
         } catch (Exception e) { e.printStackTrace(); }
@@ -190,11 +190,11 @@ public class PartyCommand extends AbstractAsyncCommand {
         try {
             UUID senderUUID = getSenderUUID(sender);
             if (!PartyManager.hasPendingInvite(senderUUID)) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cAucune invitation en attente."));
+                sender.getPlayerRef().sendMessage(Message.raw("Aucune invitation en attente."));
                 return;
             }
             PartyManager.clearInvite(senderUUID);
-            sender.getPlayerRef().sendMessage(Message.raw("§7Invitation refusee."));
+            sender.getPlayerRef().sendMessage(Message.raw("Invitation refusee."));
         } catch (Exception e) { e.printStackTrace(); }
     }
 
@@ -205,18 +205,18 @@ public class PartyCommand extends AbstractAsyncCommand {
             Party party = PartyManager.getParty(senderUUID);
 
             if (party == null) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cVous n'etes dans aucun groupe."));
+                sender.getPlayerRef().sendMessage(Message.raw("Vous n'etes dans aucun groupe."));
                 return;
             }
 
             if (!party.isCaptain(senderUUID)) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cSeul le Capitaine peut exclure."));
+                sender.getPlayerRef().sendMessage(Message.raw("Seul le Capitaine peut exclure."));
                 return;
             }
 
             String targetName = this.playerArg.get(ctx);
             if (targetName == null || targetName.isEmpty()) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es party kick <joueur>"));
+                sender.getPlayerRef().sendMessage(Message.raw("Usage : /es party kick <joueur>"));
                 return;
             }
             UUID targetUUID = null;
@@ -228,12 +228,12 @@ public class PartyCommand extends AbstractAsyncCommand {
             }
 
             if (targetUUID == null) {
-                sender.getPlayerRef().sendMessage(Message.raw("§c" + targetName + " n'est pas dans votre groupe."));
+                sender.getPlayerRef().sendMessage(Message.raw("" + targetName + " n'est pas dans votre groupe."));
                 return;
             }
 
             if (targetUUID.equals(senderUUID)) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cVous ne pouvez pas vous exclure. Utilisez §f/es party leave"));
+                sender.getPlayerRef().sendMessage(Message.raw("Vous ne pouvez pas vous exclure. Utilisez /es party leave"));
                 return;
             }
 
@@ -242,7 +242,7 @@ public class PartyCommand extends AbstractAsyncCommand {
             // Notifier le joueur kick
             PlayerRef targetRef = Universe.get().getPlayer(targetUUID);
             if (targetRef != null) {
-                targetRef.sendMessage(Message.raw("§cVous avez ete exclu du groupe."));
+                targetRef.sendMessage(Message.raw("Vous avez ete exclu du groupe."));
             }
 
             // Notifier les autres
@@ -251,7 +251,7 @@ public class PartyCommand extends AbstractAsyncCommand {
                 for (UUID memberUUID : updatedParty.getMemberUUIDs()) {
                     PlayerRef memberRef = Universe.get().getPlayer(memberUUID);
                     if (memberRef != null) {
-                        memberRef.sendMessage(Message.raw("§e" + targetName + " a ete exclu du groupe."));
+                        memberRef.sendMessage(Message.raw("" + targetName + " a ete exclu du groupe."));
                     }
                 }
             }
@@ -265,7 +265,7 @@ public class PartyCommand extends AbstractAsyncCommand {
             Party party = PartyManager.getParty(senderUUID);
 
             if (party == null) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cVous n'etes dans aucun groupe."));
+                sender.getPlayerRef().sendMessage(Message.raw("Vous n'etes dans aucun groupe."));
                 return;
             }
 
@@ -273,7 +273,7 @@ public class PartyCommand extends AbstractAsyncCommand {
             boolean wasCaptain = party.isCaptain(senderUUID);
 
             PartyManager.leaveParty(senderUUID);
-            sender.getPlayerRef().sendMessage(Message.raw("§7Vous avez quitte le groupe."));
+            sender.getPlayerRef().sendMessage(Message.raw("Vous avez quitte le groupe."));
 
             // Notifier les membres restants
             // Le capitaine a pu changer si c'etait lui qui partait
@@ -282,9 +282,9 @@ public class PartyCommand extends AbstractAsyncCommand {
                 if (memberParty != null) {
                     PlayerRef memberRef = Universe.get().getPlayer(memberUUID);
                     if (memberRef != null) {
-                        memberRef.sendMessage(Message.raw("§e" + leaverName + " a quitte le groupe."));
+                        memberRef.sendMessage(Message.raw("" + leaverName + " a quitte le groupe."));
                         if (wasCaptain && memberParty.isCaptain(memberUUID)) {
-                            memberRef.sendMessage(Message.raw("§6Vous etes maintenant le Capitaine !"));
+                            memberRef.sendMessage(Message.raw("Vous etes maintenant le Capitaine !"));
                         }
                     }
                 }
@@ -299,12 +299,12 @@ public class PartyCommand extends AbstractAsyncCommand {
             Party party = PartyManager.getParty(senderUUID);
 
             if (party == null) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cVous n'etes dans aucun groupe."));
+                sender.getPlayerRef().sendMessage(Message.raw("Vous n'etes dans aucun groupe."));
                 return;
             }
 
             if (!party.isCaptain(senderUUID)) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cSeul le Capitaine peut dissoudre le groupe."));
+                sender.getPlayerRef().sendMessage(Message.raw("Seul le Capitaine peut dissoudre le groupe."));
                 return;
             }
 
@@ -312,7 +312,7 @@ public class PartyCommand extends AbstractAsyncCommand {
             for (UUID memberUUID : party.getMemberUUIDs()) {
                 PlayerRef memberRef = Universe.get().getPlayer(memberUUID);
                 if (memberRef != null) {
-                    memberRef.sendMessage(Message.raw("§cLe groupe a ete dissout par le Capitaine."));
+                    memberRef.sendMessage(Message.raw("Le groupe a ete dissout par le Capitaine."));
                 }
             }
 
@@ -327,14 +327,14 @@ public class PartyCommand extends AbstractAsyncCommand {
             Party party = PartyManager.getParty(senderUUID);
 
             if (party == null) {
-                sender.getPlayerRef().sendMessage(Message.raw("§cVous n'etes dans aucun groupe."));
+                sender.getPlayerRef().sendMessage(Message.raw("Vous n'etes dans aucun groupe."));
                 return;
             }
 
-            sender.getPlayerRef().sendMessage(Message.raw("§6=== Groupe (" + party.getSize() + "/" + Party.MAX_MEMBERS + ") ==="));
+            sender.getPlayerRef().sendMessage(Message.raw("=== Groupe (" + party.getSize() + "/" + Party.MAX_MEMBERS + ") ==="));
             for (var entry : party.getMembers().entrySet()) {
-                String prefix = party.isCaptain(entry.getKey()) ? "§6[CAP] " : "§7 - ";
-                sender.getPlayerRef().sendMessage(Message.raw(prefix + "§f" + entry.getValue()));
+                String prefix = party.isCaptain(entry.getKey()) ? "[CAP] " : " - ";
+                sender.getPlayerRef().sendMessage(Message.raw(prefix + "" + entry.getValue()));
             }
         } catch (Exception e) { e.printStackTrace(); }
     }
