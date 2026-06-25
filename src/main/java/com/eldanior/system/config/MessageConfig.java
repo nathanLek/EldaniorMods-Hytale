@@ -8,7 +8,7 @@ package com.eldanior.system.config;
 public enum MessageConfig {
 
     // ==================== GENERAL ====================
-    LOGIN_WELCOME("Bienvenue sur Eldanior, {0} ! Niveau {1} - {2}"),
+    LOGIN_WELCOME("Bienvenue sur Eldanior, {0} !\nNiveau {1} - {2}\nTapez /es system pour commencer votre aventure !"),
     PERMISSION_DENIED("Vous n'avez pas la permission."),
     PLAYER_NOT_FOUND("Joueur introuvable : {0}"),
     PLAYER_MUST_BE_ONLINE("Le joueur doit etre connecte."),
