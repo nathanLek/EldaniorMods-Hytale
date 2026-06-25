@@ -17,7 +17,7 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 public class SeismicStrike implements IPassiveCombatSkill {
 
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
-    private static final float CHANCE = 0.15f; // 15% de chance
+    private static final float CHANCE = 0.20f; // 15% de chance
     private static final float BONUS_MULTIPLIER = 1.35f; // +35% dégâts
 
     @Override

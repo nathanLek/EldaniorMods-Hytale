@@ -15,7 +15,7 @@ public class PhoenixBlood implements IPassiveCombatSkill {
     @Override
     public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
         if (damage.isCancelled() || victimRef == null) return false;
-        if (Math.random() <= 0.30f) {
+        if (Math.random() <= 0.45f) {
             EntityStatMap statMap = store.getComponent(victimRef, EntityStatsModule.get().getEntityStatMapComponentType());
             if (statMap == null) return false;
             EntityStatValue healthStat = statMap.get(StatConfig.VITALITY.getStatId());

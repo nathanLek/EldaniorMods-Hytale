@@ -17,9 +17,9 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 public class AnnihilatorStrike implements IPassiveCombatSkill {
 
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
-    private static final float CHANCE = 0.22f; // 22% de chance
+    private static final float CHANCE = 0.35f; // 22% de chance
     private static final float BONUS_MULTIPLIER = 1.75f; // +75% dégâts
-    private static final float DOUBLE_CAST_CHANCE = 0.25f; // 25% de chance de doubler l'impact
+    private static final float DOUBLE_CAST_CHANCE = 0.40f; // 25% de chance de doubler l'impact
 
     @Override
     public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {

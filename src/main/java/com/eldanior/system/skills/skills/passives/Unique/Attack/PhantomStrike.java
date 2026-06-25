@@ -17,7 +17,7 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 public class PhantomStrike implements IPassiveCombatSkill {
 
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
-    private static final float CHANCE = 0.18f; // 18% de chance
+    private static final float CHANCE = 0.25f; // 18% de chance
     private static final float BONUS_MULTIPLIER = 1.50f; // +50% dégâts
     private static final float MASTERY_BONUS = 0.10f; // +10% supplémentaire si maîtrisé
 

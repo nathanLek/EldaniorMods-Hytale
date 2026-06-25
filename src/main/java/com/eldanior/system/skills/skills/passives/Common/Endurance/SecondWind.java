@@ -16,7 +16,7 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 public class SecondWind implements IPassiveCombatSkill {
 
-    private static final float CHANCE = 0.15f;
+    private static final float CHANCE = 0.20f;
     private static final float THRESHOLD = 0.20f;
     private static final float RESTORE = 25.0f;
     private static final float RESTORE_MASTERED = 27.5f;

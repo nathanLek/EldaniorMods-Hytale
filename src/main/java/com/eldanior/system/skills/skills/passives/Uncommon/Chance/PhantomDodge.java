@@ -14,7 +14,7 @@ public class PhantomDodge implements IPassiveCombatSkill {
         if (damage.isCancelled()) return false;
 
         // 5% de chance d'esquive totale
-        if (Math.random() <= 0.05f) {
+        if (Math.random() <= 0.10f) {
             damage.setCancelled(true);
         }
         return false;

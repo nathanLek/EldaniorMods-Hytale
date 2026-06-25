@@ -11,7 +11,7 @@ public class RealityDodge implements IPassiveCombatSkill {
     @Override
     public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
         if (damage.isCancelled()) return false;
-        if (Math.random() <= 0.16f) {
+        if (Math.random() <= 0.25f) {
             damage.setCancelled(true);
         }
         return false;

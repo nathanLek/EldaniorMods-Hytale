@@ -67,14 +67,14 @@ public class KodaJudgment implements IPassiveCombatSkill {
             return false;
         }
 
-        float chance = 0.12f;
+        float chance = 0.20f;
 
         if (levelDiff < 0) {
             // Cible plus forte : la chance descend
-            chance = 0.12f * (100f + levelDiff) / 100f;
+            chance = 0.20f * (100f + levelDiff) / 100f;
         } else if (levelDiff > 0) {
-            // Cible plus faible : la chance monte, mais plafonne à 33% maximum (0.33f)
-            chance = Math.min(0.33f, 0.12f + (levelDiff * 0.01f));
+            // Cible plus faible : la chance monte, mais plafonne à 33% maximum (0.50f)
+            chance = Math.min(0.50f, 0.20f + (levelDiff * 0.01f));
         }
 
         // --- 5. EXÉCUTION ---

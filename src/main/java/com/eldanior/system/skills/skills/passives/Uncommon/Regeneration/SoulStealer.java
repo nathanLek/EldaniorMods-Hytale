@@ -18,7 +18,7 @@ public class SoulStealer implements IPassiveCombatSkill {
         if (damage.isCancelled() || attackerRef == null) return false;
 
         // 25% de chance de restaurer 8 Mana par attaque
-        if (Math.random() <= 0.25f) {
+        if (Math.random() <= 0.40f) {
             EntityStatMap statMap = store.getComponent(attackerRef, EntityStatsModule.get().getEntityStatMapComponentType());
             if (statMap == null) return false;
 

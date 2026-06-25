@@ -11,7 +11,7 @@ public class CreatorParry implements IPassiveCombatSkill {
     @Override
     public boolean onDefend(Damage damage, PlayerLevelData victimData, Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
         if (damage.isCancelled()) return false;
-        if (Math.random() <= 0.45f) {
+        if (Math.random() <= 0.70f) {
             damage.setAmount(damage.getAmount() * 0.55f);
         }
         return false;

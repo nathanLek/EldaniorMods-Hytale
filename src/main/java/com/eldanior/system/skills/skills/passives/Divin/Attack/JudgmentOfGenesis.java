@@ -17,7 +17,7 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 public class JudgmentOfGenesis implements IPassiveCombatSkill {
 
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
-    private static final float CHANCE = 0.30f;
+    private static final float CHANCE = 0.45f;
     private static final float DIVINE_MULTIPLIER = 2.50f; // +150% dégâts (x3)
 
     @Override

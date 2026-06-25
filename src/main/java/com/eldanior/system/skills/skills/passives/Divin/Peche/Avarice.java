@@ -26,7 +26,7 @@ import java.util.List;
  */
 public class Avarice implements IPassiveCombatSkill {
 
-    private static final float STEAL_CHANCE = 0.05f;
+    private static final float STEAL_CHANCE = 0.10f;
     private static final int HOTBAR_SIZE = 9;
 
     @Override

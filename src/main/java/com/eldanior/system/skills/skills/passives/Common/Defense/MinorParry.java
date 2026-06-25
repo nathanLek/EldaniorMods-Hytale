@@ -15,7 +15,7 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 public class MinorParry implements IPassiveCombatSkill {
 
-    private static final float CHANCE = 0.15f;
+    private static final float CHANCE = 0.20f;
     private static final float REDUCTION = 0.85f;
     private static final float REDUCTION_MASTERED = 0.835f;
     private static final float ENDURANCE_COST = 0.20f;

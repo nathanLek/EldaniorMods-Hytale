@@ -27,7 +27,7 @@ public class SurvivorSpirit implements IPassiveCombatSkill {
 
             // Si endurance < 25%, 20% de chance de restaurer 40 points
             if (currentEndurance < (maxEndurance * 0.25f)) {
-                if (Math.random() <= 0.20f) {
+                if (Math.random() <= 0.30f) {
                     float newEndurance = Math.min(maxEndurance, currentEndurance + 40.0f);
                     statMap.setStatValue(StatConfig.ENDURANCE.getStatId(), newEndurance);
                 }
