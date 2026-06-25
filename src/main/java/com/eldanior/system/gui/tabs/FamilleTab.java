@@ -368,25 +368,20 @@ public class FamilleTab {
             }
             // Deduire l'argent
             data.removeMoney(price);
-
-            // Assigner le territoire au joueur
-            com.eldanior.system.territory.ParcelData parcel = com.eldanior.system.territory.ParcelManager.getFamilyParcel(chosenId);
-            if (parcel != null) {
-                try {
-                    PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
-                    UUID playerUUID = pRef != null ? com.eldanior.system.config.UUIDExtractor.getUUID(pRef) : null;
-                    com.hypixel.hytale.server.core.entity.entities.Player player = store.getComponent(ref,
-                            com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
-                    String playerName = player != null ? player.getPlayerRef().getUsername() : "";
-                    if (playerUUID != null) {
-                        parcel.setOwnerUUID(playerUUID);
-                        parcel.setOwnerName(playerName);
-                        parcel.addMember(playerUUID, com.eldanior.system.territory.ParcelRole.OWNER);
-                        com.eldanior.system.territory.ParcelManager.save();
-                    }
-                } catch (Exception e) { EldaniorLogger.error("FamilleTab", e); }
-            }
         }
+
+        // Assigner la propriete de TOUTES les parcelles de la famille au nouveau Patriarche
+        try {
+            PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
+            if (pRef != null) {
+                UUID playerUUID = com.eldanior.system.config.UUIDExtractor.getUUID(pRef);
+                String playerName = pRef.getUsername();
+                if (playerUUID != null) {
+                    com.eldanior.system.territory.ParcelManager.transferFamilyParcelsOwnership(
+                            chosenId, playerUUID, playerName);
+                }
+            }
+        } catch (Exception e) { EldaniorLogger.error("FamilleTab", e); }
 
         // Claim famille
         data.setNobleFamilyId(chosenId);
