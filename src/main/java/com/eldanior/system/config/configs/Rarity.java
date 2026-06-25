@@ -1,12 +1,12 @@
 package com.eldanior.system.config.configs;
 
 public enum Rarity {
-    COMMON("Commun", "§f"),      // Blanc
-    RARE("Rare", "§9"),          // Bleu
-    EPIC("Epique", "§5"),        // Violet
-    UNIQUE("Unique", "§e"),      // Jaune
-    LEGENDARY("Legendaire", "§6"), // Orange/Or
-    DIVINE("Divin", "§c");       // Rouge
+    COMMON("Commun", ""),
+    RARE("Rare", ""),
+    EPIC("Epique", ""),
+    UNIQUE("Unique", ""),
+    LEGENDARY("Legendaire", ""),
+    DIVINE("Divin", "");
 
     private final String displayName;
     private final String colorCode;
@@ -17,7 +17,7 @@ public enum Rarity {
     }
 
     public String getDisplayName() {
-        return colorCode + displayName;
+        return displayName;
     }
 
     public String getColorCode() {

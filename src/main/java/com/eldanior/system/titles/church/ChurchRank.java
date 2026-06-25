@@ -1,13 +1,13 @@
 package com.eldanior.system.titles.church;
 
 public enum ChurchRank {
-    LAIQUE("Laique", "§7", 0, 0, 0),
-    RELIGIEUX("Religieux", "§f", 5, 0, 0),
-    PRETRE("Pretre", "§a", 15, 1, 4),
-    ARCHEVEQUE("Archeveque", "§9", 30, 2, 3),
-    CARDINAL("Cardinal", "§5", 50, 3, 2),
-    SAINT("Saint", "§e", 80, 0, 0),         // Ne peut pas etre attribue, uniquement via classe Saint
-    PAPE("Pape", "§6", 100, 10, 0);
+    LAIQUE("Laique", "", 0, 0, 0),
+    RELIGIEUX("Religieux", "", 5, 0, 0),
+    PRETRE("Pretre", "", 15, 1, 4),
+    ARCHEVEQUE("Archeveque", "", 30, 2, 3),
+    CARDINAL("Cardinal", "", 50, 3, 2),
+    SAINT("Saint", "", 80, 0, 0),         // Ne peut pas etre attribue, uniquement via classe Saint
+    PAPE("Pape", "", 100, 10, 0);
 
     private final String displayName;
     private final String colorCode;

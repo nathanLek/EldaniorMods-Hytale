@@ -24,11 +24,11 @@ public class DynamicHologramManager {
 
     private static final int TOP_PLAYERS = 5;
     private static final String[] RANK_COLORS = {
-            "§6", // 1st - Or
-            "§f", // 2nd - Argent
-            "§c", // 3rd - Bronze
-            "§7", // 4th - Gris
-            "§8"  // 5th - Gris fonce
+            "", // 1st - Or
+            "", // 2nd - Argent
+            "", // 3rd - Bronze
+            "", // 4th - Gris
+            ""  // 5th - Gris fonce
     };
 
     /**
@@ -100,8 +100,8 @@ public class DynamicHologramManager {
         List<String> lines = new ArrayList<>();
 
         // Titre
-        lines.add("§6§l⚔ " + arenaName.replace('_', ' ') + " ⚔");
-        lines.add("§7— CLASSEMENT ARENE —");
+        lines.add("⚔ " + arenaName.replace('_', ' ') + " ⚔");
+        lines.add("— CLASSEMENT ARENE —");
         lines.add(" ");
 
         // Top 5
@@ -109,28 +109,28 @@ public class DynamicHologramManager {
                 ArenaManager.getTopPlayers(arenaId, TOP_PLAYERS);
 
         if (top.isEmpty()) {
-            lines.add("§8Aucun combattant");
+            lines.add("Aucun combattant");
         } else {
             for (int i = 0; i < top.size(); i++) {
                 Map.Entry<String, ArenaManager.ArenaStats> entry = top.get(i);
-                String color = i < RANK_COLORS.length ? RANK_COLORS[i] : "§8";
+                String color = i < RANK_COLORS.length ? RANK_COLORS[i] : "";
                 String medal = switch (i) {
-                    case 0 -> "§6①";
-                    case 1 -> "§f②";
-                    case 2 -> "§c③";
-                    default -> "§7" + (i + 1) + ".";
+                    case 0 -> "①";
+                    case 1 -> "②";
+                    case 2 -> "③";
+                    default -> (i + 1) + ".";
                 };
 
                 ArenaManager.ArenaStats stats = entry.getValue();
                 String ratio = String.format("%.1f", stats.getRatio());
 
                 lines.add(medal + " " + color + entry.getKey() +
-                        " §7— " + stats.kills + "K/" + stats.deaths + "D §8(" + ratio + ")");
+                        " — " + stats.kills + "K/" + stats.deaths + "D (" + ratio + ")");
             }
         }
 
         lines.add(" ");
-        lines.add("§8Mis a jour toutes les 60s");
+        lines.add("Mis a jour toutes les 60s");
 
         return lines;
     }

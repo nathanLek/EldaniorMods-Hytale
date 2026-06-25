@@ -70,6 +70,6 @@ public class Guild {
     public boolean isOpenRecruitment() { return openRecruitment; }
     public void setOpenRecruitment(boolean open) { this.openRecruitment = open; }
 
-    public String getFormattedTag() { return "§8[§e" + tag + "§8]"; }
-    public String getFormattedName() { return "§e" + name; }
+    public String getFormattedTag() { return "[" + tag + "]"; }
+    public String getFormattedName() { return name; }
 }

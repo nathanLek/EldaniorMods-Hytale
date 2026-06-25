@@ -159,7 +159,7 @@ public class NobilityManager {
 
         // PK en premier (rouge vif)
         if (isPK) {
-            sb.append("§4[PK] ");
+            sb.append("[PK] ");
         }
 
         // Prefixes : [PK] [Rang Noblesse] [Rang Eglise] Nom Von Famille
@@ -170,13 +170,13 @@ public class NobilityManager {
             sb.append(churchPrefix);
         }
 
-        sb.append("§f").append(playerName);
+        sb.append(playerName);
 
         String familyId = data.getNobleFamilyId();
         if (familyId != null && !familyId.isEmpty()) {
             NobleFamilyModel family = FamilyManager.get(familyId);
             if (family != null) {
-                sb.append(" §7Von ").append(family.getRarity().getColorCode()).append(family.getDisplayName());
+                sb.append(" Von ").append(family.getDisplayName());
             }
         }
 

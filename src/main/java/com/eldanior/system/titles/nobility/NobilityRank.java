@@ -4,13 +4,13 @@ import java.util.Map;
 import java.util.EnumMap;
 
 public enum NobilityRank {
-    ROTURIER("Roturier", "§7", 0),
-    CHEVALIER("Chevalier", "§f", 5),
-    BARON("Baron", "§a", 15),
-    COMTE("Comte", "§9", 30),
-    DUC("Duc", "§5", 50),
-    MARQUIS("Marquis", "§6", 75),
-    ROI("Roi", "§c", 100);
+    ROTURIER("Roturier", "", 0),
+    CHEVALIER("Chevalier", "", 5),
+    BARON("Baron", "", 15),
+    COMTE("Comte", "", 30),
+    DUC("Duc", "", 50),
+    MARQUIS("Marquis", "", 75),
+    ROI("Roi", "", 100);
 
     private final String displayName;
     private final String colorCode;
