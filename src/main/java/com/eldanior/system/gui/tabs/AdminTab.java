@@ -286,8 +286,39 @@ public class AdminTab {
             data.setQuestData("");
             data.setCooldownData("");
             try {
-                                java.util.UUID resetUUID = UUIDExtractor.getUUID(targetRef);
+                java.util.UUID resetUUID = UUIDExtractor.getUUID(targetRef);
                 com.eldanior.system.quest.QuestManager.getPlayerQuests(resetUUID).clear();
+            } catch (Exception e) { EldaniorLogger.error("AdminTab", e); }
+
+            // Reset donnees manquantes
+            data.setCurrentMana(-1);
+            data.setActiveSkillId("");
+            data.setDivineSkill("");
+            data.clearDuelHistory();
+            data.clearSkillProcs();
+            data.clearSavedEvolutionChoices();
+            data.setEvolutionRerolls(0);
+            data.setLastVictimUUID(null);
+            data.setHauntingThrustStacks(0);
+            data.collectBounty(); // Reset bounty a 0
+
+            // Vider l'inventaire du joueur
+            try {
+                var eRef = targetRef.getReference();
+                if (eRef != null) {
+                    var s = eRef.getStore();
+                    com.hypixel.hytale.server.core.entity.entities.Player p = s.getComponent(eRef, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
+                    if (p != null && p.getInventory() != null) {
+                        var hotbar = p.getInventory().getHotbar();
+                        if (hotbar != null) {
+                            for (short i = 0; i < 9; i++) {
+                                if (hotbar.getItemStack(i) != null) {
+                                    hotbar.removeItemStackFromSlot(i);
+                                }
+                            }
+                        }
+                    }
+                }
             } catch (Exception e) { EldaniorLogger.error("AdminTab", e); }
 
             targetRef.sendMessage(Message.raw("§cPersonnage reinitialise (Niveau 1)."));
