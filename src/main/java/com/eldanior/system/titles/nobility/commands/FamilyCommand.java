@@ -120,6 +120,13 @@ public class FamilyCommand extends AbstractAsyncCommand {
 
             FamilyManager.claimFamily(family.getId());
 
+            // Assigner la propriete des parcelles famille au nouveau Patriarche
+            UUID senderUUID = com.eldanior.system.config.UUIDExtractor.getUUID(sender.getPlayerRef());
+            if (senderUUID != null) {
+                com.eldanior.system.territory.ParcelManager.transferFamilyParcelsOwnership(
+                        family.getId(), senderUUID, sender.getPlayerRef().getUsername());
+            }
+
             // Verifier titres en temps reel apres choix de famille
             com.eldanior.system.titles.TitleManager.checkAndUnlockTitles(ref, store, copy, sender.getPlayerRef());
 

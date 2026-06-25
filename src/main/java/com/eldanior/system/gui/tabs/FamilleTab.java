@@ -164,24 +164,68 @@ public class FamilleTab {
         String famId = data.getNobleFamilyId();
         if (famId == null || famId.isEmpty()) return false;
 
-        // Si Patriarch -> dissoudre : expulser tous les membres en ligne
+        // Si Patriarch -> chercher un Vice pour transferer, sinon dissoudre
         if (data.isPatriarch()) {
+            // Chercher un Vice-Patriarche pour transferer le role
+            PlayerRef viceRef = null;
+            UUID viceUUID = null;
             for (PlayerRef pRef : Universe.get().getPlayers()) {
                 try {
                     var eRef = pRef.getReference();
                     if (eRef == null) continue;
                     var s = eRef.getStore();
                     PlayerLevelData mData = s.getComponent(eRef, type);
-                    if (mData == null) continue;
-                    if (famId.equals(mData.getNobleFamilyId())) {
-                        mData.setNobleFamilyId("");
-                        mData.setStatus("");
-                        s.putComponent(eRef, type, mData);
-                        pRef.sendMessage(Message.raw("La famille a ete dissoute par le Patriarch."));
+                    if (mData != null && famId.equals(mData.getNobleFamilyId()) && mData.isVicePatriarch()) {
+                        viceRef = pRef;
+                        viceUUID = com.eldanior.system.config.UUIDExtractor.getUUID(pRef);
+                        break;
+                    }
+                } catch (Exception e) { /* skip */ }
+            }
+
+            if (viceRef != null && viceUUID != null) {
+                // Transferer au Vice-Patriarche
+                try {
+                    var vRef = viceRef.getReference();
+                    if (vRef != null) {
+                        var vStore = vRef.getStore();
+                        PlayerLevelData vData = vStore.getComponent(vRef, type);
+                        if (vData != null) {
+                            vData.setStatus("PATRIARCH");
+                            vStore.putComponent(vRef, type, vData);
+                            viceRef.sendMessage(Message.raw("Vous etes maintenant Patriarche de la famille !"));
+                            // Transferer la propriete des parcelles au nouveau Patriarche
+                            com.eldanior.system.territory.ParcelManager.transferFamilyParcelsOwnership(
+                                    famId, viceUUID, viceRef.getUsername());
+                        }
                     }
                 } catch (Exception e) { EldaniorLogger.error("FamilleTab", e); }
+
+                // Le Patriarch quitte
+                data.setNobleFamilyId("");
+                data.setStatus("");
+                store.putComponent(ref, type, data);
+            } else {
+                // Pas de Vice -> dissoudre : expulser tous les membres
+                for (PlayerRef pRef : Universe.get().getPlayers()) {
+                    try {
+                        var eRef = pRef.getReference();
+                        if (eRef == null) continue;
+                        var s = eRef.getStore();
+                        PlayerLevelData mData = s.getComponent(eRef, type);
+                        if (mData == null) continue;
+                        if (famId.equals(mData.getNobleFamilyId())) {
+                            mData.setNobleFamilyId("");
+                            mData.setStatus("");
+                            s.putComponent(eRef, type, mData);
+                            pRef.sendMessage(Message.raw("La famille a ete dissoute par le Patriarch."));
+                        }
+                    } catch (Exception e) { EldaniorLogger.error("FamilleTab", e); }
+                }
+                // Remettre les parcelles en propriete famille (sans joueur owner)
+                com.eldanior.system.territory.ParcelManager.clearFamilyParcelsOwnership(famId);
+                FamilyManager.releaseFamily(famId);
             }
-            FamilyManager.releaseFamily(famId);
         } else {
             // Membre simple -> juste quitter
             data.setNobleFamilyId("");
