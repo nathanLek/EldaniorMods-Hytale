@@ -101,6 +101,15 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
             if (data != null) {
                 data.addExperience(1);
                 commandBuffer.run(deferredStore -> deferredStore.putComponent(playerRef, dataType, data));
+                // Notification XP
+                try {
+                    PlayerRef pRef = store.getComponent(playerRef, PlayerRef.getComponentType());
+                    if (pRef != null) {
+                        NotificationHelper.sendNotification(pRef,
+                                "<color:green>+1 XP</color>",
+                                com.hypixel.hytale.protocol.packets.interface_.NotificationStyle.Success);
+                    }
+                } catch (Exception e) { /* skip */ }
             }
         }
 
