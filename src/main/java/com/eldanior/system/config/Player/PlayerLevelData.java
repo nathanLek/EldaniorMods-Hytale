@@ -595,6 +595,13 @@ public class PlayerLevelData implements Component<EntityStore> {
         }
     }
 
+    public void clearDuelHistory() {
+        if (duelHistory != null) duelHistory.clear();
+        duelHistoryData = "";
+    }
+
+    public void clearSkillProcs() { skillProcs.clear(); }
+
     public double getKDR() {
         if (playerDeaths == 0) return playerKills;
         return (double) playerKills / playerDeaths;
