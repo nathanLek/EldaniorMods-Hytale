@@ -558,11 +558,13 @@ public class ParcelManager {
     public static void transferFamilyParcelsOwnership(String familyId, UUID newOwnerUUID, String newOwnerName) {
         for (ParcelData p : getByFamily(familyId)) {
             if (p.getType() != ParcelType.HOUSING) continue;
-            // Retirer l'ancien owner des membres
+            // Retirer l'ancien owner (effacer UUID avant pour contourner la protection de removeMember)
             UUID oldOwner = p.getOwnerUUID();
+            p.setOwnerUUID(null);
             if (oldOwner != null) {
-                p.removeMember(oldOwner);
+                p.getMembers().remove(oldOwner);
             }
+            // Assigner le nouveau owner
             p.setOwnerUUID(newOwnerUUID);
             p.setOwnerName(newOwnerName);
             p.addMember(newOwnerUUID, ParcelRole.OWNER);
@@ -581,11 +583,12 @@ public class ParcelManager {
         for (ParcelData p : getByFamily(familyId)) {
             if (p.getType() != ParcelType.HOUSING) continue;
             UUID oldOwner = p.getOwnerUUID();
-            if (oldOwner != null) {
-                p.removeMember(oldOwner);
-            }
+            // Effacer ownerUUID AVANT removeMember (sinon removeMember refuse de retirer le owner)
             p.setOwnerUUID(null);
             p.setOwnerName(familyName);
+            if (oldOwner != null) {
+                p.getMembers().remove(oldOwner);
+            }
         }
         save();
     }
