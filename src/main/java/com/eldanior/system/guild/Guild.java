@@ -13,6 +13,8 @@ public class Guild {
     private UUID founderUUID;
     private String founderName;
 
+    private volatile boolean openRecruitment = false;
+
     // Stats de guilde (thread-safe)
     private final AtomicInteger totalMobKills = new AtomicInteger(0);
     private final AtomicInteger totalPlayerKills = new AtomicInteger(0);
@@ -63,6 +65,10 @@ public class Guild {
     public void addMember(UUID uuid) { members.add(uuid); }
     public void removeMember(UUID uuid) { members.remove(uuid); }
     public boolean hasMember(UUID uuid) { return members.contains(uuid); }
+
+    // Recrutement ouvert
+    public boolean isOpenRecruitment() { return openRecruitment; }
+    public void setOpenRecruitment(boolean open) { this.openRecruitment = open; }
 
     public String getFormattedTag() { return "§8[§e" + tag + "§8]"; }
     public String getFormattedName() { return "§e" + name; }

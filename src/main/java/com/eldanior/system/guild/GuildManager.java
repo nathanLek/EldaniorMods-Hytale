@@ -63,6 +63,14 @@ public class GuildManager {
 
     public static Collection<Guild> getAll() { return guilds.values(); }
 
+    public static List<Guild> getOpenGuilds() {
+        List<Guild> open = new java.util.ArrayList<>();
+        for (Guild guild : guilds.values()) {
+            if (guild.isOpenRecruitment()) open.add(guild);
+        }
+        return open;
+    }
+
     public static boolean guildExists(String name) {
         return getByName(name) != null;
     }

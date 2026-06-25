@@ -32,8 +32,8 @@ public class GuildCommand extends AbstractAsyncCommand {
     private final OptionalArg<String> arg1;
 
     public GuildCommand() {
-        super("guild", "Gestion de guilde (invite/kick/promote/demote/info/leave/accept/decline)");
-        this.actionArg = this.withRequiredArg("action", "invite|kick|promote|demote|info|leave|accept|decline", ArgTypes.STRING);
+        super("guild", "Gestion de guilde (invite/kick/promote/demote/info/leave/accept/decline/recruitment/join)");
+        this.actionArg = this.withRequiredArg("action", "invite|kick|promote|demote|info|leave|accept|decline|recruitment|join", ArgTypes.STRING);
         this.arg1 = this.withOptionalArg("arg", "Joueur ou nom de guilde", ArgTypes.STRING);
     }
 
@@ -67,7 +67,9 @@ public class GuildCommand extends AbstractAsyncCommand {
                     case "leave" -> handleLeave(sender);
                     case "accept" -> handleAccept(sender);
                     case "decline" -> handleDecline(sender);
-                    default -> senderRef.sendMessage(Message.raw("§cUsage : /es guild <invite|kick|promote|demote|info|leave|accept|decline> <arg>"));
+                    case "recruitment" -> handleRecruitment(sender, ctx);
+                    case "join" -> handleJoin(sender, ctx);
+                    default -> senderRef.sendMessage(Message.raw("§cUsage : /es guild <invite|kick|promote|demote|info|leave|accept|decline|recruitment|join> <arg>"));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -385,6 +387,100 @@ public class GuildCommand extends AbstractAsyncCommand {
         sender.getPlayerRef().sendMessage(Message.raw("§7Mob Kills : §e" + guild.getTotalMobKills()));
         sender.getPlayerRef().sendMessage(Message.raw("§7PvP Kills : §e" + guild.getTotalPlayerKills()));
         sender.getPlayerRef().sendMessage(Message.raw("§7Morts : §e" + guild.getTotalDeaths()));
+    }
+
+    // ==================== RECRUITMENT ====================
+    private void handleRecruitment(Player sender, CommandContext ctx) {
+        String mode = this.arg1.get(ctx);
+        if (mode == null || (!mode.equalsIgnoreCase("on") && !mode.equalsIgnoreCase("off"))) {
+            sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es guild recruitment <on|off>"));
+            return;
+        }
+
+        try {
+            var senderRef = sender.getReference();
+            if (senderRef == null) return;
+            Store<EntityStore> senderStore = senderRef.getStore();
+            ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
+            PlayerLevelData senderData = senderStore.getComponent(senderRef, type);
+            if (senderData == null || !senderData.isGuildChef()) {
+                sender.getPlayerRef().sendMessage(Message.raw("§cSeul le Chef peut changer le mode de recrutement."));
+                return;
+            }
+
+            UUID senderUUID = getSenderUUID(sender);
+            Guild guild = GuildManager.getPlayerGuild(senderUUID);
+            if (guild == null) { sender.getPlayerRef().sendMessage(Message.raw("§cVous n'etes dans aucune guilde.")); return; }
+
+            boolean open = mode.equalsIgnoreCase("on");
+            guild.setOpenRecruitment(open);
+
+            if (open) {
+                sender.getPlayerRef().sendMessage(Message.raw("§aRecrutement ouvert ! Les joueurs peuvent maintenant rejoindre votre guilde librement."));
+            } else {
+                sender.getPlayerRef().sendMessage(Message.raw("§7Recrutement ferme. Les joueurs doivent etre invites pour rejoindre."));
+            }
+        } catch (Exception e) { e.printStackTrace(); }
+    }
+
+    // ==================== JOIN (open recruitment) ====================
+    private void handleJoin(Player sender, CommandContext ctx) {
+        String guildName = this.arg1.get(ctx);
+        if (guildName == null || guildName.isEmpty()) {
+            sender.getPlayerRef().sendMessage(Message.raw("§cUsage : /es guild join <nom_guilde>"));
+            return;
+        }
+
+        try {
+            var senderRef = sender.getReference();
+            if (senderRef == null) return;
+            Store<EntityStore> senderStore = senderRef.getStore();
+            ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
+            PlayerLevelData data = senderStore.getComponent(senderRef, type);
+            if (data == null) return;
+
+            if (!data.canJoinGuild()) {
+                if (data.hasGuild()) {
+                    sender.getPlayerRef().sendMessage(Message.raw("§cVous etes deja dans une guilde."));
+                } else {
+                    sender.getPlayerRef().sendMessage(Message.raw("§cVous faites partie d'une famille noble et ne pouvez pas rejoindre une guilde."));
+                }
+                return;
+            }
+
+            Guild guild = GuildManager.getByName(guildName);
+            if (guild == null) guild = GuildManager.getByTag(guildName);
+            if (guild == null) guild = GuildManager.get(guildName.toLowerCase().replace(" ", "_"));
+
+            if (guild == null) {
+                sender.getPlayerRef().sendMessage(Message.raw("§cGuilde '" + guildName + "' introuvable.")); return;
+            }
+
+            if (!guild.isOpenRecruitment()) {
+                sender.getPlayerRef().sendMessage(Message.raw("§cCette guilde n'est pas en recrutement ouvert. Demandez une invitation.")); return;
+            }
+
+            UUID senderUUID = getSenderUUID(sender);
+
+            PlayerLevelData copy = (PlayerLevelData) data.clone();
+            if (copy == null) return;
+            copy.setGuildId(guild.getId());
+            copy.setGuildRole("MEMBER");
+            senderStore.putComponent(senderRef, type, copy);
+
+            GuildManager.joinGuild(senderUUID, guild);
+
+            // Verifier titres en temps reel
+            com.eldanior.system.titles.TitleManager.checkAndUnlockTitles(senderRef, senderStore, copy, sender.getPlayerRef());
+
+            sender.getPlayerRef().sendMessage(Message.raw("§aVous avez rejoint la guilde " + guild.getFormattedName() + " §a!"));
+
+            // Notifier le fondateur s'il est en ligne
+            PlayerRef founderRef = Universe.get().getPlayer(guild.getFounderUUID());
+            if (founderRef != null) {
+                founderRef.sendMessage(Message.raw("§e" + sender.getPlayerRef().getUsername() + " a rejoint votre guilde via recrutement ouvert."));
+            }
+        } catch (Exception e) { e.printStackTrace(); }
     }
 
     // ==================== UTILS ====================

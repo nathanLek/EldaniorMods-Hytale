@@ -22,7 +22,9 @@ import java.util.*;
 public class GuildeTab {
 
     public static final int MAX_INVITE_SLOTS = 10;
+    public static final int MAX_OPEN_GUILD_SLOTS = 5;
     private static final java.util.concurrent.ConcurrentHashMap<UUID, List<String>> playerCachedInviteNames = new java.util.concurrent.ConcurrentHashMap<>();
+    private static final java.util.concurrent.ConcurrentHashMap<UUID, List<String>> playerCachedOpenGuilds = new java.util.concurrent.ConcurrentHashMap<>();
 
     public static void populate(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store) {
         ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
@@ -38,7 +40,13 @@ public class GuildeTab {
         ui.set("#GuildeNoGuild.Visible", !hasGuild && !isNoble);
         ui.set("#GuildeHasGuild.Visible", hasGuild);
 
-        if (!hasGuild) return;
+        if (!hasGuild) {
+            if (!isNoble) {
+                // Afficher les guildes en recrutement ouvert
+                populateOpenGuilds(ui, playerUUID);
+            }
+            return;
+        }
 
         Guild guild = GuildManager.getPlayerGuild(playerUUID);
         if (guild == null) return;
@@ -69,6 +77,10 @@ public class GuildeTab {
         ui.set("#GuildeChefActions.Visible", isChef);
         ui.set("#GuildeBtnWithdraw.Visible", isChef);
         ui.set("#GuildeInviteSection.Visible", isChef || isOfficer);
+
+        // Recrutement ouvert/ferme
+        ui.set("#GuildeRecruitmentSection.Visible", isChef);
+        ui.set("#GuildeRecruitmentStatus.Text", guild.isOpenRecruitment() ? "§aRecrutement : Ouvert" : "§7Recrutement : Ferme");
 
         // Invite list (chef + officer)
         if (isChef || isOfficer) {
@@ -223,6 +235,79 @@ public class GuildeTab {
         targetRef.sendMessage(Message.raw("§eVous etes invite a rejoindre la guilde " + guild.getFormattedName()));
         targetRef.sendMessage(Message.raw("§7Tapez §f/es guild accept _ §7pour accepter."));
         return true;
+    }
+
+    public static boolean handleToggleRecruitment(Ref<EntityStore> ref, Store<EntityStore> store) {
+        ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
+        PlayerLevelData data = store.getComponent(ref, type);
+        if (data == null || !data.isGuildChef()) return false;
+
+        UUID uuid = getPlayerUUID(ref, store);
+        Guild guild = GuildManager.getPlayerGuild(uuid);
+        if (guild == null) return false;
+
+        guild.setOpenRecruitment(!guild.isOpenRecruitment());
+
+        Player player = store.getComponent(ref, Player.getComponentType());
+        if (player != null) {
+            if (guild.isOpenRecruitment()) {
+                player.getPlayerRef().sendMessage(Message.raw("§aRecrutement ouvert !"));
+            } else {
+                player.getPlayerRef().sendMessage(Message.raw("§7Recrutement ferme."));
+            }
+        }
+        return true;
+    }
+
+    public static boolean handleJoinByIndex(String slotIndex, Ref<EntityStore> ref, Store<EntityStore> store) {
+        int idx;
+        try { idx = Integer.parseInt(slotIndex); } catch (NumberFormatException e) { return false; }
+        UUID myUUID = getPlayerUUID(ref, store);
+        List<String> cachedGuilds = playerCachedOpenGuilds.getOrDefault(myUUID, new ArrayList<>());
+        if (idx < 0 || idx >= cachedGuilds.size()) return false;
+
+        String guildId = cachedGuilds.get(idx);
+        Guild guild = GuildManager.get(guildId);
+        if (guild == null || !guild.isOpenRecruitment()) return false;
+
+        ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
+        PlayerLevelData data = store.getComponent(ref, type);
+        if (data == null || !data.canJoinGuild()) return false;
+
+        PlayerLevelData copy = (PlayerLevelData) data.clone();
+        if (copy == null) return false;
+        copy.setGuildId(guild.getId());
+        copy.setGuildRole("MEMBER");
+        store.putComponent(ref, type, copy);
+
+        GuildManager.joinGuild(myUUID, guild);
+
+        // Verifier titres
+        Player player = store.getComponent(ref, Player.getComponentType());
+        if (player != null) {
+            com.eldanior.system.titles.TitleManager.checkAndUnlockTitles(ref, store, copy, player.getPlayerRef());
+            player.getPlayerRef().sendMessage(Message.raw("§aVous avez rejoint la guilde " + guild.getFormattedName() + " §a!"));
+        }
+        return true;
+    }
+
+    private static void populateOpenGuilds(UICommandBuilder ui, UUID myUUID) {
+        List<Guild> openGuilds = GuildManager.getOpenGuilds();
+        List<String> cachedIds = playerCachedOpenGuilds.computeIfAbsent(myUUID, k -> new ArrayList<>());
+        cachedIds.clear();
+
+        ui.set("#GuildeOpenGuildSection.Visible", !openGuilds.isEmpty());
+
+        for (int i = 0; i < MAX_OPEN_GUILD_SLOTS; i++) {
+            if (i < openGuilds.size()) {
+                Guild g = openGuilds.get(i);
+                cachedIds.add(g.getId());
+                ui.set("#GOpenGuild" + i + ".Visible", true);
+                ui.set("#GOpenGuildName" + i + ".Text", g.getName() + " " + g.getFormattedTag() + " §7(" + g.getMemberCount() + " membres)");
+            } else {
+                ui.set("#GOpenGuild" + i + ".Visible", false);
+            }
+        }
     }
 
     private static void populateInviteList(UICommandBuilder ui, Guild guild, UUID myUUID) {

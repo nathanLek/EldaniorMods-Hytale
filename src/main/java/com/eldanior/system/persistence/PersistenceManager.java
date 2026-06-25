@@ -87,6 +87,8 @@ public class PersistenceManager {
             props.setProperty(prefix + ".pvpKills", String.valueOf(guild.getTotalPlayerKills()));
             props.setProperty(prefix + ".deaths", String.valueOf(guild.getTotalDeaths()));
 
+            props.setProperty(prefix + ".openRecruitment", String.valueOf(guild.isOpenRecruitment()));
+
             // Members as comma-separated UUIDs
             StringBuilder members = new StringBuilder();
             for (UUID uuid : guild.getMembers()) {
@@ -212,6 +214,7 @@ public class PersistenceManager {
 
             guild.setTreasury(Long.parseLong(props.getProperty(guildId + ".treasury", "0")));
             guild.setContribution(Long.parseLong(props.getProperty(guildId + ".contribution", "0")));
+            guild.setOpenRecruitment(Boolean.parseBoolean(props.getProperty(guildId + ".openRecruitment", "false")));
 
             // Restaurer les membres
             String membersStr = props.getProperty(guildId + ".members", "");
