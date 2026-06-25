@@ -275,6 +275,7 @@ public class EldaniorSystem extends JavaPlugin {
             // Territoire / Parcelles
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.territory.events.ParcelBreakBlockEvent());
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.territory.events.ParcelPlaceBlockEvent());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.territory.events.ParcelDamageBlockEvent());
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.territory.events.ParcelInteractEvent());
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.territory.systems.ParcelRangeSystem());
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.territory.systems.FarmRegenSystem());
