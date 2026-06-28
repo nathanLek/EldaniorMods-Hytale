@@ -202,6 +202,9 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
                     long bountyIncrease = 500 + Math.min(kills * 100L, 1_000_000L);
                     dataToWrite.addBounty(bountyIncrease);
                     dataToWrite.setLastPvPKillTime(System.currentTimeMillis());
+                    // Mettre a jour le registre des primes
+                    com.eldanior.system.quest.QuestManager.registerBounty(
+                            killerUUID, killerRefObj.getUsername(), dataToWrite.getLevel(), dataToWrite.getBounty());
                 }
 
                 // --- RECOMPENSE : si la victime etait PK, le tueur recoit la prime ---
@@ -215,8 +218,9 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
                     dataToWrite.addMoney(bonusGold);
                     QuestManager.onGoldGained(killerUUID, bonusGold);
 
-                    // Sauvegarder la victime PK (bounty a 0)
+                    // Sauvegarder la victime PK (bounty a 0) et retirer du registre des primes
                     commandBuffer.putComponent(victimRef, lvlType, victimDataPK);
+                    QuestManager.unregisterBounty(victimUUID);
 
                     NotificationHelper.sendNotification(killerRefObj,
                             "<color:gold>PRIME RECLAMEE !</color> <color:green>+" + bonusGold + " Or +" + bonusXP + " XP</color>",

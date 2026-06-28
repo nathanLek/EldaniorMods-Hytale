@@ -16,6 +16,132 @@ public class QuestManager {
     // Quetes actives par joueur (UUID -> liste de PlayerQuest)
     private static final Map<UUID, List<PlayerQuest>> playerQuests = new ConcurrentHashMap<>();
 
+    // ==================== BOUNTY REGISTRY ====================
+
+    public static class BountyInfo {
+        public final UUID uuid;
+        public final String name;
+        public final int level;
+        public final long bounty;
+
+        public BountyInfo(UUID uuid, String name, int level, long bounty) {
+            this.uuid = uuid;
+            this.name = name;
+            this.level = level;
+            this.bounty = bounty;
+        }
+    }
+
+    private static final Map<UUID, BountyInfo> activeBounties = new ConcurrentHashMap<>();
+
+    public static void registerBounty(UUID uuid, String name, int level, long bounty) {
+        if (bounty > 0) {
+            activeBounties.put(uuid, new BountyInfo(uuid, name, level, bounty));
+        } else {
+            activeBounties.remove(uuid);
+        }
+    }
+
+    public static void unregisterBounty(UUID uuid) {
+        activeBounties.remove(uuid);
+    }
+
+    public static Collection<BountyInfo> getActiveBounties() {
+        return activeBounties.values();
+    }
+
+    public static QuestDifficulty difficultyFromLevel(int level) {
+        if (level >= 190) return QuestDifficulty.S;
+        if (level >= 150) return QuestDifficulty.A;
+        if (level >= 110) return QuestDifficulty.B;
+        if (level >= 70) return QuestDifficulty.C;
+        if (level >= 40) return QuestDifficulty.D;
+        return QuestDifficulty.E;
+    }
+
+    public static long calculateBountyBonus(QuestDifficulty diff) {
+        return switch (diff) {
+            case S -> 12000;
+            case A -> 5000;
+            case B -> 2000;
+            case C -> 500;
+            case D -> 200;
+            case E -> 100;
+            case F -> 50;
+        };
+    }
+
+    /** Retourne les quêtes filtrées par catégorie pour un joueur */
+    public static List<QuestModel> getQuestsByCategory(UUID playerUUID, QuestCategory category, boolean isPK) {
+        List<QuestModel> result = new ArrayList<>();
+        List<PlayerQuest> owned = getPlayerQuests(playerUUID);
+        Set<String> ownedIds = new HashSet<>();
+        for (PlayerQuest pq : owned) ownedIds.add(pq.getQuestId());
+
+        // Quêtes possédées de cette catégorie (en cours, pas complétées)
+        for (PlayerQuest pq : owned) {
+            if (pq.isCompleted()) continue;
+            QuestModel model = getQuest(pq.getQuestId());
+            if (model == null) continue;
+            if (model instanceof com.eldanior.system.quest.dialogue.NpcDialogueQuest nq && nq.isInfoOnly()) continue;
+            if (model.getCategory() == category) result.add(model);
+        }
+
+        // Quêtes disponibles de cette catégorie
+        List<QuestModel> available = getAvailableQuests(playerUUID, isPK);
+        for (QuestModel quest : available) {
+            if (quest.getCategory() == category) result.add(quest);
+        }
+
+        return result;
+    }
+
+    /** Toutes les quêtes en cours (active ou accepted) toutes catégories */
+    public static List<PlayerQuest> getInProgressQuests(UUID playerUUID) {
+        List<PlayerQuest> result = new ArrayList<>();
+        for (PlayerQuest pq : getPlayerQuests(playerUUID)) {
+            if (!pq.isCompleted()) {
+                QuestModel model = getQuest(pq.getQuestId());
+                if (model != null && !(model instanceof com.eldanior.system.quest.dialogue.NpcDialogueQuest nq && nq.isInfoOnly())) {
+                    result.add(pq);
+                }
+            }
+        }
+        return result;
+    }
+
+    /** Quêtes terminées en attente de claim */
+    public static List<PlayerQuest> getClaimableQuests(UUID playerUUID) {
+        List<PlayerQuest> result = new ArrayList<>();
+        for (PlayerQuest pq : getPlayerQuests(playerUUID)) {
+            if (pq.isCompleted()) {
+                QuestModel model = getQuest(pq.getQuestId());
+                if (model != null && !(model instanceof com.eldanior.system.quest.dialogue.NpcDialogueQuest nq && nq.isInfoOnly())) {
+                    result.add(pq);
+                }
+            }
+        }
+        return result;
+    }
+
+    /** Compte les quêtes disponibles + en cours par catégorie */
+    public static int countByCategory(UUID playerUUID, QuestCategory category, boolean isPK) {
+        if (category == QuestCategory.PRIME) return activeBounties.size();
+        int count = 0;
+        // Quêtes possédées par le joueur dans cette catégorie
+        for (PlayerQuest pq : getPlayerQuests(playerUUID)) {
+            QuestModel model = getQuest(pq.getQuestId());
+            if (model != null && model.getCategory() == category && !pq.isCompleted()) count++;
+        }
+        // Les principales et secondaires ne s'obtiennent que via NPC — ne pas compter les "disponibles"
+        if (category == QuestCategory.JOURNALIERE) {
+            for (QuestModel quest : getAvailableQuests(playerUUID, isPK)) {
+                if (quest.getCategory() == category) count++;
+            }
+        }
+        return count;
+    }
+
     // Repertoire de donnees pour la sauvegarde fichier (shutdown safety)
     private static Path dataDir;
 
@@ -603,5 +729,6 @@ public class QuestManager {
         if (playerUUID == null) return;
         playerQuests.remove(playerUUID);
         cooldowns.remove(playerUUID);
+        activeBounties.remove(playerUUID);
     }
 }

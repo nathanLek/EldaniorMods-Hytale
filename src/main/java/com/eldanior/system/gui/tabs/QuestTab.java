@@ -23,149 +23,331 @@ public class QuestTab {
 
     public static final int MAX_QUEST_SLOTS = 15;
 
-    // Cache PAR JOUEUR au lieu d'un cache static global
+    // Etat de navigation par joueur : null = ecran categories, sinon = id de categorie
+    private static final Map<UUID, String> viewingCategory = new ConcurrentHashMap<>();
+
+    // Cache d'affichage par joueur (slot index -> questId ou bountyUUID)
     private static final Map<UUID, List<String>> playerDisplayCaches = new ConcurrentHashMap<>();
+
+    // Catégorie en cours de rendu (utilisée par fillQuestSlot pour adapter les boutons)
+    private static volatile String currentRenderCategory = null;
+
+    // ==================== NAVIGATION ====================
+
+    public static void selectCategory(UUID uuid, String category) {
+        if (category != null) {
+            viewingCategory.put(uuid, category);
+        } else {
+            viewingCategory.remove(uuid);
+        }
+    }
+
+    public static void goBack(UUID uuid) {
+        viewingCategory.remove(uuid);
+    }
+
+    // ==================== POPULATE ====================
 
     public static void populate(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store) {
         UUID myUUID = getPlayerUUID(ref, store);
         if (myUUID == null) return;
 
-        // Determiner si le joueur est PK
-        boolean isPK = false;
-        PlayerLevelData pkCheck = store.getComponent(ref, EldaniorSystem.get().getPlayerLevelDataType());
-        if (pkCheck != null) isPK = pkCheck.isPK();
+        String category = viewingCategory.get(myUUID);
 
-        // Quete active
-        PlayerQuest active = QuestManager.getActiveQuest(myUUID);
-        if (active != null) {
-            QuestModel model = QuestManager.getQuest(active.getQuestId());
-            if (model != null) {
-                ui.set("#QActivePanel.Visible", true);
-                ui.set("#QActiveName.Text", model.getName());
-                ui.set("#QActiveType.Text", model.getType().getDisplayName() + " - " + model.getDifficulty().getDisplayName());
-                ui.set("#QActiveCategory.Text", model.getCategory().getDisplayName());
-                ui.set("#QActiveReward.Text", model.getRewardText());
-
-                if (model instanceof NpcDialogueQuest nq && nq.getCompletionCondition() != null) {
-                    PlayerLevelData pData = store.getComponent(ref, EldaniorSystem.get().getPlayerLevelDataType());
-                    Player pPlayer = store.getComponent(ref, Player.getComponentType());
-                    renderActiveObjectiveBoxes(ui, nq.getCompletionCondition(), pData, pPlayer);
-                } else {
-                    // Quete simple : 1 seul objectif
-                    ui.set("#QActiveObj1Box.Visible", true);
-                    ui.set("#QActiveObj1.Text", model.getObjectiveText());
-                    String prog = active.isCompleted() ? "OK" : active.getProgress() + "/" + model.getTargetAmount();
-                    ui.set("#QActiveObj1Count.Text", prog);
-                    ui.set("#QActiveObj1.Style.TextColor", active.isCompleted() ? "#4CAF50" : "#ddeeff");
-                    ui.set("#QActiveObj1Count.Style.TextColor", active.isCompleted() ? "#4CAF50" : "#ffffff");
-                    ui.set("#QActiveObj2Box.Visible", false);
-                    ui.set("#QActiveObj3Box.Visible", false);
-                }
-            }
+        if (category == null) {
+            renderCategoryScreen(ui, ref, store, myUUID);
         } else {
-            ui.set("#QActivePanel.Visible", false);
+            renderListScreen(ui, ref, store, myUUID, category);
+        }
+    }
+
+    // ==================== ECRAN 1 : CATEGORIES ====================
+
+    private static void renderCategoryScreen(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store, UUID myUUID) {
+        ui.set("#QuestCategoryPanel.Visible", true);
+        ui.set("#QuestListPanel.Visible", false);
+
+        // Cacher tous les slots
+        for (int i = 0; i < MAX_QUEST_SLOTS; i++) {
+            ui.set("#QSlot" + i + ".Visible", false);
         }
 
-        // Construire le cache d'affichage pour ce joueur
+        boolean isPK = false;
+        PlayerLevelData data = store.getComponent(ref, EldaniorSystem.get().getPlayerLevelDataType());
+        if (data != null) isPK = data.isPK();
+
+        // Compteurs
+        int dailyCount = QuestManager.countByCategory(myUUID, QuestCategory.JOURNALIERE, isPK);
+        int sideCount = QuestManager.countByCategory(myUUID, QuestCategory.SECONDAIRE, isPK);
+        int mainCount = QuestManager.countByCategory(myUUID, QuestCategory.PRINCIPAL, isPK);
+        int bountyCount = QuestManager.getActiveBounties().size();
+        int inProgressCount = QuestManager.getInProgressQuests(myUUID).size();
+        int claimableCount = QuestManager.getClaimableQuests(myUUID).size();
+
+        // Bandeaux
+        ui.set("#QBannerEnCoursCount.Text", String.valueOf(inProgressCount));
+
+        // Bandeau a reclamer (TextButton direct)
+        if (claimableCount > 0) {
+            ui.set("#QBannerAClaim.Text", "A RECLAMER (" + claimableCount + ")");
+            ui.set("#QBannerAClaim.Background", "#1c1708");
+        } else {
+            ui.set("#QBannerAClaim.Text", "A RECLAMER (0)");
+            ui.set("#QBannerAClaim.Background", "#16130c");
+        }
+
+        // Blasons — compteurs
+        ui.set("#QBlasonDailyCount.Text", dailyCount + " quetes");
+        ui.set("#QBlasonBountyCount.Text", bountyCount + " primes");
+
+        // Secondaires et Principales : afficher "Verrouillee" si aucune quete disponible
+        if (sideCount > 0) {
+            ui.set("#QBlasonSideCount.Text", sideCount + " quetes");
+            ui.set("#QBlasonSide.Visible", true);
+        } else {
+            ui.set("#QBlasonSideCount.Text", "Verrouillee");
+            ui.set("#QBlasonSideCount.Style.TextColor", "#4a3c18");
+            ui.set("#QBlasonSide.Visible", false);
+        }
+        if (mainCount > 0) {
+            ui.set("#QBlasonMainCount.Text", mainCount + " quetes");
+            ui.set("#QBlasonMain.Visible", true);
+        } else {
+            ui.set("#QBlasonMainCount.Text", "Verrouillee");
+            ui.set("#QBlasonMainCount.Style.TextColor", "#4a3c18");
+            ui.set("#QBlasonMain.Visible", false);
+        }
+
+        playerDisplayCaches.put(myUUID, new ArrayList<>());
+    }
+
+    // ==================== ECRAN 2 : LISTING ====================
+
+    private static void renderListScreen(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store, UUID myUUID, String category) {
+        ui.set("#QuestCategoryPanel.Visible", false);
+        ui.set("#QuestListPanel.Visible", true);
+
+        boolean isPK = false;
+        PlayerLevelData data = store.getComponent(ref, EldaniorSystem.get().getPlayerLevelDataType());
+        if (data != null) isPK = data.isPK();
+
+        // Header
+        String catTitle;
+        String catColor;
+        switch (category) {
+            case "daily" -> { catTitle = "JOURNALIERES"; catColor = "#4CAF50"; }
+            case "side" -> { catTitle = "SECONDAIRES"; catColor = "#C8A2C8"; }
+            case "main" -> { catTitle = "PRINCIPALES"; catColor = "#FFD700"; }
+            case "bounty" -> { catTitle = "PRIMES"; catColor = "#cc4444"; }
+            case "progress" -> { catTitle = "QUETES EN COURS"; catColor = "#caa15a"; }
+            case "done" -> { catTitle = "A RECLAMER"; catColor = "#FFD700"; }
+            default -> { catTitle = "QUETES"; catColor = "#FFD700"; }
+        }
+        ui.set("#QListCatTitle.Text", catTitle);
+        ui.set("#QListCatTitle.Style.TextColor", catColor);
+
+        currentRenderCategory = category;
         List<String> displayCache = new ArrayList<>();
-        List<PlayerQuest> myQuests = QuestManager.getPlayerQuests(myUUID);
-        long now = System.currentTimeMillis();
         int slotIdx = 0;
 
-        // === SECTION 1 : QUETES EN COURS ===
-        int enCoursCount = 0;
-        for (PlayerQuest pq : myQuests) {
-            if (slotIdx >= MAX_QUEST_SLOTS) break;
-            if (pq.isActive() || pq.isCompleted()) continue;
-
-            QuestModel model = QuestManager.getQuest(pq.getQuestId());
-            if (model == null) continue;
-            if (model instanceof NpcDialogueQuest nq && nq.isInfoOnly()) continue;
-
-            fillQuestSlot(ui, slotIdx, model, pq, true);
-            displayCache.add(pq.getQuestId());
-            slotIdx++;
-            enCoursCount++;
+        if ("bounty".equals(category)) {
+            // Listing special primes
+            slotIdx = renderBountyList(ui, myUUID, slotIdx, displayCache);
+            ui.set("#QListCount.Text", displayCache.size() + " PRIMES");
+            ui.set("#QListSection.Visible", false);
+        } else if ("progress".equals(category)) {
+            // Vue agregee : toutes les quetes en cours
+            slotIdx = renderInProgressList(ui, ref, store, myUUID, slotIdx, displayCache);
+            ui.set("#QListCount.Text", displayCache.size() + " QUETES");
+            ui.set("#QListSection.Visible", false);
+        } else if ("done".equals(category)) {
+            // Quetes terminees a reclamer
+            slotIdx = renderClaimableList(ui, ref, store, myUUID, slotIdx, displayCache);
+            ui.set("#QListCount.Text", displayCache.size() + " QUETES");
+            ui.set("#QListSection.Visible", false);
+        } else {
+            // Listing standard par categorie
+            QuestCategory questCat = switch (category) {
+                case "daily" -> QuestCategory.JOURNALIERE;
+                case "side" -> QuestCategory.SECONDAIRE;
+                case "main" -> QuestCategory.PRINCIPAL;
+                default -> QuestCategory.JOURNALIERE;
+            };
+            slotIdx = renderCategoryList(ui, ref, store, myUUID, questCat, isPK, slotIdx, displayCache);
+            ui.set("#QListCount.Text", displayCache.size() + " QUETES");
+            ui.set("#QListSection.Visible", false);
         }
-        ui.set("#QSectionEnCours.Visible", enCoursCount > 0);
-        ui.set("#QSectionEnCours.Text", "QUETES EN COURS (" + enCoursCount + ")");
-
-        // === SECTION 2 : QUETES JOURNALIERES ===
-        int journalCount = 0;
-
-        // Disponibles
-        List<QuestModel> available = QuestManager.getAvailableQuests(myUUID, isPK);
-        for (QuestModel quest : available) {
-            if (slotIdx >= MAX_QUEST_SLOTS) break;
-            if (!quest.isDaily()) continue;
-            fillQuestSlot(ui, slotIdx, quest, null, false);
-            displayCache.add(quest.getId());
-            slotIdx++;
-            journalCount++;
-        }
-
-        // En cooldown (timer)
-        for (QuestModel quest : QuestManager.getAllQuests()) {
-            if (slotIdx >= MAX_QUEST_SLOTS) break;
-            if (!quest.isDaily() || quest.getCooldownMinutes() <= 0) continue;
-            if (!QuestManager.getTodaysDailyIds().contains(quest.getId())) continue;
-            long cdEnd = QuestManager.getCooldownEnd(myUUID, quest.getId());
-            if (cdEnd <= now) continue;
-            if (displayCache.contains(quest.getId())) continue;
-
-            fillQuestSlot(ui, slotIdx, quest, null, false);
-            ui.set("#QSlotBtnAccept" + slotIdx + ".Visible", false);
-            long remaining = cdEnd - now;
-            long hrs = remaining / 3600000;
-            long mins = (remaining % 3600000) / 60000;
-            ui.set("#QSlotProg" + slotIdx + ".Text", hrs + "h " + mins + "m");
-            ui.set("#QSlotProg" + slotIdx + ".Style.TextColor", "#cc6644");
-            displayCache.add(quest.getId());
-            slotIdx++;
-            journalCount++;
-        }
-        ui.set("#QSectionJournalieres.Visible", journalCount > 0);
-        ui.set("#QSectionJournalieres.Text", "QUETES JOURNALIERES (" + journalCount + ")");
-
-        // === SECTION 3 : QUETES TERMINEES ===
-        int termineeCount = 0;
-        for (PlayerQuest pq : myQuests) {
-            if (slotIdx >= MAX_QUEST_SLOTS) break;
-            if (!pq.isCompleted()) continue;
-
-            QuestModel model = QuestManager.getQuest(pq.getQuestId());
-            if (model == null) continue;
-            if (model instanceof NpcDialogueQuest nq && nq.isInfoOnly()) continue;
-
-            fillQuestSlot(ui, slotIdx, model, pq, true);
-            displayCache.add(pq.getQuestId());
-            slotIdx++;
-            termineeCount++;
-        }
-        ui.set("#QSectionTerminees.Visible", termineeCount > 0);
-        ui.set("#QSectionTerminees.Text", "QUETES TERMINEES (" + termineeCount + ")");
 
         // Cacher les slots restants
         for (int i = slotIdx; i < MAX_QUEST_SLOTS; i++) {
             ui.set("#QSlot" + i + ".Visible", false);
         }
 
-        // Sauver le cache pour ce joueur
         playerDisplayCaches.put(myUUID, displayCache);
     }
 
-    private static void fillQuestSlot(UICommandBuilder ui, int i, QuestModel model, PlayerQuest pq, boolean owned) {
+    // ==================== RENDERERS ====================
+
+    private static int renderCategoryList(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store,
+                                          UUID myUUID, QuestCategory category, boolean isPK,
+                                          int slotIdx, List<String> displayCache) {
+        List<PlayerQuest> myQuests = QuestManager.getPlayerQuests(myUUID);
+        long now = System.currentTimeMillis();
+
+        // Quetes possedees de cette categorie (en cours, pas completees)
+        for (PlayerQuest pq : myQuests) {
+            if (slotIdx >= MAX_QUEST_SLOTS) break;
+            if (pq.isCompleted()) continue;
+            QuestModel model = QuestManager.getQuest(pq.getQuestId());
+            if (model == null) continue;
+            if (model instanceof NpcDialogueQuest nq && nq.isInfoOnly()) continue;
+            if (model.getCategory() != category) continue;
+
+            fillQuestSlot(ui, slotIdx, model, pq, true, currentRenderCategory);
+            displayCache.add(pq.getQuestId());
+            slotIdx++;
+        }
+
+        // Quetes disponibles de cette categorie
+        // Les principales et secondaires ne s'obtiennent que via NPC — ne pas les afficher comme "disponibles"
+        if (category == QuestCategory.JOURNALIERE) {
+            List<QuestModel> available = QuestManager.getAvailableQuests(myUUID, isPK);
+            for (QuestModel quest : available) {
+                if (slotIdx >= MAX_QUEST_SLOTS) break;
+                if (quest.getCategory() != category) continue;
+                if (displayCache.contains(quest.getId())) continue;
+
+                fillQuestSlot(ui, slotIdx, quest, null, false, currentRenderCategory);
+                displayCache.add(quest.getId());
+                slotIdx++;
+            }
+        }
+
+        // Quetes en cooldown (journalieres uniquement)
+        if (category == QuestCategory.JOURNALIERE) {
+            for (QuestModel quest : QuestManager.getAllQuests()) {
+                if (slotIdx >= MAX_QUEST_SLOTS) break;
+                if (!quest.isDaily() || quest.getCooldownMinutes() <= 0) continue;
+                if (!QuestManager.getTodaysDailyIds().contains(quest.getId())) continue;
+                long cdEnd = QuestManager.getCooldownEnd(myUUID, quest.getId());
+                if (cdEnd <= now) continue;
+                if (displayCache.contains(quest.getId())) continue;
+
+                fillQuestSlot(ui, slotIdx, quest, null, false, currentRenderCategory);
+                ui.set("#QSlotBtnAccept" + slotIdx + ".Visible", false);
+                long remaining = cdEnd - now;
+                long hrs = remaining / 3600000;
+                long mins = (remaining % 3600000) / 60000;
+                ui.set("#QSlotProg" + slotIdx + ".Text", hrs + "h " + mins + "m");
+                ui.set("#QSlotProg" + slotIdx + ".Style.TextColor", "#cc6644");
+                displayCache.add(quest.getId());
+                slotIdx++;
+            }
+        }
+
+        return slotIdx;
+    }
+
+    private static int renderInProgressList(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store,
+                                            UUID myUUID, int slotIdx, List<String> displayCache) {
+        List<PlayerQuest> inProgress = QuestManager.getInProgressQuests(myUUID);
+        for (PlayerQuest pq : inProgress) {
+            if (slotIdx >= MAX_QUEST_SLOTS) break;
+            QuestModel model = QuestManager.getQuest(pq.getQuestId());
+            if (model == null) continue;
+
+            fillQuestSlot(ui, slotIdx, model, pq, true, "progress");
+            // Marquer visuellement la quête active
+            if (pq.isActive()) {
+                ui.set("#QSlotProg" + slotIdx + ".Text", "ACTIVE");
+                ui.set("#QSlotProg" + slotIdx + ".Style.TextColor", "#4CAF50");
+            }
+            displayCache.add(pq.getQuestId());
+            slotIdx++;
+        }
+        return slotIdx;
+    }
+
+    private static int renderClaimableList(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store,
+                                           UUID myUUID, int slotIdx, List<String> displayCache) {
+        List<PlayerQuest> claimable = QuestManager.getClaimableQuests(myUUID);
+        for (PlayerQuest pq : claimable) {
+            if (slotIdx >= MAX_QUEST_SLOTS) break;
+            QuestModel model = QuestManager.getQuest(pq.getQuestId());
+            if (model == null) continue;
+
+            fillQuestSlot(ui, slotIdx, model, pq, true, "done");
+            displayCache.add(pq.getQuestId());
+            slotIdx++;
+        }
+        return slotIdx;
+    }
+
+    private static int renderBountyList(UICommandBuilder ui, UUID myUUID, int slotIdx, List<String> displayCache) {
+        for (QuestManager.BountyInfo bounty : QuestManager.getActiveBounties()) {
+            if (slotIdx >= MAX_QUEST_SLOTS) break;
+            if (bounty.uuid.equals(myUUID)) continue; // Ne pas afficher sa propre prime
+
+            QuestDifficulty diff = QuestManager.difficultyFromLevel(bounty.level);
+            long bonus = QuestManager.calculateBountyBonus(diff);
+
+            ui.set("#QSlot" + slotIdx + ".Visible", true);
+            ui.set("#QSlotCat" + slotIdx + ".Text", "PRIME \u00B7 NIVEAU " + bounty.level);
+            ui.set("#QSlotCat" + slotIdx + ".Style.TextColor", "#6a5f42");
+            ui.set("#QSlotDiff" + slotIdx + ".Text", diff.getDisplayName());
+            ui.set("#QSlotDiff" + slotIdx + ".Style.TextColor", diff.getColor());
+            ui.set("#QSlotName" + slotIdx + ".Text", bounty.name);
+            ui.set("#QSlotName" + slotIdx + ".Style.TextColor", "#f0ead8");
+            ui.set("#QSlotProg" + slotIdx + ".Text", "");
+
+            // Objectif : retrouver et tuer
+            ui.set("#QSlotObjABox" + slotIdx + ".Visible", true);
+            ui.set("#QSlotObjA" + slotIdx + ".Text", "Retrouver et tuer " + bounty.name);
+            ui.set("#QSlotObjAC" + slotIdx + ".Text", "");
+            ui.set("#QSlotObjA" + slotIdx + ".Style.TextColor", "#cc4444");
+            ui.set("#QSlotObjBBox" + slotIdx + ".Visible", false);
+            ui.set("#QSlotObjCBox" + slotIdx + ".Visible", false);
+
+            // Recompenses
+            ui.set("#QSlotRewABox" + slotIdx + ".Visible", true);
+            ui.set("#QSlotRewA" + slotIdx + ".Text", "+" + formatNumber(bounty.bounty) + " Or (prime)");
+            ui.set("#QSlotRewBBox" + slotIdx + ".Visible", true);
+            ui.set("#QSlotRewB" + slotIdx + ".Text", "+" + formatNumber(bonus) + " Or (bonus)");
+            ui.set("#QSlotRewCBox" + slotIdx + ".Visible", false);
+
+            // Boutons : Traquer / Abandonner
+            ui.set("#QSlotBtnAccept" + slotIdx + ".Visible", true);
+            ui.set("#QSlotBtnAccept" + slotIdx + ".Text", "TRAQUER");
+            ui.set("#QSlotBtnActivate" + slotIdx + ".Visible", false);
+            ui.set("#QSlotBtnAbandon" + slotIdx + ".Visible", false);
+            ui.set("#QSlotBtnClaim" + slotIdx + ".Visible", false);
+
+            // Changer le style du slot pour les primes (fond rougeatre)
+            ui.set("#QSlot" + slotIdx + ".Background", "#1a0f0a");
+
+            displayCache.add("bounty:" + bounty.uuid.toString());
+            slotIdx++;
+        }
+        return slotIdx;
+    }
+
+    // ==================== FILL QUEST SLOT ====================
+
+    private static void fillQuestSlot(UICommandBuilder ui, int i, QuestModel model, PlayerQuest pq, boolean owned, String currentViewCategory) {
         ui.set("#QSlot" + i + ".Visible", true);
+        ui.set("#QSlot" + i + ".Background", "#0c1018");
         ui.set("#QSlotName" + i + ".Text", model.getName());
+        ui.set("#QSlotName" + i + ".Style.TextColor", "#ffffff");
         ui.set("#QSlotCat" + i + ".Text", model.getCategory().getDisplayName());
+        ui.set("#QSlotCat" + i + ".Style.TextColor", "#8899aa");
         ui.set("#QSlotDiff" + i + ".Text", model.getDifficulty().getDisplayName());
+        ui.set("#QSlotDiff" + i + ".Style.TextColor", model.getDifficulty().getColor());
         ui.set("#QSlotProg" + i + ".Text", "");
 
-        // Objectifs dans des containers individuels
+        // Objectifs
         if (model instanceof NpcDialogueQuest nq && nq.getCompletionCondition() != null) {
             fillSlotMultiObjectives(ui, i, nq.getCompletionCondition(), pq);
         } else {
-            // Quete simple : 1 container
             ui.set("#QSlotObjABox" + i + ".Visible", true);
             ui.set("#QSlotObjA" + i + ".Text", model.getObjectiveText());
             if (pq != null && pq.isCompleted()) {
@@ -184,10 +366,10 @@ public class QuestTab {
             ui.set("#QSlotObjCBox" + i + ".Visible", false);
         }
 
-        // Recompenses dans des containers individuels
+        // Recompenses
         fillSlotRewards(ui, i, model);
 
-        // Reset boutons
+        // Boutons — contexte-dependant
         ui.set("#QSlotBtnAbandon" + i + ".Visible", false);
         ui.set("#QSlotBtnAccept" + i + ".Visible", false);
         ui.set("#QSlotBtnActivate" + i + ".Visible", false);
@@ -196,10 +378,14 @@ public class QuestTab {
         if (pq != null && pq.isCompleted()) {
             ui.set("#QSlotBtnClaim" + i + ".Visible", true);
         } else if (owned) {
-            ui.set("#QSlotBtnActivate" + i + ".Visible", true);
+            // ACTIVER : seulement dans la vue "en cours" ET si la quête n'est pas déjà active
+            if (pq != null && !pq.isActive() && "progress".equals(currentViewCategory)) {
+                ui.set("#QSlotBtnActivate" + i + ".Visible", true);
+            }
             ui.set("#QSlotBtnAbandon" + i + ".Visible", true);
         } else {
             ui.set("#QSlotBtnAccept" + i + ".Visible", true);
+            ui.set("#QSlotBtnAccept" + i + ".Text", "ACCEPTER");
         }
     }
 
@@ -242,23 +428,25 @@ public class QuestTab {
 
         if (model.getRewardXP() > 0 && rewIdx < 3) {
             ui.set("#QSlotRew" + boxes[rewIdx] + "Box" + i + ".Visible", true);
-            ui.set("#QSlotRew" + boxes[rewIdx] + i + ".Text", "+" + model.getRewardXP() + " XP");
+            ui.set("#QSlotRew" + boxes[rewIdx] + i + ".Text", "+" + formatNumber(model.getRewardXP()) + " XP");
             rewIdx++;
         }
         if (model.getRewardGold() > 0 && rewIdx < 3) {
             ui.set("#QSlotRew" + boxes[rewIdx] + "Box" + i + ".Visible", true);
-            ui.set("#QSlotRew" + boxes[rewIdx] + i + ".Text", "+" + model.getRewardGold() + " Or");
+            ui.set("#QSlotRew" + boxes[rewIdx] + i + ".Text", "+" + formatNumber(model.getRewardGold()) + " Or");
             rewIdx++;
         }
         if (model.getRewardTitleId() != null && rewIdx < 3) {
             ui.set("#QSlotRew" + boxes[rewIdx] + "Box" + i + ".Visible", true);
-            ui.set("#QSlotRew" + boxes[rewIdx] + i + ".Text", "Titre");
+            ui.set("#QSlotRew" + boxes[rewIdx] + i + ".Text", "Titre: " + model.getRewardTitleId());
             rewIdx++;
         }
         for (int r = rewIdx; r < 3; r++) {
             ui.set("#QSlotRew" + boxes[r] + "Box" + i + ".Visible", false);
         }
     }
+
+    // ==================== HANDLERS ====================
 
     private static List<String> getCache(UUID uuid) {
         return playerDisplayCaches.getOrDefault(uuid, List.of());
@@ -271,7 +459,14 @@ public class QuestTab {
         List<String> cache = getCache(uuid);
         if (idx < 0 || idx >= cache.size()) return false;
 
-        boolean ok = QuestManager.acceptQuest(uuid, cache.get(idx));
+        String entry = cache.get(idx);
+
+        // Si c'est une prime (bounty:uuid), creer une quete d'execution
+        if (entry.startsWith("bounty:")) {
+            return handleTrack(entry.substring(7), uuid, ref, store);
+        }
+
+        boolean ok = QuestManager.acceptQuest(uuid, entry);
         if (ok) saveQuestData(uuid, ref, store);
         return ok;
     }
@@ -324,15 +519,13 @@ public class QuestTab {
         data.setCooldownData(QuestManager.serializeCooldowns(uuid));
         store.putComponent(ref, type, data);
 
-        // Mettre à jour les stats
+        // Mettre a jour les stats
         com.eldanior.system.Leveling.utils.StatCalculator.updatePlayerStats(ref, store, data);
 
         PlayerRef pRefClaim = store.getComponent(ref, PlayerRef.getComponentType());
         if (pRefClaim != null) {
-            // Grand titre de completion
             com.eldanior.system.Leveling.utils.NotificationHelper.showEventTitle(pRefClaim,
                     "QUETE TERMINEE", model.getName(), true);
-            // Notification des recompenses
             com.eldanior.system.Leveling.utils.NotificationHelper.sendSuccess(pRefClaim,
                     "<color:green>+" + model.getRewardXP() + " XP</color> <color:gold>+" + model.getRewardGold() + " Or</color>");
             if (model.getRewardTitleId() != null) {
@@ -343,21 +536,6 @@ public class QuestTab {
                 com.eldanior.system.Leveling.utils.NotificationHelper.showLevelUpTitle(pRefClaim, data.getLevel());
             }
         }
-        return true;
-    }
-
-    public static boolean handleAbandonActive(Ref<EntityStore> ref, Store<EntityStore> store) {
-        UUID uuid = getPlayerUUID(ref, store);
-        if (uuid == null) return false;
-
-        PlayerQuest active = QuestManager.getActiveQuest(uuid);
-        if (active == null) return false;
-
-        QuestManager.abandonQuest(uuid, active.getQuestId());
-        saveQuestData(uuid, ref, store);
-
-        Player player = store.getComponent(ref, Player.getComponentType());
-        if (player != null) player.getPlayerRef().sendMessage(Message.raw("Quete abandonnee."));
         return true;
     }
 
@@ -376,44 +554,54 @@ public class QuestTab {
         return true;
     }
 
-    private static void renderActiveObjectiveBoxes(UICommandBuilder ui, QuestCondition cond,
-                                                      PlayerLevelData data, Player player) {
-        List<String[]> objectives = new ArrayList<>(); // [label, counter, done]
-        int num = 1;
+    public static boolean handleAbandonActive(Ref<EntityStore> ref, Store<EntityStore> store) {
+        UUID uuid = getPlayerUUID(ref, store);
+        if (uuid == null) return false;
 
-        if (cond.getRequiredLevel() > 0) {
-            int current = data != null ? data.getLevel() : 0;
-            boolean done = current >= cond.getRequiredLevel();
-            objectives.add(new String[]{num + ". Lvl " + cond.getRequiredLevel(), done ? "OK" : current + "/" + cond.getRequiredLevel(), done ? "1" : "0"});
-            num++;
-        }
-        if (cond.getRequiredQuestCompleted() != null) {
-            boolean done = data != null && data.getQuestData() != null
-                    && data.getQuestData().contains(cond.getRequiredQuestCompleted() + ":")
-                    && data.getQuestData().contains(":COMPLETED");
-            objectives.add(new String[]{num + ". Indice", done ? "OK" : "0/1", done ? "1" : "0"});
-            num++;
-        }
-        if (cond.getRequiredItemId() != null) {
-            boolean done = hasItemInFullInventory(player, cond.getRequiredItemId());
-            String name = cond.getRequiredItemId().replaceAll("([a-z])([A-Z])", "$1 $2").replace("_", " ");
-            if (name.contains(":")) name = name.substring(name.indexOf(':') + 1);
-            objectives.add(new String[]{num + ". " + name, done ? "OK" : "0/1", done ? "1" : "0"});
-        }
+        PlayerQuest active = QuestManager.getActiveQuest(uuid);
+        if (active == null) return false;
 
-        for (int i = 1; i <= 3; i++) {
-            if (i <= objectives.size()) {
-                String[] obj = objectives.get(i - 1);
-                boolean done = "1".equals(obj[2]);
-                ui.set("#QActiveObj" + i + "Box.Visible", true);
-                ui.set("#QActiveObj" + i + ".Text", obj[0]);
-                ui.set("#QActiveObj" + i + "Count.Text", obj[1]);
-                ui.set("#QActiveObj" + i + ".Style.TextColor", done ? "#4CAF50" : "#ddeeff");
-                ui.set("#QActiveObj" + i + "Count.Style.TextColor", done ? "#4CAF50" : "#ffffff");
-            } else {
-                ui.set("#QActiveObj" + i + "Box.Visible", false);
+        QuestManager.abandonQuest(uuid, active.getQuestId());
+        saveQuestData(uuid, ref, store);
+
+        Player player = store.getComponent(ref, Player.getComponentType());
+        if (player != null) player.getPlayerRef().sendMessage(Message.raw("Quete abandonnee."));
+        return true;
+    }
+
+    /** Traquer une prime (envoyer un message — la mécanique complète sera dans un ticket dédié) */
+    private static boolean handleTrack(String targetUUIDStr, UUID killerUUID, Ref<EntityStore> ref, Store<EntityStore> store) {
+        try {
+            UUID targetUUID = UUID.fromString(targetUUIDStr);
+            QuestManager.BountyInfo bounty = null;
+            for (QuestManager.BountyInfo b : QuestManager.getActiveBounties()) {
+                if (b.uuid.equals(targetUUID)) { bounty = b; break; }
             }
+            if (bounty == null) return false;
+
+            Player player = store.getComponent(ref, Player.getComponentType());
+            if (player != null) {
+                long bonus = QuestManager.calculateBountyBonus(QuestManager.difficultyFromLevel(bounty.level));
+                player.getPlayerRef().sendMessage(Message.raw(
+                        "<color:red>PRIME ACCEPTEE !</color> Traquez <color:gold>" + bounty.name +
+                        "</color> pour <color:gold>" + formatNumber(bounty.bounty + bonus) + " Or</color>"));
+            }
+        } catch (Exception e) { return false; }
+        return true;
+    }
+
+    // ==================== UTILS ====================
+
+    private static String formatNumber(long number) {
+        if (number < 1000) return String.valueOf(number);
+        StringBuilder sb = new StringBuilder();
+        String str = String.valueOf(number);
+        int len = str.length();
+        for (int i = 0; i < len; i++) {
+            if (i > 0 && (len - i) % 3 == 0) sb.append(' ');
+            sb.append(str.charAt(i));
         }
+        return sb.toString();
     }
 
     /**
@@ -430,10 +618,12 @@ public class QuestTab {
             ItemStack item = inv.getStorage().getItemStack(i);
             if (item != null && !item.isEmpty() && item.getItemId().equalsIgnoreCase(itemId)) return true;
         }
-        for (short i = 0; i < 8; i++) {
-            ItemStack item = inv.getBackpack().getItemStack(i);
-            if (item != null && !item.isEmpty() && item.getItemId().equalsIgnoreCase(itemId)) return true;
-        }
+        try {
+            for (short i = 0; i < 8; i++) {
+                ItemStack item = inv.getBackpack().getItemStack(i);
+                if (item != null && !item.isEmpty() && item.getItemId().equalsIgnoreCase(itemId)) return true;
+            }
+        } catch (IllegalArgumentException ignored) { /* backpack may have 0 capacity */ }
         return false;
     }
 
@@ -462,5 +652,6 @@ public class QuestTab {
     /** Nettoyage quand un joueur se deconnecte */
     public static void cleanupPlayer(UUID uuid) {
         playerDisplayCaches.remove(uuid);
+        viewingCategory.remove(uuid);
     }
 }

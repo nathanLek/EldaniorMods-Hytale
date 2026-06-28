@@ -182,10 +182,12 @@ public class QuestHud extends CustomUIHud {
             ItemStack item = inv.getStorage().getItemStack(i);
             if (item != null && !item.isEmpty() && item.getItemId().equalsIgnoreCase(itemId)) return true;
         }
-        for (short i = 0; i < 8; i++) {
-            ItemStack item = inv.getBackpack().getItemStack(i);
-            if (item != null && !item.isEmpty() && item.getItemId().equalsIgnoreCase(itemId)) return true;
-        }
+        try {
+            for (short i = 0; i < 8; i++) {
+                ItemStack item = inv.getBackpack().getItemStack(i);
+                if (item != null && !item.isEmpty() && item.getItemId().equalsIgnoreCase(itemId)) return true;
+            }
+        } catch (IllegalArgumentException ignored) { /* backpack may have 0 capacity */ }
         return false;
     }
 

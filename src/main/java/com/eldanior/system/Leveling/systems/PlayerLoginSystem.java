@@ -199,6 +199,11 @@ public class PlayerLoginSystem extends EntityTickingSystem<EntityStore> {
 
         initializedPlayers.add(uuid);
 
+        // Enregistrer la prime si le joueur est PK avec bounty > 0
+        if (data.isPK() && data.getBounty() > 0) {
+            com.eldanior.system.quest.QuestManager.registerBounty(uuid, playerName, data.getLevel(), data.getBounty());
+        }
+
         // Message de bienvenue
         try {
             com.hypixel.hytale.server.core.universe.PlayerRef pRefWelcome = store.getComponent(playerRef, com.hypixel.hytale.server.core.universe.PlayerRef.getComponentType());
