@@ -262,8 +262,15 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             events.addEventBinding(CustomUIEventBindingType.Activating, "#QSlotBtnClaim" + i, EventData.of("Action", "quest_claim").append("Param", String.valueOf(i)));
             events.addEventBinding(CustomUIEventBindingType.Activating, "#QSlotBtnAbandon" + i, EventData.of("Action", "quest_abandon").append("Param", String.valueOf(i)));
         }
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#QActiveBtnAbandon", EventData.of("Action", "quest_abandon_active"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnQuetes", EventData.of("Action", "tab_quetes"));
+        // Quest category navigation
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#QBlasonDaily", EventData.of("Action", "quest_cat").append("Param", "daily"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#QBlasonSide", EventData.of("Action", "quest_cat").append("Param", "side"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#QBlasonMain", EventData.of("Action", "quest_cat").append("Param", "main"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#QBlasonBounty", EventData.of("Action", "quest_cat").append("Param", "bounty"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#QBannerEnCours", EventData.of("Action", "quest_cat").append("Param", "progress"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#QBannerAClaim", EventData.of("Action", "quest_cat").append("Param", "done"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#QListBtnBack", EventData.of("Action", "quest_back"));
 
         // Populate shop tab (PK ne voient pas le shop normal)
         boolean isPK = data.isPK();
@@ -628,6 +635,24 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             com.hypixel.hytale.server.core.entity.entities.Player player = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
             if (player != null) {
                 player.getPlayerRef().sendMessage(Message.raw("Tapez dans le chat : /es ordre invite <joueur>"));
+            }
+            return;
+        }
+
+        // Quest category navigation
+        if ("quest_cat".equals(eventData.action) && eventData.param != null) {
+            java.util.UUID qUuid = getPlayerUUID(ref, store);
+            if (qUuid != null) {
+                QuestTab.selectCategory(qUuid, eventData.param);
+                refreshQuestTab(ref, store);
+            }
+            return;
+        }
+        if ("quest_back".equals(eventData.action)) {
+            java.util.UUID qUuid = getPlayerUUID(ref, store);
+            if (qUuid != null) {
+                QuestTab.goBack(qUuid);
+                refreshQuestTab(ref, store);
             }
             return;
         }
@@ -1295,6 +1320,9 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             BlackMarketTab.populate(update, ref, store);
         }
         if ("quetes".equals(tabName)) {
+            // Reset a l'ecran categories quand on switch vers l'onglet Quetes
+            java.util.UUID questUuid = getPlayerUUID(ref, store);
+            if (questUuid != null) QuestTab.goBack(questUuid);
             QuestTab.populate(update, ref, store);
         }
         if ("shop".equals(tabName)) {
