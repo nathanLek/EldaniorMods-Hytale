@@ -102,6 +102,20 @@ public class NpcQuestInteraction {
                         player.getPageManager().openCustomPage(playerEntityRef, store,
                                 new DialogueScreen(playerRef, dialogueQuest));
                     }
+                } else if (quest.getType() == com.eldanior.system.quest.QuestType.MINAGE
+                        || quest.getType() == com.eldanior.system.quest.QuestType.RECOLTE) {
+                    // Quete MINAGE/RECOLTE : verifier inventaire et donner recompenses si assez d'items
+                    Player player = store.getComponent(playerEntityRef, Player.getComponentType());
+                    if (player != null && quest.getTargetId() != null) {
+                        int count = QuestManager.countItemInInventory(player, quest.getTargetId());
+                        if (count >= quest.getTargetAmount()) {
+                            pq.setCompleted();
+                            giveRewards(playerRef, store, playerEntityRef, quest);
+                        } else {
+                            playerRef.sendMessage(Message.raw("[PNJ] Quete en cours : " + quest.getName()));
+                            playerRef.sendMessage(Message.raw("Items : " + count + " / " + quest.getTargetAmount()));
+                        }
+                    }
                 } else {
                     playerRef.sendMessage(Message.raw("[PNJ] Quete en cours : " + quest.getName()));
                     playerRef.sendMessage(Message.raw("Progression : " + pq.getProgress() + " / " + quest.getTargetAmount()));
@@ -118,6 +132,21 @@ public class NpcQuestInteraction {
     private static void giveRewards(PlayerRef playerRef, Store<EntityStore> store,
                                      Ref<EntityStore> ref, QuestModel quest) {
         try {
+            // Pour les quetes MINAGE/RECOLTE : verifier et retirer les items
+            if (quest.getType() == com.eldanior.system.quest.QuestType.MINAGE
+                    || quest.getType() == com.eldanior.system.quest.QuestType.RECOLTE) {
+                Player player = store.getComponent(ref, Player.getComponentType());
+                if (player == null || quest.getTargetId() == null) return;
+                int count = QuestManager.countItemInInventory(player, quest.getTargetId());
+                if (count < quest.getTargetAmount()) {
+                    playerRef.sendMessage(Message.raw(
+                            "Il vous manque des items ! " + count + "/" + quest.getTargetAmount()
+                                    + " " + quest.getTargetId().replace("hytale:", "")));
+                    return;
+                }
+                QuestManager.removeItemsFromInventory(player, quest.getTargetId(), quest.getTargetAmount());
+            }
+
             ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
             PlayerLevelData data = store.getComponent(ref, type);
             if (data == null) return;

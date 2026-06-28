@@ -269,6 +269,7 @@ public class EldaniorSystem extends JavaPlugin {
             this.getEntityStoreRegistry().registerSystem(new PartyHudUpdateSystem());
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.duel.DuelProtectionSystem());
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.quest.QuestHudUpdateSystem());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.quest.QuestBlockBreakEvent());
             this.getEntityStoreRegistry().registerSystem(new DignityAuraSystem());
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.titles.systems.TitleCheckSystem());
 

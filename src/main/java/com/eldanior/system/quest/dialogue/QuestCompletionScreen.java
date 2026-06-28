@@ -73,19 +73,45 @@ public class QuestCompletionScreen extends InteractiveCustomUIPage<QuestCompleti
         Player player = store.getComponent(ref, Player.getComponentType());
         if (pData == null) { this.close(); return; }
 
+        // Pour les quetes MINAGE/RECOLTE : verifier et retirer les items de l'inventaire
+        if (quest.getType() == com.eldanior.system.quest.QuestType.MINAGE
+                || quest.getType() == com.eldanior.system.quest.QuestType.RECOLTE) {
+            if (player == null || quest.getTargetId() == null) { this.close(); return; }
+            int count = QuestManager.countItemInInventory(player, quest.getTargetId());
+            if (count < quest.getTargetAmount()) {
+                // Pas assez d'items — notifier et fermer
+                PlayerRef pRefMsg = store.getComponent(ref, PlayerRef.getComponentType());
+                if (pRefMsg != null) {
+                    pRefMsg.sendMessage(Message.raw(
+                            "Il vous manque des items ! " + count + "/" + quest.getTargetAmount()
+                                    + " " + quest.getTargetId().replace("hytale:", "")));
+                }
+                this.close();
+                return;
+            }
+            // Retirer les items
+            QuestManager.removeItemsFromInventory(player, quest.getTargetId(), quest.getTargetAmount());
+        }
+
         // Donner recompenses
         int oldLevel = pData.getLevel();
         pData.addExperience(quest.getRewardXP());
         pData.addMoney(quest.getRewardGold());
         if (quest.getRewardTitleId() != null) pData.addTitle(quest.getRewardTitleId());
 
-        // Marquer comme completee
-        for (PlayerQuest pq : QuestManager.getPlayerQuests(playerUUID)) {
+        // Marquer comme completee et retirer de la liste (evite double claim via QuestTab)
+        QuestManager.getPlayerQuests(playerUUID).removeIf(pq -> {
             if (pq.getQuestId().equals(quest.getId())) {
                 pq.addProgress(1);
                 pq.setCompleted();
-                break;
+                return true; // retirer immediatement
             }
+            return false;
+        });
+
+        // Cooldown
+        if (quest.getCooldownMinutes() > 0) {
+            QuestManager.setCooldown(playerUUID, quest.getId(), quest.getCooldownMinutes());
         }
 
         // Debloquer et activer la quete suivante
@@ -96,6 +122,7 @@ public class QuestCompletionScreen extends InteractiveCustomUIPage<QuestCompleti
 
         // Sauvegarder
         pData.setQuestData(QuestManager.serializePlayerQuests(playerUUID));
+        pData.setCooldownData(QuestManager.serializeCooldowns(playerUUID));
         store.putComponent(ref, type, pData);
 
         // Notifications + level up check

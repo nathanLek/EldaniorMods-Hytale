@@ -62,12 +62,22 @@ public class QuestHud extends CustomUIHud {
                 } else {
                     // Quete simple : afficher objectif + progression dans box 1
                     String objText = mainModel.getObjectiveText();
-                    String prog = mainQuest.isCompleted() ? "OK" : mainQuest.getProgress() + "/" + mainModel.getTargetAmount();
+                    String prog;
+                    if (mainQuest.isCompleted()) {
+                        prog = "OK";
+                    } else if ((mainModel.getType() == QuestType.MINAGE || mainModel.getType() == QuestType.RECOLTE)
+                            && cachedPlayer != null && mainModel.getTargetId() != null) {
+                        int invCount = QuestManager.countItemInInventory(cachedPlayer, mainModel.getTargetId());
+                        prog = invCount + "/" + mainModel.getTargetAmount();
+                    } else {
+                        prog = mainQuest.getProgress() + "/" + mainModel.getTargetAmount();
+                    }
+                    boolean done = mainQuest.isCompleted() || "OK".equals(prog);
                     ui.set("#QHudMainObj1Box.Visible", true);
                     ui.set("#QHudMainObj1.Text", objText);
                     ui.set("#QHudMainObj1Count.Text", prog);
-                    ui.set("#QHudMainObj1.Style.TextColor", mainQuest.isCompleted() ? "#4CAF50" : "#ddeeff");
-                    ui.set("#QHudMainObj1Count.Style.TextColor", mainQuest.isCompleted() ? "#4CAF50" : "#ffffff");
+                    ui.set("#QHudMainObj1.Style.TextColor", done ? "#4CAF50" : "#ddeeff");
+                    ui.set("#QHudMainObj1Count.Style.TextColor", done ? "#4CAF50" : "#ffffff");
                     ui.set("#QHudMainObj2Box.Visible", false);
                     ui.set("#QHudMainObj3Box.Visible", false);
                 }
@@ -95,12 +105,23 @@ public class QuestHud extends CustomUIHud {
                 } else {
                     // Quete simple : afficher objectif + progression dans box 1
                     String objText = model.getObjectiveText();
-                    String prog = active.isCompleted() ? "OK" : active.getProgress() + "/" + model.getTargetAmount();
+                    String prog;
+                    if (active.isCompleted()) {
+                        prog = "OK";
+                    } else if ((model.getType() == QuestType.MINAGE || model.getType() == QuestType.RECOLTE)
+                            && cachedPlayer != null && model.getTargetId() != null) {
+                        // Progression basee sur l'inventaire pour MINAGE/RECOLTE
+                        int invCount = QuestManager.countItemInInventory(cachedPlayer, model.getTargetId());
+                        prog = invCount + "/" + model.getTargetAmount();
+                    } else {
+                        prog = active.getProgress() + "/" + model.getTargetAmount();
+                    }
+                    boolean done = active.isCompleted() || "OK".equals(prog);
                     ui.set("#QHudObj1Box.Visible", true);
                     ui.set("#QHudObj1.Text", objText);
                     ui.set("#QHudObj1Count.Text", prog);
-                    ui.set("#QHudObj1.Style.TextColor", active.isCompleted() ? "#4CAF50" : "#ddeeff");
-                    ui.set("#QHudObj1Count.Style.TextColor", active.isCompleted() ? "#4CAF50" : "#ffffff");
+                    ui.set("#QHudObj1.Style.TextColor", done ? "#4CAF50" : "#ddeeff");
+                    ui.set("#QHudObj1Count.Style.TextColor", done ? "#4CAF50" : "#ffffff");
                     ui.set("#QHudObj2Box.Visible", false);
                     ui.set("#QHudObj3Box.Visible", false);
                 }
