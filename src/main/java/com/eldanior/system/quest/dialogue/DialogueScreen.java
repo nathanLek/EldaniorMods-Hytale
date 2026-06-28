@@ -176,6 +176,59 @@ public class DialogueScreen extends InteractiveCustomUIPage<DialogueScreen.Dialo
             }
 
             if (alreadyAccepted) {
+                // Pour MINAGE/RECOLTE : verifier inventaire et completer si assez d'items
+                if (quest.getType() == com.eldanior.system.quest.QuestType.MINAGE
+                        || quest.getType() == com.eldanior.system.quest.QuestType.RECOLTE) {
+                    if (player != null && quest.getTargetId() != null) {
+                        int count = QuestManager.countItemInInventory(player, quest.getTargetId());
+                        if (count >= quest.getTargetAmount()) {
+                            // Retirer les items et ouvrir l'ecran de completion
+                            QuestManager.removeItemsFromInventory(player, quest.getTargetId(), quest.getTargetAmount());
+                            for (PlayerQuest pq2 : QuestManager.getPlayerQuests(playerUUID)) {
+                                if (pq2.getQuestId().equals(quest.getId())) {
+                                    pq2.setCompleted();
+                                    break;
+                                }
+                            }
+                            // Donner recompenses
+                            int oldLevel = data.getLevel();
+                            data.addExperience(quest.getRewardXP());
+                            data.addMoney(quest.getRewardGold());
+                            if (quest.getRewardTitleId() != null) data.addTitle(quest.getRewardTitleId());
+                            if (quest.getCooldownMinutes() > 0) {
+                                QuestManager.setCooldown(playerUUID, quest.getId(), quest.getCooldownMinutes());
+                            }
+                            // Retirer de la liste
+                            QuestManager.getPlayerQuests(playerUUID).removeIf(pq3 -> pq3.getQuestId().equals(quest.getId()) && pq3.isCompleted());
+                            // Level up
+                            if (data.getLevel() > oldLevel) {
+                                int gained = (data.getLevel() - oldLevel) * 3;
+                                data.setAttributePoints(data.getAttributePoints() + gained);
+                            }
+                            data.setQuestData(QuestManager.serializePlayerQuests(playerUUID));
+                            data.setCooldownData(QuestManager.serializeCooldowns(playerUUID));
+                            store.putComponent(ref, type, data);
+                            com.eldanior.system.Leveling.utils.StatCalculator.updatePlayerStats(ref, store, data);
+                            PlayerRef pRefClaim = store.getComponent(ref, PlayerRef.getComponentType());
+                            if (pRefClaim != null) {
+                                com.eldanior.system.Leveling.utils.NotificationHelper.showEventTitle(pRefClaim,
+                                        "QUETE TERMINEE", quest.getName(), true);
+                                com.eldanior.system.Leveling.utils.NotificationHelper.sendSuccess(pRefClaim,
+                                        "<color:green>+" + quest.getRewardXP() + " XP</color> <color:gold>+" + quest.getRewardGold() + " Or</color>");
+                                if (data.getLevel() > oldLevel) {
+                                    com.eldanior.system.Leveling.utils.NotificationHelper.showLevelUpTitle(pRefClaim, data.getLevel());
+                                }
+                            }
+                            this.close();
+                            return;
+                        } else {
+                            if (player != null) player.getPlayerRef().sendMessage(
+                                    Message.raw("Il vous manque des items ! " + count + "/" + quest.getTargetAmount()));
+                            this.close();
+                            return;
+                        }
+                    }
+                }
                 if (player != null) player.getPlayerRef().sendMessage(Message.raw("Quete deja en cours !"));
                 this.close();
                 return;

@@ -22,7 +22,7 @@ public class SecQuest_AncienConseiller extends NpcDialogueQuest {
                 null, 1,
                 5000, 50000, null,
                 null,
-                "AncienConseiller_Npc", // NPC ID
+                "Quest_Npc_Secondaire_Multiple_N1", // NPC ID
 
                 // === PAGES DE DIALOGUE ===
                 List.of(

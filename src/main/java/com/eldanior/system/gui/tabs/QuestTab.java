@@ -130,6 +130,7 @@ public class QuestTab {
         boolean isPK = false;
         PlayerLevelData data = store.getComponent(ref, EldaniorSystem.get().getPlayerLevelDataType());
         if (data != null) isPK = data.isPK();
+        Player player = store.getComponent(ref, Player.getComponentType());
 
         // Header
         String catTitle;
@@ -157,12 +158,12 @@ public class QuestTab {
             ui.set("#QListSection.Visible", false);
         } else if ("progress".equals(category)) {
             // Vue agregee : toutes les quetes en cours
-            slotIdx = renderInProgressList(ui, ref, store, myUUID, slotIdx, displayCache);
+            slotIdx = renderInProgressList(ui, ref, store, myUUID, slotIdx, displayCache, player);
             ui.set("#QListCount.Text", displayCache.size() + " QUETES");
             ui.set("#QListSection.Visible", false);
         } else if ("done".equals(category)) {
             // Quetes terminees a reclamer
-            slotIdx = renderClaimableList(ui, ref, store, myUUID, slotIdx, displayCache);
+            slotIdx = renderClaimableList(ui, ref, store, myUUID, slotIdx, displayCache, player);
             ui.set("#QListCount.Text", displayCache.size() + " QUETES");
             ui.set("#QListSection.Visible", false);
         } else {
@@ -173,7 +174,7 @@ public class QuestTab {
                 case "main" -> QuestCategory.PRINCIPAL;
                 default -> QuestCategory.JOURNALIERE;
             };
-            slotIdx = renderCategoryList(ui, ref, store, myUUID, questCat, isPK, slotIdx, displayCache);
+            slotIdx = renderCategoryList(ui, ref, store, myUUID, questCat, isPK, slotIdx, displayCache, player);
             ui.set("#QListCount.Text", displayCache.size() + " QUETES");
             ui.set("#QListSection.Visible", false);
         }
@@ -190,7 +191,7 @@ public class QuestTab {
 
     private static int renderCategoryList(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store,
                                           UUID myUUID, QuestCategory category, boolean isPK,
-                                          int slotIdx, List<String> displayCache) {
+                                          int slotIdx, List<String> displayCache, Player player) {
         List<PlayerQuest> myQuests = QuestManager.getPlayerQuests(myUUID);
         long now = System.currentTimeMillis();
 
@@ -203,7 +204,7 @@ public class QuestTab {
             if (model instanceof NpcDialogueQuest nq && nq.isInfoOnly()) continue;
             if (model.getCategory() != category) continue;
 
-            fillQuestSlot(ui, slotIdx, model, pq, true, currentRenderCategory);
+            fillQuestSlot(ui, slotIdx, model, pq, true, currentRenderCategory, player);
             displayCache.add(pq.getQuestId());
             slotIdx++;
         }
@@ -217,7 +218,7 @@ public class QuestTab {
                 if (quest.getCategory() != category) continue;
                 if (displayCache.contains(quest.getId())) continue;
 
-                fillQuestSlot(ui, slotIdx, quest, null, false, currentRenderCategory);
+                fillQuestSlot(ui, slotIdx, quest, null, false, currentRenderCategory, player);
                 displayCache.add(quest.getId());
                 slotIdx++;
             }
@@ -233,7 +234,7 @@ public class QuestTab {
                 if (cdEnd <= now) continue;
                 if (displayCache.contains(quest.getId())) continue;
 
-                fillQuestSlot(ui, slotIdx, quest, null, false, currentRenderCategory);
+                fillQuestSlot(ui, slotIdx, quest, null, false, currentRenderCategory, player);
                 ui.set("#QSlotBtnAccept" + slotIdx + ".Visible", false);
                 long remaining = cdEnd - now;
                 long hrs = remaining / 3600000;
@@ -249,14 +250,14 @@ public class QuestTab {
     }
 
     private static int renderInProgressList(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store,
-                                            UUID myUUID, int slotIdx, List<String> displayCache) {
+                                            UUID myUUID, int slotIdx, List<String> displayCache, Player player) {
         List<PlayerQuest> inProgress = QuestManager.getInProgressQuests(myUUID);
         for (PlayerQuest pq : inProgress) {
             if (slotIdx >= MAX_QUEST_SLOTS) break;
             QuestModel model = QuestManager.getQuest(pq.getQuestId());
             if (model == null) continue;
 
-            fillQuestSlot(ui, slotIdx, model, pq, true, "progress");
+            fillQuestSlot(ui, slotIdx, model, pq, true, "progress", player);
             // Marquer visuellement la quête active
             if (pq.isActive()) {
                 ui.set("#QSlotProg" + slotIdx + ".Text", "ACTIVE");
@@ -269,14 +270,14 @@ public class QuestTab {
     }
 
     private static int renderClaimableList(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store,
-                                           UUID myUUID, int slotIdx, List<String> displayCache) {
+                                           UUID myUUID, int slotIdx, List<String> displayCache, Player player) {
         List<PlayerQuest> claimable = QuestManager.getClaimableQuests(myUUID);
         for (PlayerQuest pq : claimable) {
             if (slotIdx >= MAX_QUEST_SLOTS) break;
             QuestModel model = QuestManager.getQuest(pq.getQuestId());
             if (model == null) continue;
 
-            fillQuestSlot(ui, slotIdx, model, pq, true, "done");
+            fillQuestSlot(ui, slotIdx, model, pq, true, "done", player);
             displayCache.add(pq.getQuestId());
             slotIdx++;
         }
@@ -333,7 +334,7 @@ public class QuestTab {
 
     // ==================== FILL QUEST SLOT ====================
 
-    private static void fillQuestSlot(UICommandBuilder ui, int i, QuestModel model, PlayerQuest pq, boolean owned, String currentViewCategory) {
+    private static void fillQuestSlot(UICommandBuilder ui, int i, QuestModel model, PlayerQuest pq, boolean owned, String currentViewCategory, Player player) {
         ui.set("#QSlot" + i + ".Visible", true);
         ui.set("#QSlot" + i + ".Background", "#0c1018");
         ui.set("#QSlotName" + i + ".Text", model.getName());
@@ -355,7 +356,15 @@ public class QuestTab {
                 ui.set("#QSlotObjAC" + i + ".Style.TextColor", "#4CAF50");
                 ui.set("#QSlotObjA" + i + ".Style.TextColor", "#4CAF50");
             } else if (pq != null) {
-                ui.set("#QSlotObjAC" + i + ".Text", pq.getProgress() + "/" + model.getTargetAmount());
+                String prog;
+                if ((model.getType() == QuestType.MINAGE || model.getType() == QuestType.RECOLTE)
+                        && player != null && model.getTargetId() != null) {
+                    int invCount = QuestManager.countItemInInventory(player, model.getTargetId());
+                    prog = invCount + "/" + model.getTargetAmount();
+                } else {
+                    prog = pq.getProgress() + "/" + model.getTargetAmount();
+                }
+                ui.set("#QSlotObjAC" + i + ".Text", prog);
                 ui.set("#QSlotObjAC" + i + ".Style.TextColor", "#ffffff");
                 ui.set("#QSlotObjA" + i + ".Style.TextColor", "#ddeeff");
             } else {
@@ -493,6 +502,23 @@ public class QuestTab {
         String questId = cache.get(idx);
         QuestModel model = QuestManager.getQuest(questId);
         if (model == null) return false;
+
+        // Pour les quetes MINAGE/RECOLTE : verifier et retirer les items
+        if (model.getType() == QuestType.MINAGE || model.getType() == QuestType.RECOLTE) {
+            Player player = store.getComponent(ref, Player.getComponentType());
+            if (player == null || model.getTargetId() == null) return false;
+            int count = QuestManager.countItemInInventory(player, model.getTargetId());
+            if (count < model.getTargetAmount()) {
+                PlayerRef pRefMsg = store.getComponent(ref, PlayerRef.getComponentType());
+                if (pRefMsg != null) {
+                    pRefMsg.sendMessage(Message.raw(
+                            "Il vous manque des items ! " + count + "/" + model.getTargetAmount()
+                                    + " " + model.getTargetId().replace("hytale:", "")));
+                }
+                return false;
+            }
+            QuestManager.removeItemsFromInventory(player, model.getTargetId(), model.getTargetAmount());
+        }
 
         ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
         PlayerLevelData data = store.getComponent(ref, type);

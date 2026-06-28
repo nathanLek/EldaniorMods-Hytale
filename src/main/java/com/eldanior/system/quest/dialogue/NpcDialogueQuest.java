@@ -34,6 +34,25 @@ public class NpcDialogueQuest extends QuestModel {
         this.validatesObjective = null;
     }
 
+    // Constructeur avec cooldown (quetes secondaires repetables)
+    public NpcDialogueQuest(String id, String name, String description,
+                             QuestType type, QuestCategory category, QuestDifficulty difficulty,
+                             String targetId, int targetAmount,
+                             int rewardXP, long rewardGold, String rewardTitleId,
+                             String nextQuestId, String npcGiverId,
+                             List<DialoguePage> pages,
+                             QuestCondition completionCondition,
+                             String unlocksQuestId,
+                             int cooldownMinutes) {
+        super(id, name, description, type, category, difficulty,
+                targetId, targetAmount, rewardXP, rewardGold, rewardTitleId, nextQuestId, npcGiverId, cooldownMinutes);
+        this.pages = pages;
+        this.completionCondition = completionCondition;
+        this.unlocksQuestId = unlocksQuestId;
+        this.infoOnly = false;
+        this.validatesObjective = null;
+    }
+
     // Constructeur info-only (dialogue sans quete, valide un objectif d'une autre quete)
     public NpcDialogueQuest(String id, String name, String description,
                              String npcGiverId, List<DialoguePage> pages,

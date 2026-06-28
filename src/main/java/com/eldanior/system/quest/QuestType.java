@@ -6,7 +6,9 @@ public enum QuestType {
     EXPLORATION("Exploration", "#8B7355"),  // Decouvrir X coffres
     COLLECTION("Collection", "#D4AF37"),   // Avoir X or
     DUEL("Duel", "#ff9800"),               // Gagner X duels
-    EXECUTION("Execution", "#cc4444");     // Tuer un PK specifique
+    EXECUTION("Execution", "#cc4444"),
+    MINAGE("Minage", "#8B6914"),
+    RECOLTE("Recolte", "#228B22");     // Tuer un PK specifique
 
     private final String displayName;
     private final String color;

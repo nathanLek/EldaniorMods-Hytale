@@ -32,8 +32,96 @@ import java.util.concurrent.ConcurrentHashMap;
 public class NpcQuestDetectionSystem extends EntityTickingSystem<EntityStore> {
 
     private static final Set<String> QUEST_NPC_IDS = Set.of(
-            "AncienConseiller_Npc",
-            "TavernierQuest_Npc"
+            "Quest_Npc_Secondaire_Multiple_N1",
+            "Quest_Npc_Secondaire_Indice_N1",
+            "Quest_Npc_Secondaire_Chasse_N1",
+            "Quest_Npc_Secondaire_Chasse_N2",
+            "Quest_Npc_Secondaire_Chasse_N3",
+            "Quest_Npc_Secondaire_Chasse_N4",
+            "Quest_Npc_Secondaire_Chasse_N5",
+            "Quest_Npc_Secondaire_Chasse_N6",
+            "Quest_Npc_Secondaire_Chasse_N7",
+            "Quest_Npc_Secondaire_Chasse_N8",
+            "Quest_Npc_Secondaire_Chasse_N9",
+            "Quest_Npc_Secondaire_Chasse_N10",
+            "Quest_Npc_Secondaire_Chasse_N11",
+            "Quest_Npc_Secondaire_Chasse_N12",
+            "Quest_Npc_Secondaire_Chasse_N13",
+            "Quest_Npc_Secondaire_Chasse_N14",
+            "Quest_Npc_Secondaire_Chasse_N15",
+            "Quest_Npc_Secondaire_Chasse_N16",
+            "Quest_Npc_Secondaire_Chasse_N17",
+            "Quest_Npc_Secondaire_Chasse_N18",
+            "Quest_Npc_Secondaire_Chasse_N19",
+            "Quest_Npc_Secondaire_Chasse_N20",
+            // Secondaires - Minage
+            "Quest_Npc_Secondaire_Minage_N1",
+            "Quest_Npc_Secondaire_Minage_N2",
+            "Quest_Npc_Secondaire_Minage_N3",
+            "Quest_Npc_Secondaire_Minage_N4",
+            "Quest_Npc_Secondaire_Minage_N5",
+            "Quest_Npc_Secondaire_Minage_N6",
+            "Quest_Npc_Secondaire_Minage_N7",
+            "Quest_Npc_Secondaire_Minage_N8",
+            "Quest_Npc_Secondaire_Minage_N9",
+            "Quest_Npc_Secondaire_Minage_N10",
+            "Quest_Npc_Secondaire_Minage_N11",
+            "Quest_Npc_Secondaire_Minage_N12",
+            "Quest_Npc_Secondaire_Minage_N13",
+            "Quest_Npc_Secondaire_Minage_N14",
+            "Quest_Npc_Secondaire_Minage_N15",
+            // Secondaires - Recolte
+            "Quest_Npc_Secondaire_Recolte_N1",
+            "Quest_Npc_Secondaire_Recolte_N2",
+            "Quest_Npc_Secondaire_Recolte_N3",
+            "Quest_Npc_Secondaire_Recolte_N4",
+            "Quest_Npc_Secondaire_Recolte_N5",
+            "Quest_Npc_Secondaire_Recolte_N6",
+            "Quest_Npc_Secondaire_Recolte_N7",
+            "Quest_Npc_Secondaire_Recolte_N8",
+            "Quest_Npc_Secondaire_Recolte_N9",
+            "Quest_Npc_Secondaire_Recolte_N10",
+            "Quest_Npc_Secondaire_Recolte_N11",
+            "Quest_Npc_Secondaire_Recolte_N12",
+            "Quest_Npc_Secondaire_Recolte_N13",
+            "Quest_Npc_Secondaire_Recolte_N14",
+            "Quest_Npc_Secondaire_Recolte_N15",
+            // Secondaires - Collection
+            "Quest_Npc_Secondaire_Collection_N1",
+            "Quest_Npc_Secondaire_Collection_N2",
+            "Quest_Npc_Secondaire_Collection_N3",
+            "Quest_Npc_Secondaire_Collection_N4",
+            "Quest_Npc_Secondaire_Collection_N5",
+            "Quest_Npc_Secondaire_Collection_N6",
+            "Quest_Npc_Secondaire_Collection_N7",
+            "Quest_Npc_Secondaire_Collection_N8",
+            "Quest_Npc_Secondaire_Collection_N9",
+            "Quest_Npc_Secondaire_Collection_N10",
+            "Quest_Npc_Secondaire_Collection_N11",
+            "Quest_Npc_Secondaire_Collection_N12",
+            "Quest_Npc_Secondaire_Collection_N13",
+            "Quest_Npc_Secondaire_Collection_N14",
+            "Quest_Npc_Secondaire_Collection_N15",
+            // Secondaires - Exploration
+            "Quest_Npc_Secondaire_Exploration_N1", "Quest_Npc_Secondaire_Exploration_N2",
+            "Quest_Npc_Secondaire_Exploration_N3", "Quest_Npc_Secondaire_Exploration_N4",
+            "Quest_Npc_Secondaire_Exploration_N5", "Quest_Npc_Secondaire_Exploration_N6",
+            "Quest_Npc_Secondaire_Exploration_N7", "Quest_Npc_Secondaire_Exploration_N8",
+            "Quest_Npc_Secondaire_Exploration_N9", "Quest_Npc_Secondaire_Exploration_N10",
+            "Quest_Npc_Secondaire_Exploration_N11", "Quest_Npc_Secondaire_Exploration_N12",
+            "Quest_Npc_Secondaire_Exploration_N13", "Quest_Npc_Secondaire_Exploration_N14",
+            "Quest_Npc_Secondaire_Exploration_N15",
+            // Secondaires - Duel
+            "Quest_Npc_Secondaire_Duel_N1", "Quest_Npc_Secondaire_Duel_N2",
+            "Quest_Npc_Secondaire_Duel_N3", "Quest_Npc_Secondaire_Duel_N4",
+            "Quest_Npc_Secondaire_Duel_N5", "Quest_Npc_Secondaire_Duel_N6",
+            "Quest_Npc_Secondaire_Duel_N7", "Quest_Npc_Secondaire_Duel_N8",
+            "Quest_Npc_Secondaire_Duel_N9", "Quest_Npc_Secondaire_Duel_N10",
+            "Quest_Npc_Secondaire_Duel_N11", "Quest_Npc_Secondaire_Duel_N12",
+            "Quest_Npc_Secondaire_Duel_N13", "Quest_Npc_Secondaire_Duel_N14",
+            "Quest_Npc_Secondaire_Duel_N15", "Quest_Npc_Secondaire_Duel_N16",
+            "Quest_Npc_Secondaire_Duel_N17", "Quest_Npc_Secondaire_Duel_N18",
+            "Quest_Npc_Secondaire_Duel_N19", "Quest_Npc_Secondaire_Duel_N20"
     );
 
     // Cooldown par joueur+NPC (nettoyé périodiquement)
@@ -152,6 +240,27 @@ public class NpcQuestDetectionSystem extends EntityTickingSystem<EntityStore> {
                                         player.getPageManager().openCustomPage(targetRef, store,
                                                 new QuestCompletionScreen(playerRef, dialogueQuest));
                                         break;
+                                    }
+                                }
+
+                                // MINAGE/RECOLTE : verifier inventaire
+                                if (quest.getType() == com.eldanior.system.quest.QuestType.MINAGE
+                                        || quest.getType() == com.eldanior.system.quest.QuestType.RECOLTE) {
+                                    if (quest.getTargetId() != null) {
+                                        int itemCount = QuestManager.countItemInInventory(player, quest.getTargetId());
+                                        if (itemCount >= quest.getTargetAmount()) {
+                                            // Assez d'items → ecran de completion (qui retirera les items)
+                                            player.getPageManager().openCustomPage(targetRef, store,
+                                                    new QuestCompletionScreen(playerRef, dialogueQuest));
+                                            break;
+                                        } else {
+                                            String msg2 = "Il vous manque des ressources !\n\n"
+                                                    + itemCount + " / " + quest.getTargetAmount()
+                                                    + " " + quest.getTargetId().replace("_", " ");
+                                            player.getPageManager().openCustomPage(targetRef, store,
+                                                    new NpcMessageScreen(playerRef, npcName, msg2));
+                                            break;
+                                        }
                                     }
                                 }
 

@@ -92,7 +92,16 @@ public class QuestModel {
             case COLLECTION -> "Accumuler " + targetAmount + " Or";
             case DUEL -> "Gagner " + targetAmount + " duels";
             case EXECUTION -> "Eliminer le criminel";
+            case MINAGE -> "Apporter " + targetAmount + " " + formatItemName(targetId);
+            case RECOLTE -> "Apporter " + targetAmount + " " + formatItemName(targetId);
         };
+    }
+
+    private String formatItemName(String itemId) {
+        if (itemId == null) return "ressources";
+        // Retirer le namespace (hytale:Iron_Ore -> Iron_Ore)
+        String name = itemId.contains(":") ? itemId.substring(itemId.indexOf(':') + 1) : itemId;
+        return name.replace("_", " ");
     }
 
     private String formatMobName(String mobId) {

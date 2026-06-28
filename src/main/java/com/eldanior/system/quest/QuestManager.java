@@ -169,6 +169,118 @@ public class QuestManager {
         register(new com.eldanior.system.quest.definitions.secondaire.SecQuest_AncienConseiller());
         register(new com.eldanior.system.quest.definitions.secondaire.InfoQuest_Tavernier());
 
+        // === Secondaire - Chasse (20 quetes NPC) ===
+        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N1());
+        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N2());
+        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N3());
+        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N4());
+        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N5());
+        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N6());
+        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N7());
+        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N8());
+        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N9());
+        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N10());
+        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N11());
+        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N12());
+        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N13());
+        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N14());
+        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N15());
+        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N16());
+        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N17());
+        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N18());
+        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N19());
+        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N20());
+
+        // === Secondaire - Minage (15 quetes NPC) ===
+        register(new com.eldanior.system.quest.definitions.secondaire.minage.SecQuest_Minage_N1());
+        register(new com.eldanior.system.quest.definitions.secondaire.minage.SecQuest_Minage_N2());
+        register(new com.eldanior.system.quest.definitions.secondaire.minage.SecQuest_Minage_N3());
+        register(new com.eldanior.system.quest.definitions.secondaire.minage.SecQuest_Minage_N4());
+        register(new com.eldanior.system.quest.definitions.secondaire.minage.SecQuest_Minage_N5());
+        register(new com.eldanior.system.quest.definitions.secondaire.minage.SecQuest_Minage_N6());
+        register(new com.eldanior.system.quest.definitions.secondaire.minage.SecQuest_Minage_N7());
+        register(new com.eldanior.system.quest.definitions.secondaire.minage.SecQuest_Minage_N8());
+        register(new com.eldanior.system.quest.definitions.secondaire.minage.SecQuest_Minage_N9());
+        register(new com.eldanior.system.quest.definitions.secondaire.minage.SecQuest_Minage_N10());
+        register(new com.eldanior.system.quest.definitions.secondaire.minage.SecQuest_Minage_N11());
+        register(new com.eldanior.system.quest.definitions.secondaire.minage.SecQuest_Minage_N12());
+        register(new com.eldanior.system.quest.definitions.secondaire.minage.SecQuest_Minage_N13());
+        register(new com.eldanior.system.quest.definitions.secondaire.minage.SecQuest_Minage_N14());
+        register(new com.eldanior.system.quest.definitions.secondaire.minage.SecQuest_Minage_N15());
+
+        // === Secondaire - Recolte (15 quetes NPC) ===
+        register(new com.eldanior.system.quest.definitions.secondaire.recolte.SecQuest_Recolte_N1());
+        register(new com.eldanior.system.quest.definitions.secondaire.recolte.SecQuest_Recolte_N2());
+        register(new com.eldanior.system.quest.definitions.secondaire.recolte.SecQuest_Recolte_N3());
+        register(new com.eldanior.system.quest.definitions.secondaire.recolte.SecQuest_Recolte_N4());
+        register(new com.eldanior.system.quest.definitions.secondaire.recolte.SecQuest_Recolte_N5());
+        register(new com.eldanior.system.quest.definitions.secondaire.recolte.SecQuest_Recolte_N6());
+        register(new com.eldanior.system.quest.definitions.secondaire.recolte.SecQuest_Recolte_N7());
+        register(new com.eldanior.system.quest.definitions.secondaire.recolte.SecQuest_Recolte_N8());
+        register(new com.eldanior.system.quest.definitions.secondaire.recolte.SecQuest_Recolte_N9());
+        register(new com.eldanior.system.quest.definitions.secondaire.recolte.SecQuest_Recolte_N10());
+        register(new com.eldanior.system.quest.definitions.secondaire.recolte.SecQuest_Recolte_N11());
+        register(new com.eldanior.system.quest.definitions.secondaire.recolte.SecQuest_Recolte_N12());
+        register(new com.eldanior.system.quest.definitions.secondaire.recolte.SecQuest_Recolte_N13());
+        register(new com.eldanior.system.quest.definitions.secondaire.recolte.SecQuest_Recolte_N14());
+        register(new com.eldanior.system.quest.definitions.secondaire.recolte.SecQuest_Recolte_N15());
+
+        // === Secondaire - Collection (15 quetes NPC) ===
+        register(new com.eldanior.system.quest.definitions.secondaire.collection.SecQuest_Collection_N1());
+        register(new com.eldanior.system.quest.definitions.secondaire.collection.SecQuest_Collection_N2());
+        register(new com.eldanior.system.quest.definitions.secondaire.collection.SecQuest_Collection_N3());
+        register(new com.eldanior.system.quest.definitions.secondaire.collection.SecQuest_Collection_N4());
+        register(new com.eldanior.system.quest.definitions.secondaire.collection.SecQuest_Collection_N5());
+        register(new com.eldanior.system.quest.definitions.secondaire.collection.SecQuest_Collection_N6());
+        register(new com.eldanior.system.quest.definitions.secondaire.collection.SecQuest_Collection_N7());
+        register(new com.eldanior.system.quest.definitions.secondaire.collection.SecQuest_Collection_N8());
+        register(new com.eldanior.system.quest.definitions.secondaire.collection.SecQuest_Collection_N9());
+        register(new com.eldanior.system.quest.definitions.secondaire.collection.SecQuest_Collection_N10());
+        register(new com.eldanior.system.quest.definitions.secondaire.collection.SecQuest_Collection_N11());
+        register(new com.eldanior.system.quest.definitions.secondaire.collection.SecQuest_Collection_N12());
+        register(new com.eldanior.system.quest.definitions.secondaire.collection.SecQuest_Collection_N13());
+        register(new com.eldanior.system.quest.definitions.secondaire.collection.SecQuest_Collection_N14());
+        register(new com.eldanior.system.quest.definitions.secondaire.collection.SecQuest_Collection_N15());
+
+        // === Secondaire - Exploration (15 quetes NPC) ===
+        register(new com.eldanior.system.quest.definitions.secondaire.exploration.SecQuest_Exploration_N1());
+        register(new com.eldanior.system.quest.definitions.secondaire.exploration.SecQuest_Exploration_N2());
+        register(new com.eldanior.system.quest.definitions.secondaire.exploration.SecQuest_Exploration_N3());
+        register(new com.eldanior.system.quest.definitions.secondaire.exploration.SecQuest_Exploration_N4());
+        register(new com.eldanior.system.quest.definitions.secondaire.exploration.SecQuest_Exploration_N5());
+        register(new com.eldanior.system.quest.definitions.secondaire.exploration.SecQuest_Exploration_N6());
+        register(new com.eldanior.system.quest.definitions.secondaire.exploration.SecQuest_Exploration_N7());
+        register(new com.eldanior.system.quest.definitions.secondaire.exploration.SecQuest_Exploration_N8());
+        register(new com.eldanior.system.quest.definitions.secondaire.exploration.SecQuest_Exploration_N9());
+        register(new com.eldanior.system.quest.definitions.secondaire.exploration.SecQuest_Exploration_N10());
+        register(new com.eldanior.system.quest.definitions.secondaire.exploration.SecQuest_Exploration_N11());
+        register(new com.eldanior.system.quest.definitions.secondaire.exploration.SecQuest_Exploration_N12());
+        register(new com.eldanior.system.quest.definitions.secondaire.exploration.SecQuest_Exploration_N13());
+        register(new com.eldanior.system.quest.definitions.secondaire.exploration.SecQuest_Exploration_N14());
+        register(new com.eldanior.system.quest.definitions.secondaire.exploration.SecQuest_Exploration_N15());
+
+        // === Secondaire - Duel (20 quetes NPC) ===
+        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N1());
+        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N2());
+        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N3());
+        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N4());
+        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N5());
+        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N6());
+        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N7());
+        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N8());
+        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N9());
+        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N10());
+        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N11());
+        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N12());
+        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N13());
+        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N14());
+        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N15());
+        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N16());
+        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N17());
+        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N18());
+        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N19());
+        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N20());
+
         // === Journalieres (auto-generated: 116 quetes) ===
         register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_Bear());
         register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_DinosaureHunt());
@@ -314,10 +426,18 @@ public class QuestManager {
         Set<String> ownedIds = new HashSet<>();
         for (PlayerQuest pq : owned) ownedIds.add(pq.getQuestId());
 
+        long now = System.currentTimeMillis();
+
         for (QuestModel quest : allQuests.values()) {
             if (!npcId.equals(quest.getNpcGiverId())) continue;
             if (completedIds.contains(quest.getId())) continue;
             if (!(quest instanceof com.eldanior.system.quest.dialogue.NpcDialogueQuest nq)) continue;
+
+            // Verifier cooldown
+            if (quest.getCooldownMinutes() > 0 && playerUUID != null) {
+                long cdEnd = getCooldownEnd(playerUUID, quest.getId());
+                if (cdEnd > now) continue; // Encore en cooldown
+            }
 
             // Si la quete a un prerequis (unlocksQuestId d'une autre quete),
             // verifier que le joueur l'a bien debloquee (= la quete prerequise est completee)
@@ -598,6 +718,126 @@ public class QuestManager {
         if (model instanceof com.eldanior.system.quest.dialogue.NpcDialogueQuest nq && nq.getCompletionCondition() != null) return;
         active.addProgress(1);
         checkCompletion(killerUUID, active, model);
+    }
+
+    // MINAGE/RECOLTE : la progression est basee sur l'inventaire du joueur.
+    // Pas de hook auto — le NPC verifie et retire les items au claim.
+
+    /**
+     * Compte le nombre total d'un item dans l'inventaire du joueur (hotbar + storage + backpack).
+     * Utilise un match partiel (contains) pour supporter les targetId comme "ore_iron"
+     * qui matchent des items comme "Ore_Iron_Stone".
+     */
+    public static int countItemInInventory(com.hypixel.hytale.server.core.entity.entities.Player player, String itemId) {
+        if (player == null || itemId == null) return 0;
+        int count = 0;
+        String lower = itemId.toLowerCase();
+        var inv = player.getInventory();
+        for (short i = 0; i < 9; i++) {
+            var item = inv.getHotbar().getItemStack(i);
+            if (item != null && !item.isEmpty() && matchesItemId(item.getItemId(), lower)) {
+                count += item.getQuantity();
+            }
+        }
+        for (short i = 0; i < 27; i++) {
+            var item = inv.getStorage().getItemStack(i);
+            if (item != null && !item.isEmpty() && matchesItemId(item.getItemId(), lower)) {
+                count += item.getQuantity();
+            }
+        }
+        try {
+            for (short i = 0; i < 8; i++) {
+                var item = inv.getBackpack().getItemStack(i);
+                if (item != null && !item.isEmpty() && matchesItemId(item.getItemId(), lower)) {
+                    count += item.getQuantity();
+                }
+            }
+        } catch (IllegalArgumentException ignored) { /* backpack capacity 0 */ }
+        return count;
+    }
+
+    /**
+     * Match un item ID avec un targetId. Supporte :
+     * - Match exact (ignoreCase) : "Ore_Iron_Stone" == "ore_iron_stone"
+     * - Match partiel (contains) : "Ore_Iron_Stone" contient "ore_iron"
+     */
+    private static boolean matchesItemId(String actualId, String targetLower) {
+        if (actualId == null) return false;
+        String actualLower = actualId.toLowerCase();
+        // Retirer le namespace "hytale:" si present
+        if (actualLower.contains(":")) actualLower = actualLower.substring(actualLower.indexOf(':') + 1);
+        if (targetLower.contains(":")) targetLower = targetLower.substring(targetLower.indexOf(':') + 1);
+        return actualLower.equals(targetLower) || actualLower.contains(targetLower);
+    }
+
+    /**
+     * Retire un nombre donne d'items de l'inventaire (hotbar + storage + backpack).
+     * Retourne true si tous les items ont ete retires.
+     */
+    public static boolean removeItemsFromInventory(com.hypixel.hytale.server.core.entity.entities.Player player, String itemId, int amount) {
+        if (player == null || itemId == null || amount <= 0) return false;
+        int remaining = amount;
+        String lower = itemId.toLowerCase();
+        var inv = player.getInventory();
+
+        // Parcourir hotbar
+        for (short i = 0; i < 9 && remaining > 0; i++) {
+            var item = inv.getHotbar().getItemStack(i);
+            if (item != null && !item.isEmpty() && matchesItemId(item.getItemId(), lower)) {
+                int inStack = item.getQuantity();
+                if (inStack <= remaining) {
+                    inv.getHotbar().removeItemStackFromSlot(i);
+                    remaining -= inStack;
+                } else {
+                    // Retirer partiellement : remplacer le stack par un plus petit
+                    inv.getHotbar().setItemStackForSlot(i,
+                            new com.hypixel.hytale.server.core.inventory.ItemStack(item.getItemId(), inStack - remaining));
+                    remaining = 0;
+                }
+            }
+        }
+        // Parcourir storage
+        for (short i = 0; i < 27 && remaining > 0; i++) {
+            var item = inv.getStorage().getItemStack(i);
+            if (item != null && !item.isEmpty() && matchesItemId(item.getItemId(), lower)) {
+                int inStack = item.getQuantity();
+                if (inStack <= remaining) {
+                    inv.getStorage().removeItemStackFromSlot(i);
+                    remaining -= inStack;
+                } else {
+                    inv.getStorage().setItemStackForSlot(i,
+                            new com.hypixel.hytale.server.core.inventory.ItemStack(item.getItemId(), inStack - remaining));
+                    remaining = 0;
+                }
+            }
+        }
+        // Parcourir backpack
+        try {
+            for (short i = 0; i < 8 && remaining > 0; i++) {
+                var item = inv.getBackpack().getItemStack(i);
+                if (item != null && !item.isEmpty() && matchesItemId(item.getItemId(), lower)) {
+                    int inStack = item.getQuantity();
+                    if (inStack <= remaining) {
+                        inv.getBackpack().removeItemStackFromSlot(i);
+                        remaining -= inStack;
+                    } else {
+                        inv.getBackpack().setItemStackForSlot(i,
+                                new com.hypixel.hytale.server.core.inventory.ItemStack(item.getItemId(), inStack - remaining));
+                        remaining = 0;
+                    }
+                }
+            }
+        } catch (IllegalArgumentException ignored) { /* backpack capacity 0 */ }
+
+        return remaining <= 0;
+    }
+
+    /**
+     * Verifie si un joueur a assez d'items pour une quete MINAGE/RECOLTE.
+     */
+    public static boolean hasEnoughItemsForQuest(com.hypixel.hytale.server.core.entity.entities.Player player, QuestModel model) {
+        if (model == null || model.getTargetId() == null) return false;
+        return countItemInInventory(player, model.getTargetId()) >= model.getTargetAmount();
     }
 
     private static void checkCompletion(UUID playerUUID, PlayerQuest pq, QuestModel model) {

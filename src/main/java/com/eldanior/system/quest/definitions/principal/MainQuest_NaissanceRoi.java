@@ -23,7 +23,7 @@ public class MainQuest_NaissanceRoi extends NpcDialogueQuest {
                 null, 1,
                 50000, 500000, "first_king",
                 null,
-                "AncienConseiller_Npc", // Donné par l'Ancien Conseiller après la quête précédente
+                "Quest_Npc_Secondaire_Multiple_N1", // Donné par l'Ancien Conseiller après la quête précédente
 
                 // === PAGES DE DIALOGUE ===
                 List.of(

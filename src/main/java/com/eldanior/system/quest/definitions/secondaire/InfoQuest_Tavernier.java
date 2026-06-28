@@ -16,7 +16,7 @@ public class InfoQuest_Tavernier extends NpcDialogueQuest {
                 "talk_tavernier",
                 "Informations sur le Dragon",
                 "Le tavernier connait des histoires sur le Dragon Primordial.",
-                "TavernierQuest_Npc",
+                "Quest_Npc_Secondaire_Indice_N1",
 
                 List.of(
                     new DialoguePage("Alex Silford",
