@@ -146,25 +146,39 @@ public class BlackMarketTab {
         boolean isAdmin = me.getPlayerRef().hasPermission(EldaniorLogger.ADMIN_PERMISSION);
         if (!isOwner && !isAdmin) return false;
 
+        // Atomic remove BEFORE giving the item to prevent duplication (ELD-140)
+        ShopListing removed = ShopManager.removeBlackMarketListing(idx);
+        if (removed == null) {
+            me.getPlayerRef().sendMessage(Message.raw("Annonce deja retiree !"));
+            return false;
+        }
+        if (isOwner && !myUUID.equals(removed.getSellerUUID())) {
+            ShopManager.addBlackMarketListing(removed.getSellerUUID(), removed.getSellerName(), removed.getItem(), removed.getPrice());
+            me.getPlayerRef().sendMessage(Message.raw("Le marche a change, veuillez reessayer."));
+            return false;
+        }
+
         if (isOwner) {
-            var result = me.getInventory().getHotbar().addItemStack(listing.getItem());
-            if (!result.succeeded()) { me.getPlayerRef().sendMessage(Message.raw("Inventaire plein !")); return false; }
-            ShopManager.removeBlackMarketListing(idx);
+            var result = me.getInventory().getHotbar().addItemStack(removed.getItem());
+            if (!result.succeeded()) {
+                ShopManager.addBlackMarketListing(removed.getSellerUUID(), removed.getSellerName(), removed.getItem(), removed.getPrice());
+                me.getPlayerRef().sendMessage(Message.raw("Inventaire plein !"));
+                return false;
+            }
             me.getPlayerRef().sendMessage(Message.raw("Annonce retiree du Marche Noir."));
         } else {
-            PlayerRef sellerRef = com.hypixel.hytale.server.core.universe.Universe.get().getPlayer(listing.getSellerUUID());
+            PlayerRef sellerRef = com.hypixel.hytale.server.core.universe.Universe.get().getPlayer(removed.getSellerUUID());
             if (sellerRef != null) {
                 try {
                     var sRef = sellerRef.getReference(); if (sRef != null) {
                         var sStore = sRef.getStore();
                         var sPlayer = sStore.getComponent(sRef, Player.getComponentType());
-                        if (sPlayer != null) { sPlayer.getInventory().getHotbar().addItemStack(listing.getItem());
+                        if (sPlayer != null) { sPlayer.getInventory().getHotbar().addItemStack(removed.getItem());
                             sellerRef.sendMessage(Message.raw("Admin a retire votre annonce du Marche Noir."));
                         }
                     }
                 } catch (Exception e) { EldaniorLogger.error("BlackMarketTab", e); }
             }
-            ShopManager.removeBlackMarketListing(idx);
             me.getPlayerRef().sendMessage(Message.raw("Annonce retiree du Marche Noir (admin)."));
         }
 
@@ -186,5 +200,10 @@ public class BlackMarketTab {
         if (pRef == null) return null;
         try { return UUIDExtractor.getUUID(pRef); }
         catch (Exception e) { return null; }
+    }
+
+    /** Nettoyage memoire quand un joueur se deconnecte */
+    public static void cleanupPlayer(UUID uuid) {
+        playerPages.remove(uuid);
     }
 }

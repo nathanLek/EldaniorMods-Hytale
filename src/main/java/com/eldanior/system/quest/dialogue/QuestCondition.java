@@ -2,8 +2,6 @@ package com.eldanior.system.quest.dialogue;
 
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.hypixel.hytale.server.core.entity.entities.Player;
-import com.hypixel.hytale.server.core.inventory.ItemStack;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +38,7 @@ public class QuestCondition {
         }
 
         if (requiredItemId != null && player != null) {
-            boolean hasItem = hasItemInFullInventory(player, requiredItemId);
+            boolean hasItem = com.eldanior.system.quest.QuestManager.hasItemInFullInventory(player, requiredItemId);
             if (!hasItem) {
                 failures.add("Objet requis : " + requiredItemId);
             }
@@ -126,31 +124,7 @@ public class QuestCondition {
     }
 
     private boolean hasItem(Player player, String itemId) {
-        return hasItemInFullInventory(player, itemId);
-    }
-
-    /**
-     * Parcourt l'inventaire complet (hotbar + storage + backpack) pour trouver un item.
-     */
-    private boolean hasItemInFullInventory(Player player, String itemId) {
-        if (player == null || itemId == null) return false;
-        var inv = player.getInventory();
-        // Hotbar (9 slots)
-        for (short i = 0; i < 9; i++) {
-            ItemStack item = inv.getHotbar().getItemStack(i);
-            if (item != null && !item.isEmpty() && item.getItemId().equalsIgnoreCase(itemId)) return true;
-        }
-        // Storage (27 slots)
-        for (short i = 0; i < 27; i++) {
-            ItemStack item = inv.getStorage().getItemStack(i);
-            if (item != null && !item.isEmpty() && item.getItemId().equalsIgnoreCase(itemId)) return true;
-        }
-        // Backpack (8 slots)
-        for (short i = 0; i < 8; i++) {
-            ItemStack item = inv.getBackpack().getItemStack(i);
-            if (item != null && !item.isEmpty() && item.getItemId().equalsIgnoreCase(itemId)) return true;
-        }
-        return false;
+        return com.eldanior.system.quest.QuestManager.hasItemInFullInventory(player, itemId);
     }
 
     /**

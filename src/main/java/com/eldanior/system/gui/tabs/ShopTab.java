@@ -127,6 +127,16 @@ public class ShopTab {
             return false;
         }
 
+        // TOCTOU check: verify the listing we got matches what we peeked
+        if (!listing.getSellerUUID().equals(peekListing.getSellerUUID())
+                || listing.getPrice() != peekListing.getPrice()
+                || !listing.getItem().getItemId().equals(peekListing.getItem().getItemId())) {
+            // Market changed between peek and buy — put it back
+            ShopManager.addListing(listing.getSellerUUID(), listing.getSellerName(), listing.getItem(), listing.getPrice());
+            buyer.getPlayerRef().sendMessage(Message.raw("Le marche a change, veuillez reessayer."));
+            return false;
+        }
+
         // Give item to buyer
         var result = buyer.getInventory().getHotbar().addItemStack(listing.getItem());
         if (!result.succeeded()) {
@@ -211,42 +221,53 @@ public class ShopTab {
         boolean isAdmin = me.getPlayerRef().hasPermission(EldaniorLogger.ADMIN_PERMISSION);
         if (!isOwner && !isAdmin) return false;
 
+        // Atomic remove BEFORE giving the item to prevent duplication (ELD-140)
+        ShopListing removed = ShopManager.removeListing(idx);
+        if (removed == null) {
+            me.getPlayerRef().sendMessage(Message.raw("Annonce deja retiree !"));
+            return false;
+        }
+        // Verify ownership consistency
+        if (isOwner && !myUUID.equals(removed.getSellerUUID())) {
+            // Wrong listing was removed (index shifted) — put it back
+            ShopManager.addListing(removed.getSellerUUID(), removed.getSellerName(), removed.getItem(), removed.getPrice());
+            me.getPlayerRef().sendMessage(Message.raw("Le marche a change, veuillez reessayer."));
+            return false;
+        }
+
         if (isOwner) {
             // Owner: retourne l'item directement
-            var result = me.getInventory().getHotbar().addItemStack(listing.getItem());
+            var result = me.getInventory().getHotbar().addItemStack(removed.getItem());
             if (!result.succeeded()) {
+                // Re-add listing since we can't give the item
+                ShopManager.addListing(removed.getSellerUUID(), removed.getSellerName(), removed.getItem(), removed.getPrice());
                 me.getPlayerRef().sendMessage(Message.raw("Inventaire plein !"));
                 return false;
             }
-            ShopManager.removeListing(idx);
             me.getPlayerRef().sendMessage(Message.raw("Annonce retiree, objet recupere."));
             TransactionLogger.logShopCancel(me.getPlayerRef().getUsername(),
-                    listing.getItem().getItemId(), listing.getItem().getQuantity(),
-                    listing.getPrice(), false);
+                    removed.getItem().getItemId(), removed.getItem().getQuantity(),
+                    removed.getPrice(), false);
         } else {
             // Admin: retourne l'item au vendeur (en ligne ou pending)
-            PlayerRef sellerRef = com.hypixel.hytale.server.core.universe.Universe.get().getPlayer(listing.getSellerUUID());
+            PlayerRef sellerRef = com.hypixel.hytale.server.core.universe.Universe.get().getPlayer(removed.getSellerUUID());
             if (sellerRef != null) {
-                // Vendeur en ligne -> donner l'item
                 try {
                     var sRef = sellerRef.getReference();
                     if (sRef != null) {
                         var sStore = sRef.getStore();
                         var sPlayer = sStore.getComponent(sRef, Player.getComponentType());
                         if (sPlayer != null) {
-                            sPlayer.getInventory().getHotbar().addItemStack(listing.getItem());
+                            sPlayer.getInventory().getHotbar().addItemStack(removed.getItem());
                             sellerRef.sendMessage(Message.raw("Un admin a retire votre annonce. Objet restitue."));
                         }
                     }
                 } catch (Exception e) { EldaniorLogger.error("ShopTab", e); }
             }
-            // Note: si vendeur deconnecte, l'item est perdu (pas de pending items system)
-            // On pourrait ajouter un systeme de pending items plus tard
-            ShopManager.removeListing(idx);
-            me.getPlayerRef().sendMessage(Message.raw("Annonce de " + listing.getSellerName() + " retiree (admin)."));
+            me.getPlayerRef().sendMessage(Message.raw("Annonce de " + removed.getSellerName() + " retiree (admin)."));
             TransactionLogger.logShopCancel(me.getPlayerRef().getUsername(),
-                    listing.getItem().getItemId(), listing.getItem().getQuantity(),
-                    listing.getPrice(), true);
+                    removed.getItem().getItemId(), removed.getItem().getQuantity(),
+                    removed.getPrice(), true);
         }
 
         // Persist shop state immediately to prevent data loss on crash (BUGS-12)
@@ -320,5 +341,10 @@ public class ShopTab {
     private static UUID extractUUID(PlayerRef playerRef) {
         if (playerRef == null) return null;
         try { return UUIDExtractor.getUUID(playerRef); } catch (Exception e) { return null; }
+    }
+
+    /** Nettoyage memoire quand un joueur se deconnecte */
+    public static void cleanupPlayer(java.util.UUID uuid) {
+        playerPages.remove(uuid);
     }
 }

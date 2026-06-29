@@ -91,6 +91,17 @@ public class NpcQuestInteraction {
                 } else {
                     playerRef.sendMessage(Message.raw("[PNJ] Quete terminee : " + quest.getName() + " !"));
                     giveRewards(playerRef, store, playerEntityRef, quest);
+                    QuestManager.getPlayerQuests(playerUUID).removeIf(q -> q.getQuestId().equals(quest.getId()));
+                    if (quest.getCooldownMinutes() > 0) QuestManager.setCooldown(playerUUID, quest.getId(), quest.getCooldownMinutes());
+                    try {
+                        var type = EldaniorSystem.get().getPlayerLevelDataType();
+                        var data = store.getComponent(playerEntityRef, type);
+                        if (data != null) {
+                            data.setQuestData(QuestManager.serializePlayerQuests(playerUUID));
+                            data.setCooldownData(QuestManager.serializeCooldowns(playerUUID));
+                            store.putComponent(playerEntityRef, type, data);
+                        }
+                    } catch (Exception e) { /* ignore */ }
                 }
                 hasInteraction = true;
 
@@ -111,6 +122,17 @@ public class NpcQuestInteraction {
                         if (count >= quest.getTargetAmount()) {
                             pq.setCompleted();
                             giveRewards(playerRef, store, playerEntityRef, quest);
+                            QuestManager.getPlayerQuests(playerUUID).removeIf(q -> q.getQuestId().equals(quest.getId()));
+                            if (quest.getCooldownMinutes() > 0) QuestManager.setCooldown(playerUUID, quest.getId(), quest.getCooldownMinutes());
+                            try {
+                                var type = EldaniorSystem.get().getPlayerLevelDataType();
+                                var data = store.getComponent(playerEntityRef, type);
+                                if (data != null) {
+                                    data.setQuestData(QuestManager.serializePlayerQuests(playerUUID));
+                                    data.setCooldownData(QuestManager.serializeCooldowns(playerUUID));
+                                    store.putComponent(playerEntityRef, type, data);
+                                }
+                            } catch (Exception e) { /* ignore */ }
                         } else {
                             playerRef.sendMessage(Message.raw("[PNJ] Quete en cours : " + quest.getName()));
                             playerRef.sendMessage(Message.raw("Items : " + count + " / " + quest.getTargetAmount()));

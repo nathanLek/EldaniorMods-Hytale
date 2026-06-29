@@ -693,8 +693,8 @@ public class FamilleTab {
                 var tStore = tRef.getStore();
                 PlayerLevelData tData = tStore.getComponent(tRef, type);
                 if (tData != null) {
-                    tData.setStatus("VICE");
-                    tStore.putComponent(tRef, type, tData);
+                    PlayerLevelData tCopy = (PlayerLevelData) tData.clone();
+                    if (tCopy != null) { tCopy.setStatus("VICE"); tStore.putComponent(tRef, type, tCopy); }
                 }
             }
             targetRef.sendMessage(Message.raw("Vous avez ete promu Vice-Patriarche !"));
@@ -735,8 +735,8 @@ public class FamilleTab {
                 var tStore = tRef.getStore();
                 PlayerLevelData tData = tStore.getComponent(tRef, type);
                 if (tData != null) {
-                    tData.setStatus("MEMBER");
-                    tStore.putComponent(tRef, type, tData);
+                    PlayerLevelData tCopy = (PlayerLevelData) tData.clone();
+                    if (tCopy != null) { tCopy.setStatus("MEMBER"); tStore.putComponent(tRef, type, tCopy); }
                 }
             }
             targetRef.sendMessage(Message.raw("Vous avez ete retrograde au rang de Membre."));
@@ -773,9 +773,8 @@ public class FamilleTab {
                     var tStore = tRef.getStore();
                     PlayerLevelData tData = tStore.getComponent(tRef, type);
                     if (tData != null) {
-                        tData.setNobleFamilyId("");
-                        tData.setStatus("");
-                        tStore.putComponent(tRef, type, tData);
+                        PlayerLevelData tCopy = (PlayerLevelData) tData.clone();
+                        if (tCopy != null) { tCopy.setNobleFamilyId(""); tCopy.setStatus(""); tStore.putComponent(tRef, type, tCopy); }
                     }
                 }
                 targetRef.sendMessage(Message.raw("Vous avez ete expulse de la famille."));
@@ -988,8 +987,10 @@ public class FamilleTab {
         FamilyManager.FamilyRuntimeData runtime = FamilyManager.getRuntimeData(famId);
         if (!runtime.withdrawTreasury(1000)) return false;
 
-        data.addMoney(1000);
-        store.putComponent(ref, type, data);
+        PlayerLevelData wCopy = (PlayerLevelData) data.clone();
+        if (wCopy == null) return false;
+        wCopy.addMoney(1000);
+        store.putComponent(ref, type, wCopy);
         return true;
     }
 
@@ -1002,8 +1003,10 @@ public class FamilleTab {
         if (famId == null || famId.isEmpty()) return false;
         if (data.getMoney() < 1000) return false;
 
-        data.removeMoney(1000);
-        store.putComponent(ref, type, data);
+        PlayerLevelData dCopy = (PlayerLevelData) data.clone();
+        if (dCopy == null) return false;
+        dCopy.removeMoney(1000);
+        store.putComponent(ref, type, dCopy);
         FamilyManager.getRuntimeData(famId).addTreasury(1000);
         return true;
     }
@@ -1043,8 +1046,8 @@ public class FamilleTab {
                         var vStore = vRef.getStore();
                         PlayerLevelData vData = vStore.getComponent(vRef, type);
                         if (vData != null) {
-                            vData.setStatus("PATRIARCH");
-                            vStore.putComponent(vRef, type, vData);
+                            PlayerLevelData vCopy = (PlayerLevelData) vData.clone();
+                            if (vCopy != null) { vCopy.setStatus("PATRIARCH"); vStore.putComponent(vRef, type, vCopy); }
                             viceRef.sendMessage(Message.raw("Vous etes maintenant Patriarche de la famille !"));
                             // Transferer la propriete des parcelles au nouveau Patriarche
                             com.eldanior.system.territory.ParcelManager.transferFamilyParcelsOwnership(
@@ -1054,9 +1057,8 @@ public class FamilleTab {
                 } catch (Exception e) { EldaniorLogger.error("FamilleTab", e); }
 
                 // Le Patriarch quitte
-                data.setNobleFamilyId("");
-                data.setStatus("");
-                store.putComponent(ref, type, data);
+                PlayerLevelData leaveCopy = (PlayerLevelData) data.clone();
+                if (leaveCopy != null) { leaveCopy.setNobleFamilyId(""); leaveCopy.setStatus(""); store.putComponent(ref, type, leaveCopy); }
             } else {
                 // Pas de Vice -> dissoudre : expulser tous les membres
                 for (PlayerRef pRef : Universe.get().getPlayers()) {
@@ -1067,9 +1069,8 @@ public class FamilleTab {
                         PlayerLevelData mData = s.getComponent(eRef, type);
                         if (mData == null) continue;
                         if (famId.equals(mData.getNobleFamilyId())) {
-                            mData.setNobleFamilyId("");
-                            mData.setStatus("");
-                            s.putComponent(eRef, type, mData);
+                            PlayerLevelData mCopy = (PlayerLevelData) mData.clone();
+                            if (mCopy != null) { mCopy.setNobleFamilyId(""); mCopy.setStatus(""); s.putComponent(eRef, type, mCopy); }
                             pRef.sendMessage(Message.raw("La famille a ete dissoute par le Patriarch."));
                         }
                     } catch (Exception e) { EldaniorLogger.error("FamilleTab", e); }
@@ -1080,9 +1081,8 @@ public class FamilleTab {
             }
         } else {
             // Membre simple -> juste quitter
-            data.setNobleFamilyId("");
-            data.setStatus("");
-            store.putComponent(ref, type, data);
+            PlayerLevelData simpleCopy = (PlayerLevelData) data.clone();
+            if (simpleCopy != null) { simpleCopy.setNobleFamilyId(""); simpleCopy.setStatus(""); store.putComponent(ref, type, simpleCopy); }
         }
 
         return true;
@@ -1105,9 +1105,8 @@ public class FamilleTab {
                 PlayerLevelData mData = s.getComponent(eRef, type);
                 if (mData == null) continue;
                 if (famId.equals(mData.getNobleFamilyId())) {
-                    mData.setNobleFamilyId("");
-                    mData.setStatus("");
-                    s.putComponent(eRef, type, mData);
+                    PlayerLevelData dCopy = (PlayerLevelData) mData.clone();
+                    if (dCopy != null) { dCopy.setNobleFamilyId(""); dCopy.setStatus(""); s.putComponent(eRef, type, dCopy); }
                     pRef.sendMessage(Message.raw("La famille a ete dissoute par le Patriarche."));
                 }
             } catch (Exception e) { EldaniorLogger.error("FamilleTab", e); }
@@ -1165,9 +1164,8 @@ public class FamilleTab {
             var tStore = tRef.getStore();
             PlayerLevelData tData = tStore.getComponent(tRef, type);
             if (tData != null) {
-                tData.setNobleFamilyId(famId);
-                tData.setStatus("MEMBER");
-                tStore.putComponent(tRef, type, tData);
+                PlayerLevelData tCopy = (PlayerLevelData) tData.clone();
+                if (tCopy != null) { tCopy.setNobleFamilyId(famId); tCopy.setStatus("MEMBER"); tStore.putComponent(tRef, type, tCopy); }
             }
         }
 
@@ -1236,9 +1234,11 @@ public class FamilleTab {
         } catch (Exception e) { EldaniorLogger.error("FamilleTab", e); }
 
         // Claim famille
-        data.setNobleFamilyId(chosenId);
-        data.setStatus("PATRIARCH");
-        store.putComponent(ref, type, data);
+        PlayerLevelData claimCopy = (PlayerLevelData) data.clone();
+        if (claimCopy == null) return false;
+        claimCopy.setNobleFamilyId(chosenId);
+        claimCopy.setStatus("PATRIARCH");
+        store.putComponent(ref, type, claimCopy);
         FamilyManager.claimFamily(chosenId);
 
         return true;
@@ -1261,5 +1261,18 @@ public class FamilleTab {
         if (price >= 1_000_000L) return String.format("%.0fM", price / 1_000_000.0);
         if (price >= 1_000L) return String.format("%.0fK", price / 1_000.0);
         return price + " Or";
+    }
+
+    /** Nettoyage memoire quand un joueur se deconnecte */
+    public static void cleanupPlayer(UUID uuid) {
+        memberPages.remove(uuid);
+        invitePages.remove(uuid);
+        ordreMemberPages.remove(uuid);
+        openAccordion.remove(uuid);
+        viewingOrderId.remove(uuid);
+        playerCachedMembers.remove(uuid);
+        playerCachedInviteNames.remove(uuid);
+        playerCachedFamilyIds.remove(uuid);
+        playerCachedOrdreMembers.remove(uuid);
     }
 }

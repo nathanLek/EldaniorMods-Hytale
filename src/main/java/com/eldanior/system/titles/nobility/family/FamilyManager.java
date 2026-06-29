@@ -7,6 +7,7 @@ import com.eldanior.system.titles.nobility.family.definitions.royal.*;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class FamilyManager {
 
@@ -44,18 +45,17 @@ public class FamilyManager {
     }
 
     public static class FamilyRuntimeData {
-        private long treasury = 0;
-        private long contribution = 0;
+        private final AtomicLong treasury = new AtomicLong(0);
+        private final AtomicLong contribution = new AtomicLong(0);
 
-        public long getTreasury() { return treasury; }
-        public void addTreasury(long amount) { this.treasury += amount; }
+        public long getTreasury() { return treasury.get(); }
+        public void addTreasury(long amount) { treasury.addAndGet(amount); }
         public boolean withdrawTreasury(long amount) {
-            if (treasury < amount) return false;
-            treasury -= amount;
-            return true;
+            long prev = treasury.getAndUpdate(c -> c >= amount ? c - amount : c);
+            return prev >= amount;
         }
-        public long getContribution() { return contribution; }
-        public void addContribution(long points) { this.contribution += points; }
+        public long getContribution() { return contribution.get(); }
+        public void addContribution(long points) { contribution.addAndGet(points); }
     }
 
     public static void init() {

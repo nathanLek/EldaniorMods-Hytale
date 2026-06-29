@@ -604,4 +604,9 @@ public class TerritoiresTab {
             countOwnersRecursive(childId, owners, depth + 1);
         }
     }
+
+    /** Nettoyage memoire quand un joueur se deconnecte */
+    public static void cleanupPlayer(java.util.UUID uuid) {
+        playerStates.remove(uuid);
+    }
 }

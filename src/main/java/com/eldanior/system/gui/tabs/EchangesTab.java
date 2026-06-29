@@ -175,4 +175,9 @@ public class EchangesTab {
         }
         return false;
     }
+
+    /** Nettoyage memoire quand un joueur se deconnecte */
+    public static void cleanupPlayer(java.util.UUID uuid) {
+        playerCachedNames.remove(uuid);
+    }
 }

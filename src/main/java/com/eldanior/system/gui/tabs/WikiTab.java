@@ -82,4 +82,9 @@ public class WikiTab {
     public static boolean handlePrev() { return false; }
     /** @deprecated Use handleNext(uuid) */
     public static boolean handleNext() { return false; }
+
+    /** Nettoyage memoire quand un joueur se deconnecte */
+    public static void cleanupPlayer(java.util.UUID uuid) {
+        playerPages.remove(uuid);
+    }
 }

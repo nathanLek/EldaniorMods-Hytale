@@ -36,10 +36,11 @@ public class ShopManager {
         return listings.remove(index);
     }
 
-    public static void removeListing(int index) {
+    public static synchronized ShopListing removeListing(int index) {
         if (index >= 0 && index < listings.size()) {
-            listings.remove(index);
+            return listings.remove(index);
         }
+        return null;
     }
 
     public static List<ShopListing> getListings() {
@@ -59,8 +60,9 @@ public class ShopManager {
         return blackMarketListings.get(index);
     }
 
-    public static void removeBlackMarketListing(int index) {
-        if (index >= 0 && index < blackMarketListings.size()) blackMarketListings.remove(index);
+    public static synchronized ShopListing removeBlackMarketListing(int index) {
+        if (index >= 0 && index < blackMarketListings.size()) return blackMarketListings.remove(index);
+        return null;
     }
 
     /** Achat atomique Black Market. */

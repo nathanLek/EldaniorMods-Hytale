@@ -97,6 +97,7 @@ public class PlayerLevelData implements Component<EntityStore> {
     private Set<String> disabledSkills = new HashSet<>();
     private String divineSkill = ""; // Le skill divin unique équipé (PECHE_xxx ou ANGE_xxx)
     private transient Map<String, Long> cooldowns = new HashMap<>();
+    private transient TitleBonus cachedTitleBonus = null;
 
     // Kill tracking par type de mob (ex: "goblin_scrapper" -> 150)
     private Map<String, Integer> mobKills = new HashMap<>();
@@ -391,6 +392,7 @@ public class PlayerLevelData implements Component<EntityStore> {
         copy.skillProcs = new HashMap<>(this.skillProcs);
         copy.savedEvolutionChoices = this.savedEvolutionChoices;
         copy.evolutionRerolls = this.evolutionRerolls;
+        copy.cachedTitleBonus = null;
 
         return copy;
     }
@@ -685,8 +687,9 @@ public class PlayerLevelData implements Component<EntityStore> {
         return model != null ? model.getBonusLck() : 0;
     }
 
-    // Utilitaires internes pour recuperer le bonus CUMULE de TOUS les titres debloqués
+    // Utilitaires internes pour recuperer le bonus CUMULE de TOUS les titres debloqués (avec cache)
     private TitleBonus getTitleBonus() {
+        if (cachedTitleBonus != null) return cachedTitleBonus;
         if (unlockedTitles == null || unlockedTitles.isEmpty()) return TitleBonus.NONE;
         int str = 0, vit = 0, intel = 0, end = 0, agl = 0, lck = 0;
         for (String titleId : unlockedTitles) {
@@ -701,7 +704,8 @@ public class PlayerLevelData implements Component<EntityStore> {
                 lck += b.luck();
             }
         }
-        return new TitleBonus(str, vit, intel, end, agl, lck);
+        cachedTitleBonus = new TitleBonus(str, vit, intel, end, agl, lck);
+        return cachedTitleBonus;
     }
     private int getTitleBonusStr() { return getTitleBonus().strength(); }
     private int getTitleBonusVit() { return getTitleBonus().vitality(); }
@@ -765,6 +769,7 @@ public class PlayerLevelData implements Component<EntityStore> {
         if (this.unlockedTitles == null) this.unlockedTitles = new ArrayList<>();
         if (!this.unlockedTitles.contains(title)) {
             this.unlockedTitles.add(title);
+            this.cachedTitleBonus = null;
         }
     }
 
@@ -772,6 +777,7 @@ public class PlayerLevelData implements Component<EntityStore> {
         if (this.unlockedTitles != null) {
             this.unlockedTitles.remove(titleId);
         }
+        this.cachedTitleBonus = null;
         // Si le titre retiré était équipé, on repasse sur "novice"
         if (titleId.equals(this.currentTitle)) {
             this.currentTitle = "novice";
@@ -782,6 +788,7 @@ public class PlayerLevelData implements Component<EntityStore> {
         this.unlockedTitles = new ArrayList<>();
         this.unlockedTitles.add("novice");
         this.currentTitle = "novice";
+        this.cachedTitleBonus = null;
         this.mobKills = new HashMap<>();
         this.chestsDiscovered = 0;
         this.territoriesDiscovered = 0;
