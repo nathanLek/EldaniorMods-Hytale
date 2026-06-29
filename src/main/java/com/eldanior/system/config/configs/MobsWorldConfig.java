@@ -7,7 +7,7 @@ public class MobsWorldConfig {
     private static final Random RANDOM = new Random();
 
     // Scaling des stats par niveau
-    public static final float HP_PER_LEVEL = 10.0f;      // +10 HP par niveau
+    public static final float HP_PER_LEVEL = 7.0f;       // +7 HP par niveau (reequilibrage PvE)
     public static final float DAMAGE_PER_LEVEL = 0.5f;   // +0.5 dégât par niveau
 
     public static int getRandomLevel(String mobTypeId) {
