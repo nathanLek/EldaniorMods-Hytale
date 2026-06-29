@@ -64,9 +64,9 @@ public class SkillEffectConfig {
         // Freeze — Famille Frostguard
         ATTACKER_EFFECTS.put(PassiveSkill.FAMILY_FROST_RESILIENCE, "Freeze");
 
-        // Flame_Staff_Burn — brulure magique sur la victime
-        VICTIM_EFFECTS.put(PassiveSkill.SPELLBLADE, "Flame_Staff_Burn");
-        VICTIM_EFFECTS.put(PassiveSkill.ARCANE_STRIKE, "Flame_Staff_Burn");
+        // Flame_Staff_Burn — retire : ces skills ne sont pas lies au feu
+        // VICTIM_EFFECTS.put(PassiveSkill.SPELLBLADE, "Flame_Staff_Burn");
+        // VICTIM_EFFECTS.put(PassiveSkill.ARCANE_STRIKE, "Flame_Staff_Burn");
 
         // Bomb_Explode_Stun — explosion sur la victime
         VICTIM_EFFECTS.put(PassiveSkill.ANNIHILATOR_STRIKE, "Bomb_Explode_Stun");
@@ -112,39 +112,15 @@ public class SkillEffectConfig {
         // =====================================================================
 
         // --- COMMON ATTACK (effet sur victime : dégâts physiques) ---
-        VICTIM_EFFECTS.put(PassiveSkill.DEEP_SLASH, "Flame_Staff_Burn");
-        VICTIM_EFFECTS.put(PassiveSkill.DUELIST_SWIFTNESS, "Flame_Staff_Burn");
+        // Flame_Staff_Burn retire de ces skills — pas lies au feu
         VICTIM_EFFECTS.put(PassiveSkill.PRESSURE_POINT, "Bomb_Explode_Stun");
-        VICTIM_EFFECTS.put(PassiveSkill.OPPORTUNIST_STRIKE, "Flame_Staff_Burn");
 
         // --- ATTACK tiers (effet sur victime) ---
-        VICTIM_EFFECTS.put(PassiveSkill.INSTINCTIVE_STRIKE, "Flame_Staff_Burn");
-        VICTIM_EFFECTS.put(PassiveSkill.PREDATORY_STRIKE, "Flame_Staff_Burn");
-        VICTIM_EFFECTS.put(PassiveSkill.FURY_STRIKE, "Flame_Staff_Burn");
         VICTIM_EFFECTS.put(PassiveSkill.SEISMIC_STRIKE, "Bomb_Explode_Stun");
         VICTIM_EFFECTS.put(PassiveSkill.PHANTOM_STRIKE, "Bomb_Explode_Stun");
 
         // --- UNCOMMON ATTACK ---
-        VICTIM_EFFECTS.put(PassiveSkill.SHARP_BLADE, "Flame_Staff_Burn");
-        VICTIM_EFFECTS.put(PassiveSkill.COMBATANT_SWIFTNESS, "Flame_Staff_Burn");
         VICTIM_EFFECTS.put(PassiveSkill.VITAL_PRESSURE, "Bomb_Explode_Stun");
-
-        // --- RARE ATTACK ---
-        VICTIM_EFFECTS.put(PassiveSkill.WARRIOR_SWIFTNESS, "Flame_Staff_Burn");
-        VICTIM_EFFECTS.put(PassiveSkill.BLOOD_HUNT, "Flame_Staff_Burn");
-
-        // --- EPIQUE ATTACK ---
-        VICTIM_EFFECTS.put(PassiveSkill.VOID_BLADE, "Flame_Staff_Burn");
-        VICTIM_EFFECTS.put(PassiveSkill.BERSERKER_SWIFTNESS, "Flame_Staff_Burn");
-        VICTIM_EFFECTS.put(PassiveSkill.DEATH_HUNT, "Flame_Staff_Burn");
-
-        // --- UNIQUE ATTACK ---
-        VICTIM_EFFECTS.put(PassiveSkill.ABYSS_BLADE, "Flame_Staff_Burn");
-        VICTIM_EFFECTS.put(PassiveSkill.DEMIGOD_SWIFTNESS, "Flame_Staff_Burn");
-
-        // --- LEGENDAIRE ATTACK ---
-        VICTIM_EFFECTS.put(PassiveSkill.GENESIS_EDGE, "Flame_Staff_Burn");
-        VICTIM_EFFECTS.put(PassiveSkill.GOD_SLAYER_SWIFTNESS, "Flame_Staff_Burn");
 
         // --- DIVIN ATTACK ---
         VICTIM_EFFECTS.put(PassiveSkill.CREATOR_EDGE, "Flame_Staff_Burn");
