@@ -11,7 +11,6 @@ import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.entity.entities.Player;
-import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.ui.builder.UICommandBuilder;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
@@ -28,9 +27,6 @@ public class QuestTab {
 
     // Cache d'affichage par joueur (slot index -> questId ou bountyUUID)
     private static final Map<UUID, List<String>> playerDisplayCaches = new ConcurrentHashMap<>();
-
-    // Catégorie en cours de rendu (utilisée par fillQuestSlot pour adapter les boutons)
-    private static volatile String currentRenderCategory = null;
 
     // ==================== NAVIGATION ====================
 
@@ -147,7 +143,6 @@ public class QuestTab {
         ui.set("#QListCatTitle.Text", catTitle);
         ui.set("#QListCatTitle.Style.TextColor", catColor);
 
-        currentRenderCategory = category;
         List<String> displayCache = new ArrayList<>();
         int slotIdx = 0;
 
@@ -174,7 +169,7 @@ public class QuestTab {
                 case "main" -> QuestCategory.PRINCIPAL;
                 default -> QuestCategory.JOURNALIERE;
             };
-            slotIdx = renderCategoryList(ui, ref, store, myUUID, questCat, isPK, slotIdx, displayCache, player);
+            slotIdx = renderCategoryList(ui, ref, store, myUUID, questCat, isPK, slotIdx, displayCache, player, category);
             ui.set("#QListCount.Text", displayCache.size() + " QUETES");
             ui.set("#QListSection.Visible", false);
         }
@@ -191,7 +186,7 @@ public class QuestTab {
 
     private static int renderCategoryList(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store,
                                           UUID myUUID, QuestCategory category, boolean isPK,
-                                          int slotIdx, List<String> displayCache, Player player) {
+                                          int slotIdx, List<String> displayCache, Player player, String viewCategory) {
         List<PlayerQuest> myQuests = QuestManager.getPlayerQuests(myUUID);
         long now = System.currentTimeMillis();
 
@@ -204,7 +199,7 @@ public class QuestTab {
             if (model instanceof NpcDialogueQuest nq && nq.isInfoOnly()) continue;
             if (model.getCategory() != category) continue;
 
-            fillQuestSlot(ui, slotIdx, model, pq, true, currentRenderCategory, player);
+            fillQuestSlot(ui, slotIdx, model, pq, true, viewCategory, player);
             displayCache.add(pq.getQuestId());
             slotIdx++;
         }
@@ -218,7 +213,7 @@ public class QuestTab {
                 if (quest.getCategory() != category) continue;
                 if (displayCache.contains(quest.getId())) continue;
 
-                fillQuestSlot(ui, slotIdx, quest, null, false, currentRenderCategory, player);
+                fillQuestSlot(ui, slotIdx, quest, null, false, viewCategory, player);
                 displayCache.add(quest.getId());
                 slotIdx++;
             }
@@ -234,7 +229,7 @@ public class QuestTab {
                 if (cdEnd <= now) continue;
                 if (displayCache.contains(quest.getId())) continue;
 
-                fillQuestSlot(ui, slotIdx, quest, null, false, currentRenderCategory, player);
+                fillQuestSlot(ui, slotIdx, quest, null, false, viewCategory, player);
                 ui.set("#QSlotBtnAccept" + slotIdx + ".Visible", false);
                 long remaining = cdEnd - now;
                 long hrs = remaining / 3600000;
@@ -529,7 +524,7 @@ public class QuestTab {
         data.addMoney(model.getRewardGold());
         if (model.getRewardTitleId() != null) data.addTitle(model.getRewardTitleId());
 
-        if (model.isDaily() && model.getCooldownMinutes() > 0) {
+        if (model.getCooldownMinutes() > 0) {
             QuestManager.setCooldown(uuid, questId, model.getCooldownMinutes());
         }
 
@@ -628,29 +623,6 @@ public class QuestTab {
             sb.append(str.charAt(i));
         }
         return sb.toString();
-    }
-
-    /**
-     * Parcourt l'inventaire complet (hotbar + storage + backpack) pour trouver un item.
-     */
-    private static boolean hasItemInFullInventory(Player player, String itemId) {
-        if (player == null || itemId == null) return false;
-        var inv = player.getInventory();
-        for (short i = 0; i < 9; i++) {
-            ItemStack item = inv.getHotbar().getItemStack(i);
-            if (item != null && !item.isEmpty() && item.getItemId().equalsIgnoreCase(itemId)) return true;
-        }
-        for (short i = 0; i < 27; i++) {
-            ItemStack item = inv.getStorage().getItemStack(i);
-            if (item != null && !item.isEmpty() && item.getItemId().equalsIgnoreCase(itemId)) return true;
-        }
-        try {
-            for (short i = 0; i < 8; i++) {
-                ItemStack item = inv.getBackpack().getItemStack(i);
-                if (item != null && !item.isEmpty() && item.getItemId().equalsIgnoreCase(itemId)) return true;
-            }
-        } catch (IllegalArgumentException ignored) { /* backpack may have 0 capacity */ }
-        return false;
     }
 
     /** Sauvegarde les quetes + cooldowns du joueur dans PlayerLevelData */

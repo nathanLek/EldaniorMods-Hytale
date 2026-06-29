@@ -196,11 +196,13 @@ public class DuelManager {
                     var lStore = lRef.getStore();
                     PlayerLevelData lData = lStore.getComponent(lRef, type);
                     if (lData != null) {
-                        int xpLost = lData.removeExperiencePercent(0.10);
-                        lData.addDuelLoss();
+                        PlayerLevelData lCopy = (PlayerLevelData) lData.clone();
+                        if (lCopy == null) return;
+                        int xpLost = lCopy.removeExperiencePercent(0.10);
+                        lCopy.addDuelLoss();
                         String winnerName = winnerRef != null ? winnerRef.getUsername() : "?";
-                        lData.addDuelHistory(winnerName, false, loserHPPercent, winnerHPPercent);
-                        lStore.putComponent(lRef, type, lData);
+                        lCopy.addDuelHistory(winnerName, false, loserHPPercent, winnerHPPercent);
+                        lStore.putComponent(lRef, type, lCopy);
 
                         // Winner: gagne l'XP perdue
                         if (winnerRef != null) {
@@ -209,20 +211,22 @@ public class DuelManager {
                                 var wStore = wRef.getStore();
                                 PlayerLevelData wData = wStore.getComponent(wRef, type);
                                 if (wData != null) {
-                                    wData.addExperience(xpLost);
-                                    wData.addDuelWin();
+                                    PlayerLevelData wCopy = (PlayerLevelData) wData.clone();
+                                    if (wCopy == null) return;
+                                    wCopy.addExperience(xpLost);
+                                    wCopy.addDuelWin();
                                     String loserName = loserRef.getUsername();
-                                    wData.addDuelHistory(loserName, true, winnerHPPercent, loserHPPercent);
-                                    wStore.putComponent(wRef, type, wData);
+                                    wCopy.addDuelHistory(loserName, true, winnerHPPercent, loserHPPercent);
+                                    wStore.putComponent(wRef, type, wCopy);
 
                                     // Classement + quete
-                                    ClassementManager.updateDuelWins(winnerRef.getUsername(), wData.getDuelWins());
+                                    ClassementManager.updateDuelWins(winnerRef.getUsername(), wCopy.getDuelWins());
                                     QuestManager.onDuelWin(winnerUUID);
 
                                     winnerRef.sendMessage(Message.raw("+" + xpLost + " XP (mise du duel)"));
 
                                     // Verifier titres en temps reel apres victoire en duel
-                                    com.eldanior.system.titles.TitleManager.checkAndUnlockTitles(wRef, wStore, wData, winnerRef);
+                                    com.eldanior.system.titles.TitleManager.checkAndUnlockTitles(wRef, wStore, wCopy, winnerRef);
                                 }
                             }
                         }

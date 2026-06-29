@@ -210,7 +210,7 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
                 // --- RECOMPENSE : si la victime etait PK, le tueur recoit la prime ---
                 PlayerLevelData victimDataPK = store.getComponent(victimRef, lvlType);
                 if (victimDataPK != null && victimDataPK.isPK()) {
-                    long bountyReward = victimDataPK.collectBounty();
+                    long bountyReward = victimDataPK.getBounty();
                     long bonusXP = xpAmount * 2; // Double XP pour tuer un PK
                     long bonusGold = Math.max(1000, bountyReward);
 
@@ -218,8 +218,18 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
                     dataToWrite.addMoney(bonusGold);
                     QuestManager.onGoldGained(killerUUID, bonusGold);
 
-                    // Sauvegarder la victime PK (bounty a 0) et retirer du registre des primes
-                    commandBuffer.putComponent(victimRef, lvlType, victimDataPK);
+                    // Reset bounty via commandBuffer.run pour ne pas ecraser la penalite de mort
+                    final Ref<EntityStore> victimRefFinal = victimRef;
+                    commandBuffer.run(deferredStore -> {
+                        PlayerLevelData penalizedData = deferredStore.getComponent(victimRefFinal, lvlType);
+                        if (penalizedData != null) {
+                            PlayerLevelData bountyCopy = (PlayerLevelData) penalizedData.clone();
+                            if (bountyCopy != null) {
+                                bountyCopy.collectBounty();
+                                deferredStore.putComponent(victimRefFinal, lvlType, bountyCopy);
+                            }
+                        }
+                    });
                     QuestManager.unregisterBounty(victimUUID);
 
                     NotificationHelper.sendNotification(killerRefObj,

@@ -145,13 +145,15 @@ public class NpcQuestDetectionSystem extends EntityTickingSystem<EntityStore> {
                      @Nonnull Store<EntityStore> store,
                      @Nonnull CommandBuffer<EntityStore> commandBuffer) {
 
-        // Nettoyage mémoire toutes les 60 secondes
-        cleanupTimer += dt;
-        if (cleanupTimer > 60f && index == 0) {
-            cleanupTimer = 0;
-            long now = System.currentTimeMillis();
-            cooldowns.entrySet().removeIf(e -> (now - e.getValue()) > 30000);
-            activeInteractions.entrySet().removeIf(e -> (now - e.getValue()) > 30000);
+        // Nettoyage mémoire toutes les 60 secondes (seul le premier index incrémente le timer)
+        if (index == 0) {
+            cleanupTimer += dt;
+            if (cleanupTimer > 60f) {
+                cleanupTimer = 0;
+                long now = System.currentTimeMillis();
+                cooldowns.entrySet().removeIf(e -> (now - e.getValue()) > 30000);
+                activeInteractions.entrySet().removeIf(e -> (now - e.getValue()) > 30000);
+            }
         }
 
         Ref<EntityStore> npcRef = chunk.getReferenceTo(index);

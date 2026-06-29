@@ -826,4 +826,9 @@ public class ProprietesTab {
             case MINE -> "#F39C12";
         };
     }
+
+    /** Nettoyage memoire quand un joueur se deconnecte */
+    public static void cleanupPlayer(java.util.UUID uuid) {
+        playerStates.remove(uuid);
+    }
 }

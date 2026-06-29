@@ -437,4 +437,9 @@ public class AdminTab {
             return true;
         } catch (Exception e) { e.printStackTrace(); return false; }
     }
+
+    /** Nettoyage memoire quand un joueur se deconnecte */
+    public static void cleanupPlayer(java.util.UUID uuid) {
+        adminStates.remove(uuid);
+    }
 }

@@ -223,6 +223,16 @@ public class EldaniorSystem extends JavaPlugin {
                     com.eldanior.system.trade.TradeManager.handleDisconnect(uuid);
                     com.eldanior.system.territory.systems.ParcelRangeSystem.handleDisconnect(uuid);
                     com.eldanior.system.gui.tabs.QuestTab.cleanupPlayer(uuid);
+                    com.eldanior.system.gui.tabs.GuildeTab.cleanupPlayer(uuid);
+                    com.eldanior.system.gui.tabs.FamilleTab.cleanupPlayer(uuid);
+                    com.eldanior.system.gui.tabs.DuelTab.cleanupPlayer(uuid);
+                    com.eldanior.system.gui.tabs.ShopTab.cleanupPlayer(uuid);
+                    com.eldanior.system.gui.tabs.BlackMarketTab.cleanupPlayer(uuid);
+                    com.eldanior.system.gui.tabs.WikiTab.cleanupPlayer(uuid);
+                    com.eldanior.system.gui.tabs.EchangesTab.cleanupPlayer(uuid);
+                    com.eldanior.system.gui.tabs.TerritoiresTab.cleanupPlayer(uuid);
+                    com.eldanior.system.gui.tabs.ProprietesTab.cleanupPlayer(uuid);
+                    com.eldanior.system.gui.tabs.AdminTab.cleanupPlayer(uuid);
 
                     // Memory leak cleanup — static maps
                     com.eldanior.system.config.Player.PlayerPositionTracker.PLAYER_POSITIONS.remove(uuid);

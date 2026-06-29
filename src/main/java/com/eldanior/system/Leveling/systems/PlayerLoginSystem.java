@@ -21,9 +21,9 @@ import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntitySta
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class PlayerLoginSystem extends EntityTickingSystem<EntityStore> {
 
@@ -33,7 +33,7 @@ public class PlayerLoginSystem extends EntityTickingSystem<EntityStore> {
 
     public static PlayerLoginSystem getInstance() { return instance; }
 
-    private final Set<UUID> initializedPlayers = new HashSet<>();
+    private final Set<UUID> initializedPlayers = ConcurrentHashMap.newKeySet();
 
     public PlayerLoginSystem() {
         instance = this;
@@ -116,10 +116,21 @@ public class PlayerLoginSystem extends EntityTickingSystem<EntityStore> {
             com.eldanior.system.titles.nobility.family.NobleFamilyModel famModel =
                     com.eldanior.system.titles.nobility.family.FamilyManager.get(loginFamId);
             if (famModel != null) {
-                // Reclaim la famille si pas encore prise
                 if (!com.eldanior.system.titles.nobility.family.FamilyManager.isFamilyTaken(loginFamId)) {
-                    com.eldanior.system.titles.nobility.family.FamilyManager.claimFamily(loginFamId);
-                    System.out.println("[PlayerLogin] Famille " + loginFamId + " restauree pour " + uuid);
+                    // Famille non prise : seul le Patriarche peut la restaurer
+                    if ("PATRIARCH".equals(data.getStatus())) {
+                        com.eldanior.system.titles.nobility.family.FamilyManager.claimFamily(loginFamId);
+                        System.out.println("[PlayerLogin] Famille " + loginFamId + " restauree pour " + uuid);
+                    } else {
+                        // Famille dissoute (plus de Patriarche online) -> nettoyer le membre offline
+                        final PlayerLevelData famCleanData = data;
+                        commandBuffer.run(deferredStore -> {
+                            famCleanData.setNobleFamilyId("");
+                            famCleanData.setStatus("");
+                            deferredStore.putComponent(playerRef, type, famCleanData);
+                        });
+                        System.out.println("[PlayerLogin] Famille " + loginFamId + " dissoute, membre nettoye: " + uuid);
+                    }
                 }
             } else {
                 // Famille inconnue -> nettoyer

@@ -622,8 +622,10 @@ public class GuildeTab {
         Guild guild = GuildManager.getPlayerGuild(uuid);
         if (guild == null || !guild.withdrawTreasury(1000)) return false;
 
-        data.addMoney(1000);
-        store.putComponent(ref, type, data);
+        PlayerLevelData wCopy = (PlayerLevelData) data.clone();
+        if (wCopy == null) return false;
+        wCopy.addMoney(1000);
+        store.putComponent(ref, type, wCopy);
 
         Player player = store.getComponent(ref, Player.getComponentType());
         if (player != null) player.getPlayerRef().sendMessage(Message.raw("-1000 Or retire de la tresorerie !"));
@@ -640,8 +642,10 @@ public class GuildeTab {
         Guild guild = GuildManager.getPlayerGuild(uuid);
         if (guild == null) return false;
 
-        data.removeMoney(1000);
-        store.putComponent(ref, type, data);
+        PlayerLevelData dCopy = (PlayerLevelData) data.clone();
+        if (dCopy == null) return false;
+        dCopy.removeMoney(1000);
+        store.putComponent(ref, type, dCopy);
         guild.addTreasury(1000);
 
         Player player = store.getComponent(ref, Player.getComponentType());
@@ -756,5 +760,16 @@ public class GuildeTab {
     private static UUID extractUUID(PlayerRef playerRef) {
         if (playerRef == null) return null;
         try { return UUIDExtractor.getUUID(playerRef); } catch (Exception e) { return null; }
+    }
+
+    /** Nettoyage memoire quand un joueur se deconnecte */
+    public static void cleanupPlayer(java.util.UUID uuid) {
+        memberPages.remove(uuid);
+        invitePages.remove(uuid);
+        openGuildPages.remove(uuid);
+        openAccordion.remove(uuid);
+        playerCachedMembers.remove(uuid);
+        playerCachedInviteNames.remove(uuid);
+        playerCachedOpenGuilds.remove(uuid);
     }
 }

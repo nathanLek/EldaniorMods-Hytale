@@ -7,7 +7,6 @@ import com.eldanior.system.quest.dialogue.QuestCondition;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.entity.entities.player.hud.CustomUIHud;
-import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.ui.builder.UICommandBuilder;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
@@ -156,7 +155,7 @@ public class QuestHud extends CustomUIHud {
         }
 
         if (cond.getRequiredItemId() != null) {
-            boolean done = hasItemInFullInventory(cachedPlayer, cond.getRequiredItemId());
+            boolean done = QuestManager.hasItemInFullInventory(cachedPlayer, cond.getRequiredItemId());
             String name = cond.getRequiredItemId().replaceAll("([a-z])([A-Z])", "$1 $2").replace("_", " ");
             if (name.contains(":")) name = name.substring(name.indexOf(':') + 1);
             objectives.add(new String[]{name, done ? "OK" : "0/1", done ? "1" : "0"});
@@ -187,29 +186,6 @@ public class QuestHud extends CustomUIHud {
         for (int i = 1; i <= 3; i++) {
             ui.set("#" + prefix + "Obj" + i + "Box.Visible", false);
         }
-    }
-
-    /**
-     * Parcourt l'inventaire complet (hotbar + storage + backpack) pour trouver un item.
-     */
-    private boolean hasItemInFullInventory(Player player, String itemId) {
-        if (player == null || itemId == null) return false;
-        var inv = player.getInventory();
-        for (short i = 0; i < 9; i++) {
-            ItemStack item = inv.getHotbar().getItemStack(i);
-            if (item != null && !item.isEmpty() && item.getItemId().equalsIgnoreCase(itemId)) return true;
-        }
-        for (short i = 0; i < 27; i++) {
-            ItemStack item = inv.getStorage().getItemStack(i);
-            if (item != null && !item.isEmpty() && item.getItemId().equalsIgnoreCase(itemId)) return true;
-        }
-        try {
-            for (short i = 0; i < 8; i++) {
-                ItemStack item = inv.getBackpack().getItemStack(i);
-                if (item != null && !item.isEmpty() && item.getItemId().equalsIgnoreCase(itemId)) return true;
-            }
-        } catch (IllegalArgumentException ignored) { /* backpack may have 0 capacity */ }
-        return false;
     }
 
     private PlayerQuest findMainQuest() {

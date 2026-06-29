@@ -200,25 +200,28 @@ public class ProfilTab {
         // Clamp to available points
         amount = Math.min(amount, data.getAttributePoints());
 
+        PlayerLevelData copy = (PlayerLevelData) data.clone();
+        if (copy == null) return false;
+
         switch (stat) {
-            case "str" -> data.setStrength(data.getStrength() + amount);
-            case "vit" -> data.setVitality(data.getVitality() + amount);
-            case "int" -> data.setIntelligence(data.getIntelligence() + amount);
-            case "end" -> data.setEndurance(data.getEndurance() + amount);
-            case "agl" -> data.setAgility(data.getAgility() + amount);
-            case "lck" -> data.setLuck(data.getLuck() + amount);
+            case "str" -> copy.setStrength(copy.getStrength() + amount);
+            case "vit" -> copy.setVitality(copy.getVitality() + amount);
+            case "int" -> copy.setIntelligence(copy.getIntelligence() + amount);
+            case "end" -> copy.setEndurance(copy.getEndurance() + amount);
+            case "agl" -> copy.setAgility(copy.getAgility() + amount);
+            case "lck" -> copy.setLuck(copy.getLuck() + amount);
             default -> { return false; }
         }
 
-        data.setAttributePoints(data.getAttributePoints() - amount);
-        store.putComponent(ref, type, data);
+        copy.setAttributePoints(copy.getAttributePoints() - amount);
+        store.putComponent(ref, type, copy);
 
-        com.eldanior.system.Leveling.utils.StatCalculator.updatePlayerStats(ref, store, data);
+        com.eldanior.system.Leveling.utils.StatCalculator.updatePlayerStats(ref, store, copy);
 
         // Verifier titres en temps reel apres changement de stats
         com.hypixel.hytale.server.core.universe.PlayerRef playerRef =
                 store.getComponent(ref, com.hypixel.hytale.server.core.universe.PlayerRef.getComponentType());
-        com.eldanior.system.titles.TitleManager.checkAndUnlockTitles(ref, store, data, playerRef);
+        com.eldanior.system.titles.TitleManager.checkAndUnlockTitles(ref, store, copy, playerRef);
 
         return true;
     }

@@ -64,8 +64,6 @@ public class PersistenceManager {
             saveClassements();
             saveShop();
             saveHierarchies();
-            // Verifier les impots hebdomadaires
-            com.eldanior.system.territory.ParcelEconomyManager.collectWeeklyTaxes();
             com.eldanior.system.territory.ParcelManager.saveAll();
             System.out.println("[Persistence] Donnees sauvegardees !");
         } catch (Exception e) {

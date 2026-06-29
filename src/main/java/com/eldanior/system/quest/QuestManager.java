@@ -146,7 +146,7 @@ public class QuestManager {
     private static Path dataDir;
 
     // Jour courant pour les journalieres
-    private static int currentDay = -1;
+    private static volatile int currentDay = -1;
 
     // Selection aleatoire de 7 quetes journalieres pour aujourd'hui
     private static final int DAILY_SELECTION_COUNT = 5;
@@ -840,6 +840,14 @@ public class QuestManager {
         return countItemInInventory(player, model.getTargetId()) >= model.getTargetAmount();
     }
 
+    /**
+     * Verifie si un item est present dans l'inventaire complet du joueur.
+     * Delegue a countItemInInventory pour un match coherent (partiel, ignoreCase).
+     */
+    public static boolean hasItemInFullInventory(com.hypixel.hytale.server.core.entity.entities.Player player, String itemId) {
+        return countItemInInventory(player, itemId) > 0;
+    }
+
     private static void checkCompletion(UUID playerUUID, PlayerQuest pq, QuestModel model) {
         if (pq.getProgress() >= model.getTargetAmount()) {
             pq.setCompleted();
@@ -850,7 +858,7 @@ public class QuestManager {
 
     // ==================== DAILY RESET ====================
 
-    public static void checkDailyReset() {
+    public static synchronized void checkDailyReset() {
         int today = getDayOfYear();
         if (today != currentDay) {
             currentDay = today;
@@ -967,6 +975,21 @@ public class QuestManager {
     /** Nettoie les donnees en memoire d'un joueur qui se deconnecte. */
     public static void handleDisconnect(UUID playerUUID) {
         if (playerUUID == null) return;
+        // Sauvegarder avant suppression
+        if (dataDir != null) {
+            try {
+                Path file = dataDir.resolve("quest_shutdown.properties");
+                Properties props = new Properties();
+                if (Files.exists(file)) {
+                    try (InputStream in = Files.newInputStream(file)) { props.load(in); }
+                }
+                String qd = serializePlayerQuests(playerUUID);
+                String cd = serializeCooldowns(playerUUID);
+                if (!qd.isEmpty()) props.setProperty(playerUUID + ".quests", qd);
+                if (!cd.isEmpty()) props.setProperty(playerUUID + ".cooldowns", cd);
+                PersistenceUtils.writeAtomicWithBackup(file, props, "Quest data saved on disconnect");
+            } catch (Exception e) { EldaniorLogger.error("QuestManager.handleDisconnect save", e); }
+        }
         playerQuests.remove(playerUUID);
         cooldowns.remove(playerUUID);
         activeBounties.remove(playerUUID);

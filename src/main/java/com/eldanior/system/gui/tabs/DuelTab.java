@@ -21,7 +21,7 @@ public class DuelTab {
 
     public static final int MAX_INVITE_SLOTS = 8;
     public static final int MAX_HISTORY_SLOTS = 10;
-    private static final Map<UUID, List<String>> cachedPlayerNames = new HashMap<>();
+    private static final Map<UUID, List<String>> cachedPlayerNames = new java.util.concurrent.ConcurrentHashMap<>();
 
     public static void populate(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store) {
         ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
@@ -126,5 +126,10 @@ public class DuelTab {
     private static UUID extractUUID(PlayerRef playerRef) {
         if (playerRef == null) return null;
         try { return UUIDExtractor.getUUID(playerRef); } catch (Exception e) { return null; }
+    }
+
+    /** Nettoyage memoire quand un joueur se deconnecte */
+    public static void cleanupPlayer(UUID uuid) {
+        cachedPlayerNames.remove(uuid);
     }
 }
