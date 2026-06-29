@@ -360,4 +360,5 @@ Quests display real-time progression in the HUD, with inventory-based tracking f
 <p align="center">
   <i>Built for Hytale. Designed for epic stories.</i>
   https://github.com/nathanLek/EldaniorMods-Hytale
+  https://linear.app/nathanlek/my-issues/created
 </p>
