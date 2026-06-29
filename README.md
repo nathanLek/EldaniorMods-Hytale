@@ -1,7 +1,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Hytale-RPG%20Mod-gold?style=for-the-badge&labelColor=1a1a2e" />
-  <img src="https://img.shields.io/badge/Version-1.0.0-blue?style=for-the-badge&labelColor=1a1a2e" />
-  <img src="https://img.shields.io/badge/Classes-406-purple?style=for-the-badge&labelColor=1a1a2e" />
+  <img src="https://img.shields.io/badge/Version-1.1.0-blue?style=for-the-badge&labelColor=1a1a2e" />
+  <img src="https://img.shields.io/badge/Java%20Classes-1652-purple?style=for-the-badge&labelColor=1a1a2e" />
   <img src="https://img.shields.io/badge/Skills-580+-red?style=for-the-badge&labelColor=1a1a2e" />
 </p>
 
@@ -82,7 +82,7 @@ Every fight is tactical. Every stat matters.
 
 ### Mob Scaling
 
-Monsters scale with your level. Every zone stays relevant, every fight stays dangerous. Virtual HP pools, dynamic damage, and XP rewards that match the challenge.
+Monsters scale with your level. Every zone stays relevant, every fight stays dangerous. Virtual HP pools (+7 HP/level), dynamic damage (+0.5/level), and XP rewards that match the challenge.
 
 **9 Mob Factions** — Outlanders, Kweebecs, Elementals, Trorks, Slothians, Void Creatures, Undead, Animals, and more.
 
@@ -106,6 +106,7 @@ Monsters scale with your level. Every zone stays relevant, every fight stays dan
 - **Black Market** — Rare and forbidden goods, for those who dare
 - **12 NPC Merchants** — Blacksmith, Alchemist, Banker, Farmer, Miner, and more
 - **Barter System** — NPC shops with daily restocking trades
+- **Thread-safe transactions** — Synchronized buy/cancel to prevent item duplication
 
 ### Taxes & Trade
 
@@ -162,7 +163,7 @@ Pledge your loyalty to one of **13 noble houses**, each with unique bonuses:
 - **Marquis:** Luminara, Valmontis, Runkandel, Zippel
 - **Duchy:** Goldcrest, Warbane, Ironveil, Spellweave, Nighthollow, Silkroad, Frostguard, Swiftquiver
 
-Family treasuries, contribution tracking, and inter-family rivalry fuel the political game.
+Family treasuries (thread-safe AtomicLong), contribution tracking, and inter-family rivalry fuel the political game.
 
 ### 480+ Titles
 
@@ -181,25 +182,46 @@ A parallel hierarchy of faith — climb from Laique to Cardinal through devotion
 - **Party system** — Group up with real-time HUD showing member status
 - **Player trading** — Secure face-to-face item exchange
 - **Duel system** — Challenge anyone via command (`/es duel <player>`) or GUI, with full win/loss tracking
+- **Offline member cleanup** — Dissolved guilds/families are cleaned on reconnect
 
 ---
 
-## 121 Quests & Daily Content
+## 221+ Quests & Daily Content
 
-### Quest Types
+### Quest Categories
 
-| Type | Count | Description |
-|------|-------|-------------|
+| Category | Count | Description |
+|----------|-------|-------------|
 | **Main Quest** | 1 | Naissance du Roi — the epic storyline |
-| **Side Quests** | 4+ | Unique NPC-driven adventures |
-| **Daily Hunts** | 10/day | Kill specific mob types |
-| **Daily Collection** | Rotating | Gather rare materials |
-| **Daily Duels** | Rotating | PvP challenges |
-| **Daily Exploration** | Rotating | Discover new areas |
-| **Daily Massacre** | Rotating | Mass kill challenges |
-| **Daily PK** | Rotating | Player kill bounties |
+| **Secondary Quests** | 100 | NPC-driven adventures with dialogues & 24h cooldown |
+| **Daily Quests** | 116 | Rotating selection of 10/day |
+| **Bounties (Primes)** | Dynamic | Hunt PK players for gold rewards |
 
-**10 daily quests refresh every day**, keeping the world alive and rewarding consistent play.
+### Secondary Quest Types — 100 Unique Quests
+
+| Type | Count | Mechanic |
+|------|-------|----------|
+| **Chasse** (Hunt) | 20 | Kill specific mob types |
+| **Minage** (Mining) | 15 | Bring ore/stone items to NPC |
+| **Recolte** (Harvest) | 15 | Bring plant/wood items to NPC |
+| **Collection** (Gold) | 15 | Accumulate gold amounts |
+| **Exploration** | 15 | Discover treasure chests |
+| **Duel** | 20 | Win PvP duels |
+
+Each secondary quest has **unique NPC dialogue** (in French), difficulty scaling from F to S, and a dedicated NPC with a JSON role file. Mining & harvesting quests use an **inventory-based system** — the NPC checks and removes items from your inventory on claim.
+
+### Daily Quests — 116 Rotating
+
+| Type | Count |
+|------|-------|
+| Chasse | 31 |
+| Collection | 14 |
+| Duel | 11 |
+| Exploration | 12 |
+| Massacre | 15 |
+| PK | 33 |
+
+**10 daily quests refresh every day** (5 normal + 5 PK), keeping the world alive and rewarding consistent play.
 
 ---
 
@@ -272,13 +294,16 @@ Full admin toolkit built in:
 - **Leaderboards** — Track top players across multiple categories
 - **Hologram System** — Place information displays anywhere in the world
 
-### Performance Optimized
+### Performance & Stability
 
-- **Optimized combat loops** — No unnecessary object cloning or heavy logging in hot paths
-- **Memory management** — Automatic cleanup of player data on disconnect
+- **Thread-safe data structures** — ConcurrentHashMap, AtomicLong, volatile fields throughout
+- **ECS clone pattern** — PlayerLevelData cloned before mutation to prevent store corruption
+- **Memory management** — Automatic cleanup of 25+ GUI caches on player disconnect
 - **Atomic file writes** — Data never corrupts, even on crashes
 - **Backup system** — Automatic `.bak` files for all persistent data
+- **Quest save on disconnect** — No progression loss on logout
 - **Tick-throttled systems** — ECS systems run at controlled intervals to prevent lag
+- **Title bonus caching** — Lazy cache invalidated on title change, avoiding 120+ lookups per tick
 
 ### Persistence
 
@@ -292,16 +317,31 @@ Everything saves. Everything persists across restarts:
 
 ---
 
+## Quest UI — Category Navigation
+
+The quest interface features a **two-screen navigation system**:
+
+1. **Category Screen** — 4 blasons (Journalieres, Secondaires, Principales, Primes) + "En Cours" and "A Reclamer" banners + Speciales placeholder
+2. **List Screen** — Paginated quest list with objectives, rewards, and action buttons (Accepter, Activer, Abandonner, Reclamer)
+
+Quests display real-time progression in the HUD, with inventory-based tracking for mining and harvesting quests.
+
+---
+
 ## At a Glance
 
 | Feature | Count |
 |---------|-------|
+| Java Classes | 1,652 |
 | Base Classes | 5 |
 | Class Evolutions | 406 |
 | Passive Skills | 580+ |
 | Active Spells | 27+ |
 | Titles | 480+ |
-| Quests | 121 |
+| Total Quests | 221+ |
+| Secondary Quests | 100 |
+| Daily Quests | 116 |
+| Quest NPCs | 102 |
 | Crafting Professions | 10 |
 | Noble Families | 13 |
 | Nobility Ranks | 7 |
