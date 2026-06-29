@@ -1,7 +1,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Hytale-RPG%20Mod-gold?style=for-the-badge&labelColor=1a1a2e" />
   <img src="https://img.shields.io/badge/Version-1.1.0-blue?style=for-the-badge&labelColor=1a1a2e" />
-  <img src="https://img.shields.io/badge/Java%20Classes-1652-purple?style=for-the-badge&labelColor=1a1a2e" />
+  <img src="https://img.shields.io/badge/Classes-406-purple?style=for-the-badge&labelColor=1a1a2e" />
   <img src="https://img.shields.io/badge/Skills-580+-red?style=for-the-badge&labelColor=1a1a2e" />
 </p>
 
