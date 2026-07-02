@@ -78,6 +78,8 @@ Le prompt de chaque agent doit contenir :
 1. Le titre et la description COMPLETE du ticket
 2. L'ID du ticket (BUGS-XX)
 3. Les instructions :
+   - **AVANT d'explorer** : consulter l'index `.claude/index/` (grep) pour localiser les classes/skills/cles au lieu de scanner le repo. Ex : `grep -i guildmanager .claude/index/classes.txt`
+   - **Avant de CREER un skill/classe** : verifier qu'il n'existe pas deja (`grep -i "<nom>" .claude/index/skills-passives.txt`) pour eviter les doublons
    - Creer la branch `fix/bugs-XX-description-courte` depuis main
    - Lire CHAQUE fichier mentionne dans le ticket
    - Appliquer le fix minimal et correct
@@ -85,6 +87,8 @@ Le prompt de chaque agent doit contenir :
    - Ne toucher QUE les fichiers lies au ticket
    - Builder avec `./gradlew compileJava` pour verifier
    - Si le build echoue, corriger et re-builder
+   - Lancer `./scripts/lint-eldanior.sh` : si un probleme HAUTE apparait a cause du fix, le corriger
+   - **Definition of Done (obligatoire avant commit)** : (a) le code compile, (b) tout nouveau skill/classe est ENREGISTRE (enum PassiveSkill / ClassManager), (c) toute chaine visible a une cle de langue dans `server.lang`, (d) aucun stub/TODO laisse. Si un point hors-scope est decouvert, NE PAS le bricoler : le signaler dans le rapport pour creer un ticket de suivi.
    - `git add` uniquement les fichiers modifies (JAMAIS `git add .`)
    - Commit :
      ```
@@ -102,21 +106,24 @@ Le prompt de chaque agent doit contenir :
 Les agents tournent en parallele. Quand chacun finit :
 
 ### Etape 6 — Pour CHAQUE agent termine
-1. Linear → In Review
-2. Creer la PR :
+1. **Revue qualite avant PR** : `/code-review low` sur le diff de la branche. Si une correction bloquante est trouvee, la faire appliquer par l'agent avant de continuer.
+2. Linear → In Review
+3. Creer la PR :
    ```
    gh pr create --title "fix: description (BUGS-XX)" --body "..." --base main --head fix/bugs-XX-description-courte
    ```
-3. Verifier et merger :
+4. Verifier et merger :
    ```
    gh pr view <PR> --json mergeable
    gh pr merge <PR> --merge --delete-branch
    ```
-4. Pull main :
+5. Pull main :
    ```
    git pull origin main
    ```
-5. Linear → Done
+6. **Doc** : si le fix change un comportement documente, noter le fichier `Brain IA/` a mettre a jour (traite par `/ticket-done` via l'agent camille).
+7. **Tickets de suivi** : pour chaque point hors-scope signale par l'agent a l'Etape 4, creer un ticket Linear **en Backlog** (`a585414d-7b88-4052-8384-8bcd3e9dbb5d`) lie (team + milestone adaptes). La promotion en Todo se fait au grooming.
+8. Linear → Done
 
 ### Etape 7 — Rapport final
 Afficher un tableau recap :

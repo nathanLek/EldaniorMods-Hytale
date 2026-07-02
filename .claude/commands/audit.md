@@ -13,10 +13,13 @@ Analyse le codebase en profondeur, identifie tous les problemes, et cree des tic
 - `/audit trade` → audit d'un systeme specifique (trade, duel, guild, quest, territory, skills, economy, gui, persistence, perf)
 
 ## IDs des statuts Linear (TOUJOURS utiliser ces IDs)
+- **Backlog** : `a585414d-7b88-4052-8384-8bcd3e9dbb5d`  ← les tickets crees par l'audit vont ICI
 - **Todo** : `823f2630-1b0b-4825-983f-40c07b99d052`
 - **In Progress** : `9832c40d-7386-4417-8acb-d934272c6798`
 - **In Review** : `468e6805-5187-45db-badb-e5218297a4ff`
 - **Done** : `838f9ae4-180d-44a6-ad7b-758eef8cc203`
+
+> **Regle** : tout nouveau ticket est cree en **Backlog**, jamais directement en Todo. Le passage Backlog -> Todo se fait au grooming (routine de 12h ou `/triage`).
 
 ## Team et Projet Linear
 - Team UUID : `a6f0f1f0-d63a-445d-ac0f-ced74383d453`
@@ -117,7 +120,7 @@ mcp__linear__save_issue(
   milestone: "M1 — Bugs critiques & Stabilité",
   priority: 1,
   labels: ["Bug", "Combat"],
-  state: "823f2630-1b0b-4825-983f-40c07b99d052",
+  state: "a585414d-7b88-4052-8384-8bcd3e9dbb5d",
   description: "..."
 )
 ```

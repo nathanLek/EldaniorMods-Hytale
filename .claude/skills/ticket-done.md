@@ -42,7 +42,11 @@ Si la branch remote est deja supprimee (par GitHub), ignorer l'erreur.
 mcp__linear__save_issue(id: "BUGS-XX", state: "838f9ae4-180d-44a6-ad7b-758eef8cc203")
 ```
 
-### Etape 5 — Confirmer et enchainer
+### Etape 5 — Regenerer l'index & mettre a jour la doc
+- `./scripts/build-index.sh` (l'index reflete le code fraichement merge)
+- Si le ticket a change un comportement documente dans `Brain IA/`, lancer l'agent **camille** avec UNIQUEMENT le diff du merge (`git show --stat HEAD` + fichiers concernes) pour mettre a jour la doc — pas d'audit complet du vault.
+
+### Etape 6 — Confirmer et enchainer
 - Afficher : "BUGS-XX termine. Enchainement du prochain ticket..."
 - Executer immediatement la procedure complete du skill `/ticket` (auto-pick)
 
