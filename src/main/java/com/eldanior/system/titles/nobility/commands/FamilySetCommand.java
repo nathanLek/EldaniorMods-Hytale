@@ -37,7 +37,6 @@ public class FamilySetCommand extends AbstractAsyncCommand {
         this.familyArg = this.withRequiredArg("familyId", "ID de la famille", ArgTypes.STRING);
     }
 
-    @Override
     protected boolean canGeneratePermission() { return true; }
 
     @Nonnull

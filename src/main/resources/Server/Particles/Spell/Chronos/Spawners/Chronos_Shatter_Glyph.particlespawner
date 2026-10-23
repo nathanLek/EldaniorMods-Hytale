@@ -1,0 +1,86 @@
+{
+  "RenderMode": "BlendAdd",
+  "ParticleRotationInfluence": "Billboard",
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "ParticleRotateWithSpawner": false,
+  "MaxConcurrentParticles": 1,
+  "ParticleLifeSpan": {
+    "Min": 0.7,
+    "Max": 0.7
+  },
+  "SpawnRate": {
+    "Min": 1,
+    "Max": 1
+  },
+  "EmitOffset": {
+    "X": {
+      "Min": 0,
+      "Max": 0
+    },
+    "Y": {
+      "Min": 1.0,
+      "Max": 1.0
+    },
+    "Z": {
+      "Min": 0,
+      "Max": 0
+    }
+  },
+  "InitialVelocity": {
+    "Speed": {
+      "Min": 0,
+      "Max": 0
+    },
+    "Yaw": {
+      "Min": -180,
+      "Max": 180
+    },
+    "Pitch": {
+      "Min": -90,
+      "Max": 90
+    }
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Eldanior/Chronos_Glyph.png",
+    "ScaleRatioConstraint": "OneToOne",
+    "UVOption": "None",
+    "SoftParticles": "Disable",
+    "InitialAnimationFrame": {
+      "Opacity": 1,
+      "Color": "#7dffb5",
+      "Scale": {
+        "X": {
+          "Min": 1.0,
+          "Max": 1.0
+        },
+        "Y": {
+          "Min": 1.0,
+          "Max": 1.0
+        }
+      }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 1
+      },
+      "40": {
+        "Opacity": 0.9
+      },
+      "100": {
+        "Opacity": 0,
+        "Scale": {
+          "X": {
+            "Min": 4.0,
+            "Max": 4.0
+          },
+          "Y": {
+            "Min": 4.0,
+            "Max": 4.0
+          }
+        }
+      }
+    }
+  },
+  "SpawnBurst": true
+}

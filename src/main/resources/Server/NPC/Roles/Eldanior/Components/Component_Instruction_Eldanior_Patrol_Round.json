@@ -1,0 +1,51 @@
+{
+  "Type": "Component",
+  "Class": "Instruction",
+  "Interface": "Hytale.Instruction.Idle",
+  "Parameters": {
+    "WanderRadius": {
+      "Value": 25,
+      "Description": "Non utilise : exige par l'interface du gabarit."
+    }
+  },
+  "Content": {
+    "Weight": 100,
+    "Instructions": [
+      {
+        "$Comment": "Torche en main pendant la ronde (la lance revient en combat).",
+        "Continue": true,
+        "Sensor": {
+          "Type": "Any",
+          "Once": true
+        },
+        "Actions": [
+          {
+            "Type": "Inventory",
+            "Operation": "EquipHotbar",
+            "UseTarget": false,
+            "Slot": 1
+          }
+        ]
+      },
+      {
+        "$Comment": "Ronde : rejoint le point de laisse, que GuardManager deplace de point en point sur un cercle de 25 blocs ; la recherche de chemin contourne murs et angles.",
+        "Sensor": {
+          "Type": "Leash",
+          "Range": 1.5
+        },
+        "BodyMotion": {
+          "Type": "Seek",
+          "SlowDownDistance": 1.5,
+          "StopDistance": 0.8,
+          "RelativeSpeed": 0.3,
+          "UsePathfinder": true
+        }
+      },
+      {
+        "BodyMotion": {
+          "Type": "Nothing"
+        }
+      }
+    ]
+  }
+}

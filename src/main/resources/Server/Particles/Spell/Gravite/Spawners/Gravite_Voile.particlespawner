@@ -1,0 +1,102 @@
+{
+  "$Comment": "Voile de fumee sombre qui tombe sur le bord du cylindre de gravite.",
+  "RenderMode": "BlendLinear",
+  "EmitOffset": {
+    "X": {
+      "Min": -0.6,
+      "Max": 0.6
+    },
+    "Y": {
+      "Min": 2,
+      "Max": 50
+    },
+    "Z": {
+      "Min": -0.6,
+      "Max": 0.6
+    }
+  },
+  "ParticleRotationInfluence": "Velocity",
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "ParticleRotateWithSpawner": false,
+  "MaxConcurrentParticles": 120,
+  "SpawnRate": {
+    "Min": 8,
+    "Max": 8
+  },
+  "ParticleLifeSpan": {
+    "Min": 0.8,
+    "Max": 1.2
+  },
+  "InitialVelocity": {
+    "Yaw": {
+      "Min": -180,
+      "Max": 180
+    },
+    "Pitch": {
+      "Min": -10,
+      "Max": 10
+    },
+    "Speed": {
+      "Min": 0.5,
+      "Max": 1.0
+    }
+  },
+  "Attractors": [
+    {
+      "Position": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Radius": 0,
+      "LinearAcceleration": {
+        "X": 0,
+        "Y": -75,
+        "Z": 0
+      }
+    }
+  ],
+  "Particle": {
+    "Texture": "Particles/Textures/Smoke/Smoke_Dense.png",
+    "ScaleRatioConstraint": "None",
+    "UVOption": "None",
+    "SoftParticles": "Disable",
+    "InitialAnimationFrame": {
+      "Opacity": 0,
+      "Color": "#160a22",
+      "Scale": {
+        "X": {
+          "Min": 2.5,
+          "Max": 3.5
+        },
+        "Y": {
+          "Min": 5.0,
+          "Max": 8.0
+        }
+      }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0,
+        "Color": "#160a22"
+      },
+      "12": {
+        "Opacity": 0.55,
+        "Color": "#160a22"
+      },
+      "75": {
+        "Opacity": 0.49500000000000005,
+        "Color": "#22113a"
+      },
+      "100": {
+        "Opacity": 0,
+        "Color": "#2f1a4d"
+      }
+    },
+    "FrameSize": {
+      "Width": 64,
+      "Height": 64
+    }
+  }
+}

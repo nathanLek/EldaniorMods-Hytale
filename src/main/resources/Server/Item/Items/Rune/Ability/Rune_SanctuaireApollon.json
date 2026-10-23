@@ -1,0 +1,45 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune du Sanctuaire d'Apollon",
+    "Description": "Sort divin de lumière (Mage, Guerrier, Dragon). Le dieu de la lumière, de la guérison, de l'arc et de la musique élève son temple sur la zone visée (12 blocs, 20 s) : un tholos de marbre et d'or à 16 colonnes, braseros et guirlandes de laurier, sa statue dorée sur l'autel, traversé par une colonne de lumière. Chaque seconde, vous et vos alliés à l'intérieur récupérez 4 % de vie (+10 % par allié présent, chœur des Muses), 5 % de mana et 10 % d'endurance, êtes purifiés de tout contrôle, subissez 20 % de dégâts en moins et en infligez 15 % de plus, couronnés de laurier. Un allié qui devrait mourir dans le sanctuaire est sauvé une fois (grâce d'Apollon). Les ennemis sont repoussés hors du temple par le feu sacré (80 dégâts par seconde) et le soleil leur tire des flèches solaires (150 dégâts, aveuglement). À la fin, l'apothéose : grand soin et mana plein pour les alliés, onde de lumière de 1000 dégâts sur les ennemis. Coût : 2000 mana. Recharge : 5 s (valeur de test)."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_SanctuaireApollon.png",
+  "Quality": "Divin",
+  "ItemLevel": 100,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_System.Competences_Actives"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_SanctuaireApollon.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 5,
+    "Cost": 2000,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Heal",
+      "Elemental",
+      "Aoe",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_SanctuaireApollon"
+  }
+}

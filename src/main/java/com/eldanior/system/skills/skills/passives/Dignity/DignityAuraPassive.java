@@ -46,27 +46,20 @@ public class DignityAuraPassive implements IPassiveCombatSkill {
         return 0f;
     }
 
+    // NEUTRALISE : l'aura de dignite n'est plus un passif permanent.
+    // Son fonctionnement (degats +%, reduction -%, ralentissement) est desormais porte
+    // par la Rune d'Aura (toggle 5 mana/s) — voir RuneAuraSystem + CombatStatsSystem.
+    // On garde la classe pour ne pas casser l'enum PassiveSkill / les sauvegardes existantes.
+
     @Override
     public boolean onAttack(Damage damage, PlayerLevelData attackerData,
                          Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
-        if (damage.isCancelled()) return false;
-        int dignity = attackerData.getDignity();
-        if (dignity < 5) return false;
-
-        float bonus = getDamageBonus(dignity);
-        damage.setAmount(damage.getAmount() * (1.0f + bonus));
         return false;
     }
 
     @Override
     public boolean onDefend(Damage damage, PlayerLevelData defenderData,
                          Store<EntityStore> store, Ref<EntityStore> attackerRef, Ref<EntityStore> defenderRef) {
-        if (damage.isCancelled()) return false;
-        int dignity = defenderData.getDignity();
-        if (dignity < 5) return false;
-
-        float reduction = getDamageReduction(dignity);
-        damage.setAmount(damage.getAmount() * (1.0f - reduction));
         return false;
     }
 }

@@ -1,0 +1,23 @@
+{
+  "$Comment": "Trone du Neant : le trone de ferraille du jeu (Deco_Chair_Scrap, modele copie ici : un modele d'entite doit etre sous Items/), noirci aux reflets violets, a sa taille d'origine, flottant ; seule lumiere du royaume. HitBox large en X : le serveur masque (LOD) les entites a hitbox trop petite.",
+  "Model": "Items/Projectiles/Nyx/Throne.blockymodel",
+  "Texture": "Items/Projectiles/Nyx/Throne_Dark.png",
+  "MinScale": 2.0,
+  "MaxScale": 2.0,
+  "HitBox": {
+    "Max": {
+      "X": 2.0,
+      "Y": 0.01,
+      "Z": 0.01
+    },
+    "Min": {
+      "X": -2.0,
+      "Y": -0.01,
+      "Z": -0.01
+    }
+  },
+  "Light": {
+    "Color": "#9a4cff",
+    "Radius": 30
+  }
+}

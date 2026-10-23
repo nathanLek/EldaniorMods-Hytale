@@ -1,0 +1,39 @@
+{
+  "$Comment": "Bahamut, roi des dragons (Avenement de Bahamut) : dragon de feu vanilla en or spectral, geant, anime en vol ; deplace par le code (passages en pique, atterrissage). HitBox large en X : le serveur masque (LOD) les entites a hitbox trop petite.",
+  "Model": "NPC/Elemental/Dragon_Fire/Models/Model.blockymodel",
+  "Texture": "Items/Projectiles/Bahamut/Dragon_Gold.png",
+  "MinScale": 4.0,
+  "MaxScale": 4.0,
+  "HitBox": {
+    "Max": {
+      "X": 2.0,
+      "Y": 0.01,
+      "Z": 0.01
+    },
+    "Min": {
+      "X": -2.0,
+      "Y": -0.01,
+      "Z": -0.01
+    }
+  },
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "NPC/Elemental/Dragon_Fire/Animations/Fly.blockyanim"
+        }
+      ]
+    }
+  },
+  "Particles": [
+    {
+      "SystemId": "Gilgamesh_Sword_Glow",
+      "TargetNodeName": "",
+      "Scale": 4.0
+    }
+  ],
+  "Light": {
+    "Color": "#ffd27a",
+    "Radius": 30
+  }
+}

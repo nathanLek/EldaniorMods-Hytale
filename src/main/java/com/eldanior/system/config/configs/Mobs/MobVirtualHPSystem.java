@@ -29,7 +29,7 @@ public class MobVirtualHPSystem extends EntityTickingSystem<EntityStore> {
         if (!mobRef.isValid()) return;
 
         NPCEntity npc = store.getComponent(mobRef, Objects.requireNonNull(NPCEntity.getComponentType()));
-        if (npc == null) return;
+        if (npc == null || com.eldanior.system.skills.runes.spells.RuneSpellRuntime.isSummonRole(npc.getNPCTypeId())) return;   // copies des sorts : PV et apparence geres par le sort
 
         ComponentType<EntityStore, MobLevelData> mobLevelType = EldaniorSystem.get().getMobLevelDataType();
         MobLevelData existingData = store.getComponent(mobRef, mobLevelType);

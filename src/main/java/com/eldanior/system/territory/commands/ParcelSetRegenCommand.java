@@ -32,7 +32,6 @@ public class ParcelSetRegenCommand extends AbstractAsyncCommand {
         this.delayArg = this.withRequiredArg("secondes", "Delai en secondes", ArgTypes.STRING);
     }
 
-    @Override
     protected boolean canGeneratePermission() { return false; }
 
     @Nonnull

@@ -1,0 +1,45 @@
+{
+  "$Comment": "Fleche solaire d'Apollon : fleche vanilla en or lumineux, montee comme une fleche (pointe en avant). HitBox large en X : le serveur masque (LOD) les entites a hitbox trop petite.",
+  "Model": "Items/Projectiles/Projectile.blockymodel",
+  "Texture": "Items/Projectiles/Projectile_default.png",
+  "DefaultAttachments": [
+    {
+      "Model": "Items/Weapons/Arrow/Arrow.blockymodel",
+      "Texture": "Items/Projectiles/Apollo/Light_Arrow.png"
+    }
+  ],
+  "AnimationSets": {
+    "FlyIdle": {
+      "Animations": [
+        {
+          "Animation": "Items/Animations/Fly/Fly_Vertical.blockyanim"
+        }
+      ]
+    }
+  },
+  "MinScale": 2.0,
+  "MaxScale": 2.0,
+  "HitBox": {
+    "Max": {
+      "X": 0.3,
+      "Y": 0.01,
+      "Z": 0.01
+    },
+    "Min": {
+      "X": -0.3,
+      "Y": -0.01,
+      "Z": -0.01
+    }
+  },
+  "Particles": [
+    {
+      "SystemId": "Gilgamesh_Sword_Glow",
+      "TargetNodeName": "",
+      "Scale": 1.0
+    }
+  ],
+  "Light": {
+    "Color": "#fff0a0",
+    "Radius": 5
+  }
+}

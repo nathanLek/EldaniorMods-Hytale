@@ -1,0 +1,20 @@
+{
+  "$Comment": "Visuel du palier : Aura Royale (Marquis) - violet. Memes particules que la rune Enrage (Buff_Enrage) recolorees : Buff_Aura_T5. Applique en infini par RuneAuraSystem selon la dignite. Echelle : x2.4.",
+  "ApplicationEffects": {
+    "Particles": [
+      {
+        "SystemId": "Buff_Aura_T5",
+        "TargetNodeName": "Chest",
+        "PositionOffset": {
+          "X": 0,
+          "Y": -1,
+          "Z": 0
+        },
+        "Scale": 2.4
+      }
+    ]
+  },
+  "Duration": 8.0,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": false
+}

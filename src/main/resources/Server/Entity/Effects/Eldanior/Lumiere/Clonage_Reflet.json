@@ -1,0 +1,17 @@
+{
+  "$Comment": "Clone de lumiere (sort Clonage) : voile dore lumineux, etincelles. Pose une seule fois (pas de clignotement), retire a la fin du sort.",
+  "Duration": 60.0,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": false,
+  "ApplicationEffects": {
+    "EntityTopTint": "#fff6d6",
+    "EntityBottomTint": "#d9a441",
+    "ModelVFXId": "Clonage_Lumiere",
+    "Particles": [
+      {
+        "SystemId": "Clonage_Aura",
+        "TargetEntityPart": "Entity"
+      }
+    ]
+  }
+}

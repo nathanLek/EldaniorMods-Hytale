@@ -1,0 +1,46 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de l'Avènement de Bahamut",
+    "Description": "Sort divin ultime de la classe Dragon. Votre rugissement fait trembler la terre : les ennemis proches sont terrifiés (ralentis et incapables d'attaquer pendant 3 s). Des ailes de dragon vous poussent et Bahamut, le roi des dragons, surgit derrière vous sous forme spectrale dorée. Il fait trois passages en piqué au-dessus de la zone visée en crachant le feu (600 dégâts et brûlure), laissant des traînées de flammes au sol, puis se pose au centre et déclenche le Mégaflare : une explosion colossale (2500 dégâts sur 16 blocs) qui projette tout. Épargne votre groupe, votre guilde et votre famille. Coût : 2000 mana. Recharge : 5 s (valeur de test)."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_AvenementBahamut.png",
+  "Quality": "Divin",
+  "ItemLevel": 100,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_System.Competences_Actives"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_AvenementBahamut.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 5,
+    "Cost": 2000,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Damage",
+      "Elemental",
+      "Fire",
+      "Aoe",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_AvenementBahamut"
+  }
+}

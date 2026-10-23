@@ -65,13 +65,13 @@ public class TreasureContainerMonitoringSystem extends EntityTickingSystem<Entit
 
                     if (itemContainer != null) {
                         for (short i = 0; i < itemContainer.getCapacity(); i++) {
+                            // Slot vide -> null (et non ItemStack.EMPTY, refuse a la relecture) pour garder les positions
                             ItemStack stack = itemContainer.getItemStack(i);
-                            if (stack != null) {
-                                itemsRemaining.add(stack);
-                            }
+                            itemsRemaining.add(ItemStack.isEmpty(stack) ? null : stack);
                         }
 
                         // MISE À JOUR DE LA PERSISTANCE (Si vide, on enregistre une liste vide)
+                        if (itemsRemaining.stream().allMatch(java.util.Objects::isNull)) itemsRemaining.clear();
                         playerChestData.setInventory(monitor.getX(), monitor.getY(), monitor.getZ(), world.getName(), itemsRemaining);
                         commandBuffer.replaceComponent(playerRef, EldaniorSystem.get().getPlayerChestDataType(), playerChestData);
 

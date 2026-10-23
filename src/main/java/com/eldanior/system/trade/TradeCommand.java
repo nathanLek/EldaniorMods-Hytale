@@ -27,7 +27,6 @@ public class TradeCommand extends AbstractAsyncCommand {
         this.actionArg = this.withRequiredArg("action", "accept|decline|cancel", ArgTypes.STRING);
     }
 
-    @Override
     protected boolean canGeneratePermission() { return false; }
 
     @Nonnull

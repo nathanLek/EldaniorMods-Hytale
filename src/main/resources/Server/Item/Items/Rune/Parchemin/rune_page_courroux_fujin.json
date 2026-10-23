@@ -1,0 +1,37 @@
+{
+  "Id": "rune_page_courroux_fujin",
+  "TranslationProperties": {
+    "Name": "Parchemin de Rune : Courroux de Fūjin",
+    "Description": "Un parchemin qui ne tient pas en place, comme poussé par le vent. Enseigne le sort divin de vent : le courroux de Fūjin et ses tornades. Classes : Archer, Assassin, Dragon. Utilisez-le pour ajouter la rune à votre sac de runes."
+  },
+  "Icon": "Icons/ItemsGenerated/Recipe_Page.png",
+  "Quality": "Divin",
+  "Categories": [
+    "Eldanior_System.Competences_Actives"
+  ],
+  "Tags": {
+    "Type": [
+      "Item",
+      "Consumable"
+    ]
+  },
+  "MaxStack": 1,
+  "PlayerAnimationsId": "Item",
+  "Model": "Items/Consumables/Recipes/Recipe.blockymodel",
+  "Texture": "Items/Consumables/Recipes/Recipe_Texture.png",
+  "IconProperties": {
+    "Scale": 0.76,
+    "Rotation": [
+      135,
+      135,
+      0
+    ],
+    "Translation": [
+      -1,
+      5
+    ]
+  },
+  "Interactions": {
+    "Use": "Root_ConsumableItemSkillInteraction"
+  }
+}

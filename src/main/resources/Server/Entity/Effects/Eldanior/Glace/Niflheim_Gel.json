@@ -1,0 +1,32 @@
+{
+  "$Comment": "Gel du Porte de Niflheim : entite figee dans la glace 20 s (visuels du Freeze vanilla), ni deplacement ni attaque.",
+  "Duration": 20,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": true,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#80ecff",
+    "EntityTopTint": "#dff6ff",
+    "ModelVFXId": "Freeze",
+    "ScreenEffect": "ScreenEffects/Snow.png",
+    "Particles": [
+      {
+        "SystemId": "Effect_Snow"
+      },
+      {
+        "SystemId": "Effect_Snow_Impact"
+      }
+    ],
+    "MovementEffects": {
+      "DisableAll": true
+    },
+    "AbilityEffects": {
+      "Disabled": [
+        "Primary",
+        "Secondary",
+        "Ability1",
+        "Ability3"
+      ]
+    },
+    "KnockbackMultiplier": 0
+  }
+}

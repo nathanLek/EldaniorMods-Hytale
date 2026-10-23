@@ -1,0 +1,140 @@
+$C = "../Common.ui";
+
+// Fenetre de recrutement d'un aventurier : copie de la carte d'invocation des portails (client :
+// Data/Shared/UI/Portals/PortalSummonPanel.xaml + PortalTokens.xaml). Banniere verticale de 439 de large au centre de
+// l'ecran : arche du haut avec l'embleme en losange, titre, ligne a puce, note ; corps sombre borde de bleu-gris
+// avec separateur et texte ; contour dore (arches recolorees par gen_recruit_ui.py, bords et separateur en or) ; emplacement du cout (detenu / requis), note de cout et bouton dans l'arche du bas.
+// Images : scripts/npcs/gen_recruit_ui.py (arches copiees du client, embleme dessine).
+Group {
+  LayoutMode: Middle;
+  Background: #05080d(0.55);
+
+  Group #RecruitCard {
+    Anchor: (Width: 439);
+    LayoutMode: Top;
+
+    // ===== Arche du haut : embleme, titre, duree, note =====
+    Group {
+      Anchor: (Height: 252);
+      LayoutMode: Top;
+      Background: (TexturePath: "RecruitFrameTop.png");
+
+      Group {
+        Anchor: (Height: 0);
+        Background: (TexturePath: "RecruitEmblem.png", Anchor: (Width: 96, Height: 96, Top: -34));
+      }
+
+      Group { Anchor: (Height: 124); }
+
+      Label #RecruitName {
+        Style: (FontSize: 30, RenderBold: true, RenderUppercase: true, TextColor: #d1dae6, HorizontalAlignment: Center);
+      }
+
+      Label #RecruitLevel {
+        Anchor: (Top: 10);
+        Style: (FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center);
+      }
+
+      Label #RecruitFootnote {
+        Anchor: (Top: 6);
+        Style: (FontSize: 13, RenderBold: true, TextColor: #878e9c, HorizontalAlignment: Center);
+      }
+    }
+
+    // ===== Corps : bords bleu-gris, separateur, texte, emplacement du cout =====
+    Group {
+      Anchor: (Height: 330);
+      LayoutMode: Left;
+
+      Group { Anchor: (Width: 3); Background: #16212f; }
+      Group { Anchor: (Width: 7); Background: #e8b34f; }
+      Group { Anchor: (Width: 2); Background: #16212f; }
+
+      Group {
+        FlexWeight: 1;
+        LayoutMode: Top;
+        Background: #0b141d(0.9);
+        Padding: (Horizontal: 26, Top: 6);
+
+        Group {
+          Anchor: (Height: 2);
+          Background: #c99436;
+        }
+
+        Label #RecruitQuote {
+          Anchor: (Top: 18);
+          Style: (FontSize: 15, RenderBold: true, TextColor: #c9b37a, Wrap: true, HorizontalAlignment: Center);
+        }
+
+        Label #RecruitInfo {
+          Anchor: (Top: 12);
+          FlexWeight: 1;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #96a9be, Wrap: true, HorizontalAlignment: Center);
+        }
+
+        // Emplacement du cout (comme l'emplacement de la cle)
+        Group {
+          Anchor: (Height: 76);
+          LayoutMode: Center;
+
+          Group {
+            Anchor: (Width: 72, Height: 72);
+            Background: #8a6420;
+            Padding: (Full: 2);
+
+            Group #RecruitSlot {
+              Background: #1d2837;
+              LayoutMode: Middle;
+
+              Label #RecruitSlotValue {
+                Style: (FontSize: 16, RenderBold: true, TextColor: #E8A93B, HorizontalAlignment: Center);
+              }
+
+              Label {
+                Text: "OR";
+                Style: (FontSize: 11, RenderBold: true, TextColor: #878e9c, HorizontalAlignment: Center);
+              }
+            }
+          }
+        }
+
+        Label #RecruitCount {
+          Anchor: (Top: 6);
+          Style: (FontSize: 16, RenderBold: true, TextColor: #cc3361, HorizontalAlignment: Center);
+        }
+      }
+
+      Group { Anchor: (Width: 2); Background: #16212f; }
+      Group { Anchor: (Width: 7); Background: #e8b34f; }
+      Group { Anchor: (Width: 3); Background: #16212f; }
+    }
+
+    // ===== Arche du bas : note de cout, bouton =====
+    Group {
+      Anchor: (Height: 201);
+      LayoutMode: Top;
+      Background: (TexturePath: "RecruitFrameBottom.png");
+
+      Label #RecruitCost {
+        Anchor: (Top: 8);
+        Style: (FontSize: 13, RenderBold: true, TextColor: #878e9c, HorizontalAlignment: Center);
+      }
+
+      Group {
+        Anchor: (Top: 10, Height: 44);
+        LayoutMode: Center;
+
+        $C.@TextButton #RecruitBtnOk {
+          @Text = "Recruter";
+          @Anchor = Anchor(MinWidth: 246);
+        }
+      }
+
+      Label {
+        Anchor: (Top: 10);
+        Text: "Echap : partir";
+        Style: (FontSize: 12, TextColor: #5a6a7a, HorizontalAlignment: Center);
+      }
+    }
+  }
+}

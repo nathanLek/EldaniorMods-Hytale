@@ -1,0 +1,33 @@
+{
+  "$Comment": "Tourbillon de feu en spirale juste sous le cercle runique du Courroux de Muspelheim (quad horizontal tournant). HitBox large en X (LOD serveur).",
+  "Model": "Items/Projectiles/Celestial/Sky_Circle.blockymodel",
+  "Texture": "Items/Projectiles/Muspelheim/Fire_Vortex.png",
+  "MinScale": 47,
+  "MaxScale": 47,
+  "HitBox": {
+    "Max": {
+      "X": 1.5,
+      "Y": 0.01,
+      "Z": 0.01
+    },
+    "Min": {
+      "X": -1.5,
+      "Y": -0.01,
+      "Z": -0.01
+    }
+  },
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Celestial/Sky_Circle_Spin.blockyanim",
+          "BlendingDuration": 0
+        }
+      ]
+    }
+  },
+  "Light": {
+    "Color": "#ff7a20",
+    "Radius": 60
+  }
+}

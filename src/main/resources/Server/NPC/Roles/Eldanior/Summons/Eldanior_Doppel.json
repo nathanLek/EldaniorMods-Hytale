@@ -1,0 +1,87 @@
+{
+  "Type": "Generic",
+  "Parameters": {
+    "MaxHealth": {
+      "Value": 100,
+      "Description": "Le double est intouchable (degats annules par le sort Doppelganger)"
+    }
+  },
+  "Appearance": "Player",
+  "DefaultPlayerAttitude": "Ignore",
+  "DefaultNPCAttitude": "Ignore",
+  "HotbarItems": [],
+  "HotbarSize": 3,
+  "OffHandItems": [],
+  "OffHandSlots": 1,
+  "DefaultOffHandSlot": 0,
+  "KnockbackScale": 0,
+  "BreathesInWater": true,
+  "MotionControllerList": [
+    {
+      "Type": "Walk",
+      "MaxWalkSpeed": 9,
+      "RunThreshold": 0.45,
+      "Gravity": 10,
+      "MaxFallSpeed": 20,
+      "MaxRotationSpeed": 720,
+      "Acceleration": 20
+    }
+  ],
+  "MaxHealth": {
+    "Compute": "MaxHealth"
+  },
+  "Instructions": [
+    {
+      "Continue": true,
+      "Instructions": [
+        {
+          "Continue": true,
+          "Sensor": {
+            "Type": "Any",
+            "Once": true
+          },
+          "Actions": [
+            {
+              "Type": "TimerStart",
+              "Name": "Life",
+              "StartValueRange": [
+                45,
+                45
+              ],
+              "RestartValueRange": [
+                45,
+                45
+              ]
+            }
+          ]
+        },
+        {
+          "Sensor": {
+            "Type": "Timer",
+            "Name": "Life",
+            "State": "Stopped"
+          },
+          "Actions": [
+            {
+              "Type": "Despawn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$Comment": "Le double se deplace lui-meme (animations de marche et de course du moteur) vers son point de laisse, que le sort place au point miroir ; son regard est impose par DoppelPoseSystem.",
+      "Sensor": {
+        "Type": "Leash",
+        "Range": 0.4
+      },
+      "BodyMotion": {
+        "Type": "Seek",
+        "SlowDownDistance": 1.5,
+        "StopDistance": 0.2,
+        "RelativeSpeed": 1.0
+      }
+    }
+  ],
+  "NameTranslationKey": "server.npcRoles.Eldanior_Doppel.name"
+}

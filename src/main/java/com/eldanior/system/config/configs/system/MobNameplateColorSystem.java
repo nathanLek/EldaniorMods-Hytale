@@ -49,14 +49,16 @@ public class MobNameplateColorSystem extends EntityTickingSystem<EntityStore> {
         if (!mobRef.isValid()) return;
 
         NPCEntity npc = store.getComponent(mobRef, Objects.requireNonNull(NPCEntity.getComponentType()));
-        if (npc == null) return;
+        if (npc == null || com.eldanior.system.skills.runes.spells.RuneSpellRuntime.isSummonRole(npc.getNPCTypeId()) || com.eldanior.system.guards.GuardType.fromRole(npc.getNPCTypeId()) != null) return;   // copies et PNJ de poste : nom gere par leur systeme   // copies des sorts : gardent le nom du lanceur
 
         String mobTypeId = npc.getNPCTypeId();
 
         String specialTitle = getSpecialNPCTitle(mobTypeId);
 
         if (specialTitle != null) {
-            Nameplate nameplate = new Nameplate(specialTitle);
+            // PNJ nommes avec un niveau (gardes) : "Nom Lv.X" ; sans niveau (marchands) : le nom seul
+            MobLevelData leveled = store.getComponent(mobRef, EldaniorSystem.get().getMobLevelDataType());
+            Nameplate nameplate = new Nameplate(leveled != null && leveled.isStatsApplied() ? specialTitle + " Lv." + leveled.getLevel() : specialTitle);
             commandBuffer.putComponent(mobRef, Nameplate.getComponentType(), nameplate);
             return;
         }

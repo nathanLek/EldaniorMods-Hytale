@@ -1,0 +1,20 @@
+{
+  "$Comment": "Cercle sacre dore au sol du Sanctuaire d'Apollon (20 s).",
+  "Spawners": [
+    {
+      "SpawnerId": "Apollo_Zone_Fill",
+      "PositionOffset": {
+        "Y": 0.02
+      }
+    },
+    {
+      "SpawnerId": "Apollo_Zone_Ring",
+      "PositionOffset": {
+        "Y": 0.04
+      }
+    }
+  ],
+  "LifeSpan": 0.1,
+  "IsImportant": true,
+  "CullDistance": 160
+}

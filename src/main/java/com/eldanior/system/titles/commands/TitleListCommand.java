@@ -24,7 +24,6 @@ public class TitleListCommand extends AbstractAsyncCommand {
         super("titlelist", "Liste vos titres debloques");
     }
 
-    @Override
     protected boolean canGeneratePermission() { return false; }
 
     @Nonnull

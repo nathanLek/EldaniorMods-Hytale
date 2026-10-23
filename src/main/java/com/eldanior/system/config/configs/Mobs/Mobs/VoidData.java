@@ -17,7 +17,13 @@ public enum VoidData implements IMobConfig {
     SPECTRE_VOID("spectre void", 590, 580, 610),
 
     // --- Boss invocateur (Lv600-630) ---
-    SPAWN_VOID("spawn void", 700, 600, 630);
+    SPAWN_VOID("spawn void", 700, 600, 630),
+
+    // === Nouveautes 0.7.2 (Void) ===
+    VOID_SPECTRE("void spectre", 590, 580, 610),
+    BEAR_VOIDTAKEN("bear voidtaken", 650, 600, 630),
+    VOIDTAKEN_GOBLIN("voidtaken goblin", 500, 560, 600),
+    VOID_ANOMALY_CRYSTAL("void anomaly crystal", 400, 530, 560);
 
     private final String keyword;
     private final int xp;

@@ -1,0 +1,73 @@
+{
+  "keywords": [
+    "Duration",
+    "Damage"
+  ],
+  "loot": null,
+  "persistent": true,
+  "classes": "dragon, warrior, assassin, archer",
+  "overrides": {
+    "mana": null,
+    "cooldown": 5,
+    "reason": "Valeur de test (5 s) comme pour les autres sorts en cours de test - remettre 120 s (Epic) avant release."
+  },
+  "$Comment": "Fiche de conception. Demande utilisateur 2026-10-21 : un seul clone miroir du lanceur (s'il va a gauche, le doppel va a droite), Epic.",
+  "id": "Rune_Doppelganger",
+  "spell": "Doppelganger",
+  "javaClass": "Doppelganger",
+  "page": "rune_page_doppelganger",
+  "name": "Rune du Doppelgänger",
+  "type": "Tenebres",
+  "rarity": "Epic",
+  "emblem": "Miroir",
+  "summary": "Double exact du lanceur à sa droite, même regard, gauche/droite inversées ; même arme, rejoue attaques et capacités, intouchable, 30 s.",
+  "description": "Sort épique de ténèbres (Dragon, Guerrier, Assassin, Archer). Votre double, copie exacte de vous-même, surgit à votre droite pendant 30 s. Il regarde toujours dans la même direction que vous et bouge comme votre reflet : quand vous allez à gauche, il va à droite ; quand vous avancez ou reculez, il fait de même. Il marche, court et saute comme vous, tient la même arme et reproduit chacune de vos attaques et capacités d'arme. Rien ne peut le blesser.",
+  "pageDescription": "Un parchemin dont l'écriture est inversée, lisible seulement dans un miroir. Enseigne le Doppelgänger : un double d'ombre armé comme vous, qui reproduit vos gestes, vos attaques et vos capacités en miroir. Classes : Dragon, Guerrier, Assassin, Archer. Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.5,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": "SFX_Portal_Void",
+    "releaseSound": null,
+    "handParticles": "Doppel_Fumee",
+    "handParticlesScale": 0.8,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.5,
+    "animationTimeS": 0.9,
+    "range": 6,
+    "radius": "miroir vertical parallele au regard, a 1.5 bloc a droite du lanceur (le double nait a 3 blocs a sa droite)",
+    "targets": "ennemis a la place du reflet des cibles du lanceur",
+    "triggers": "clic de la rune -> 30 s ; aucun clic : le double suit seul les mouvements et rejoue les interactions du lanceur",
+    "characterAnimation": "double = PNJ role Eldanior_Doppel (sans IA) : modele + skin + objet en main du lanceur, etat de mouvement copie, orientation reflechie ; chaque nouvelle chaine d'interaction du lanceur (Primary, Secondary, Ability1-4) est rejouee sur le double (tryStartChain, meme RootInteraction)",
+    "castFx": "fumee noire dans les mains",
+    "executionFx": "silhouette noire (effet Doppel_Ombre : teinte quasi noire, voile Intangible_Dark, volutes de fumee)",
+    "impactFx": "impact d'epee + volute d'ombre a chaque coup copie",
+    "sounds": "SFX_Portal_Void au lancement",
+    "effects": "les attaques rejouees touchent ce qui est devant le double (degats de l'arme) ; repli si le rejeu est impossible : 60 % des degats au reflet de la cible",
+    "terrain": "aucun",
+    "persistentDurationS": 30,
+    "interruptions": "fin des 30 s : le double se dissout en fumee",
+    "restrictions": "ennemis uniquement",
+    "balance": {
+      "damage": 2,
+      "range": 1,
+      "duration": 2,
+      "mobility": 0,
+      "control": 0,
+      "defense": 0,
+      "targets": 1,
+      "frequency": 0,
+      "terrain": 0,
+      "difficulty": 2
+    },
+    "synergies": "placer l'ennemi et son reflet de part et d'autre du miroir : deux cibles frappees a chaque coup",
+    "edgeCases": "runes, grimoires et consommables non rejoues (pas de sort lance par le double) ; changement d'arme du lanceur -> le double change aussi ; relief different des deux cotes -> le double suit le sol ; double intouchable ; minuterie de securite de 45 s dans le role",
+    "limitations": "Le rejeu d'une attaque chargee (maintien du clic) n'a pas d'entree de relachement sur le PNJ : a valider en jeu."
+  }
+}

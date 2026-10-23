@@ -1,0 +1,19 @@
+{
+  "$Comment": "Couronne du souverain du Trone du Neant : couronne noire aux gemmes violettes au-dessus de la tete, petite flamme violette en son centre. Posee une fois pour la duree du sort, retiree a la fin.",
+  "Duration": 65.0,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": false,
+  "ModelOverride": {
+    "Model": "Items/Projectiles/Nyx/Crown.blockymodel",
+    "Texture": "Items/Projectiles/Nyx/Crown.png"
+  },
+  "ApplicationEffects": {
+    "Particles": [
+      {
+        "SystemId": "Nyx_Crown_Flame",
+        "TargetEntityPart": "Entity",
+        "TargetNodeName": "Head"
+      }
+    ]
+  }
+}

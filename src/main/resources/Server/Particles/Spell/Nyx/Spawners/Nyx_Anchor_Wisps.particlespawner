@@ -1,0 +1,76 @@
+{
+  "$Comment": "Chaines de l'enfer : volutes d'ombre qui montent de l'ancrage.",
+  "RenderMode": "BlendLinear",
+  "ParticleRotationInfluence": "Billboard",
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "ParticleRotateWithSpawner": false,
+  "MaxConcurrentParticles": 10,
+  "SpawnRate": {
+    "Min": 6,
+    "Max": 8
+  },
+  "SpawnBurst": false,
+  "ParticleLifeSpan": {
+    "Min": 0.8,
+    "Max": 1.2
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Smoke/Smoke_Dense.png",
+    "ScaleRatioConstraint": "OneToOne",
+    "UVOption": "None",
+    "SoftParticles": "Disable",
+    "InitialAnimationFrame": {
+      "Opacity": 0,
+      "Color": "#0b0414",
+      "Scale": {
+        "X": {
+          "Min": 0.4,
+          "Max": 0.7
+        }
+      }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0,
+        "Color": "#0b0414"
+      },
+      "20": {
+        "Opacity": 0.5,
+        "Color": "#140826"
+      },
+      "100": {
+        "Opacity": 0,
+        "Color": "#000000"
+      }
+    }
+  },
+  "EmitOffset": {
+    "X": {
+      "Min": -0.3,
+      "Max": 0.3
+    },
+    "Y": {
+      "Min": 0,
+      "Max": 0.2
+    },
+    "Z": {
+      "Min": -0.3,
+      "Max": 0.3
+    }
+  },
+  "InitialVelocity": {
+    "Speed": {
+      "Min": 0.4,
+      "Max": 0.9
+    },
+    "Yaw": {
+      "Min": -180,
+      "Max": 180
+    },
+    "Pitch": {
+      "Min": 70,
+      "Max": 90
+    }
+  }
+}

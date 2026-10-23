@@ -114,57 +114,43 @@ tasks.register<Exec>("runServer") {
     val gameRootDir = serverJar.parentFile.parentFile
     val assetsZip = gameRootDir.resolve("Assets.zip")
 
-    // STRATÉGIE : On met les assets dans 'mods/Hytale'
-    // Ainsi, le nom du dossier est "Hytale" (ce qui plait au manifest)
-    // Et le serveur le scanne automatiquement.
-    val destAssets = modsDir.resolve("Hytale")
+    // STRATÉGIE (0.7.x) : on pointe '--assets' directement sur le Assets.zip du jeu.
+    // Le serveur accepte un zip comme pack de base (DIR_OR_ZIP) et le charge en
+    // lecture seule — c'est lui qui fournit les cosmétiques, modèles, particules, etc.
+    // Plus besoin d'extraire 3,9 Go dans mods/Hytale (ce qui cassait la validation
+    // des cosmétiques et chargeait les assets de test cassés en 0.7.x).
 
     doFirst {
         println(">>> PRÉPARATION DU LANCEMENT <<<")
 
         if (!modsDir.exists()) modsDir.mkdirs()
 
-        // A. Copie du Mod (Votre code)
+        // A. Copie du Mod dans mods/
         val pluginJar = tasks.jar.get().archiveFile.get().asFile
         if (pluginJar.exists()) {
             copy { from(pluginJar); into(modsDir) }
         }
 
-        // B. Nettoyage des anciennes tentatives qui font planter le serveur
-        val badFolder = runDir.resolve("HytaleAssets")
-        if (badFolder.exists()) {
-            println("🧹 Suppression du dossier 'HytaleAssets' racine (cause de conflits)...")
-            badFolder.deleteRecursively()
+        // B. Nettoyage des anciennes extractions (contournement 0.6.x) qui font
+        //    désormais planter le boot en 0.7.x.
+        listOf(runDir.resolve("HytaleAssets"), modsDir.resolve("Hytale")).forEach { stale ->
+            if (stale.exists()) {
+                println("🧹 Suppression de l'ancienne extraction '${stale.name}'...")
+                stale.deleteRecursively()
+            }
         }
 
-        // C. Extraction des Assets dans mods/Hytale
-        if (!destAssets.exists()) {
-            println("🔍 Extraction des assets vers 'mods/Hytale'...")
-            if (assetsZip.exists()) {
-                println("📦 Assets.zip trouvé ! Extraction en cours...")
-
-                copy {
-                    from(zipTree(assetsZip))
-                    into(destAssets)
-                }
-
-                // On supprime quand même le hash par sécurité, au cas où
-                val hashFile = destAssets.resolve("CommonAssetsIndex.hashes")
-                if (hashFile.exists()) hashFile.delete()
-
-                println("✅ Assets installés dans le dossier des mods.")
-            } else {
-                println("⚠️ ATTENTION : Assets.zip introuvable !")
-            }
+        if (!assetsZip.exists()) {
+            println("⚠️ ATTENTION : Assets.zip introuvable : $assetsZip")
         } else {
-            println("✅ Assets déjà présents dans mods/Hytale.")
+            println("📦 Assets.zip utilisé : $assetsZip")
         }
 
         println(">>> LANCEMENT DU SERVEUR <<<")
     }
 
     workingDir = runDir
-    args("-Xmx1G", "-Xms1G", "-jar", serverJar.absolutePath)
+    args("-Xmx1G", "-Xms1G", "-jar", serverJar.absolutePath, "--assets", assetsZip.absolutePath)
     standardInput = System.`in`
 }
 

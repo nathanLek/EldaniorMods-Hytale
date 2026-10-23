@@ -1,0 +1,61 @@
+{
+  "RenderMode": "BlendAdd",
+  "ParticleRotationInfluence": "None",
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "MaxConcurrentParticles": 1,
+  "ParticleRotateWithSpawner": true,
+  "SpawnRate": {
+    "Min": 30,
+    "Max": 30
+  },
+  "SpawnBurst": false,
+  "ParticleLifeSpan": {
+    "Min": 1.0,
+    "Max": 1.0
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Circles/Signature_Spin7_GS.png",
+    "ScaleRatioConstraint": "OneToOne",
+    "UVOption": "None",
+    "SoftParticles": "Disable",
+    "InitialAnimationFrame": {
+      "Opacity": 0.9,
+      "Color": "#ff4a2a",
+      "Scale": {
+        "X": {
+          "Min": 0.07,
+          "Max": 0.07
+        }
+      },
+      "Rotation": {
+        "X": {
+          "Min": 90,
+          "Max": 90
+        }
+      }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0.95,
+        "Color": "#ff4a2a",
+        "Rotation": {
+          "Z": {
+            "Min": 0,
+            "Max": 0
+          }
+        }
+      },
+      "100": {
+        "Opacity": 0.95,
+        "Color": "#ff4a2a",
+        "Rotation": {
+          "Z": {
+            "Min": -360,
+            "Max": -360
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "$Comment": "Lame de vent de Fujin : poussiere soulevee et projetee de part et d'autre de la tranchee.",
+  "RenderMode": "BlendLinear",
+  "ParticleRotationInfluence": "Billboard",
+  "LinearFiltering": true,
+  "LightInfluence": 0.6,
+  "ParticleRotateWithSpawner": false,
+  "MaxConcurrentParticles": 20,
+  "SpawnRate": {
+    "Min": 1,
+    "Max": 1
+  },
+  "SpawnBurst": true,
+  "ParticleLifeSpan": {
+    "Min": 0.6,
+    "Max": 1.0
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Smoke/Smoke_Dense.png",
+    "ScaleRatioConstraint": "OneToOne",
+    "UVOption": "None",
+    "SoftParticles": "Disable",
+    "InitialAnimationFrame": {
+      "Opacity": 0,
+      "Color": "#a89a88",
+      "Scale": {
+        "X": {
+          "Min": 1.4,
+          "Max": 2.2
+        },
+        "Y": {
+          "Min": 1.4,
+          "Max": 2.2
+        }
+      },
+      "Rotation": {
+        "Z": {
+          "Min": 0,
+          "Max": 360
+        }
+      }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0,
+        "Color": "#a89a88"
+      },
+      "20": {
+        "Opacity": 0.75,
+        "Color": "#8e8272"
+      },
+      "80": {
+        "Opacity": 0.6375
+      },
+      "100": {
+        "Opacity": 0,
+        "Color": "#6a6052",
+        "Scale": {
+          "X": {
+            "Min": 3.5200000000000005,
+            "Max": 3.5200000000000005
+          },
+          "Y": {
+            "Min": 3.5200000000000005,
+            "Max": 3.5200000000000005
+          }
+        }
+      }
+    }
+  },
+  "EmitOffset": {
+    "X": {
+      "Min": -0.8,
+      "Max": 0.8
+    },
+    "Y": {
+      "Min": 0,
+      "Max": 0.4
+    },
+    "Z": {
+      "Min": -0.8,
+      "Max": 0.8
+    }
+  },
+  "InitialVelocity": {
+    "Speed": {
+      "Min": 3,
+      "Max": 7
+    },
+    "Yaw": {
+      "Min": -180,
+      "Max": 180
+    },
+    "Pitch": {
+      "Min": 15,
+      "Max": 55
+    }
+  },
+  "Attractors": [
+    {
+      "Radius": 0,
+      "LinearAcceleration": {
+        "X": 0,
+        "Y": -4,
+        "Z": 0
+      }
+    }
+  ],
+  "TotalParticles": {
+    "Min": 14,
+    "Max": 14
+  }
+}

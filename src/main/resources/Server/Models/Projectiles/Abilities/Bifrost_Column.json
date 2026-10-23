@@ -1,0 +1,33 @@
+{
+  "$Comment": "Colonne de convocation runique du Pont du Bifrost : faisceau de lumiere, trois cercles magiques qui tournent en sens contraires (1, 5 et 9 blocs), runes en orbite. HitBox large en X : le serveur masque (LOD) les entites a hitbox trop petite.",
+  "Model": "Items/Projectiles/Bifrost/Column.blockymodel",
+  "Texture": "Items/Projectiles/Bifrost/Column.png",
+  "MinScale": 4,
+  "MaxScale": 4,
+  "HitBox": {
+    "Max": {
+      "X": 1.5,
+      "Y": 0.01,
+      "Z": 0.01
+    },
+    "Min": {
+      "X": -1.5,
+      "Y": -0.01,
+      "Z": -0.01
+    }
+  },
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Bifrost/Column_Spin.blockyanim",
+          "BlendingDuration": 0
+        }
+      ]
+    }
+  },
+  "Light": {
+    "Color": "#ffe9b0",
+    "Radius": 10
+  }
+}

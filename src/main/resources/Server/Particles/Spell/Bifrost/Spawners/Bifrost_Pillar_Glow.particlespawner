@@ -1,0 +1,80 @@
+{
+  "$Comment": "Halo epais du pilier du Bifrost.",
+  "RenderMode": "BlendAdd",
+  "EmitOffset": {
+    "X": {
+      "Min": -2.2,
+      "Max": 2.2
+    },
+    "Y": {
+      "Min": 0,
+      "Max": 2
+    },
+    "Z": {
+      "Min": -2.2,
+      "Max": 2.2
+    }
+  },
+  "ParticleRotationInfluence": "Velocity",
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "ParticleRotateWithSpawner": false,
+  "MaxConcurrentParticles": 400,
+  "SpawnRate": {
+    "Min": 90,
+    "Max": 90
+  },
+  "ParticleLifeSpan": {
+    "Min": 2.2,
+    "Max": 2.6
+  },
+  "InitialVelocity": {
+    "Yaw": {
+      "Min": -180,
+      "Max": 180
+    },
+    "Pitch": {
+      "Min": 88,
+      "Max": 90
+    },
+    "Speed": {
+      "Min": 80,
+      "Max": 88
+    }
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Basic/Glow.png",
+    "ScaleRatioConstraint": "None",
+    "UVOption": "None",
+    "SoftParticles": "Disable",
+    "InitialAnimationFrame": {
+      "Opacity": 0,
+      "Scale": {
+        "X": {
+          "Min": 5,
+          "Max": 7
+        },
+        "Y": {
+          "Min": 16,
+          "Max": 22
+        }
+      }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0,
+        "Color": "#fff3d6"
+      },
+      "8": {
+        "Opacity": 0.45
+      },
+      "80": {
+        "Opacity": 0.35,
+        "Color": "#d8c8ff"
+      },
+      "100": {
+        "Opacity": 0
+      }
+    }
+  }
+}

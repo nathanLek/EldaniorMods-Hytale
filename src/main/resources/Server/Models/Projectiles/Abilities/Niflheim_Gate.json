@@ -1,0 +1,41 @@
+{
+  "$Comment": "Porte de Niflheim : porte divine de glace (cadre custom : socle flottant a stalactites, colonnes runiques, double arche, embleme flocon, couronne de pics ; battants = porte vanilla du chateau gele agrandie) qui apparait 12 blocs au-dessus du centre de la zone et s'ouvre avant que l'onde parte. HitBox large en X : le serveur masque (LOD) les entites a hitbox trop petite.",
+  "Model": "Items/Projectiles/Niflheim/Gate.blockymodel",
+  "Texture": "Items/Projectiles/Niflheim/Gate.png",
+  "MinScale": 3,
+  "MaxScale": 3,
+  "HitBox": {
+    "Max": {
+      "X": 1.5,
+      "Y": 0.01,
+      "Z": 0.01
+    },
+    "Min": {
+      "X": -1.5,
+      "Y": -0.01,
+      "Z": -0.01
+    }
+  },
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Niflheim/Gate_Open.blockyanim",
+          "Looping": false,
+          "BlendingDuration": 0
+        }
+      ]
+    }
+  },
+  "Light": {
+    "Color": "#9fe3ff",
+    "Radius": 32
+  },
+  "Particles": [
+    {
+      "SystemId": "Niflheim_Gate_Aura",
+      "TargetNodeName": "",
+      "Scale": 3.0
+    }
+  ]
+}

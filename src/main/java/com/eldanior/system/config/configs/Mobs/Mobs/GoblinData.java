@@ -33,7 +33,18 @@ public enum GoblinData implements IMobConfig {
     GOBLIN_DUKE("goblin duke", 350, 95, 110),
     GOBLIN_DUKE_PHASE_2("goblin duke phase 2", 400, 100, 110),
     GOBLIN_DUKE_PHASE_3_FAST("goblin duke phase 3 fast", 450, 100, 110),
-    GOBLIN_DUKE_PHASE_3_SLOW("goblin duke phase 3 slow", 450, 100, 110);
+    GOBLIN_DUKE_PHASE_3_SLOW("goblin duke phase 3 slow", 450, 100, 110),
+
+    // === Nouveautes 0.7.2 (Goblin Lab / Feastmaster) ===
+    GOBLIN_BURNER("goblin burner", 55, 55, 80),
+    GOBLIN_GLUTTON("goblin glutton", 60, 60, 85),
+    GOBLIN_GUARDIAN("goblin guardian", 70, 65, 90),
+    GOBLIN_SCIENTIST("goblin scientist", 65, 60, 85),
+    GOBLIN_LAUNCHER("goblin launcher", 55, 55, 80),
+    GOBLIN_PILOT("goblin pilot", 60, 60, 85),
+    GOBLIN_LAB_SCRAPPER("goblin lab scrapper", 55, 55, 80),
+    GOBLIN_MACE("goblin mace", 60, 60, 85),
+    GOBLIN_FEASTMASTER("feastmaster", 300, 95, 110);
 
     private final String keyword;
     private final int xp;

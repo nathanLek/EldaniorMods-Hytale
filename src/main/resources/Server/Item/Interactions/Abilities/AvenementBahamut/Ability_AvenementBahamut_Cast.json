@@ -1,0 +1,72 @@
+{
+  "$Comment": "Avenement de Bahamut : posture de rugissement (flammes aux mains), puis BahamutAdvent (Java) : rugissement de terreur, ailes de dragon, Bahamut spectral, trois passages en pique avec souffle de feu, Megaflare.",
+  "Type": "StatsCondition",
+  "UseAbilityCost": true,
+  "Failed": "Ability_Cast_Fail",
+  "Next": {
+    "Type": "Parallel",
+    "Interactions": [
+      {
+        "Interactions": [
+          {
+            "Type": "Simple",
+            "RunTime": 1.0,
+            "HorizontalSpeedMultiplier": 0.3,
+            "Effects": {
+              "ItemPlayerAnimationsId": "Staff",
+              "ItemAnimationId": "CastSummonCharging",
+              "WaitForAnimationToFinish": false,
+              "CameraEffect": "Ability_Cast_Generic",
+              "WorldSoundEventId": "SFX_Dragon_Void_Finale_Roar",
+              "Particles": [
+                {
+                  "SystemId": "Fire_Charge_Charging_Constant",
+                  "TargetEntityPart": "Entity",
+                  "TargetNodeName": "R-Hand",
+                  "Scale": 1.2
+                },
+                {
+                  "SystemId": "Fire_Charge_Charging_Constant",
+                  "TargetEntityPart": "Entity",
+                  "TargetNodeName": "L-Hand",
+                  "Scale": 1.2
+                }
+              ]
+            }
+          },
+          {
+            "Type": "BahamutAdvent",
+            "RunTime": 0.05
+          },
+          {
+            "Type": "Simple",
+            "RunTime": 0.6,
+            "HorizontalSpeedMultiplier": 0.5,
+            "Effects": {
+              "ItemPlayerAnimationsId": "Staff",
+              "ItemAnimationId": "CastSummon",
+              "ClearAnimationOnFinish": true,
+              "WorldSoundEventId": "SFX_Staff_Flame_Fireball_Launch"
+            }
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "TriggerCooldown",
+            "UseAbilityCooldown": true
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "ChangeStat",
+            "UseAbilityCost": true
+          }
+        ]
+      }
+    ]
+  }
+}

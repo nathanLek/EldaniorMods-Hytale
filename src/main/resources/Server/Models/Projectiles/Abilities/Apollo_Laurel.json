@@ -1,0 +1,29 @@
+{
+  "$Comment": "Couronne de laurier dore au-dessus de la tete d'un allie beni par le Sanctuaire d'Apollon. HitBox large en X : le serveur masque (LOD) les entites a hitbox trop petite.",
+  "Model": "Items/Projectiles/Apollo/Laurel.blockymodel",
+  "Texture": "Items/Projectiles/Apollo/Laurel.png",
+  "MinScale": 1.0,
+  "MaxScale": 1.0,
+  "HitBox": {
+    "Max": {
+      "X": 0.5,
+      "Y": 0.01,
+      "Z": 0.01
+    },
+    "Min": {
+      "X": -0.5,
+      "Y": -0.01,
+      "Z": -0.01
+    }
+  },
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Celestial/Sky_Circle_Spin.blockyanim",
+          "BlendingDuration": 0
+        }
+      ]
+    }
+  }
+}

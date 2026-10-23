@@ -6,6 +6,7 @@ import com.eldanior.system.config.CraftingConfig;
 import com.eldanior.system.config.EldaniorLogger;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
+import com.eldanior.system.util.WorldBlockUtil;
 import com.hypixel.hytale.builtin.crafting.component.BenchBlock;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
@@ -59,7 +60,7 @@ public class CraftingRestrictionSystem extends EntityEventSystem<EntityStore, Us
         // Recuperer le nom du bench via le BlockType
         String benchName = "";
         try {
-            benchName = player.getWorld().getBlockType(target.x(), target.y(), target.z())
+            benchName = WorldBlockUtil.getBlockType(player.getWorld(), target.x(), target.y(), target.z())
                     .getId().toLowerCase();
         } catch (Exception e) {
             EldaniorLogger.error("CraftingRestrictionSystem: failed to get bench name", e);

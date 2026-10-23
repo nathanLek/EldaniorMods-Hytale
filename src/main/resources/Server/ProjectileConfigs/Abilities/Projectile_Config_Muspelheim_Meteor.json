@@ -1,0 +1,38 @@
+{
+  "$Comment": "Meteorite du Courroux de Muspelheim (boule de feu x15), purement visuelle : lancee par MuspelheimWrath depuis le cercle magique (180 blocs de haut) vers son point d'impact ; le code la retire a l'impact. UseModelScale obligatoire : sans lui le moteur ignore MinScale/MaxScale (boule de feu x1, invisible depuis le ciel). Interactions obligatoires mais neutres : une liste vide fait echouer le lancement ('Specified map is empty'), et RemoveEntity/User designerait le LANCEUR (le joueur deviendrait invisible).",
+  "Model": "Muspelheim_Meteor",
+  "Physics": {
+    "Type": "Standard",
+    "Gravity": 0,
+    "TerminalVelocityAir": 120,
+    "TerminalVelocityWater": 30,
+    "RotationMode": "VelocityDamped",
+    "Bounciness": 0,
+    "SticksVertically": true
+  },
+  "LaunchForce": 60,
+  "SpawnOffset": {
+    "X": 0,
+    "Y": 0,
+    "Z": 0
+  },
+  "UseModelScale": true,
+  "Interactions": {
+    "ProjectileHit": {
+      "Interactions": [
+        {
+          "Type": "Simple",
+          "RunTime": 0.01
+        }
+      ]
+    },
+    "ProjectileMiss": {
+      "Interactions": [
+        {
+          "Type": "Simple",
+          "RunTime": 0.01
+        }
+      ]
+    }
+  }
+}

@@ -40,7 +40,6 @@ public class OrdreCommand extends AbstractAsyncCommand {
         this.arg2 = this.withRequiredArg("arg2", "Devise ou argument", ArgTypes.STRING);
     }
 
-    @Override
     protected boolean canGeneratePermission() { return false; }
 
     @Nonnull

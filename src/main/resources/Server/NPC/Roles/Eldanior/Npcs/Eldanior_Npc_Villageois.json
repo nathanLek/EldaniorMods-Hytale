@@ -1,0 +1,57 @@
+{
+  "Type": "Variant",
+  "Reference": "Template_Intelligent",
+  "Modify": {
+    "DropList": "Empty",
+    "WakingPeriod": [
+      0,
+      24
+    ],
+    "BedBlockSet": "",
+    "Patrol": false,
+    "FollowPatrolPath": false,
+    "ViewRange": 20,
+    "ViewSector": 240,
+    "HearingRange": 12,
+    "AlertedRange": 40,
+    "AlertedTime": [
+      0.3,
+      0.6
+    ],
+    "LeashMinPlayerDistance": 4,
+    "LeashTimer": [
+      2,
+      3
+    ],
+    "SearchTimeRange": [
+      4,
+      6
+    ],
+    "BreathesInWater": true,
+    "NameTranslationKey": {
+      "Compute": "NameTranslationKey"
+    },
+    "Appearance": "Player",
+    "MaxHealth": 120,
+    "MaxSpeed": 8,
+    "KnockbackScale": 0.8,
+    "Weapons": [],
+    "OffHand": [],
+    "DefaultOffHandSlot": -1,
+    "NighttimeOffhandSlot": -1,
+    "WakingIdleBehaviorComponent": "Component_Instruction_Eldanior_Leash_Walk",
+    "WanderRadius": 10,
+    "LeashDistance": 50,
+    "HardLeashDistance": 80,
+    "UseCombatActionEvaluator": false,
+    "AttitudeGroup": "Eldanior_Villager",
+    "DefaultPlayerAttitude": "Ignore",
+    "CombatFleeIfTooCloseDistance": 6
+  },
+  "Parameters": {
+    "NameTranslationKey": {
+      "Value": "server.npcRoles.Eldanior_Npc_Villageois.name",
+      "Description": "Translation key for NPC name display"
+    }
+  }
+}

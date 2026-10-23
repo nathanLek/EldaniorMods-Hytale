@@ -1,0 +1,82 @@
+{
+  "RenderMode": "BlendLinear",
+  "EmitOffset": {
+    "X": {
+      "Min": -2.0,
+      "Max": 2.0
+    },
+    "Y": {
+      "Min": 0,
+      "Max": 0.1
+    },
+    "Z": {
+      "Min": -2.0,
+      "Max": 2.0
+    }
+  },
+  "ParticleRotationInfluence": "Billboard",
+  "LinearFiltering": true,
+  "LightInfluence": 0.6,
+  "ParticleRotateWithSpawner": false,
+  "MaxConcurrentParticles": 40,
+  "ParticleLifeSpan": {
+    "Min": 2.8,
+    "Max": 3.6
+  },
+  "SpawnRate": {
+    "Min": 10,
+    "Max": 12
+  },
+  "InitialVelocity": {
+    "Speed": {
+      "Min": 0.1,
+      "Max": 0.4
+    },
+    "Yaw": {
+      "Min": 0,
+      "Max": 360
+    },
+    "Pitch": {
+      "Min": -2,
+      "Max": 2
+    }
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Smoke/Smoke_Dense.png",
+    "FrameSize": {
+      "Width": 64,
+      "Height": 64
+    },
+    "ScaleRatioConstraint": "None",
+    "UVOption": "RandomFlipU",
+    "InitialAnimationFrame": {
+      "Scale": {
+        "X": {
+          "Min": 2.4,
+          "Max": 3.0
+        },
+        "Y": {
+          "Min": 0.95,
+          "Max": 1.05
+        }
+      },
+      "Opacity": 0.45,
+      "Color": "#030105"
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0.25
+      },
+      "15": {
+        "Opacity": 0.55
+      },
+      "85": {
+        "Opacity": 0.55
+      },
+      "100": {
+        "Opacity": 0.25
+      }
+    }
+  },
+  "$Comment": "Brume noire au ras du sol du royaume du Trone du Neant."
+}

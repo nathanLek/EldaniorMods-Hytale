@@ -41,7 +41,6 @@ public class WithdrawCommand extends AbstractPlayerCommand {
         this.amountArg = this.withRequiredArg("montant", "Montant a retirer", ArgTypes.INTEGER);
     }
 
-    @Override
     protected boolean canGeneratePermission() { return false; }
 
     @Override

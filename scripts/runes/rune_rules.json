@@ -1,0 +1,45 @@
+{
+  "$Comment": "Source unique des regles des runes : couts et recharges par rarete, loot, types. Lu par scripts/runes/rune_tool.py (new / check). Le moteur Hytale lit le cout et la recharge dans le JSON de chaque rune : rune_tool les y ecrit depuis cette table.",
+  "rarities": {
+    "Common":     { "quality": "Common", "itemLevel": 10,    "mana": 25,   "cooldown": 15,  "frame": [150, 150, 150], "loot": { "DUNGEON_COMMON_CHEST": 1.0, "DEFAULT": 0.8, "DUNGEON_CHEST": 1.5 } },
+    "Uncommon":   { "quality": "Uncommon", "itemLevel": 25,  "mana": 60,   "cooldown": 30,  "frame": [90, 200, 90],   "loot": { "DUNGEON_COMMON_CHEST": 0.6, "DEFAULT": 0.4, "DUNGEON_CHEST": 1.0 } },
+    "Rare":       { "quality": "Rare", "itemLevel": 40,      "mana": 120,  "cooldown": 60,  "frame": [70, 140, 255],  "loot": { "DUNGEON_CHEST": 0.8, "DUNGEON_COMMON_CHEST": 0.3, "LEGENDARY_CHEST": 10 } },
+    "Epic":       { "quality": "Epic", "itemLevel": 60,      "mana": 300,  "cooldown": 120, "frame": [170, 80, 255],  "loot": { "DUNGEON_CHEST": 0.3, "DUNGEON_BOSS_CHEST": 2.0, "LEGENDARY_CHEST": 5 } },
+    "Unique":     { "quality": "Unique", "itemLevel": 75,    "mana": 600,  "cooldown": 180, "frame": [255, 140, 40],  "loot": { "DUNGEON_BOSS_CHEST": 1.5, "LEGENDARY_CHEST": 2 } },
+    "Legendaire": { "quality": "Legendary", "itemLevel": 90, "mana": 1200, "cooldown": 300, "frame": [255, 200, 60],  "loot": { "DUNGEON_BOSS_CHEST": 1.0, "LEGENDARY_CHEST": 1 } },
+    "Divin":      { "quality": "Divin", "itemLevel": 100,     "mana": 3000, "cooldown": 500, "frame": [7, 216, 251],   "loot": { "DUNGEON_BOSS_CHEST": 1.0, "LEGENDARY_CHEST": 0.5 } }
+  },
+  "types": {
+    "Feu":       { "keywords": ["Elemental", "Fire"],     "hue": 0.04, "top": [70, 14, 6],   "bottom": [16, 4, 3],   "accent": [255, 120, 30],  "glyph": [255, 190, 80] },
+    "Glace":     { "keywords": ["Elemental", "Water"],    "hue": 0.54, "top": [14, 44, 74],  "bottom": [5, 12, 30],  "accent": [130, 220, 255], "glyph": [220, 250, 255] },
+    "Terre":     { "keywords": ["Elemental", "Earth"],    "hue": 0.08, "top": [62, 42, 20],  "bottom": [18, 12, 6],  "accent": [200, 150, 80],  "glyph": [235, 200, 140] },
+    "Air":       { "keywords": ["Elemental", "Wind"],     "hue": 0.47, "top": [20, 70, 80],  "bottom": [6, 22, 30],  "accent": [150, 230, 240], "glyph": [225, 252, 255] },
+    "Tenebres":  { "keywords": ["Elemental"],             "hue": 0.76, "top": [30, 10, 50],  "bottom": [6, 2, 14],   "accent": [140, 80, 255],  "glyph": [200, 170, 255] },
+    "Lumiere":   { "keywords": ["Elemental", "Buff"],     "hue": 0.13, "top": [80, 90, 140], "bottom": [24, 30, 70], "accent": [255, 220, 120], "glyph": [255, 248, 210] },
+    "Temps":     { "keywords": ["Elemental", "Duration"], "hue": 0.58, "top": [40, 50, 90],  "bottom": [10, 12, 30], "accent": [255, 215, 120], "glyph": [235, 240, 255] },
+    "Espace":    { "keywords": ["Elemental"],             "hue": 0.66, "top": [24, 30, 80],  "bottom": [6, 6, 24],   "accent": [120, 160, 255], "glyph": [210, 225, 255] },
+    "Combat":    { "keywords": ["Physical", "Melee"],     "hue": 0.0,  "top": [60, 30, 26],  "bottom": [16, 8, 8],   "accent": [230, 90, 70],   "glyph": [240, 230, 220] },
+    "Spatial":   { "keywords": ["Elemental"],             "hue": 0.83, "top": [44, 20, 60],  "bottom": [10, 4, 18],  "accent": [230, 120, 255], "glyph": [245, 215, 255] },
+    "Foudre":    { "keywords": ["Elemental", "Charged"],  "hue": 0.15, "top": [26, 22, 70],  "bottom": [6, 6, 22],   "accent": [120, 170, 255], "glyph": [255, 245, 150] },
+    "Dragonic":  { "keywords": ["Elemental", "Fire"],     "hue": 0.11, "top": [50, 26, 10],  "bottom": [12, 6, 3],   "accent": [255, 170, 70],  "glyph": [255, 225, 160] }
+  },
+  "exceptions": {
+    "$Comment": "Runes dont le cout ou la recharge s'ecartent volontairement de la table. Toute entree doit donner une raison.",
+    "Rune_Aura": "Rune de dignite (titre de noblesse) : gratuite, hors systeme de rarete.",
+    "Rune_AuraBlade": "Rune Rare vanilla-like (cout/recharge de reference du jeu de base).",
+    "Rune_AbimeChaos": "Valeurs de test (2000 mana / 5 s) - a aligner sur Divin avant release.",
+    "Rune_AvatarDragon": "Valeurs de test (2000 mana / 5 s) - a aligner sur Legendaire avant release.",
+    "Rune_AvenementBahamut": "Valeurs de test - a aligner sur Divin avant release.",
+    "Rune_CourrouxFujin": "Valeurs de test - a aligner sur Divin avant release.",
+    "Rune_CourrouxMuspelheim": "Valeurs de test (2000 mana / 180 s) - a aligner sur Divin avant release.",
+    "Rune_EveilYggdrasil": "Valeurs de test - a aligner sur Divin avant release.",
+    "Rune_GilgameshBabylon": "Valeurs de test - a aligner sur Divin avant release.",
+    "Rune_PontBifrost": "Valeurs de test - a aligner sur Divin avant release.",
+    "Rune_PorteNiflheim": "Valeurs de test - a aligner sur Divin avant release.",
+    "Rune_ReveilGaia": "Valeurs de test - a aligner sur Divin avant release.",
+    "Rune_SablierChronos": "Valeurs de test - a aligner sur Divin avant release.",
+    "Rune_SanctuaireApollon": "Valeurs de test - a aligner sur Divin avant release.",
+    "Rune_SanctuaireTaranis": "Valeurs de test - a aligner sur Divin avant release.",
+    "Rune_VoileNyx": "Valeurs de test - a aligner sur Divin avant release."
+  }
+}

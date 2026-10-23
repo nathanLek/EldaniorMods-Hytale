@@ -1,0 +1,23 @@
+{
+  "$Comment": "Faille etoilee dans l'espace (Abime du Chaos), deux quads croises. HitBox large en X : le serveur masque (LOD) les entites a hitbox trop petite.",
+  "Model": "Items/Projectiles/Chaos/Rift.blockymodel",
+  "Texture": "Items/Projectiles/Chaos/Rift.png",
+  "MinScale": 3,
+  "MaxScale": 3,
+  "HitBox": {
+    "Max": {
+      "X": 0.5,
+      "Y": 0.01,
+      "Z": 0.01
+    },
+    "Min": {
+      "X": -0.5,
+      "Y": -0.01,
+      "Z": -0.01
+    }
+  },
+  "Light": {
+    "Color": "#9a5cff",
+    "Radius": 6
+  }
+}

@@ -31,7 +31,6 @@ public class TaxAuditCommand extends AbstractAsyncCommand {
         super("taxaudit", "Audit des taxes collectees par parcelle (admin)");
     }
 
-    @Override
     protected boolean canGeneratePermission() { return false; }
 
     @Nonnull

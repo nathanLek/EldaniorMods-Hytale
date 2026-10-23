@@ -1,0 +1,20 @@
+{
+  "$Comment": "Forme de l'Avatar du Dragon Divin : +20 % de vitesse, endurance max x1.5, insensible aux projections (degats et aura geres par le code).",
+  "Duration": 1.6,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": false,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Rune_AvatarDragon.png",
+  "ApplicationEffects": {
+    "HorizontalSpeedMultiplier": 1.2,
+    "KnockbackMultiplier": 0
+  },
+  "RawStatModifiers": {
+    "Stamina": [
+      {
+        "Amount": 1.5,
+        "CalculationType": "Multiplicative",
+        "Target": "Max"
+      }
+    ]
+  }
+}

@@ -6,6 +6,7 @@ import com.eldanior.system.territory.ParcelManager;
 import com.eldanior.system.territory.ParcelType;
 import com.eldanior.system.config.EldaniorLogger;
 import com.eldanior.system.config.Player.PlayerPositionTracker;
+import com.eldanior.system.util.WorldBlockUtil;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.EntityEventSystem;
@@ -135,7 +136,7 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
     private void handleSimpleRegen(Vector3i target, String worldName, ParcelData parcel, World world) {
         String blockName;
         try {
-            blockName = world.getBlockType(target.x(), target.y(), target.z()).getId();
+            blockName = WorldBlockUtil.getBlockType(world, target.x(), target.y(), target.z()).getId();
         } catch (Exception e) {
             EldaniorLogger.error("FarmRegen: impossible de lire le bloc", e);
             return;
@@ -159,7 +160,7 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
             try {
                 world.execute(() -> {
                     try {
-                        world.setBlock(target.x(), target.y(), target.z(), blockName);
+                        WorldBlockUtil.setBlock(world, target.x(), target.y(), target.z(), blockName);
                         EldaniorLogger.info("[FarmRegen] Bloc restaure a " +
                                 target.x() + "," + target.y() + "," + target.z() +
                                 " block=" + blockName);
@@ -221,7 +222,7 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
                     for (int x = parcel.getMinX(); x <= parcel.getMaxX(); x++) {
                         for (int y = parcel.getMinY(); y <= parcel.getMaxY(); y++) {
                             for (int z = parcel.getMinZ(); z <= parcel.getMaxZ(); z++) {
-                                BlockType bt = world.getBlockType(x, y, z);
+                                BlockType bt = WorldBlockUtil.getBlockType(world, x, y, z);
                                 if (bt != null && bt != BlockType.EMPTY) {
                                     String id = bt.getId();
                                     if (id != null && !id.isEmpty()) {
@@ -266,7 +267,7 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
             if (coords == null) continue;
 
             try {
-                BlockType currentType = world.getBlockType(coords[0], coords[1], coords[2]);
+                BlockType currentType = WorldBlockUtil.getBlockType(world, coords[0], coords[1], coords[2]);
                 if (currentType == null || currentType == BlockType.EMPTY) {
                     toRegen.add(new String[]{posKey, expectedBlock});
                     pending.add(posKey);
@@ -295,7 +296,7 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
                         try {
                             int[] coords = parseKey(entry[0]);
                             if (coords != null) {
-                                world.setBlock(coords[0], coords[1], coords[2], entry[1]);
+                                WorldBlockUtil.setBlock(world, coords[0], coords[1], coords[2], entry[1]);
                                 restored++;
                             }
                         } catch (Exception e) {
@@ -342,7 +343,7 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
                     for (int x = parcel.getMinX(); x <= parcel.getMaxX(); x++) {
                         for (int y = parcel.getMinY(); y <= parcel.getMaxY(); y++) {
                             for (int z = parcel.getMinZ(); z <= parcel.getMaxZ(); z++) {
-                                BlockType bt = world.getBlockType(x, y, z);
+                                BlockType bt = WorldBlockUtil.getBlockType(world, x, y, z);
                                 if (bt != null && bt != BlockType.EMPTY) {
                                     String id = bt.getId();
                                     if (id != null && !id.isEmpty()) {
@@ -410,7 +411,7 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
                             int[] coords = parseKey(entry.getKey());
                             if (coords == null) continue;
 
-                            BlockType currentType = world.getBlockType(coords[0], coords[1], coords[2]);
+                            BlockType currentType = WorldBlockUtil.getBlockType(world, coords[0], coords[1], coords[2]);
                             String currentId = (currentType != null && currentType != BlockType.EMPTY)
                                     ? currentType.getId() : null;
 
@@ -480,7 +481,7 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
             try {
                 int[] coords = parseKey(entry.getKey());
                 if (coords != null) {
-                    world.setBlock(coords[0], coords[1], coords[2], entry.getValue());
+                    WorldBlockUtil.setBlock(world, coords[0], coords[1], coords[2], entry.getValue());
                     restored++;
                 }
             } catch (Exception e) {
@@ -567,7 +568,7 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
                     for (int x = parcel.getMinX(); x <= parcel.getMaxX(); x++) {
                         for (int y = parcel.getMinY(); y <= parcel.getMaxY(); y++) {
                             for (int z = parcel.getMinZ(); z <= parcel.getMaxZ(); z++) {
-                                BlockType bt = world.getBlockType(x, y, z);
+                                BlockType bt = WorldBlockUtil.getBlockType(world, x, y, z);
                                 if (bt != null && bt != BlockType.EMPTY) {
                                     String id = bt.getId();
                                     if (id != null && !id.isEmpty()) {
@@ -630,13 +631,13 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
                             int[] coords = parseKey(entry.getKey());
                             if (coords == null) continue;
 
-                            BlockType currentType = world.getBlockType(coords[0], coords[1], coords[2]);
+                            BlockType currentType = WorldBlockUtil.getBlockType(world, coords[0], coords[1], coords[2]);
                             String currentId = (currentType != null && currentType != BlockType.EMPTY)
                                     ? currentType.getId() : null;
 
                             // Restaurer seulement si le bloc a change
                             if (!entry.getValue().equals(currentId)) {
-                                world.setBlock(coords[0], coords[1], coords[2], entry.getValue());
+                                WorldBlockUtil.setBlock(world, coords[0], coords[1], coords[2], entry.getValue());
                                 restored++;
                             }
                         } catch (Exception e) {
@@ -717,7 +718,7 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
                                             int[] coords = parseKey(entry.getKey());
                                             if (coords == null) continue;
 
-                                            BlockType currentType = w.getBlockType(
+                                            BlockType currentType = WorldBlockUtil.getBlockType(w, 
                                                     coords[0], coords[1], coords[2]);
                                             String currentId = (currentType != null && currentType != BlockType.EMPTY)
                                                     ? currentType.getId() : null;
@@ -807,7 +808,7 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
                                 for (int x = parcel.getMinX(); x <= parcel.getMaxX(); x++) {
                                     for (int y = parcel.getMinY(); y <= parcel.getMaxY(); y++) {
                                         for (int z = parcel.getMinZ(); z <= parcel.getMaxZ(); z++) {
-                                            BlockType bt = world.getBlockType(x, y, z);
+                                            BlockType bt = WorldBlockUtil.getBlockType(world, x, y, z);
                                             if (bt != null && bt != BlockType.EMPTY) {
                                                 String id = bt.getId();
                                                 if (id != null && !id.isEmpty()) {
@@ -867,7 +868,7 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
                                             try {
                                                 int[] coords = parseKey(entry.getKey());
                                                 if (coords == null) continue;
-                                                w.setBlock(coords[0], coords[1], coords[2], entry.getValue());
+                                                WorldBlockUtil.setBlock(w, coords[0], coords[1], coords[2], entry.getValue());
                                                 restored++;
                                             } catch (Exception ex) {
                                                 EldaniorLogger.error("DungeonRegen.restore", ex);

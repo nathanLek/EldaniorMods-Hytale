@@ -1,0 +1,33 @@
+{
+  "$Comment": "Portail dore ondulant de la Porte de Babylone : une arme de lumiere en sort. Quad vertical (oriente par le code face au regard du lanceur) qui tourne sur lui-meme. HitBox elargie en X (LOD serveur).",
+  "Model": "Items/Projectiles/Gilgamesh/Portal.blockymodel",
+  "Texture": "Items/Projectiles/Gilgamesh/Portal.png",
+  "MinScale": 0.85,
+  "MaxScale": 0.85,
+  "HitBox": {
+    "Max": {
+      "X": 1.5,
+      "Y": 0.01,
+      "Z": 0.01
+    },
+    "Min": {
+      "X": -1.5,
+      "Y": -0.01,
+      "Z": -0.01
+    }
+  },
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Gilgamesh/Portal_Spin.blockyanim",
+          "BlendingDuration": 0
+        }
+      ]
+    }
+  },
+  "Light": {
+    "Color": "#ffcf6a",
+    "Radius": 3
+  }
+}

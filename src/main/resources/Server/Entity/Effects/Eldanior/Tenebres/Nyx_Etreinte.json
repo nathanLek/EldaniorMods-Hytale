@@ -1,0 +1,22 @@
+{
+  "$Comment": "Etreinte d'une tentacule du Voile de Nyx : immobilise.",
+  "Duration": 2.5,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": true,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Rune_VoileNyx.png",
+  "ApplicationEffects": {
+    "EntityTopTint": "#5a1a8a",
+    "EntityBottomTint": "#12001c",
+    "MovementEffects": {
+      "DisableAll": true
+    },
+    "AbilityEffects": {
+      "Disabled": [
+        "Primary",
+        "Secondary",
+        "Ability1",
+        "Ability3"
+      ]
+    }
+  }
+}

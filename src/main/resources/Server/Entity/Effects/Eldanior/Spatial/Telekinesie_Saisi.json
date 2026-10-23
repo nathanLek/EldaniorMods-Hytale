@@ -1,0 +1,14 @@
+{
+  "$Comment": "Saisi par telekinesie : ne peut plus se deplacer seul (porte par le lanceur). Applique pour la duree restante du sort, retire au lacher.",
+  "Duration": 20.0,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": true,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Rune_Telekinesie.png",
+  "ApplicationEffects": {
+    "EntityTopTint": "#c9a2ff",
+    "EntityBottomTint": "#5b1fb0",
+    "MovementEffects": {
+      "DisableAll": true
+    }
+  }
+}

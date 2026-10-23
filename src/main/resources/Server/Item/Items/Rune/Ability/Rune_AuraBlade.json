@@ -1,0 +1,72 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune d'Aura Tranchante",
+    "Description": "Enchante votre arme pendant 10s : vos 3 prochaines attaques projettent une lame de vent tranchante (10 degats Vent + projection). Clone de la rune WindStrike."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_WindStrike.png",
+  "Quality": "Rare",
+  "ItemLevel": 10,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_System.Competences_Actives"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_WindStrikes.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 2,
+    "Cost": 30,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Buff",
+      "Damage",
+      "Elemental",
+      "Wind",
+      "Aoe",
+      "Duration"
+    ],
+    "Attributes": {
+      "Duration": 8.0
+    },
+    "Cast": "Root_Ability_AuraBlade"
+  },
+  "Recipe": {
+    "TimeSeconds": 1,
+    "KnowledgeRequired": false,
+    "Input": [
+      {
+        "ItemId": "Ingredient_Rune_Shard",
+        "Quantity": 2
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Id": "GoblinLab_Workbench",
+        "Type": "Crafting",
+        "Categories": [
+          "GoblinLab_Runes"
+        ],
+        "RequiredAugmentTags": [
+          "goblin_lab_power"
+        ]
+      }
+    ]
+  }
+}

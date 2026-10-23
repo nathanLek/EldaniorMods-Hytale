@@ -1,0 +1,44 @@
+{
+  "$Comment": "Immense cercle magique rouge (~60 blocs de diametre avec l'echelle 1.5 du code) fixe 60 blocs au-dessus du point d'impact du Courroux de Muspelheim ; les meteorites en tombent. Chaque couche existe en double (face haut / face bas) car une particule n'a qu'une face. Duree de vie (24 s) reglee dans les spawners.",
+  "Spawners": [
+    {
+      "SpawnerId": "Muspelheim_Sky_Circle_Glow",
+      "PositionOffset": {
+        "Y": 0.3
+      }
+    },
+    {
+      "SpawnerId": "Muspelheim_Sky_Circle_Glow_Down",
+      "PositionOffset": {
+        "Y": 0.3
+      }
+    },
+    {
+      "SpawnerId": "Muspelheim_Sky_Circle_Runes",
+      "PositionOffset": {
+        "Y": 0.0
+      }
+    },
+    {
+      "SpawnerId": "Muspelheim_Sky_Circle_Runes_Down",
+      "PositionOffset": {
+        "Y": 0.0
+      }
+    },
+    {
+      "SpawnerId": "Muspelheim_Sky_Circle_Inner",
+      "PositionOffset": {
+        "Y": -0.3
+      }
+    },
+    {
+      "SpawnerId": "Muspelheim_Sky_Circle_Inner_Down",
+      "PositionOffset": {
+        "Y": -0.3
+      }
+    }
+  ],
+  "IsImportant": true,
+  "CullDistance": 256,
+  "LifeSpan": 0.1
+}

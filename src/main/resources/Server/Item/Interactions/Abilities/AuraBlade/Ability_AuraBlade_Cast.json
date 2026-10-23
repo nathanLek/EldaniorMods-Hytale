@@ -1,0 +1,70 @@
+{
+  "Type": "StatsCondition",
+  "UseAbilityCost": true,
+  "Failed": "Ability_Cast_Fail",
+  "Next": {
+    "Type": "Parallel",
+    "Interactions": [
+      {
+        "Interactions": [
+          {
+            "Type": "Simple",
+            "RunTime": 0.1,
+            "HorizontalSpeedMultiplier": 0.6,
+            "Effects": {
+              "ItemPlayerAnimationsId": "Sword",
+              "ItemAnimationId": "CastEnchant",
+              "CameraEffect": "Ability_Cast_Generic",
+              "WorldSoundEventId": "SFX_Ability_Wind_Strike_Imbue",
+              "LocalSoundEventId": "SFX_Ability_Wind_Strike_Imbue_Local"
+            }
+          },
+          {
+            "Type": "GrantAbilityCharges",
+            "Effect": "Ability_AuraBlade_Buff",
+            "Duration": 10,
+            "DurationAttribute": "Duration",
+            "Trigger": "OnPrimaryActivation",
+            "MaxCharges": 3,
+            "PerActivationInteraction": {
+              "Interactions": [
+                {
+                  "Type": "Simple",
+                  "RunTime": 0.17,
+                  "Effects": {
+                    "WorldSoundEventId": "SFX_Ability_Wind_Strike_Slash"
+                  },
+                  "Next": {
+                    "Type": "LaunchAbilityProjectile",
+                    "Projectile": "Projectile_Config_Ability_AuraBlade",
+                    "Pierce": true,
+                    "Distance": 8,
+                    "ScaleAttribute": "AoeScale",
+                    "SpeedAttribute": "Speed",
+                    "Lifetime": 3.5
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "TriggerCooldown",
+            "UseAbilityCooldown": true
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "ChangeStat",
+            "UseAbilityCost": true
+          }
+        ]
+      }
+    ]
+  }
+}

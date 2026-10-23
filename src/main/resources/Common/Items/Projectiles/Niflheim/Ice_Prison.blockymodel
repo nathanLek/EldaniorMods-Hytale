@@ -1,0 +1,1375 @@
+{
+  "nodes": [
+    {
+      "id": "1",
+      "name": "Origin",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
+      "shape": {
+        "type": "none",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "settings": {
+          "isPiece": false
+        },
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "standard",
+        "unwrapMode": "custom",
+        "textureLayout": {}
+      },
+      "children": [
+        {
+          "id": "2",
+          "name": "Spike_2",
+          "position": {
+            "x": 0.0,
+            "y": 0,
+            "z": 0.0
+          },
+          "orientation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "shape": {
+            "type": "quad",
+            "offset": {
+              "x": 0,
+              "y": 24.0,
+              "z": 0
+            },
+            "stretch": {
+              "x": 0.9,
+              "y": 0.9,
+              "z": 1
+            },
+            "settings": {
+              "isPiece": false,
+              "size": {
+                "x": 16,
+                "y": 48,
+                "z": 0
+              },
+              "normal": "+Z"
+            },
+            "textureLayout": {
+              "front": {
+                "offset": {
+                  "x": 0,
+                  "y": 0
+                },
+                "mirror": {
+                  "x": false,
+                  "y": false
+                },
+                "angle": 0
+              }
+            },
+            "unwrapMode": "custom",
+            "visible": true,
+            "doubleSided": true,
+            "shadingMode": "fullbright"
+          },
+          "children": [
+            {
+              "id": "3",
+              "name": "Spike_3_X",
+              "position": {
+                "x": 0,
+                "y": -24.0,
+                "z": 0
+              },
+              "orientation": {
+                "x": 0.0,
+                "y": 0.707107,
+                "z": 0.0,
+                "w": 0.707107
+              },
+              "shape": {
+                "type": "quad",
+                "offset": {
+                  "x": 0,
+                  "y": 24.0,
+                  "z": 0
+                },
+                "stretch": {
+                  "x": 0.9,
+                  "y": 0.9,
+                  "z": 1
+                },
+                "settings": {
+                  "isPiece": false,
+                  "size": {
+                    "x": 16,
+                    "y": 48,
+                    "z": 0
+                  },
+                  "normal": "+Z"
+                },
+                "textureLayout": {
+                  "front": {
+                    "offset": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "mirror": {
+                      "x": false,
+                      "y": false
+                    },
+                    "angle": 0
+                  }
+                },
+                "unwrapMode": "custom",
+                "visible": true,
+                "doubleSided": true,
+                "shadingMode": "fullbright"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "4",
+          "name": "Spike_4",
+          "position": {
+            "x": -0.442,
+            "y": 19.528,
+            "z": 5.984
+          },
+          "orientation": {
+            "x": 0.267342,
+            "y": -0.035543,
+            "z": 0.009868,
+            "w": 0.962895
+          },
+          "shape": {
+            "type": "quad",
+            "offset": {
+              "x": 0,
+              "y": 24.0,
+              "z": 0
+            },
+            "stretch": {
+              "x": 0.5862181433337714,
+              "y": 0.5862181433337714,
+              "z": 1
+            },
+            "settings": {
+              "isPiece": false,
+              "size": {
+                "x": 16,
+                "y": 48,
+                "z": 0
+              },
+              "normal": "+Z"
+            },
+            "textureLayout": {
+              "front": {
+                "offset": {
+                  "x": 0,
+                  "y": 0
+                },
+                "mirror": {
+                  "x": false,
+                  "y": false
+                },
+                "angle": 0
+              }
+            },
+            "unwrapMode": "custom",
+            "visible": true,
+            "doubleSided": true,
+            "shadingMode": "fullbright"
+          },
+          "children": [
+            {
+              "id": "5",
+              "name": "Spike_5_X",
+              "position": {
+                "x": 0,
+                "y": -24.0,
+                "z": 0
+              },
+              "orientation": {
+                "x": 0.0,
+                "y": 0.707107,
+                "z": 0.0,
+                "w": 0.707107
+              },
+              "shape": {
+                "type": "quad",
+                "offset": {
+                  "x": 0,
+                  "y": 24.0,
+                  "z": 0
+                },
+                "stretch": {
+                  "x": 0.5862181433337714,
+                  "y": 0.5862181433337714,
+                  "z": 1
+                },
+                "settings": {
+                  "isPiece": false,
+                  "size": {
+                    "x": 16,
+                    "y": 48,
+                    "z": 0
+                  },
+                  "normal": "+Z"
+                },
+                "textureLayout": {
+                  "front": {
+                    "offset": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "mirror": {
+                      "x": false,
+                      "y": false
+                    },
+                    "angle": 0
+                  }
+                },
+                "unwrapMode": "custom",
+                "visible": true,
+                "doubleSided": true,
+                "shadingMode": "fullbright"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "6",
+          "name": "Spike_6",
+          "position": {
+            "x": 3.319,
+            "y": 1.74,
+            "z": 4.998
+          },
+          "orientation": {
+            "x": 0.324507,
+            "y": 0.27183,
+            "z": -0.097939,
+            "w": 0.900673
+          },
+          "shape": {
+            "type": "quad",
+            "offset": {
+              "x": 0,
+              "y": 24.0,
+              "z": 0
+            },
+            "stretch": {
+              "x": 0.8037178665947102,
+              "y": 0.8037178665947102,
+              "z": 1
+            },
+            "settings": {
+              "isPiece": false,
+              "size": {
+                "x": 16,
+                "y": 48,
+                "z": 0
+              },
+              "normal": "+Z"
+            },
+            "textureLayout": {
+              "front": {
+                "offset": {
+                  "x": 0,
+                  "y": 0
+                },
+                "mirror": {
+                  "x": false,
+                  "y": false
+                },
+                "angle": 0
+              }
+            },
+            "unwrapMode": "custom",
+            "visible": true,
+            "doubleSided": true,
+            "shadingMode": "fullbright"
+          },
+          "children": [
+            {
+              "id": "7",
+              "name": "Spike_7_X",
+              "position": {
+                "x": 0,
+                "y": -24.0,
+                "z": 0
+              },
+              "orientation": {
+                "x": 0.0,
+                "y": 0.707107,
+                "z": 0.0,
+                "w": 0.707107
+              },
+              "shape": {
+                "type": "quad",
+                "offset": {
+                  "x": 0,
+                  "y": 24.0,
+                  "z": 0
+                },
+                "stretch": {
+                  "x": 0.8037178665947102,
+                  "y": 0.8037178665947102,
+                  "z": 1
+                },
+                "settings": {
+                  "isPiece": false,
+                  "size": {
+                    "x": 16,
+                    "y": 48,
+                    "z": 0
+                  },
+                  "normal": "+Z"
+                },
+                "textureLayout": {
+                  "front": {
+                    "offset": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "mirror": {
+                      "x": false,
+                      "y": false
+                    },
+                    "angle": 0
+                  }
+                },
+                "unwrapMode": "custom",
+                "visible": true,
+                "doubleSided": true,
+                "shadingMode": "fullbright"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "8",
+          "name": "Spike_8",
+          "position": {
+            "x": 4.876,
+            "y": 2.096,
+            "z": 3.497
+          },
+          "orientation": {
+            "x": 0.321308,
+            "y": 0.425912,
+            "z": -0.164969,
+            "w": 0.829545
+          },
+          "shape": {
+            "type": "quad",
+            "offset": {
+              "x": 0,
+              "y": 24.0,
+              "z": 0
+            },
+            "stretch": {
+              "x": 0.5953565066719326,
+              "y": 0.5953565066719326,
+              "z": 1
+            },
+            "settings": {
+              "isPiece": false,
+              "size": {
+                "x": 16,
+                "y": 48,
+                "z": 0
+              },
+              "normal": "+Z"
+            },
+            "textureLayout": {
+              "front": {
+                "offset": {
+                  "x": 0,
+                  "y": 0
+                },
+                "mirror": {
+                  "x": false,
+                  "y": false
+                },
+                "angle": 0
+              }
+            },
+            "unwrapMode": "custom",
+            "visible": true,
+            "doubleSided": true,
+            "shadingMode": "fullbright"
+          },
+          "children": [
+            {
+              "id": "9",
+              "name": "Spike_9_X",
+              "position": {
+                "x": 0,
+                "y": -24.0,
+                "z": 0
+              },
+              "orientation": {
+                "x": 0.0,
+                "y": 0.707107,
+                "z": 0.0,
+                "w": 0.707107
+              },
+              "shape": {
+                "type": "quad",
+                "offset": {
+                  "x": 0,
+                  "y": 24.0,
+                  "z": 0
+                },
+                "stretch": {
+                  "x": 0.5953565066719326,
+                  "y": 0.5953565066719326,
+                  "z": 1
+                },
+                "settings": {
+                  "isPiece": false,
+                  "size": {
+                    "x": 16,
+                    "y": 48,
+                    "z": 0
+                  },
+                  "normal": "+Z"
+                },
+                "textureLayout": {
+                  "front": {
+                    "offset": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "mirror": {
+                      "x": false,
+                      "y": false
+                    },
+                    "angle": 0
+                  }
+                },
+                "unwrapMode": "custom",
+                "visible": true,
+                "doubleSided": true,
+                "shadingMode": "fullbright"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "10",
+          "name": "Spike_10",
+          "position": {
+            "x": 5.963,
+            "y": 3.714,
+            "z": -0.666
+          },
+          "orientation": {
+            "x": 0.323612,
+            "y": 0.651623,
+            "z": -0.361751,
+            "w": 0.582922
+          },
+          "shape": {
+            "type": "quad",
+            "offset": {
+              "x": 0,
+              "y": 24.0,
+              "z": 0
+            },
+            "stretch": {
+              "x": 0.6616194823035073,
+              "y": 0.6616194823035073,
+              "z": 1
+            },
+            "settings": {
+              "isPiece": false,
+              "size": {
+                "x": 16,
+                "y": 48,
+                "z": 0
+              },
+              "normal": "+Z"
+            },
+            "textureLayout": {
+              "front": {
+                "offset": {
+                  "x": 0,
+                  "y": 0
+                },
+                "mirror": {
+                  "x": false,
+                  "y": false
+                },
+                "angle": 0
+              }
+            },
+            "unwrapMode": "custom",
+            "visible": true,
+            "doubleSided": true,
+            "shadingMode": "fullbright"
+          },
+          "children": [
+            {
+              "id": "11",
+              "name": "Spike_11_X",
+              "position": {
+                "x": 0,
+                "y": -24.0,
+                "z": 0
+              },
+              "orientation": {
+                "x": 0.0,
+                "y": 0.707107,
+                "z": 0.0,
+                "w": 0.707107
+              },
+              "shape": {
+                "type": "quad",
+                "offset": {
+                  "x": 0,
+                  "y": 24.0,
+                  "z": 0
+                },
+                "stretch": {
+                  "x": 0.6616194823035073,
+                  "y": 0.6616194823035073,
+                  "z": 1
+                },
+                "settings": {
+                  "isPiece": false,
+                  "size": {
+                    "x": 16,
+                    "y": 48,
+                    "z": 0
+                  },
+                  "normal": "+Z"
+                },
+                "textureLayout": {
+                  "front": {
+                    "offset": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "mirror": {
+                      "x": false,
+                      "y": false
+                    },
+                    "angle": 0
+                  }
+                },
+                "unwrapMode": "custom",
+                "visible": true,
+                "doubleSided": true,
+                "shadingMode": "fullbright"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "12",
+          "name": "Spike_12",
+          "position": {
+            "x": 4.318,
+            "y": 17.313,
+            "z": -4.166
+          },
+          "orientation": {
+            "x": 0.204026,
+            "y": 0.785149,
+            "z": -0.480277,
+            "w": 0.333539
+          },
+          "shape": {
+            "type": "quad",
+            "offset": {
+              "x": 0,
+              "y": 24.0,
+              "z": 0
+            },
+            "stretch": {
+              "x": 0.7483402373253901,
+              "y": 0.7483402373253901,
+              "z": 1
+            },
+            "settings": {
+              "isPiece": false,
+              "size": {
+                "x": 16,
+                "y": 48,
+                "z": 0
+              },
+              "normal": "+Z"
+            },
+            "textureLayout": {
+              "front": {
+                "offset": {
+                  "x": 0,
+                  "y": 0
+                },
+                "mirror": {
+                  "x": false,
+                  "y": false
+                },
+                "angle": 0
+              }
+            },
+            "unwrapMode": "custom",
+            "visible": true,
+            "doubleSided": true,
+            "shadingMode": "fullbright"
+          },
+          "children": [
+            {
+              "id": "13",
+              "name": "Spike_13_X",
+              "position": {
+                "x": 0,
+                "y": -24.0,
+                "z": 0
+              },
+              "orientation": {
+                "x": 0.0,
+                "y": 0.707107,
+                "z": 0.0,
+                "w": 0.707107
+              },
+              "shape": {
+                "type": "quad",
+                "offset": {
+                  "x": 0,
+                  "y": 24.0,
+                  "z": 0
+                },
+                "stretch": {
+                  "x": 0.7483402373253901,
+                  "y": 0.7483402373253901,
+                  "z": 1
+                },
+                "settings": {
+                  "isPiece": false,
+                  "size": {
+                    "x": 16,
+                    "y": 48,
+                    "z": 0
+                  },
+                  "normal": "+Z"
+                },
+                "textureLayout": {
+                  "front": {
+                    "offset": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "mirror": {
+                      "x": false,
+                      "y": false
+                    },
+                    "angle": 0
+                  }
+                },
+                "unwrapMode": "custom",
+                "visible": true,
+                "doubleSided": true,
+                "shadingMode": "fullbright"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "14",
+          "name": "Spike_14",
+          "position": {
+            "x": 0.516,
+            "y": 25.754,
+            "z": -5.978
+          },
+          "orientation": {
+            "x": 0.009997,
+            "y": 0.971746,
+            "z": -0.23207,
+            "w": 0.041862
+          },
+          "shape": {
+            "type": "quad",
+            "offset": {
+              "x": 0,
+              "y": 24.0,
+              "z": 0
+            },
+            "stretch": {
+              "x": 0.6948046431658381,
+              "y": 0.6948046431658381,
+              "z": 1
+            },
+            "settings": {
+              "isPiece": false,
+              "size": {
+                "x": 16,
+                "y": 48,
+                "z": 0
+              },
+              "normal": "+Z"
+            },
+            "textureLayout": {
+              "front": {
+                "offset": {
+                  "x": 0,
+                  "y": 0
+                },
+                "mirror": {
+                  "x": false,
+                  "y": false
+                },
+                "angle": 0
+              }
+            },
+            "unwrapMode": "custom",
+            "visible": true,
+            "doubleSided": true,
+            "shadingMode": "fullbright"
+          },
+          "children": [
+            {
+              "id": "15",
+              "name": "Spike_15_X",
+              "position": {
+                "x": 0,
+                "y": -24.0,
+                "z": 0
+              },
+              "orientation": {
+                "x": 0.0,
+                "y": 0.707107,
+                "z": 0.0,
+                "w": 0.707107
+              },
+              "shape": {
+                "type": "quad",
+                "offset": {
+                  "x": 0,
+                  "y": 24.0,
+                  "z": 0
+                },
+                "stretch": {
+                  "x": 0.6948046431658381,
+                  "y": 0.6948046431658381,
+                  "z": 1
+                },
+                "settings": {
+                  "isPiece": false,
+                  "size": {
+                    "x": 16,
+                    "y": 48,
+                    "z": 0
+                  },
+                  "normal": "+Z"
+                },
+                "textureLayout": {
+                  "front": {
+                    "offset": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "mirror": {
+                      "x": false,
+                      "y": false
+                    },
+                    "angle": 0
+                  }
+                },
+                "unwrapMode": "custom",
+                "visible": true,
+                "doubleSided": true,
+                "shadingMode": "fullbright"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "16",
+          "name": "Spike_16",
+          "position": {
+            "x": -0.817,
+            "y": 9.254,
+            "z": -5.944
+          },
+          "orientation": {
+            "x": -0.017496,
+            "y": 0.964321,
+            "z": -0.25579,
+            "w": -0.065959
+          },
+          "shape": {
+            "type": "quad",
+            "offset": {
+              "x": 0,
+              "y": 24.0,
+              "z": 0
+            },
+            "stretch": {
+              "x": 0.9580631795600157,
+              "y": 0.9580631795600157,
+              "z": 1
+            },
+            "settings": {
+              "isPiece": false,
+              "size": {
+                "x": 16,
+                "y": 48,
+                "z": 0
+              },
+              "normal": "+Z"
+            },
+            "textureLayout": {
+              "front": {
+                "offset": {
+                  "x": 0,
+                  "y": 0
+                },
+                "mirror": {
+                  "x": false,
+                  "y": false
+                },
+                "angle": 0
+              }
+            },
+            "unwrapMode": "custom",
+            "visible": true,
+            "doubleSided": true,
+            "shadingMode": "fullbright"
+          },
+          "children": [
+            {
+              "id": "17",
+              "name": "Spike_17_X",
+              "position": {
+                "x": 0,
+                "y": -24.0,
+                "z": 0
+              },
+              "orientation": {
+                "x": 0.0,
+                "y": 0.707107,
+                "z": 0.0,
+                "w": 0.707107
+              },
+              "shape": {
+                "type": "quad",
+                "offset": {
+                  "x": 0,
+                  "y": 24.0,
+                  "z": 0
+                },
+                "stretch": {
+                  "x": 0.9580631795600157,
+                  "y": 0.9580631795600157,
+                  "z": 1
+                },
+                "settings": {
+                  "isPiece": false,
+                  "size": {
+                    "x": 16,
+                    "y": 48,
+                    "z": 0
+                  },
+                  "normal": "+Z"
+                },
+                "textureLayout": {
+                  "front": {
+                    "offset": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "mirror": {
+                      "x": false,
+                      "y": false
+                    },
+                    "angle": 0
+                  }
+                },
+                "unwrapMode": "custom",
+                "visible": true,
+                "doubleSided": true,
+                "shadingMode": "fullbright"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "18",
+          "name": "Spike_18",
+          "position": {
+            "x": -3.97,
+            "y": 19.167,
+            "z": -4.499
+          },
+          "orientation": {
+            "x": -0.144609,
+            "y": 0.853612,
+            "z": -0.382411,
+            "w": -0.322794
+          },
+          "shape": {
+            "type": "quad",
+            "offset": {
+              "x": 0,
+              "y": 24.0,
+              "z": 0
+            },
+            "stretch": {
+              "x": 0.7361987713628657,
+              "y": 0.7361987713628657,
+              "z": 1
+            },
+            "settings": {
+              "isPiece": false,
+              "size": {
+                "x": 16,
+                "y": 48,
+                "z": 0
+              },
+              "normal": "+Z"
+            },
+            "textureLayout": {
+              "front": {
+                "offset": {
+                  "x": 0,
+                  "y": 0
+                },
+                "mirror": {
+                  "x": false,
+                  "y": false
+                },
+                "angle": 0
+              }
+            },
+            "unwrapMode": "custom",
+            "visible": true,
+            "doubleSided": true,
+            "shadingMode": "fullbright"
+          },
+          "children": [
+            {
+              "id": "19",
+              "name": "Spike_19_X",
+              "position": {
+                "x": 0,
+                "y": -24.0,
+                "z": 0
+              },
+              "orientation": {
+                "x": 0.0,
+                "y": 0.707107,
+                "z": 0.0,
+                "w": 0.707107
+              },
+              "shape": {
+                "type": "quad",
+                "offset": {
+                  "x": 0,
+                  "y": 24.0,
+                  "z": 0
+                },
+                "stretch": {
+                  "x": 0.7361987713628657,
+                  "y": 0.7361987713628657,
+                  "z": 1
+                },
+                "settings": {
+                  "isPiece": false,
+                  "size": {
+                    "x": 16,
+                    "y": 48,
+                    "z": 0
+                  },
+                  "normal": "+Z"
+                },
+                "textureLayout": {
+                  "front": {
+                    "offset": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "mirror": {
+                      "x": false,
+                      "y": false
+                    },
+                    "angle": 0
+                  }
+                },
+                "unwrapMode": "custom",
+                "visible": true,
+                "doubleSided": true,
+                "shadingMode": "fullbright"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "20",
+          "name": "Spike_20",
+          "position": {
+            "x": -5.955,
+            "y": 1.788,
+            "z": -0.735
+          },
+          "orientation": {
+            "x": -0.157504,
+            "y": 0.727676,
+            "z": -0.178139,
+            "w": -0.643387
+          },
+          "shape": {
+            "type": "quad",
+            "offset": {
+              "x": 0,
+              "y": 24.0,
+              "z": 0
+            },
+            "stretch": {
+              "x": 0.6529793564096633,
+              "y": 0.6529793564096633,
+              "z": 1
+            },
+            "settings": {
+              "isPiece": false,
+              "size": {
+                "x": 16,
+                "y": 48,
+                "z": 0
+              },
+              "normal": "+Z"
+            },
+            "textureLayout": {
+              "front": {
+                "offset": {
+                  "x": 0,
+                  "y": 0
+                },
+                "mirror": {
+                  "x": false,
+                  "y": false
+                },
+                "angle": 0
+              }
+            },
+            "unwrapMode": "custom",
+            "visible": true,
+            "doubleSided": true,
+            "shadingMode": "fullbright"
+          },
+          "children": [
+            {
+              "id": "21",
+              "name": "Spike_21_X",
+              "position": {
+                "x": 0,
+                "y": -24.0,
+                "z": 0
+              },
+              "orientation": {
+                "x": 0.0,
+                "y": 0.707107,
+                "z": 0.0,
+                "w": 0.707107
+              },
+              "shape": {
+                "type": "quad",
+                "offset": {
+                  "x": 0,
+                  "y": 24.0,
+                  "z": 0
+                },
+                "stretch": {
+                  "x": 0.6529793564096633,
+                  "y": 0.6529793564096633,
+                  "z": 1
+                },
+                "settings": {
+                  "isPiece": false,
+                  "size": {
+                    "x": 16,
+                    "y": 48,
+                    "z": 0
+                  },
+                  "normal": "+Z"
+                },
+                "textureLayout": {
+                  "front": {
+                    "offset": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "mirror": {
+                      "x": false,
+                      "y": false
+                    },
+                    "angle": 0
+                  }
+                },
+                "unwrapMode": "custom",
+                "visible": true,
+                "doubleSided": true,
+                "shadingMode": "fullbright"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "22",
+          "name": "Spike_22",
+          "position": {
+            "x": -5.254,
+            "y": 9.424,
+            "z": 2.897
+          },
+          "orientation": {
+            "x": -0.309309,
+            "y": 0.47454,
+            "z": -0.182652,
+            "w": -0.803603
+          },
+          "shape": {
+            "type": "quad",
+            "offset": {
+              "x": 0,
+              "y": 24.0,
+              "z": 0
+            },
+            "stretch": {
+              "x": 0.8427809317538194,
+              "y": 0.8427809317538194,
+              "z": 1
+            },
+            "settings": {
+              "isPiece": false,
+              "size": {
+                "x": 16,
+                "y": 48,
+                "z": 0
+              },
+              "normal": "+Z"
+            },
+            "textureLayout": {
+              "front": {
+                "offset": {
+                  "x": 0,
+                  "y": 0
+                },
+                "mirror": {
+                  "x": false,
+                  "y": false
+                },
+                "angle": 0
+              }
+            },
+            "unwrapMode": "custom",
+            "visible": true,
+            "doubleSided": true,
+            "shadingMode": "fullbright"
+          },
+          "children": [
+            {
+              "id": "23",
+              "name": "Spike_23_X",
+              "position": {
+                "x": 0,
+                "y": -24.0,
+                "z": 0
+              },
+              "orientation": {
+                "x": 0.0,
+                "y": 0.707107,
+                "z": 0.0,
+                "w": 0.707107
+              },
+              "shape": {
+                "type": "quad",
+                "offset": {
+                  "x": 0,
+                  "y": 24.0,
+                  "z": 0
+                },
+                "stretch": {
+                  "x": 0.8427809317538194,
+                  "y": 0.8427809317538194,
+                  "z": 1
+                },
+                "settings": {
+                  "isPiece": false,
+                  "size": {
+                    "x": 16,
+                    "y": 48,
+                    "z": 0
+                  },
+                  "normal": "+Z"
+                },
+                "textureLayout": {
+                  "front": {
+                    "offset": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "mirror": {
+                      "x": false,
+                      "y": false
+                    },
+                    "angle": 0
+                  }
+                },
+                "unwrapMode": "custom",
+                "visible": true,
+                "doubleSided": true,
+                "shadingMode": "fullbright"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "24",
+          "name": "Spike_24",
+          "position": {
+            "x": -3.342,
+            "y": 23.831,
+            "z": 4.983
+          },
+          "orientation": {
+            "x": -0.303487,
+            "y": 0.27609,
+            "z": -0.092353,
+            "w": -0.907271
+          },
+          "shape": {
+            "type": "quad",
+            "offset": {
+              "x": 0,
+              "y": 24.0,
+              "z": 0
+            },
+            "stretch": {
+              "x": 0.8994972168647857,
+              "y": 0.8994972168647857,
+              "z": 1
+            },
+            "settings": {
+              "isPiece": false,
+              "size": {
+                "x": 16,
+                "y": 48,
+                "z": 0
+              },
+              "normal": "+Z"
+            },
+            "textureLayout": {
+              "front": {
+                "offset": {
+                  "x": 0,
+                  "y": 0
+                },
+                "mirror": {
+                  "x": false,
+                  "y": false
+                },
+                "angle": 0
+              }
+            },
+            "unwrapMode": "custom",
+            "visible": true,
+            "doubleSided": true,
+            "shadingMode": "fullbright"
+          },
+          "children": [
+            {
+              "id": "25",
+              "name": "Spike_25_X",
+              "position": {
+                "x": 0,
+                "y": -24.0,
+                "z": 0
+              },
+              "orientation": {
+                "x": 0.0,
+                "y": 0.707107,
+                "z": 0.0,
+                "w": 0.707107
+              },
+              "shape": {
+                "type": "quad",
+                "offset": {
+                  "x": 0,
+                  "y": 24.0,
+                  "z": 0
+                },
+                "stretch": {
+                  "x": 0.8994972168647857,
+                  "y": 0.8994972168647857,
+                  "z": 1
+                },
+                "settings": {
+                  "isPiece": false,
+                  "size": {
+                    "x": 16,
+                    "y": 48,
+                    "z": 0
+                  },
+                  "normal": "+Z"
+                },
+                "textureLayout": {
+                  "front": {
+                    "offset": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "mirror": {
+                      "x": false,
+                      "y": false
+                    },
+                    "angle": 0
+                  }
+                },
+                "unwrapMode": "custom",
+                "visible": true,
+                "doubleSided": true,
+                "shadingMode": "fullbright"
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "lod": "auto"
+}

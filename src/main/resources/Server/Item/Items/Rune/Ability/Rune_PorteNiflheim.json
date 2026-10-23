@@ -1,0 +1,44 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de la Porte de Niflheim",
+    "Description": "Sort divin de glace (Mage, Dragon). Une immense porte divine de glace apparaît dans les airs au-dessus de vous et s'ouvre sur le monde des glaces : une onde de givre en jaillit et gèle tout sur 35 blocs. Sols, murs et arbres sont pris dans la neige et la glace, des pics et stalagmites jaillissent du sol et la brume glacée de Niflheim recouvre la zone. Chaque ennemi atteint est emprisonné dans des piques de glace pendant 20 s ; un ennemi emprisonné subit 50 % de dégâts en plus, et le frapper fait exploser sa prison (400 dégâts de glace et éclats). Pendant la première minute, des stalactites tombent du ciel sur les ennemis (150 dégâts). Tant que le givre est présent, les ennemis dans la zone subissent l'engelure : 2 dégâts de glace par seconde, vitesse et endurance réduites de 50 %. Au bout de 3 minutes, la glace éclate et le terrain est restauré. Épargne votre groupe, votre guilde et votre famille. Coût : 2000 mana. Recharge : 5 s (valeur de test)."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_PorteNiflheim.png",
+  "Quality": "Divin",
+  "ItemLevel": 100,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_System.Competences_Actives"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_PorteNiflheim.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 5,
+    "Cost": 2000,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Aoe",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_PorteNiflheim"
+  }
+}

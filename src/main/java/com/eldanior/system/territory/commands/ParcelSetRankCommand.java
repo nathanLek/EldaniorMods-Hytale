@@ -33,7 +33,6 @@ public class ParcelSetRankCommand extends AbstractAsyncCommand {
         this.rankArg = this.withRequiredArg("rang", "E|D|C|B|A|S", ArgTypes.STRING);
     }
 
-    @Override
     protected boolean canGeneratePermission() { return false; }
 
     @Nonnull

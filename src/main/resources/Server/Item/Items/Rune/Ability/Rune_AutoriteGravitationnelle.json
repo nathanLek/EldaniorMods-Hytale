@@ -1,0 +1,45 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de l'Autorité Gravitationnelle",
+    "Description": "Sort légendaire de gravité (Mage, Assassin, Dragon). Vous imposez votre gravité à tout ce qui vous entoure : pendant 30 s, chaque ennemi qui se trouve ou entre dans un rayon de 20 blocs autour de vous voit le sol s'effondrer sous ses pieds (cratère de 7 blocs de diamètre, fissures), une colonne de gravité noir-violet s'abat sur lui, et il reste cloué au sol, incapable de bouger, en subissant 2 dégâts par seconde jusqu'à la fin. La gravité est invisible : seuls le sol et les colonnes la trahissent. Jusqu'à 10 ennemis écrasés à la fois. Le terrain est restauré après 3 minutes. Épargne votre groupe, votre guilde et votre famille. Coût : 1200 mana. Recharge : 5 s (valeur de test)."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_AutoriteGravitationnelle.png",
+  "Quality": "Legendary",
+  "ItemLevel": 90,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_System.Competences_Actives"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_AutoriteGravitationnelle.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 5,
+    "Cost": 1200,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Aoe",
+      "Duration",
+      "Damage"
+    ],
+    "Cast": "Root_Ability_AutoriteGravitationnelle"
+  }
+}

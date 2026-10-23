@@ -32,7 +32,6 @@ public class ClassInfoCommand extends AbstractAsyncCommand {
         this.playerArg = this.withRequiredArg("joueur", "Joueur cible", ArgTypes.STRING);
     }
 
-    @Override
     protected boolean canGeneratePermission() { return true; }
 
     @Nonnull

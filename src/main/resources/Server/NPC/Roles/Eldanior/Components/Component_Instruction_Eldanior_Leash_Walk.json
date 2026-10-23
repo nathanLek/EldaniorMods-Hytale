@@ -1,0 +1,35 @@
+{
+  "Type": "Component",
+  "Class": "Instruction",
+  "Interface": "Hytale.Instruction.Idle",
+  "Parameters": {
+    "WanderRadius": {
+      "Value": 10,
+      "Description": "Non utilise : exige par l'interface du gabarit."
+    }
+  },
+  "Content": {
+    "Weight": 100,
+    "Instructions": [
+      {
+        "$Comment": "Promenade / errance : rejoint le point de laisse en marchant, avec la recherche de chemin.",
+        "Sensor": {
+          "Type": "Leash",
+          "Range": 1.5
+        },
+        "BodyMotion": {
+          "Type": "Seek",
+          "SlowDownDistance": 1.5,
+          "StopDistance": 0.8,
+          "RelativeSpeed": 0.28,
+          "UsePathfinder": true
+        }
+      },
+      {
+        "BodyMotion": {
+          "Type": "Nothing"
+        }
+      }
+    ]
+  }
+}

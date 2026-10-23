@@ -1,0 +1,72 @@
+{
+  "$Comment": "Abîme du Chaos : posture d'incantation, puis ChaosAbyss (Java) declenche le sort.",
+  "Type": "StatsCondition",
+  "UseAbilityCost": true,
+  "Failed": "Ability_Cast_Fail",
+  "Next": {
+    "Type": "Parallel",
+    "Interactions": [
+      {
+        "Interactions": [
+          {
+            "Type": "Simple",
+            "RunTime": 1.0,
+            "HorizontalSpeedMultiplier": 0.3,
+            "Effects": {
+              "ItemPlayerAnimationsId": "Staff",
+              "ItemAnimationId": "CastSummonCharging",
+              "WaitForAnimationToFinish": false,
+              "CameraEffect": "Ability_Cast_Generic",
+              "WorldSoundEventId": "SFX_Portal_Void",
+              "Particles": [
+                {
+                  "SystemId": "Chaos_Burst",
+                  "TargetEntityPart": "Entity",
+                  "TargetNodeName": "R-Hand",
+                  "Scale": 0.6
+                },
+                {
+                  "SystemId": "Chaos_Burst",
+                  "TargetEntityPart": "Entity",
+                  "TargetNodeName": "L-Hand",
+                  "Scale": 0.6
+                }
+              ]
+            }
+          },
+          {
+            "Type": "ChaosAbyss",
+            "RunTime": 0.05
+          },
+          {
+            "Type": "Simple",
+            "RunTime": 0.6,
+            "HorizontalSpeedMultiplier": 0.5,
+            "Effects": {
+              "ItemPlayerAnimationsId": "Staff",
+              "ItemAnimationId": "CastSummon",
+              "ClearAnimationOnFinish": true,
+              "WorldSoundEventId": "SFX_Portal_Void"
+            }
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "TriggerCooldown",
+            "UseAbilityCooldown": true
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "ChangeStat",
+            "UseAbilityCost": true
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -266,6 +266,7 @@ public class AdminTab {
             data.setAttributePoints(0);
             data.setPlayerClass("Novice"); data.setPlayerClassId("novice");
             data.forgetAllSkills(); data.resetTitles();
+            com.eldanior.system.skills.runes.RuneManager.wipeAllRunes(tRef, tStore);
             // Liberer le slot de decret si le joueur avait un rang noble
             String oldRank = data.getNobilityRank();
             if (oldRank != null && !"ROTURIER".equals(oldRank) && !"CHEVALIER".equals(oldRank) && !"ROI".equals(oldRank)) {
@@ -381,6 +382,7 @@ public class AdminTab {
         return executeOnTarget(targetRef, (tRef, tStore, data) -> {
             data.setPlayerClassId(classId); data.setPlayerClass(model.getDisplayName());
             data.forgetAllSkills();
+            com.eldanior.system.skills.runes.RuneManager.purgeDisallowedRunes(tRef, tStore, data);
             targetRef.sendMessage(Message.raw("Classe: " + model.getDisplayName()));
         });
     }

@@ -1,0 +1,45 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune du Courroux de Fūjin",
+    "Description": "Sort divin de vent (Archer, Assassin, Dragon). Pendant 25 s, un cyclone se forme là où vous visez (mode test) : un œil de calme de 7 blocs de diamètre, puis un mur de vent de 5 blocs d'épaisseur qui monte à 100 blocs, s'évase et se coiffe d'une enclume d'orage, sous un plafond de nuages tournants. Une pluie battante tombe sur la zone et des éclairs frappent le sol. Le cyclone aspire tout sur 35 blocs : les ennemis glissent vers le mur, y tournoient (20 dégâts toutes les 0,6 s) jusqu'à la fin, puis sont projetés au loin (300 dégâts) ; le sol et les plantes sont arrachés, et jusqu'à 16 arbres entiers sont déracinés, aspirés dans la colonne en tournoyant puis expulsés au sommet. Le mur lance au hasard des lames de vent qui tranchent le terrain et les arbres (220 dégâts). Le terrain est restauré après 3 minutes. Épargne votre groupe, votre guilde et votre famille. Coût : 2000 mana. Recharge : 5 s (valeur de test)."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_CourrouxFujin.png",
+  "Quality": "Divin",
+  "ItemLevel": 100,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_System.Competences_Actives"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_CourrouxFujin.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 5,
+    "Cost": 2000,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Damage",
+      "Elemental",
+      "Aoe",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_CourrouxFujin"
+  }
+}

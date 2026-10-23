@@ -1,0 +1,19 @@
+{
+  "$Comment": "Ennemi dans le Voile de Nyx : silhouette eclairee de violet et etoile au-dessus de la tete (on le voit dans la nuit) ; ecran assombri sur les bords pour les joueurs ennemis. Reappliquee par le code.",
+  "Duration": 1.3,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": true,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Rune_VoileNyx.png",
+  "ApplicationEffects": {
+    "EntityTopTint": "#d6b4ff",
+    "EntityBottomTint": "#7a3cff",
+    "ScreenEffect": "ScreenEffects/Nyx_Night.png",
+    "Particles": [
+      {
+        "SystemId": "Nyx_Mark",
+        "TargetEntityPart": "Entity",
+        "TargetNodeName": "Head"
+      }
+    ]
+  }
+}

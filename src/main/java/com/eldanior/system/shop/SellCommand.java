@@ -31,7 +31,6 @@ public class SellCommand extends AbstractAsyncCommand {
         this.priceArg = this.withRequiredArg("prix", "Prix en or", ArgTypes.INTEGER);
     }
 
-    @Override
     protected boolean canGeneratePermission() { return false; }
 
     @Nonnull

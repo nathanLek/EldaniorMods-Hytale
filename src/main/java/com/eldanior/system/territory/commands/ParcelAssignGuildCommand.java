@@ -31,7 +31,6 @@ public class ParcelAssignGuildCommand extends AbstractAsyncCommand {
         this.guildArg = this.withRequiredArg("guilde", "ID ou nom de la guilde", ArgTypes.STRING);
     }
 
-    @Override
     protected boolean canGeneratePermission() { return false; }
 
     @Nonnull

@@ -1,0 +1,30 @@
+{
+  "$Comment": "Ailes de dragon (ecailles pourpres bordees d'or) du lanceur de l'Avenement de Bahamut.",
+  "Model": "Items/Projectiles/Muspelheim/Wings.blockymodel",
+  "Texture": "Items/Projectiles/Bahamut/Dragon_Wings.png",
+  "MinScale": 1.6,
+  "MaxScale": 1.6,
+  "HitBox": {
+    "Max": {
+      "X": 0.8,
+      "Y": 0.01,
+      "Z": 0.01
+    },
+    "Min": {
+      "X": -0.8,
+      "Y": -0.01,
+      "Z": -0.01
+    }
+  },
+  "Particles": [
+    {
+      "SystemId": "Fire_Charge_Charging_Constant",
+      "TargetNodeName": "",
+      "Scale": 1.5
+    }
+  ],
+  "Light": {
+    "Color": "#ff9a3a",
+    "Radius": 6
+  }
+}

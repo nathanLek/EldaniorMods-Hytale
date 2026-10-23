@@ -1,0 +1,22 @@
+{
+  "$Comment": "Aspiration du cyclone de Fujin : filets de vent et poussiere qui filent vers le mur (emis par le code, orientes vers le cyclone).",
+  "Spawners": [
+    {
+      "SpawnerId": "Fujin_Aspiration_Streak"
+    },
+    {
+      "SpawnerId": "Fujin_Aspiration_Streak",
+      "PositionOffset": {
+        "X": 1.5,
+        "Y": 0.5
+      }
+    },
+    {
+      "SpawnerId": "Fujin_Aspiration_Dust"
+    }
+  ],
+  "LifeSpan": 0.35,
+  "BoundingRadius": 20,
+  "IsImportant": true,
+  "CullDistance": 220
+}

@@ -37,7 +37,6 @@ public class TitleTwoArgCommand extends AbstractAsyncCommand {
         this.titleIdArg = this.withRequiredArg("titleId", "ID du titre", ArgTypes.STRING);
     }
 
-    @Override
     protected boolean canGeneratePermission() { return true; }
 
     @Nonnull

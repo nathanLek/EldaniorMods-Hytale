@@ -1,0 +1,21 @@
+{
+  "$Comment": "Trainee de feu laissee au sol par le souffle de Bahamut (feu au sol du piege de feu vanilla, 6 s).",
+  "Spawners": [
+    {
+      "SpawnerId": "Fire_AoE_Glow"
+    },
+    {
+      "SpawnerId": "Fire_AoE_Sparks"
+    },
+    {
+      "SpawnerId": "Fire_AoE_Floor",
+      "PositionOffset": {
+        "Y": 0.2
+      }
+    }
+  ],
+  "LifeSpan": 6,
+  "IsImportant": true,
+  "BoundingRadius": 10,
+  "CullDistance": 160
+}

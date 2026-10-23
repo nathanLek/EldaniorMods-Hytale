@@ -1,0 +1,45 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune du Sablier de Chronos",
+    "Description": "Sort divin du temps (Mage, Marchand, Dragon). Une horloge divine géante (70 blocs, aiguilles qui tournent) apparaît au-dessus de la zone visée et un sablier flotte au-dessus de vous. Le temps s'arrête pendant 30 s : les ennemis de la zone (35 blocs), et ceux qui y entrent, sont figés dans une stase verte et tous les dégâts qu'on leur inflige sont mis en réserve. Pendant tout le sort, vous laissez derrière vous en vous déplaçant quatre images rémanentes vertes figées (votre skin, votre posture), serrées dans votre sillage, et chacune de vos attaques devient un dash temporel : vous apparaissez devant l'ennemi visé (16 blocs) et le frappez (150 dégâts). Puis les aiguilles tournent à rebours : vous revenez à votre position du lancement et récupérez la vie perdue depuis ; les dégâts en réserve s'abattent en cascade sur chaque ennemi, multipliés par 1,5 (plus 200 dégâts d'onde temporelle) ; enfin le temps se brise en un éclat de temps vert et les ennemis sont libérés. Vos alliés dans la zone sont accélérés pendant tout le sort (+30 % de vitesse, endurance restaurée). Épargne votre groupe, votre guilde et votre famille. Coût : 2000 mana. Recharge : 5 s (valeur de test)."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_SablierChronos.png",
+  "Quality": "Divin",
+  "ItemLevel": 100,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_System.Competences_Actives"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_SablierChronos.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 5,
+    "Cost": 2000,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Damage",
+      "Elemental",
+      "Aoe",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_SablierChronos"
+  }
+}

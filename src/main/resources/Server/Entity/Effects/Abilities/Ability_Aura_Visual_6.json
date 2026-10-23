@@ -1,0 +1,20 @@
+{
+  "$Comment": "Visuel du palier : Aura Absolue (Roi) - or. Memes particules que la rune Enrage (Buff_Enrage) recolorees : Buff_Aura_T6. Applique en infini par RuneAuraSystem selon la dignite. Echelle : x3.",
+  "ApplicationEffects": {
+    "Particles": [
+      {
+        "SystemId": "Buff_Aura_T6",
+        "TargetNodeName": "Chest",
+        "PositionOffset": {
+          "X": 0,
+          "Y": -1,
+          "Z": 0
+        },
+        "Scale": 3.0
+      }
+    ]
+  },
+  "Duration": 8.0,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": false
+}

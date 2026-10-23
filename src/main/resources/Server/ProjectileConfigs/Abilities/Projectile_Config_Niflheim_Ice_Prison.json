@@ -1,0 +1,37 @@
+{
+  "$Comment": "Porte la prison de glace du Porte de Niflheim (deplacee par le code sur l'ennemi gele, retiree a la fin du gel). Interactions neutres obligatoires.",
+  "Model": "Niflheim_Ice_Prison",
+  "UseModelScale": true,
+  "Physics": {
+    "Type": "Standard",
+    "Gravity": 0,
+    "TerminalVelocityAir": 1,
+    "TerminalVelocityWater": 1,
+    "Bounciness": 0,
+    "SticksVertically": false
+  },
+  "LaunchForce": 0,
+  "SpawnOffset": {
+    "X": 0,
+    "Y": 0,
+    "Z": 0
+  },
+  "Interactions": {
+    "ProjectileHit": {
+      "Interactions": [
+        {
+          "Type": "Simple",
+          "RunTime": 0.01
+        }
+      ]
+    },
+    "ProjectileMiss": {
+      "Interactions": [
+        {
+          "Type": "Simple",
+          "RunTime": 0.01
+        }
+      ]
+    }
+  }
+}

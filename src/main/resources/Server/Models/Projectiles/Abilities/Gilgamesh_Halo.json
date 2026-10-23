@@ -1,0 +1,40 @@
+{
+  "$Comment": "Halo d'ange 3D au-dessus de la tete du lanceur de Gilgamesh Babylon : anneau dore en volume (32 segments) serti de gemmes, qui tourne sur lui-meme (modele genere par scripts/rune_aura_icons/gen_halo.py). HitBox large en X uniquement : le serveur masque (LOD) les entites dont la hitbox est trop petite par rapport a la distance.",
+  "Model": "Items/Projectiles/Gilgamesh/Halo.blockymodel",
+  "Texture": "Items/Projectiles/Gilgamesh/Halo.png",
+  "MinScale": 0.75,
+  "MaxScale": 0.75,
+  "HitBox": {
+    "Max": {
+      "X": 0.6,
+      "Y": 0.01,
+      "Z": 0.01
+    },
+    "Min": {
+      "X": -0.6,
+      "Y": -0.01,
+      "Z": -0.01
+    }
+  },
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Celestial/Sky_Circle_Spin.blockyanim",
+          "BlendingDuration": 0
+        }
+      ]
+    }
+  },
+  "Light": {
+    "Color": "#ffe7a0",
+    "Radius": 8
+  },
+  "Particles": [
+    {
+      "SystemId": "Gilgamesh_Sword_Glow",
+      "TargetNodeName": "",
+      "Scale": 0.7
+    }
+  ]
+}

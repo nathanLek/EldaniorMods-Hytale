@@ -1,0 +1,85 @@
+{
+  "formatVersion": 1,
+  "duration": 600,
+  "holdLastKeyframe": false,
+  "nodeAnimations": {
+    "Ripple": {
+      "position": [],
+      "orientation": [
+        {
+          "time": 0,
+          "delta": {
+            "x": 0,
+            "y": 0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "interpolationType": "linear"
+        },
+        {
+          "time": 100,
+          "delta": {
+            "x": 0,
+            "y": 0,
+            "z": 0.5,
+            "w": 0.866025
+          },
+          "interpolationType": "linear"
+        },
+        {
+          "time": 200,
+          "delta": {
+            "x": 0,
+            "y": 0,
+            "z": 0.866025,
+            "w": 0.5
+          },
+          "interpolationType": "linear"
+        },
+        {
+          "time": 300,
+          "delta": {
+            "x": 0,
+            "y": 0,
+            "z": 1.0,
+            "w": 0.0
+          },
+          "interpolationType": "linear"
+        },
+        {
+          "time": 400,
+          "delta": {
+            "x": 0,
+            "y": 0,
+            "z": 0.866025,
+            "w": -0.5
+          },
+          "interpolationType": "linear"
+        },
+        {
+          "time": 500,
+          "delta": {
+            "x": 0,
+            "y": 0,
+            "z": 0.5,
+            "w": -0.866025
+          },
+          "interpolationType": "linear"
+        },
+        {
+          "time": 600,
+          "delta": {
+            "x": 0,
+            "y": 0,
+            "z": 0.0,
+            "w": -1.0
+          },
+          "interpolationType": "linear"
+        }
+      ],
+      "shapeStretch": [],
+      "shapeVisible": [],
+      "shapeUvOffset": []
+    }
+  }
+}

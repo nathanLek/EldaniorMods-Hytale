@@ -1,0 +1,114 @@
+{
+  "$Comment": "Canon de vent de Fujin : nuage de poussiere chasse vers l'avant.",
+  "RenderMode": "BlendLinear",
+  "ParticleRotationInfluence": "Billboard",
+  "LinearFiltering": true,
+  "LightInfluence": 0.6,
+  "ParticleRotateWithSpawner": true,
+  "MaxConcurrentParticles": 40,
+  "SpawnRate": {
+    "Min": 1,
+    "Max": 1
+  },
+  "SpawnBurst": true,
+  "ParticleLifeSpan": {
+    "Min": 0.7,
+    "Max": 1.2
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Smoke/Smoke_Dense.png",
+    "ScaleRatioConstraint": "OneToOne",
+    "UVOption": "None",
+    "SoftParticles": "Disable",
+    "InitialAnimationFrame": {
+      "Opacity": 0,
+      "Color": "#b8ae9e",
+      "Scale": {
+        "X": {
+          "Min": 1.5,
+          "Max": 2.5
+        },
+        "Y": {
+          "Min": 1.5,
+          "Max": 2.5
+        }
+      },
+      "Rotation": {
+        "Z": {
+          "Min": 0,
+          "Max": 360
+        }
+      }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0,
+        "Color": "#b8ae9e"
+      },
+      "20": {
+        "Opacity": 0.7,
+        "Color": "#a09484"
+      },
+      "80": {
+        "Opacity": 0.595
+      },
+      "100": {
+        "Opacity": 0,
+        "Color": "#7a7062",
+        "Scale": {
+          "X": {
+            "Min": 5.5,
+            "Max": 5.5
+          },
+          "Y": {
+            "Min": 5.5,
+            "Max": 5.5
+          }
+        }
+      }
+    }
+  },
+  "EmitOffset": {
+    "X": {
+      "Min": -0.8,
+      "Max": 0.8
+    },
+    "Y": {
+      "Min": 0,
+      "Max": 1.0
+    },
+    "Z": {
+      "Min": -0.8,
+      "Max": 0.8
+    }
+  },
+  "InitialVelocity": {
+    "Speed": {
+      "Min": 12,
+      "Max": 22
+    },
+    "Yaw": {
+      "Min": -28,
+      "Max": 28
+    },
+    "Pitch": {
+      "Min": -8,
+      "Max": 14
+    }
+  },
+  "TotalParticles": {
+    "Min": 30,
+    "Max": 30
+  },
+  "UseEmitDirection": true,
+  "Attractors": [
+    {
+      "Radius": 0,
+      "DampingMultiplier": {
+        "X": 0.92,
+        "Y": 0.92,
+        "Z": 0.92
+      }
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "$Comment": "Canon de vent de Fujin : trainees de vent projetees vers l'avant.",
+  "RenderMode": "BlendLinear",
+  "ParticleRotationInfluence": "BillboardVelocity",
+  "LinearFiltering": true,
+  "LightInfluence": 0.4,
+  "ParticleRotateWithSpawner": true,
+  "MaxConcurrentParticles": 70,
+  "SpawnRate": {
+    "Min": 1,
+    "Max": 1
+  },
+  "SpawnBurst": true,
+  "ParticleLifeSpan": {
+    "Min": 0.5,
+    "Max": 0.8
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Smoke/Smoke_Wind2.png",
+    "ScaleRatioConstraint": "None",
+    "UVOption": "None",
+    "SoftParticles": "Disable",
+    "InitialAnimationFrame": {
+      "Opacity": 0,
+      "Color": "#ffffff",
+      "Scale": {
+        "X": {
+          "Min": 0.8,
+          "Max": 1.2
+        },
+        "Y": {
+          "Min": 2.5,
+          "Max": 4.0
+        }
+      }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0
+      },
+      "15": {
+        "Opacity": 0.7,
+        "Color": "#f2f6fa"
+      },
+      "100": {
+        "Opacity": 0,
+        "Color": "#d6e0ea"
+      }
+    }
+  },
+  "EmitOffset": {
+    "X": {
+      "Min": -1.0,
+      "Max": 1.0
+    },
+    "Y": {
+      "Min": 0,
+      "Max": 1.5
+    },
+    "Z": {
+      "Min": -1.0,
+      "Max": 1.0
+    }
+  },
+  "InitialVelocity": {
+    "Speed": {
+      "Min": 22,
+      "Max": 32
+    },
+    "Yaw": {
+      "Min": -25,
+      "Max": 25
+    },
+    "Pitch": {
+      "Min": -10,
+      "Max": 15
+    }
+  },
+  "TotalParticles": {
+    "Min": 60,
+    "Max": 60
+  },
+  "UseEmitDirection": true
+}

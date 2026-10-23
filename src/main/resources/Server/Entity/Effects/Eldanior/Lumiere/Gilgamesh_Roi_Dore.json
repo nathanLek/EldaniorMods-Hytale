@@ -1,0 +1,19 @@
+{
+  "$Comment": "Descente de Gilgamesh : le lanceur de Gilgamesh Babylon devient entierement dore et rayonne de poussiere d'or tant que le sort est actif (reapplique chaque seconde par le code).",
+  "Duration": 1.6,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": false,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Rune_GilgameshBabylon.png",
+  "ApplicationEffects": {
+    "EntityTopTint": "#ffd54a",
+    "EntityBottomTint": "#c8961e",
+    "Particles": [
+      {
+        "SystemId": "Gilgamesh_Sword_Glow",
+        "TargetEntityPart": "Entity",
+        "TargetNodeName": "Chest",
+        "Scale": 1.2
+      }
+    ]
+  }
+}

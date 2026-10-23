@@ -1,0 +1,31 @@
+{
+  "$Comment": "Arret du temps (Sablier de Chronos) : la cible est figee dans une stase verte (glyphe d'horloge, sable du temps) ; ses degats sont mis en reserve. Retire par le code quand le temps se brise.",
+  "Duration": 40.0,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": true,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Rune_SablierChronos.png",
+  "ApplicationEffects": {
+    "EntityTopTint": "#9dffc8",
+    "EntityBottomTint": "#0f5a35",
+    "ModelVFXId": "Chronos_Stase",
+    "Particles": [
+      {
+        "SystemId": "Chronos_Stase",
+        "TargetEntityPart": "Entity",
+        "TargetNodeName": "Chest"
+      }
+    ],
+    "MovementEffects": {
+      "DisableAll": true
+    },
+    "KnockbackMultiplier": 0,
+    "AbilityEffects": {
+      "Disabled": [
+        "Primary",
+        "Secondary",
+        "Ability1",
+        "Ability3"
+      ]
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "$Comment": "Cercle runique dore au sol du Sanctuaire d'Apollon (frise grecque, huit soleils), tournant lentement. HitBox large en X : le serveur masque (LOD) les entites a hitbox trop petite.",
+  "Model": "Items/Projectiles/Celestial/Sky_Circle.blockymodel",
+  "Texture": "Items/Projectiles/Apollo/Floor_Ring.png",
+  "MinScale": 12,
+  "MaxScale": 12,
+  "HitBox": {
+    "Max": {
+      "X": 1.5,
+      "Y": 0.01,
+      "Z": 0.01
+    },
+    "Min": {
+      "X": -1.5,
+      "Y": -0.01,
+      "Z": -0.01
+    }
+  },
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Celestial/Sky_Circle_Spin.blockyanim",
+          "BlendingDuration": 0
+        }
+      ]
+    }
+  }
+}

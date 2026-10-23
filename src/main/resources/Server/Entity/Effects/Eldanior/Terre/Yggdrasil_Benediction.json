@@ -1,0 +1,24 @@
+{
+  "$Comment": "Benediction de l'arbre-monde (allies dans le jardin d'Yggdrasil) : soin, endurance et mana rendus, -20 % de degats subis (geres par le code).",
+  "Duration": 1.6,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": false,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Rune_EveilYggdrasil.png",
+  "ApplicationEffects": {
+    "EntityTopTint": "#e8ffb0",
+    "EntityBottomTint": "#5fbf3a",
+    "Particles": [
+      {
+        "SystemId": "Yggdrasil_Blessing",
+        "TargetEntityPart": "Entity",
+        "TargetNodeName": "Chest"
+      },
+      {
+        "SystemId": "Effect_Heal",
+        "TargetEntityPart": "Entity",
+        "TargetNodeName": "Chest",
+        "Scale": 0.6
+      }
+    ]
+  }
+}

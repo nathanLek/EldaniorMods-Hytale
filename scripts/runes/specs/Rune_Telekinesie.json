@@ -1,0 +1,72 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Demande utilisateur 2026-10-21.",
+  "id": "Rune_Telekinesie",
+  "spell": "Telekinesie",
+  "javaClass": "Telekinesie",
+  "page": "rune_page_telekinesie",
+  "name": "Rune de Télékinésie",
+  "type": "Spatial",
+  "rarity": "Epic",
+  "emblem": "Telekinesie",
+  "classes": "mage, assassin, dragon",
+  "persistent": true,
+  "summary": "pendant 20 s, une main spectrale saisit tout le contenu d'une sphere de 5 blocs au curseur, le porte, puis l'ecrase au sol (clic gauche) ou le projette (clic droit).",
+  "description": "Sort épique de télékinésie (Mage, Assassin, Dragon). Pendant 20 s, une main spectrale obéit à votre volonté : un clic la fait descendre sur tout ce que contient une sphère de 5 blocs de diamètre là où vous visez (blocs, créatures, joueurs) ; elle se referme sur la prise, qui s'élève et suit votre curseur. Clic gauche : la main prend son élan et écrase la prise au sol (120 dégâts aux ennemis tenus) ; l'impact creuse le sol, le fissure, projette des éclats de terre et souffle les ennemis proches (40 dégâts). Clic droit : la main s'arme et projette la prise loin vers le point visé (80 dégâts) ; les blocs lancés percutent les ennemis (50 dégâts) et se reposent là où ils atterrissent. Le terrain est restauré après 3 minutes.",
+  "pageDescription": "Un parchemin qui flotte à quelques centimètres de la main. Enseigne la Télékinésie : saisir, porter et lancer à distance blocs et créatures. Classes : Mage, Assassin, Dragon. Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Duration",
+    "Damage"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": 5,
+    "reason": "Valeur de test (5 s) comme pour les sorts de gravite - remettre 120 s (Epic) avant release."
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Spellbook",
+    "charging": "CastPushCharging",
+    "release": "CastPushCharged",
+    "chargeTime": 0.3,
+    "releaseTime": 0.3,
+    "moveSpeed": 0.7,
+    "cameraEffect": null,
+    "sound": "SFX_Portal_Void",
+    "releaseSound": null,
+    "handParticles": "Gravite_Fissure",
+    "handParticlesScale": 0.6,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.3,
+    "animationTimeS": 0.6,
+    "range": 30,
+    "radius": "sphere invisible de 5 blocs de diametre (rayon 2.5) au point vise (sur l'entite visee si le curseur est dessus)",
+    "targets": "creatures, joueurs (allies compris) et blocs ; jamais le lanceur",
+    "triggers": "clic de la rune -> 20 s de controle ; rien en main : clic gauche ou droit = saisir la sphere au curseur ; en main : clic gauche = ecraser, clic droit = projeter",
+    "characterAnimation": "Spellbook / CastPushCharging puis CastPushCharged",
+    "castFx": "lueur violette dans les mains",
+    "executionFx": "main spectrale violette (modele Telekinesie_Main : paume, doigts recourbes, aura attachee, trainees aux doigts) au-dessus de la prise ; fil d'energie du lanceur a la main ; aura sur ce qui est tenu ; blocs qui tournoient et s'effritent ; prise qui se balance",
+    "impactFx": "ecraser : elan vers le haut (0.26 s), la main plonge, impact = cuvette 5 blocs en demi-dalles + 5 fissures, 10 eclats de terre, double onde de choc, anneau de poussiere, secousse, souffle 40 degats sur 4.5 blocs ; projeter : la main s'arme en reculant (0.2 s) puis pousse, rafale + onde, trainees violettes",
+    "sounds": "SFX_Portal_Void a la saisie, SFX_Ability_Wind_Strike_Slash au lancer",
+    "effects": "ecraser : 120 degats aux ennemis tenus + 40 de souffle autour ; projeter : vitesse 55 vers le point vise (jusqu'a 90 blocs), 80 degats ; bloc lance : 50 degats a l'ennemi percute ; allies lances : sans degats de chute",
+    "terrain": "blocs saisis retires du monde puis reposes la ou ils atterrissent (60 blocs max par saisie), tout est restaure apres 3 min",
+    "persistentDurationS": 20,
+    "interruptions": "fin des 20 s : tout est lache ; deconnexion : blocs tenus retires",
+    "restrictions": "pas de blocs en zone protegee, ni blocs conserves, ni fluides",
+    "balance": {
+      "damage": 1,
+      "range": 2,
+      "duration": 2,
+      "mobility": 1,
+      "control": 3,
+      "defense": 1,
+      "targets": 2,
+      "frequency": 0,
+      "terrain": 2,
+      "difficulty": 2
+    },
+    "edgeCases": "cible morte pendant la saisie -> retiree ; bloc lance qui ne trouve pas de place -> disparait apres 5 s ; regard vers le ciel -> la saisie de zone se fait a portee maximale",
+    "limitations": "Les creatures tenues sont deplacees par des vitesses imposees chaque tick : leur IA peut tressaillir. Orientation du modele de main a confirmer en jeu (HAND_REVERSED)."
+  }
+}

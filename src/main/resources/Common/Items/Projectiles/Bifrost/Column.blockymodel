@@ -1,0 +1,990 @@
+{
+  "nodes": [
+    {
+      "id": "73",
+      "name": "Origin",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+      },
+      "shape": {
+        "type": "none",
+        "offset": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "stretch": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "settings": {
+          "isPiece": false
+        },
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "standard",
+        "unwrapMode": "custom",
+        "textureLayout": {}
+      },
+      "children": [
+        {
+          "id": "54",
+          "name": "Beam_0",
+          "position": {
+            "x": 0,
+            "y": 320,
+            "z": 0
+          },
+          "orientation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "shape": {
+            "type": "quad",
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "stretch": {
+              "x": 1.5,
+              "y": 10,
+              "z": 1
+            },
+            "settings": {
+              "size": {
+                "x": 16,
+                "y": 64
+              },
+              "normal": "+Z"
+            },
+            "visible": true,
+            "doubleSided": true,
+            "shadingMode": "fullbright",
+            "unwrapMode": "custom",
+            "textureLayout": {
+              "front": {
+                "offset": {
+                  "x": 128,
+                  "y": 0
+                },
+                "mirror": {
+                  "x": false,
+                  "y": false
+                },
+                "angle": 0
+              }
+            }
+          },
+          "children": []
+        },
+        {
+          "id": "55",
+          "name": "Beam_1",
+          "position": {
+            "x": 0,
+            "y": 320,
+            "z": 0
+          },
+          "orientation": {
+            "x": 0.0,
+            "y": 0.707107,
+            "z": 0.0,
+            "w": 0.707107
+          },
+          "shape": {
+            "type": "quad",
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "stretch": {
+              "x": 1.5,
+              "y": 10,
+              "z": 1
+            },
+            "settings": {
+              "size": {
+                "x": 16,
+                "y": 64
+              },
+              "normal": "+Z"
+            },
+            "visible": true,
+            "doubleSided": true,
+            "shadingMode": "fullbright",
+            "unwrapMode": "custom",
+            "textureLayout": {
+              "front": {
+                "offset": {
+                  "x": 128,
+                  "y": 0
+                },
+                "mirror": {
+                  "x": false,
+                  "y": false
+                },
+                "angle": 0
+              }
+            }
+          },
+          "children": []
+        },
+        {
+          "id": "56",
+          "name": "Beam_2",
+          "position": {
+            "x": 0,
+            "y": 320,
+            "z": 0
+          },
+          "orientation": {
+            "x": 0.0,
+            "y": 0.382683,
+            "z": 0.0,
+            "w": 0.92388
+          },
+          "shape": {
+            "type": "quad",
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "stretch": {
+              "x": 1.5,
+              "y": 10,
+              "z": 1
+            },
+            "settings": {
+              "size": {
+                "x": 16,
+                "y": 64
+              },
+              "normal": "+Z"
+            },
+            "visible": true,
+            "doubleSided": true,
+            "shadingMode": "fullbright",
+            "unwrapMode": "custom",
+            "textureLayout": {
+              "front": {
+                "offset": {
+                  "x": 128,
+                  "y": 0
+                },
+                "mirror": {
+                  "x": false,
+                  "y": false
+                },
+                "angle": 0
+              }
+            }
+          },
+          "children": []
+        },
+        {
+          "id": "57",
+          "name": "Beam_3",
+          "position": {
+            "x": 0,
+            "y": 320,
+            "z": 0
+          },
+          "orientation": {
+            "x": 0.0,
+            "y": 0.92388,
+            "z": 0.0,
+            "w": 0.382683
+          },
+          "shape": {
+            "type": "quad",
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "stretch": {
+              "x": 1.5,
+              "y": 10,
+              "z": 1
+            },
+            "settings": {
+              "size": {
+                "x": 16,
+                "y": 64
+              },
+              "normal": "+Z"
+            },
+            "visible": true,
+            "doubleSided": true,
+            "shadingMode": "fullbright",
+            "unwrapMode": "custom",
+            "textureLayout": {
+              "front": {
+                "offset": {
+                  "x": 128,
+                  "y": 0
+                },
+                "mirror": {
+                  "x": false,
+                  "y": false
+                },
+                "angle": 0
+              }
+            }
+          },
+          "children": []
+        },
+        {
+          "id": "59",
+          "name": "Circle_1",
+          "position": {
+            "x": 0,
+            "y": 1,
+            "z": 0
+          },
+          "orientation": {
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "w": 1
+          },
+          "shape": {
+            "type": "none",
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "stretch": {
+              "x": 1,
+              "y": 1,
+              "z": 1
+            },
+            "settings": {
+              "isPiece": false
+            },
+            "visible": true,
+            "doubleSided": false,
+            "shadingMode": "standard",
+            "unwrapMode": "custom",
+            "textureLayout": {}
+          },
+          "children": [
+            {
+              "id": "58",
+              "name": "Circle_1_q",
+              "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              },
+              "orientation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+              },
+              "shape": {
+                "type": "quad",
+                "offset": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0
+                },
+                "stretch": {
+                  "x": 0.75,
+                  "y": 0.75,
+                  "z": 1
+                },
+                "settings": {
+                  "size": {
+                    "x": 128,
+                    "y": 128
+                  },
+                  "normal": "+Y"
+                },
+                "visible": true,
+                "doubleSided": true,
+                "shadingMode": "fullbright",
+                "unwrapMode": "custom",
+                "textureLayout": {
+                  "front": {
+                    "offset": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "mirror": {
+                      "x": false,
+                      "y": false
+                    },
+                    "angle": 0
+                  }
+                }
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "61",
+          "name": "Circle_2",
+          "position": {
+            "x": 0,
+            "y": 80,
+            "z": 0
+          },
+          "orientation": {
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "w": 1
+          },
+          "shape": {
+            "type": "none",
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "stretch": {
+              "x": 1,
+              "y": 1,
+              "z": 1
+            },
+            "settings": {
+              "isPiece": false
+            },
+            "visible": true,
+            "doubleSided": false,
+            "shadingMode": "standard",
+            "unwrapMode": "custom",
+            "textureLayout": {}
+          },
+          "children": [
+            {
+              "id": "60",
+              "name": "Circle_2_q",
+              "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              },
+              "orientation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+              },
+              "shape": {
+                "type": "quad",
+                "offset": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0
+                },
+                "stretch": {
+                  "x": 0.5625,
+                  "y": 0.5625,
+                  "z": 1
+                },
+                "settings": {
+                  "size": {
+                    "x": 128,
+                    "y": 128
+                  },
+                  "normal": "+Y"
+                },
+                "visible": true,
+                "doubleSided": true,
+                "shadingMode": "fullbright",
+                "unwrapMode": "custom",
+                "textureLayout": {
+                  "front": {
+                    "offset": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "mirror": {
+                      "x": false,
+                      "y": false
+                    },
+                    "angle": 0
+                  }
+                }
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "63",
+          "name": "Circle_3",
+          "position": {
+            "x": 0,
+            "y": 144,
+            "z": 0
+          },
+          "orientation": {
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "w": 1
+          },
+          "shape": {
+            "type": "none",
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "stretch": {
+              "x": 1,
+              "y": 1,
+              "z": 1
+            },
+            "settings": {
+              "isPiece": false
+            },
+            "visible": true,
+            "doubleSided": false,
+            "shadingMode": "standard",
+            "unwrapMode": "custom",
+            "textureLayout": {}
+          },
+          "children": [
+            {
+              "id": "62",
+              "name": "Circle_3_q",
+              "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              },
+              "orientation": {
+                "x": 0,
+                "y": 0,
+                "z": 0,
+                "w": 1
+              },
+              "shape": {
+                "type": "quad",
+                "offset": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0
+                },
+                "stretch": {
+                  "x": 0.375,
+                  "y": 0.375,
+                  "z": 1
+                },
+                "settings": {
+                  "size": {
+                    "x": 128,
+                    "y": 128
+                  },
+                  "normal": "+Y"
+                },
+                "visible": true,
+                "doubleSided": true,
+                "shadingMode": "fullbright",
+                "unwrapMode": "custom",
+                "textureLayout": {
+                  "front": {
+                    "offset": {
+                      "x": 0,
+                      "y": 0
+                    },
+                    "mirror": {
+                      "x": false,
+                      "y": false
+                    },
+                    "angle": 0
+                  }
+                }
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "72",
+          "name": "Runes",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "orientation": {
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "w": 1
+          },
+          "shape": {
+            "type": "none",
+            "offset": {
+              "x": 0,
+              "y": 0,
+              "z": 0
+            },
+            "stretch": {
+              "x": 1,
+              "y": 1,
+              "z": 1
+            },
+            "settings": {
+              "isPiece": false
+            },
+            "visible": true,
+            "doubleSided": false,
+            "shadingMode": "standard",
+            "unwrapMode": "custom",
+            "textureLayout": {}
+          },
+          "children": [
+            {
+              "id": "64",
+              "name": "Rune_0",
+              "position": {
+                "x": 48.0,
+                "y": 64,
+                "z": 0.0
+              },
+              "orientation": {
+                "x": 0.0,
+                "y": 0.707107,
+                "z": 0.0,
+                "w": 0.707107
+              },
+              "shape": {
+                "type": "quad",
+                "offset": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0
+                },
+                "stretch": {
+                  "x": 1.2,
+                  "y": 1.2,
+                  "z": 1
+                },
+                "settings": {
+                  "size": {
+                    "x": 16,
+                    "y": 16
+                  },
+                  "normal": "+Z"
+                },
+                "visible": true,
+                "doubleSided": true,
+                "shadingMode": "fullbright",
+                "unwrapMode": "custom",
+                "textureLayout": {
+                  "front": {
+                    "offset": {
+                      "x": 144,
+                      "y": 0
+                    },
+                    "mirror": {
+                      "x": false,
+                      "y": false
+                    },
+                    "angle": 0
+                  }
+                }
+              },
+              "children": []
+            },
+            {
+              "id": "65",
+              "name": "Rune_1",
+              "position": {
+                "x": 33.941,
+                "y": 64,
+                "z": 33.941
+              },
+              "orientation": {
+                "x": 0.0,
+                "y": 0.382683,
+                "z": 0.0,
+                "w": 0.92388
+              },
+              "shape": {
+                "type": "quad",
+                "offset": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0
+                },
+                "stretch": {
+                  "x": 1.2,
+                  "y": 1.2,
+                  "z": 1
+                },
+                "settings": {
+                  "size": {
+                    "x": 16,
+                    "y": 16
+                  },
+                  "normal": "+Z"
+                },
+                "visible": true,
+                "doubleSided": true,
+                "shadingMode": "fullbright",
+                "unwrapMode": "custom",
+                "textureLayout": {
+                  "front": {
+                    "offset": {
+                      "x": 160,
+                      "y": 0
+                    },
+                    "mirror": {
+                      "x": false,
+                      "y": false
+                    },
+                    "angle": 0
+                  }
+                }
+              },
+              "children": []
+            },
+            {
+              "id": "66",
+              "name": "Rune_2",
+              "position": {
+                "x": 0.0,
+                "y": 64,
+                "z": 48.0
+              },
+              "orientation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+              },
+              "shape": {
+                "type": "quad",
+                "offset": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0
+                },
+                "stretch": {
+                  "x": 1.2,
+                  "y": 1.2,
+                  "z": 1
+                },
+                "settings": {
+                  "size": {
+                    "x": 16,
+                    "y": 16
+                  },
+                  "normal": "+Z"
+                },
+                "visible": true,
+                "doubleSided": true,
+                "shadingMode": "fullbright",
+                "unwrapMode": "custom",
+                "textureLayout": {
+                  "front": {
+                    "offset": {
+                      "x": 176,
+                      "y": 0
+                    },
+                    "mirror": {
+                      "x": false,
+                      "y": false
+                    },
+                    "angle": 0
+                  }
+                }
+              },
+              "children": []
+            },
+            {
+              "id": "67",
+              "name": "Rune_3",
+              "position": {
+                "x": -33.941,
+                "y": 64,
+                "z": 33.941
+              },
+              "orientation": {
+                "x": -0.0,
+                "y": -0.382683,
+                "z": -0.0,
+                "w": 0.92388
+              },
+              "shape": {
+                "type": "quad",
+                "offset": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0
+                },
+                "stretch": {
+                  "x": 1.2,
+                  "y": 1.2,
+                  "z": 1
+                },
+                "settings": {
+                  "size": {
+                    "x": 16,
+                    "y": 16
+                  },
+                  "normal": "+Z"
+                },
+                "visible": true,
+                "doubleSided": true,
+                "shadingMode": "fullbright",
+                "unwrapMode": "custom",
+                "textureLayout": {
+                  "front": {
+                    "offset": {
+                      "x": 144,
+                      "y": 16
+                    },
+                    "mirror": {
+                      "x": false,
+                      "y": false
+                    },
+                    "angle": 0
+                  }
+                }
+              },
+              "children": []
+            },
+            {
+              "id": "68",
+              "name": "Rune_4",
+              "position": {
+                "x": -48.0,
+                "y": 64,
+                "z": 0.0
+              },
+              "orientation": {
+                "x": -0.0,
+                "y": -0.707107,
+                "z": -0.0,
+                "w": 0.707107
+              },
+              "shape": {
+                "type": "quad",
+                "offset": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0
+                },
+                "stretch": {
+                  "x": 1.2,
+                  "y": 1.2,
+                  "z": 1
+                },
+                "settings": {
+                  "size": {
+                    "x": 16,
+                    "y": 16
+                  },
+                  "normal": "+Z"
+                },
+                "visible": true,
+                "doubleSided": true,
+                "shadingMode": "fullbright",
+                "unwrapMode": "custom",
+                "textureLayout": {
+                  "front": {
+                    "offset": {
+                      "x": 160,
+                      "y": 16
+                    },
+                    "mirror": {
+                      "x": false,
+                      "y": false
+                    },
+                    "angle": 0
+                  }
+                }
+              },
+              "children": []
+            },
+            {
+              "id": "69",
+              "name": "Rune_5",
+              "position": {
+                "x": -33.941,
+                "y": 64,
+                "z": -33.941
+              },
+              "orientation": {
+                "x": -0.0,
+                "y": -0.92388,
+                "z": -0.0,
+                "w": 0.382683
+              },
+              "shape": {
+                "type": "quad",
+                "offset": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0
+                },
+                "stretch": {
+                  "x": 1.2,
+                  "y": 1.2,
+                  "z": 1
+                },
+                "settings": {
+                  "size": {
+                    "x": 16,
+                    "y": 16
+                  },
+                  "normal": "+Z"
+                },
+                "visible": true,
+                "doubleSided": true,
+                "shadingMode": "fullbright",
+                "unwrapMode": "custom",
+                "textureLayout": {
+                  "front": {
+                    "offset": {
+                      "x": 176,
+                      "y": 16
+                    },
+                    "mirror": {
+                      "x": false,
+                      "y": false
+                    },
+                    "angle": 0
+                  }
+                }
+              },
+              "children": []
+            },
+            {
+              "id": "70",
+              "name": "Rune_6",
+              "position": {
+                "x": -0.0,
+                "y": 64,
+                "z": -48.0
+              },
+              "orientation": {
+                "x": -0.0,
+                "y": -1.0,
+                "z": -0.0,
+                "w": 0.0
+              },
+              "shape": {
+                "type": "quad",
+                "offset": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0
+                },
+                "stretch": {
+                  "x": 1.2,
+                  "y": 1.2,
+                  "z": 1
+                },
+                "settings": {
+                  "size": {
+                    "x": 16,
+                    "y": 16
+                  },
+                  "normal": "+Z"
+                },
+                "visible": true,
+                "doubleSided": true,
+                "shadingMode": "fullbright",
+                "unwrapMode": "custom",
+                "textureLayout": {
+                  "front": {
+                    "offset": {
+                      "x": 144,
+                      "y": 0
+                    },
+                    "mirror": {
+                      "x": false,
+                      "y": false
+                    },
+                    "angle": 0
+                  }
+                }
+              },
+              "children": []
+            },
+            {
+              "id": "71",
+              "name": "Rune_7",
+              "position": {
+                "x": 33.941,
+                "y": 64,
+                "z": -33.941
+              },
+              "orientation": {
+                "x": -0.0,
+                "y": -0.92388,
+                "z": -0.0,
+                "w": -0.382683
+              },
+              "shape": {
+                "type": "quad",
+                "offset": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0
+                },
+                "stretch": {
+                  "x": 1.2,
+                  "y": 1.2,
+                  "z": 1
+                },
+                "settings": {
+                  "size": {
+                    "x": 16,
+                    "y": 16
+                  },
+                  "normal": "+Z"
+                },
+                "visible": true,
+                "doubleSided": true,
+                "shadingMode": "fullbright",
+                "unwrapMode": "custom",
+                "textureLayout": {
+                  "front": {
+                    "offset": {
+                      "x": 160,
+                      "y": 0
+                    },
+                    "mirror": {
+                      "x": false,
+                      "y": false
+                    },
+                    "angle": 0
+                  }
+                }
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "lod": "auto"
+}

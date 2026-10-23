@@ -1,0 +1,76 @@
+{
+  "$Comment": "Chaines de l'enfer : etincelles violettes a l'ancrage.",
+  "RenderMode": "BlendAdd",
+  "ParticleRotationInfluence": "Billboard",
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "ParticleRotateWithSpawner": false,
+  "MaxConcurrentParticles": 14,
+  "SpawnRate": {
+    "Min": 10,
+    "Max": 14
+  },
+  "SpawnBurst": false,
+  "ParticleLifeSpan": {
+    "Min": 0.5,
+    "Max": 0.9
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Basic/Spark.png",
+    "ScaleRatioConstraint": "OneToOne",
+    "UVOption": "None",
+    "SoftParticles": "Disable",
+    "InitialAnimationFrame": {
+      "Opacity": 0,
+      "Color": "#e0c0ff",
+      "Scale": {
+        "X": {
+          "Min": 0.08,
+          "Max": 0.16
+        }
+      }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0,
+        "Color": "#e0c0ff"
+      },
+      "20": {
+        "Opacity": 1.0,
+        "Color": "#9a50ff"
+      },
+      "100": {
+        "Opacity": 0,
+        "Color": "#3a0a6a"
+      }
+    }
+  },
+  "EmitOffset": {
+    "X": {
+      "Min": -0.5,
+      "Max": 0.5
+    },
+    "Y": {
+      "Min": 0,
+      "Max": 0.1
+    },
+    "Z": {
+      "Min": -0.5,
+      "Max": 0.5
+    }
+  },
+  "InitialVelocity": {
+    "Speed": {
+      "Min": 0.8,
+      "Max": 1.8
+    },
+    "Yaw": {
+      "Min": -180,
+      "Max": 180
+    },
+    "Pitch": {
+      "Min": 50,
+      "Max": 90
+    }
+  }
+}

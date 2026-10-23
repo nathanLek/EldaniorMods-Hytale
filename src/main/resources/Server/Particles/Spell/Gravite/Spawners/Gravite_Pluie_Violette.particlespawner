@@ -1,0 +1,98 @@
+{
+  "$Comment": "Trait violet lumineux qui tombe dans la colonne de gravite.",
+  "RenderMode": "BlendAdd",
+  "EmitOffset": {
+    "X": {
+      "Min": -0.6,
+      "Max": 0.6
+    },
+    "Y": {
+      "Min": 6,
+      "Max": 50
+    },
+    "Z": {
+      "Min": -0.6,
+      "Max": 0.6
+    }
+  },
+  "ParticleRotationInfluence": "Velocity",
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "ParticleRotateWithSpawner": false,
+  "MaxConcurrentParticles": 120,
+  "SpawnRate": {
+    "Min": 20,
+    "Max": 20
+  },
+  "ParticleLifeSpan": {
+    "Min": 0.8,
+    "Max": 1.2
+  },
+  "InitialVelocity": {
+    "Yaw": {
+      "Min": -180,
+      "Max": 180
+    },
+    "Pitch": {
+      "Min": -10,
+      "Max": 10
+    },
+    "Speed": {
+      "Min": 0.5,
+      "Max": 1.0
+    }
+  },
+  "Attractors": [
+    {
+      "Position": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Radius": 0,
+      "LinearAcceleration": {
+        "X": 0,
+        "Y": -75,
+        "Z": 0
+      }
+    }
+  ],
+  "Particle": {
+    "Texture": "Particles/Textures/Basic/Glow.png",
+    "ScaleRatioConstraint": "None",
+    "UVOption": "None",
+    "SoftParticles": "Disable",
+    "InitialAnimationFrame": {
+      "Opacity": 0,
+      "Color": "#d4a3ff",
+      "Scale": {
+        "X": {
+          "Min": 0.3,
+          "Max": 0.45
+        },
+        "Y": {
+          "Min": 3.5,
+          "Max": 6.0
+        }
+      }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0,
+        "Color": "#d4a3ff"
+      },
+      "12": {
+        "Opacity": 0.9,
+        "Color": "#d4a3ff"
+      },
+      "75": {
+        "Opacity": 0.81,
+        "Color": "#9446ff"
+      },
+      "100": {
+        "Opacity": 0,
+        "Color": "#4a1599"
+      }
+    }
+  }
+}

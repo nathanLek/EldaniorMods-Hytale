@@ -1,0 +1,23 @@
+{
+  "$Comment": "Prison de glace du Porte de Niflheim : piques de glace qui jaillissent du corps de l'ennemi gele (modele genere par scripts/rune_aura_icons/gen_ice_prison.py), jusqu'a la fin du gel. HitBox large en X uniquement : le serveur masque (LOD) les entites dont la hitbox est trop petite par rapport a la distance.",
+  "Model": "Items/Projectiles/Niflheim/Ice_Prison.blockymodel",
+  "Texture": "Items/Projectiles/Niflheim/Ice_Spike.png",
+  "MinScale": 0.8,
+  "MaxScale": 0.8,
+  "HitBox": {
+    "Max": {
+      "X": 0.8,
+      "Y": 0.01,
+      "Z": 0.01
+    },
+    "Min": {
+      "X": -0.8,
+      "Y": -0.01,
+      "Z": -0.01
+    }
+  },
+  "Light": {
+    "Color": "#9fe3ff",
+    "Radius": 4
+  }
+}

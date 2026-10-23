@@ -126,6 +126,8 @@ public class EldaniorSystem extends JavaPlugin {
             com.eldanior.system.shop.ShopManager.init();
             com.eldanior.system.persistence.PersistenceManager.init(this.getDataDirectory());
             com.eldanior.system.hologram.HologramManager.init(this.getDataDirectory());
+            com.eldanior.system.skills.runes.spells.TerrainRestore.init(this.getDataDirectory());
+            com.eldanior.system.guards.GuardManager.init(this.getDataDirectory());
             LOGGER.atInfo().log("[OK] Managers et Registres initialisés.");
         } catch (Exception e) {
             LOGGER.atSevere().withCause(e).log("[ERREUR] Échec init Managers/Registres");
@@ -197,7 +199,13 @@ public class EldaniorSystem extends JavaPlugin {
             this.getEntityStoreRegistry().registerSystem(new CombatStatsSystem());
             this.getEntityStoreRegistry().registerSystem(new GlobalRegenSystem());
             this.getEntityStoreRegistry().registerSystem(new FallDamageSystem());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.skills.runes.DivineDamageSystem()); // sorts divins : briser la glace (Niflheim), ombre (Nyx), protection (Apollon)
             this.getEntityStoreRegistry().registerSystem(new DeathXPSystem());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.guards.GuardAlertSystem()); // gardes : PvP pres d'un garde -> joueur recherche
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.guards.GuardDeathSystem()); // gardes : reapparition au poste
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.guards.AdventurerSystem()); // aventuriers : recrutement contre de l'or
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.skills.runes.spells.RoyalMageMagic()); // mage royal : soin, nova de givre, pluie de flammes
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.skills.runes.spells.DoppelPoseSystem()); // Doppelganger : pose miroir apres l'IA des PNJ
             this.getEntityStoreRegistry().registerSystem(new PlayerPositionTracker());
             this.getEntityStoreRegistry().registerSystem(new MobVirtualHPSystem());
             this.getEntityStoreRegistry().registerSystem(new MobNameplateUpdateOnDamageSystem());
@@ -215,6 +223,12 @@ public class EldaniorSystem extends JavaPlugin {
             this.getEntityStoreRegistry().registerSystem(
                     new com.eldanior.system.quest.interaction.NpcQuestDetectionSystem());
 
+            // Trone du Neant : gestes du souverain (clics) et coups portes aux ombres
+            this.getEventRegistry().registerGlobal(com.hypixel.hytale.server.core.event.events.player.PlayerMouseButtonEvent.class,
+                    com.eldanior.system.skills.runes.spells.NyxVeil::onMouseButton);
+            // Sorts de rune du moteur commun qui ecoutent les clics (ex. Telekinesie)
+            this.getEventRegistry().registerGlobal(com.hypixel.hytale.server.core.event.events.player.PlayerMouseButtonEvent.class,
+                    com.eldanior.system.skills.runes.spells.RuneSpellRuntime::onMouseButton);
             this.getEventRegistry().registerGlobal(PlayerDisconnectEvent.class, event -> {
                 try {
                     java.util.UUID uuid = UUIDExtractor.getUUID(event.getPlayerRef());
@@ -262,6 +276,26 @@ public class EldaniorSystem extends JavaPlugin {
 
                     // DignityAuraSystem (slowedPlayers + activeEmitters)
                     DignityAuraSystem.handleDisconnect(uuid);
+
+                    // RuneAuraSystem (runeEmitters)
+                    com.eldanior.system.titles.nobility.systems.RuneAuraSystem.handleDisconnect(uuid);
+
+                    // RuneManager (cache Rune d'Aura)
+                    com.eldanior.system.skills.runes.RuneManager.handleDisconnect(uuid);
+                    com.eldanior.system.skills.runes.spells.MuspelheimWrath.handleDisconnect(uuid);
+                    com.eldanior.system.skills.runes.spells.TaranisSanctuary.handleDisconnect(uuid);
+                    com.eldanior.system.skills.runes.spells.BahamutAdvent.handleDisconnect(uuid);
+                    com.eldanior.system.skills.runes.spells.DragonAvatar.handleDisconnect(uuid);
+                    com.eldanior.system.skills.runes.spells.ChronosHourglass.handleDisconnect(uuid);
+                    com.eldanior.system.skills.runes.spells.ChaosAbyss.handleDisconnect(uuid);
+                    com.eldanior.system.skills.runes.spells.BifrostBridge.handleDisconnect(uuid);
+                    com.eldanior.system.skills.runes.spells.NyxVeil.handleDisconnect(uuid);
+                    com.eldanior.system.skills.runes.spells.ApolloSanctuary.handleDisconnect(uuid);
+                    com.eldanior.system.skills.runes.spells.GaiaAwakening.handleDisconnect(uuid);
+                    com.eldanior.system.skills.runes.spells.YggdrasilAwakening.handleDisconnect(uuid);
+                    com.eldanior.system.skills.runes.spells.GilgameshBabylon.handleDisconnect(uuid);
+                    com.eldanior.system.skills.runes.spells.NiflheimGate.handleDisconnect(uuid);
+                    com.eldanior.system.skills.runes.spells.RuneSpellRuntime.handleDisconnect(uuid);
                 } catch (Exception e) { EldaniorLogger.error("EldaniorSystem", e); }
             });
             this.getEntityStoreRegistry().registerSystem(new TreasureChestBreakBlockEvent());
@@ -281,6 +315,12 @@ public class EldaniorSystem extends JavaPlugin {
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.quest.QuestHudUpdateSystem());
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.quest.QuestBlockBreakEvent());
             this.getEntityStoreRegistry().registerSystem(new DignityAuraSystem());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.titles.nobility.systems.RuneAuraSystem());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.skills.system.RuneDropProtectionSystem());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.skills.runes.RuneSystem());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.skills.runes.spells.MuspelheimWrathSystem());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.skills.runes.spells.DivineSpellsSystem());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.titles.nobility.systems.DragonicFearSystem());
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.titles.systems.TitleCheckSystem());
 
             // Territoire / Parcelles

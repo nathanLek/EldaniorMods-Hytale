@@ -1,0 +1,89 @@
+{
+  "$Comment": "Etincelles violettes qui s'echappent de la main spectrale (continu, attache au modele).",
+  "RenderMode": "BlendAdd",
+  "EmitOffset": {
+    "X": {
+      "Min": -0.9,
+      "Max": 0.9
+    },
+    "Y": {
+      "Min": -0.4,
+      "Max": 0.4
+    },
+    "Z": {
+      "Min": -1.4,
+      "Max": 0.8
+    }
+  },
+  "ParticleRotationInfluence": "Billboard",
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "ParticleRotateWithSpawner": false,
+  "MaxConcurrentParticles": 40,
+  "SpawnRate": {
+    "Min": 30,
+    "Max": 30
+  },
+  "ParticleLifeSpan": {
+    "Min": 0.5,
+    "Max": 0.9
+  },
+  "InitialVelocity": {
+    "Yaw": {
+      "Min": -180,
+      "Max": 180
+    },
+    "Pitch": {
+      "Min": -60,
+      "Max": 30
+    },
+    "Speed": {
+      "Min": 0.4,
+      "Max": 1.2
+    }
+  },
+  "Attractors": [
+    {
+      "Position": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Radius": 0,
+      "LinearAcceleration": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    }
+  ],
+  "Particle": {
+    "Texture": "Particles/Textures/Basic/Glow.png",
+    "ScaleRatioConstraint": "OneToOne",
+    "UVOption": "None",
+    "SoftParticles": "Disable",
+    "InitialAnimationFrame": {
+      "Opacity": 0,
+      "Color": "#e2c2ff",
+      "Scale": {
+        "X": {
+          "Min": 0.12,
+          "Max": 0.25
+        }
+      }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0
+      },
+      "20": {
+        "Opacity": 1,
+        "Color": "#b878ff"
+      },
+      "100": {
+        "Opacity": 0,
+        "Color": "#5b1fb0"
+      }
+    }
+  }
+}

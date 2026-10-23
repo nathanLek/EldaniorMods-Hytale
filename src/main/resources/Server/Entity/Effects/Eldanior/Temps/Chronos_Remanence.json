@@ -1,0 +1,17 @@
+{
+  "$Comment": "Image remanente de Chronos (echo du lanceur, avec son skin et ses mouvements) : voile vert lumineux. Reappliquee par le code.",
+  "Duration": 2.0,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": false,
+  "ApplicationEffects": {
+    "EntityTopTint": "#e8fff0",
+    "EntityBottomTint": "#8dffbe",
+    "ModelVFXId": "Chronos_Ghost",
+    "Particles": [
+      {
+        "SystemId": "Chronos_Afterimage",
+        "TargetEntityPart": "Entity"
+      }
+    ]
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "$Comment": "Jet relativiste de Chaos : faisceau de plasma lumineux le long de l'axe du trou noir (fin du sort).",
+  "RenderMode": "BlendAdd",
+  "ParticleRotationInfluence": "Billboard",
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "MaxConcurrentParticles": 400,
+  "ParticleRotateWithSpawner": false,
+  "SpawnRate": {
+    "Min": 500,
+    "Max": 500
+  },
+  "SpawnBurst": false,
+  "ParticleLifeSpan": {
+    "Min": 0.2,
+    "Max": 0.35
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Basic/Glow.png",
+    "ScaleRatioConstraint": "OneToOne",
+    "UVOption": "None",
+    "SoftParticles": "Disable",
+    "InitialAnimationFrame": {
+      "Opacity": 1,
+      "Color": "#ffffff",
+      "Scale": {
+        "X": {
+          "Min": 1.6,
+          "Max": 3.0
+        }
+      }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0,
+        "Color": "#ffffff"
+      },
+      "15": {
+        "Opacity": 1,
+        "Color": "#bfe6ff"
+      },
+      "100": {
+        "Opacity": 0,
+        "Color": "#7a5cff"
+      }
+    }
+  },
+  "EmitOffset": {
+    "X": {
+      "Min": -0.5,
+      "Max": 0.5
+    },
+    "Y": {
+      "Min": 1,
+      "Max": 70
+    },
+    "Z": {
+      "Min": -0.5,
+      "Max": 0.5
+    }
+  },
+  "InitialVelocity": {
+    "Speed": {
+      "Min": 0,
+      "Max": 0
+    }
+  }
+}

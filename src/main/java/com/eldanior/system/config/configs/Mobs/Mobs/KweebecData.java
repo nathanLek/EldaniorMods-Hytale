@@ -14,7 +14,10 @@ public enum KweebecData implements IMobConfig {
     KWEEBEC_SAPLING_PINK("kweebec sapling pink", 35, 100, 125),
     KWEEBEC_PRISONER("kweebec_prisoner", 45, 110, 140),
     KWEEBEC_ELDER("kweebec elder", 70, 130, 160),
-    KWEEBEC_RAZORLEAF("kweebec razorleaf", 90, 140, 160);
+    KWEEBEC_RAZORLEAF("kweebec razorleaf", 90, 140, 160),
+
+    // === Nouveaute 0.7.2 ===
+    KWEEBEC_SCARED("kweebec scared", 20, 80, 95);
 
     private final String keyword;
     private final int xp;

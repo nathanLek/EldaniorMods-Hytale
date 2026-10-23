@@ -24,7 +24,6 @@ public class KingdomCommand extends AbstractAsyncCommand {
         super("kingdom", "Vue d'ensemble du royaume");
     }
 
-    @Override
     protected boolean canGeneratePermission() { return false; }
 
     @Nonnull

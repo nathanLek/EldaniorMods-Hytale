@@ -1,0 +1,40 @@
+{
+  "$Comment": "Appui sur la Rune d'Aura. On applique un marqueur transitoire Ability_Aura_Toggle ; RuneAuraSystem le detecte et bascule l'aura ON/OFF. Pas de cout mana ici (la canalisation coute 5 mana/s, geree en Java).",
+  "Type": "StatsCondition",
+  "UseAbilityCost": true,
+  "Failed": "Ability_Cast_Fail",
+  "Next": {
+    "Type": "Parallel",
+    "Interactions": [
+      {
+        "Interactions": [
+          {
+            "Type": "Simple",
+            "RunTime": 0.1,
+            "HorizontalSpeedMultiplier": 0.6,
+            "Effects": {
+              "ItemPlayerAnimationsId": "Sword",
+              "ItemAnimationId": "CastEnrage",
+              "CameraEffect": "Ability_Cast_Generic",
+              "WorldSoundEventId": "SFX_Ability_Enrage",
+              "LocalSoundEventId": "SFX_Ability_Enrage_Local"
+            }
+          },
+          {
+            "Type": "ApplyEffect",
+            "EffectId": "Ability_Aura_Toggle",
+            "Duration": 0.6
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "TriggerCooldown",
+            "UseAbilityCooldown": true
+          }
+        ]
+      }
+    ]
+  }
+}

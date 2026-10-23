@@ -1,0 +1,29 @@
+{
+  "$Comment": "Aiguilles de l'horloge de Chronos qui tournent a rebours, tres vite (retour en arriere). HitBox large en X : le serveur masque (LOD) les entites a hitbox trop petite.",
+  "Model": "Items/Projectiles/Chronos/Hands.blockymodel",
+  "Texture": "Items/Projectiles/Chronos/Chronos.png",
+  "MinScale": 35,
+  "MaxScale": 35,
+  "HitBox": {
+    "Max": {
+      "X": 1.5,
+      "Y": 0.01,
+      "Z": 0.01
+    },
+    "Min": {
+      "X": -1.5,
+      "Y": -0.01,
+      "Z": -0.01
+    }
+  },
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Chronos/Hands_Rewind.blockyanim",
+          "BlendingDuration": 0
+        }
+      ]
+    }
+  }
+}

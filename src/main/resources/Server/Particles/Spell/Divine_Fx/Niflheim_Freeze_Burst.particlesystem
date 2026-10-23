@@ -1,0 +1,20 @@
+{
+  "$Comment": "Eclats de glace quand une entite est gelee par le Porte de Niflheim (emetteurs StatusSnow vanilla).",
+  "Spawners": [
+    {
+      "SpawnerId": "StatusSnow_Flash"
+    },
+    {
+      "SpawnerId": "StatusSnow_IceShard"
+    },
+    {
+      "SpawnerId": "StatusSnow_Sparks"
+    },
+    {
+      "SpawnerId": "StatusSnow_Fragment"
+    }
+  ],
+  "LifeSpan": 0.4,
+  "IsImportant": true,
+  "CullDistance": 128
+}

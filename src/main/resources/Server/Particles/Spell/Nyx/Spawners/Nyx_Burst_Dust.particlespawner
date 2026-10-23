@@ -1,0 +1,80 @@
+{
+  "$Comment": "Chaines de l'enfer : poussiere noire soulevee.",
+  "RenderMode": "BlendLinear",
+  "ParticleRotationInfluence": "Billboard",
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "ParticleRotateWithSpawner": false,
+  "MaxConcurrentParticles": 8,
+  "SpawnRate": {
+    "Min": 1,
+    "Max": 1
+  },
+  "SpawnBurst": true,
+  "ParticleLifeSpan": {
+    "Min": 0.6,
+    "Max": 0.9
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Smoke/Smoke_Dense.png",
+    "ScaleRatioConstraint": "OneToOne",
+    "UVOption": "None",
+    "SoftParticles": "Disable",
+    "InitialAnimationFrame": {
+      "Opacity": 0,
+      "Color": "#0a0510",
+      "Scale": {
+        "X": {
+          "Min": 0.6,
+          "Max": 1.0
+        }
+      }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0,
+        "Color": "#0a0510"
+      },
+      "20": {
+        "Opacity": 0.7,
+        "Color": "#140826"
+      },
+      "100": {
+        "Opacity": 0,
+        "Color": "#000000"
+      }
+    }
+  },
+  "EmitOffset": {
+    "X": {
+      "Min": -0.3,
+      "Max": 0.3
+    },
+    "Y": {
+      "Min": 0,
+      "Max": 0.2
+    },
+    "Z": {
+      "Min": -0.3,
+      "Max": 0.3
+    }
+  },
+  "InitialVelocity": {
+    "Speed": {
+      "Min": 0.8,
+      "Max": 1.6
+    },
+    "Yaw": {
+      "Min": -180,
+      "Max": 180
+    },
+    "Pitch": {
+      "Min": 20,
+      "Max": 70
+    }
+  },
+  "TotalParticles": {
+    "Min": 6,
+    "Max": 6
+  }
+}

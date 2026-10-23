@@ -1,0 +1,77 @@
+{
+  "$Comment": "Main spectrale de la Telekinesie (genere par scripts/rune_aura_icons/gen_telekinesie.py). HitBox large en X : le serveur masque les entites a hitbox minuscule.",
+  "Model": "Items/Projectiles/Telekinesie/Main.blockymodel",
+  "Texture": "Items/Projectiles/Telekinesie/Main.png",
+  "MinScale": 1,
+  "MaxScale": 1,
+  "HitBox": {
+    "Max": {
+      "X": 1.5,
+      "Y": 0.01,
+      "Z": 0.01
+    },
+    "Min": {
+      "X": -1.5,
+      "Y": -0.01,
+      "Z": -0.01
+    }
+  },
+  "Particles": [
+    {
+      "SystemId": "Telekinesie_Main_Aura",
+      "TargetNodeName": "Paume",
+      "Scale": 1.0
+    }
+  ],
+  "Trails": [
+    {
+      "TargetNodeName": "Doigt0_Bout",
+      "TrailId": "Telekinesie_Trainee",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0,
+        "Z": -0.6
+      }
+    },
+    {
+      "TargetNodeName": "Doigt1_Bout",
+      "TrailId": "Telekinesie_Trainee",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0,
+        "Z": -0.6
+      }
+    },
+    {
+      "TargetNodeName": "Doigt2_Bout",
+      "TrailId": "Telekinesie_Trainee",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0,
+        "Z": -0.6
+      }
+    },
+    {
+      "TargetNodeName": "Doigt3_Bout",
+      "TrailId": "Telekinesie_Trainee",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0,
+        "Z": -0.6
+      }
+    },
+    {
+      "TargetNodeName": "Pouce_Bout",
+      "TrailId": "Telekinesie_Trainee",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0,
+        "Z": -0.5
+      }
+    }
+  ],
+  "Light": {
+    "Color": "#9b4dff",
+    "Radius": 8
+  }
+}

@@ -9,6 +9,7 @@ public class MobsWorldConfig {
     // Scaling des stats par niveau
     public static final float HP_PER_LEVEL = 7.0f;       // +7 HP par niveau (reequilibrage PvE)
     public static final float DAMAGE_PER_LEVEL = 0.5f;   // +0.5 dégât par niveau
+    public static final float POST_NPC_DAMAGE_PER_LEVEL = 0.05f;   // PNJ de poste (guards/) : +0.05 par niveau (niv. 600 -> +30)
 
     public static int getRandomLevel(String mobTypeId) {
         int min = MobXP.getMinLevelForId(mobTypeId);

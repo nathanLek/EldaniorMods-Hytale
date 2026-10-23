@@ -1,0 +1,95 @@
+{
+  "$Comment": "Energie gravitationnelle qui suinte d'une fissure : lueur violette qui monte a peine puis est rabattue au sol.",
+  "RenderMode": "BlendAdd",
+  "EmitOffset": {
+    "X": {
+      "Min": -0.45,
+      "Max": 0.45
+    },
+    "Y": {
+      "Min": -0.3,
+      "Max": 0.1
+    },
+    "Z": {
+      "Min": -0.45,
+      "Max": 0.45
+    }
+  },
+  "ParticleRotationInfluence": "Billboard",
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "ParticleRotateWithSpawner": false,
+  "MaxConcurrentParticles": 14,
+  "SpawnRate": {
+    "Min": 22,
+    "Max": 22
+  },
+  "ParticleLifeSpan": {
+    "Min": 0.6,
+    "Max": 1.0
+  },
+  "InitialVelocity": {
+    "Yaw": {
+      "Min": -180,
+      "Max": 180
+    },
+    "Pitch": {
+      "Min": 60,
+      "Max": 90
+    },
+    "Speed": {
+      "Min": 1.0,
+      "Max": 2.2
+    }
+  },
+  "Attractors": [
+    {
+      "Position": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Radius": 0,
+      "LinearAcceleration": {
+        "X": 0,
+        "Y": -6,
+        "Z": 0
+      }
+    }
+  ],
+  "Particle": {
+    "Texture": "Particles/Textures/Basic/Glow.png",
+    "ScaleRatioConstraint": "OneToOne",
+    "UVOption": "None",
+    "SoftParticles": "Disable",
+    "InitialAnimationFrame": {
+      "Opacity": 0,
+      "Color": "#c27bff",
+      "Scale": {
+        "X": {
+          "Min": 0.35,
+          "Max": 0.6
+        }
+      }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0
+      },
+      "20": {
+        "Opacity": 0.95,
+        "Color": "#a24dff"
+      },
+      "100": {
+        "Opacity": 0,
+        "Color": "#4a1599",
+        "Scale": {
+          "X": {
+            "Min": 0.15,
+            "Max": 0.2
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "$Comment": "Ciel embrase du Courroux de Muspelheim : nuages de feu en volume (5 couches, corps rouge-noir, bords incandescents, braises ; scripts/rune_aura_icons/gen_fire_sky.py) qui tournoient autour du cercle runique. HitBox large en X : le serveur masque (LOD) les entites a hitbox trop petite.",
+  "Model": "Items/Projectiles/Taranis/Storm_Clouds.blockymodel",
+  "Texture": "Items/Projectiles/Muspelheim/Fire_Clouds_Atlas.png",
+  "MinScale": 98,
+  "MaxScale": 98,
+  "HitBox": {
+    "Max": {
+      "X": 1.0,
+      "Y": 0.01,
+      "Z": 0.01
+    },
+    "Min": {
+      "X": -1.0,
+      "Y": -0.01,
+      "Z": -0.01
+    }
+  },
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Celestial/Sky_Circle_Spin.blockyanim",
+          "BlendingDuration": 0
+        }
+      ]
+    }
+  },
+  "Light": {
+    "Color": "#ff4a12",
+    "Radius": 40
+  }
+}

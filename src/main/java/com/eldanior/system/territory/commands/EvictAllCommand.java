@@ -28,7 +28,6 @@ public class EvictAllCommand extends AbstractAsyncCommand {
         super("evictall", "Evincer tous les locataires expires (admin)");
     }
 
-    @Override
     protected boolean canGeneratePermission() { return false; }
 
     @Nonnull

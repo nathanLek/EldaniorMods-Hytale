@@ -29,6 +29,7 @@ public class ESCommand extends AbstractCommandCollection {
         super("es", "Commande principale Eldanior System");
         this.addSubCommand(new AddXPCommand());
         this.addSubCommand(new SetLevelCommand());
+        this.addSubCommand(new com.eldanior.system.guards.GuardCommand());
         this.addSubCommand(new ClassInfoCommand());
         this.addSubCommand(new SetClassCommand());
         this.addSubCommand(new GiveRelicCommand());
@@ -94,6 +95,7 @@ public class ESCommand extends AbstractCommandCollection {
 
         // Interface unifiee
         this.addSubCommand(new SystemCommand());
+        this.addSubCommand(new com.eldanior.system.skills.commands.RunesCommand());
 
         // Hologrammes
         this.addSubCommand(new com.eldanior.system.hologram.HologramCommand());
@@ -117,7 +119,6 @@ public class ESCommand extends AbstractCommandCollection {
         this.addSubCommand(new com.eldanior.system.config.commands.DebugCommand());
     }
 
-    @Override
     protected boolean canGeneratePermission() {
         return false;
     }

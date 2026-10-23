@@ -33,7 +33,6 @@ public class ParcelInviteCommand extends AbstractAsyncCommand {
         this.playerArg = this.withRequiredArg("joueur", "Nom du joueur", ArgTypes.STRING);
     }
 
-    @Override
     protected boolean canGeneratePermission() { return false; }
 
     @Nonnull

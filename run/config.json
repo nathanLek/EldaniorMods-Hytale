@@ -1,5 +1,5 @@
 {
-  "Version": 3,
+  "Version": 4,
   "ServerName": "Hytale Server",
   "MOTD": "",
   "Password": "",
@@ -7,16 +7,37 @@
   "MaxViewRadius": 32,
   "Defaults": {
     "World": "default",
-    "GameMode": "Adventure"
+    "GameMode": "Adventure",
+    "HardcoreMode": "None",
+    "CrashRecovery": {}
   },
   "ConnectionTimeouts": {},
   "RateLimit": {},
-  "Modules": {},
+  "Modules": {
+    "Telemetry": {
+      "Modules": {}
+    }
+  },
   "LogLevels": {},
   "Mods": {},
+  "DefaultModsEnabled": true,
+  "RequireJoinPermission": false,
   "DisplayTmpTagsInStrings": false,
   "PlayerStorage": {
     "Type": "Hytale"
   },
-  "Update": {}
+  "UniverseResourceStorage": {
+    "Type": "Hytale"
+  },
+  "BanStorage": {
+    "Type": "Disk",
+    "Path": "bans.json"
+  },
+  "AuthCredentialStore": {
+    "Type": "Encrypted",
+    "Path": "auth.enc"
+  },
+  "Update": {},
+  "Backup": {},
+  "WorldMap": {}
 }

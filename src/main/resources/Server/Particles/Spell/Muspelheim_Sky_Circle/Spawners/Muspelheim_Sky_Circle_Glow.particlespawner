@@ -1,0 +1,89 @@
+{
+  "RenderMode": "BlendLinear",
+  "ParticleRotationInfluence": "None",
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "MaxConcurrentParticles": 1,
+  "ParticleRotateWithSpawner": true,
+  "SpawnRate": {
+    "Min": 1,
+    "Max": 1
+  },
+  "SpawnBurst": true,
+  "ParticleLifeSpan": {
+    "Min": 24.0,
+    "Max": 24.0
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Circles/Circle_Glow.png",
+    "ScaleRatioConstraint": "OneToOne",
+    "UVOption": "None",
+    "SoftParticles": "Disable",
+    "InitialAnimationFrame": {
+      "Opacity": 0,
+      "Color": "#200000",
+      "Scale": {
+        "X": {
+          "Min": 13.5,
+          "Max": 13.5
+        }
+      },
+      "Rotation": {
+        "X": {
+          "Min": 90,
+          "Max": 90
+        }
+      }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0,
+        "Color": "#200000",
+        "Scale": {
+          "X": {
+            "Min": 0.15,
+            "Max": 0.15
+          }
+        },
+        "Rotation": {
+          "Z": {
+            "Min": 0,
+            "Max": 0
+          }
+        }
+      },
+      "8": {
+        "Opacity": 0.35,
+        "Color": "#ff2a00",
+        "Scale": {
+          "X": {
+            "Min": 1,
+            "Max": 1
+          }
+        }
+      },
+      "55": {
+        "Opacity": 0.3
+      },
+      "92": {
+        "Opacity": 0.35
+      },
+      "100": {
+        "Opacity": 0,
+        "Color": "#200000",
+        "Scale": {
+          "X": {
+            "Min": 1.05,
+            "Max": 1.05
+          }
+        },
+        "Rotation": {
+          "Z": {
+            "Min": 0,
+            "Max": 0
+          }
+        }
+      }
+    }
+  }
+}

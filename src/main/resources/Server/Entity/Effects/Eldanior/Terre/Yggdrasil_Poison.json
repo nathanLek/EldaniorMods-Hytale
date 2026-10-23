@@ -1,0 +1,22 @@
+{
+  "$Comment": "Poison des racines et des spores d'Yggdrasil : 15 degats de poison par seconde pendant 4 s.",
+  "Duration": 4,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": true,
+  "StatusEffectIcon": "UI/StatusEffects/Poison.png",
+  "DamageCalculatorCooldown": 1,
+  "DamageCalculator": {
+    "BaseDamage": {
+      "Poison": 15
+    }
+  },
+  "ApplicationEffects": {
+    "EntityTopTint": "#3a8a2a",
+    "EntityBottomTint": "#0a2a00",
+    "Particles": [
+      {
+        "SystemId": "Effect_Poison"
+      }
+    ]
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "$Comment": "Temple du Sanctuaire d'Apollon : tholos grec (soubassement a 3 marches, dallage en mosaique a soleil dore, 16 colonnes a 12 cannelures et chapiteau dorique, architrave, frise a metopes dorees, corniche a denticules, acroteres dores, tambour a 16 fenetres, coupole a caissons et nervures dorees avec oculus, autel a flamme eternelle, 16 braseros, guirlandes de laurier ; scripts/rune_aura_icons/gen_apollo.py). Sort du sol au lancement. HitBox large en X : le serveur masque (LOD) les entites a hitbox trop petite.",
+  "Model": "Items/Projectiles/Apollo/Temple.blockymodel",
+  "Texture": "Items/Projectiles/Apollo/Temple.png",
+  "MinScale": 4,
+  "MaxScale": 4,
+  "HitBox": {
+    "Max": {
+      "X": 3.0,
+      "Y": 0.01,
+      "Z": 0.01
+    },
+    "Min": {
+      "X": -3.0,
+      "Y": -0.01,
+      "Z": -0.01
+    }
+  },
+  "Light": {
+    "Color": "#ffe9a8",
+    "Radius": 14
+  },
+  "Particles": [
+    {
+      "SystemId": "Effect_Fire",
+      "TargetNodeName": "Altar_Flame",
+      "Scale": 0.8
+    },
+    {
+      "SystemId": "Gilgamesh_Sword_Glow",
+      "TargetNodeName": "Altar_Flame",
+      "Scale": 1.2
+    },
+    {
+      "SystemId": "Effect_Fire",
+      "TargetNodeName": "Brazier_Flame_0",
+      "Scale": 0.35
+    },
+    {
+      "SystemId": "Effect_Fire",
+      "TargetNodeName": "Brazier_Flame_1",
+      "Scale": 0.35
+    },
+    {
+      "SystemId": "Effect_Fire",
+      "TargetNodeName": "Brazier_Flame_2",
+      "Scale": 0.35
+    },
+    {
+      "SystemId": "Effect_Fire",
+      "TargetNodeName": "Brazier_Flame_3",
+      "Scale": 0.35
+    },
+    {
+      "SystemId": "Effect_Fire",
+      "TargetNodeName": "Brazier_Flame_4",
+      "Scale": 0.35
+    },
+    {
+      "SystemId": "Effect_Fire",
+      "TargetNodeName": "Brazier_Flame_5",
+      "Scale": 0.35
+    },
+    {
+      "SystemId": "Effect_Fire",
+      "TargetNodeName": "Brazier_Flame_6",
+      "Scale": 0.35
+    },
+    {
+      "SystemId": "Effect_Fire",
+      "TargetNodeName": "Brazier_Flame_7",
+      "Scale": 0.35
+    },
+    {
+      "SystemId": "Effect_Fire",
+      "TargetNodeName": "Brazier_Flame_8",
+      "Scale": 0.35
+    },
+    {
+      "SystemId": "Effect_Fire",
+      "TargetNodeName": "Brazier_Flame_9",
+      "Scale": 0.35
+    },
+    {
+      "SystemId": "Effect_Fire",
+      "TargetNodeName": "Brazier_Flame_10",
+      "Scale": 0.35
+    },
+    {
+      "SystemId": "Effect_Fire",
+      "TargetNodeName": "Brazier_Flame_11",
+      "Scale": 0.35
+    },
+    {
+      "SystemId": "Effect_Fire",
+      "TargetNodeName": "Brazier_Flame_12",
+      "Scale": 0.35
+    },
+    {
+      "SystemId": "Effect_Fire",
+      "TargetNodeName": "Brazier_Flame_13",
+      "Scale": 0.35
+    },
+    {
+      "SystemId": "Effect_Fire",
+      "TargetNodeName": "Brazier_Flame_14",
+      "Scale": 0.35
+    },
+    {
+      "SystemId": "Effect_Fire",
+      "TargetNodeName": "Brazier_Flame_15",
+      "Scale": 0.35
+    }
+  ]
+}

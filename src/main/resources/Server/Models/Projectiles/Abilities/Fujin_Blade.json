@@ -1,0 +1,127 @@
+{
+  "$Comment": "Lame de vent lancee par le cyclone du Courroux de Fujin : projectile Wind Strike vanilla agrandi (x2.4), memes trails et particules, plus une bande de poussiere.",
+  "Model": "Items/Projectiles/WindStrike_Projectile.blockymodel",
+  "Texture": "Items/Projectiles/WindStrike_Projectile_Texture.png",
+  "HitBox": {
+    "Max": {
+      "X": 1.2,
+      "Y": 1,
+      "Z": 1.2
+    },
+    "Min": {
+      "X": -1.2,
+      "Y": -1,
+      "Z": -1.2
+    }
+  },
+  "MinScale": 2.4,
+  "MaxScale": 2.4,
+  "Particles": [
+    {
+      "SystemId": "Ability_Windstrikes",
+      "TargetNodeName": "Projectile",
+      "RotationOffset": {
+        "Roll": 45
+      },
+      "PositionOffset": {
+        "Z": -0.5
+      }
+    },
+    {
+      "SystemId": "Block_Run_Crystal",
+      "TargetNodeName": "Projectile",
+      "PositionOffset": {
+        "Z": -0.5
+      }
+    }
+  ],
+  "Trails": [
+    {
+      "TrailId": "Ability_Windstrike_Trail",
+      "RotationOffset": {
+        "Roll": 0
+      },
+      "PositionOffset": {
+        "Z": 0.5,
+        "X": 0,
+        "Y": 0.03
+      },
+      "TargetNodeName": "Projectile"
+    },
+    {
+      "TrailId": "Ability_Windstrike_Trail",
+      "RotationOffset": {
+        "Roll": 180
+      },
+      "PositionOffset": {
+        "Z": 0.5,
+        "X": 0,
+        "Y": -0.03
+      },
+      "TargetNodeName": "Projectile"
+    },
+    {
+      "TrailId": "Ability_Windstrike_Streak",
+      "TargetNodeName": "Projectile",
+      "PositionOffset": {
+        "X": 1.07,
+        "Y": 0.02,
+        "Z": -0.47
+      }
+    },
+    {
+      "TrailId": "Ability_Windstrike_Streak",
+      "TargetNodeName": "Projectile",
+      "PositionOffset": {
+        "X": -1.07,
+        "Y": -0.02,
+        "Z": -0.47
+      }
+    },
+    {
+      "TrailId": "Ability_Windstrike_Streak",
+      "TargetNodeName": "Projectile",
+      "PositionOffset": {
+        "X": 0.6,
+        "Y": -0.03,
+        "Z": -0.19
+      }
+    },
+    {
+      "TrailId": "Ability_Windstrike_Streak",
+      "TargetNodeName": "Projectile",
+      "PositionOffset": {
+        "X": -0.6,
+        "Y": 0.03,
+        "Z": -0.19
+      }
+    },
+    {
+      "TrailId": "Ability_Windstrike_Streak",
+      "TargetNodeName": "Projectile",
+      "PositionOffset": {
+        "X": 0.2,
+        "Y": 0.05,
+        "Z": 0.0
+      }
+    },
+    {
+      "TrailId": "Ability_Windstrike_Streak",
+      "TargetNodeName": "Projectile",
+      "PositionOffset": {
+        "X": -0.2,
+        "Y": -0.05,
+        "Z": 0.0
+      }
+    },
+    {
+      "TrailId": "Fujin_Cyclone_Streak",
+      "TargetNodeName": "Projectile",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0.6
+      }
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune du Réveil de Gaïa",
+    "Description": "Sort divin de terre (Guerrier, Dragon). Vous êtes l'épicentre : toute la zone autour de vous (35 blocs) se soulève, sauf le pilier de terre sur lequel vous vous tenez. De grands crocs rocheux (14 à 22 blocs, courbés, veinés de lave) jaillissent un à un en bordure de zone en laissant de larges passages (300 dégâts et projection aux ennemis proches) ; ils se rétractent dans le sol à la fin. Le sol se fend de failles profondes remplies de lave d'où jaillissent des geysers (120 dégâts) et se découpe en seize plaques. Par vagues, du centre vers l'extérieur, les plaques s'arrachent avec tout ce qu'elles portent (sol sur 6 blocs, plantes, arbres), montent jusqu'à 40 blocs, tournent autour de vous et s'entrechoquent (400 dégâts aux ennemis pris entre elles). Puis chacune se retourne et s'abat sur son trou (1500 dégâts dessous) : chaque impact déclenche un tremblement de terre qui fait onduler le sol et projette les ennemis (250 dégâts). Quand tout est retombé, un dernier séisme traverse toute la zone (600 dégâts). Le terrain est restauré après 3 minutes. Épargne votre groupe, votre guilde et votre famille. Coût : 2000 mana. Recharge : 5 s (valeur de test)."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_ReveilGaia.png",
+  "Quality": "Divin",
+  "ItemLevel": 100,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_System.Competences_Actives"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_ReveilGaia.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 5,
+    "Cost": 2000,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Damage",
+      "Elemental",
+      "Aoe"
+    ],
+    "Cast": "Root_Ability_ReveilGaia"
+  }
+}

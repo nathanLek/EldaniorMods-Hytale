@@ -1,0 +1,29 @@
+{
+  "$Comment": "Eclair vertical du Sanctuaire de Taranis : trait de foudre (texture Lightning vanilla etiree sur ~25 blocs, face camera), eclair au sol, fumee et etincelles vanilla.",
+  "Spawners": [
+    {
+      "SpawnerId": "Taranis_Bolt_Strike",
+      "PositionOffset": {
+        "Y": 13
+      }
+    },
+    {
+      "SpawnerId": "Taranis_Bolt_Flash",
+      "PositionOffset": {
+        "Y": 0.05
+      }
+    },
+    {
+      "SpawnerId": "Lightning_Poof",
+      "PositionOffset": {
+        "Y": 0.5
+      }
+    },
+    {
+      "SpawnerId": "Lightning_Smoke"
+    }
+  ],
+  "IsImportant": true,
+  "CullDistance": 160,
+  "LifeSpan": 0.1
+}

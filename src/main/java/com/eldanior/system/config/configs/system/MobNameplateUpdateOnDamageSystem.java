@@ -46,7 +46,7 @@ public class MobNameplateUpdateOnDamageSystem extends DamageEventSystem {
         Ref<EntityStore> targetRef = chunk.getReferenceTo(index);
 
         NPCEntity npc = store.getComponent(targetRef, Objects.requireNonNull(NPCEntity.getComponentType()));
-        if (npc == null) return;
+        if (npc == null || com.eldanior.system.skills.runes.spells.RuneSpellRuntime.isSummonRole(npc.getNPCTypeId()) || com.eldanior.system.guards.GuardType.fromRole(npc.getNPCTypeId()) != null) return;   // copies et PNJ de poste : nom gere par leur systeme   // copies des sorts : gardent le nom du lanceur
 
         String mobTypeId = npc.getNPCTypeId();
 
@@ -54,7 +54,9 @@ public class MobNameplateUpdateOnDamageSystem extends DamageEventSystem {
         IMobConfig mobXPData = MobXP.getMobDataForId(mobTypeId);
 
         if (mobXPData.getCustomTitle() != null) {
-            Nameplate nameplate = new Nameplate(mobXPData.getCustomTitle());
+            MobLevelData leveled = store.getComponent(targetRef, EldaniorSystem.get().getMobLevelDataType());
+            Nameplate nameplate = new Nameplate(leveled != null && leveled.isStatsApplied()
+                    ? mobXPData.getCustomTitle() + " Lv." + leveled.getLevel() : mobXPData.getCustomTitle());
             commandBuffer.putComponent(targetRef, Nameplate.getComponentType(), nameplate);
             return;
         }

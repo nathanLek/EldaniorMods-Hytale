@@ -1,0 +1,33 @@
+{
+  "$Comment": "Sablier divin qui flotte au-dessus du lanceur du Sablier de Chronos. HitBox large en X : le serveur masque (LOD) les entites a hitbox trop petite.",
+  "Model": "Items/Projectiles/Chronos/Hourglass.blockymodel",
+  "Texture": "Items/Projectiles/Chronos/Chronos.png",
+  "MinScale": 1.2,
+  "MaxScale": 1.2,
+  "HitBox": {
+    "Max": {
+      "X": 0.5,
+      "Y": 0.01,
+      "Z": 0.01
+    },
+    "Min": {
+      "X": -0.5,
+      "Y": -0.01,
+      "Z": -0.01
+    }
+  },
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Celestial/Sky_Circle_Spin.blockyanim",
+          "BlendingDuration": 0
+        }
+      ]
+    }
+  },
+  "Light": {
+    "Color": "#ffe0a0",
+    "Radius": 4
+  }
+}

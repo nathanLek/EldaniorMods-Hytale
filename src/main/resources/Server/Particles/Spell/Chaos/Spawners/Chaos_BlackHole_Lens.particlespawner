@@ -1,0 +1,62 @@
+{
+  "$Comment": "Trou noir de Chaos : lentille gravitationnelle, l'arriere-plan est devie autour de l'horizon (carte de normales radiale). Face camera ; reemis par le code.",
+  "RenderMode": "Distortion",
+  "ParticleRotationInfluence": "Billboard",
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "ParticleRotateWithSpawner": false,
+  "MaxConcurrentParticles": 1,
+  "ParticleLifeSpan": {
+    "Min": 0.6,
+    "Max": 0.6
+  },
+  "SpawnRate": {
+    "Min": 1,
+    "Max": 1
+  },
+  "SpawnBurst": true,
+  "TotalParticles": {
+    "Min": 1,
+    "Max": 1
+  },
+  "InitialVelocity": {
+    "Speed": {
+      "Min": 0,
+      "Max": 0
+    }
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Eldanior/Chaos_BlackHole_Lens.png",
+    "ScaleRatioConstraint": "OneToOne",
+    "UVOption": "None",
+    "SoftParticles": "Disable",
+    "InitialAnimationFrame": {
+      "Opacity": 0,
+      "Color": "#ffffff",
+      "Scale": {
+        "X": {
+          "Min": 9.6,
+          "Max": 9.6
+        },
+        "Y": {
+          "Min": 9.6,
+          "Max": 9.6
+        }
+      }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0
+      },
+      "25": {
+        "Opacity": 0.6
+      },
+      "75": {
+        "Opacity": 0.6
+      },
+      "100": {
+        "Opacity": 0
+      }
+    }
+  }
+}

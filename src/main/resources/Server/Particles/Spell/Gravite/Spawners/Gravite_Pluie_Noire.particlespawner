@@ -1,0 +1,98 @@
+{
+  "$Comment": "Trait noir epais aspire vers le sol par la gravite (acceleration vers le bas : chute garantie).",
+  "RenderMode": "BlendLinear",
+  "EmitOffset": {
+    "X": {
+      "Min": -0.6,
+      "Max": 0.6
+    },
+    "Y": {
+      "Min": 6,
+      "Max": 50
+    },
+    "Z": {
+      "Min": -0.6,
+      "Max": 0.6
+    }
+  },
+  "ParticleRotationInfluence": "Velocity",
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "ParticleRotateWithSpawner": false,
+  "MaxConcurrentParticles": 120,
+  "SpawnRate": {
+    "Min": 34,
+    "Max": 34
+  },
+  "ParticleLifeSpan": {
+    "Min": 0.8,
+    "Max": 1.2
+  },
+  "InitialVelocity": {
+    "Yaw": {
+      "Min": -180,
+      "Max": 180
+    },
+    "Pitch": {
+      "Min": -10,
+      "Max": 10
+    },
+    "Speed": {
+      "Min": 0.5,
+      "Max": 1.0
+    }
+  },
+  "Attractors": [
+    {
+      "Position": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "Radius": 0,
+      "LinearAcceleration": {
+        "X": 0,
+        "Y": -75,
+        "Z": 0
+      }
+    }
+  ],
+  "Particle": {
+    "Texture": "Particles/Textures/Basic/Glow.png",
+    "ScaleRatioConstraint": "None",
+    "UVOption": "None",
+    "SoftParticles": "Disable",
+    "InitialAnimationFrame": {
+      "Opacity": 0,
+      "Color": "#12041c",
+      "Scale": {
+        "X": {
+          "Min": 0.45,
+          "Max": 0.65
+        },
+        "Y": {
+          "Min": 4.5,
+          "Max": 7.5
+        }
+      }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0,
+        "Color": "#12041c"
+      },
+      "12": {
+        "Opacity": 0.92,
+        "Color": "#12041c"
+      },
+      "75": {
+        "Opacity": 0.8280000000000001,
+        "Color": "#1f0933"
+      },
+      "100": {
+        "Opacity": 0,
+        "Color": "#2c0d4a"
+      }
+    }
+  }
+}

@@ -14,7 +14,7 @@ public class Croise extends ClassModel {
         super(
                 "croise",
                 "Croise",
-                "Le Croise est un guerrier beni par la lumiere divine. Sa foi le rend quasiment invulnerable et ses coups portent le jugement celeste.",
+                "Le Croise est un guerrier beni par la lumiere divine. Sa foi le rend quasiment invulnerable et ses coups portent le courroux de Muspelheim.",
                 Rarity.EPIC,
                 ClassType.WARRIOR,
                 List.of(PassiveSkill.STEEL_BODY, PassiveSkill.BURSTING_LIFE, PassiveSkill.MONSTER_SLAYER_GUARD),

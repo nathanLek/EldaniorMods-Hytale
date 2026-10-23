@@ -1,0 +1,33 @@
+{
+  "$Comment": "Couronne de feu au-dessus de la tete du lanceur du Courroux de Muspelheim pendant la levitation. HitBox large en X : le serveur masque (LOD) les entites a hitbox trop petite.",
+  "Model": "Items/Projectiles/Muspelheim/Crown.blockymodel",
+  "Texture": "Items/Projectiles/Muspelheim/Wings.png",
+  "MinScale": 2.5,
+  "MaxScale": 2.5,
+  "HitBox": {
+    "Max": {
+      "X": 0.6,
+      "Y": 0.01,
+      "Z": 0.01
+    },
+    "Min": {
+      "X": -0.6,
+      "Y": -0.01,
+      "Z": -0.01
+    }
+  },
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Celestial/Sky_Circle_Spin.blockyanim",
+          "BlendingDuration": 0
+        }
+      ]
+    }
+  },
+  "Light": {
+    "Color": "#ffb050",
+    "Radius": 5
+  }
+}

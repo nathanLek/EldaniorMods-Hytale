@@ -1,0 +1,71 @@
+{
+  "Type": "Variant",
+  "Reference": "Template_Intelligent",
+  "Modify": {
+    "Appearance": "Eldanior_Guard_Ville",
+    "DropList": "Empty",
+    "MaxHealth": 300,
+    "MaxSpeed": 10,
+    "KnockbackScale": 0.4,
+    "Weapons": [
+      "Weapon_Sword_Iron"
+    ],
+    "OffHand": [
+      "Weapon_Shield_Iron"
+    ],
+    "DefaultOffHandSlot": 0,
+    "NighttimeOffhandSlot": 0,
+    "WakingPeriod": [
+      0,
+      24
+    ],
+    "BedBlockSet": "",
+    "WakingIdleBehaviorComponent": "Component_Instruction_Eldanior_Leash_Return",
+    "WanderRadius": 2,
+    "Patrol": false,
+    "FollowPatrolPath": false,
+    "ViewRange": 20,
+    "ViewSector": 240,
+    "HearingRange": 12,
+    "AbsoluteDetectionRange": 4,
+    "AlertedRange": 48,
+    "AlertedTime": [
+      0.3,
+      0.6
+    ],
+    "LeashDistance": 24,
+    "LeashMinPlayerDistance": 4,
+    "LeashTimer": [
+      2,
+      3
+    ],
+    "HardLeashDistance": 48,
+    "ChanceToBeAlertedWhenReceivingCallForHelp": 100,
+    "CombatMessageTargetGroups": [
+      "Eldanior_Guards"
+    ],
+    "InvestigateRange": 48,
+    "SearchTimeRange": [
+      4,
+      6
+    ],
+    "UseCombatActionEvaluator": true,
+    "_CombatConfig": "CAE_Eldanior_Guard_Ville",
+    "AttitudeGroup": "Eldanior_Guard",
+    "DefaultPlayerAttitude": "Ignore",
+    "DisableDamageGroups": [
+      "Self",
+      "Eldanior_Guards"
+    ],
+    "BreathesInWater": true,
+    "NameTranslationKey": {
+      "Compute": "NameTranslationKey"
+    }
+  },
+  "Parameters": {
+    "NameTranslationKey": {
+      "Value": "server.npcRoles.Eldanior_Guard_Ville.name",
+      "Description": "Translation key for NPC name display"
+    }
+  }
+}

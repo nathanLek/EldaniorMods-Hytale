@@ -1,0 +1,17 @@
+{
+  "$Comment": "Explosion de vapeur quand une meteorite du Courroux de Muspelheim tombe sur une zone gelee par la Porte de Niflheim.",
+  "Spawners": [
+    {
+      "SpawnerId": "Goblin_Smoke"
+    },
+    {
+      "SpawnerId": "Goblin_Smoke",
+      "PositionOffset": {
+        "Y": 2
+      }
+    }
+  ],
+  "LifeSpan": 2.5,
+  "IsImportant": true,
+  "CullDistance": 160
+}

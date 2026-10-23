@@ -1,0 +1,31 @@
+{
+  "$Comment": "Foudroiement du Sanctuaire de Taranis : paralysie electrique breve (visuels du Hazard_Electric_Stun vanilla).",
+  "Duration": 0.8,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": true,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#ffeb00",
+    "EntityTopTint": "#9ad7ff",
+    "Particles": [
+      {
+        "SystemId": "Hazard_Electric_Stun",
+        "TargetEntityPart": "Entity",
+        "TargetNodeName": "Chest",
+        "Scale": 1
+      }
+    ],
+    "ModelVFXId": "Hazard_Electric_Stun",
+    "MovementEffects": {
+      "DisableAll": true
+    },
+    "AbilityEffects": {
+      "Disabled": [
+        "Primary",
+        "Secondary",
+        "Ability1",
+        "Ability3"
+      ]
+    }
+  },
+  "StatusEffectIcon": "UI/StatusEffects/Burn.png"
+}

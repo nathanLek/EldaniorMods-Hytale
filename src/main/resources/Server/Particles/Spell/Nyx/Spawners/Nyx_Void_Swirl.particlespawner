@@ -1,0 +1,83 @@
+{
+  "$Comment": "Retour au neant : fumee noire qui tourbillonne et s'enfonce.",
+  "RenderMode": "BlendLinear",
+  "ParticleRotationInfluence": "Billboard",
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "ParticleRotateWithSpawner": false,
+  "MaxConcurrentParticles": 40,
+  "SpawnRate": {
+    "Min": 12,
+    "Max": 16
+  },
+  "SpawnBurst": false,
+  "ParticleLifeSpan": {
+    "Min": 1.2,
+    "Max": 2.0
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Smoke/Smoke_Dense.png",
+    "ScaleRatioConstraint": "OneToOne",
+    "UVOption": "None",
+    "SoftParticles": "Disable",
+    "InitialAnimationFrame": {
+      "Opacity": 0,
+      "Color": "#050008",
+      "Scale": {
+        "X": {
+          "Min": 1.2,
+          "Max": 2.0
+        }
+      }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0,
+        "Color": "#050008"
+      },
+      "20": {
+        "Opacity": 0.8,
+        "Color": "#0a0212"
+      },
+      "80": {
+        "Opacity": 0.8
+      },
+      "100": {
+        "Opacity": 0,
+        "Color": "#000000"
+      }
+    }
+  },
+  "EmitOffset": {
+    "X": {
+      "Min": -1.6,
+      "Max": 1.6
+    },
+    "Y": {
+      "Min": -0.5,
+      "Max": 1.5
+    },
+    "Z": {
+      "Min": -1.6,
+      "Max": 1.6
+    }
+  },
+  "InitialVelocity": {
+    "Speed": {
+      "Min": 0,
+      "Max": 0
+    }
+  },
+  "Attractors": [
+    {
+      "Radius": 0,
+      "RadialAcceleration": -3.0,
+      "RadialTangentAcceleration": 8.0,
+      "LinearAcceleration": {
+        "X": 0,
+        "Y": -4,
+        "Z": 0
+      }
+    }
+  ]
+}

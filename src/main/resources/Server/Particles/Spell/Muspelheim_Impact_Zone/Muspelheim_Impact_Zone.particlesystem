@@ -1,0 +1,20 @@
+{
+  "$Comment": "Zone rouge au sol pendant la chute d'une meteorite du Courroux de Muspelheim (s'intensifie jusqu'a l'impact). Duree coupee par le code (maxDuration = temps de chute).",
+  "Spawners": [
+    {
+      "SpawnerId": "Muspelheim_Impact_Zone_Fill",
+      "PositionOffset": {
+        "Y": 0.02
+      }
+    },
+    {
+      "SpawnerId": "Muspelheim_Impact_Zone_Ring",
+      "PositionOffset": {
+        "Y": 0.04
+      }
+    }
+  ],
+  "IsImportant": true,
+  "CullDistance": 128,
+  "LifeSpan": 0.1
+}

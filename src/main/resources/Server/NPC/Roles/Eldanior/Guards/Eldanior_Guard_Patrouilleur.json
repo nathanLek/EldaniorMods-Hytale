@@ -1,0 +1,90 @@
+{
+  "Type": "Variant",
+  "Reference": "Template_Intelligent",
+  "Modify": {
+    "Appearance": "Eldanior_Guard_Patrouilleur",
+    "DropList": "Empty",
+    "MaxHealth": 200,
+    "MaxSpeed": 10,
+    "KnockbackScale": 0.5,
+    "Weapons": [
+      "Weapon_Spear_Iron",
+      "Furniture_Crude_Torch"
+    ],
+    "OffHand": [],
+    "DefaultOffHandSlot": -1,
+    "NighttimeOffhandSlot": -1,
+    "WakingPeriod": [
+      0,
+      24
+    ],
+    "BedBlockSet": "",
+    "WakingIdleBehaviorComponent": "Component_Instruction_Eldanior_Patrol_Round",
+    "WanderRadius": 2,
+    "Patrol": false,
+    "FollowPatrolPath": false,
+    "ViewRange": 20,
+    "ViewSector": 240,
+    "HearingRange": 12,
+    "AbsoluteDetectionRange": 4,
+    "AlertedRange": 48,
+    "AlertedTime": [
+      0.3,
+      0.6
+    ],
+    "LeashDistance": 40,
+    "LeashMinPlayerDistance": 4,
+    "LeashTimer": [
+      2,
+      3
+    ],
+    "HardLeashDistance": 70,
+    "ChanceToBeAlertedWhenReceivingCallForHelp": 100,
+    "CombatMessageTargetGroups": [
+      "Eldanior_Guards"
+    ],
+    "InvestigateRange": 48,
+    "SearchTimeRange": [
+      4,
+      6
+    ],
+    "UseCombatActionEvaluator": false,
+    "AttitudeGroup": "Eldanior_Guard",
+    "DefaultPlayerAttitude": "Ignore",
+    "DisableDamageGroups": [
+      "Self",
+      "Eldanior_Guards"
+    ],
+    "BreathesInWater": true,
+    "NameTranslationKey": {
+      "Compute": "NameTranslationKey"
+    },
+    "Attack": "Root_NPC_Attack_Melee",
+    "AttackDistance": 3,
+    "DesiredAttackDistanceRange": [
+      2,
+      2.5
+    ],
+    "BlockAbility": "",
+    "_InteractionVars": {
+      "Melee_Damage": {
+        "Interactions": [
+          {
+            "Parent": "NPC_Attack_Melee_Damage",
+            "DamageCalculator": {
+              "BaseDamage": {
+                "Physical": 12
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "Parameters": {
+    "NameTranslationKey": {
+      "Value": "server.npcRoles.Eldanior_Guard_Patrouilleur.name",
+      "Description": "Translation key for NPC name display"
+    }
+  }
+}

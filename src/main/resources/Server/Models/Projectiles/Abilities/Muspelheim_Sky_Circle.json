@@ -1,0 +1,33 @@
+{
+  "$Comment": "Cercle runique 3D du Courroux de Muspelheim : trois anneaux contrarotatifs, pierres-glyphes, hexagramme et oeil de feu (scripts/rune_aura_icons/gen_muspelheim.py). HitBox large en X : le serveur masque (LOD) les entites a hitbox trop petite.",
+  "Model": "Items/Projectiles/Muspelheim/Rune_Circle.blockymodel",
+  "Texture": "Items/Projectiles/Muspelheim/Rune_Circle.png",
+  "MinScale": 66,
+  "MaxScale": 66,
+  "HitBox": {
+    "Max": {
+      "X": 1.5,
+      "Y": 0.01,
+      "Z": 0.01
+    },
+    "Min": {
+      "X": -1.5,
+      "Y": -0.01,
+      "Z": -0.01
+    }
+  },
+  "Light": {
+    "Color": "#ff5a1e",
+    "Radius": 60
+  },
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Muspelheim/Rune_Circle_Spin.blockyanim",
+          "BlendingDuration": 0
+        }
+      ]
+    }
+  }
+}

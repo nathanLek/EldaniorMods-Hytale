@@ -6,6 +6,7 @@ import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
+import com.hypixel.hytale.protocol.FlyMode;
 import com.hypixel.hytale.protocol.MovementSettings;
 import com.hypixel.hytale.protocol.SavedMovementStates;
 import com.hypixel.hytale.protocol.packets.player.SetMovementStates;
@@ -68,11 +69,11 @@ public class MorphFlightSystem extends EntityTickingSystem<EntityStore> {
         MovementSettings settings = movementManager.getSettings();
         if (settings == null) return;
 
-        boolean currentlyCanFly = settings.canFly;
+        boolean currentlyCanFly = settings.fly != FlyMode.Disabled;
 
         // 2. Activation : morph volant détecté et vol pas encore actif → on l'active
         if (isFlyingMorphActive && !currentlyCanFly) {
-            settings.canFly = true;
+            settings.fly = FlyMode.Allowed;
             settings.horizontalFlySpeed = MORPH_FLY_SPEED;
             settings.verticalFlySpeed = MORPH_FLY_SPEED;
             movementManager.update(playerRef.getPacketHandler());
@@ -85,7 +86,7 @@ public class MorphFlightSystem extends EntityTickingSystem<EntityStore> {
         }
         // 3. Désactivation : plus de morph volant ET on l'avait activé → on le désactive
         else if (!isFlyingMorphActive && currentlyCanFly && morphFlyEnabled.contains(playerUUID)) {
-            settings.canFly = false;
+            settings.fly = FlyMode.Disabled;
             movementManager.update(playerRef.getPacketHandler());
             commandBuffer.putComponent(player.getReference(), MovementManager.getComponentType(), movementManager);
 

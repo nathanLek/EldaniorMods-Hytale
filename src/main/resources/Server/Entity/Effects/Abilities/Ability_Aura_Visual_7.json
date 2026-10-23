@@ -1,0 +1,20 @@
+{
+  "$Comment": "Visuel du palier : Aura Draconique (Dragon) - rouge et noir. Memes particules que la rune Enrage (Buff_Enrage) recolorees : Buff_Aura_T7. Applique en infini par RuneAuraSystem selon la dignite. Le palier Dragon ajoute Ability_Aura_Dragon (eclairs, fumee noire, aura du vide). Echelle : x4.",
+  "ApplicationEffects": {
+    "Particles": [
+      {
+        "SystemId": "Buff_Aura_T7",
+        "TargetNodeName": "Chest",
+        "PositionOffset": {
+          "X": 0,
+          "Y": -1,
+          "Z": 0
+        },
+        "Scale": 4.0
+      }
+    ]
+  },
+  "Duration": 8.0,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": false
+}

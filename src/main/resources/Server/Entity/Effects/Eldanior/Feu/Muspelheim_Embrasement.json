@@ -1,0 +1,16 @@
+{
+  "$Comment": "Embrasement du sol ardent du Courroux de Muspelheim : reapplique chaque seconde par le code (qui inflige 3 degats de feu/s) tant que l'ennemi reste sur une zone d'impact.",
+  "Duration": 1.6,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": true,
+  "StatusEffectIcon": "UI/StatusEffects/Burn.png",
+  "ApplicationEffects": {
+    "EntityBottomTint": "#100600",
+    "EntityTopTint": "#cf2302",
+    "Particles": [
+      {
+        "SystemId": "Effect_Fire"
+      }
+    ]
+  }
+}

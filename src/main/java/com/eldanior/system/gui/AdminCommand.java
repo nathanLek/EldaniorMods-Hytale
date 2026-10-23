@@ -20,7 +20,6 @@ public class AdminCommand extends AbstractAsyncCommand {
         super("admin", "Ouvre l'interface d'administration Eldanior (OP uniquement)");
     }
 
-    @Override
     protected boolean canGeneratePermission() { return false; }
 
     @Nonnull

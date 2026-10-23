@@ -37,7 +37,6 @@ public class GuildCommand extends AbstractAsyncCommand {
         this.arg1 = this.withOptionalArg("arg", "Joueur ou nom de guilde", ArgTypes.STRING);
     }
 
-    @Override
     protected boolean canGeneratePermission() { return false; }
 
     @Nonnull

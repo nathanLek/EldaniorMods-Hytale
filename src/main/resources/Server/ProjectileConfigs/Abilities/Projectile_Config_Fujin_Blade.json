@@ -1,0 +1,40 @@
+{
+  "$Comment": "Lame de vent du cyclone de Fujin. Les degats sont geres par le code (allies epargnes) : interactions neutres.",
+  "Model": "Fujin_Blade",
+  "Physics": {
+    "Type": "Standard",
+    "Gravity": 0,
+    "TerminalVelocityAir": 40,
+    "TerminalVelocityWater": 5,
+    "RotationMode": "Velocity",
+    "ComputePitch": false,
+    "Bounciness": 0.0
+  },
+  "LaunchForce": 24,
+  "DirectionalHitBox": {
+    "Width": 5.0,
+    "Depth": 1.6
+  },
+  "SpawnOffset": {
+    "X": 0,
+    "Z": -0.5
+  },
+  "Interactions": {
+    "ProjectileHit": {
+      "Interactions": [
+        {
+          "Type": "Simple",
+          "RunTime": 0.01
+        }
+      ]
+    },
+    "ProjectileMiss": {
+      "Interactions": [
+        {
+          "Type": "Simple",
+          "RunTime": 0.01
+        }
+      ]
+    }
+  }
+}

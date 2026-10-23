@@ -58,15 +58,7 @@ public class MobXP {
     }
 
     public static int getXpForId(String typeId) {
-        if (typeId == null) return DEFAULT.getXp();
-        String cleanId = typeId.replace("_", " ").toLowerCase();
-
-        for (IMobConfig mob : ALL_MOBS) {
-            if (cleanId.contains(mob.getKeyword())) {
-                return mob.getXp();
-            }
-        }
-        return DEFAULT.getXp();
+        return getMobDataForId(typeId).getXp();   // meme correspondance que getMobDataForId (mots-cles avec "_" ou majuscules)
     }
 
     public static int getTotalMobCount() {
@@ -90,26 +82,10 @@ public class MobXP {
     }
 
     public static int getMinLevelForId(String typeId) {
-        if (typeId == null) return DEFAULT.getMinLevel();
-        String cleanId = typeId.replace("_", " ").toLowerCase();
-
-        for (IMobConfig mob : ALL_MOBS) {
-            if (cleanId.contains(mob.getKeyword())) {
-                return mob.getMinLevel();
-            }
-        }
-        return DEFAULT.getMinLevel();
+        return getMobDataForId(typeId).getMinLevel();   // meme correspondance que getMobDataForId (mots-cles avec "_" ou majuscules)
     }
 
     public static int getMaxLevelForId(String typeId) {
-        if (typeId == null) return DEFAULT.getMaxLevel();
-        String cleanId = typeId.replace("_", " ").toLowerCase();
-
-        for (IMobConfig mob : ALL_MOBS) {
-            if (cleanId.contains(mob.getKeyword())) {
-                return mob.getMaxLevel();
-            }
-        }
-        return DEFAULT.getMaxLevel();
+        return getMobDataForId(typeId).getMaxLevel();   // meme correspondance que getMobDataForId (mots-cles avec "_" ou majuscules)
     }
 }

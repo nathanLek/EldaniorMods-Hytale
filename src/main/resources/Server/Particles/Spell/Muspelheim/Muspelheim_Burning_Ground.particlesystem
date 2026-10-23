@@ -1,0 +1,21 @@
+{
+  "$Comment": "Sol ardent apres un impact du Courroux de Muspelheim (feu au sol du piege de feu vanilla, 30 s).",
+  "Spawners": [
+    {
+      "SpawnerId": "Fire_AoE_Glow"
+    },
+    {
+      "SpawnerId": "Fire_AoE_Sparks"
+    },
+    {
+      "SpawnerId": "Fire_AoE_Floor",
+      "PositionOffset": {
+        "Y": 0.2
+      }
+    }
+  ],
+  "LifeSpan": 30,
+  "IsImportant": true,
+  "BoundingRadius": 10,
+  "CullDistance": 120
+}

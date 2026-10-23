@@ -31,7 +31,6 @@ public class ParcelSetRentCommand extends AbstractAsyncCommand {
         this.priceArg = this.withRequiredArg("prix", "Prix en Or/7j", ArgTypes.STRING);
     }
 
-    @Override
     protected boolean canGeneratePermission() { return false; }
 
     @Nonnull

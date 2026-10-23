@@ -1,0 +1,38 @@
+{
+  "$Comment": "Arme de lumiere (epee ornementee) de Gilgamesh Babylon epee ornementeee : vol rectiligne rapide, contact gere par le code. Interactions neutres obligatoires.",
+  "Model": "Gilgamesh_Ornate",
+  "UseModelScale": true,
+  "Physics": {
+    "Type": "Standard",
+    "Gravity": 0,
+    "TerminalVelocityAir": 80,
+    "TerminalVelocityWater": 30,
+    "RotationMode": "VelocityDamped",
+    "Bounciness": 0,
+    "SticksVertically": true
+  },
+  "LaunchForce": 55,
+  "SpawnOffset": {
+    "X": 0,
+    "Y": 0,
+    "Z": 0
+  },
+  "Interactions": {
+    "ProjectileHit": {
+      "Interactions": [
+        {
+          "Type": "Simple",
+          "RunTime": 0.01
+        }
+      ]
+    },
+    "ProjectileMiss": {
+      "Interactions": [
+        {
+          "Type": "Simple",
+          "RunTime": 0.01
+        }
+      ]
+    }
+  }
+}

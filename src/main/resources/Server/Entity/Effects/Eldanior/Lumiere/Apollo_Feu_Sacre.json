@@ -1,0 +1,16 @@
+{
+  "$Comment": "Feu sacre du Sanctuaire d'Apollon : les ennemis qui y entrent brulent (degats geres par le code).",
+  "Duration": 1.6,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": true,
+  "StatusEffectIcon": "UI/StatusEffects/Burn.png",
+  "ApplicationEffects": {
+    "EntityTopTint": "#ffd060",
+    "EntityBottomTint": "#c84a00",
+    "Particles": [
+      {
+        "SystemId": "Effect_Fire"
+      }
+    ]
+  }
+}

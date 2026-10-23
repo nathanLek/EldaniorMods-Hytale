@@ -1,0 +1,27 @@
+{
+  "ApplicationEffects": {
+    "Particles": [
+      {
+        "SystemId": "Buff_Windstrikes",
+        "TargetEntityPart": "PrimaryItem",
+        "TargetNodeName": "Handle",
+        "RotationOffset": { "Pitch": 0, "Yaw": 0, "Roll": -90 },
+        "PositionOffset": { "X": 0.4, "Y": 0, "Z": 0 }
+      }
+    ],
+    "FirstPersonParticles": [
+      {
+        "SystemId": "Buff_Windstrikes",
+        "TargetEntityPart": "PrimaryItem",
+        "TargetNodeName": "Handle",
+        "RotationOffset": { "Pitch": 0, "Yaw": 0, "Roll": -90 },
+        "PositionOffset": { "X": 0.4, "Y": 0, "Z": 0 }
+      }
+    ],
+    "WorldSoundEventId": "SFX_Ability_Wind_Strike_Imbued_Loop"
+  },
+  "Duration": 8.0,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": false,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Potion_Signature.png"
+}

@@ -12,6 +12,7 @@ import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.tick.EntityTickingSystem;
+import com.hypixel.hytale.protocol.FlyMode;
 import com.hypixel.hytale.protocol.MovementSettings;
 import com.hypixel.hytale.protocol.SavedMovementStates;
 import com.hypixel.hytale.protocol.packets.interface_.NotificationStyle;
@@ -48,6 +49,12 @@ public class FlySystem extends EntityTickingSystem<EntityStore> {
 
         if (player == null || playerRef == null || data == null) return;
         if (player.getReference() == null || !player.getReference().isValid()) return;
+        // Creatif : le vol est natif et gratuit, la competence Vol (mana) ne s'en occupe pas
+        if (player.getGameMode() == com.hypixel.hytale.protocol.GameMode.Creative) {
+            flightTimers.remove(playerRef.getUuid());
+            flyEnabledBySystem.remove(playerRef.getUuid());
+            return;
+        }
 
         boolean hasVol = data.getActivePassives().contains(PassiveSkill.VOL);
 
@@ -68,7 +75,7 @@ public class FlySystem extends EntityTickingSystem<EntityStore> {
         MovementSettings settings = movementManager.getSettings();
         if (settings == null) return;
 
-        boolean currentlyCanFly = settings.canFly;
+        boolean currentlyCanFly = settings.fly != FlyMode.Disabled;
         boolean isActuallyFlying = movementStates.getMovementStates().flying;
         UUID playerUUID = playerRef.getUuid();
 
@@ -88,6 +95,8 @@ public class FlySystem extends EntityTickingSystem<EntityStore> {
                         flightTimers.put(playerUUID, timeFlying - 1.0f);
                     } else {
                         if (currentlyCanFly) {
+                            com.eldanior.system.config.EldaniorLogger.info("[Vol] coupe faute de mana : stat=" + currentMana + "/" + manaStat.getMax()
+                                    + " | mana interne=" + data.getCurrentMana() + "/" + data.getMaxMana() + " | mode=" + player.getGameMode());
                             NotificationHelper.sendNotification(playerRef, "<color:red>Vol désactivé : Plus de mana</color>", NotificationStyle.Warning);
                             forceStopFlying(player, playerRef, movementManager, settings, commandBuffer);
                             flyEnabledBySystem.remove(playerUUID);
@@ -102,7 +111,7 @@ public class FlySystem extends EntityTickingSystem<EntityStore> {
             }
 
             if (!currentlyCanFly && currentMana >= Fly.MANA_COST_PER_SECOND) {
-                settings.canFly = true;
+                settings.fly = FlyMode.Allowed;
                 settings.horizontalFlySpeed = FLY_SPEED;
                 settings.verticalFlySpeed = FLY_SPEED;
                 movementManager.update(playerRef.getPacketHandler());
@@ -121,7 +130,7 @@ public class FlySystem extends EntityTickingSystem<EntityStore> {
     }
 
     private void forceStopFlying(Player player, PlayerRef playerRef, MovementManager movementManager, MovementSettings settings, CommandBuffer<EntityStore> commandBuffer) {
-        settings.canFly = false;
+        settings.fly = FlyMode.Disabled;
         movementManager.update(playerRef.getPacketHandler());
         assert player.getReference() != null;
         commandBuffer.putComponent(player.getReference(), MovementManager.getComponentType(), movementManager);

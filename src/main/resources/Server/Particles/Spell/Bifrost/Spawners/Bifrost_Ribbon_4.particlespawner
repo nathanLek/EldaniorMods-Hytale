@@ -1,0 +1,84 @@
+{
+  "$Comment": "Bande 5/7 du ruban arc-en-ciel du Bifrost : lumiere qui persiste le long du pont.",
+  "RenderMode": "BlendAdd",
+  "ParticleRotationInfluence": "Billboard",
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "MaxConcurrentParticles": 2,
+  "ParticleRotateWithSpawner": false,
+  "SpawnRate": {
+    "Min": 2,
+    "Max": 2
+  },
+  "SpawnBurst": true,
+  "TotalParticles": {
+    "Min": 2,
+    "Max": 2
+  },
+  "ParticleLifeSpan": {
+    "Min": 2.6,
+    "Max": 3.0
+  },
+  "EmitOffset": {
+    "X": {
+      "Min": -0.4,
+      "Max": 0.4
+    },
+    "Y": {
+      "Min": -0.1,
+      "Max": 0.1
+    },
+    "Z": {
+      "Min": -0.4,
+      "Max": 0.4
+    }
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Basic/Glow.png",
+    "ScaleRatioConstraint": "OneToOne",
+    "UVOption": "None",
+    "SoftParticles": "Disable",
+    "InitialAnimationFrame": {
+      "Opacity": 0,
+      "Color": "#50aaff",
+      "Scale": {
+        "X": {
+          "Min": 1.5,
+          "Max": 1.7
+        }
+      }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0,
+        "Scale": {
+          "X": {
+            "Min": 0.6,
+            "Max": 0.6
+          }
+        }
+      },
+      "10": {
+        "Opacity": 1,
+        "Scale": {
+          "X": {
+            "Min": 1.6,
+            "Max": 1.6
+          }
+        }
+      },
+      "75": {
+        "Opacity": 0.85
+      },
+      "100": {
+        "Opacity": 0,
+        "Scale": {
+          "X": {
+            "Min": 1.9,
+            "Max": 1.9
+          }
+        }
+      }
+    }
+  }
+}

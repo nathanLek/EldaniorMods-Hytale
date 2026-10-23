@@ -21,6 +21,18 @@ public enum NpcData implements IMobConfig {
     MARCHANT2_NPC("Marchant2_Npc", "Marchant", true),
     MARCHANT3_NPC("Marchant3_Npc", "Marchant", true),
 
+    // Gardes de zone (guards/GuardManager) : mortels, niveau fixe, reapparaissent a leur poste ; aucun XP (tuer un garde est un crime)
+    GARDE_VILLE("Eldanior_Guard_Ville", "Garde de ville", 1000, 300),
+    GARDE_ROYAL("Eldanior_Guard_Royal", "Garde royal", 5000, 500),
+    GARDE_CHEVALIER("Eldanior_Guard_Chevalier", "Chevalier", 10000, 700),
+    GARDE_PATROUILLEUR("Eldanior_Guard_Patrouilleur", "Patrouilleur", 0, 150),
+    GARDE_MAGE_ROYAL("Eldanior_Guard_Mage", "Mage royal", 0, 600),
+
+    // PNJ de poste (guards/GuardManager) : chevalier errant, villageois, aventurier (recrutable et compagnon)
+    PNJ_CHEVALIER_ERRANT("Eldanior_Npc_Chevalier_Errant", "Chevalier errant", 0, 400),
+    PNJ_VILLAGEOIS("Eldanior_Npc_Villageois", "Villageois", 0, 10),
+    PNJ_AVENTURIER("Eldanior_Npc_Aventurier", "Aventurier", 0, 200),
+
     // PNJ de quetes (norme : Quest_Npc_{Categorie}_{Type}_N{numero})
     QUEST_NPC_SECONDAIRE_MULTIPLE_N1("Quest_Npc_Secondaire_Multiple_N1", "Ancien Conseiller", true),
     QUEST_NPC_SECONDAIRE_INDICE_N1("Quest_Npc_Secondaire_Indice_N1", "Alex Silford", true),
@@ -163,6 +175,16 @@ public enum NpcData implements IMobConfig {
         this.xp = 0;
         this.minLevel = 0;
         this.maxLevel = 0;
+    }
+
+    // Constructeur 3 (PNJ combattants nommes : niveau fixe, nom affiche avec le niveau)
+    NpcData(String keyword, String customTitle, int xp, int level) {
+        this.keyword = keyword;
+        this.customTitle = customTitle;
+        this.isInvincible = false;
+        this.xp = xp;
+        this.minLevel = level;
+        this.maxLevel = level;
     }
 
     @Override public String getKeyword() { return keyword; }

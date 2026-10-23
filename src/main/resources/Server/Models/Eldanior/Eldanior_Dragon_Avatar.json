@@ -1,0 +1,980 @@
+{
+  "$Comment": "Avatar du Dragon Divin : dragon humanoide muscle sur le squelette et les animations du Loup-garou (ailes et queue animees par nos copies d'animations) ; genere par scripts/rune_aura_icons/gen_dragon_avatar.py.",
+  "Model": "Items/Projectiles/Dragon_Avatar/Dragon_Avatar.blockymodel",
+  "Texture": "Items/Projectiles/Dragon_Avatar/Dragon_Avatar.png",
+  "EyeHeight": 2.14,
+  "CrouchOffset": -1,
+  "SittingOffset": -0.6,
+  "SleepingOffset": -1,
+  "HitBox": {
+    "Max": {
+      "X": 0.45,
+      "Y": 2.76,
+      "Z": 0.45
+    },
+    "Min": {
+      "X": -0.45,
+      "Y": 0,
+      "Z": -0.45
+    }
+  },
+  "MinScale": 1,
+  "MaxScale": 1,
+  "PhysicsValues": {
+    "Mass": 68
+  },
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Idle.blockyanim",
+          "Speed": 0.5
+        }
+      ]
+    },
+    "Walk": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Walk.blockyanim",
+          "Speed": 0.8
+        }
+      ]
+    },
+    "WalkBackward": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Walk_Backward.blockyanim",
+          "Speed": 0.8
+        }
+      ]
+    },
+    "Run": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Run.blockyanim",
+          "Speed": 0.9
+        }
+      ]
+    },
+    "Sprint": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Sprint.blockyanim",
+          "Speed": 1.2
+        }
+      ]
+    },
+    "Crouch": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Crouch.blockyanim",
+          "BlendingDuration": 0.1,
+          "Speed": 0.5
+        }
+      ]
+    },
+    "CrouchWalk": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Crouch_Walk.blockyanim",
+          "BlendingDuration": 0.1
+        }
+      ]
+    },
+    "CrouchWalkBackward": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Crouch_Walk_Backward.blockyanim",
+          "BlendingDuration": 0.1
+        }
+      ]
+    },
+    "Jump": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Jump.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false,
+          "Speed": 0.8
+        }
+      ]
+    },
+    "JumpWalk": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Jump.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false,
+          "Speed": 0.8
+        }
+      ]
+    },
+    "JumpRun": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Jump_Far.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false,
+          "Speed": 0.8
+        },
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Jump_Far2.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false,
+          "Speed": 0.8
+        }
+      ]
+    },
+    "Fall": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Fall.blockyanim",
+          "BlendingDuration": 0.4,
+          "Looping": true
+        },
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Default/Fall2.blockyanim",
+          "BlendingDuration": 0.4,
+          "Looping": true
+        }
+      ]
+    },
+    "FallFar": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Fall_Far.blockyanim",
+          "BlendingDuration": 0.4,
+          "Looping": true
+        }
+      ]
+    },
+    "Alerted": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Alerted.blockyanim",
+          "Looping": false
+        }
+      ]
+    },
+    "FlyIdle": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Fly_Idle.blockyanim"
+        }
+      ]
+    },
+    "Fly": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Fly.blockyanim"
+        }
+      ]
+    },
+    "FlyBackward": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Fly_Backward.blockyanim"
+        }
+      ]
+    },
+    "FlyFast": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Fly_Fast.blockyanim"
+        }
+      ]
+    },
+    "SwimIdle": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Swim/Swim_Idle.blockyanim"
+        }
+      ]
+    },
+    "Swim": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Swim/Swim.blockyanim",
+          "Speed": 0.6
+        }
+      ]
+    },
+    "SwimBackward": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Swim/Swim_Backward.blockyanim"
+        }
+      ]
+    },
+    "SwimFast": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Swim/Swim_Fast.blockyanim",
+          "Speed": 0.6
+        }
+      ]
+    },
+    "SwimJump": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Swim/Swim_Jump.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false,
+          "Speed": 0.8
+        }
+      ]
+    },
+    "SwimFloat": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Swim/Swim_Float.blockyanim"
+        }
+      ]
+    },
+    "SwimSink": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Swim/Swim_Sink.blockyanim"
+        }
+      ]
+    },
+    "SwimDive": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Swim/Swim.blockyanim",
+          "Speed": 0.6
+        }
+      ]
+    },
+    "SwimDiveBackward": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Swim/Swim_Backward.blockyanim"
+        }
+      ]
+    },
+    "SwimDiveFast": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Swim/Swim_Dive_Fast.blockyanim",
+          "Speed": 0.6
+        },
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Swim/Swim_Dive_Fast2.blockyanim",
+          "Speed": 0.6
+        }
+      ]
+    },
+    "FluidIdle": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Idle.blockyanim",
+          "Speed": 0.3
+        }
+      ]
+    },
+    "FluidWalk": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Walk.blockyanim",
+          "Speed": 0.6
+        }
+      ]
+    },
+    "FluidWalkBackward": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Walk_Backward.blockyanim",
+          "Speed": 0.6
+        }
+      ]
+    },
+    "FluidRun": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Run.blockyanim",
+          "Speed": 0.6
+        }
+      ]
+    },
+    "ClimbIdle": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Climb/Climb_Idle.blockyanim",
+          "Speed": 0.5
+        }
+      ]
+    },
+    "ClimbUp": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Climb/Climb_Up.blockyanim"
+        }
+      ]
+    },
+    "ClimbDown": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Climb/Climb_Down.blockyanim"
+        }
+      ]
+    },
+    "ClimbLeft": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Climb/Climb_Left.blockyanim"
+        }
+      ]
+    },
+    "ClimbRight": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Climb/Climb_Right.blockyanim"
+        }
+      ]
+    },
+    "Hurt": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Damage/Hurt.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false
+        },
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Damage/Hurt2.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false
+        },
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Damage/Hurt3.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false
+        }
+      ]
+    },
+    "Death": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Damage/Death.blockyanim",
+          "Looping": false
+        }
+      ]
+    },
+    "Laydown": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Default/Laydown.blockyanim",
+          "Looping": false
+        }
+      ]
+    },
+    "Sleep": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Default/Sleep.blockyanim"
+        }
+      ]
+    },
+    "Wake": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Default/Wake.blockyanim",
+          "Looping": false
+        }
+      ]
+    },
+    "Search": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Flavor/Search.blockyanim"
+        }
+      ]
+    },
+    "Spawn": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Default/Spawn.blockyanim",
+          "Looping": false,
+          "BlendingDuration": 0
+        }
+      ]
+    },
+    "Despawn": {
+      "Animations": [
+        {
+          "Looping": false,
+          "Animation": "NPC/Undead/Werewolf/Animations/Default/Despawn.blockyanim"
+        }
+      ]
+    },
+    "RunBackward": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Walk_Backward.blockyanim",
+          "Speed": 0.8
+        }
+      ]
+    },
+    "CrouchSlide": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Crouch.blockyanim",
+          "BlendingDuration": 0.1,
+          "Speed": 0.5
+        }
+      ]
+    },
+    "SafetyRoll": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Jump_Far.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false,
+          "Speed": 0.8
+        },
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Jump_Far2.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false,
+          "Speed": 0.8
+        }
+      ]
+    },
+    "JumpCrouch": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Jump.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false,
+          "Speed": 0.8
+        }
+      ]
+    },
+    "JumpSprint": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Jump_Far.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false,
+          "Speed": 0.8
+        },
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Jump_Far2.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false,
+          "Speed": 0.8
+        }
+      ]
+    },
+    "StepWalk": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Walk.blockyanim",
+          "Speed": 0.8
+        }
+      ]
+    },
+    "StepRun": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Run.blockyanim",
+          "Speed": 0.9
+        }
+      ]
+    },
+    "StepSprint": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Sprint.blockyanim",
+          "Speed": 1.2
+        }
+      ]
+    },
+    "StepCrouchWalk": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Crouch_Walk.blockyanim",
+          "BlendingDuration": 0.1
+        }
+      ]
+    },
+    "GlideIdle": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Fly_Idle.blockyanim"
+        }
+      ]
+    },
+    "Glide": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Fly.blockyanim"
+        }
+      ]
+    },
+    "GlideBackward": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Fly_Backward.blockyanim"
+        }
+      ]
+    },
+    "GlideFast": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Fly_Fast.blockyanim"
+        }
+      ]
+    },
+    "FlyCrouchIdle": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Fly_Idle.blockyanim"
+        }
+      ]
+    },
+    "FlyCrouch": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Fly.blockyanim"
+        }
+      ]
+    },
+    "FlyCrouchBackward": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Fly_Backward.blockyanim"
+        }
+      ]
+    },
+    "FluidRunBackward": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Walk_Backward.blockyanim",
+          "Speed": 0.6
+        }
+      ]
+    },
+    "FluidSprint": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Run.blockyanim",
+          "Speed": 0.6
+        }
+      ]
+    },
+    "MantleIdle": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Climb/Climb_Idle.blockyanim",
+          "Speed": 0.5
+        }
+      ]
+    },
+    "MantleUp": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Climb/Climb_Up.blockyanim"
+        }
+      ]
+    },
+    "MantleLeft": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Climb/Climb_Left.blockyanim"
+        }
+      ]
+    },
+    "MantleRight": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Climb/Climb_Right.blockyanim"
+        }
+      ]
+    },
+    "DashForward": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Jump_Far.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false,
+          "Speed": 0.8
+        },
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Jump_Far2.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false,
+          "Speed": 0.8
+        }
+      ]
+    },
+    "DashBackward": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Jump_Far.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false,
+          "Speed": 0.8
+        },
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Jump_Far2.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false,
+          "Speed": 0.8
+        }
+      ]
+    },
+    "DashLeft": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Jump_Far.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false,
+          "Speed": 0.8
+        },
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Jump_Far2.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false,
+          "Speed": 0.8
+        }
+      ]
+    },
+    "DashRight": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Jump_Far.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false,
+          "Speed": 0.8
+        },
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Jump_Far2.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false,
+          "Speed": 0.8
+        }
+      ]
+    },
+    "Roll": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Jump_Far.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false,
+          "Speed": 0.8
+        },
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Jump_Far2.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false,
+          "Speed": 0.8
+        }
+      ]
+    },
+    "RollBackward": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Jump_Far.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false,
+          "Speed": 0.8
+        },
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Jump_Far2.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false,
+          "Speed": 0.8
+        }
+      ]
+    },
+    "RollLeft": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Jump_Far.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false,
+          "Speed": 0.8
+        },
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Jump_Far2.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false,
+          "Speed": 0.8
+        }
+      ]
+    },
+    "RollRight": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Jump_Far.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false,
+          "Speed": 0.8
+        },
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Jump_Far2.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false,
+          "Speed": 0.8
+        }
+      ]
+    },
+    "HurtFall": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Damage/Hurt.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false
+        },
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Damage/Hurt2.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false
+        },
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Damage/Hurt3.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false
+        }
+      ]
+    },
+    "HurtFly": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Damage/Hurt.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false
+        },
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Damage/Hurt2.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false
+        },
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Damage/Hurt3.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false
+        }
+      ]
+    },
+    "HurtDrown": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Damage/Hurt.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false
+        },
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Damage/Hurt2.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false
+        },
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Damage/Hurt3.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false
+        }
+      ]
+    },
+    "HurtBurn": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Damage/Hurt.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false
+        },
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Damage/Hurt2.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false
+        },
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Damage/Hurt3.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false
+        }
+      ]
+    },
+    "DeathFall": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Damage/Death.blockyanim",
+          "Looping": false
+        }
+      ]
+    },
+    "DeathFly": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Damage/Death.blockyanim",
+          "Looping": false
+        }
+      ]
+    },
+    "DeathFlyImpact": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Damage/Death.blockyanim",
+          "Looping": false
+        }
+      ]
+    },
+    "DeathDrown": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Damage/Death.blockyanim",
+          "Looping": false
+        }
+      ]
+    },
+    "Sleep2": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Default/Sleep.blockyanim"
+        }
+      ]
+    },
+    "Sit": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Crouch.blockyanim",
+          "BlendingDuration": 0.1,
+          "Speed": 0.5
+        }
+      ]
+    },
+    "Sit2": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Crouch.blockyanim",
+          "BlendingDuration": 0.1,
+          "Speed": 0.5
+        }
+      ]
+    },
+    "SitGround": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Default/Laydown.blockyanim",
+          "Looping": false
+        }
+      ]
+    },
+    "Slide": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Crouch.blockyanim",
+          "BlendingDuration": 0.1,
+          "Speed": 0.5
+        }
+      ]
+    },
+    "IdlePassive": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Idle.blockyanim",
+          "Speed": 0.5
+        }
+      ]
+    },
+    "FlyIdlePassive": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Fly_Idle.blockyanim"
+        }
+      ]
+    },
+    "SwimIdlePassive": {
+      "Animations": [
+        {
+          "Animation": "NPC/Undead/Werewolf/Animations/Swim/Swim_Idle.blockyanim"
+        }
+      ]
+    },
+    "FluidIdlePassive": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Idle.blockyanim",
+          "Speed": 0.3
+        }
+      ]
+    },
+    "MountIdle": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Idle.blockyanim",
+          "Speed": 0.5
+        }
+      ]
+    },
+    "MountWalk": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Walk.blockyanim",
+          "Speed": 0.8
+        }
+      ]
+    },
+    "MountWalkBackward": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Walk_Backward.blockyanim",
+          "Speed": 0.8
+        }
+      ]
+    },
+    "MountRun": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Run.blockyanim",
+          "Speed": 0.9
+        }
+      ]
+    },
+    "MountRunBackward": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Walk_Backward.blockyanim",
+          "Speed": 0.8
+        }
+      ]
+    },
+    "MountSprint": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Dragon_Avatar/Animations/Sprint.blockyanim",
+          "Speed": 1.2
+        }
+      ]
+    }
+  },
+  "Camera": {
+    "PositionOffset": {
+      "X": -0.35,
+      "Z": 2.75,
+      "Y": 0.4
+    }
+  },
+  "Particles": [
+    {
+      "SystemId": "Gilgamesh_Sword_Glow",
+      "TargetNodeName": "Chest",
+      "Scale": 1.2
+    },
+    {
+      "SystemId": "Fire_Charge_Charging_Constant",
+      "TargetNodeName": "R-Hand",
+      "Scale": 0.6
+    },
+    {
+      "SystemId": "Fire_Charge_Charging_Constant",
+      "TargetNodeName": "L-Hand",
+      "Scale": 0.6
+    }
+  ],
+  "Light": {
+    "Color": "#ffe0a0",
+    "Radius": 6
+  }
+}

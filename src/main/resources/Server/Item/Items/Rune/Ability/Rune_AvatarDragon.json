@@ -1,0 +1,45 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de l'Avatar du Dragon Divin",
+    "Description": "Compétence légendaire de la classe Dragon. Vous vous transformez en dragon divin pendant 30 s : écailles nacrées, armure d'or, ailes et queue. La transformation libère une onde de feu (500 dégâts, projection). Sous cette forme, vous infligez 50 % de dégâts en plus, en subissez 30 % de moins, gagnez 20 % de vitesse et 50 % d'endurance maximale, ne pouvez plus être projeté ni subir de dégâts de chute, et une aura de feu divin brûle les ennemis autour de vous (40 dégâts par seconde). Coût : 2000 mana. Recharge : 5 s (valeur de test)."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_AvatarDragon.png",
+  "Quality": "Legendary",
+  "ItemLevel": 100,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_System.Competences_Actives"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_AvatarDragon.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 5,
+    "Cost": 2000,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Damage",
+      "Elemental",
+      "Fire",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_AvatarDragon"
+  }
+}

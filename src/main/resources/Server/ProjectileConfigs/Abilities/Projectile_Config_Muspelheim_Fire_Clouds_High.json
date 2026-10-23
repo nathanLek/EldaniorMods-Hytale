@@ -1,0 +1,37 @@
+{
+  "$Comment": "Porte une couche de nuages de feu du Courroux de Muspelheim (immobile, retiree a la fin de la pluie). Interactions neutres obligatoires.",
+  "Model": "Muspelheim_Fire_Clouds_High",
+  "UseModelScale": true,
+  "Physics": {
+    "Type": "Standard",
+    "Gravity": 0,
+    "TerminalVelocityAir": 1,
+    "TerminalVelocityWater": 1,
+    "Bounciness": 0,
+    "SticksVertically": false
+  },
+  "LaunchForce": 0,
+  "SpawnOffset": {
+    "X": 0,
+    "Y": 0,
+    "Z": 0
+  },
+  "Interactions": {
+    "ProjectileHit": {
+      "Interactions": [
+        {
+          "Type": "Simple",
+          "RunTime": 0.01
+        }
+      ]
+    },
+    "ProjectileMiss": {
+      "Interactions": [
+        {
+          "Type": "Simple",
+          "RunTime": 0.01
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "Id": "rune_page_puits_gravitationnel",
+  "TranslationProperties": {
+    "Name": "Parchemin de Rune : Puits Gravitationnel",
+    "Description": "Un parchemin anormalement lourd, qui tire vers le sol la main qui le tient. Enseigne le Puits Gravitationnel : une zone de gravité extrême qui cloue vos ennemis au sol. Classes : Mage, Assassin, Dragon. Utilisez-le pour ajouter la rune à votre sac de runes."
+  },
+  "Icon": "Icons/ItemsGenerated/Recipe_Page.png",
+  "Quality": "Unique",
+  "Categories": [
+    "Eldanior_System.Competences_Actives"
+  ],
+  "Tags": {
+    "Type": [
+      "Item",
+      "Consumable"
+    ]
+  },
+  "MaxStack": 1,
+  "PlayerAnimationsId": "Item",
+  "Model": "Items/Consumables/Recipes/Recipe.blockymodel",
+  "Texture": "Items/Consumables/Recipes/Recipe_Texture.png",
+  "IconProperties": {
+    "Scale": 0.76,
+    "Rotation": [
+      135,
+      135,
+      0
+    ],
+    "Translation": [
+      -1,
+      5
+    ]
+  },
+  "Interactions": {
+    "Use": "Root_ConsumableItemSkillInteraction"
+  }
+}

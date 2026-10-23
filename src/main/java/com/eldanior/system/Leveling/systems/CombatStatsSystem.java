@@ -212,7 +212,11 @@ public class CombatStatsSystem extends DamageEventSystem {
         if (mobLevelType != null) {
             var mobData = store.getComponent(attackerRef, mobLevelType);
             if (mobData != null && mobData.isStatsApplied()) {
-                float damageBonus = mobData.getLevel() * com.eldanior.system.config.configs.MobsWorldConfig.DAMAGE_PER_LEVEL;
+                // PNJ de poste (gardes, mage, aventuriers...) : bonus de niveau reduit, leurs degats viennent surtout de leur arme
+                NPCEntity attackerNpc = store.getComponent(attackerRef, NPCEntity.getComponentType());
+                boolean postNpc = attackerNpc != null && com.eldanior.system.guards.GuardType.fromRole(attackerNpc.getNPCTypeId()) != null;
+                float damageBonus = mobData.getLevel() * (postNpc ? com.eldanior.system.config.configs.MobsWorldConfig.POST_NPC_DAMAGE_PER_LEVEL
+                        : com.eldanior.system.config.configs.MobsWorldConfig.DAMAGE_PER_LEVEL);
                 damage.setAmount(damage.getAmount() + damageBonus);
                 return;
             }
@@ -283,6 +287,14 @@ public class CombatStatsSystem extends DamageEventSystem {
                 // Effet visuel du skill
                 com.eldanior.system.config.Effects.SkillEffectConfig.applySkillEffects(skill, attackerRef, victimRef, store);
             }
+        }
+
+        // --- Rune d'Aura active : bonus de degats scale sur la dignite (remplace l'ancien passif) ---
+        if (!damage.isCancelled()
+                && com.eldanior.system.config.Effects.EffectsManager.hasEffect(attackerRef,
+                        com.eldanior.system.titles.nobility.systems.RuneAuraSystem.BUFF_ID, store)) {
+            float auraBonus = com.eldanior.system.titles.nobility.systems.RuneAuraSystem.getDamageBonus(attackerData.getDignity());
+            if (auraBonus > 0f) damage.setAmount(damage.getAmount() * (1.0f + auraBonus));
         }
 
         // Persister les changements (procs, cooldowns, stacks)
@@ -358,6 +370,14 @@ public class CombatStatsSystem extends DamageEventSystem {
                 // Effet visuel du skill (pour la defense, l'attaquant et victime sont inverses)
                 com.eldanior.system.config.Effects.SkillEffectConfig.applySkillEffects(skill, victimRef, attackerRef, store);
             }
+        }
+
+        // --- Rune d'Aura active : reduction de degats scale sur la dignite (remplace l'ancien passif) ---
+        if (!damage.isCancelled()
+                && com.eldanior.system.config.Effects.EffectsManager.hasEffect(victimRef,
+                        com.eldanior.system.titles.nobility.systems.RuneAuraSystem.BUFF_ID, store)) {
+            float auraRed = com.eldanior.system.titles.nobility.systems.RuneAuraSystem.getDamageReduction(victimData.getDignity());
+            if (auraRed > 0f) damage.setAmount(damage.getAmount() * (1.0f - auraRed));
         }
 
         // Persister les procs/cooldowns défensifs

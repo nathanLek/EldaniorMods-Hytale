@@ -1,0 +1,23 @@
+{
+  "$Comment": "Cadran geant de l'horloge de Chronos (70 blocs = la zone), au-dessus de la zone. HitBox large en X : le serveur masque (LOD) les entites a hitbox trop petite.",
+  "Model": "Items/Projectiles/Chronos/Dial.blockymodel",
+  "Texture": "Items/Projectiles/Chronos/Clock_Face.png",
+  "MinScale": 35,
+  "MaxScale": 35,
+  "HitBox": {
+    "Max": {
+      "X": 1.5,
+      "Y": 0.01,
+      "Z": 0.01
+    },
+    "Min": {
+      "X": -1.5,
+      "Y": -0.01,
+      "Z": -0.01
+    }
+  },
+  "Light": {
+    "Color": "#7dffb0",
+    "Radius": 24
+  }
+}

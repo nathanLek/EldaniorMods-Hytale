@@ -1,0 +1,45 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune du Trône du Néant Éternel",
+    "Description": "Sort divin de ténèbres (Assassin, Mage, Dragon). Pendant 1 minute, vous devenez maître de la mort et du néant sur tout le royaume autour de vous (30 blocs). Un globe de goudron noir se referme sur la zone : on peut y entrer, on ne peut plus en sortir. Tout le sol du globe devient noir sous un tapis de brume noire, et seul votre trône éclaire le royaume : un trône de ferraille noirci s'élève et flotte au centre, vous y prenez place, une couronne noire à la petite flamme violette au-dessus de la tête. Dans le royaume, vous infligez 50 % de dégâts en plus et en subissez 30 % de moins. L'ombre de chaque ennemi se dresse : sa copie toute noire, un peu plus faible que lui (90 % de sa vie et de sa force), qui court sur lui, tourne autour, se fend et le frappe ; il peut la frapper en retour. Abattue, une ombre fond dans l'ombre et se reforme 6 s plus tard. Clic gauche : le sol éclate en cercles runiques d'où quatre chaînes violettes jaillissent comme des grappins ; elles s'accrochent à l'ennemi visé (plus haut sur les grandes créatures), s'enroulent autour de lui et le tiennent enchaîné jusqu'à la fin du sort, en aspirant son mana à votre profit (sans lui infliger de dégâts). Clic droit : retour au néant, le sol s'ouvre et aspire lentement l'ennemi visé (environ 1800 dégâts), puis se referme. À la fin, les ombres fondent, le trône redescend dans le sol et le globe se dissout. Épargne votre groupe, votre guilde et votre famille. Coût : 2000 mana. Recharge : 5 s (valeur de test)."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_VoileNyx.png",
+  "Quality": "Divin",
+  "ItemLevel": 100,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_System.Competences_Actives"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_VoileNyx.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 5,
+    "Cost": 2000,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Damage",
+      "Elemental",
+      "Aoe",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_VoileNyx"
+  }
+}

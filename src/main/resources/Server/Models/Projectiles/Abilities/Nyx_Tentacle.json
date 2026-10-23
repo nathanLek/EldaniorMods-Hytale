@@ -1,0 +1,32 @@
+{
+  "$Comment": "Tentacule du neant (modele vanilla) qui agrippe un ennemi dans le Voile de Nyx. HitBox large en X : le serveur masque (LOD) les entites a hitbox trop petite.",
+  "Model": "NPC/Void/Tentacle_Void/Models/Model.blockymodel",
+  "Texture": "NPC/Void/Tentacle_Void/Models/Texture.png",
+  "MinScale": 1.6,
+  "MaxScale": 1.6,
+  "HitBox": {
+    "Max": {
+      "X": 0.8,
+      "Y": 0.01,
+      "Z": 0.01
+    },
+    "Min": {
+      "X": -0.8,
+      "Y": -0.01,
+      "Z": -0.01
+    }
+  },
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "NPC/Void/Tentacle_Void/Animations/Default/Idle.blockyanim"
+        }
+      ]
+    }
+  },
+  "Light": {
+    "Color": "#7a2cff",
+    "Radius": 4
+  }
+}

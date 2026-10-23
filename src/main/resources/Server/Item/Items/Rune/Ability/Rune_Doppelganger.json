@@ -1,0 +1,44 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune du Doppelgänger",
+    "Description": "Sort épique de ténèbres (Dragon, Guerrier, Assassin, Archer). Votre double, copie exacte de vous-même, surgit à votre droite pendant 30 s. Il regarde toujours dans la même direction que vous et bouge comme votre reflet : quand vous allez à gauche, il va à droite ; quand vous avancez ou reculez, il fait de même. Il marche, court et saute comme vous, tient la même arme et reproduit chacune de vos attaques et capacités d'arme. Rien ne peut le blesser. Coût : 300 mana. Recharge : 5 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_Doppelganger.png",
+  "Quality": "Epic",
+  "ItemLevel": 60,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_System.Competences_Actives"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_Doppelganger.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 5,
+    "Cost": 300,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Duration",
+      "Damage"
+    ],
+    "Cast": "Root_Ability_Doppelganger"
+  }
+}

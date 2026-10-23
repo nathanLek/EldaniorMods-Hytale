@@ -1,0 +1,45 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de Clonage",
+    "Description": "Sort épique de lumière (Dragon, Guerrier, Assassin, Archer). Cinq copies parfaites de vous-même apparaissent pendant 20 s : même apparence, même nom, même arme de corps à corps (ou mains nues), la moitié de votre vie. Impossible de savoir qui est le vrai. Clic droit sur un ennemi : un clone libre fonce sur lui et devient autonome jusqu'à la fin du sort ; il le combat avec les vraies attaques de votre arme, puis s'attaque seul à chaque monstre proche. Cliquez à nouveau pour lancer un autre clone. Les monstres voient vos clones et les attaquent ; un clone vaincu se dissipe. Coût : 300 mana. Recharge : 5 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_Clonage.png",
+  "Quality": "Epic",
+  "ItemLevel": 60,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_System.Competences_Actives"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_Clonage.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 5,
+    "Cost": 300,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Buff",
+      "Duration",
+      "Damage"
+    ],
+    "Cast": "Root_Ability_Clonage"
+  }
+}

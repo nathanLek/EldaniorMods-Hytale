@@ -1,0 +1,33 @@
+{
+  "$Comment": "Voute etoilee de l'Abime du Chaos (70 blocs = la zone), quad horizontal tournant. HitBox large en X : le serveur masque (LOD) les entites a hitbox trop petite.",
+  "Model": "Items/Projectiles/Celestial/Sky_Circle.blockymodel",
+  "Texture": "Items/Projectiles/Nyx/Starry_Sky.png",
+  "MinScale": 35,
+  "MaxScale": 35,
+  "HitBox": {
+    "Max": {
+      "X": 1.5,
+      "Y": 0.01,
+      "Z": 0.01
+    },
+    "Min": {
+      "X": -1.5,
+      "Y": -0.01,
+      "Z": -0.01
+    }
+  },
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Celestial/Sky_Circle_Spin.blockyanim",
+          "BlendingDuration": 0
+        }
+      ]
+    }
+  },
+  "Light": {
+    "Color": "#6a3cff",
+    "Radius": 20
+  }
+}

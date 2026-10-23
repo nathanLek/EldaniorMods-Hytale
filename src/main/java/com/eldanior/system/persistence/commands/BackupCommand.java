@@ -30,7 +30,6 @@ public class BackupCommand extends AbstractAsyncCommand {
         this.actionArg = this.withRequiredArg("action", "save ou restore", ArgTypes.STRING);
     }
 
-    @Override
     protected boolean canGeneratePermission() { return false; }
 
     @Nonnull

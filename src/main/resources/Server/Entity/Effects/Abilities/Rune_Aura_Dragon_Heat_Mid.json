@@ -1,0 +1,20 @@
+{
+  "$Comment": "Zone draconique - chaleur moyenne. Degats de feu + teinte + overlay ecran sombre (void) pour reduire/obscurcir la vision du joueur.",
+  "ApplicationEffects": {
+    "EntityBottomTint": "#260500",
+    "EntityTopTint": "#a81800",
+    "ScreenEffect": "ScreenEffects/VoidEscalationScreenEffect.png",
+    "Particles": [
+      { "SystemId": "Effect_Fire" },
+      { "SystemId": "Smoke_Black" }
+    ]
+  },
+  "DamageCalculatorCooldown": 1,
+  "DamageCalculator": {
+    "BaseDamage": { "Fire": 7 }
+  },
+  "Duration": 1.5,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": true,
+  "StatusEffectIcon": "UI/StatusEffects/Burn.png"
+}

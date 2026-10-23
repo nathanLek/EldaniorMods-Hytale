@@ -1,0 +1,19 @@
+{
+  "$Comment": "Pluie de cendres et de braises sur la zone du Courroux de Muspelheim (emetteurs Ash_Storm et Ember vanilla, duree finie).",
+  "Spawners": [
+    {
+      "SpawnerId": "Ash_Storm",
+      "FixedRotation": true
+    },
+    {
+      "SpawnerId": "Ember",
+      "FixedRotation": true,
+      "PositionOffset": {
+        "Y": -4
+      }
+    }
+  ],
+  "LifeSpan": 20,
+  "IsImportant": true,
+  "CullDistance": 120
+}

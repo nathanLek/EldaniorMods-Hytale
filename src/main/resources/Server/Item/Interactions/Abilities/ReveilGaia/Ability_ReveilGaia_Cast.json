@@ -1,0 +1,72 @@
+{
+  "$Comment": "Réveil de Gaïa : posture d'incantation, puis GaiaAwakening (Java) declenche le sort.",
+  "Type": "StatsCondition",
+  "UseAbilityCost": true,
+  "Failed": "Ability_Cast_Fail",
+  "Next": {
+    "Type": "Parallel",
+    "Interactions": [
+      {
+        "Interactions": [
+          {
+            "Type": "Simple",
+            "RunTime": 1.0,
+            "HorizontalSpeedMultiplier": 0.3,
+            "Effects": {
+              "ItemPlayerAnimationsId": "Staff",
+              "ItemAnimationId": "CastSummonCharging",
+              "WaitForAnimationToFinish": false,
+              "CameraEffect": "Ability_Cast_Generic",
+              "WorldSoundEventId": "SFX_Golem_Frost_Slam_Impact",
+              "Particles": [
+                {
+                  "SystemId": "Gilgamesh_Sword_Glow",
+                  "TargetEntityPart": "Entity",
+                  "TargetNodeName": "R-Hand",
+                  "Scale": 1.0
+                },
+                {
+                  "SystemId": "Gilgamesh_Sword_Glow",
+                  "TargetEntityPart": "Entity",
+                  "TargetNodeName": "L-Hand",
+                  "Scale": 1.0
+                }
+              ]
+            }
+          },
+          {
+            "Type": "GaiaAwakening",
+            "RunTime": 0.05
+          },
+          {
+            "Type": "Simple",
+            "RunTime": 0.6,
+            "HorizontalSpeedMultiplier": 0.5,
+            "Effects": {
+              "ItemPlayerAnimationsId": "Staff",
+              "ItemAnimationId": "CastSummon",
+              "ClearAnimationOnFinish": true,
+              "WorldSoundEventId": "SFX_Staff_Flame_Fireball_Launch"
+            }
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "TriggerCooldown",
+            "UseAbilityCooldown": true
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "ChangeStat",
+            "UseAbilityCost": true
+          }
+        ]
+      }
+    ]
+  }
+}

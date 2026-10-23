@@ -1,0 +1,19 @@
+{
+  "$Comment": "Projectile graine du Courroux de Muspelheim, totalement invisible. Modele autonome volontairement SANS 'Parent' : herite de 'Fireball', il recuperait sa trainee de feu. Echelle quasi nulle, ni particule ni lumiere.",
+  "Model": "Items/Projectiles/Fireball.blockymodel",
+  "Texture": "Items/Projectiles/Fireball.png",
+  "MinScale": 0.01,
+  "MaxScale": 0.01,
+  "HitBox": {
+    "Max": {
+      "X": 5,
+      "Y": 5,
+      "Z": 5
+    },
+    "Min": {
+      "X": -5,
+      "Y": -5,
+      "Z": -5
+    }
+  }
+}

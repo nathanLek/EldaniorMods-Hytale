@@ -1,0 +1,97 @@
+{
+  "$Comment": "Poussiere laissee par un noeud de tornade en rotation (se disperse vers le haut).",
+  "RenderMode": "BlendLinear",
+  "EmitOffset": {
+    "X": {
+      "Min": -0.5,
+      "Max": 0.5
+    },
+    "Y": {
+      "Min": -0.5,
+      "Max": 0.5
+    },
+    "Z": {
+      "Min": -0.5,
+      "Max": 0.5
+    }
+  },
+  "ParticleRotationInfluence": "Billboard",
+  "LinearFiltering": true,
+  "LightInfluence": 0.5,
+  "ParticleRotateWithSpawner": false,
+  "MaxConcurrentParticles": 60,
+  "SpawnRate": {
+    "Min": 30,
+    "Max": 30
+  },
+  "ParticleLifeSpan": {
+    "Min": 0.9,
+    "Max": 1.4
+  },
+  "InitialVelocity": {
+    "Yaw": {
+      "Min": -180,
+      "Max": 180
+    },
+    "Pitch": {
+      "Min": 20,
+      "Max": 80
+    },
+    "Speed": {
+      "Min": 1.0,
+      "Max": 2.5
+    }
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Smoke/Smoke_Dense.png",
+    "FrameSize": {
+      "Width": 64,
+      "Height": 64
+    },
+    "ScaleRatioConstraint": "OneToOne",
+    "UVOption": "RandomFlipU",
+    "InitialAnimationFrame": {
+      "Rotation": {
+        "Z": {
+          "Min": 0,
+          "Max": 360
+        }
+      },
+      "Scale": {
+        "X": {
+          "Min": 2.0,
+          "Max": 3.0
+        },
+        "Y": {
+          "Min": 2.0,
+          "Max": 3.0
+        }
+      },
+      "Opacity": 0
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0,
+        "Color": "#a1978a"
+      },
+      "20": {
+        "Opacity": 0.6,
+        "Color": "#968b7c"
+      },
+      "100": {
+        "Opacity": 0,
+        "Color": "#bab3a8",
+        "Scale": {
+          "X": {
+            "Min": 4.0,
+            "Max": 5.0
+          },
+          "Y": {
+            "Min": 4.0,
+            "Max": 5.0
+          }
+        }
+      }
+    }
+  }
+}

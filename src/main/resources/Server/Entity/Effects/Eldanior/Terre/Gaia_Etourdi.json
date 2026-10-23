@@ -1,0 +1,22 @@
+{
+  "$Comment": "Etourdissement du Reveil de Gaia (pilier de roche, poing du golem).",
+  "Duration": 1.5,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": true,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Rune_ReveilGaia.png",
+  "ApplicationEffects": {
+    "EntityTopTint": "#b08a5a",
+    "EntityBottomTint": "#3a2a18",
+    "MovementEffects": {
+      "DisableAll": true
+    },
+    "AbilityEffects": {
+      "Disabled": [
+        "Primary",
+        "Secondary",
+        "Ability1",
+        "Ability3"
+      ]
+    }
+  }
+}

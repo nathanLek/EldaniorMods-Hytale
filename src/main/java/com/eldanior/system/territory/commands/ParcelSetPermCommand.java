@@ -33,7 +33,6 @@ public class ParcelSetPermCommand extends AbstractAsyncCommand {
         this.valueArg = this.withRequiredArg("valeur", "true|false", ArgTypes.STRING);
     }
 
-    @Override
     protected boolean canGeneratePermission() { return false; }
 
     @Nonnull

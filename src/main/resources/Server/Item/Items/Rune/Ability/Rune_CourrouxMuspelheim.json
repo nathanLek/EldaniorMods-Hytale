@@ -1,0 +1,46 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune du Courroux de Muspelheim",
+    "Description": "Sort divin ultime de feu (Mage, Dragon). Vous vous élevez, ailes et couronne de feu, et ouvrez le royaume de Muspelheim : un immense cercle runique s'embrase dans un ciel de flammes, sous une pluie de cendres. 20 météorites s'abattent sur la zone visée (35 blocs), certaines guidées sur vos ennemis : chaque impact explose (1200 dégâts, souffle qui projette), libère une vague de flammes (400 dégâts + brûlure), fait trembler la terre, laisse un cratère rempli de lave, des flaques de lave dans la terre brûlée et un sol ardent pendant 30 s (3 dégâts de feu par seconde). Enfin le Météore du Jugement, trois fois plus gros, s'écrase au centre (2500 dégâts, 14 blocs). Sur une zone gelée par la Porte de Niflheim, la glace fond et se vaporise en explosion de vapeur (500 dégâts), libérant les ennemis emprisonnés. Le terrain est restauré après 3 minutes. Épargne votre groupe, votre guilde et votre famille. Coût : 2000 mana. Recharge : 180 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_CourrouxMuspelheim.png",
+  "Quality": "Divin",
+  "ItemLevel": 100,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_System.Competences_Actives"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_CourrouxMuspelheim.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 180,
+    "Cost": 2000,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Damage",
+      "Elemental",
+      "Fire",
+      "Projectile",
+      "Aoe"
+    ],
+    "Cast": "Root_Ability_CourrouxMuspelheim"
+  }
+}

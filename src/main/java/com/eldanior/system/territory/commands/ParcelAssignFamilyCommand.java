@@ -31,7 +31,6 @@ public class ParcelAssignFamilyCommand extends AbstractAsyncCommand {
         this.familyIdArg = this.withRequiredArg("familyId", "ID de la famille", ArgTypes.STRING);
     }
 
-    @Override
     protected boolean canGeneratePermission() { return false; }
 
     @Nonnull

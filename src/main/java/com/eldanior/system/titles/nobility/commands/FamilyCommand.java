@@ -38,7 +38,6 @@ public class FamilyCommand extends AbstractAsyncCommand {
         this.arg1 = this.withRequiredArg("arg", "FamilyId ou joueur", ArgTypes.STRING);
     }
 
-    @Override
     protected boolean canGeneratePermission() { return true; }
 
     @Nonnull

@@ -1,0 +1,20 @@
+{
+  "$Comment": "Terreur du rugissement de Bahamut : la cible tremble, ralentie et incapable d'attaquer pendant 3 s (les creatures sont aussi figees par le code).",
+  "Duration": 3.0,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": true,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Rune_AvenementBahamut.png",
+  "ApplicationEffects": {
+    "EntityTopTint": "#3a1030",
+    "EntityBottomTint": "#120408",
+    "HorizontalSpeedMultiplier": 0.4,
+    "AbilityEffects": {
+      "Disabled": [
+        "Primary",
+        "Secondary",
+        "Ability1",
+        "Ability3"
+      ]
+    }
+  }
+}

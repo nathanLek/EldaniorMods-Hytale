@@ -151,6 +151,18 @@ public enum StatConfig {
         };
     }
 
+    /**
+     * Stats physiques boostees par la Rune d'Aura : endurance, force, vitesse, saut, agilite.
+     * PAS la vie : activer l'aura augmente la vie max ET la vie courante -> l'activer/desactiver en boucle soignerait a l'infini.
+     */
+    private boolean isAuraPhysicalStat() {
+        return switch (this) {
+            case ENDURANCE, ENDURANCE_DEFENSE, STRENGTH_DAMAGE,
+                 AGILITY_SPEED, AGILITY_JUMP, ATTACK_SPEED, DODGE_CHANCE -> true;
+            default -> false;
+        };
+    }
+
     // Calcule la valeur finale (Base + (Points * Ratio)), en respectant le CAP
     public float getFinalValue(PlayerLevelData data, ClassModel model) {
         int points = getTotalPoints(data, model);
@@ -169,6 +181,11 @@ public enum StatConfig {
             }
         }
         // ------------------------------------
+
+        // Bonus physique de la Rune d'Aura active (scale sur le palier de dignite)
+        if (data != null && data.getAuraPhysicalBonus() > 0 && isAuraPhysicalStat()) {
+            value *= 1f + data.getAuraPhysicalBonus();
+        }
 
         // Rendements décroissants au-delà du cap (soft cap)
         // Au lieu d'un mur dur, les points au-delà donnent 30% d'efficacité

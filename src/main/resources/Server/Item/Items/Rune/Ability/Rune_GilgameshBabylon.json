@@ -1,0 +1,44 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de Gilgamesh Babylon",
+    "Description": "Sort divin de lumière (Guerrier, Dragon). Ouvre la Porte de Babylone, le trésor du roi : 30 armes de lumière (épées, katanas, épées ornementées, espadons) sortent à moitié de portails dorés ouverts en éventail dans votre dos, lame pointée vers votre cible. Vous devenez le roi doré, sous un halo d'ange. À chaque attaque (clic gauche), une arme s'élance vers le point visé, déviée vers l'ennemi le plus proche du viseur : 500 dégâts. Elle reste plantée dans sa cible 2 s avant de se dissoudre. Relancez le sort pour déclencher « Enuma Elish » : toutes les armes restantes partent en rafale et explosent en lumière à l'impact (300 dégâts de zone). Épargne votre groupe, votre guilde et votre famille. Coût : 2000 mana. Recharge : 5 s (valeur de test)."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_GilgameshBabylon.png",
+  "Quality": "Divin",
+  "ItemLevel": 100,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_System.Competences_Actives"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_GilgameshBabylon.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 5,
+    "Cost": 2000,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Damage",
+      "Projectile",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_GilgameshBabylon"
+  }
+}

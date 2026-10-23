@@ -1,0 +1,44 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de Télékinésie",
+    "Description": "Sort épique de télékinésie (Mage, Assassin, Dragon). Pendant 20 s, une main spectrale obéit à votre volonté : un clic la fait descendre sur tout ce que contient une sphère de 5 blocs de diamètre là où vous visez (blocs, créatures, joueurs) ; elle se referme sur la prise, qui s'élève et suit votre curseur. Clic gauche : la main prend son élan et écrase la prise au sol (120 dégâts aux ennemis tenus) ; l'impact creuse le sol, le fissure, projette des éclats de terre et souffle les ennemis proches (40 dégâts). Clic droit : la main s'arme et projette la prise loin vers le point visé (80 dégâts) ; les blocs lancés percutent les ennemis (50 dégâts) et se reposent là où ils atterrissent. Le terrain est restauré après 3 minutes. Coût : 300 mana. Recharge : 5 s (valeur de test)."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_Telekinesie.png",
+  "Quality": "Epic",
+  "ItemLevel": 60,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_System.Competences_Actives"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_Telekinesie.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 5,
+    "Cost": 300,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Duration",
+      "Damage"
+    ],
+    "Cast": "Root_Ability_Telekinesie"
+  }
+}

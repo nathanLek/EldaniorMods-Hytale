@@ -1,0 +1,18 @@
+{
+  "$Comment": "Happe par une tornade du Courroux de Fujin : ne peut plus attaquer.",
+  "Duration": 2.5,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": true,
+  "ApplicationEffects": {
+    "EntityTopTint": "#d8e4ea",
+    "EntityBottomTint": "#7f97a2",
+    "AbilityEffects": {
+      "Disabled": [
+        "Primary",
+        "Secondary",
+        "Ability1",
+        "Ability3"
+      ]
+    }
+  }
+}

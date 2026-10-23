@@ -3,6 +3,7 @@ package com.eldanior.system.skills.interaction;
 import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.skills.SkillManager;
+import com.eldanior.system.skills.runes.RuneManager;
 import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
 import com.eldanior.system.classes.ClassManager;
 import com.eldanior.system.classes.models.ClassModel;
@@ -10,6 +11,8 @@ import com.eldanior.system.titles.church.ChurchRank;
 import com.eldanior.system.config.EldaniorLogger;
 
 import com.hypixel.hytale.codec.builder.BuilderCodec;
+import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.InteractionType;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.entity.entities.Player;
@@ -17,6 +20,7 @@ import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.CooldownHandler;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.SimpleInteraction;
 import com.hypixel.hytale.server.core.entity.InteractionContext;
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 import java.awt.Color;
@@ -42,6 +46,13 @@ public class ConsumableItemSkillInteraction extends SimpleInteraction {
 
         ItemStack heldItem = player.getInventory().getHotbar().getItemStack(context.getHeldItemSlot());
         if (heldItem == null) return;
+
+        // Parchemin de rune : meme restriction de classe, la rune va directement dans le sac de runes
+        var runeId = RuneManager.getRuneFromPage(heldItem.getItemId());
+        if (runeId.isPresent()) {
+            learnRune(runeId.get(), player, data, playerRef, context.getHeldItemSlot());
+            return;
+        }
 
         SkillManager.getSkillFromItem(heldItem.getItemId()).ifPresent(skill -> {
 
@@ -153,5 +164,33 @@ public class ConsumableItemSkillInteraction extends SimpleInteraction {
                 }, 50, java.util.concurrent.TimeUnit.MILLISECONDS);
 
         });
+    }
+
+    private static void learnRune(String runeId, Player player, PlayerLevelData data,
+                                  Ref<EntityStore> playerRef, int slot) {
+        Store<EntityStore> store = playerRef.getStore();
+
+        if (!RuneManager.canUseRune(runeId, data)) {
+            player.getPlayerRef().sendMessage(Message.raw("Votre classe n'est pas apte à déchiffrer ce savoir !")
+                    .color(Color.ORANGE));
+            return;
+        }
+        if (RuneManager.ownsRune(playerRef, store, runeId)) {
+            player.getPlayerRef().sendMessage(Message.raw("Vous possédez déjà cette rune !").color(Color.RED));
+            return;
+        }
+        if (!RuneManager.giveRune(playerRef, store, runeId)) {
+            player.getPlayerRef().sendMessage(Message.raw("Votre sac de runes est plein !").color(Color.RED));
+            return;
+        }
+
+        player.getPlayerRef().sendMessage(Message.raw("Rune acquise ! Équipez-la depuis la fenêtre des runes (/es runes).")
+                .color(Color.CYAN).bold(true));
+
+        EldaniorLogger.SCHEDULER.schedule(() -> {
+            try {
+                player.getInventory().getHotbar().removeItemStackFromSlot((short) slot, 1, true, false);
+            } catch (Exception e) { EldaniorLogger.error("ConsumableItemSkillInteraction", e); }
+        }, 50, java.util.concurrent.TimeUnit.MILLISECONDS);
     }
 }

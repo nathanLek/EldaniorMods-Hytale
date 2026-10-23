@@ -36,7 +36,6 @@ public class AddXPCommand extends AbstractAsyncCommand {
         this.amountArg = this.withRequiredArg("nombre", "Quantité d'XP", ArgTypes.INTEGER);
     }
 
-    @Override
     protected boolean canGeneratePermission() { return false; }
 
     @Nonnull

@@ -1,0 +1,13 @@
+{
+  "$Comment": "Palier leger de ralentissement de l'aura de dignite (Rune d'Aura). Applique par RuneAuraSystem aux ennemis proches, re-applique chaque tick tant qu'ils sont dans la zone.",
+  "ApplicationEffects": {
+    "HorizontalSpeedMultiplier": 0.8,
+    "MovementEffects": {
+      "DisableSprint": true
+    }
+  },
+  "Duration": 1.5,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": true,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Potion_Signature.png"
+}

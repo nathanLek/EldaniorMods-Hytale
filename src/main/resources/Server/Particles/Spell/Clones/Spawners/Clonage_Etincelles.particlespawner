@@ -1,0 +1,74 @@
+{
+  "$Comment": "Etincelles dorees qui s'echappent d'un clone de lumiere (continu tant que l'effet est actif).",
+  "RenderMode": "BlendAdd",
+  "EmitOffset": {
+    "X": {
+      "Min": -0.4,
+      "Max": 0.4
+    },
+    "Y": {
+      "Min": 0,
+      "Max": 1.8
+    },
+    "Z": {
+      "Min": -0.4,
+      "Max": 0.4
+    }
+  },
+  "ParticleRotationInfluence": "Billboard",
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "ParticleRotateWithSpawner": false,
+  "MaxConcurrentParticles": 20,
+  "SpawnRate": {
+    "Min": 12,
+    "Max": 12
+  },
+  "ParticleLifeSpan": {
+    "Min": 0.6,
+    "Max": 1.0
+  },
+  "InitialVelocity": {
+    "Yaw": {
+      "Min": -180,
+      "Max": 180
+    },
+    "Pitch": {
+      "Min": 40,
+      "Max": 90
+    },
+    "Speed": {
+      "Min": 0.3,
+      "Max": 0.8
+    }
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Basic/Glow.png",
+    "ScaleRatioConstraint": "OneToOne",
+    "UVOption": "None",
+    "SoftParticles": "Disable",
+    "InitialAnimationFrame": {
+      "Opacity": 0,
+      "Color": "#fff2b8",
+      "Scale": {
+        "X": {
+          "Min": 0.1,
+          "Max": 0.2
+        }
+      }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0
+      },
+      "20": {
+        "Opacity": 1,
+        "Color": "#ffd25e"
+      },
+      "100": {
+        "Opacity": 0,
+        "Color": "#e89a20"
+      }
+    }
+  }
+}

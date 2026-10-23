@@ -1,0 +1,94 @@
+{
+  "$Comment": "Traits arc-en-ciel du pilier : la couleur change avec la hauteur (rouge en bas, violet en haut).",
+  "RenderMode": "BlendAdd",
+  "EmitOffset": {
+    "X": {
+      "Min": -3.4,
+      "Max": 3.4
+    },
+    "Y": {
+      "Min": 0,
+      "Max": 2
+    },
+    "Z": {
+      "Min": -3.4,
+      "Max": 3.4
+    }
+  },
+  "ParticleRotationInfluence": "Velocity",
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "ParticleRotateWithSpawner": false,
+  "MaxConcurrentParticles": 400,
+  "SpawnRate": {
+    "Min": 200,
+    "Max": 200
+  },
+  "ParticleLifeSpan": {
+    "Min": 2.3,
+    "Max": 2.7
+  },
+  "InitialVelocity": {
+    "Yaw": {
+      "Min": -180,
+      "Max": 180
+    },
+    "Pitch": {
+      "Min": 88,
+      "Max": 90
+    },
+    "Speed": {
+      "Min": 76,
+      "Max": 88
+    }
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Basic/Glow.png",
+    "ScaleRatioConstraint": "None",
+    "UVOption": "None",
+    "SoftParticles": "Disable",
+    "InitialAnimationFrame": {
+      "Opacity": 0,
+      "Scale": {
+        "X": {
+          "Min": 1.2,
+          "Max": 1.8
+        },
+        "Y": {
+          "Min": 10,
+          "Max": 16
+        }
+      }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0,
+        "Color": "#ffffff"
+      },
+      "4": {
+        "Opacity": 1,
+        "Color": "#ff4646"
+      },
+      "18": {
+        "Color": "#ffa03c"
+      },
+      "32": {
+        "Color": "#ffeb5a"
+      },
+      "48": {
+        "Color": "#5ae66e"
+      },
+      "64": {
+        "Color": "#50aaff"
+      },
+      "80": {
+        "Color": "#6e5aff",
+        "Opacity": 0.9
+      },
+      "100": {
+        "Opacity": 0,
+        "Color": "#c86eff"
+      }
+    }
+  }
+}

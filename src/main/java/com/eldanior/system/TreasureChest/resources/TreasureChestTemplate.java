@@ -238,7 +238,7 @@ public class TreasureChestTemplate implements Resource<ChunkStore> {
                     list.add((ItemStack) null);
                 }
                 reader.consumeWhiteSpace();
-                if (reader.tryConsume(']')) return list;
+                if (reader.tryConsume(']')) return normalize(list);
                 reader.expect(',');
             }
         }
@@ -267,11 +267,17 @@ public class TreasureChestTemplate implements Resource<ChunkStore> {
                     default -> reader.skipValue();
                 }
                 reader.consumeWhiteSpace();
-                if (reader.tryConsume('}')) return new ItemStack(id, q, d, md, meta);
+                if (reader.tryConsume('}')) return "Empty".equals(id) ? null : new ItemStack(id, q, d, md, meta);
                 reader.expect(',');
             }
         }
 
+
+        /** Un coffre sans aucun item reel = liste vide (c'est ce qui declenche le re-loot apres cooldown). */
+        public static List<ItemStack> normalize(List<ItemStack> items) {
+            for (ItemStack stack : items) if (stack != null) return items;
+            return new ArrayList<>();
+        }
         public static List<ItemStack> deserializeBsonArray(BsonArray array) {
             List<ItemStack> items = new ArrayList<>();
             if (array == null) return items;
@@ -280,6 +286,8 @@ public class TreasureChestTemplate implements Resource<ChunkStore> {
                 else if (value.isDocument()) {
                     try {
                         BsonDocument doc = value.asDocument();
+                        // Slot vide sauvegarde par erreur ("Empty") : null pour conserver la position des items suivants
+                        if ("Empty".equals(doc.getString("id").getValue())) { items.add(null); continue; }
                         items.add(new ItemStack(
                                 doc.getString("id").getValue().intern(),
                                 doc.getInt32("q").getValue(),
@@ -290,14 +298,14 @@ public class TreasureChestTemplate implements Resource<ChunkStore> {
                     } catch (Exception e) { EldaniorLogger.error("TreasureChestTemplate", e); }
                 }
             }
-            return items;
+            return normalize(items);
         }
 
         @Nonnull
         public BsonValue encode(@Nonnull List<ItemStack> items, @Nonnull ExtraInfo extraInfo) {
             BsonArray array = new BsonArray();
             for(ItemStack stack : items) {
-                if (stack != null) {
+                if (!ItemStack.isEmpty(stack)) {
                     BsonDocument doc = new BsonDocument();
                     doc.append("id", new BsonString(stack.getItemId()));
                     doc.append("q", new BsonInt32(stack.getQuantity()));

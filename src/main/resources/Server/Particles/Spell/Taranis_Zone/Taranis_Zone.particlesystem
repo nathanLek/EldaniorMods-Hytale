@@ -1,0 +1,20 @@
+{
+  "$Comment": "Zone de la tempete du Sanctuaire de Taranis au sol (15 s), bleu electrique / jaune.",
+  "Spawners": [
+    {
+      "SpawnerId": "Taranis_Zone_Fill",
+      "PositionOffset": {
+        "Y": 0.02
+      }
+    },
+    {
+      "SpawnerId": "Taranis_Zone_Ring",
+      "PositionOffset": {
+        "Y": 0.04
+      }
+    }
+  ],
+  "IsImportant": true,
+  "CullDistance": 160,
+  "LifeSpan": 0.1
+}

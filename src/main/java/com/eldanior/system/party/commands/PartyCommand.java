@@ -33,7 +33,6 @@ public class PartyCommand extends AbstractAsyncCommand {
         this.playerArg = this.withOptionalArg("joueur", "Joueur cible", ArgTypes.STRING);
     }
 
-    @Override
     protected boolean canGeneratePermission() { return false; }
 
     @Nonnull

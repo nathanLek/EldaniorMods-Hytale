@@ -1,0 +1,45 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de l'Éveil d'Yggdrasil",
+    "Description": "Sort divin de nature (Mage, Marchand, Dragon). Une graine tombe sur la zone visée et la nature reprend tout le sol sur 35 blocs, quel que soit le bloc. Au centre se dresse le frêne-monde Yggdrasil (100 blocs : pied à contreforts, racines qui serpentent, tronc cannelé, grandes branches ramifiées, feuillage parsemé d'or, lianes) au-dessus d'un sanctuaire de marbre. Sous le tronc, une salle voûtée tapissée de bois et de racines abrite la fontaine de vie : on y descend par trois galeries qui suivent les grandes racines depuis le jardin. Tant que l'arbre existe (3 minutes) : dans le jardin, vos alliés reçoivent sa bénédiction (vie, endurance et mana rendues chaque seconde, -20 % de dégâts subis), et dans la salle de la fontaine ils sont en plus purifiés et soignés davantage ; l'anneau du milieu cache des pièges végétaux (des racines jaillissent du sol et immobilisent 3 s, 120 dégâts et poison), des ronces qui ralentissent et une vague de poison toutes les 6 s (80 dégâts + poison) ; l'anneau extérieur devient une forêt noyée dans une brume toxique au ras du sol qui empoisonne les ennemis. Juste avant de disparaître, l'arbre libère une onde qui projette tous les ennemis (800 dégâts). Le terrain est ensuite entièrement restauré. Épargne votre groupe, votre guilde et votre famille. Coût : 2000 mana. Recharge : 5 s (valeur de test)."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_EveilYggdrasil.png",
+  "Quality": "Divin",
+  "ItemLevel": 100,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_System.Competences_Actives"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_EveilYggdrasil.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 5,
+    "Cost": 2000,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Damage",
+      "Elemental",
+      "Aoe",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_EveilYggdrasil"
+  }
+}

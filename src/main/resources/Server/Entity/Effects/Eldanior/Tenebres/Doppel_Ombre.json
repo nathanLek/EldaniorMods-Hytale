@@ -1,0 +1,17 @@
+{
+  "$Comment": "Doppelganger (sort Doppelganger) : silhouette noire (teinte quasi noire, #000000 est ignore), voile sombre, volutes de fumee. Pose une seule fois.",
+  "Duration": 60.0,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": false,
+  "ApplicationEffects": {
+    "EntityTopTint": "#0d0614",
+    "EntityBottomTint": "#030106",
+    "ModelVFXId": "Intangible_Dark",
+    "Particles": [
+      {
+        "SystemId": "Doppel_Fumee",
+        "TargetEntityPart": "Entity"
+      }
+    ]
+  }
+}

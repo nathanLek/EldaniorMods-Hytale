@@ -45,6 +45,7 @@ public class MobDamageReductionSystem extends DamageEventSystem {
         Ref<EntityStore> targetRef = chunk.getReferenceTo(index);
 
         NPCEntity npc = store.getComponent(targetRef, Objects.requireNonNull(NPCEntity.getComponentType()));
+        if (npc != null && com.eldanior.system.skills.runes.spells.RuneSpellRuntime.isSummonRole(npc.getNPCTypeId())) return;   // copies des sorts : pas de mise a l'echelle par niveau
         if (npc != null) {
             // CORRECTION ICI : On utilise IMobConfig au lieu de MobXP
             IMobConfig mobData = MobXP.getMobDataForId(npc.getNPCTypeId());
@@ -63,6 +64,24 @@ public class MobDamageReductionSystem extends DamageEventSystem {
 
         Player attackerPlayer = store.getComponent(attackerRef, Player.getComponentType());
         ComponentType<EntityStore, MobLevelData> mobLevelType = EldaniorSystem.get().getMobLevelDataType();
+
+        // PNJ de poste qui frappe un monstre : les PV virtuels (niveau) du monstre comptent, comme contre un joueur
+        NPCEntity attackerNpc = attackerPlayer == null ? store.getComponent(attackerRef, NPCEntity.getComponentType()) : null;
+        if (attackerNpc != null && com.eldanior.system.guards.GuardType.fromRole(attackerNpc.getNPCTypeId()) != null
+                && (npc == null || com.eldanior.system.guards.GuardType.fromRole(npc.getNPCTypeId()) == null)) {
+            MobLevelData targetData = store.getComponent(targetRef, mobLevelType);
+            if (targetData != null && targetData.isStatsApplied())
+                damage.setAmount(damage.getAmount() / MobVirtualHPSystem.getHPMultiplier(targetData.getLevel(), getBaseHP(store, targetRef)));
+            return;
+        }
+
+        // Gardes de zone : leurs PV virtuels (niveau) comptent aussi contre les monstres, pas seulement contre les joueurs
+        if (attackerPlayer == null && npc != null && com.eldanior.system.guards.GuardType.fromRole(npc.getNPCTypeId()) != null) {
+            MobLevelData guardData = store.getComponent(targetRef, mobLevelType);
+            if (guardData != null && guardData.isStatsApplied())
+                damage.setAmount(damage.getAmount() / MobVirtualHPSystem.getHPMultiplier(guardData.getLevel(), getBaseHP(store, targetRef)));
+            return;
+        }
 
         if (attackerPlayer != null) {
             MobLevelData mobData = store.getComponent(targetRef, mobLevelType);

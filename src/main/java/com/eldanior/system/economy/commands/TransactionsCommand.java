@@ -29,8 +29,6 @@ public class TransactionsCommand extends AbstractAsyncCommand {
         super("transactions", "Affiche les dernieres transactions economiques (admin)");
         this.countArg = this.withOptionalArg("count", "Nombre de lignes (defaut 20)", ArgTypes.INTEGER);
     }
-
-    @Override
     protected boolean canGeneratePermission() { return false; }
 
     @Nonnull

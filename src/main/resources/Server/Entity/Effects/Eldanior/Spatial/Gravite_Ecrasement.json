@@ -1,0 +1,15 @@
+{
+  "$Comment": "Ecrase par le Puits Gravitationnel : cloue au sol (mouvement desactive). Applique sans fin par le code et retire a la fin de la zone (pas de clignotement).",
+  "Duration": 10.0,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": true,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Rune_PuitsGravitationnel.png",
+  "ApplicationEffects": {
+    "EntityTopTint": "#3a1a55",
+    "EntityBottomTint": "#0d0614",
+    "MovementEffects": {
+      "DisableAll": true
+    },
+    "KnockbackMultiplier": 0
+  }
+}

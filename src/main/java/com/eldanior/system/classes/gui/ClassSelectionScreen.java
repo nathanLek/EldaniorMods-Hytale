@@ -170,6 +170,8 @@ public class ClassSelectionScreen extends InteractiveCustomUIPage<ClassSelection
 
         playerData.setPlayerClass(model.getDisplayName());
         playerData.setPlayerClassId(model.getId());
+        // Runes : suppression de celles que la nouvelle classe ne peut pas utiliser
+        com.eldanior.system.skills.runes.RuneManager.purgeDisallowedRunes(ref, store, playerData);
         playerData.clearSavedEvolutionChoices();
         // Attribuer les compétences actives de la classe
         for (String activeSkillId : model.getActiveSkillIds()) {

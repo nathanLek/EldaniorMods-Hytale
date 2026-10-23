@@ -1,0 +1,29 @@
+{
+  "$Comment": "Nuage d'orage en volume du Sanctuaire de Taranis : 5 couches empilees qui tournent lentement (scripts/rune_aura_icons/gen_storm_clouds.py + gen_storm_volume.py). HitBox large en X uniquement : le serveur masque (LOD) les entites dont la hitbox est trop petite par rapport a la distance.",
+  "Model": "Items/Projectiles/Taranis/Storm_Clouds.blockymodel",
+  "Texture": "Items/Projectiles/Taranis/Storm_Clouds_Atlas.png",
+  "MinScale": 76,
+  "MaxScale": 76,
+  "HitBox": {
+    "Max": {
+      "X": 1.0,
+      "Y": 0.01,
+      "Z": 0.01
+    },
+    "Min": {
+      "X": -1.0,
+      "Y": -0.01,
+      "Z": -0.01
+    }
+  },
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Celestial/Sky_Circle_Spin.blockyanim",
+          "BlendingDuration": 0
+        }
+      ]
+    }
+  }
+}

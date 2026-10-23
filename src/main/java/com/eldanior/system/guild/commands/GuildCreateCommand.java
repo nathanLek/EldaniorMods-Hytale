@@ -33,7 +33,6 @@ public class GuildCreateCommand extends AbstractAsyncCommand {
         this.tagArg = this.withRequiredArg("tag", "Tag court (3-5 lettres)", ArgTypes.STRING);
     }
 
-    @Override
     protected boolean canGeneratePermission() { return false; }
 
     @Nonnull

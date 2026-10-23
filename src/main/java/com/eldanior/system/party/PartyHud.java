@@ -121,6 +121,13 @@ public class PartyHud extends CustomUIHud {
         try {
             PlayerRef playerRef = Universe.get().getPlayer(playerUUID);
             if (playerRef == null) {
+                float[] companion = com.eldanior.system.guards.GuardManager.companionInfo(playerUUID);   // aventurier recrute
+                if (companion != null) {
+                    info.level = (int) companion[0];
+                    info.className = "Aventurier";
+                    info.hpRatio = companion[1];
+                    return info;
+                }
                 info.className = "Offline";
                 return info;
             }
@@ -168,6 +175,13 @@ public class PartyHud extends CustomUIHud {
         try {
             PlayerRef playerRef = Universe.get().getPlayer(playerUUID);
             if (playerRef == null) {
+                float[] companion = com.eldanior.system.guards.GuardManager.companionInfo(playerUUID);   // aventurier recrute
+                if (companion != null) {
+                    info.level = (int) companion[0];
+                    info.className = "Aventurier";
+                    info.hpRatio = companion[1];
+                    return info;
+                }
                 info.className = "Offline";
                 return info;
             }

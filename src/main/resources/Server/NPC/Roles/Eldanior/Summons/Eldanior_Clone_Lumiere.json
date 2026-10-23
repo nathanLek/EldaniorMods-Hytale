@@ -1,0 +1,281 @@
+{
+  "Type": "Generic",
+  "Parameters": {
+    "MaxHealth": {
+      "Value": 100,
+      "Description": "Vie de base (le sort la remplace par 50 % de celle du lanceur)"
+    }
+  },
+  "Appearance": "Player",
+  "DefaultPlayerAttitude": "Ignore",
+  "DefaultNPCAttitude": "Ignore",
+  "HotbarItems": [],
+  "HotbarSize": 3,
+  "OffHandItems": [],
+  "OffHandSlots": 1,
+  "DefaultOffHandSlot": 0,
+  "StartState": "Idle",
+  "KnockbackScale": 0.5,
+  "ApplySeparation": true,
+  "SeparationDistance": 1.5,
+  "SeparationWeight": 1,
+  "BreathesInWater": true,
+  "MotionControllerList": [
+    {
+      "Type": "Walk",
+      "MaxWalkSpeed": 14,
+      "RunThreshold": 0.3,
+      "Gravity": 10,
+      "MaxFallSpeed": 20,
+      "MaxRotationSpeed": 360,
+      "Acceleration": 12
+    }
+  ],
+  "MaxHealth": {
+    "Compute": "MaxHealth"
+  },
+  "Instructions": [
+    {
+      "$Comment": "Securite : le sort retire les clones apres 20 s ; s'il n'a pas pu (arret du serveur), ils disparaissent seuls.",
+      "Continue": true,
+      "Instructions": [
+        {
+          "Continue": true,
+          "Sensor": {
+            "Type": "Any",
+            "Once": true
+          },
+          "Actions": [
+            {
+              "Type": "TimerStart",
+              "Name": "Life",
+              "StartValueRange": [
+                45,
+                45
+              ],
+              "RestartValueRange": [
+                45,
+                45
+              ]
+            }
+          ]
+        },
+        {
+          "Sensor": {
+            "Type": "Timer",
+            "Name": "Life",
+            "State": "Stopped"
+          },
+          "Actions": [
+            {
+              "Type": "Despawn"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Instructions": [
+        {
+          "$Comment": "Au repos : suit le lanceur (point de laisse) ; un ennemi hostile (cible du clic droit) declenche le combat.",
+          "Sensor": {
+            "Type": "State",
+            "State": "Idle"
+          },
+          "Instructions": [
+            {
+              "Sensor": {
+                "Type": "Mob",
+                "Range": 30,
+                "GetPlayers": true,
+                "LockOnTarget": true,
+                "Filters": [
+                  {
+                    "Type": "Attitude",
+                    "Attitudes": [
+                      "Hostile"
+                    ]
+                  }
+                ],
+                "Collector": {
+                  "Type": "CombatTargets"
+                }
+              },
+              "Actions": [
+                {
+                  "Type": "State",
+                  "State": "Combat"
+                }
+              ]
+            },
+            {
+              "$Comment": "Suit le lanceur : rejoint son point de laisse (sa place en formation, deplacee par le sort), en contournant les obstacles.",
+              "Sensor": {
+                "Type": "Leash",
+                "Range": 1.5
+              },
+              "BodyMotion": {
+                "Type": "Seek",
+                "SlowDownDistance": 3,
+                "StopDistance": 0.8,
+                "RelativeSpeed": 0.9,
+                "UsePathfinder": true
+              }
+            }
+          ]
+        },
+        {
+          "Sensor": {
+            "Type": "State",
+            "State": "Combat"
+          },
+          "Instructions": [
+            {
+              "Sensor": {
+                "Type": "Or",
+                "Sensors": [
+                  {
+                    "Type": "Mob",
+                    "Range": 30,
+                    "GetPlayers": true,
+                    "LockOnTarget": false,
+                    "Filters": [
+                      {
+                        "Type": "Attitude",
+                        "Attitudes": [
+                          "Hostile"
+                        ]
+                      }
+                    ],
+                    "Collector": {
+                      "Type": "CombatTargets"
+                    }
+                  },
+                  {
+                    "Type": "HasHostileTargetMemory"
+                  }
+                ]
+              },
+              "Instructions": [
+                {
+                  "Sensor": {
+                    "Type": "Or",
+                    "Sensors": [
+                      {
+                        "Type": "State",
+                        "State": ".Default"
+                      }
+                    ]
+                  },
+                  "Instructions": [
+                    {
+                      "Sensor": {
+                        "Type": "CombatActionEvaluator",
+                        "TargetInRange": true
+                      },
+                      "HeadMotion": {
+                        "Type": "Aim",
+                        "RelativeTurnSpeed": 0.4
+                      },
+                      "BodyMotion": {
+                        "Type": "MaintainDistance",
+                        "DesiredDistanceRange": [
+                          2,
+                          3
+                        ],
+                        "MoveThreshold": 0.1,
+                        "RelativeForwardsSpeed": 0.45,
+                        "RelativeBackwardsSpeed": 0.45
+                      },
+                      "Actions": [
+                        {
+                          "Type": "CombatAbility"
+                        }
+                      ]
+                    },
+                    {
+                      "Sensor": {
+                        "Type": "CombatActionEvaluator",
+                        "TargetInRange": false
+                      },
+                      "BodyMotion": {
+                        "Type": "Seek",
+                        "SlowDownDistance": 1,
+                        "StopDistance": 1,
+                        "RelativeSpeed": 0.45
+                      }
+                    }
+                  ]
+                },
+                {
+                  "Sensor": {
+                    "Type": "State",
+                    "State": ".Strafe",
+                    "IgnoreMissingSetState": true
+                  },
+                  "Instructions": [
+                    {
+                      "Sensor": {
+                        "Type": "CombatActionEvaluator",
+                        "TargetInRange": true
+                      },
+                      "HeadMotion": {
+                        "Type": "Aim",
+                        "RelativeTurnSpeed": 0.4
+                      },
+                      "BodyMotion": {
+                        "Type": "MaintainDistance",
+                        "DesiredDistanceRange": [
+                          2,
+                          3
+                        ],
+                        "StrafingFrequencyRange": [
+                          0.1,
+                          0.5
+                        ],
+                        "StrafingDurationRange": [
+                          2,
+                          4
+                        ],
+                        "MoveThreshold": 0.1,
+                        "RelativeForwardsSpeed": 0.38,
+                        "RelativeBackwardsSpeed": 0.28
+                      },
+                      "Actions": [
+                        {
+                          "Type": "CombatAbility"
+                        }
+                      ]
+                    },
+                    {
+                      "Sensor": {
+                        "Type": "CombatActionEvaluator",
+                        "TargetInRange": false
+                      },
+                      "BodyMotion": {
+                        "Type": "Seek",
+                        "SlowDownDistance": 1,
+                        "StopDistance": 1,
+                        "RelativeSpeed": 0.45
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "Actions": [
+                {
+                  "Type": "State",
+                  "State": "Idle"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "NameTranslationKey": "server.npcRoles.Eldanior_Clone_Lumiere.name",
+  "CombatConfig": "CAE_Eldanior_Clone"
+}

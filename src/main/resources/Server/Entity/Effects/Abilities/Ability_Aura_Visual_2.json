@@ -1,0 +1,20 @@
+{
+  "$Comment": "Visuel du palier : Aura Mineure (Baron) - cyan. Memes particules que la rune Enrage (Buff_Enrage) recolorees : Buff_Aura_T2. Applique en infini par RuneAuraSystem selon la dignite. Echelle : x1.3.",
+  "ApplicationEffects": {
+    "Particles": [
+      {
+        "SystemId": "Buff_Aura_T2",
+        "TargetNodeName": "Chest",
+        "PositionOffset": {
+          "X": 0,
+          "Y": -1,
+          "Z": 0
+        },
+        "Scale": 1.3
+      }
+    ]
+  },
+  "Duration": 8.0,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": false
+}

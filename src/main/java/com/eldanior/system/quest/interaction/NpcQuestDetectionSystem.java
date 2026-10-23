@@ -168,8 +168,7 @@ public class NpcQuestDetectionSystem extends EntityTickingSystem<EntityStore> {
         Role role = npc.getRole();
         if (role == null) return;
 
-        StateSupport stateSupport = role.getStateSupport();
-        if (stateSupport == null) return;
+        StateSupport stateSupport = StateSupport.get(npcRef, store);
 
         String stateName = stateSupport.getStateName();
         int npcHash = System.identityHashCode(npc);
@@ -181,7 +180,7 @@ public class NpcQuestDetectionSystem extends EntityTickingSystem<EntityStore> {
             if (activeInteractions.containsKey(npcHash)) return;
             activeInteractions.put(npcHash, System.currentTimeMillis());
 
-            MarkedEntitySupport markedSupport = role.getMarkedEntitySupport();
+            MarkedEntitySupport markedSupport = MarkedEntitySupport.get(npcRef, store);
             Ref<EntityStore>[] targets = markedSupport.getEntityTargets();
 
             if (targets != null) {

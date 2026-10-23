@@ -24,7 +24,6 @@ public class DebugCommand extends AbstractAsyncCommand {
         super("debug", "Active/desactive le mode debug (admin)");
     }
 
-    @Override
     protected boolean canGeneratePermission() { return false; }
 
     @Nonnull

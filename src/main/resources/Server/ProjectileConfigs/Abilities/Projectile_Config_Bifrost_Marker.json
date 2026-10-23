@@ -1,0 +1,37 @@
+{
+  "$Comment": "Porte le cercle de visee du Bifrost. Interactions neutres obligatoires.",
+  "Model": "Bifrost_Marker",
+  "UseModelScale": true,
+  "Physics": {
+    "Type": "Standard",
+    "Gravity": 0,
+    "TerminalVelocityAir": 1,
+    "TerminalVelocityWater": 1,
+    "Bounciness": 0,
+    "SticksVertically": false
+  },
+  "LaunchForce": 0,
+  "SpawnOffset": {
+    "X": 0,
+    "Y": 0,
+    "Z": 0
+  },
+  "Interactions": {
+    "ProjectileHit": {
+      "Interactions": [
+        {
+          "Type": "Simple",
+          "RunTime": 0.01
+        }
+      ]
+    },
+    "ProjectileMiss": {
+      "Interactions": [
+        {
+          "Type": "Simple",
+          "RunTime": 0.01
+        }
+      ]
+    }
+  }
+}

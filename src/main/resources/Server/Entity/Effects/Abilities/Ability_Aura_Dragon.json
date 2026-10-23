@@ -1,0 +1,41 @@
+{
+  "$Comment": "Visuel supplementaire du palier Dragon de l'Aura de Dignite : aura noire menacante (Void_Dragon) + fumee noire + foudre. Applique en plus de Ability_Aura_Buff quand la dignite >= 1000. Infini (gere par RuneAuraSystem).",
+  "ApplicationEffects": {
+    "Particles": [
+      {
+        "SystemId": "Void_Dragon_Effects",
+        "TargetNodeName": "Chest",
+        "PositionOffset": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "Scale": 4.0
+      },
+      {
+        "SystemId": "Smoke_Black",
+        "TargetNodeName": "Chest",
+        "PositionOffset": {
+          "X": 0,
+          "Y": -0.5,
+          "Z": 0
+        },
+        "Scale": 4.0
+      },
+      {
+        "SystemId": "Lightning",
+        "TargetNodeName": "Chest",
+        "PositionOffset": {
+          "X": 0,
+          "Y": 0.5,
+          "Z": 0
+        },
+        "Scale": 4.0
+      }
+    ]
+  },
+  "Duration": 8.0,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": false,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Potion_Signature.png"
+}

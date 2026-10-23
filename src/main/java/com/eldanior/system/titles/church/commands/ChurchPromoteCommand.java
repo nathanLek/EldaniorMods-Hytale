@@ -35,7 +35,6 @@ public class ChurchPromoteCommand extends AbstractAsyncCommand {
         this.rankArg = this.withRequiredArg("rang", "pretre|archeveque|cardinal", ArgTypes.STRING);
     }
 
-    @Override
     protected boolean canGeneratePermission() { return true; }
 
     @Nonnull

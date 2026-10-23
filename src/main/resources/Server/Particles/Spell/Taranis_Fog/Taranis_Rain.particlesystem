@@ -1,0 +1,24 @@
+{
+  "$Comment": "Pluie battante du Sanctuaire de Taranis (emetteurs Rain_Heavy vanilla), duree de la tempete.",
+  "Spawners": [
+    {
+      "SpawnerId": "Rain_Heavy",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 14
+      },
+      "FixedRotation": true
+    },
+    {
+      "SpawnerId": "Rain_Heavy",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 10
+      },
+      "FixedRotation": true
+    }
+  ],
+  "LifeSpan": 18.5,
+  "IsImportant": true,
+  "CullDistance": 120
+}

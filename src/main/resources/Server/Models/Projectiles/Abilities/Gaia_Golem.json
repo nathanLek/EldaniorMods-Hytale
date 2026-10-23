@@ -1,0 +1,28 @@
+{
+  "$Comment": "Golem gardien de pierre (modele vanilla, echelle x2.5) du Reveil de Gaia : surgit du sol et frappe le sol de ses poings. HitBox large en X : le serveur masque (LOD) les entites a hitbox trop petite.",
+  "Model": "NPC/Boss/Golem_Guardian/Models/Model.blockymodel",
+  "Texture": "NPC/Boss/Golem_Guardian/Models/Texture.png",
+  "MinScale": 2.5,
+  "MaxScale": 2.5,
+  "HitBox": {
+    "Max": {
+      "X": 1.0,
+      "Y": 0.01,
+      "Z": 0.01
+    },
+    "Min": {
+      "X": -1.0,
+      "Y": -0.01,
+      "Z": -0.01
+    }
+  },
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "NPC/Boss/Golem_Guardian/Animations/Attacks/Ground_Slam.blockyanim"
+        }
+      ]
+    }
+  }
+}

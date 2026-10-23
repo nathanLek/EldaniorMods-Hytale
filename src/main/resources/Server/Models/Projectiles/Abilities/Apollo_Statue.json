@@ -1,0 +1,30 @@
+{
+  "$Comment": "Statue d'Apollon sculptee sur l'autel du sanctuaire (marbre et or : chiton drape, cape, soleil leve dans la main droite, lyre dans la gauche, couronne de laurier, grandes ailes d'ange de marbre bordees d'or ; scripts/rune_aura_icons/gen_apollo.py). HitBox large en X : le serveur masque (LOD) les entites a hitbox trop petite.",
+  "Model": "Items/Projectiles/Apollo/Statue.blockymodel",
+  "Texture": "Items/Projectiles/Apollo/Temple.png",
+  "MinScale": 6,
+  "MaxScale": 6,
+  "HitBox": {
+    "Max": {
+      "X": 0.6,
+      "Y": 0.01,
+      "Z": 0.01
+    },
+    "Min": {
+      "X": -0.6,
+      "Y": -0.01,
+      "Z": -0.01
+    }
+  },
+  "Particles": [
+    {
+      "SystemId": "Gilgamesh_Sword_Glow",
+      "TargetNodeName": "Sun_disc",
+      "Scale": 0.8
+    }
+  ],
+  "Light": {
+    "Color": "#ffe9b0",
+    "Radius": 7
+  }
+}

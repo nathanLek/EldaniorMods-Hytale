@@ -1,0 +1,14 @@
+{
+  "$Comment": "Peur draconique : appliquee aux MONSTRES proches d'un porteur d'aura de palier Dragon (DragonicFearSystem). Fort ralentissement + sprint/saut coupes. Re-appliquee chaque tick tant qu'ils sont a portee.",
+  "ApplicationEffects": {
+    "HorizontalSpeedMultiplier": 0.4,
+    "MovementEffects": {
+      "DisableSprint": true,
+      "DisableJump": true
+    }
+  },
+  "Duration": 1.5,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": true,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Potion_Signature.png"
+}

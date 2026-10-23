@@ -1,0 +1,33 @@
+{
+  "$Comment": "Vortex glace de la Porte de Niflheim, visible entre les battants ouverts (portail de Gilgamesh recolore). HitBox large en X : le serveur masque (LOD) les entites a hitbox trop petite.",
+  "Model": "Items/Projectiles/Gilgamesh/Portal.blockymodel",
+  "Texture": "Items/Projectiles/Niflheim/Portal_Ice.png",
+  "MinScale": 2.1,
+  "MaxScale": 2.1,
+  "HitBox": {
+    "Max": {
+      "X": 1.0,
+      "Y": 0.01,
+      "Z": 0.01
+    },
+    "Min": {
+      "X": -1.0,
+      "Y": -0.01,
+      "Z": -0.01
+    }
+  },
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Gilgamesh/Portal_Spin.blockyanim",
+          "BlendingDuration": 0
+        }
+      ]
+    }
+  },
+  "Light": {
+    "Color": "#bfefff",
+    "Radius": 10
+  }
+}

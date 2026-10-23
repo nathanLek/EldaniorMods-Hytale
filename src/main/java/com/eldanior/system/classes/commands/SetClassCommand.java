@@ -36,7 +36,6 @@ public class SetClassCommand extends AbstractAsyncCommand {
         this.classIdArg = this.withRequiredArg("classId", "ID de la classe (ex: warrior)", ArgTypes.STRING);
     }
 
-    @Override
     protected boolean canGeneratePermission() { return true; }
 
     @Nonnull
@@ -96,6 +95,8 @@ public class SetClassCommand extends AbstractAsyncCommand {
 
                 data.setPlayerClass(model.getDisplayName());
                 data.setPlayerClassId(model.getId());
+                // Runes : suppression de celles que la nouvelle classe ne peut pas utiliser
+                com.eldanior.system.skills.runes.RuneManager.purgeDisallowedRunes(ref, store, data);
                 // Classe Dragon : dignité de base à 1000
                 if ("dragon".equalsIgnoreCase(model.getId())) {
                     data.setDignity(1000);

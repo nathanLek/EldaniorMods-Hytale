@@ -1,0 +1,82 @@
+{
+  "$Comment": "Coeur du pilier du Bifrost : longs traits de lumiere blanc-or qui montent a 200 blocs.",
+  "RenderMode": "BlendAdd",
+  "EmitOffset": {
+    "X": {
+      "Min": -3.4,
+      "Max": 3.4
+    },
+    "Y": {
+      "Min": 0,
+      "Max": 2
+    },
+    "Z": {
+      "Min": -3.4,
+      "Max": 3.4
+    }
+  },
+  "ParticleRotationInfluence": "Velocity",
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "ParticleRotateWithSpawner": false,
+  "MaxConcurrentParticles": 400,
+  "SpawnRate": {
+    "Min": 260,
+    "Max": 260
+  },
+  "ParticleLifeSpan": {
+    "Min": 2.3,
+    "Max": 2.7
+  },
+  "InitialVelocity": {
+    "Yaw": {
+      "Min": -180,
+      "Max": 180
+    },
+    "Pitch": {
+      "Min": 88,
+      "Max": 90
+    },
+    "Speed": {
+      "Min": 78,
+      "Max": 90
+    }
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Basic/Glow.png",
+    "ScaleRatioConstraint": "None",
+    "UVOption": "None",
+    "SoftParticles": "Disable",
+    "InitialAnimationFrame": {
+      "Opacity": 0,
+      "Scale": {
+        "X": {
+          "Min": 0.9,
+          "Max": 1.3
+        },
+        "Y": {
+          "Min": 9,
+          "Max": 14
+        }
+      }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0,
+        "Color": "#ffffff"
+      },
+      "5": {
+        "Opacity": 1,
+        "Color": "#fffaf0"
+      },
+      "70": {
+        "Opacity": 0.9,
+        "Color": "#ffe9b0"
+      },
+      "100": {
+        "Opacity": 0,
+        "Color": "#ffd27a"
+      }
+    }
+  }
+}

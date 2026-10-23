@@ -172,7 +172,6 @@ public class HologramCommand extends AbstractAsyncCommand {
         this.paramArg = this.withOptionalArg("param", "texte ou id", ArgTypes.STRING);
     }
 
-    @Override
     protected boolean canGeneratePermission() { return false; }
 
     @Nonnull

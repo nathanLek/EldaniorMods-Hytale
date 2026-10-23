@@ -1,0 +1,19 @@
+{
+  "$Comment": "Benediction du Sanctuaire d'Apollon (allies a l'interieur : soin, mana, endurance et protection geres par le code).",
+  "Duration": 1.6,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": false,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Rune_SanctuaireApollon.png",
+  "ApplicationEffects": {
+    "EntityTopTint": "#fff3b0",
+    "EntityBottomTint": "#d8a838",
+    "Particles": [
+      {
+        "SystemId": "Effect_Heal",
+        "TargetEntityPart": "Entity",
+        "TargetNodeName": "Chest",
+        "Scale": 0.8
+      }
+    ]
+  }
+}

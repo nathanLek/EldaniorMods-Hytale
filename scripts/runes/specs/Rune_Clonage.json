@@ -1,0 +1,73 @@
+{
+  "keywords": [
+    "Duration",
+    "Damage"
+  ],
+  "loot": null,
+  "persistent": true,
+  "classes": "dragon, warrior, assassin, archer",
+  "overrides": {
+    "mana": null,
+    "cooldown": 5,
+    "reason": "Valeur de test (5 s) comme pour les autres sorts en cours de test - remettre 120 s (Epic) avant release."
+  },
+  "$Comment": "Fiche de conception. Demande utilisateur 2026-10-21 : clones du lanceur, clic droit = un clone attaque l'entite visee, re-clic = un autre clone y va ; version Epic a 5 clones.",
+  "id": "Rune_Clonage",
+  "spell": "Clonage",
+  "javaClass": "Clonage",
+  "page": "rune_page_clonage",
+  "name": "Rune de Clonage",
+  "type": "Lumiere",
+  "rarity": "Epic",
+  "emblem": "Clonage",
+  "summary": "5 copies indiscernables du lanceur (nom, arme, 50 % PV) ; clic droit : un clone libre part combattre, puis reste autonome contre les monstres proches.",
+  "description": "Sort épique de lumière (Dragon, Guerrier, Assassin, Archer). Cinq copies parfaites de vous-même apparaissent pendant 20 s : même apparence, même nom, même arme de corps à corps (ou mains nues), la moitié de votre vie. Impossible de savoir qui est le vrai. Clic droit sur un ennemi : un clone libre fonce sur lui et devient autonome jusqu'à la fin du sort ; il le combat avec les vraies attaques de votre arme, puis s'attaque seul à chaque monstre proche. Cliquez à nouveau pour lancer un autre clone. Les monstres voient vos clones et les attaquent ; un clone vaincu se dissipe.",
+  "pageDescription": "Un parchemin dont l'encre se dédouble quand on le lit. Enseigne le Clonage : cinq copies de lumière de vous-même, armées comme vous, envoyées une à une contre vos ennemis. Classes : Dragon, Guerrier, Assassin, Archer. Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.5,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": "SFX_Portal_Neutral_Open",
+    "releaseSound": null,
+    "handParticles": "Clonage_Aura",
+    "handParticlesScale": 0.8,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.5,
+    "animationTimeS": 0.9,
+    "range": 30,
+    "radius": "clones en arc derriere le lanceur (2.5 blocs)",
+    "targets": "ennemi vise (clic droit)",
+    "triggers": "clic de la rune -> 20 s ; clic droit sur un ennemi = le clone libre le plus proche l'attaque (a defaut, le clone le plus proche change de cible) ; re-clic = un autre clone",
+    "characterAnimation": "Staff / CastSummonCharging puis CastSummon ; clones = PNJ role Eldanior_Clone_Lumiere (Appearance Player + modele et skin du lanceur) : marche, course, sauts et vraies attaques de l'arme gerees par le moteur PNJ",
+    "castFx": "etincelles dorees dans les mains",
+    "executionFx": "clones dores translucides (effet Clonage_Reflet : teinte, voile Clonage_Lumiere, etincelles)",
+    "impactFx": "impact d'epee + eclat dore a chaque coup",
+    "sounds": "SFX_Portal_Neutral_Open au lancement, impact a chaque coup, dissipation en lumiere a la fin",
+    "effects": "clones = PNJ autonomes : attaques Primary / Primary chargee / Secondary / Ability1 (signature, energie remplie toutes les 6 s) de l'arme tenue ; 50 % de la vie max du lanceur ; les monstres a 16 blocs les voient hostiles (attitude forcee)",
+    "terrain": "aucun",
+    "persistentDurationS": 20,
+    "interruptions": "fin des 20 s : les clones se dissipent en lumiere",
+    "restrictions": "cible = ennemi uniquement (groupe, guilde, famille epargnes)",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 2,
+      "mobility": 0,
+      "control": 1,
+      "defense": 1,
+      "targets": 2,
+      "frequency": 0,
+      "terrain": 0,
+      "difficulty": 1
+    },
+    "synergies": "focus d'un boss (tous les clones sur la meme cible) ou dispersion sur un groupe",
+    "edgeCases": "cible morte ou a plus de 40 blocs du lanceur -> monstre le plus proche a 15 blocs, sinon retour au lanceur ; coup fatal -> le clone se dissipe (retire avant la mort : pas de butin, l'arme copiee disparait) ; pas de tir ami lanceur/clones ; deconnexion ou arret serveur -> clones retires (minuterie de securite de 45 s dans le role)",
+    "limitations": "L'IA (poursuite, saut, choix d'attaque) est celle du moteur PNJ : a valider en jeu (animations de l'arme sur un PNJ Player, competence de signature selon l'arme)."
+  }
+}

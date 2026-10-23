@@ -1,0 +1,86 @@
+{
+  "$Comment": "Filets de vent et de poussiere aspires vers le cyclone de Fujin (orientes par le code : avant = vers le cyclone).",
+  "RenderMode": "BlendLinear",
+  "EmitOffset": {
+    "X": {
+      "Min": -1.5,
+      "Max": 1.5
+    },
+    "Y": {
+      "Min": 0.2,
+      "Max": 2.5
+    },
+    "Z": {
+      "Min": -1.0,
+      "Max": 1.0
+    }
+  },
+  "ParticleRotationInfluence": "Velocity",
+  "LinearFiltering": true,
+  "LightInfluence": 0.4,
+  "ParticleRotateWithSpawner": true,
+  "MaxConcurrentParticles": 30,
+  "SpawnRate": {
+    "Min": 30,
+    "Max": 30
+  },
+  "ParticleLifeSpan": {
+    "Min": 0.6,
+    "Max": 1.0
+  },
+  "InitialVelocity": {
+    "Yaw": {
+      "Min": -8,
+      "Max": 8
+    },
+    "Pitch": {
+      "Min": -3,
+      "Max": 8
+    },
+    "Speed": {
+      "Min": 14,
+      "Max": 22
+    }
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Smoke/Smoke_Wind2.png",
+    "FrameSize": {
+      "Width": 32,
+      "Height": 96
+    },
+    "ScaleRatioConstraint": "None",
+    "UVOption": "RandomFlipU",
+    "SoftParticles": "Disable",
+    "InitialAnimationFrame": {
+      "Opacity": 0,
+      "Color": "#d9d3c7",
+      "Scale": {
+        "X": {
+          "Min": 0.5,
+          "Max": 0.8
+        },
+        "Y": {
+          "Min": 2.5,
+          "Max": 4.0
+        }
+      }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0
+      },
+      "15": {
+        "Opacity": 0.75,
+        "Color": "#cfc7b8"
+      },
+      "80": {
+        "Opacity": 0.6,
+        "Color": "#b3a996"
+      },
+      "100": {
+        "Opacity": 0,
+        "Color": "#9e937f"
+      }
+    }
+  }
+}

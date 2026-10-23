@@ -1,0 +1,45 @@
+{
+  "$Comment": "Arme de Gilgamesh Babylon en attente dans son portail : demi-modele (pieces cote poignee masquees, scripts/rune_aura_icons/gen_gilgamesh_halves.py) pour qu'elle semble sortir a moitie du portail. Remplacee par l'arme complete au lancement.",
+  "Model": "Items/Projectiles/Projectile.blockymodel",
+  "Texture": "Items/Projectiles/Projectile_default.png",
+  "DefaultAttachments": [
+    {
+      "Model": "Items/Projectiles/Gilgamesh/Half_Ornate.blockymodel",
+      "Texture": "Items/Projectiles/Gilgamesh/Light_Ornate.png"
+    }
+  ],
+  "AnimationSets": {
+    "FlyIdle": {
+      "Animations": [
+        {
+          "Animation": "Items/Animations/Fly/Fly_Vertical.blockyanim"
+        }
+      ]
+    }
+  },
+  "MinScale": 1.5,
+  "MaxScale": 1.5,
+  "HitBox": {
+    "Max": {
+      "X": 0.5,
+      "Y": 0.1,
+      "Z": 0.1
+    },
+    "Min": {
+      "X": -0.5,
+      "Y": -0.1,
+      "Z": -0.1
+    }
+  },
+  "Particles": [
+    {
+      "SystemId": "Gilgamesh_Sword_Glow",
+      "TargetNodeName": "",
+      "Scale": 1.0
+    }
+  ],
+  "Light": {
+    "Color": "#ffe9a8",
+    "Radius": 6
+  }
+}

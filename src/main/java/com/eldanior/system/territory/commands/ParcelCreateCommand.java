@@ -39,7 +39,6 @@ public class ParcelCreateCommand extends AbstractAsyncCommand {
         this.nameArg = this.withRequiredArg("nom", "Nom de la parcelle", ArgTypes.STRING);
     }
 
-    @Override
     protected boolean canGeneratePermission() { return false; }
 
     @Nonnull

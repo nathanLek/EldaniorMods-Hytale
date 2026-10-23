@@ -31,7 +31,6 @@ public class ParcelDeleteCommand extends AbstractAsyncCommand {
         this.idOrNameArg = this.withRequiredArg("id_ou_nom", "ID ou nom de la parcelle", ArgTypes.STRING);
     }
 
-    @Override
     protected boolean canGeneratePermission() { return false; }
 
     @Nonnull

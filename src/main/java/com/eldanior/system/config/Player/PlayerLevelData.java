@@ -98,6 +98,8 @@ public class PlayerLevelData implements Component<EntityStore> {
     private String divineSkill = ""; // Le skill divin unique équipé (PECHE_xxx ou ANGE_xxx)
     private transient Map<String, Long> cooldowns = new HashMap<>();
     private transient TitleBonus cachedTitleBonus = null;
+    /** Bonus physique de la Rune d'Aura active (ex: 0.15 = +15%), 0 si inactive. Non sauvegarde, gere par RuneAuraSystem. */
+    private transient float auraPhysicalBonus = 0f;
 
     // Kill tracking par type de mob (ex: "goblin_scrapper" -> 150)
     private Map<String, Integer> mobKills = new HashMap<>();
@@ -375,6 +377,7 @@ public class PlayerLevelData implements Component<EntityStore> {
         copy.lastVictimUUID = this.lastVictimUUID;
         copy.hauntingThrustStacks = this.hauntingThrustStacks;
         copy.lastDamageTakenTime = this.lastDamageTakenTime;
+        copy.auraPhysicalBonus = this.auraPhysicalBonus;
 
 
         copy.enabledSkills = new HashSet<>(this.enabledSkills);
@@ -715,6 +718,8 @@ public class PlayerLevelData implements Component<EntityStore> {
     private int getTitleBonusLck() { return getTitleBonus().luck(); }
 
     public UUID getLastVictimUUID() { return lastVictimUUID; }
+    public float getAuraPhysicalBonus() { return auraPhysicalBonus; }
+    public void setAuraPhysicalBonus(float auraPhysicalBonus) { this.auraPhysicalBonus = auraPhysicalBonus; }
     public void setLastVictimUUID(UUID lastVictimUUID) { this.lastVictimUUID = lastVictimUUID; }
     public int getHauntingThrustStacks() { return hauntingThrustStacks; }
     public void setHauntingThrustStacks(int stacks) { this.hauntingThrustStacks = stacks; }

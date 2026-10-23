@@ -1,0 +1,35 @@
+{
+  "Type": "Component",
+  "Class": "Instruction",
+  "Interface": "Hytale.Instruction.Idle",
+  "Parameters": {
+    "WanderRadius": {
+      "Value": 10,
+      "Description": "Non utilise : exige par l'interface du gabarit."
+    }
+  },
+  "Content": {
+    "Weight": 100,
+    "Instructions": [
+      {
+        "$Comment": "Garde au repos : revient a son poste (point de laisse) apres un combat ou un appel.",
+        "Sensor": {
+          "Type": "Leash",
+          "Range": 1.5
+        },
+        "BodyMotion": {
+          "Type": "Seek",
+          "SlowDownDistance": 1.5,
+          "StopDistance": 0.6,
+          "RelativeSpeed": 0.45,
+          "UsePathfinder": true
+        }
+      },
+      {
+        "BodyMotion": {
+          "Type": "Nothing"
+        }
+      }
+    ]
+  }
+}

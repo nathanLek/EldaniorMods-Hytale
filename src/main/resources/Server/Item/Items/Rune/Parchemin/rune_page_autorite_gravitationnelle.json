@@ -1,0 +1,37 @@
+{
+  "Id": "rune_page_autorite_gravitationnelle",
+  "TranslationProperties": {
+    "Name": "Parchemin de Rune : Autorité Gravitationnelle",
+    "Description": "Un parchemin si lourd qu'il s'enfonce dans la table où on le pose. Enseigne l'Autorité Gravitationnelle : pendant 30 s, chaque ennemi autour de vous est écrasé au sol par sa propre colonne de gravité. Classes : Mage, Assassin, Dragon. Utilisez-le pour ajouter la rune à votre sac de runes."
+  },
+  "Icon": "Icons/ItemsGenerated/Recipe_Page.png",
+  "Quality": "Legendary",
+  "Categories": [
+    "Eldanior_System.Competences_Actives"
+  ],
+  "Tags": {
+    "Type": [
+      "Item",
+      "Consumable"
+    ]
+  },
+  "MaxStack": 1,
+  "PlayerAnimationsId": "Item",
+  "Model": "Items/Consumables/Recipes/Recipe.blockymodel",
+  "Texture": "Items/Consumables/Recipes/Recipe_Texture.png",
+  "IconProperties": {
+    "Scale": 0.76,
+    "Rotation": [
+      135,
+      135,
+      0
+    ],
+    "Translation": [
+      -1,
+      5
+    ]
+  },
+  "Interactions": {
+    "Use": "Root_ConsumableItemSkillInteraction"
+  }
+}

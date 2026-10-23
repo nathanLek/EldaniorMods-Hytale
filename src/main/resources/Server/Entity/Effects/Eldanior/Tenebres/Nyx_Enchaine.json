@@ -1,0 +1,23 @@
+{
+  "$Comment": "Enchaine par les chaines de l'enfer du Trone du Neant : immobilise, ne peut plus agir, son mana est aspire (legere teinte sombre ; les chaines autour du corps sont des faisceaux poses par le code).",
+  "Duration": 1.5,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": true,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Rune_ChainHook.png",
+  "ApplicationEffects": {
+    "EntityTopTint": "#3c2c50",
+    "EntityBottomTint": "#1a1024",
+    "MovementEffects": {
+      "DisableAll": true
+    },
+    "KnockbackMultiplier": 0,
+    "AbilityEffects": {
+      "Disabled": [
+        "Primary",
+        "Secondary",
+        "Ability1",
+        "Ability3"
+      ]
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "$Comment": "Onde de givre du Porte de Niflheim : anneau de glace qui s'etend du lanceur jusqu'a 20 blocs (~1.4 s).",
+  "Spawners": [
+    {
+      "SpawnerId": "Niflheim_Ring_Ice",
+      "PositionOffset": {
+        "Y": 0.05
+      }
+    },
+    {
+      "SpawnerId": "Niflheim_Ring_Wave",
+      "PositionOffset": {
+        "Y": 0.3
+      }
+    }
+  ],
+  "IsImportant": true,
+  "CullDistance": 160,
+  "LifeSpan": 0.1
+}

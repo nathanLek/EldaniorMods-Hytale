@@ -33,7 +33,6 @@ public class NobilityStatusCommand extends AbstractAsyncCommand {
         this.playerArg = this.withRequiredArg("joueur", "Joueur cible", ArgTypes.STRING);
     }
 
-    @Override
     protected boolean canGeneratePermission() { return true; }
 
     @Nonnull

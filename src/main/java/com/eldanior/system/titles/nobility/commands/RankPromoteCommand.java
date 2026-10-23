@@ -36,7 +36,6 @@ public class RankPromoteCommand extends AbstractAsyncCommand {
         this.rankArg = this.withRequiredArg("rang", "baron|comte|duc|marquis", ArgTypes.STRING);
     }
 
-    @Override
     protected boolean canGeneratePermission() { return true; }
 
     @Nonnull

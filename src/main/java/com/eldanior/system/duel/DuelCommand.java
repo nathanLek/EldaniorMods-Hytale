@@ -28,7 +28,6 @@ public class DuelCommand extends AbstractAsyncCommand {
         this.actionArg = this.withRequiredArg("action", "accept|decline|<player>", ArgTypes.STRING);
     }
 
-    @Override
     protected boolean canGeneratePermission() { return false; }
 
     @Nonnull

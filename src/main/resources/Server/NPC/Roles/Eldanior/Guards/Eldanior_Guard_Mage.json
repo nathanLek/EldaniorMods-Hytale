@@ -1,0 +1,83 @@
+{
+  "Type": "Variant",
+  "Reference": "Template_Intelligent",
+  "Modify": {
+    "DropList": "Empty",
+    "WakingPeriod": [
+      0,
+      24
+    ],
+    "BedBlockSet": "",
+    "Patrol": false,
+    "FollowPatrolPath": false,
+    "ViewRange": 20,
+    "ViewSector": 240,
+    "HearingRange": 12,
+    "AlertedRange": 40,
+    "AlertedTime": [
+      0.3,
+      0.6
+    ],
+    "LeashMinPlayerDistance": 4,
+    "LeashTimer": [
+      2,
+      3
+    ],
+    "SearchTimeRange": [
+      4,
+      6
+    ],
+    "BreathesInWater": true,
+    "NameTranslationKey": {
+      "Compute": "NameTranslationKey"
+    },
+    "Appearance": "Eldanior_Guard_Mage",
+    "MaxHealth": 400,
+    "MaxSpeed": 9,
+    "KnockbackScale": 0.3,
+    "Weapons": [
+      "Weapon_Staff_Onyxium"
+    ],
+    "OffHand": [],
+    "DefaultOffHandSlot": -1,
+    "NighttimeOffhandSlot": -1,
+    "WakingIdleBehaviorComponent": "Component_Instruction_Eldanior_Leash_Return",
+    "WanderRadius": 2,
+    "LeashDistance": 24,
+    "HardLeashDistance": 48,
+    "ChanceToBeAlertedWhenReceivingCallForHelp": 100,
+    "CombatMessageTargetGroups": [
+      "Eldanior_Guards"
+    ],
+    "InvestigateRange": 48,
+    "UseCombatActionEvaluator": false,
+    "Attack": "Root_NPC_Eldanior_Mage_Attack",
+    "AttackDistance": 16,
+    "DesiredAttackDistanceRange": [
+      7,
+      14
+    ],
+    "AttackPauseRange": [
+      1.2,
+      1.8
+    ],
+    "CombatBehaviorDistance": 16,
+    "TargetRange": 16,
+    "CombatBackOffAfterAttack": false,
+    "CombatStrafeWeight": 3,
+    "CombatFleeIfTooCloseDistance": 3,
+    "BlockAbility": "",
+    "AttitudeGroup": "Eldanior_Guard",
+    "DefaultPlayerAttitude": "Ignore",
+    "DisableDamageGroups": [
+      "Self",
+      "Eldanior_Guards"
+    ]
+  },
+  "Parameters": {
+    "NameTranslationKey": {
+      "Value": "server.npcRoles.Eldanior_Guard_Mage.name",
+      "Description": "Translation key for NPC name display"
+    }
+  }
+}

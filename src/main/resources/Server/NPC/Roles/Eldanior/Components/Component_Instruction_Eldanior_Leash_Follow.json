@@ -1,0 +1,35 @@
+{
+  "Type": "Component",
+  "Class": "Instruction",
+  "Interface": "Hytale.Instruction.Idle",
+  "Parameters": {
+    "WanderRadius": {
+      "Value": 10,
+      "Description": "Non utilise : exige par l'interface du gabarit."
+    }
+  },
+  "Content": {
+    "Weight": 100,
+    "Instructions": [
+      {
+        "$Comment": "Aventurier recrute : suit son joueur (point de laisse place derriere lui par GuardManager).",
+        "Sensor": {
+          "Type": "Leash",
+          "Range": 1.5
+        },
+        "BodyMotion": {
+          "Type": "Seek",
+          "SlowDownDistance": 3,
+          "StopDistance": 1.2,
+          "RelativeSpeed": 0.9,
+          "UsePathfinder": true
+        }
+      },
+      {
+        "BodyMotion": {
+          "Type": "Nothing"
+        }
+      }
+    ]
+  }
+}

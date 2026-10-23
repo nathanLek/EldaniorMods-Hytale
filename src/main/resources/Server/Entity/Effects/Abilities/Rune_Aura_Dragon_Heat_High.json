@@ -1,0 +1,21 @@
+{
+  "$Comment": "Zone draconique - chaleur intense (pres de la barriere 7 blocs). Gros degats de feu + teinte ardente + overlay ecran void + VFX de combustion.",
+  "ApplicationEffects": {
+    "EntityBottomTint": "#330600",
+    "EntityTopTint": "#e02400",
+    "ScreenEffect": "ScreenEffects/VoidEscalationScreenEffect.png",
+    "ModelVFXId": "Burn",
+    "Particles": [
+      { "SystemId": "Effect_Fire" },
+      { "SystemId": "Smoke_Black" }
+    ]
+  },
+  "DamageCalculatorCooldown": 1,
+  "DamageCalculator": {
+    "BaseDamage": { "Fire": 14 }
+  },
+  "Duration": 1.5,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": true,
+  "StatusEffectIcon": "UI/StatusEffects/Burn.png"
+}

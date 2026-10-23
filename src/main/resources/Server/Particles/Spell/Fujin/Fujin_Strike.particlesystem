@@ -1,0 +1,39 @@
+{
+  "$Comment": "Wind strike vertical de Fujin (clic gauche), emis par le code le long de sa course, oriente sur sa direction.",
+  "Spawners": [
+    {
+      "SpawnerId": "Fujin_Strike_Glow"
+    },
+    {
+      "SpawnerId": "Fujin_Strike_Blade"
+    },
+    {
+      "SpawnerId": "Fujin_Strike_Streaks"
+    },
+    {
+      "SpawnerId": "Fujin_Strike_Sparks"
+    },
+    {
+      "SpawnerId": "Windstrike_Distortion",
+      "PositionOffset": {
+        "Y": -3
+      }
+    },
+    {
+      "SpawnerId": "Windstrike_Distortion",
+      "PositionOffset": {
+        "Y": 3
+      }
+    },
+    {
+      "SpawnerId": "Fujin_Slash_Wake",
+      "PositionOffset": {
+        "Y": -6
+      }
+    }
+  ],
+  "LifeSpan": 0.55,
+  "BoundingRadius": 10,
+  "IsImportant": true,
+  "CullDistance": 260
+}

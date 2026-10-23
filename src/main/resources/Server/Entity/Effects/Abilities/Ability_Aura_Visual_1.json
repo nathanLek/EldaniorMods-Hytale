@@ -1,0 +1,20 @@
+{
+  "$Comment": "Visuel du palier : Aura (Chevalier) - blanc. Memes particules que la rune Enrage (Buff_Enrage) recolorees : Buff_Aura_T1. Applique en infini par RuneAuraSystem selon la dignite. Echelle : x1.",
+  "ApplicationEffects": {
+    "Particles": [
+      {
+        "SystemId": "Buff_Aura_T1",
+        "TargetNodeName": "Chest",
+        "PositionOffset": {
+          "X": 0,
+          "Y": -1,
+          "Z": 0
+        },
+        "Scale": 1.0
+      }
+    ]
+  },
+  "Duration": 8.0,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": false
+}

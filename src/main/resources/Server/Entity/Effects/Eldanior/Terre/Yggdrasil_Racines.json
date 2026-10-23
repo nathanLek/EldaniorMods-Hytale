@@ -1,0 +1,37 @@
+{
+  "$Comment": "Racines d'Yggdrasil : la cible est enserree par des racines qui sortent du sol (modele de l'effet vanilla Root) et immobilisee.",
+  "Duration": 3.0,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": true,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Rune_EveilYggdrasil.png",
+  "ModelOverride": {
+    "Model": "VFX/Spells/Roots/Model.blockymodel",
+    "Texture": "VFX/Spells/Roots/Model.png",
+    "AnimationSets": {
+      "Spawn": {
+        "Animations": [
+          {
+            "Animation": "VFX/Spells/Roots/Spawn.blockyanim",
+            "Looping": false
+          }
+        ]
+      },
+      "Despawn": {
+        "Animations": [
+          {
+            "Animation": "VFX/Spells/Roots/Despawn.blockyanim",
+            "Looping": false
+          }
+        ]
+      }
+    }
+  },
+  "ApplicationEffects": {
+    "EntityTopTint": "#6a8a3a",
+    "EntityBottomTint": "#2a3a10",
+    "MovementEffects": {
+      "DisableAll": true
+    },
+    "KnockbackMultiplier": 0
+  }
+}

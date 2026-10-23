@@ -1,0 +1,270 @@
+{
+  "$Comment": "Colonne du Puits Gravitationnel (genere par scripts/rune_aura_icons/gen_gravite.py) : traits noir-violet qui tombent sur 50 blocs dans un cylindre de 7 blocs de diametre. HitBox large en X : le serveur masque les entites a hitbox minuscule.",
+  "Model": "Items/Projectiles/Gravite/Colonne.blockymodel",
+  "Texture": "Items/Projectiles/Tornado_Texture.png",
+  "MinScale": 1,
+  "MaxScale": 1,
+  "HitBox": {
+    "Max": {
+      "X": 8.0,
+      "Y": 0.01,
+      "Z": 0.01
+    },
+    "Min": {
+      "X": -8.0,
+      "Y": -0.01,
+      "Z": -0.01
+    }
+  },
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Gravite/Colonne_Chute.blockyanim",
+          "BlendingDuration": 0,
+          "Speed": 1
+        }
+      ]
+    }
+  },
+  "Trails": [
+    {
+      "TargetNodeName": "G0",
+      "TrailId": "Gravite_Trait"
+    },
+    {
+      "TargetNodeName": "G0",
+      "TrailId": "Gravite_Trait_Lueur",
+      "PositionOffset": {
+        "X": 0.3,
+        "Y": 0,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "G1",
+      "TrailId": "Gravite_Trait"
+    },
+    {
+      "TargetNodeName": "G2",
+      "TrailId": "Gravite_Trait"
+    },
+    {
+      "TargetNodeName": "G2",
+      "TrailId": "Gravite_Trait_Lueur",
+      "PositionOffset": {
+        "X": 0.3,
+        "Y": 0,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "G3",
+      "TrailId": "Gravite_Trait"
+    },
+    {
+      "TargetNodeName": "G4",
+      "TrailId": "Gravite_Trait"
+    },
+    {
+      "TargetNodeName": "G4",
+      "TrailId": "Gravite_Trait_Lueur",
+      "PositionOffset": {
+        "X": 0.3,
+        "Y": 0,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "G5",
+      "TrailId": "Gravite_Trait"
+    },
+    {
+      "TargetNodeName": "G6",
+      "TrailId": "Gravite_Trait"
+    },
+    {
+      "TargetNodeName": "G6",
+      "TrailId": "Gravite_Trait_Lueur",
+      "PositionOffset": {
+        "X": 0.3,
+        "Y": 0,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "G7",
+      "TrailId": "Gravite_Trait"
+    },
+    {
+      "TargetNodeName": "G8",
+      "TrailId": "Gravite_Trait"
+    },
+    {
+      "TargetNodeName": "G8",
+      "TrailId": "Gravite_Trait_Lueur",
+      "PositionOffset": {
+        "X": 0.3,
+        "Y": 0,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "G9",
+      "TrailId": "Gravite_Trait"
+    },
+    {
+      "TargetNodeName": "G10",
+      "TrailId": "Gravite_Trait"
+    },
+    {
+      "TargetNodeName": "G10",
+      "TrailId": "Gravite_Trait_Lueur",
+      "PositionOffset": {
+        "X": 0.3,
+        "Y": 0,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "G11",
+      "TrailId": "Gravite_Trait"
+    },
+    {
+      "TargetNodeName": "G12",
+      "TrailId": "Gravite_Trait"
+    },
+    {
+      "TargetNodeName": "G12",
+      "TrailId": "Gravite_Trait_Lueur",
+      "PositionOffset": {
+        "X": 0.3,
+        "Y": 0,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "G13",
+      "TrailId": "Gravite_Trait"
+    },
+    {
+      "TargetNodeName": "G14",
+      "TrailId": "Gravite_Trait"
+    },
+    {
+      "TargetNodeName": "G14",
+      "TrailId": "Gravite_Trait_Lueur",
+      "PositionOffset": {
+        "X": 0.3,
+        "Y": 0,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "G15",
+      "TrailId": "Gravite_Trait"
+    },
+    {
+      "TargetNodeName": "G16",
+      "TrailId": "Gravite_Trait"
+    },
+    {
+      "TargetNodeName": "G16",
+      "TrailId": "Gravite_Trait_Lueur",
+      "PositionOffset": {
+        "X": 0.3,
+        "Y": 0,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "G17",
+      "TrailId": "Gravite_Trait"
+    },
+    {
+      "TargetNodeName": "G18",
+      "TrailId": "Gravite_Trait"
+    },
+    {
+      "TargetNodeName": "G18",
+      "TrailId": "Gravite_Trait_Lueur",
+      "PositionOffset": {
+        "X": 0.3,
+        "Y": 0,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "G19",
+      "TrailId": "Gravite_Trait"
+    },
+    {
+      "TargetNodeName": "G20",
+      "TrailId": "Gravite_Trait"
+    },
+    {
+      "TargetNodeName": "G20",
+      "TrailId": "Gravite_Trait_Lueur",
+      "PositionOffset": {
+        "X": 0.3,
+        "Y": 0,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "G21",
+      "TrailId": "Gravite_Trait"
+    },
+    {
+      "TargetNodeName": "G22",
+      "TrailId": "Gravite_Trait"
+    },
+    {
+      "TargetNodeName": "G22",
+      "TrailId": "Gravite_Trait_Lueur",
+      "PositionOffset": {
+        "X": 0.3,
+        "Y": 0,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "G23",
+      "TrailId": "Gravite_Trait"
+    },
+    {
+      "TargetNodeName": "G24",
+      "TrailId": "Gravite_Trait"
+    },
+    {
+      "TargetNodeName": "G24",
+      "TrailId": "Gravite_Trait_Lueur",
+      "PositionOffset": {
+        "X": 0.3,
+        "Y": 0,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "G25",
+      "TrailId": "Gravite_Trait"
+    },
+    {
+      "TargetNodeName": "G26",
+      "TrailId": "Gravite_Trait"
+    },
+    {
+      "TargetNodeName": "G26",
+      "TrailId": "Gravite_Trait_Lueur",
+      "PositionOffset": {
+        "X": 0.3,
+        "Y": 0,
+        "Z": 0
+      }
+    }
+  ],
+  "Light": {
+    "Color": "#5a1aa0",
+    "Radius": 12
+  }
+}

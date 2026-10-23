@@ -1,0 +1,49 @@
+{
+  "$Comment": "Meteorite du Courroux de Muspelheim : boule de feu x15 qui roule sur elle-meme, trainee de feu et de fumee noire, forte lumiere. L'echelle n'est appliquee que parce que le projectile a UseModelScale=true. HitBox petite : elle est multipliee par l'echelle.",
+  "Parent": "Fireball",
+  "MinScale": 15,
+  "MaxScale": 15,
+  "HitBox": {
+    "Max": {
+      "X": 0.1,
+      "Y": 0.1,
+      "Z": 0.1
+    },
+    "Min": {
+      "X": -0.1,
+      "Y": -0.1,
+      "Z": -0.1
+    }
+  },
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "Items/Animations/Spin_Roll/Spin_Roll_Left.blockyanim",
+          "BlendingDuration": 0
+        }
+      ]
+    }
+  },
+  "Particles": [
+    {
+      "SystemId": "Fire_Projectile",
+      "TargetNodeName": "",
+      "Scale": 2.5
+    },
+    {
+      "SystemId": "Effect_Fire",
+      "TargetNodeName": "",
+      "Scale": 2.0
+    },
+    {
+      "SystemId": "Smoke_Black",
+      "TargetNodeName": "",
+      "Scale": 1.5
+    }
+  ],
+  "Light": {
+    "Color": "#ff8a3a",
+    "Radius": 40
+  }
+}

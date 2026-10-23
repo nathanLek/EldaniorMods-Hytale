@@ -31,7 +31,18 @@ public class FallDamageSystem extends DamageEventSystem {
 
         // 1. Vérification rapide : Est-ce des dégâts de chute ?
         Damage.Source source = damage.getSource();
-        if (!source.getClass().getSimpleName().contains("Fall")) {
+        boolean sourceIsFall = source.getClass().getSimpleName().contains("Fall");
+
+        // Atterrissage apres la levitation du Courroux de Muspelheim : aucun degat de chute
+        boolean causeIsFall = damage.getCause() != null && "Fall".equalsIgnoreCase(damage.getCause().getId());
+        if ((sourceIsFall || causeIsFall)
+                && (com.eldanior.system.skills.runes.spells.MuspelheimWrath.isFallProtected(archetypeChunk.getReferenceTo(index), store)
+                    || com.eldanior.system.skills.runes.spells.SpellFx.isFallProtected(archetypeChunk.getReferenceTo(index), store))) {
+            damage.setCancelled(true);
+            return;
+        }
+
+        if (!sourceIsFall) {
             return;
         }
 

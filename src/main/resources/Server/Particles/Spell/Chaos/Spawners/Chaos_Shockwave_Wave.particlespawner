@@ -1,0 +1,71 @@
+{
+  "RenderMode": "BlendAdd",
+  "ParticleRotationInfluence": "None",
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "MaxConcurrentParticles": 1,
+  "ParticleRotateWithSpawner": true,
+  "SpawnRate": {
+    "Min": 1,
+    "Max": 1
+  },
+  "SpawnBurst": true,
+  "ParticleLifeSpan": {
+    "Min": 1.6,
+    "Max": 1.6
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Circles/Explosion_Shockwave.png",
+    "ScaleRatioConstraint": "OneToOne",
+    "UVOption": "None",
+    "SoftParticles": "Disable",
+    "InitialAnimationFrame": {
+      "Opacity": 1,
+      "Color": "#c8a0ff",
+      "Scale": {
+        "X": {
+          "Min": 1.75,
+          "Max": 1.75
+        }
+      },
+      "Rotation": {
+        "X": {
+          "Min": 90,
+          "Max": 90
+        }
+      }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0.8,
+        "Color": "#c8a0ff",
+        "Scale": {
+          "X": {
+            "Min": 0.05,
+            "Max": 0.05
+          }
+        }
+      },
+      "85": {
+        "Opacity": 0.8,
+        "Color": "#c8a0ff",
+        "Scale": {
+          "X": {
+            "Min": 1,
+            "Max": 1
+          }
+        }
+      },
+      "100": {
+        "Opacity": 0,
+        "Color": "#c8a0ff",
+        "Scale": {
+          "X": {
+            "Min": 1.05,
+            "Max": 1.05
+          }
+        }
+      }
+    }
+  }
+}

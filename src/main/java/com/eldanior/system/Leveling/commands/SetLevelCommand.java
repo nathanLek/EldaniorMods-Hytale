@@ -34,7 +34,6 @@ public class SetLevelCommand extends AbstractAsyncCommand {
         this.levelArg  = this.withRequiredArg("niveau", "Niveau", ArgTypes.INTEGER);
     }
 
-    @Override
     protected boolean canGeneratePermission() { return false; }
 
     @Nonnull
@@ -107,6 +106,7 @@ public class SetLevelCommand extends AbstractAsyncCommand {
                     data.setPlayerClass("Novice");
                     data.setPlayerClassId("novice");
                     data.forgetAllSkills();
+                    com.eldanior.system.skills.runes.RuneManager.wipeAllRunes(ref, store);
 
                     // Reset titres + kills + stats PvP + coffres
                     data.resetTitles();

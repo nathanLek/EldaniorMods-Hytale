@@ -1,0 +1,7668 @@
+{
+  "$Comment": "Mur du cyclone du Courroux de Fujin (genere par scripts/rune_aura_icons/gen_fujin_cyclone.py) : colonne de 100 blocs, oeil de 7 blocs, mur de 5 blocs. Trails sur des anneaux de noeuds qui tournent. HitBox large en X : le serveur masque les entites a hitbox minuscule.",
+  "Model": "Items/Projectiles/Fujin/Cyclone.blockymodel",
+  "Texture": "Items/Projectiles/Tornado_Texture.png",
+  "MinScale": 1,
+  "MaxScale": 1,
+  "HitBox": {
+    "Max": {
+      "X": 36.0,
+      "Y": 0.01,
+      "Z": 0.01
+    },
+    "Min": {
+      "X": -36.0,
+      "Y": -0.01,
+      "Z": -0.01
+    }
+  },
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "Items/Projectiles/Fujin/Cyclone_Spin.blockyanim",
+          "BlendingDuration": 0,
+          "SoundEventId": "SFX_Tornado",
+          "Speed": 1
+        }
+      ]
+    }
+  },
+  "Particles": [
+    {
+      "SystemId": "Fujin_Tornado_Node",
+      "TargetNodeName": "L0_1",
+      "Scale": 1.4
+    },
+    {
+      "SystemId": "Fujin_Tornado_Node",
+      "TargetNodeName": "L9_1",
+      "Scale": 1.4
+    },
+    {
+      "SystemId": "Fujin_Tornado_Node",
+      "TargetNodeName": "L18_1",
+      "Scale": 1.4
+    },
+    {
+      "SystemId": "Fujin_Tornado_Node",
+      "TargetNodeName": "L27_1",
+      "Scale": 1.4
+    },
+    {
+      "SystemId": "Fujin_Tornado_Node",
+      "TargetNodeName": "L36_1",
+      "Scale": 1.4
+    },
+    {
+      "SystemId": "Fujin_Tornado_Node",
+      "TargetNodeName": "L45_1",
+      "Scale": 1.4
+    },
+    {
+      "SystemId": "Fujin_Tornado_Node",
+      "TargetNodeName": "L54_1",
+      "Scale": 1.4
+    },
+    {
+      "SystemId": "Fujin_Tornado_Node",
+      "TargetNodeName": "L63_1",
+      "Scale": 1.4
+    },
+    {
+      "SystemId": "Fujin_Tornado_Node",
+      "TargetNodeName": "L72_1",
+      "Scale": 1.4
+    },
+    {
+      "SystemId": "Fujin_Tornado_Node",
+      "TargetNodeName": "L81_1",
+      "Scale": 1.4
+    },
+    {
+      "SystemId": "Fujin_Tornado_Node",
+      "TargetNodeName": "L90_1",
+      "Scale": 1.4
+    },
+    {
+      "SystemId": "Fujin_Tornado_Node",
+      "TargetNodeName": "L99_1",
+      "Scale": 1.4
+    },
+    {
+      "SystemId": "Fujin_Vortex_Base",
+      "TargetNodeName": "Base",
+      "Scale": 1.2
+    }
+  ],
+  "Trails": [
+    {
+      "TargetNodeName": "L0_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L0_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L0_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L0_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L0_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L0_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L0_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L0_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L0_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L0_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L0_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L0_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L0_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L0_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L0_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L0_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L1_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L1_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L1_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L1_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L1_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L1_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L1_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L1_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L2_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L2_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L2_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L2_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L2_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L2_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L2_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L2_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L2_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L2_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L2_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L2_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L3_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L3_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L3_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L3_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L3_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L3_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L3_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L3_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L3_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L3_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L3_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L3_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L4_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L4_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L4_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L4_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L4_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L4_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L4_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L4_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L4_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L4_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L4_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L4_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L5_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L5_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L5_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L5_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L5_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L5_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L5_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L5_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L6_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L6_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L6_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L6_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L6_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L6_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L6_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L6_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L6_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L6_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L6_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L6_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L6_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L6_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L6_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L6_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L7_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L7_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L7_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L7_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L7_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L7_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L7_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L7_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L8_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L8_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L8_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L8_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L8_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L8_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L8_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L8_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L8_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L8_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L8_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L8_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L9_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L9_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L9_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L9_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L9_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L9_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L9_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L9_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L9_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L9_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L9_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L9_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L10_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L10_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L10_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L10_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L10_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L10_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L10_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L10_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L10_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L10_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L10_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L10_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L11_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L11_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L11_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L11_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L11_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L11_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L11_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L11_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L12_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L12_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L12_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L12_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L12_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L12_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L12_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L12_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L12_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L12_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L12_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L12_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L12_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L12_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L12_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L12_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L13_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L13_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L13_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L13_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L13_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L13_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L13_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L13_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L14_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L14_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L14_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L14_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L14_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L14_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L14_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L14_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L14_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L14_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L14_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L14_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L15_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L15_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L15_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L15_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L15_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L15_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L15_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L15_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L15_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L15_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L15_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L15_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L16_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L16_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L16_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L16_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L16_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L16_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L16_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L16_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L16_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L16_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L16_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L16_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L17_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L17_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L17_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L17_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L17_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L17_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L17_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L17_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L18_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L18_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L18_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L18_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L18_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L18_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L18_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L18_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L18_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L18_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L18_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L18_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L18_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L18_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L18_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L18_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L19_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L19_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L19_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L19_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L19_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L19_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L19_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L19_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L20_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L20_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L20_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L20_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L20_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L20_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L20_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L20_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L20_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L20_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L20_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L20_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L21_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L21_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L21_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L21_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L21_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L21_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L21_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L21_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L21_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L21_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L21_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L21_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L22_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L22_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L22_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L22_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L22_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L22_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L22_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L22_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L22_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L22_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L22_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L22_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L23_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L23_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L23_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L23_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L23_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L23_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L23_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L23_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L24_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L24_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L24_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L24_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L24_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L24_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L24_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L24_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L24_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L24_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L24_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L24_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L24_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L24_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L24_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L24_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L25_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L25_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L25_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L25_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L25_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L25_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L25_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L25_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L26_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L26_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L26_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L26_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L26_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L26_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L26_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L26_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L26_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L26_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L26_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L26_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L27_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L27_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L27_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L27_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L27_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L27_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L27_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L27_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L27_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L27_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L27_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L27_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L28_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L28_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L28_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L28_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L28_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L28_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L28_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L28_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L28_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L28_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L28_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L28_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L29_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L29_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L29_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L29_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L29_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L29_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L29_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L29_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L30_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L30_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L30_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L30_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L30_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L30_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L30_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L30_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L30_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L30_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L30_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L30_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L30_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L30_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L30_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L30_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L31_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L31_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L31_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L31_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L31_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L31_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L31_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L31_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L32_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L32_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L32_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L32_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L32_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L32_1",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L32_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L32_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L32_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L32_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L32_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L32_3",
+      "TrailId": "Fujin_Cyclone_Dust",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L33_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L33_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L33_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L33_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L33_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L33_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L33_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L33_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L33_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L33_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L33_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L33_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L34_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L34_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L34_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L34_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L34_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L34_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L34_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L34_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L35_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L35_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L35_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L35_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L35_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L35_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L35_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L35_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L36_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L36_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L36_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L36_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L36_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L36_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L36_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L36_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L36_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L36_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L36_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L36_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L37_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L37_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L37_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L37_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L37_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L37_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L37_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L37_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L38_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L38_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L38_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L38_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L38_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L38_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L38_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L38_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L39_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L39_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L39_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L39_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L39_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L39_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L39_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L39_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L39_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L39_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L39_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L39_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L40_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L40_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L40_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L40_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L40_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L40_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L40_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L40_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L41_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L41_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L41_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L41_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L41_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L41_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L41_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L41_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L42_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L42_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L42_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L42_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L42_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L42_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L42_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L42_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L42_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L42_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L42_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L42_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L43_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L43_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L43_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L43_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L43_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L43_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L43_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L43_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L44_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L44_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L44_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L44_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L44_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L44_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L44_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L44_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L45_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L45_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L45_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L45_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L45_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L45_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L45_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L45_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L45_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L45_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L45_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L45_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L46_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L46_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L46_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L46_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L46_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L46_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L46_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L46_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L47_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L47_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L47_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L47_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L47_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L47_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L47_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L47_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L48_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L48_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L48_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L48_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L48_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L48_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L48_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L48_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L48_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L48_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L48_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L48_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L49_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L49_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L49_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L49_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L49_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L49_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L49_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L49_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L50_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L50_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L50_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L50_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L50_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L50_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L50_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L50_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L51_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L51_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L51_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L51_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L51_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L51_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L51_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L51_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L51_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L51_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L51_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L51_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L52_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L52_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L52_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L52_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L52_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L52_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L52_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L52_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L53_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L53_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L53_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L53_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L53_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L53_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L53_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L53_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L54_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L54_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L54_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L54_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L54_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L54_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L54_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L54_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L54_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L54_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L54_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L54_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L55_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L55_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L55_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L55_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L55_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L55_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L55_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L55_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L56_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L56_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L56_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L56_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L56_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L56_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L56_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L56_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L57_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L57_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L57_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L57_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L57_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L57_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L57_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L57_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L57_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L57_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L57_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L57_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L58_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L58_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L58_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L58_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L58_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L58_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L58_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L58_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L59_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L59_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L59_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L59_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L59_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L59_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L59_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L59_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L60_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L60_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L60_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L60_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L60_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L60_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L60_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L60_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L60_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L60_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L60_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L60_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L61_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L61_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L61_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L61_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L61_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L61_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L61_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L61_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L62_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L62_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L62_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L62_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L62_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L62_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L62_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L62_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L63_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L63_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L63_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L63_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L63_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L63_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L63_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L63_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L63_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L63_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L63_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L63_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L64_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L64_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L64_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L64_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L64_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L64_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L64_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L64_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L65_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L65_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L65_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L65_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L65_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L65_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L65_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L65_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L66_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L66_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L66_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L66_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L66_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L66_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L66_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L66_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L66_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L66_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L66_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L66_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L67_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L67_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L67_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L67_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L67_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L67_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L67_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L67_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L68_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L68_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L68_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L68_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L68_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L68_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L68_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L68_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L69_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L69_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L69_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L69_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L69_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L69_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L69_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L69_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L69_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L69_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L69_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L69_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L70_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L70_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L70_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L70_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L70_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L70_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L70_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L70_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L71_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L71_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L71_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L71_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L71_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L71_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L71_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L71_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L72_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L72_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L72_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L72_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L72_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L72_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L72_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L72_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L72_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L72_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L72_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L72_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L73_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L73_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L73_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L73_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L73_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L73_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L73_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L73_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L74_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L74_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L74_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L74_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L74_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L74_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L74_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L74_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L75_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L75_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L75_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L75_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L75_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L75_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L75_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L75_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L75_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L75_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L75_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L75_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L76_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L76_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L76_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L76_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L76_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L76_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L76_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L76_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L77_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L77_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L77_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L77_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L77_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L77_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L77_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L77_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L78_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L78_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L78_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L78_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L78_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L78_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L78_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L78_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L78_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L78_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L78_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L78_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L79_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L79_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L79_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L79_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L79_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L79_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L79_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L79_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L80_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L80_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L80_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L80_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L80_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L80_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L80_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L80_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L81_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L81_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L81_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L81_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L81_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L81_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L81_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L81_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L81_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L81_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L81_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L81_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L82_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L82_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L82_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L82_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L82_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L82_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L82_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L82_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L83_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L83_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L83_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L83_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L83_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L83_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L83_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L83_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L84_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L84_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L84_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L84_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L84_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L84_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L84_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L84_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L84_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L84_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L84_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L84_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L85_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L85_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L85_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L85_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L85_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L85_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L85_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L85_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L86_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L86_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L86_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L86_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L86_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L86_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L86_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L86_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L87_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L87_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L87_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L87_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L87_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L87_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L87_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L87_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L87_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L87_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L87_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L87_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L88_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L88_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L88_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L88_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L88_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L88_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L88_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L88_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L89_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L89_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L89_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L89_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L89_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L89_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L89_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L89_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L90_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L90_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L90_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L90_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L90_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L90_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L90_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L90_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L90_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L90_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L90_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L90_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L91_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L91_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L91_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L91_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L91_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L91_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L91_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L91_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L92_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L92_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L92_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L92_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L92_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L92_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L92_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L92_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L93_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L93_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L93_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L93_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L93_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L93_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L93_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L93_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L93_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L93_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L93_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L93_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L94_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L94_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L94_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L94_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L94_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L94_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L94_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L94_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L95_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L95_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L95_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L95_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L95_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L95_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L95_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L95_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L96_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L96_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L96_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L96_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L96_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L96_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L96_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L96_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L96_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L96_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L96_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L96_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L97_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L97_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L97_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L97_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L97_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L97_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L97_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L97_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L98_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L98_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L98_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L98_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L98_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L98_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L98_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L98_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L99_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L99_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L99_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L99_0",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L99_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L99_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L99_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L99_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L99_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "L99_2",
+      "TrailId": "Fujin_Cyclone_Streak",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0.4,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "L99_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L99_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L100_0",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L100_0",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L100_1",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L100_1",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L100_2",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L100_2",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "L100_3",
+      "TrailId": "Fujin_Cyclone_Wall"
+    },
+    {
+      "TargetNodeName": "L100_3",
+      "TrailId": "Fujin_Cyclone_Wall_Flat"
+    },
+    {
+      "TargetNodeName": "S0_0",
+      "TrailId": "Fujin_Cyclone_Skirt"
+    },
+    {
+      "TargetNodeName": "S0_0",
+      "TrailId": "Fujin_Cyclone_Skirt",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "S0_1",
+      "TrailId": "Fujin_Cyclone_Skirt"
+    },
+    {
+      "TargetNodeName": "S0_1",
+      "TrailId": "Fujin_Cyclone_Skirt",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "S0_1",
+      "TrailId": "Fujin_Cyclone_Dust"
+    },
+    {
+      "TargetNodeName": "S0_2",
+      "TrailId": "Fujin_Cyclone_Skirt"
+    },
+    {
+      "TargetNodeName": "S0_2",
+      "TrailId": "Fujin_Cyclone_Skirt",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "S0_3",
+      "TrailId": "Fujin_Cyclone_Skirt"
+    },
+    {
+      "TargetNodeName": "S0_3",
+      "TrailId": "Fujin_Cyclone_Skirt",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "S0_3",
+      "TrailId": "Fujin_Cyclone_Dust"
+    },
+    {
+      "TargetNodeName": "S0_4",
+      "TrailId": "Fujin_Cyclone_Skirt"
+    },
+    {
+      "TargetNodeName": "S0_4",
+      "TrailId": "Fujin_Cyclone_Skirt",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "S0_5",
+      "TrailId": "Fujin_Cyclone_Skirt"
+    },
+    {
+      "TargetNodeName": "S0_5",
+      "TrailId": "Fujin_Cyclone_Skirt",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "S0_5",
+      "TrailId": "Fujin_Cyclone_Dust"
+    },
+    {
+      "TargetNodeName": "S1_0",
+      "TrailId": "Fujin_Cyclone_Skirt"
+    },
+    {
+      "TargetNodeName": "S1_0",
+      "TrailId": "Fujin_Cyclone_Skirt",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "S1_1",
+      "TrailId": "Fujin_Cyclone_Skirt"
+    },
+    {
+      "TargetNodeName": "S1_1",
+      "TrailId": "Fujin_Cyclone_Skirt",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "S1_1",
+      "TrailId": "Fujin_Cyclone_Dust"
+    },
+    {
+      "TargetNodeName": "S1_2",
+      "TrailId": "Fujin_Cyclone_Skirt"
+    },
+    {
+      "TargetNodeName": "S1_2",
+      "TrailId": "Fujin_Cyclone_Skirt",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "S1_3",
+      "TrailId": "Fujin_Cyclone_Skirt"
+    },
+    {
+      "TargetNodeName": "S1_3",
+      "TrailId": "Fujin_Cyclone_Skirt",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "S1_3",
+      "TrailId": "Fujin_Cyclone_Dust"
+    },
+    {
+      "TargetNodeName": "S1_4",
+      "TrailId": "Fujin_Cyclone_Skirt"
+    },
+    {
+      "TargetNodeName": "S1_4",
+      "TrailId": "Fujin_Cyclone_Skirt",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "S1_5",
+      "TrailId": "Fujin_Cyclone_Skirt"
+    },
+    {
+      "TargetNodeName": "S1_5",
+      "TrailId": "Fujin_Cyclone_Skirt",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "S1_5",
+      "TrailId": "Fujin_Cyclone_Dust"
+    },
+    {
+      "TargetNodeName": "S2_0",
+      "TrailId": "Fujin_Cyclone_Skirt"
+    },
+    {
+      "TargetNodeName": "S2_0",
+      "TrailId": "Fujin_Cyclone_Skirt",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "S2_1",
+      "TrailId": "Fujin_Cyclone_Skirt"
+    },
+    {
+      "TargetNodeName": "S2_1",
+      "TrailId": "Fujin_Cyclone_Skirt",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "S2_1",
+      "TrailId": "Fujin_Cyclone_Dust"
+    },
+    {
+      "TargetNodeName": "S2_2",
+      "TrailId": "Fujin_Cyclone_Skirt"
+    },
+    {
+      "TargetNodeName": "S2_2",
+      "TrailId": "Fujin_Cyclone_Skirt",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "S2_3",
+      "TrailId": "Fujin_Cyclone_Skirt"
+    },
+    {
+      "TargetNodeName": "S2_3",
+      "TrailId": "Fujin_Cyclone_Skirt",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "S2_3",
+      "TrailId": "Fujin_Cyclone_Dust"
+    },
+    {
+      "TargetNodeName": "S2_4",
+      "TrailId": "Fujin_Cyclone_Skirt"
+    },
+    {
+      "TargetNodeName": "S2_4",
+      "TrailId": "Fujin_Cyclone_Skirt",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "S2_5",
+      "TrailId": "Fujin_Cyclone_Skirt"
+    },
+    {
+      "TargetNodeName": "S2_5",
+      "TrailId": "Fujin_Cyclone_Skirt",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "S2_5",
+      "TrailId": "Fujin_Cyclone_Dust"
+    },
+    {
+      "TargetNodeName": "C0_0",
+      "TrailId": "Fujin_Cyclone_Cloud"
+    },
+    {
+      "TargetNodeName": "C0_0",
+      "TrailId": "Fujin_Cyclone_Cloud",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "C0_1",
+      "TrailId": "Fujin_Cyclone_Cloud"
+    },
+    {
+      "TargetNodeName": "C0_1",
+      "TrailId": "Fujin_Cyclone_Cloud",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "C0_2",
+      "TrailId": "Fujin_Cyclone_Cloud"
+    },
+    {
+      "TargetNodeName": "C0_2",
+      "TrailId": "Fujin_Cyclone_Cloud",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "C0_3",
+      "TrailId": "Fujin_Cyclone_Cloud"
+    },
+    {
+      "TargetNodeName": "C0_3",
+      "TrailId": "Fujin_Cyclone_Cloud",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "C0_4",
+      "TrailId": "Fujin_Cyclone_Cloud"
+    },
+    {
+      "TargetNodeName": "C0_4",
+      "TrailId": "Fujin_Cyclone_Cloud",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "C0_5",
+      "TrailId": "Fujin_Cyclone_Cloud"
+    },
+    {
+      "TargetNodeName": "C0_5",
+      "TrailId": "Fujin_Cyclone_Cloud",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "C0_6",
+      "TrailId": "Fujin_Cyclone_Cloud"
+    },
+    {
+      "TargetNodeName": "C0_6",
+      "TrailId": "Fujin_Cyclone_Cloud",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "C0_7",
+      "TrailId": "Fujin_Cyclone_Cloud"
+    },
+    {
+      "TargetNodeName": "C0_7",
+      "TrailId": "Fujin_Cyclone_Cloud",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "C1_0",
+      "TrailId": "Fujin_Cyclone_Cloud"
+    },
+    {
+      "TargetNodeName": "C1_0",
+      "TrailId": "Fujin_Cyclone_Cloud",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "C1_1",
+      "TrailId": "Fujin_Cyclone_Cloud"
+    },
+    {
+      "TargetNodeName": "C1_1",
+      "TrailId": "Fujin_Cyclone_Cloud",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "C1_2",
+      "TrailId": "Fujin_Cyclone_Cloud"
+    },
+    {
+      "TargetNodeName": "C1_2",
+      "TrailId": "Fujin_Cyclone_Cloud",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "C1_3",
+      "TrailId": "Fujin_Cyclone_Cloud"
+    },
+    {
+      "TargetNodeName": "C1_3",
+      "TrailId": "Fujin_Cyclone_Cloud",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "C1_4",
+      "TrailId": "Fujin_Cyclone_Cloud"
+    },
+    {
+      "TargetNodeName": "C1_4",
+      "TrailId": "Fujin_Cyclone_Cloud",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "C1_5",
+      "TrailId": "Fujin_Cyclone_Cloud"
+    },
+    {
+      "TargetNodeName": "C1_5",
+      "TrailId": "Fujin_Cyclone_Cloud",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "C1_6",
+      "TrailId": "Fujin_Cyclone_Cloud"
+    },
+    {
+      "TargetNodeName": "C1_6",
+      "TrailId": "Fujin_Cyclone_Cloud",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "C1_7",
+      "TrailId": "Fujin_Cyclone_Cloud"
+    },
+    {
+      "TargetNodeName": "C1_7",
+      "TrailId": "Fujin_Cyclone_Cloud",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "C2_0",
+      "TrailId": "Fujin_Cyclone_Cloud"
+    },
+    {
+      "TargetNodeName": "C2_0",
+      "TrailId": "Fujin_Cyclone_Cloud",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "C2_1",
+      "TrailId": "Fujin_Cyclone_Cloud"
+    },
+    {
+      "TargetNodeName": "C2_1",
+      "TrailId": "Fujin_Cyclone_Cloud",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "C2_2",
+      "TrailId": "Fujin_Cyclone_Cloud"
+    },
+    {
+      "TargetNodeName": "C2_2",
+      "TrailId": "Fujin_Cyclone_Cloud",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "C2_3",
+      "TrailId": "Fujin_Cyclone_Cloud"
+    },
+    {
+      "TargetNodeName": "C2_3",
+      "TrailId": "Fujin_Cyclone_Cloud",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "C2_4",
+      "TrailId": "Fujin_Cyclone_Cloud"
+    },
+    {
+      "TargetNodeName": "C2_4",
+      "TrailId": "Fujin_Cyclone_Cloud",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "C2_5",
+      "TrailId": "Fujin_Cyclone_Cloud"
+    },
+    {
+      "TargetNodeName": "C2_5",
+      "TrailId": "Fujin_Cyclone_Cloud",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "C2_6",
+      "TrailId": "Fujin_Cyclone_Cloud"
+    },
+    {
+      "TargetNodeName": "C2_6",
+      "TrailId": "Fujin_Cyclone_Cloud",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "C2_7",
+      "TrailId": "Fujin_Cyclone_Cloud"
+    },
+    {
+      "TargetNodeName": "C2_7",
+      "TrailId": "Fujin_Cyclone_Cloud",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N0_0",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N0_0",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N0_0",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N0_1",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N0_1",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N0_1",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N0_2",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N0_2",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N0_2",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N0_3",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N0_3",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N0_3",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N0_4",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N0_4",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N0_4",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N0_5",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N0_5",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N0_5",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N0_6",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N0_6",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N0_6",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N0_7",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N0_7",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N0_7",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N1_0",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N1_0",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N1_0",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N1_1",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N1_1",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N1_1",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N1_2",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N1_2",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N1_2",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N1_3",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N1_3",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N1_3",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N1_4",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N1_4",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N1_4",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N1_5",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N1_5",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N1_5",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N1_6",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N1_6",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N1_6",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N1_7",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N1_7",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N1_7",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N2_0",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N2_0",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N2_0",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N2_1",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N2_1",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N2_1",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N2_2",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N2_2",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N2_2",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N2_3",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N2_3",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N2_3",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N2_4",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N2_4",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N2_4",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N2_5",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N2_5",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N2_5",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N2_6",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N2_6",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N2_6",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N2_7",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N2_7",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N2_7",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N3_0",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N3_0",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N3_0",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N3_1",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N3_1",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N3_1",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N3_2",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N3_2",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N3_2",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N3_3",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N3_3",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N3_3",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N3_4",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N3_4",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N3_4",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N3_5",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N3_5",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N3_5",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N3_6",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N3_6",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N3_6",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N3_7",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N3_7",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N3_7",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N4_0",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N4_0",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N4_0",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N4_1",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N4_1",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N4_1",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N4_2",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N4_2",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N4_2",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N4_3",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N4_3",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N4_3",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N4_4",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N4_4",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N4_4",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N4_5",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N4_5",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N4_5",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N4_6",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N4_6",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N4_6",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N4_7",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N4_7",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N4_7",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N5_0",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N5_0",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N5_0",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N5_1",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N5_1",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N5_1",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N5_2",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N5_2",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N5_2",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N5_3",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N5_3",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N5_3",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N5_4",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N5_4",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N5_4",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N5_5",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N5_5",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N5_5",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N5_6",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N5_6",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N5_6",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N5_7",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N5_7",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N5_7",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N6_0",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N6_0",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N6_0",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N6_1",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N6_1",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N6_1",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N6_2",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N6_2",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N6_2",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N6_3",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N6_3",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N6_3",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N6_4",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N6_4",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N6_4",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N6_5",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N6_5",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N6_5",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N6_6",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N6_6",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N6_6",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N6_7",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N6_7",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N6_7",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N7_0",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N7_0",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N7_0",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N7_1",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N7_1",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N7_1",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N7_2",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N7_2",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N7_2",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N7_3",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N7_3",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N7_3",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N7_4",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N7_4",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N7_4",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N7_5",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N7_5",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N7_5",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N7_6",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N7_6",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N7_6",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    },
+    {
+      "TargetNodeName": "N7_7",
+      "TrailId": "Fujin_Cyclone_Nuage"
+    },
+    {
+      "TargetNodeName": "N7_7",
+      "TrailId": "Fujin_Cyclone_Nuage",
+      "RotationOffset": {
+        "Pitch": 0,
+        "Roll": 90,
+        "Yaw": 0
+      }
+    },
+    {
+      "TargetNodeName": "N7_7",
+      "TrailId": "Fujin_Cyclone_Nuage_Sombre",
+      "PositionOffset": {
+        "X": 0,
+        "Y": -1.5,
+        "Z": 0
+      }
+    }
+  ]
+}

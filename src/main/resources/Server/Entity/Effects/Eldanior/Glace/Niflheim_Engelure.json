@@ -1,0 +1,29 @@
+{
+  "$Comment": "Engelure de la Porte de Niflheim : tant qu'un ennemi reste dans la zone gelee, le code reapplique cet effet chaque seconde (et inflige 5 degats de glace/s). Vitesse -50 %, endurance max -50 %, teinte givree.",
+  "Duration": 1.6,
+  "OverlapBehavior": "Overwrite",
+  "RemovalBehavior": "Duration",
+  "Infinite": false,
+  "Debuff": true,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Rune_PorteNiflheim.png",
+  "ApplicationEffects": {
+    "EntityTopTint": "#c9f0ff",
+    "EntityBottomTint": "#4aa8ff",
+    "HorizontalSpeedMultiplier": 0.5,
+    "ScreenEffect": "ScreenEffects/Snow.png",
+    "Particles": [
+      {
+        "SystemId": "Effect_Snow"
+      }
+    ]
+  },
+  "RawStatModifiers": {
+    "Stamina": [
+      {
+        "Amount": 0.5,
+        "CalculationType": "Multiplicative",
+        "Target": "Max"
+      }
+    ]
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "$Comment": "Projectile graine du Courroux de Muspelheim, totalement invisible, lance par MuspelheimWrath a la fin de l'animation la ou le joueur vise. Le code le suit a chaque tick : quand il s'arrete (bloque dans un bloc), disparait (creature) ou depasse sa portee, il le retire et ouvre le cercle du ciel a cet endroit. Interactions obligatoires mais neutres (liste vide = lancement refuse ; RemoveEntity/User viserait le lanceur).",
+  "Model": "Muspelheim_Seed",
+  "UseModelScale": true,
+  "Physics": {
+    "Type": "Standard",
+    "Gravity": 0,
+    "TerminalVelocityAir": 60,
+    "TerminalVelocityWater": 20,
+    "RotationMode": "VelocityDamped",
+    "Bounciness": 0,
+    "SticksVertically": true
+  },
+  "LaunchForce": 45,
+  "SpawnOffset": {
+    "X": 0,
+    "Y": 0,
+    "Z": 0
+  },
+  "Interactions": {
+    "ProjectileHit": {
+      "Interactions": [
+        {
+          "Type": "Simple",
+          "RunTime": 0.01
+        }
+      ]
+    },
+    "ProjectileMiss": {
+      "Interactions": [
+        {
+          "Type": "Simple",
+          "RunTime": 0.01
+        }
+      ]
+    }
+  }
+}

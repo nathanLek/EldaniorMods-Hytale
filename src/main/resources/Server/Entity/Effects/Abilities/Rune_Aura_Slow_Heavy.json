@@ -1,0 +1,14 @@
+{
+  "$Comment": "Palier fort de ralentissement de l'aura de dignite (Rune d'Aura).",
+  "ApplicationEffects": {
+    "HorizontalSpeedMultiplier": 0.4,
+    "MovementEffects": {
+      "DisableSprint": true,
+      "DisableJump": true
+    }
+  },
+  "Duration": 1.5,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": true,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Potion_Signature.png"
+}

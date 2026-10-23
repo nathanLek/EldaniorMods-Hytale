@@ -33,7 +33,6 @@ public class ParcelCommand extends AbstractAsyncCommand {
         this.actionArg = this.withRequiredArg("action", "pos1|pos2|info|list|buy", ArgTypes.STRING);
     }
 
-    @Override
     protected boolean canGeneratePermission() { return false; }
 
     @Nonnull
