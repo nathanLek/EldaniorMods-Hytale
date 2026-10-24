@@ -124,7 +124,7 @@ public class PartyHud extends CustomUIHud {
                 float[] companion = com.eldanior.system.guards.GuardManager.companionInfo(playerUUID);   // aventurier recrute
                 if (companion != null) {
                     info.level = (int) companion[0];
-                    info.className = "Aventurier";
+                    info.className = com.eldanior.system.guards.GuardManager.companionClass(playerUUID);
                     info.hpRatio = companion[1];
                     return info;
                 }

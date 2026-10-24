@@ -204,7 +204,9 @@ public class EldaniorSystem extends JavaPlugin {
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.guards.GuardAlertSystem()); // gardes : PvP pres d'un garde -> joueur recherche
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.guards.GuardDeathSystem()); // gardes : reapparition au poste
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.guards.AdventurerSystem()); // aventuriers : recrutement contre de l'or
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.guards.AdventurerLootSystem()); // aventuriers : ramassage du butin
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.skills.runes.spells.RoyalMageMagic()); // mage royal : soin, nova de givre, pluie de flammes
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.skills.runes.spells.AdventurerMagic()); // aventuriers recrutes : sorts de leur type
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.skills.runes.spells.DoppelPoseSystem()); // Doppelganger : pose miroir apres l'IA des PNJ
             this.getEntityStoreRegistry().registerSystem(new PlayerPositionTracker());
             this.getEntityStoreRegistry().registerSystem(new MobVirtualHPSystem());

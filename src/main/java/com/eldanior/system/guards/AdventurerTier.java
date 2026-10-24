@@ -41,7 +41,7 @@ public enum AdventurerTier {
     private static final Map<String, Status> CACHE = new ConcurrentHashMap<>();
 
     private static Status status(GuardManager.Post p) {
-        return CACHE.computeIfAbsent(p.id + ":" + p.level, k -> {
+        return CACHE.computeIfAbsent(p.id + ":" + p.level + ":" + p.skinSeed, k -> {
             int rank = Math.max(0, "EDCBAS".indexOf(getAdventureRank(p.level)));
             Random rng = new Random(p.skinSeed * 17 + 3);
             int roll = rng.nextInt(100);
@@ -53,6 +53,13 @@ public enum AdventurerTier {
             if (pool.isEmpty()) pool = stage;                    // aucune classe de cette rarete a ce palier : une du palier
             return new Status(tier, pool.get(rng.nextInt(pool.size())));
         });
+    }
+
+    public static AdventurerTier fromArg(String s) {
+        if (s == null) return null;
+        if (s.equalsIgnoreCase("heros") || s.equalsIgnoreCase("héros")) return HEROS;
+        for (AdventurerTier t : values()) if (t.name().equalsIgnoreCase(s)) return t;
+        return null;
     }
 
     /**

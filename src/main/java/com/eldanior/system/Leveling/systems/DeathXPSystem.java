@@ -89,6 +89,11 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
     private void processKillRewards(UUID killerUUID, UUID victimUUID, Ref<EntityStore> victimRef,
                                     Store<EntityStore> store, CommandBuffer<EntityStore> commandBuffer) {
         try {
+            UUID companionOwner = com.eldanior.system.guards.GuardManager.ownerOfCompanion(killerUUID);
+            if (companionOwner != null) {
+                rewardCompanionKill(companionOwner, victimRef, store, commandBuffer);
+                return;
+            }
             PlayerRef killerRefObj = Universe.get().getPlayer(killerUUID);
             if (killerRefObj == null) return;
 
@@ -397,6 +402,49 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
 
     private int calculatePvEXP(String typeId) {
         return MobXP.getXpForId(typeId);
+    }
+
+    /**
+     * Monstre tue par un aventurier recrute : son joueur recoit 10 % de l'XP qu'il aurait gagnee en le tuant lui-meme
+     * (meme calcul : XP du monstre, ecart de niveau), comme le partage d'XP d'un groupe.
+     */
+    /**
+     * Monstre tue par un aventurier recrute : son joueur et les autres joueurs de son groupe recoivent chacun 10 % de l'XP
+     * qu'ils auraient gagnee en le tuant eux-memes (XP du monstre, ecart avec leur niveau), comme le partage d'un groupe.
+     */
+    private void rewardCompanionKill(UUID ownerUUID, Ref<EntityStore> victimRef, Store<EntityStore> store,
+                                     CommandBuffer<EntityStore> commandBuffer) {
+        NPCEntity npc = store.getComponent(victimRef, NPCEntity.getComponentType());
+        if (npc == null) return;                                                    // les aventuriers ne donnent que l'XP des monstres
+        int xpAmount = calculatePvEXP(npc.getNPCTypeId().toLowerCase());
+        if (xpAmount <= 0) return;
+        MobLevelData mobData = store.getComponent(victimRef, EldaniorSystem.get().getMobLevelDataType());
+        int victimLevel = mobData != null ? mobData.getLevel() : MobXP.getMinLevelForId(npc.getNPCTypeId());
+
+        java.util.Set<UUID> receivers = new java.util.LinkedHashSet<>();
+        receivers.add(ownerUUID);
+        Party party = PartyManager.getParty(ownerUUID);
+        if (party != null) receivers.addAll(party.getMemberUUIDs());               // les autres aventuriers du groupe sont ignores plus bas
+        for (UUID uuid : receivers) giveCompanionShare(uuid, xpAmount, victimLevel, commandBuffer);
+    }
+
+    /** Part d'XP (10 %) d'un joueur pour le kill d'un aventurier ; rien si ce n'est pas un joueur connecte. */
+    private void giveCompanionShare(UUID playerUUID, int xpAmount, int victimLevel, CommandBuffer<EntityStore> commandBuffer) {
+        PlayerRef playerRef = Universe.get().getPlayer(playerUUID);
+        var entityRef = playerRef != null ? playerRef.getReference() : null;
+        if (entityRef == null || !entityRef.isValid()) return;
+        ComponentType<EntityStore, PlayerLevelData> lvlType = EldaniorSystem.get().getPlayerLevelDataType();
+        PlayerLevelData data = entityRef.getStore().getComponent(entityRef, lvlType);
+        if (data == null) return;
+        double multiplier = Math.clamp(1.0 + ((victimLevel - data.getLevel()) * 0.02), 0.2, 2.0);
+        int sharedXP = Math.max(1, (int) Math.round(xpAmount * multiplier * 0.10));
+        PlayerLevelData copy = (PlayerLevelData) data.clone();
+        if (copy == null) return;
+        int oldLvl = copy.getLevel();
+        copy.addExperience(sharedXP);
+        commandBuffer.putComponent(entityRef, lvlType, copy);
+        NotificationHelper.sendNotification(playerRef, "<color:aqua>+" + sharedXP + " XP (aventurier)</color>", NotificationStyle.Success);
+        if (copy.getLevel() > oldLvl) NotificationHelper.showLevelUpTitle(playerRef, copy.getLevel());
     }
 
     private int calculatePvPXP(int killerLvl, int victimLvl) {

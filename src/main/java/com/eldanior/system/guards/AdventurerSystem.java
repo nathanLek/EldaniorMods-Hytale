@@ -124,6 +124,7 @@ public class AdventurerSystem extends EntityTickingSystem<EntityStore> {
                 if (data != null) data.addMoney(price);
                 GuardManager.spawn(post, world);
             }
+            if (post.owner != null) AdventurerBehavior.onRecruited(post);
             GuardManager.saveLater();
         } catch (Exception e) {
             EldaniorLogger.error("[Aventurier] recrutement", e);
@@ -156,11 +157,12 @@ public class AdventurerSystem extends EntityTickingSystem<EntityStore> {
             return;
         }
         npc.setLeashPoint(spot);
-        guard(ref, owner, op, at, store);
+        if (AdventurerBehavior.tick(p, ref, at, op, owner, store)) return;              // repli en cours : il ne combat pas
+        guard(p, ref, owner, op, at, store);
     }
 
     /** Detection du danger : le monstre le plus proche de son joueur (ou de lui) devient sa cible, s'il est libre. */
-    private static void guard(Ref<EntityStore> ref, Ref<EntityStore> owner, Vector3d ownerPos, Vector3d at, Store<EntityStore> store) {
+    private static void guard(GuardManager.Post p, Ref<EntityStore> ref, Ref<EntityStore> owner, Vector3d ownerPos, Vector3d at, Store<EntityStore> store) {
         StateSupport st = StateSupport.get(ref, store);
         String state = st != null ? st.getStateName() : null;
         if (state == null || !state.startsWith("Idle")) return;                              // deja en combat
@@ -178,6 +180,7 @@ public class AdventurerSystem extends EntityTickingSystem<EntityStore> {
                 if (d < bestD) { bestD = d; best = e; }
             }
         if (best == null) return;
+        AdventurerBehavior.warn(p, best, store);
         NpcAttitudes.hostile(ref, best, FIGHT_SECONDS, store);
         GuardManager.call(ref, best, store);
     }
@@ -236,6 +239,7 @@ public class AdventurerSystem extends EntityTickingSystem<EntityStore> {
         World world = store.getExternalData().getWorld();
         if (world == null) return;
         for (GuardManager.Post p : defenders) {
+            if (AdventurerBehavior.isRetreating(p)) continue;
             Ref<EntityStore> companion = p.guard != null ? world.getEntityStore().getRefFromUUID(p.guard) : null;
             if (companion == null || !companion.isValid() || companion.equals(enemy)) continue;
             if (GuardManager.blocksFriendlyFire(companion, enemy, store)) continue;             // pas contre un allie
@@ -252,7 +256,7 @@ public class AdventurerSystem extends EntityTickingSystem<EntityStore> {
             PlayerRef pr = Universe.get().getPlayer(p.owner);
             boolean offline = pr == null || pr.getReference() == null;
             if (!offline && now < p.contractEnd) continue;
-            if (!offline) say(pr, "Votre aventurier a rempli son contrat et retourne a son poste.");
+            if (!offline) AdventurerBehavior.talk(p, "Mission accomplie. Ce fut un honneur, je retourne à mon poste.", true);
             World world = Universe.get().getWorld(p.world);
             if (world == null) continue;
             world.execute(() -> {
@@ -269,7 +273,7 @@ public class AdventurerSystem extends EntityTickingSystem<EntityStore> {
     static void onCompanionDeath(GuardManager.Post p) {
         leaveParty(p);
         PlayerRef pr = Universe.get().getPlayer(p.owner);
-        if (pr != null) say(pr, "Votre aventurier est tombe. Il reprendra des forces a son poste.");
+        if (pr != null) AdventurerBehavior.talk(p, "Je… ne peux plus continuer… Je vous attendrai à mon poste.", true);
         p.owner = null;
         p.contractEnd = 0;
     }

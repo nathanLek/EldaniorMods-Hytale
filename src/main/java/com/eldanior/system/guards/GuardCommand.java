@@ -5,6 +5,7 @@ import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
+import com.hypixel.hytale.server.core.command.system.arguments.system.OptionalArg;
 import com.hypixel.hytale.server.core.command.system.arguments.system.RequiredArg;
 import com.hypixel.hytale.server.core.command.system.arguments.types.ArgTypes;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractAsyncCommand;
@@ -19,7 +20,8 @@ import javax.annotation.Nonnull;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * /es garde poser <ville|royal|chevalier|patrouilleur|mage|errant|villageois|aventurier> : PNJ de poste a votre position.
+ * /es garde poser [ville|royal|chevalier|patrouilleur|mage|errant|villageois|aventurier] : PNJ de poste a votre position.
+ *   Aventurier : --type guerrier|mage|archer|assassin, --statut ordinaire|exceptionnel|heros, --niveau 20..600 (sinon au hasard).
  * /es garde retirer : retire le poste le plus proche (6 blocs) et son garde.
  * /es garde liste : postes et etat des gardes.
  * (Sous-commandes : un argument optionnel de commande Hytale s'ecrit --nom valeur, pas en position.)
@@ -63,10 +65,15 @@ public class GuardCommand extends AbstractCommandCollection {
 
     private static final class Place extends AbstractAsyncCommand {
         private final RequiredArg<String> rankArg;
+        private final OptionalArg<String> typeArg, tierArg;
+        private final OptionalArg<Integer> levelArg;
 
         Place() {
             super("poser", "Poste un PNJ ici : " + GuardType.args());
             this.rankArg = this.withRequiredArg("rang", GuardType.args(), ArgTypes.STRING);
+            this.typeArg = this.withOptionalArg("type", "Aventurier : guerrier|mage|archer|assassin", ArgTypes.STRING);
+            this.tierArg = this.withOptionalArg("statut", "Aventurier : ordinaire|exceptionnel|heros", ArgTypes.STRING);
+            this.levelArg = this.withOptionalArg("niveau", "Aventurier : 20 a 600", ArgTypes.INTEGER);
         }
 
         protected boolean canGeneratePermission() { return false; }
@@ -75,18 +82,27 @@ public class GuardCommand extends AbstractCommandCollection {
         @Override
         public CompletableFuture<Void> executeAsync(@Nonnull CommandContext ctx) {
             String rank = this.rankArg.get(ctx);
+            String typeName = this.typeArg.get(ctx), tierName = this.tierArg.get(ctx);
+            Integer level = this.levelArg.get(ctx);
             return onWorld(ctx, (sender, world, pos, yaw) -> {
                 GuardType type = GuardType.fromArg(rank);
                 if (type == null) { sender.sendMessage(Message.raw("Rang inconnu : " + rank + " (" + GuardType.args().replace("|", ", ") + ")")); return; }
-                GuardManager.Post p = GuardManager.place(type, world, pos, yaw);
+                AdventurerType advType = AdventurerType.fromArg(typeName);
+                AdventurerTier advTier = AdventurerTier.fromArg(tierName);
+                if (typeName != null && advType == null) { sender.sendMessage(Message.raw("Type inconnu : " + typeName + " (guerrier, mage, archer, assassin)")); return; }
+                if (tierName != null && advTier == null) { sender.sendMessage(Message.raw("Statut inconnu : " + tierName + " (ordinaire, exceptionnel, heros)")); return; }
+                GuardManager.Post p = GuardManager.place(type, world, pos, yaw, advType, advTier, level != null ? level : 0);
                 sender.sendMessage(Message.raw(type.getLabel() + " poste ici (" + p.getId() + ")."
                         + switch (type) {
-                            case PATROUILLEUR -> " Il fait sa ronde autour de ce point.";
-                            case CHEVALIER_ERRANT -> " Il erre dans 200 blocs autour de ce point.";
-                            case VILLAGEOIS -> " Il se promene dans 30 blocs autour de ce point.";
-                            case AVENTURIER -> " Niveau " + p.level + ", recrutable pour " + GuardManager.priceOf(p) + " or.";
-                            default -> " Il revient toujours a ce poste.";
-                        }));
+                    case PATROUILLEUR -> " Il fait sa ronde autour de ce point.";
+                    case CHEVALIER_ERRANT -> " Il erre dans 200 blocs autour de ce point.";
+                    case VILLAGEOIS -> " Il se promene dans 30 blocs autour de ce point.";
+                    case AVENTURIER -> " " + GuardManager.nameplate(p) + " (niveau " + p.level + ", "
+                            + AdventurerTier.of(p).getLabel()
+                            + (AdventurerTier.classOf(p) != null ? ", " + AdventurerTier.classOf(p).getDisplayName() : "")
+                            + "), recrutable pour " + GuardManager.priceOf(p) + " or.";
+                    default -> " Il revient toujours a ce poste.";
+                }));
             });
         }
     }
@@ -121,8 +137,9 @@ public class GuardCommand extends AbstractCommandCollection {
                 for (GuardManager.Post p : GuardManager.getPosts()) {
                     Vector3d c = p.position();
                     String state = p.isAlive() ? "en poste" : p.getRespawnAt() > 0
-                            ? "tombe, retour dans " + Math.max(0, (p.getRespawnAt() - now) / 1000) + " s" : "a faire apparaitre";
-                    sender.sendMessage(Message.raw(p.getId() + " - " + p.getType().getLabel() + " - " + p.getWorld() + " "
+                                                              ? "tombe, retour dans " + Math.max(0, (p.getRespawnAt() - now) / 1000) + " s" : "a faire apparaitre";
+                    String label = p.getType() == GuardType.AVENTURIER ? GuardManager.nameplate(p) : p.getType().getLabel();
+                    sender.sendMessage(Message.raw(p.getId() + " - " + label + " - " + p.getWorld() + " "
                             + (int) c.x + " " + (int) c.y + " " + (int) c.z + " - " + state));
                 }
             });

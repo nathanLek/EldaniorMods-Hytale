@@ -109,6 +109,10 @@ public final class GuardManager {
         transient volatile com.eldanior.system.party.Party party;            // aventurier recrute : groupe qu'il a rejoint
         transient volatile float hpRatio = 1f;                              // aventurier recrute : vie (affichage du groupe)
         transient float lastHp;                                             // aventurier recrute : vie a la seconde precedente
+        transient volatile boolean potionUsed;                              // aventurier recrute : potion bue pendant cette mission
+        transient volatile long retreatUntil;                               // aventurier recrute : repli en cours (fin au plus tard)
+        transient volatile long drinkAt;                                    // aventurier recrute : fin de la potion en cours
+        transient long lastTalk;                                            // aventurier recrute : dernier message (anti-spam)
         // Deplacements (PostMovement, thread du monde)
         transient List<Vector3d> round;
         transient int waypoint;
@@ -128,6 +132,9 @@ public final class GuardManager {
         public Vector3d position() { return new Vector3d(x, y, z); }
         public boolean isAlive() { return guard != null && respawnAt == 0; }
         public long getRespawnAt() { return respawnAt; }
+        public int getLevel() { return level; }
+        public long getSkinSeed() { return skinSeed; }
+        public UUID getOwner() { return owner; }
     }
 
     private static final Map<String, Post> posts = new ConcurrentHashMap<>();
@@ -166,10 +173,27 @@ public final class GuardManager {
 
     /** Cree un poste a la position (et l'orientation) donnee et y fait apparaitre son garde. Appeler dans le thread du monde. */
     public static Post place(GuardType type, World world, Vector3d pos, float yaw) {
+        return place(type, world, pos, yaw, null, null, 0);
+    }
+
+    /**
+     * Comme ci-dessus ; pour un aventurier, type, statut et niveau peuvent etre imposes (null / 0 : au hasard). Type et statut
+     * venant de la graine du poste, on tire des graines jusqu'a en trouver une qui les donne.
+     */
+    public static Post place(GuardType type, World world, Vector3d pos, float yaw,
+                             AdventurerType wantType, AdventurerTier wantTier, int level) {
         Post p = new Post("garde_" + nextId.getAndIncrement(), type, world.getName(), pos.x, pos.y, pos.z, yaw);
         java.util.Random rng = new java.util.Random();
         p.skinSeed = rng.nextLong();
-        if (type == GuardType.AVENTURIER) p.level = ADVENTURER_MIN_LEVEL + rng.nextInt(ADVENTURER_MAX_LEVEL - ADVENTURER_MIN_LEVEL + 1);
+        if (type == GuardType.AVENTURIER) {
+            p.level = level > 0 ? Math.clamp(level, ADVENTURER_MIN_LEVEL, ADVENTURER_MAX_LEVEL)
+                    : ADVENTURER_MIN_LEVEL + rng.nextInt(ADVENTURER_MAX_LEVEL - ADVENTURER_MIN_LEVEL + 1);
+            for (int i = 0; i < 20_000 && (wantType != null || wantTier != null); i++) {
+                if ((wantType == null || AdventurerType.of(p.skinSeed) == wantType)
+                        && (wantTier == null || AdventurerTier.of(p) == wantTier)) break;
+                p.skinSeed = rng.nextLong();
+            }
+        }
         posts.put(p.id, p);
         spawn(p, world);
         save();
@@ -234,12 +258,12 @@ public final class GuardManager {
         if (p.type.hasRandomSkin()) applySkin(p, ref, store);
         store.putComponent(ref, Nameplate.getComponentType(), new Nameplate(nameplate(p)));
         AdventurerType adv = p.type == GuardType.AVENTURIER ? AdventurerType.of(p.skinSeed) : null;
-        List<String> armor = adv != null ? adv.getArmor(p.level) : p.type.getArmor();
+        List<String> armor = adv != null ? adv.getArmor(p.level, AdventurerTier.of(p)) : p.type.getArmor();
         NPCEntity npc = store.getComponent(ref, Objects.requireNonNull(NPCEntity.getComponentType()));
         var inv = npc != null ? npc.getInventory() : null;
         if (inv == null) return;
         if (adv != null && inv.getHotbar() != null) {                                    // arme de son type
-            inv.getHotbar().setItemStackForSlot((short) 0, new ItemStack(adv.getWeapon(p.level), 1));
+            inv.getHotbar().setItemStackForSlot((short) 0, new ItemStack(adv.getWeapon(p.level, AdventurerTier.of(p)), 1));
             inv.setActiveHotbarSlot(ref, (byte) 0, store);
         }
         if (armor.isEmpty() || inv.getArmor() == null) return;
@@ -271,6 +295,18 @@ public final class GuardManager {
         if (u == null) return null;
         for (Post p : posts.values()) if (u.getUuid().equals(p.guard)) return p;
         return null;
+    }
+
+    /** Poste d'un aventurier recrute (pour sa magie, AdventurerMagic), null sinon. */
+    public static Post companionPost(Ref<EntityStore> ref, ComponentAccessor<EntityStore> store) {
+        Post p = postOf(ref, store);
+        return p != null && p.type == GuardType.AVENTURIER && p.owner != null ? p : null;
+    }
+
+    /** Poste d'un aventurier, libre ou recrute (pour son aura, AdventurerMagic), null sinon. */
+    public static Post adventurerPost(Ref<EntityStore> ref, ComponentAccessor<EntityStore> store) {
+        Post p = postOf(ref, store);
+        return p != null && p.type == GuardType.AVENTURIER ? p : null;
     }
 
     static Post post(String id) { return id != null ? posts.get(id) : null; }
@@ -310,6 +346,24 @@ public final class GuardManager {
     public static float[] companionInfo(UUID npc) {
         if (npc == null) return null;
         for (Post p : posts.values()) if (npc.equals(p.guard) && p.owner != null) return new float[]{p.level, p.hpRatio};
+        return null;
+    }
+
+    public static String companionClass(UUID npc) {
+        if (npc != null)
+            for (Post p : posts.values()) {
+                if (!npc.equals(p.guard) || p.owner == null) continue;
+                var cls = AdventurerTier.classOf(p);
+                return (cls != null ? cls.getDisplayName() : "Aventurier " + AdventurerType.of(p.skinSeed).getLabel())
+                        + " [" + getAdventureRank(p.level) + "]";
+            }
+        return "Aventurier";
+    }
+
+    /** Joueur qui a recrute cet aventurier (par l'UUID du PNJ), null si ce n'est pas un aventurier recrute. */
+    public static UUID ownerOfCompanion(UUID npc) {
+        if (npc == null) return null;
+        for (Post p : posts.values()) if (npc.equals(p.guard) && p.owner != null) return p.owner;
         return null;
     }
 

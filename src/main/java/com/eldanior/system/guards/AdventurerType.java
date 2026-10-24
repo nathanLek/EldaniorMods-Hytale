@@ -37,13 +37,28 @@ public enum AdventurerType {
         return Math.max(0, "EDCBAS".indexOf(getAdventureRank(level)));
     }
 
-    /** Arme de son rang. */
-    public String getWeapon(int level) { return weapons[rankIndex(level)]; }
+    /** Rangs d'equipement en plus selon le statut : exceptionnel +1, heros +2. */
+    private static int bonus(AdventurerTier tier) {
+        return tier == AdventurerTier.HEROS ? 2 : tier == AdventurerTier.EXCEPTIONNEL ? 1 : 0;
+    }
 
-    /** Tenue de son rang : torse, mains, jambes (pas de casque : on voit son visage). */
-    public List<String> getArmor(int level) {
-        String set = "Armor_" + armorSets[rankIndex(level)];
-        return List.of(set + "_Chest", set + "_Hands", set + "_Legs");
+    /** Arme de son rang (plus haute pour un exceptionnel ou un heros). */
+    public String getWeapon(int level, AdventurerTier tier) {
+        return weapons[Math.min(5, rankIndex(level) + bonus(tier))];
+    }
+
+    /** Tenue de son rang : torse, mains, jambes ; exceptionnel et heros ont aussi le casque. */
+    public List<String> getArmor(int level, AdventurerTier tier) {
+        String set = "Armor_" + armorSets[Math.min(5, rankIndex(level) + bonus(tier))];
+        return tier == AdventurerTier.ORDINAIRE
+                ? List.of(set + "_Chest", set + "_Hands", set + "_Legs")
+                : List.of(set + "_Head", set + "_Chest", set + "_Hands", set + "_Legs");
+    }
+
+    public static AdventurerType fromArg(String s) {
+        if (s == null) return null;
+        for (AdventurerType t : values()) if (t.name().equalsIgnoreCase(s) || t.label.equalsIgnoreCase(s)) return t;
+        return null;
     }
 
     /** Role de l'aventurier libre (recrutable). */

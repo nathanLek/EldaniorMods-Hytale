@@ -48,7 +48,9 @@ public class RecruitScreen extends InteractiveCustomUIPage<RecruitScreen.Recruit
                 + title + (cls != null ? "  ·  Classe " + cls.getRarity().getDisplayName().toLowerCase() : ""));
         ui.set("#RecruitQuote.Text", "« Ma lame est à louer, voyageur. Payez-moi et je vous suivrai jusqu'au bout de la mission. »");
         String skills = post != null ? AdventurerPassives.names(post) : "";
+        String spells = post != null ? com.eldanior.system.skills.runes.spells.AdventurerMagic.spells(AdventurerType.of(post.getSkinSeed())) : "";
         ui.set("#RecruitInfo.Text", (skills.isEmpty() ? "" : "Compétences : " + skills + ".  ")
+                + (spells.isEmpty() ? "" : "Sorts : " + spells + ".  ")
                 + "Il vous suit et combat à vos côtés : ce que vous attaquez, ceux qui vous attaquent et les monstres "
                 + "qui approchent. Il rejoint votre groupe. Il retourne à son poste à la fin de la mission, si vous partez ou s'il tombe.");
         ui.set("#RecruitSlotValue.Text", String.valueOf(price));

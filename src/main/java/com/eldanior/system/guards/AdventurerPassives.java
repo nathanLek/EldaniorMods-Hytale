@@ -55,7 +55,7 @@ public final class AdventurerPassives {
     }
 
     private static Stats stats(GuardManager.Post p) {
-        return STATS.computeIfAbsent(p.id + ":" + p.level, k -> {
+        return STATS.computeIfAbsent(p.id + ":" + p.level + ":" + p.skinSeed, k -> {
             float power = 1f, toughness = 1f, flatDamage = 0f, flatReduce = 0f, crit = 0f, dodge = 0f, regen = 1f;
             for (PassiveSkill s : of(p)) {
                 IPassiveCombatSkill l = s.getLogic();
