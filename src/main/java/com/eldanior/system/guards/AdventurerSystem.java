@@ -58,7 +58,7 @@ public class AdventurerSystem extends EntityTickingSystem<EntityStore> {
         Ref<EntityStore> ref = chunk.getReferenceTo(index);
         if (ref == null || !ref.isValid()) return;
         NPCEntity npc = store.getComponent(ref, NPCEntity.getComponentType());
-        if (npc == null || !GuardType.AVENTURIER.getRoleId().equals(npc.getRoleName())) return;
+        if (npc == null || !GuardType.isRecruitRole(npc.getRoleName())) return;
         StateSupport st = StateSupport.get(ref, store);
         String state = st != null ? st.getStateName() : null;
         int key = System.identityHashCode(npc);
@@ -76,7 +76,8 @@ public class AdventurerSystem extends EntityTickingSystem<EntityStore> {
             {
                 PlayerLevelData data = store.getComponent(t, EldaniorSystem.get().getPlayerLevelDataType());
                 player.getPageManager().openCustomPage(t, store, new RecruitScreen(pr, post.id, post.level,
-                        GuardManager.priceFor(post.level), data != null ? data.getMoney() : 0));
+                        GuardManager.priceOf(post), data != null ? data.getMoney() : 0,
+                        GuardManager.nameplate(post)));
             }
             return;
         }
@@ -94,7 +95,7 @@ public class AdventurerSystem extends EntityTickingSystem<EntityStore> {
             return;
         }
         if (post.owner != null || !post.isAlive()) { say(pr, "Cet aventurier n'est plus disponible."); return; }
-        long price = GuardManager.priceFor(post.level);
+        long price = GuardManager.priceOf(post);
         PlayerLevelData data = store.getComponent(playerRef, EldaniorSystem.get().getPlayerLevelDataType());
         if (data == null || !data.removeMoney(price)) {
             say(pr, "Aventurier : « Revenez avec " + price + " pieces d'or. » (vous avez " + (data != null ? data.getMoney() : 0) + " or)");
@@ -115,7 +116,7 @@ public class AdventurerSystem extends EntityTickingSystem<EntityStore> {
             post.lastHp = 0;                                                                  // nouveau contrat : vie pleine
             post.owner = player;
             post.contractEnd = System.currentTimeMillis() + GuardManager.CONTRACT_MS;
-            if (GuardManager.spawnAs(post, world, GuardType.COMPANION_ROLE, new Vector3d(near).add(1.5, 0, 1.5)) == null) {
+            if (GuardManager.spawnAs(post, world, AdventurerType.of(post.skinSeed).getCompanionRole(), new Vector3d(near).add(1.5, 0, 1.5)) == null) {
                 post.owner = null;                                                            // echec : on rend l'or
                 PlayerRef pr = Universe.get().getPlayer(player);
                 Ref<EntityStore> pref = pr != null ? pr.getReference() : null;
@@ -150,7 +151,7 @@ public class AdventurerSystem extends EntityTickingSystem<EntityStore> {
         Vector3d spot = new Vector3d(op.x - fx * FOLLOW_BEHIND - fz * side, op.y, op.z - fz * FOLLOW_BEHIND + fx * side);
         if (at.distance(op) > CATCH_UP) {                                                    // il le rejoint, avec la vie qu'il avait
             removeCurrent(p, world);
-            Ref<EntityStore> again = GuardManager.spawnAs(p, world, GuardType.COMPANION_ROLE, spot);
+            Ref<EntityStore> again = GuardManager.spawnAs(p, world, AdventurerType.of(p.skinSeed).getCompanionRole(), spot);
             if (again != null && p.lastHp > 0) setHealth(again, p.lastHp, store);
             return;
         }
@@ -203,7 +204,7 @@ public class AdventurerSystem extends EntityTickingSystem<EntityStore> {
         int health = com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes.getHealth();
         var hp = stats != null ? stats.get(health) : null;
         if (hp == null) return;
-        float cur = hp.get(), allowed = p.lastHp + hp.getMax() * regenPerSecond();
+        float cur = hp.get(), allowed = p.lastHp + hp.getMax() * regenPerSecond() * AdventurerPassives.regenMultiplier(p);
         if (p.lastHp > 0 && cur > allowed) { stats.setStatValue(health, allowed); cur = allowed; }
         p.lastHp = cur;
     }

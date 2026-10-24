@@ -58,12 +58,22 @@ public enum GuardType {
         return null;
     }
 
-    /** Type d'apres l'identifiant de role du PNJ (l'aventurier recrute compte comme aventurier), null sinon. */
+    /** Type d'apres l'identifiant de role du PNJ (tous les roles d'aventurier comptent comme aventurier), null sinon. */
     public static GuardType fromRole(String roleId) {
         if (roleId == null || !roleId.startsWith("Eldanior_")) return null;
-        if (COMPANION_ROLE.equals(roleId)) return AVENTURIER;
+        if (roleId.startsWith("Eldanior_Npc_Aventurier")) return AVENTURIER;
         for (GuardType t : values()) if (t.roleId.equals(roleId)) return t;
         return null;
+    }
+
+    /** Role d'un aventurier recrute (compagnon, tout type). */
+    public static boolean isCompanionRole(String roleId) {
+        return roleId != null && roleId.startsWith(COMPANION_ROLE);
+    }
+
+    /** Role d'un aventurier libre, recrutable (tout type). */
+    public static boolean isRecruitRole(String roleId) {
+        return roleId != null && roleId.startsWith("Eldanior_Npc_Aventurier") && !isCompanionRole(roleId);
     }
 
     /** Liste des arguments, pour les messages d'aide. */

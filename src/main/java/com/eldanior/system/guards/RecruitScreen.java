@@ -16,30 +16,40 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
 
+import static com.eldanior.system.gui.tabs.ProfilTab.getAdventureRank;
+
 /** Fenetre de recrutement d'un aventurier (touche d'interaction) : presentation, prix, duree, boutons Recruter / Partir. */
 public class RecruitScreen extends InteractiveCustomUIPage<RecruitScreen.RecruitEventData> {
 
     private final String postId;
     private final int level;
     private final long price, money;
+    private final String title;
 
-    public RecruitScreen(@Nonnull PlayerRef playerRef, String postId, int level, long price, long money) {
+    public RecruitScreen(@Nonnull PlayerRef playerRef, String postId, int level, long price, long money, String title) {
         super(playerRef, CustomPageLifetime.CanDismiss, RecruitEventData.CODEC);
         this.postId = postId;
         this.level = level;
         this.price = price;
         this.money = money;
+        this.title = title;
     }
 
     @Override
     public void build(@Nonnull Ref<EntityStore> ref, @Nonnull UICommandBuilder ui, @Nonnull UIEventBuilder events,
                       @Nonnull Store<EntityStore> store) {
         ui.append("Npc/Recruit.ui");
-        ui.set("#RecruitName.Text", "Aventurier");
-        ui.set("#RecruitLevel.Text", "•  Niveau " + level + "  ·  Mission de " + GuardManager.CONTRACT_MS / 60_000 + " min");
-        ui.set("#RecruitFootnote.Text", "Deux aventuriers au plus par joueur");
+        GuardManager.Post post = GuardManager.post(postId);
+        var cls = post != null ? AdventurerTier.classOf(post) : null;
+        var tier = post != null ? AdventurerTier.of(post) : AdventurerTier.ORDINAIRE;
+        ui.set("#RecruitName.Text", cls != null ? cls.getDisplayName() : title);      // classe (sinon « Aventurier Archer »)
+        ui.set("#RecruitLevel.Text", "•  Rang " + getAdventureRank(level) + "  ·  Mission de " + GuardManager.CONTRACT_MS / 60_000 + " min");
+        ui.set("#RecruitFootnote.Text", (tier == AdventurerTier.ORDINAIRE ? "" : tier.getLabel() + "  ·  ")
+                + title + (cls != null ? "  ·  Classe " + cls.getRarity().getDisplayName().toLowerCase() : ""));
         ui.set("#RecruitQuote.Text", "« Ma lame est à louer, voyageur. Payez-moi et je vous suivrai jusqu'au bout de la mission. »");
-        ui.set("#RecruitInfo.Text", "Il vous suit et combat à vos côtés : ce que vous attaquez, ceux qui vous attaquent et les monstres "
+        String skills = post != null ? AdventurerPassives.names(post) : "";
+        ui.set("#RecruitInfo.Text", (skills.isEmpty() ? "" : "Compétences : " + skills + ".  ")
+                + "Il vous suit et combat à vos côtés : ce que vous attaquez, ceux qui vous attaquent et les monstres "
                 + "qui approchent. Il rejoint votre groupe. Il retourne à son poste à la fin de la mission, si vous partez ou s'il tombe.");
         ui.set("#RecruitSlotValue.Text", String.valueOf(price));
         ui.set("#RecruitCount.Text", money + " / " + price);

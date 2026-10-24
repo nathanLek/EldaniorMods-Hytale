@@ -218,6 +218,7 @@ public class CombatStatsSystem extends DamageEventSystem {
                 float damageBonus = mobData.getLevel() * (postNpc ? com.eldanior.system.config.configs.MobsWorldConfig.POST_NPC_DAMAGE_PER_LEVEL
                         : com.eldanior.system.config.configs.MobsWorldConfig.DAMAGE_PER_LEVEL);
                 damage.setAmount(damage.getAmount() + damageBonus);
+                if (postNpc) com.eldanior.system.guards.AdventurerPassives.onAttack(damage, attackerRef, victimRef, store);  // passifs de l'aventurier
                 return;
             }
         }
@@ -332,7 +333,10 @@ public class CombatStatsSystem extends DamageEventSystem {
 
     private void applyEnduranceDefense(Ref<EntityStore> victimRef, Store<EntityStore> store, Damage damage, CommandBuffer<EntityStore> commandBuffer) {
         PlayerLevelData victimData = store.getComponent(victimRef, EldaniorSystem.get().getPlayerLevelDataType());
-        if (victimData == null) return;
+        if (victimData == null) {                                        // pas un joueur : peut-etre un aventurier (ses passifs)
+            com.eldanior.system.guards.AdventurerPassives.onDefend(damage, victimRef, store);
+            return;
+        }
 
         ClassModel victimClass = ClassManager.get(victimData.getPlayerClassId());
 

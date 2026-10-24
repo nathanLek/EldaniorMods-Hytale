@@ -84,7 +84,7 @@ public class GuardCommand extends AbstractCommandCollection {
                             case PATROUILLEUR -> " Il fait sa ronde autour de ce point.";
                             case CHEVALIER_ERRANT -> " Il erre dans 200 blocs autour de ce point.";
                             case VILLAGEOIS -> " Il se promene dans 30 blocs autour de ce point.";
-                            case AVENTURIER -> " Niveau " + p.level + ", recrutable pour " + GuardManager.priceFor(p.level) + " or.";
+                            case AVENTURIER -> " Niveau " + p.level + ", recrutable pour " + GuardManager.priceOf(p) + " or.";
                             default -> " Il revient toujours a ce poste.";
                         }));
             });

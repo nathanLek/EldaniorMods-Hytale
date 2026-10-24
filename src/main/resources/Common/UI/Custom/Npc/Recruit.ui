@@ -26,9 +26,9 @@ Group {
 
       Group { Anchor: (Height: 124); }
 
-      Label #RecruitName {
-        Style: (FontSize: 30, RenderBold: true, RenderUppercase: true, TextColor: #d1dae6, HorizontalAlignment: Center);
-      }
+        Label #RecruitName {
+          Style: (FontSize: 22, RenderBold: true, RenderUppercase: true, TextColor: #d1dae6, Wrap: true, HorizontalAlignment: Center);
+        }
 
       Label #RecruitLevel {
         Anchor: (Top: 10);

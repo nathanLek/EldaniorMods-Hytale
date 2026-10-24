@@ -35,17 +35,12 @@ import org.joml.Vector3d;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static com.eldanior.system.gui.tabs.ProfilTab.getAdventureRank;
 
 /**
  * PNJ de poste (gardes, mage royal, patrouilleur, chevalier errant, villageois, aventurier) : postes persistants, apparition
@@ -79,6 +74,10 @@ public final class GuardManager {
     /** Prix de recrutement d'un aventurier selon son niveau (arrondi a 10 : niveau 20 -> 440 or, 600 -> 6 820 or). */
     static long priceFor(int level) {
         return Math.round((100 + level * 5) * PRICE_FACTOR / 10.0) * 10;
+    }
+
+    static long priceOf(Post p) {
+        return Math.round(priceFor(p.level) * AdventurerTier.of(p).getPriceFactor() / 10.0) * 10;
     }
 
     /** Majoration des prix des aventuriers (+120 %). */
@@ -200,7 +199,7 @@ public final class GuardManager {
 
     /** Fait apparaitre le PNJ d'un poste (thread du monde). Son point de laisse est le poste : il y revient toujours. */
     static void spawn(Post p, World world) {
-        spawnAs(p, world, p.type.getRoleId(), p.position());
+        spawnAs(p, world, p.type == GuardType.AVENTURIER ? AdventurerType.of(p.skinSeed).getRecruitRole() : p.type.getRoleId(), p.position());
     }
 
     /** Fait apparaitre le PNJ du poste avec le role donne (aventurier recrute : role compagnon), a la position donnee. */
@@ -230,15 +229,20 @@ public final class GuardManager {
         }
     }
 
-    /** Apparence du PNJ : skin de joueur aleatoire (stable par poste), nom affiche et armure posee par le code. */
+    /** Apparence du PNJ : skin de joueur aleatoire (stable par poste), nom affiche, armure et arme (aventurier : selon son type). */
     private static void dress(Post p, Ref<EntityStore> ref, String roleId, Store<EntityStore> store) {
         if (p.type.hasRandomSkin()) applySkin(p, ref, store);
         store.putComponent(ref, Nameplate.getComponentType(), new Nameplate(nameplate(p)));
-        List<String> armor = GuardType.COMPANION_ROLE.equals(roleId) ? GuardType.COMPANION_ARMOR : p.type.getArmor();
-        if (armor.isEmpty()) return;
-        NPCEntity npc = store.getComponent(ref, NPCEntity.getComponentType());
+        AdventurerType adv = p.type == GuardType.AVENTURIER ? AdventurerType.of(p.skinSeed) : null;
+        List<String> armor = adv != null ? adv.getArmor(p.level) : p.type.getArmor();
+        NPCEntity npc = store.getComponent(ref, Objects.requireNonNull(NPCEntity.getComponentType()));
         var inv = npc != null ? npc.getInventory() : null;
-        if (inv == null || inv.getArmor() == null) return;
+        if (inv == null) return;
+        if (adv != null && inv.getHotbar() != null) {                                    // arme de son type
+            inv.getHotbar().setItemStackForSlot((short) 0, new ItemStack(adv.getWeapon(p.level), 1));
+            inv.setActiveHotbarSlot(ref, (byte) 0, store);
+        }
+        if (armor.isEmpty() || inv.getArmor() == null) return;
         for (String id : armor) {
             short slot = id.endsWith("_Head") ? 0 : id.endsWith("_Chest") ? (short) 1 : id.endsWith("_Hands") ? (short) 2 : (short) 3;
             inv.getArmor().setItemStackForSlot(slot, new ItemStack(id, 1));
@@ -251,7 +255,7 @@ public final class GuardManager {
      */
     static String nameplate(Post p) {
         if (p.type == GuardType.VILLAGEOIS) return VILLAGER_NAMES[(int) Math.floorMod(p.skinSeed, (long) VILLAGER_NAMES.length)];
-        if (p.type == GuardType.AVENTURIER) return "Aventurier Lv." + p.level;
+        if (p.type == GuardType.AVENTURIER) return "Aventurier [" + getAdventureRank(p.level) + "]";
         return p.type.getLabel();
     }
 
@@ -433,9 +437,17 @@ public final class GuardManager {
                         String name = nameplate(p);
                         if (np == null || !name.equals(np.getText())) store.putComponent(ref, Nameplate.getComponentType(), new Nameplate(name));
                     }
-                    NPCEntity npc = store.getComponent(ref, NPCEntity.getComponentType());
+                    NPCEntity npc = store.getComponent(ref, Objects.requireNonNull(NPCEntity.getComponentType()));
                     TransformComponent t = store.getComponent(ref, TransformComponent.getComponentType());
                     if (npc == null || t == null) return;
+                    if (slow && !companion && p.type == GuardType.AVENTURIER
+                            && !AdventurerType.of(p.skinSeed).getRecruitRole().equals(npc.getRoleName())) {
+                        store.removeEntity(ref, RemoveReason.REMOVE);                    // role de son type
+                        p.guard = null;
+                        spawn(p, world);
+                        save();
+                        return;
+                    }
                     Vector3d at = new Vector3d(t.getPosition());
                     if (companion) { AdventurerSystem.follow(p, ref, npc, at, world, store); return; }
                     if (stays) { if (p.type.isGuard()) faceDuty(p, ref, at, store); return; }   // l'aventurier libre regarde les joueurs
@@ -502,9 +514,8 @@ public final class GuardManager {
     /** PNJ de poste protege par les gardes (tout sauf l'aventurier recrute, qui suit son joueur). */
     static boolean isProtected(Ref<EntityStore> ref, ComponentAccessor<EntityStore> store) {
         NPCEntity npc = ref != null && ref.isValid() ? store.getComponent(ref, NPCEntity.getComponentType()) : null;
-        return npc != null && GuardType.fromRole(npc.getRoleName()) != null && !GuardType.COMPANION_ROLE.equals(npc.getRoleName());
+        return npc != null && GuardType.fromRole(npc.getRoleName()) != null && !GuardType.isCompanionRole(npc.getRoleName());
     }
-
     // ===== Persistance =====
 
     private static synchronized void save() {
