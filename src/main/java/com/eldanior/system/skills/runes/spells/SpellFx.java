@@ -431,6 +431,16 @@ public final class SpellFx {
         if (ref != null && ref.isValid()) cb.tryRemoveEntity(ref, com.hypixel.hytale.component.RemoveReason.REMOVE);
     }
 
+    /** Entite de sort jamais sauvegardee avec le monde (sinon elle reapparait, en double, apres une deconnexion). */
+    static void notSaved(Ref<EntityStore> ref, Store<EntityStore> store, CommandBuffer<EntityStore> cb) {
+        if (ref == null) return;
+        try {
+            cb.ensureComponent(ref, store.getRegistry().getNonSerializedComponentType());
+        } catch (Exception e) {
+            EldaniorLogger.error("SpellFx: entite non sauvegardee", e);
+        }
+    }
+
     /** Regard horizontal normalise du lanceur. */
     static Vector3d forward(Ref<EntityStore> ref, ComponentAccessor<EntityStore> store) {
         Vector3d look = lookDirection(ref, store);

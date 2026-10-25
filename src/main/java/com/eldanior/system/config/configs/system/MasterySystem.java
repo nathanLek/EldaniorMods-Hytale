@@ -70,13 +70,17 @@ public class MasterySystem extends EntityTickingSystem<EntityStore> {
 
             ClassModel classModel = ClassManager.get(playerData.getPlayerClassId());
             Set<ClassType> artifactClasses = ARTIFACT_CLASSES.get(heldItem.getItemId());
-            if (artifactClasses != null && (classModel == null || !artifactClasses.contains(classModel.getType()))) {
-                int fallbackSlotInt = lastValidSlot.getOrDefault(playerRef, -1);
-                short fallbackSlot = (fallbackSlotInt == -1 || fallbackSlotInt == currentSlot) ? findSafeSlot(inv) : (short) fallbackSlotInt;
-                inv.setActiveHotbarSlot(playerRef, (byte) fallbackSlot, store);
-                NotificationHelper.sendNotification(netRef,
-                        "<color:red>Cet artefact refuse votre classe !</color>",
-                        NotificationStyle.Warning);
+            if (artifactClasses != null) {                                        // artefact : seule sa classe compte
+                if (classModel == null || !artifactClasses.contains(classModel.getType())) {
+                    int fallbackSlotInt = lastValidSlot.getOrDefault(playerRef, -1);
+                    short fallbackSlot = (fallbackSlotInt == -1 || fallbackSlotInt == currentSlot) ? findSafeSlot(inv) : (short) fallbackSlotInt;
+                    inv.setActiveHotbarSlot(playerRef, (byte) fallbackSlot, store);
+                    NotificationHelper.sendNotification(netRef,
+                            "<color:red>Cet artefact refuse votre classe !</color>",
+                            NotificationStyle.Warning);
+                    return;
+                }
+                lastValidSlot.put(playerRef, (int) currentSlot);                  // pas de maitrise d'arme exigee (Gungnir contient « gun »)
                 return;
             }
 

@@ -1,7 +1,7 @@
 {
   "TranslationProperties": {
     "Name": "Gungnir, la Lance d'Odin",
-    "Description": "Artefact divin. Elle ne manque jamais sa cible et revient toujours dans la main de son porteur. Clic : combo de lance. Maintenir : lancer guidé qui revient (foudre runique à l'impact). Signature, Œil d'Odin : transperce en chaîne jusqu'à 6 ennemis. Hugin et Munin : +10 % de chance critique. Guerriers, Dragons et Marchands."
+    "Description": "Artefact divin. Elle ne manque jamais sa cible et revient toujours dans la main de son porteur. Clic : combo de lance. Maintenir : lancer guidé qui transperce tout sur son passage, puis la foudre d'Odin frappe la cible et creuse un cratère. Signature, Œil d'Odin : transperce en chaîne jusqu'à 8 ennemis, un éclair sur chacun, la grande foudre sur le dernier. Hugin et Munin : +10 % de chance critique. Guerriers, Dragons et Marchands."
   },
   "Categories": [
     "Eldanior_System.Artefacts",
@@ -40,7 +40,7 @@
           "Parent": "Spear_Stab_Damage",
           "DamageCalculator": {
             "BaseDamage": {
-              "Physical": 55
+              "Physical": 85
             }
           },
           "EntityStatsOnHit": [
@@ -62,7 +62,7 @@
           "Parent": "Spear_Swing_Left_Damage",
           "DamageCalculator": {
             "BaseDamage": {
-              "Physical": 30
+              "Physical": 50
             }
           },
           "EntityStatsOnHit": [
@@ -84,7 +84,7 @@
           "Parent": "Spear_Swing_Right_Damage",
           "DamageCalculator": {
             "BaseDamage": {
-              "Physical": 30
+              "Physical": 50
             }
           },
           "EntityStatsOnHit": [
@@ -106,7 +106,7 @@
           "Parent": "Spear_Spin_Swing_Left_Heavy_Damage",
           "DamageCalculator": {
             "BaseDamage": {
-              "Physical": 70
+              "Physical": 110
             }
           },
           "EntityStatsOnHit": [

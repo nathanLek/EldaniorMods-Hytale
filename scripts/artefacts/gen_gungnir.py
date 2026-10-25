@@ -6,6 +6,7 @@ de la forme du parent (pivot + offset). UV au pixel pres (une face de 124x5 lit 
 grande zone uniforme de l'atlas et toutes ses faces y lisent depuis le coin, quel que soit leur sens.
 Icone : rendu orthographique du modele (face visible des boites), en diagonale comme les icones vanilla.
 Corbeaux : texture du vautour vanilla recoloree en noir a reflets bleus (modele et animation de vol vanilla).
+L'arme utilise les animations vanilla de la lance (pointe devant pendant le lancer) : ne pas les modifier.
 
 Usage : python3 scripts/artefacts/gen_gungnir.py <src/main/resources/Common> <dossier contenant Common/... extrait d'Assets.zip>
 """
@@ -55,14 +56,23 @@ def q_axis(axis, deg):
     return {"x": round(axis[0] * s, 6), "y": round(axis[1] * s, 6), "z": round(axis[2] * s, 6), "w": round(math.cos(math.radians(deg) / 2), 6)}
 
 
+def qmul(a, b):
+    return {"x": a["w"] * b["x"] + a["x"] * b["w"] + a["y"] * b["z"] - a["z"] * b["y"],
+            "y": a["w"] * b["y"] - a["x"] * b["z"] + a["y"] * b["w"] + a["z"] * b["x"],
+            "z": a["w"] * b["z"] + a["x"] * b["y"] - a["y"] * b["x"] + a["z"] * b["w"],
+            "w": a["w"] * b["w"] - a["x"] * b["x"] - a["y"] * b["y"] - a["z"] * b["z"]}
+
+
 def node(name, pos, orient=IDENT, shape=None, children=None):
     _id[0] += 1
     return {"id": str(_id[0]), "name": name, "position": {"x": round(pos[0], 3), "y": round(pos[1], 3), "z": round(pos[2], 3)},
             "orientation": orient, "shape": shape or empty(), "children": children or []}
 
 
-def empty():
-    return {"type": "none", "offset": {"x": 0, "y": 0, "z": 0}, "stretch": {"x": 1, "y": 1, "z": 1}, "settings": {"isPiece": False},
+def empty(piece=False):
+    """Noeud sans forme. piece=True : le moteur le fixe sur l'os du meme nom (R-Attachment de la main, Origin_Projectile du
+    projectile), comme les armes vanilla ; sinon l'arme ne suit pas les animations de la main (lancer : pointe derriere)."""
+    return {"type": "none", "offset": {"x": 0, "y": 0, "z": 0}, "stretch": {"x": 1, "y": 1, "z": 1}, "settings": {"isPiece": piece},
             "textureLayout": {}, "unwrapMode": "custom", "visible": True, "doubleSided": False, "shadingMode": "flat"}
 
 
@@ -88,7 +98,7 @@ def gungnir():
     kids = []
     # Talon : capuchon d'or et pointe en losange
     kids.append(part("Butt_Cap", (-63, 0, 0), (6, 8, 8), "gold"))
-    kids.append(part("Butt_Spike", (-68.5, 0, 0), (6, 4.5, 4.5), "gold", q_axis((1, 0, 0), 45)))
+    kids.append(part("Butt_Disc", (-66.5, 0, 0), (2.5, 6.4, 6.4), "gold"))           # talon emousse : rien qui ressemble a une pointe
     # Anneaux d'or et runes lumineuses gravees sur la hampe (pas a l'endroit de la main : x = -28)
     for i, x in enumerate((-50, -8, 20, 46)):
         kids.append(part("Ring_%d" % i, (x, 0, 0), (2.5, 6.6, 6.6), "gold"))
@@ -109,10 +119,13 @@ def gungnir():
                              (length, width, 2), "gold", q_axis((0, 0, 1), theta)))
     kids.append(part("Core", (68.5, 0, 0), (8, 5.5, 5.5), "crystal", q_axis((1, 0, 0), 45)))
     # Lame en feuille : base large, milieu, haut, pointe en losange ; arete centrale de cristal
-    kids.append(part("Blade_Base", (77, 0, 0), (10, 10.5, 1.6), "blade"))
-    kids.append(part("Blade_Mid", (88, 0, 0), (13, 8.5, 1.6), "blade"))
-    kids.append(part("Blade_Top", (99.5, 0, 0), (11, 5.5, 1.6), "blade"))
-    kids.append(part("Blade_Tip", (106, 0, 0), (5.2, 5.2, 1.6), "blade", q_axis((0, 0, 1), 45)))
+    # Deux lames croisees (comme le fer des lances vanilla) : la pointe se lit sous tous les angles, meme de dos
+    for k, roll in enumerate((0, 90)):
+        r = q_axis((1, 0, 0), roll)
+        kids.append(part("Blade_Base_%d" % k, (77, 0, 0), (10, 10.5, 1.6), "blade", r))
+        kids.append(part("Blade_Mid_%d" % k, (88, 0, 0), (13, 8.5, 1.6), "blade", r))
+        kids.append(part("Blade_Top_%d" % k, (99.5, 0, 0), (11, 5.5, 1.6), "blade", r))
+        kids.append(part("Blade_Tip_%d" % k, (106, 0, 0), (5.2, 5.2, 1.6), "blade", qmul(r, q_axis((0, 0, 1), 45))))
     kids.append(part("Blade_Ridge", (90, 0, 0), (34, 1.8, 2.3), "crystal"))
     BOXES.append(((SHAFT_LEN, 5, 5), (0, 0, 0), IDENT, "wood"))
     handle = node("Handle", (0, -34, 0), {"x": 0.5, "y": 0.5, "z": -0.5, "w": -0.5},
@@ -120,8 +133,8 @@ def gungnir():
     # Pointe (Origin_Projectile) : main a y = 42, pointe a 28 + 110 unites devant
     tip = SHAFT_OFFSET + 110
     origin_item = node("Origin_Item", (0, -64 - (tip - 98), 0), children=[handle])
-    origin_proj = node("Origin_Projectile", (0, tip, 0), children=[origin_item])
-    root = node("R-Attachment", (0, 42, 0), children=[origin_proj])
+    origin_proj = node("Origin_Projectile", (0, tip, 0), shape=empty(piece=True), children=[origin_item])
+    root = node("R-Attachment", (0, 42, 0), shape=empty(piece=True), children=[origin_proj])
     json.dump({"nodes": [root], "lod": "auto"}, open(os.path.join(MODEL_DIR, "Artefact_Gungnir.blockymodel"), "w"), indent=2)
     print("modele : %d pieces, %.2f blocs de long" % (len(BOXES), (tip + SHAFT_LEN / 2 - SHAFT_OFFSET + 8) / 64))
 

@@ -1,8 +1,22 @@
 {
-  "$Comment": "Hugin / Munin, corbeaux d'Odin autour du porteur de Gungnir : vautour vanilla reduit, texture noire a reflets bleus (scripts/artefacts/gen_gungnir.py). Deplace par le code.",
+  "$Comment": "Hugin / Munin, corbeaux d'Odin autour du porteur de Gungnir : vautour vanilla reduit, texture noire a reflets bleus (scripts/artefacts/gen_gungnir.py). Deplace par le code. Battement d'ailes : l'animation de vol est donnee a tous les jeux d'animation (Idle, Fly, FlyIdle) : une entite deplacee par le code joue Idle.",
   "Model": "NPC/Flying_Beast/Vulture/Models/Model.blockymodel",
   "Texture": "Items/Projectiles/Gungnir/Raven.png",
   "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "NPC/Flying_Beast/Vulture/Animations/Fly/Fly.blockyanim"
+        }
+      ]
+    },
+    "Fly": {
+      "Animations": [
+        {
+          "Animation": "NPC/Flying_Beast/Vulture/Animations/Fly/Fly.blockyanim"
+        }
+      ]
+    },
     "FlyIdle": {
       "Animations": [
         {
