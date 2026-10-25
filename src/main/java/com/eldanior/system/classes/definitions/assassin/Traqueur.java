@@ -16,5 +16,6 @@ public class Traqueur extends ClassModel {
                 List.of(WeaponMastery.DAGGER, WeaponMastery.BOW),
                 List.of("traqueur_implacable", "chasseur_d_ombres", "pisteur_absolu"), 400, false,
                 20, 15, 5, 15, 50, 50);
+        runes("Rune_WindStrike");
     }
 }

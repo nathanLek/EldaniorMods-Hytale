@@ -13,5 +13,6 @@ public class MagusEternel extends ClassModel {
         super("magus_eternel", "Magus Eternel", "Un magus eternel qui transcende le temps par sa puissance.",
                 Rarity.UNIQUE, ClassType.MAGE, List.of(PassiveSkill.COSMIC_MIND, PassiveSkill.ARCANE_SUPREMACY, PassiveSkill.MANA_CITADEL), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 36, 98, 212, 88, 54, 66);
+        runes("Rune_PuitsGravitationnel", "Rune_Fireball");
     }
 }

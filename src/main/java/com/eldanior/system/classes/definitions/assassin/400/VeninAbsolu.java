@@ -13,5 +13,6 @@ public class VeninAbsolu extends ClassModel {
         super("venin_absolu", "Venin Absolu", "Le poison ultime coule dans ses veines. Il est le venin incarne.",
                 Rarity.UNIQUE, ClassType.ASSASSIN, List.of(PassiveSkill.SPIRIT_DRAIN, PassiveSkill.HYDRA_BLOOD, PassiveSkill.DEADLY_PRECISION), List.of(WeaponMastery.DAGGER), List.of(), 400, false,
                 64, 72, 54, 36, 140, 148);
+        runes("Rune_PoisonImbue", "Rune_WindStrike");
     }
 }

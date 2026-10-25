@@ -14,5 +14,6 @@ public class DanseurDeLames extends ClassModel {
         super("danseur_de_lames", "Danseur de Lames", "Le Danseur de Lames transforme le combat en une danse mortelle. Ses mouvements fluides et hypnotiques dissimulent des attaques devastatrices.",
                 Rarity.EPIC, ClassType.WARRIOR, List.of(PassiveSkill.GALE_STEP, PassiveSkill.RAZOR_SENSES, PassiveSkill.ACROBATIC_POISE), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 64, 48, 17, 50, 120, 64);
+        runes("Rune_AuraBlade", "Rune_Enrage");
     }
 }

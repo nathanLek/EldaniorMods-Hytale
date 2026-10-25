@@ -13,5 +13,6 @@ public class ArcRunique extends ClassModel {
         super("arc_runique", "Arc Runique", "Un arc grave de runes anciennes qui amplifient chaque fleche.",
                 Rarity.EPIC, ClassType.ARCHER, List.of(PassiveSkill.SPELLBLADE, PassiveSkill.BRILLIANT_MIND, PassiveSkill.MANA_FORTRESS), List.of(WeaponMastery.BOW, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 26, 26, 60, 18, 70, 70);
+        runes("Rune_ChargedShot", "Rune_ChainHook");
     }
 }

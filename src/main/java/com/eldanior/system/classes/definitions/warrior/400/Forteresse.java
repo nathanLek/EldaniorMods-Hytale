@@ -13,5 +13,6 @@ public class Forteresse extends ClassModel {
         super("forteresse", "Forteresse", "La Forteresse est un bastion vivant impenetrable. Derriere ses defenses colossales, ses allies sont en securite absolue contre toute menace.",
                 Rarity.UNIQUE, ClassType.WARRIOR, List.of(PassiveSkill.UNBREAKABLE, PassiveSkill.LIVING_FORTRESS, PassiveSkill.BURSTING_LIFE), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 98, 236, 17, 240, 36, 48);
+        runes("Rune_GroundSlam", "Rune_Enrage");
     }
 }

@@ -13,5 +13,6 @@ public class StrategeSupreme extends ClassModel {
         super("stratege_supreme", "Stratege Supreme", "Le Stratege Supreme anticipe chaque mouvement ennemi avec une precision surnaturelle. Son intelligence tactique et sa lame redoutable ne laissent aucune faille.",
                 Rarity.UNIQUE, ClassType.WARRIOR, List.of(PassiveSkill.CRIMSON_BLADE, PassiveSkill.TITAN_CONSTITUTION, PassiveSkill.COMBAT_INTUITION), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 164, 132, 52, 134, 82, 102);
+        runes("Rune_GroundSlam", "Rune_Enrage");
     }
 }

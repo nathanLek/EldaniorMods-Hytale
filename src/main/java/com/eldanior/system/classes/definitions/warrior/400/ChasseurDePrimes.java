@@ -13,5 +13,6 @@ public class ChasseurDePrimes extends ClassModel {
         super("chasseur_de_primes", "Chasseur de Primes", "Le Chasseur de Primes traque ses cibles avec une determination implacable. Aucune proie ne lui echappe une fois qu'il a accepte le contrat.",
                 Rarity.RARE, ClassType.WARRIOR, List.of(PassiveSkill.PRESSURE_POINT, PassiveSkill.RELENTLESS_HUNT, PassiveSkill.TRACKER), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 32, 20, 7, 16, 34, 26);
+        runes("Rune_GroundSlam");
     }
 }

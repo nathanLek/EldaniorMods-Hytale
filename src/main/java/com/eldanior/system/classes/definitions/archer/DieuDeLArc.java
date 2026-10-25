@@ -16,5 +16,6 @@ public class DieuDeLArc extends ClassModel {
                 List.of(WeaponMastery.BOW, WeaponMastery.DAGGER),
                 List.of("demi_dieu_archer"), 400, false,
                 150, 120, 60, 80, 350, 350);
+        runes("Rune_ChargedShot", "Rune_ChainHook", "Rune_Bourrasque");
     }
 }

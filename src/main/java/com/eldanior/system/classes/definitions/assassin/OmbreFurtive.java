@@ -16,5 +16,6 @@ public class OmbreFurtive extends ClassModel {
                 List.of(WeaponMastery.DAGGER),
                 List.of("ombre_insaisissable", "spectre_silencieux", "nuit_vivante"), 400, false,
                 20, 15, 5, 10, 60, 45);
+        runes("Rune_WindStrike");
     }
 }

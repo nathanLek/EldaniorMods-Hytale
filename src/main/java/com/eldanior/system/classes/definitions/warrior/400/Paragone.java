@@ -13,5 +13,6 @@ public class Paragone extends ClassModel {
         super("paragone", "Paragone", "Le Paragone est le modele ultime de ce qu'un guerrier peut devenir. Son equilibre parfait entre toutes les vertus martiales le rend supreme en toute situation.",
                 Rarity.LEGENDARY, ClassType.WARRIOR, List.of(PassiveSkill.GENESIS_EDGE, PassiveSkill.COSMIC_CONSTITUTION, PassiveSkill.WAR_PROPHECY), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 252, 248, 252, 248, 138, 134);
+        runes("Rune_GroundSlam", "Rune_Enrage", "Rune_AuraBlade");
     }
 }

@@ -13,5 +13,6 @@ public class NuitEternelle extends ClassModel {
         super("nuit_eternelle", "Nuit Eternelle", "La nuit sans fin qui engloutira le monde.",
                 Rarity.LEGENDARY, ClassType.ASSASSIN, List.of(PassiveSkill.GENESIS_EDGE, PassiveSkill.ABSOLUTE_PRECISION, PassiveSkill.CREATOR_PRECISION), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 200, 98, 36, 98, 420, 310);
+        runes("Rune_PuitsGravitationnel", "Rune_AutoriteGravitationnelle", "Rune_WindStrike");
     }
 }

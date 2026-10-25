@@ -1,0 +1,24 @@
+{
+  "$Comment": "Gungnir : clic = combo estoc, balayage gauche, balayage droit, grand tourbillon ; maintien (0,8 s) = lancer de Gungnir (sort GungnirLancer).",
+  "Type": "Charging",
+  "Effects": {
+    "ItemAnimationId": "ThrowCharging",
+    "LocalSoundEventId": "SFX_Spear_Throw_Charge_Local",
+    "WorldSoundEventId": "SFX_Spear_Throw_Charge",
+    "ClearAnimationOnFinish": true
+  },
+  "AllowIndefiniteHold": true,
+  "Next": {
+    "0": {
+      "Type": "Chaining",
+      "ChainingAllowance": 1.25,
+      "Next": [
+        "Spear_Stab",
+        "Spear_Swing_Left",
+        "Spear_Swing_Right",
+        "Spear_Spin_Swing_Left_Heavy"
+      ]
+    },
+    "0.8": "Gungnir_Throw"
+  }
+}

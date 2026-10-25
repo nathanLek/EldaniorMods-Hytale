@@ -16,5 +16,6 @@ public class Magus extends ClassModel {
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
                 List.of("magus_supreme", "archi_magus", "magus_eternel"), 400, false,
                 20, 60, 120, 50, 30, 40);
+        runes("Rune_Fireball", "Rune_Bourrasque");
     }
 }

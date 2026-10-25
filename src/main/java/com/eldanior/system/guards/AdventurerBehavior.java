@@ -68,7 +68,7 @@ public final class AdventurerBehavior {
         p.lastTalk = 0;
         talk(p, switch (AdventurerType.of(p.skinSeed)) {
             case GUERRIER -> "Mon épée est à vous. Restez derrière moi !";
-            case MAGE -> "Mes sorts sont prêts. Je vous soignerai si besoin.";
+            case MAGE -> "Mes runes sont prêtes. Restez à distance de mes sorts !";
             case ARCHER -> "Je couvre vos arrières, à distance.";
             case ASSASSIN -> "Je frapperai depuis l'ombre.";
         }, true);
@@ -152,7 +152,7 @@ public final class AdventurerBehavior {
             p.lastHp = value;
         }
         AdventurerMagic.potionFx(at, store);
-        hold(ref, AdventurerType.of(p.skinSeed).getWeapon(p.level, AdventurerTier.of(p)), store);
+        hold(ref, AdventurerType.of(p.skinSeed).getWeapon(p), store);
         talk(p, "Ça va mieux. Je reprends le combat !", true);
     }
 

@@ -13,5 +13,6 @@ public class VoidWalker extends ClassModel {
         super("void_walker", "Void Walker", "Il marche entre les dimensions, insaisissable et invincible.",
                 Rarity.UNIQUE, ClassType.ASSASSIN, List.of(PassiveSkill.VOID_STEP, PassiveSkill.DIMENSIONAL_STEP, PassiveSkill.VOID_BLADE), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 80, 54, 20, 54, 166, 144);
+        runes("Rune_PuitsGravitationnel", "Rune_WindStrike");
     }
 }

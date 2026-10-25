@@ -16,5 +16,6 @@ public class SniperDivin extends ClassModel {
                 List.of(WeaponMastery.BOW),
                 List.of("sniper_celeste", "oeil_absolu", "tir_fatal"), 400, false,
                 40, 30, 15, 20, 80, 100);
+        runes("Rune_ChargedShot", "Rune_ChainHook");
     }
 }

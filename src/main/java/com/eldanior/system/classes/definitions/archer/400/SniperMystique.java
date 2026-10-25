@@ -13,5 +13,6 @@ public class SniperMystique extends ClassModel {
         super("sniper_mystique", "Sniper Mystique", "Un tireur dont les fleches sont guidees par une force mystique.",
                 Rarity.EPIC, ClassType.ARCHER, List.of(PassiveSkill.RAZOR_SENSES, PassiveSkill.SPELLBLADE, PassiveSkill.EXPANDED_MIND), List.of(WeaponMastery.BOW), List.of(), 400, false,
                 30, 28, 20, 20, 82, 84);
+        runes("Rune_ChargedShot", "Rune_ChainHook");
     }
 }

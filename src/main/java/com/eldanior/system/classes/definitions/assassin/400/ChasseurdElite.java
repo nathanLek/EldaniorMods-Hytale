@@ -13,5 +13,6 @@ public class ChasseurdElite extends ClassModel {
         super("chasseur_d_elite", "Chasseur d'Elite", "Un predateur d'elite forme pour traquer les cibles les plus dangereuses.",
                 Rarity.EPIC, ClassType.ASSASSIN, List.of(PassiveSkill.RELENTLESS_HUNT, PassiveSkill.HAWK_EYE, PassiveSkill.DEADLY_PRECISION), List.of(WeaponMastery.DAGGER, WeaponMastery.BOW, WeaponMastery.SWORD), List.of(), 400, false,
                 44, 34, 8, 26, 78, 78);
+        runes("Rune_WindStrike", "Rune_PoisonImbue");
     }
 }

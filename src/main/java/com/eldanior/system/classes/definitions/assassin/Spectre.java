@@ -16,5 +16,6 @@ public class Spectre extends ClassModel {
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
                 List.of("spectre_originel", "revenant_absolu", "esprit_vengeur"), 400, false,
                 80, 50, 15, 40, 160, 120);
+        runes("Rune_PuitsGravitationnel", "Rune_WindStrike");
     }
 }

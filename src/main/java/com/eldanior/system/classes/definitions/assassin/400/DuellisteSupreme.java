@@ -13,5 +13,6 @@ public class DuellisteSupreme extends ClassModel {
         super("duelliste_supreme", "Duelliste Supreme", "Invaincu en duel, sa technique est absolute.",
                 Rarity.EPIC, ClassType.ASSASSIN, List.of(PassiveSkill.SHARP_BLADE, PassiveSkill.STEEL_NERVES, PassiveSkill.LIGHTNING_REFLEXES), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 54, 22, 8, 14, 92, 72);
+        runes("Rune_WindStrike", "Rune_PoisonImbue");
     }
 }

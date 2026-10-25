@@ -13,5 +13,6 @@ public class ArcheLiche extends ClassModel {
         super("arche_liche", "Arche-Liche", "La liche supreme qui defie la mort depuis des millenaires.",
                 Rarity.UNIQUE, ClassType.MAGE, List.of(PassiveSkill.SPIRIT_DRAIN, PassiveSkill.ETERNAL_LIFE, PassiveSkill.ARCANE_ANNIHILATION), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 26, 86, 190, 104, 34, 86);
+        runes("Rune_PuitsGravitationnel", "Rune_Fireball");
     }
 }

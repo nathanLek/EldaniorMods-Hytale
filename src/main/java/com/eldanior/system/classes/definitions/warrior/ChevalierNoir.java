@@ -24,5 +24,6 @@ public class ChevalierNoir extends ClassModel {
                 false,
                 120, 60, 20, 50, 80, 70
         );
+        runes("Rune_GroundSlam", "Rune_Enrage");
     }
 }

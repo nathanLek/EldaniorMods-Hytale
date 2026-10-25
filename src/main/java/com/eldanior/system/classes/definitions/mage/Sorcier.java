@@ -16,5 +16,6 @@ public class Sorcier extends ClassModel {
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
                 List.of("sorcier_supreme", "mage_noir", "envouteur_maitre"), 400, false,
                 10, 20, 55, 15, 20, 40);
+        runes("Rune_Fireball");
     }
 }

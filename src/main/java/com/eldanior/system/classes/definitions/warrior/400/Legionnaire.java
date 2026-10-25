@@ -13,5 +13,6 @@ public class Legionnaire extends ClassModel {
         super("legionnaire", "Legionnaire", "Le Legionnaire est un soldat d'elite forge dans le feu des batailles. Sa determination et sa constitution font de lui le dernier homme debout.",
                 Rarity.RARE, ClassType.WARRIOR, List.of(PassiveSkill.IRON_RESOLVE, PassiveSkill.OVERFLOWING_LIFE, PassiveSkill.PERSEVERANCE), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 27, 52, 6, 34, 10, 7);
+        runes("Rune_GroundSlam");
     }
 }

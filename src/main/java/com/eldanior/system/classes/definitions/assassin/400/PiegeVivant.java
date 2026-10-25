@@ -13,5 +13,6 @@ public class PiegeVivant extends ClassModel {
         super("piege_vivant", "Piege Vivant", "Chaque pas de ses ennemis est un piege qui se referme.",
                 Rarity.RARE, ClassType.ASSASSIN, List.of(PassiveSkill.PRESSURE_POINT, PassiveSkill.RAZOR_SENSES, PassiveSkill.BATTLE_FRENZY), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 16, 10, 6, 12, 22, 16);
+        runes("Rune_WindStrike");
     }
 }

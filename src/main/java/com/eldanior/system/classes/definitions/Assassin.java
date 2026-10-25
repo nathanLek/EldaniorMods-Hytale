@@ -24,5 +24,6 @@ public class Assassin extends ClassModel {
                 false,
                 6, 4, 2, 2, 14, 8
         );
+        runes("Rune_WindStrike");
     }
 }

@@ -13,5 +13,6 @@ public class ArchiMagus extends ClassModel {
         super("archi_magus", "Archi-Magus", "L'archi-magus dont le savoir remonte a l'aube de la magie.",
                 Rarity.UNIQUE, ClassType.MAGE, List.of(PassiveSkill.BRILLIANT_MIND, PassiveSkill.ARCANE_DEVASTATION, PassiveSkill.MANA_OCEAN), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 32, 100, 204, 82, 48, 68);
+        runes("Rune_PuitsGravitationnel", "Rune_Fireball");
     }
 }

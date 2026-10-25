@@ -13,5 +13,6 @@ public class PropheteAbsolu extends ClassModel {
         super("prophete_absolu", "Prophete Absolu", "Le prophete absolu dont chaque parole est verite.",
                 Rarity.LEGENDARY, ClassType.MAGE, List.of(PassiveSkill.ABSOLUTE_PRECISION, PassiveSkill.COSMIC_MIND, PassiveSkill.FATE_DODGE), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 68, 170, 476, 136, 136, 204);
+        runes("Rune_Bourrasque", "Rune_Fireball", "Rune_PuitsGravitationnel");
     }
 }

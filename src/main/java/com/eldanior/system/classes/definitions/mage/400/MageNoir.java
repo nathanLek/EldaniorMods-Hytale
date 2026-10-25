@@ -13,5 +13,6 @@ public class MageNoir extends ClassModel {
         super("mage_noir", "Mage Noir", "Un mage corrompu par les arts sombres. Sa puissance est terrifiante.",
                 Rarity.EPIC, ClassType.MAGE, List.of(PassiveSkill.SPIRIT_DRAIN, PassiveSkill.RAZOR_SENSES, PassiveSkill.SPELLBLADE), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 16, 32, 92, 24, 36, 66);
+        runes("Rune_Fireball", "Rune_Bourrasque");
     }
 }

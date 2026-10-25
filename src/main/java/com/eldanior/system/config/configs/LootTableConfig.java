@@ -12,6 +12,8 @@ public enum LootTableConfig {
     //  DONJON — Armures/armes haut tier + skills 2x (Common 2% → Divine 0.02%)
     // ============================================================
     DUNGEON_CHEST("donjon", 3600,
+            // --- Artefact divin : Gungnir, la Lance d'Odin ---
+            new LootEntry("Artefact_Gungnir", 1, 1, 1, 0.005),
             new LootEntry("rune_page_doppelganger", 1, 1, 1, 0.3),
             new LootEntry("rune_page_clonage", 1, 1, 1, 0.3),
             new LootEntry("rune_page_telekinesie", 1, 1, 1, 0.3),
@@ -1094,6 +1096,8 @@ public enum LootTableConfig {
     //  LEGENDARY — Toutes raretés de compétences
     // ============================================================
     LEGENDARY_CHEST("legendary", 21600,
+            // --- Artefact divin : Gungnir, la Lance d'Odin ---
+            new LootEntry("Artefact_Gungnir", 1, 1, 1, 0.01),
             new LootEntry("rune_page_doppelganger", 1, 1, 1, 5),
             new LootEntry("rune_page_clonage", 1, 1, 1, 5),
             new LootEntry("rune_page_telekinesie", 1, 1, 1, 5),
@@ -2162,6 +2166,8 @@ public enum LootTableConfig {
     //  DONJON BOSS — Loot spécial boss de donjon (toutes tiers)
     // ============================================================
     DUNGEON_BOSS_CHEST("donjon_boss", 7200,
+            // --- Artefact divin : Gungnir, la Lance d'Odin ---
+            new LootEntry("Artefact_Gungnir", 1, 1, 1, 0.02),
             new LootEntry("rune_page_doppelganger", 1, 1, 1, 2.0),
             new LootEntry("rune_page_clonage", 1, 1, 1, 2.0),
             new LootEntry("rune_page_telekinesie", 1, 1, 1, 2.0),

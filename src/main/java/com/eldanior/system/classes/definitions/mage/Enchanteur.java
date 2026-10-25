@@ -17,5 +17,6 @@ public class Enchanteur extends ClassModel {
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
                 List.of("grand_enchanteur", "tisseur_de_runes", "enchanteur_royal"), 400, false,
                 2, 10, 22, 8, 4, 4);
+        runes("Rune_Fireball");
     }
 }

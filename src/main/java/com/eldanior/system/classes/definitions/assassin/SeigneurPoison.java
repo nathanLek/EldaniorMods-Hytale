@@ -16,5 +16,6 @@ public class SeigneurPoison extends ClassModel {
                 List.of(WeaponMastery.DAGGER),
                 List.of("poison_primordial", "seigneur_des_venins", "toxine_eternelle"), 400, false,
                 60, 60, 40, 40, 120, 140);
+        runes("Rune_PoisonImbue", "Rune_WindStrike");
     }
 }

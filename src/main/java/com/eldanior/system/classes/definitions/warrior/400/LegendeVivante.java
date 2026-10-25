@@ -13,5 +13,6 @@ public class LegendeVivante extends ClassModel {
         super("legende_vivante", "Legende Vivante", "La Legende Vivante transcende le mythe pour incarner la perfection guerriere. Chaque aspect de son etre a ete forge par des epreuves impossibles.",
                 Rarity.LEGENDARY, ClassType.WARRIOR, List.of(PassiveSkill.ABYSS_BLADE, PassiveSkill.GOD_CONSTITUTION, PassiveSkill.ABSOLUTE_PRECISION), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 250, 250, 250, 250, 140, 132);
+        runes("Rune_GroundSlam", "Rune_Enrage", "Rune_AuraBlade");
     }
 }

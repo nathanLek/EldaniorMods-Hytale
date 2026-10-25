@@ -13,5 +13,6 @@ public class MonarqueNoir extends ClassModel {
         super("monarque_noir", "Monarque Noir", "Le monarque noir dont le trone est fait des ames de ses ennemis.",
                 Rarity.LEGENDARY, ClassType.ASSASSIN, List.of(PassiveSkill.ABYSS_BLADE, PassiveSkill.DEMIGOD_SWIFTNESS, PassiveSkill.CREATOR_PRECISION), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 166, 140, 48, 100, 370, 336);
+        runes("Rune_PuitsGravitationnel", "Rune_AutoriteGravitationnelle", "Rune_WindStrike");
     }
 }

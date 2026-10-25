@@ -16,5 +16,6 @@ public class MageVoid extends ClassModel {
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
                 List.of("mage_void_absolu", "void_primordial", "neant_mystique"), 400, false,
                 20, 60, 180, 50, 60, 80);
+        runes("Rune_PuitsGravitationnel", "Rune_Fireball");
     }
 }

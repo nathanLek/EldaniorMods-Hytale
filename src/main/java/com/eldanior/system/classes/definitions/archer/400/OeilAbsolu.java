@@ -13,5 +13,6 @@ public class OeilAbsolu extends ClassModel {
         super("oeil_absolu", "Oeil Absolu", "L'oeil qui voit tout. Aucune cible n'est hors de portee.",
                 Rarity.UNIQUE, ClassType.ARCHER, List.of(PassiveSkill.ABSOLUTE_PRECISION, PassiveSkill.DEADLY_PRECISION, PassiveSkill.EAGLE_EYE), List.of(WeaponMastery.BOW), List.of(), 400, false,
                 72, 48, 24, 32, 134, 170);
+        runes("Rune_ChargedShot", "Rune_ChainHook");
     }
 }

@@ -24,5 +24,6 @@ public class Ravageur extends ClassModel {
                 false,
                 90, 40, 4, 40, 30, 16
         );
+        runes("Rune_Enrage");
     }
 }

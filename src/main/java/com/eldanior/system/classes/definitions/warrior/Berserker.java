@@ -24,5 +24,6 @@ public class Berserker extends ClassModel {
                 false,
                 28, 10, 2, 8, 12, 6
         );
+        runes("Rune_Enrage");
     }
 }

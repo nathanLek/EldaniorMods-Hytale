@@ -16,5 +16,6 @@ public class Sicaire extends ClassModel {
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
                 List.of("sicaire_elite", "lame_rapide", "assassin_royal"), 400, false,
                 10, 4, 2, 2, 18, 12);
+        runes("Rune_WindStrike");
     }
 }

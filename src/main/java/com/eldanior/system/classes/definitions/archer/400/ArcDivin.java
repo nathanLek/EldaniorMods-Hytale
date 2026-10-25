@@ -13,5 +13,6 @@ public class ArcDivin extends ClassModel {
         super("arc_divin_leg", "Arc Divin", "L'arc divin dont les fleches sont des jugements celestes.",
                 Rarity.LEGENDARY, ClassType.ARCHER, List.of(PassiveSkill.GENESIS_EDGE, PassiveSkill.ABSOLUTE_PRECISION, PassiveSkill.COSMIC_CONSTITUTION), List.of(WeaponMastery.BOW, WeaponMastery.DAGGER), List.of(), 400, false,
                 166, 140, 72, 98, 336, 336);
+        runes("Rune_ChargedShot", "Rune_ChainHook", "Rune_Bourrasque");
     }
 }

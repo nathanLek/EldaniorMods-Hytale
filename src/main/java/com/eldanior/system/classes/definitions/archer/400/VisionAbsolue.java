@@ -13,5 +13,6 @@ public class VisionAbsolue extends ClassModel {
         super("vision_absolue", "Vision Absolue", "Celui qui voit tout, au-dela du visible. Sa vision transcende la realite.",
                 Rarity.UNIQUE, ClassType.ARCHER, List.of(PassiveSkill.ABSOLUTE_PRECISION, PassiveSkill.ABYSS_BLADE, PassiveSkill.GOD_SLAYER_SWIFTNESS), List.of(WeaponMastery.BOW), List.of(), 400, false,
                 102, 68, 34, 52, 204, 254);
+        runes("Rune_ChargedShot", "Rune_ChainHook");
     }
 }

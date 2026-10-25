@@ -13,5 +13,6 @@ public class CroiseDivin extends ClassModel {
         super("croise_divin", "Croise Divin", "Le Croise Divin porte la volonte des dieux sur le champ de bataille. Son epee sacree et sa vie debordante ecrasent les forces du mal.",
                 Rarity.EPIC, ClassType.WARRIOR, List.of(PassiveSkill.OVERFLOWING_LIFE, PassiveSkill.IRON_FORTIFICATION, PassiveSkill.ENRICHED_BLOOD), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD, WeaponMastery.MACE), List.of(), 400, false,
                 68, 82, 32, 66, 32, 52);
+        runes("Rune_GroundSlam", "Rune_Enrage");
     }
 }

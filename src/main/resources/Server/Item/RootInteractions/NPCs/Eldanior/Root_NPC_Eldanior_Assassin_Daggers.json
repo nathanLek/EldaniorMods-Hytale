@@ -1,0 +1,34 @@
+{
+  "Interactions": [
+    {
+      "Type": "EffectCondition",
+      "Entity": "User",
+      "EntityEffectIds": [
+        "Hit_Interrupt_Stunned"
+      ],
+      "Match": "None",
+      "Next": {
+        "Type": "Serial",
+        "Interactions": [
+          "Hit_Interrupt_Begin_Protected_Attack",
+          {
+            "$Comment": "Enchaine les 4 coups de dagues",
+            "Type": "Chaining",
+            "ChainingAllowance": 3,
+            "Next": [
+              "Eldanior_NPC_Assassin_Daggers_Swing_Left_Right",
+              "Eldanior_NPC_Assassin_Daggers_Stab_Right_Left",
+              "Eldanior_NPC_Assassin_Daggers_Swing_Right_Left",
+              "Eldanior_NPC_Assassin_Daggers_Stab_Left_Right"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "Tags": {
+    "Attack": [
+      "Melee"
+    ]
+  }
+}

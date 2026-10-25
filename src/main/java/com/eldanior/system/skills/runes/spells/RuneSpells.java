@@ -13,6 +13,8 @@ public final class RuneSpells {
         RuneSpellRuntime.register(new Telekinesie());
         RuneSpellRuntime.register(new Clonage());
         RuneSpellRuntime.register(new Doppelganger());
+        RuneSpellRuntime.register(new Gungnir.Lancer());      // Gungnir (artefact divin) : lancer guide qui revient
+        RuneSpellRuntime.register(new Gungnir.OeilOdin());    // Gungnir : signature, Oeil d'Odin
         // <rune-tool:register>
     }
 }

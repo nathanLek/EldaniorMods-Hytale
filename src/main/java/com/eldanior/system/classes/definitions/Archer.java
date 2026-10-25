@@ -24,5 +24,6 @@ public class Archer extends ClassModel {
                 false,
                 4, 4, 4, 2, 12, 10
         );
+        runes("Rune_ChargedShot");
     }
 }

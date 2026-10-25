@@ -16,5 +16,6 @@ public class LameNoire extends ClassModel {
                 List.of(WeaponMastery.DAGGER),
                 List.of("lame_abyssale", "epee_des_ombres", "trancheur_noir"), 400, false,
                 35, 10, 5, 10, 55, 40);
+        runes("Rune_WindStrike");
     }
 }

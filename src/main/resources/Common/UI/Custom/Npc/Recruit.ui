@@ -3,7 +3,7 @@ $C = "../Common.ui";
 // Fenetre de recrutement d'un aventurier : copie de la carte d'invocation des portails (client :
 // Data/Shared/UI/Portals/PortalSummonPanel.xaml + PortalTokens.xaml). Banniere verticale de 439 de large au centre de
 // l'ecran : arche du haut avec l'embleme en losange, titre, ligne a puce, note ; corps sombre borde de bleu-gris
-// avec separateur et texte ; contour dore (arches recolorees par gen_recruit_ui.py, bords et separateur en or) ; emplacement du cout (detenu / requis), note de cout et bouton dans l'arche du bas.
+// avec separateur, replique, indicateurs (puissance, robustesse, runes), competences passives en cartes (nom + effet) et sorts de rune en cartes (icone cadree a la couleur de rarete, nom, rarete, recharge, effet) ; contour dore (arches recolorees par gen_recruit_ui.py, bords et separateur en or) ; emplacement du cout (detenu / requis), note de cout et bouton dans l'arche du bas.
 // Images : scripts/npcs/gen_recruit_ui.py (arches copiees du client, embleme dessine).
 Group {
   LayoutMode: Middle;
@@ -41,9 +41,9 @@ Group {
       }
     }
 
-    // ===== Corps : bords bleu-gris, separateur, texte, emplacement du cout =====
+    // ===== Corps : bords dores, replique, indicateurs, competences passives, sorts de rune, cout =====
     Group {
-      Anchor: (Height: 330);
+      Anchor: (Height: 468);
       LayoutMode: Left;
 
       Group { Anchor: (Width: 3); Background: #16212f; }
@@ -53,8 +53,8 @@ Group {
       Group {
         FlexWeight: 1;
         LayoutMode: Top;
-        Background: #0b141d(0.9);
-        Padding: (Horizontal: 26, Top: 6);
+        Background: #0b141d(0.92);
+        Padding: (Horizontal: 20, Top: 6);
 
         Group {
           Anchor: (Height: 2);
@@ -62,23 +62,416 @@ Group {
         }
 
         Label #RecruitQuote {
-          Anchor: (Top: 18);
-          Style: (FontSize: 15, RenderBold: true, TextColor: #c9b37a, Wrap: true, HorizontalAlignment: Center);
+          Anchor: (Top: 10);
+          Style: (FontSize: 13, RenderBold: true, TextColor: #c9b37a, Wrap: true, HorizontalAlignment: Center);
         }
 
-        Label #RecruitInfo {
-          Anchor: (Top: 12);
-          FlexWeight: 1;
-          Style: (FontSize: 14, RenderBold: true, TextColor: #96a9be, Wrap: true, HorizontalAlignment: Center);
-        }
-
-        // Emplacement du cout (comme l'emplacement de la cle)
+        // ---- Indicateurs : puissance, robustesse, runes ----
         Group {
-          Anchor: (Height: 76);
+          Anchor: (Top: 10, Height: 36);
+          LayoutMode: Left;
+
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Background: #132130;
+            Padding: (Top: 4);
+
+            Label #RecruitPower {
+              Style: (FontSize: 15, RenderBold: true, TextColor: #f0c868, HorizontalAlignment: Center);
+            }
+
+            Label {
+              Text: "Puissance";
+              Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #6f8296, HorizontalAlignment: Center);
+            }
+          }
+
+          Group { Anchor: (Width: 6); }
+
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Background: #132130;
+            Padding: (Top: 4);
+
+            Label #RecruitTough {
+              Style: (FontSize: 15, RenderBold: true, TextColor: #f0c868, HorizontalAlignment: Center);
+            }
+
+            Label {
+              Text: "Robustesse";
+              Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #6f8296, HorizontalAlignment: Center);
+            }
+          }
+
+          Group { Anchor: (Width: 6); }
+
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Background: #132130;
+            Padding: (Top: 4);
+
+            Label #RecruitRuneCount {
+              Style: (FontSize: 15, RenderBold: true, TextColor: #f0c868, HorizontalAlignment: Center);
+            }
+
+            Label {
+              Text: "Runes";
+              Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #6f8296, HorizontalAlignment: Center);
+            }
+          }
+        }
+
+        // ---- Compétences passives ----
+        Group {
+          Anchor: (Top: 12, Height: 16);
+          LayoutMode: Left;
+
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Top: 8);
+
+            Group { Anchor: (Height: 1); Background: #c99436(0.55); }
+          }
+
+          Label {
+            Anchor: (Width: 190);
+            Text: "Compétences passives";
+            Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #e8b34f, HorizontalAlignment: Center);
+          }
+
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Top: 8);
+
+            Group { Anchor: (Height: 1); Background: #c99436(0.55); }
+          }
+        }
+
+        Label #RecruitNoPassive {
+          Anchor: (Top: 6);
+          Visible: false;
+          Style: (FontSize: 12, TextColor: #6f8296, HorizontalAlignment: Center, Wrap: true);
+        }
+
+        Group #RecruitPassive0 {
+          Anchor: (Top: 4, Height: 30);
+          LayoutMode: Left;
+          Background: #101c28;
+          Visible: false;
+
+          Group { Anchor: (Width: 3); Background: #e8b34f; }
+
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Left;
+            Padding: (Horizontal: 8, Vertical: 2);
+
+            Label #RecruitPassiveName0 {
+              Anchor: (Width: 124);
+              Style: (FontSize: 13, RenderBold: true, TextColor: #f0d58c, Wrap: true, VerticalAlignment: Center);
+            }
+
+            Label #RecruitPassiveDesc0 {
+              FlexWeight: 1;
+              Style: (FontSize: 11, TextColor: #a9b8c8, Wrap: true, VerticalAlignment: Center);
+            }
+          }
+        }
+
+        Group #RecruitPassive1 {
+          Anchor: (Top: 4, Height: 30);
+          LayoutMode: Left;
+          Background: #101c28;
+          Visible: false;
+
+          Group { Anchor: (Width: 3); Background: #e8b34f; }
+
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Left;
+            Padding: (Horizontal: 8, Vertical: 2);
+
+            Label #RecruitPassiveName1 {
+              Anchor: (Width: 124);
+              Style: (FontSize: 13, RenderBold: true, TextColor: #f0d58c, Wrap: true, VerticalAlignment: Center);
+            }
+
+            Label #RecruitPassiveDesc1 {
+              FlexWeight: 1;
+              Style: (FontSize: 11, TextColor: #a9b8c8, Wrap: true, VerticalAlignment: Center);
+            }
+          }
+        }
+
+        Group #RecruitPassive2 {
+          Anchor: (Top: 4, Height: 30);
+          LayoutMode: Left;
+          Background: #101c28;
+          Visible: false;
+
+          Group { Anchor: (Width: 3); Background: #e8b34f; }
+
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Left;
+            Padding: (Horizontal: 8, Vertical: 2);
+
+            Label #RecruitPassiveName2 {
+              Anchor: (Width: 124);
+              Style: (FontSize: 13, RenderBold: true, TextColor: #f0d58c, Wrap: true, VerticalAlignment: Center);
+            }
+
+            Label #RecruitPassiveDesc2 {
+              FlexWeight: 1;
+              Style: (FontSize: 11, TextColor: #a9b8c8, Wrap: true, VerticalAlignment: Center);
+            }
+          }
+        }
+
+        // ---- Sorts de rune ----
+        Group {
+          Anchor: (Top: 12, Height: 16);
+          LayoutMode: Left;
+
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Top: 8);
+
+            Group { Anchor: (Height: 1); Background: #c99436(0.55); }
+          }
+
+          Label {
+            Anchor: (Width: 190);
+            Text: "Sorts de rune";
+            Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #e8b34f, HorizontalAlignment: Center);
+          }
+
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Top: 8);
+
+            Group { Anchor: (Height: 1); Background: #c99436(0.55); }
+          }
+        }
+
+        Label #RecruitNoRune {
+          Anchor: (Top: 6);
+          Visible: false;
+          Style: (FontSize: 12, TextColor: #6f8296, HorizontalAlignment: Center, Wrap: true);
+        }
+
+        Group #RecruitRune0 {
+          Anchor: (Top: 4, Height: 44);
+          LayoutMode: Left;
+          Background: #101c28;
+          Padding: (Full: 3);
+          Visible: false;
+
+          Group #RecruitRuneFrame0 {
+            Anchor: (Width: 38, Height: 38);
+            Background: #3498DB;
+            Padding: (Full: 2);
+
+            Group {
+              Background: #0b141d;
+              LayoutMode: Middle;
+
+              ItemIcon #RecruitRuneIcon0 {
+                Anchor: (Width: 32, Height: 32);
+              }
+            }
+          }
+
+          Group { Anchor: (Width: 9); }
+
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+
+            Group {
+              Anchor: (Height: 17);
+              LayoutMode: Left;
+
+              Label #RecruitRuneName0 {
+                FlexWeight: 1;
+                Style: (FontSize: 13, RenderBold: true, TextColor: #e6edf5);
+              }
+
+              Label #RecruitRuneMeta0 {
+                Anchor: (Width: 128);
+                Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #3498DB, HorizontalAlignment: End);
+              }
+            }
+
+            Label #RecruitRuneDesc0 {
+              Style: (FontSize: 11, TextColor: #a9b8c8, Wrap: true);
+            }
+          }
+        }
+
+        Group #RecruitRune1 {
+          Anchor: (Top: 4, Height: 44);
+          LayoutMode: Left;
+          Background: #101c28;
+          Padding: (Full: 3);
+          Visible: false;
+
+          Group #RecruitRuneFrame1 {
+            Anchor: (Width: 38, Height: 38);
+            Background: #3498DB;
+            Padding: (Full: 2);
+
+            Group {
+              Background: #0b141d;
+              LayoutMode: Middle;
+
+              ItemIcon #RecruitRuneIcon1 {
+                Anchor: (Width: 32, Height: 32);
+              }
+            }
+          }
+
+          Group { Anchor: (Width: 9); }
+
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+
+            Group {
+              Anchor: (Height: 17);
+              LayoutMode: Left;
+
+              Label #RecruitRuneName1 {
+                FlexWeight: 1;
+                Style: (FontSize: 13, RenderBold: true, TextColor: #e6edf5);
+              }
+
+              Label #RecruitRuneMeta1 {
+                Anchor: (Width: 128);
+                Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #3498DB, HorizontalAlignment: End);
+              }
+            }
+
+            Label #RecruitRuneDesc1 {
+              Style: (FontSize: 11, TextColor: #a9b8c8, Wrap: true);
+            }
+          }
+        }
+
+        Group #RecruitRune2 {
+          Anchor: (Top: 4, Height: 44);
+          LayoutMode: Left;
+          Background: #101c28;
+          Padding: (Full: 3);
+          Visible: false;
+
+          Group #RecruitRuneFrame2 {
+            Anchor: (Width: 38, Height: 38);
+            Background: #3498DB;
+            Padding: (Full: 2);
+
+            Group {
+              Background: #0b141d;
+              LayoutMode: Middle;
+
+              ItemIcon #RecruitRuneIcon2 {
+                Anchor: (Width: 32, Height: 32);
+              }
+            }
+          }
+
+          Group { Anchor: (Width: 9); }
+
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+
+            Group {
+              Anchor: (Height: 17);
+              LayoutMode: Left;
+
+              Label #RecruitRuneName2 {
+                FlexWeight: 1;
+                Style: (FontSize: 13, RenderBold: true, TextColor: #e6edf5);
+              }
+
+              Label #RecruitRuneMeta2 {
+                Anchor: (Width: 128);
+                Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #3498DB, HorizontalAlignment: End);
+              }
+            }
+
+            Label #RecruitRuneDesc2 {
+              Style: (FontSize: 11, TextColor: #a9b8c8, Wrap: true);
+            }
+          }
+        }
+
+        Group #RecruitRune3 {
+          Anchor: (Top: 4, Height: 44);
+          LayoutMode: Left;
+          Background: #101c28;
+          Padding: (Full: 3);
+          Visible: false;
+
+          Group #RecruitRuneFrame3 {
+            Anchor: (Width: 38, Height: 38);
+            Background: #3498DB;
+            Padding: (Full: 2);
+
+            Group {
+              Background: #0b141d;
+              LayoutMode: Middle;
+
+              ItemIcon #RecruitRuneIcon3 {
+                Anchor: (Width: 32, Height: 32);
+              }
+            }
+          }
+
+          Group { Anchor: (Width: 9); }
+
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+
+            Group {
+              Anchor: (Height: 17);
+              LayoutMode: Left;
+
+              Label #RecruitRuneName3 {
+                FlexWeight: 1;
+                Style: (FontSize: 13, RenderBold: true, TextColor: #e6edf5);
+              }
+
+              Label #RecruitRuneMeta3 {
+                Anchor: (Width: 128);
+                Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #3498DB, HorizontalAlignment: End);
+              }
+            }
+
+            Label #RecruitRuneDesc3 {
+              Style: (FontSize: 11, TextColor: #a9b8c8, Wrap: true);
+            }
+          }
+        }
+
+        Group { FlexWeight: 1; }
+
+        // ---- Cout : emplacement (comme celui de la cle) et solde ----
+        Group {
+          Anchor: (Height: 56, Bottom: 8);
           LayoutMode: Center;
 
           Group {
-            Anchor: (Width: 72, Height: 72);
+            Anchor: (Width: 54, Height: 54);
             Background: #8a6420;
             Padding: (Full: 2);
 
@@ -87,20 +480,31 @@ Group {
               LayoutMode: Middle;
 
               Label #RecruitSlotValue {
-                Style: (FontSize: 16, RenderBold: true, TextColor: #E8A93B, HorizontalAlignment: Center);
+                Style: (FontSize: 14, RenderBold: true, TextColor: #E8A93B, HorizontalAlignment: Center);
               }
 
               Label {
                 Text: "OR";
-                Style: (FontSize: 11, RenderBold: true, TextColor: #878e9c, HorizontalAlignment: Center);
+                Style: (FontSize: 10, RenderBold: true, TextColor: #878e9c, HorizontalAlignment: Center);
               }
             }
           }
-        }
 
-        Label #RecruitCount {
-          Anchor: (Top: 6);
-          Style: (FontSize: 16, RenderBold: true, TextColor: #cc3361, HorizontalAlignment: Center);
+          Group { Anchor: (Width: 14); }
+
+          Group {
+            Anchor: (Width: 120);
+            LayoutMode: Middle;
+
+            Label {
+              Text: "Votre bourse";
+              Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #6f8296);
+            }
+
+            Label #RecruitCount {
+              Style: (FontSize: 15, RenderBold: true, TextColor: #cc3361);
+            }
+          }
         }
       }
 

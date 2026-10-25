@@ -13,5 +13,6 @@ public class Devastateur extends ClassModel {
         super("devastateur", "Devastateur", "Le Devastateur ne laisse que ruines et desolation dans son sillage. Sa force brute est telle que meme les armures les plus solides cedent sous ses coups.",
                 Rarity.RARE, ClassType.WARRIOR, List.of(PassiveSkill.DEEP_SLASH, PassiveSkill.SHARP_BLADE, PassiveSkill.SEISMIC_STRIKE), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 50, 16, 3, 13, 18, 10);
+        runes("Rune_Enrage");
     }
 }

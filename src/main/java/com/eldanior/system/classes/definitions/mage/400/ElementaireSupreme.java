@@ -13,5 +13,6 @@ public class ElementaireSupreme extends ClassModel {
         super("elementaire_supreme", "Elementaire Supreme", "L'elementaire supreme dont la maitrise est absolue.",
                 Rarity.UNIQUE, ClassType.MAGE, List.of(PassiveSkill.ARCANE_DEVASTATION, PassiveSkill.COSMIC_MIND, PassiveSkill.LIGHTNING_REFLEXES), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 40, 82, 204, 66, 90, 50);
+        runes("Rune_Bourrasque", "Rune_Fireball");
     }
 }

@@ -13,5 +13,6 @@ public class DanseurMortel extends ClassModel {
         super("danseur_mortel", "Danseur Mortel", "Sa danse hypnotise avant de tuer. Chaque mouvement est une lame.",
                 Rarity.RARE, ClassType.ASSASSIN, List.of(PassiveSkill.WIND_STEP, PassiveSkill.LIGHT_REFLEXES, PassiveSkill.SHARP_BLADE), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 12, 8, 4, 6, 38, 16);
+        runes("Rune_WindStrike");
     }
 }

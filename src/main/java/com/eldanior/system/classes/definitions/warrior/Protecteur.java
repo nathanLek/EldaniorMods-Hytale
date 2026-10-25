@@ -24,5 +24,6 @@ public class Protecteur extends ClassModel {
                 false,
                 12, 24, 2, 18, 6, 4
         );
+        runes("Rune_GroundSlam");
     }
 }

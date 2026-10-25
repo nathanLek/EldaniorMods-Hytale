@@ -13,5 +13,6 @@ public class CommandantRanger extends ClassModel {
         super("commandant_ranger", "Commandant Ranger", "Le commandant des rangers, meneur d'hommes et tireur hors pair.",
                 Rarity.EPIC, ClassType.ARCHER, List.of(PassiveSkill.MARATHON_RUNNER, PassiveSkill.TITAN_CONSTITUTION, PassiveSkill.DEADLY_PRECISION), List.of(WeaponMastery.BOW, WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 44, 52, 18, 34, 70, 60);
+        runes("Rune_ChainHook", "Rune_ChargedShot");
     }
 }

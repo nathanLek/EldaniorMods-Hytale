@@ -16,5 +16,6 @@ public class PhantomBlade extends ClassModel {
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
                 List.of("lame_spectrale", "phantome_eternel", "lame_du_vide"), 400, false,
                 60, 25, 15, 25, 110, 70);
+        runes("Rune_WindStrike", "Rune_PoisonImbue");
     }
 }

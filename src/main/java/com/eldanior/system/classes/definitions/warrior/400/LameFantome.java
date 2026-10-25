@@ -13,5 +13,6 @@ public class LameFantome extends ClassModel {
         super("lame_fantome", "Lame Fantome", "La Lame Fantome se deplace comme un spectre sur le champ de bataille. Invisible et foudroyante, elle frappe avant que l'ennemi ne realise sa presence.",
                 Rarity.EPIC, ClassType.WARRIOR, List.of(PassiveSkill.STORM_STEP, PassiveSkill.LIGHTNING_REFLEXES, PassiveSkill.RAZOR_SENSES), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 68, 50, 17, 50, 119, 68);
+        runes("Rune_AuraBlade", "Rune_Enrage");
     }
 }

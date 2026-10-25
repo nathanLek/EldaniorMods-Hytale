@@ -13,5 +13,6 @@ public class ArchitecteduMonde extends ClassModel {
         super("architecte_du_monde", "Architecte du Monde", "L'architecte qui a dessine les fondations du monde.",
                 Rarity.LEGENDARY, ClassType.MAGE, List.of(PassiveSkill.COSMIC_MIND, PassiveSkill.GENESIS_STRIKE, PassiveSkill.ETERNAL_LIFE), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 106, 208, 500, 174, 106, 132);
+        runes("Rune_PuitsGravitationnel", "Rune_AutoriteGravitationnelle", "Rune_Fireball");
     }
 }

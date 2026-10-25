@@ -13,5 +13,6 @@ public class AcrobateVirtuose extends ClassModel {
         super("acrobate_virtuose", "Acrobate Virtuose", "Un artiste martial dont les mouvements defient la gravite.",
                 Rarity.RARE, ClassType.ASSASSIN, List.of(PassiveSkill.GALE_STEP, PassiveSkill.ACROBATIC_POISE, PassiveSkill.THUNDER_REFLEXES), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 10, 10, 4, 7, 42, 14);
+        runes("Rune_WindStrike");
     }
 }

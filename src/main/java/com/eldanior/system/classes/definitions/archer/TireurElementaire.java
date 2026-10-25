@@ -16,5 +16,6 @@ public class TireurElementaire extends ClassModel {
                 List.of(WeaponMastery.BOW, WeaponMastery.SPELLBOOK),
                 List.of("arcane_archer", "sagittaire_elemental", "fleche_cosmique"), 400, false,
                 30, 30, 50, 20, 70, 60);
+        runes("Rune_ChargedShot", "Rune_ChainHook");
     }
 }

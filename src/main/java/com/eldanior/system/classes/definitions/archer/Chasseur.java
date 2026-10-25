@@ -16,5 +16,6 @@ public class Chasseur extends ClassModel {
                 List.of(WeaponMastery.BOW, WeaponMastery.DAGGER),
                 List.of("chasseur_veteran_archer", "pisteur_sauvage", "traqueur_de_fauves"), 400, false,
                 6, 8, 2, 6, 14, 12);
+        runes("Rune_ChainHook");
     }
 }

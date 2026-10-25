@@ -13,5 +13,6 @@ public class VisionnaireSupreme extends ClassModel {
         super("visionnaire_supreme", "Visionnaire Supreme", "Le visionnaire supreme dont le regard perce les voiles du temps.",
                 Rarity.UNIQUE, ClassType.MAGE, List.of(PassiveSkill.EAGLE_VISION, PassiveSkill.FATAL_PRECISION, PassiveSkill.COSMIC_MIND), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 16, 66, 170, 50, 72, 138);
+        runes("Rune_Bourrasque", "Rune_Fireball");
     }
 }

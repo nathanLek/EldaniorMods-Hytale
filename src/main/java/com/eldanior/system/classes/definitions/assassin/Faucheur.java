@@ -16,5 +16,6 @@ public class Faucheur extends ClassModel {
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
                 List.of("faucheur_eternel", "moissonneur_d_ames", "ange_noir"), 400, false,
                 80, 30, 5, 30, 90, 60);
+        runes("Rune_WindStrike", "Rune_PoisonImbue");
     }
 }

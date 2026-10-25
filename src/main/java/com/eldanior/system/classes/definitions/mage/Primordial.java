@@ -16,5 +16,6 @@ public class Primordial extends ClassModel {
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
                 List.of("primordial_ancien", "force_originelle", "geneses_mage"), 400, false,
                 40, 100, 180, 70, 30, 50);
+        runes("Rune_Fireball", "Rune_Bourrasque");
     }
 }

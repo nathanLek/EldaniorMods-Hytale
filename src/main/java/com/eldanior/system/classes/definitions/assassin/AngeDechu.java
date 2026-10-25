@@ -16,5 +16,6 @@ public class AngeDechu extends ClassModel {
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
                 List.of("archange_noir", "chute_finale", "aile_brisee"), 400, false,
                 40, 30, 10, 20, 130, 60);
+        runes("Rune_WindStrike", "Rune_PoisonImbue");
     }
 }

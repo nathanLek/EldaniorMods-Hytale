@@ -13,5 +13,6 @@ public class GrandThaumaturge extends ClassModel {
         super("grand_thaumaturge", "Grand Thaumaturge", "Le plus grand thaumaturge. Ses miracles sont des realites.",
                 Rarity.EPIC, ClassType.MAGE, List.of(PassiveSkill.UNLEASHED_MAGIC, PassiveSkill.TITAN_CONSTITUTION, PassiveSkill.MANA_OCEAN), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 14, 60, 86, 44, 26, 44);
+        runes("Rune_Fireball", "Rune_Bourrasque");
     }
 }

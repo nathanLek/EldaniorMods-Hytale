@@ -13,5 +13,6 @@ public class PrimordialAncien extends ClassModel {
         super("primordial_ancien", "Primordial Ancien", "Le plus ancien des primordinaux. Son existence est un mythe.",
                 Rarity.UNIQUE, ClassType.MAGE, List.of(PassiveSkill.GENIUS_MIND, PassiveSkill.HEART_OF_ETERNITY, PassiveSkill.MANA_INFINITY), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 68, 170, 306, 120, 52, 86);
+        runes("Rune_Fireball", "Rune_Bourrasque");
     }
 }

@@ -13,5 +13,6 @@ public class MaitreduMirage extends ClassModel {
         super("maitre_du_mirage", "Maitre du Mirage", "Ses mirages sont si parfaits que la realite elle-meme doute.",
                 Rarity.EPIC, ClassType.MAGE, List.of(PassiveSkill.DIMENSIONAL_DODGE, PassiveSkill.GALE_STEP, PassiveSkill.EXPANDED_MIND), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 12, 32, 76, 24, 68, 62);
+        runes("Rune_Fireball", "Rune_Bourrasque");
     }
 }

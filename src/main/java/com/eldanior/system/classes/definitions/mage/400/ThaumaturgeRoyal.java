@@ -13,5 +13,6 @@ public class ThaumaturgeRoyal extends ClassModel {
         super("thaumaturge_royal", "Thaumaturge Royal", "Le thaumaturge du roi dont les prodiges protegent le royaume.",
                 Rarity.EPIC, ClassType.MAGE, List.of(PassiveSkill.UNLEASHED_MAGIC, PassiveSkill.BURSTING_LIFE, PassiveSkill.MANA_FORTRESS), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 16, 62, 82, 46, 24, 40);
+        runes("Rune_Fireball", "Rune_Bourrasque");
     }
 }

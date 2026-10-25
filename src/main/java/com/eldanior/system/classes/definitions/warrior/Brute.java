@@ -24,5 +24,6 @@ public class Brute extends ClassModel {
                 false,
                 30, 20, 2, 8, 8, 4
         );
+        runes("Rune_Enrage");
     }
 }

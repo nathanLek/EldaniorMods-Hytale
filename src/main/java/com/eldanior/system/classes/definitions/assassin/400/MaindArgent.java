@@ -13,5 +13,6 @@ public class MaindArgent extends ClassModel {
         super("main_d_argent", "Main d'Argent", "Ses doigts de velours derobent avec une precision chirurgicale. Un artiste du vol.",
                 Rarity.RARE, ClassType.ASSASSIN, List.of(PassiveSkill.GOLDEN_TOUCH, PassiveSkill.RAZOR_SENSES, PassiveSkill.DUELIST_SWIFTNESS), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 16, 6, 4, 2, 30, 26);
+        runes("Rune_WindStrike");
     }
 }

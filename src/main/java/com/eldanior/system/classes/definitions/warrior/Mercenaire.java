@@ -24,5 +24,6 @@ public class Mercenaire extends ClassModel {
                 false,
                 20, 12, 4, 10, 20, 16
         );
+        runes("Rune_GroundSlam");
     }
 }

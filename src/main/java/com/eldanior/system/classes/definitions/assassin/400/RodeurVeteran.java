@@ -13,5 +13,6 @@ public class RodeurVeteran extends ClassModel {
         super("rodeur_veteran", "Rodeur Veteran", "Un pisteur aguerri par des annees d'embuscades. Ses proies ne lui echappent jamais.",
                 Rarity.RARE, ClassType.ASSASSIN, List.of(PassiveSkill.EAGLE_EYE, PassiveSkill.WIND_STEP, PassiveSkill.RELENTLESS_HUNT), List.of(WeaponMastery.DAGGER, WeaponMastery.BOW), List.of(), 400, false,
                 10, 10, 7, 7, 28, 20);
+        runes("Rune_WindStrike");
     }
 }

@@ -13,5 +13,6 @@ public class TitanOriginel extends ClassModel {
         super("titan_originel", "Titan Originel", "Le Titan Originel est le premier ne de sa race, une force primordiale pure. Sa constitution divine et sa vie eternelle defient les lois de l'existence.",
                 Rarity.UNIQUE, ClassType.WARRIOR, List.of(PassiveSkill.GOD_CONSTITUTION, PassiveSkill.ETERNAL_LIFE, PassiveSkill.UNMOVABLE_MOUNTAIN), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 340, 510, 0, 238, 68, 34);
+        runes("Rune_GroundSlam", "Rune_Enrage");
     }
 }

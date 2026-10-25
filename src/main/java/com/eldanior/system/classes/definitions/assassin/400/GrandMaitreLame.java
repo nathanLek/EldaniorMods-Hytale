@@ -13,5 +13,6 @@ public class GrandMaitreLame extends ClassModel {
         super("grand_maitre_lame", "Grand Maitre Lame", "Le sommet de l'art du sabre. Ses techniques sont inscrites dans la legende.",
                 Rarity.EPIC, ClassType.ASSASSIN, List.of(PassiveSkill.CRIMSON_BLADE, PassiveSkill.RAZOR_SENSES, PassiveSkill.FATAL_PRECISION), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 52, 26, 8, 18, 96, 70);
+        runes("Rune_WindStrike", "Rune_PoisonImbue");
     }
 }

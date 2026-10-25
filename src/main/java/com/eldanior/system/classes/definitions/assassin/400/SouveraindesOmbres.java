@@ -13,5 +13,6 @@ public class SouveraindesOmbres extends ClassModel {
         super("souverain_des_ombres", "Souverain des Ombres", "Le monarque absolu du royaume des ombres. Sa volonte plie les tenebres.",
                 Rarity.UNIQUE, ClassType.ASSASSIN, List.of(PassiveSkill.VOID_STEP, PassiveSkill.SHADOW_DODGE, PassiveSkill.FATAL_PRECISION), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 86, 52, 18, 52, 174, 140);
+        runes("Rune_PuitsGravitationnel", "Rune_WindStrike");
     }
 }

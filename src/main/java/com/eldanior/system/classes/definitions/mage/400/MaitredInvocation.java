@@ -13,5 +13,6 @@ public class MaitredInvocation extends ClassModel {
         super("maitre_d_invocation", "Maitre d'Invocation", "Le maitre absolu de l'invocation. Ses creatures sont legendaires.",
                 Rarity.RARE, ClassType.MAGE, List.of(PassiveSkill.AWAKENED_MIND, PassiveSkill.MANAWELL, PassiveSkill.STEEL_CONSTITUTION), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 4, 16, 38, 16, 8, 6);
+        runes("Rune_Fireball");
     }
 }

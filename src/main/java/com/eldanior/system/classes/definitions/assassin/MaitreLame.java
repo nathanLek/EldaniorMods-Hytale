@@ -16,5 +16,6 @@ public class MaitreLame extends ClassModel {
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
                 List.of("grand_maitre_lame", "lame_diamant", "duelliste_supreme"), 400, false,
                 30, 15, 5, 10, 55, 40);
+        runes("Rune_WindStrike");
     }
 }

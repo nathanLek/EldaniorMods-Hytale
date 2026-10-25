@@ -5,6 +5,7 @@ import com.eldanior.system.Leveling.utils.NotificationHelper;
 import com.eldanior.system.classes.ClassManager;
 import com.eldanior.system.classes.models.ClassModel;
 import com.eldanior.system.config.Player.PlayerLevelData;
+import com.eldanior.system.config.configs.ClassType;
 import com.eldanior.system.config.configs.WeaponMastery;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
@@ -19,12 +20,17 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
 import java.util.Map;
+import java.util.Set;
 import java.util.WeakHashMap;
 
 @SuppressWarnings("removal")
 public class MasterySystem extends EntityTickingSystem<EntityStore> {
 
     private final Map<Ref<EntityStore>, Integer> lastValidSlot = new WeakHashMap<>();
+
+    /** Artefacts reserves a certains types de classe (quelle que soit la maitrise d'arme). */
+    private static final Map<String, Set<ClassType>> ARTIFACT_CLASSES = Map.of(
+            "Artefact_Gungnir", Set.of(ClassType.WARRIOR, ClassType.DRAGON, ClassType.MERCHANT));
 
     @Override
     public void tick(float dt, int index, @Nonnull ArchetypeChunk<EntityStore> archetypeChunk, @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
@@ -62,12 +68,23 @@ public class MasterySystem extends EntityTickingSystem<EntityStore> {
                 return;
             }
 
+            ClassModel classModel = ClassManager.get(playerData.getPlayerClassId());
+            Set<ClassType> artifactClasses = ARTIFACT_CLASSES.get(heldItem.getItemId());
+            if (artifactClasses != null && (classModel == null || !artifactClasses.contains(classModel.getType()))) {
+                int fallbackSlotInt = lastValidSlot.getOrDefault(playerRef, -1);
+                short fallbackSlot = (fallbackSlotInt == -1 || fallbackSlotInt == currentSlot) ? findSafeSlot(inv) : (short) fallbackSlotInt;
+                inv.setActiveHotbarSlot(playerRef, (byte) fallbackSlot, store);
+                NotificationHelper.sendNotification(netRef,
+                        "<color:red>Cet artefact refuse votre classe !</color>",
+                        NotificationStyle.Warning);
+                return;
+            }
+
             if (required == WeaponMastery.ANY) {
                 lastValidSlot.put(playerRef, (int) currentSlot);
                 return;
             }
 
-            ClassModel classModel = ClassManager.get(playerData.getPlayerClassId());
             if (classModel == null) return;
 
             if (!classModel.canEquip(required)) {
@@ -136,7 +153,7 @@ public class MasterySystem extends EntityTickingSystem<EntityStore> {
 
         for (short i = 0; i < 9; i++) {
             ItemStack item = hotbar.getItemStack(i);
-            if (item == null || item.isEmpty() || getWeaponMastery(item) == WeaponMastery.ANY) {
+            if (item == null || item.isEmpty() || (getWeaponMastery(item) == WeaponMastery.ANY && !ARTIFACT_CLASSES.containsKey(item.getItemId()))) {
                 return i;
             }
         }

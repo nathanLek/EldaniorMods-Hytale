@@ -13,5 +13,6 @@ public class ColosseDeFer extends ClassModel {
         super("colosse_de_fer", "Colosse de Fer", "Le Colosse de Fer allie une force brute immense a une resistance surhumaine. Tel un golem d'acier, il avance inexorablement vers ses ennemis terrifies.",
                 Rarity.RARE, ClassType.WARRIOR, List.of(PassiveSkill.DEEP_SLASH, PassiveSkill.FORTIFIED_SKIN, PassiveSkill.TIRELESS_BREATH), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 48, 36, 3, 14, 12, 7);
+        runes("Rune_GroundSlam");
     }
 }

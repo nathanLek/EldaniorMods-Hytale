@@ -24,5 +24,6 @@ public class Croise extends ClassModel {
                 false,
                 80, 100, 40, 100, 40, 40
         );
+        runes("Rune_GroundSlam", "Rune_Enrage");
     }
 }

@@ -13,5 +13,6 @@ public class VoleurMaitre extends ClassModel {
         super("voleur_maitre", "Voleur Maitre", "Un maitre du larcin dont les mains sont plus rapides que l'oeil. Nul tresor n'est hors de sa portee.",
                 Rarity.RARE, ClassType.ASSASSIN, List.of(PassiveSkill.RAZOR_SENSES, PassiveSkill.WIND_STEP, PassiveSkill.CRITICAL_LUCK), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 14, 7, 4, 4, 34, 24);
+        runes("Rune_WindStrike");
     }
 }

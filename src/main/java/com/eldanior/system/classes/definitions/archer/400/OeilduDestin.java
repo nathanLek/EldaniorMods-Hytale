@@ -13,5 +13,6 @@ public class OeilduDestin extends ClassModel {
         super("oeil_du_destin", "Oeil du Destin", "Son regard voit le destin de chacun. Nul n'echappe a sa vision.",
                 Rarity.UNIQUE, ClassType.ARCHER, List.of(PassiveSkill.FATAL_PRECISION, PassiveSkill.VOID_BLADE, PassiveSkill.DEMIGOD_SWIFTNESS), List.of(WeaponMastery.BOW), List.of(), 400, false,
                 98, 64, 36, 50, 200, 250);
+        runes("Rune_ChargedShot", "Rune_ChainHook");
     }
 }

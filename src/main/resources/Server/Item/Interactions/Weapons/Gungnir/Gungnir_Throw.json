@@ -1,0 +1,15 @@
+{
+  "$Comment": "Lancer de Gungnir : animation de lancer puis sort Java GungnirLancer (vol guide, retour dans la main). L'arme n'est pas consommee.",
+  "Type": "Simple",
+  "Effects": {
+    "ItemAnimationId": "ThrowCharged",
+    "LocalSoundEventId": "SFX_Spear_Throw_Local",
+    "WorldSoundEventId": "SFX_Spear_Throw"
+  },
+  "RunTime": 0,
+  "Next": {
+    "Type": "RuneSpell",
+    "RunTime": 0.05,
+    "Spell": "GungnirLancer"
+  }
+}

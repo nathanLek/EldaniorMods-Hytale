@@ -16,5 +16,6 @@ public class Arbaletrier extends ClassModel {
                 List.of(WeaponMastery.BOW),
                 List.of("arbaletrier_d_elite", "arbalete_lourd", "tireur_de_siege"), 400, false,
                 8, 8, 2, 6, 12, 12);
+        runes("Rune_ChargedShot");
     }
 }

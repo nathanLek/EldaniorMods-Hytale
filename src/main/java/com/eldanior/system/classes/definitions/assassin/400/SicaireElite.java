@@ -13,5 +13,6 @@ public class SicaireElite extends ClassModel {
         super("sicaire_elite", "Sicaire Elite", "Un tueur d'elite dont chaque frappe est calculee pour tuer.",
                 Rarity.RARE, ClassType.ASSASSIN, List.of(PassiveSkill.RAZOR_SENSES, PassiveSkill.PRESSURE_POINT, PassiveSkill.PREDATORY_STRIKE), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 18, 7, 4, 4, 30, 20);
+        runes("Rune_WindStrike");
     }
 }

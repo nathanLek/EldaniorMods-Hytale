@@ -13,5 +13,6 @@ public class FaucheurEternel extends ClassModel {
         super("faucheur_eternel", "Faucheur Eternel", "La mort incarnee qui moissonne sans fin depuis l'aube des temps.",
                 Rarity.UNIQUE, ClassType.ASSASSIN, List.of(PassiveSkill.ABYSS_BLADE, PassiveSkill.BLOOD_HUNT, PassiveSkill.FATAL_PRECISION), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 138, 52, 8, 52, 156, 104);
+        runes("Rune_PuitsGravitationnel", "Rune_WindStrike");
     }
 }

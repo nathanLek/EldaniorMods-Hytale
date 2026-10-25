@@ -13,5 +13,6 @@ public class MageVoidAbsolu extends ClassModel {
         super("mage_void_absolu", "Mage Void Absolu", "Le mage du vide absolu. Rien n'existe la ou il regarde.",
                 Rarity.UNIQUE, ClassType.MAGE, List.of(PassiveSkill.VOID_BLADE, PassiveSkill.ARCANE_ANNIHILATION, PassiveSkill.MANA_INFINITY), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 34, 102, 306, 86, 102, 136);
+        runes("Rune_PuitsGravitationnel", "Rune_Fireball");
     }
 }

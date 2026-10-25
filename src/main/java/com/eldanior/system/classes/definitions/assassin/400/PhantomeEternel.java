@@ -13,5 +13,6 @@ public class PhantomeEternel extends ClassModel {
         super("phantome_eternel", "Phantome Eternel", "Un spectre de combat qui hante les champs de bataille pour l'eternite.",
                 Rarity.UNIQUE, ClassType.ASSASSIN, List.of(PassiveSkill.DIMENSIONAL_STEP, PassiveSkill.STORM_STEP, PassiveSkill.FATAL_PRECISION), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 100, 42, 24, 42, 186, 118);
+        runes("Rune_PuitsGravitationnel", "Rune_WindStrike");
     }
 }

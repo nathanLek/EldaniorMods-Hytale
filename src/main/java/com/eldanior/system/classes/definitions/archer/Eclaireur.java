@@ -16,5 +16,6 @@ public class Eclaireur extends ClassModel {
                 List.of(WeaponMastery.BOW, WeaponMastery.DAGGER),
                 List.of("eclaireur_fantome_archer", "ombre_des_vents", "coureur_d_aurore"), 400, false,
                 4, 4, 4, 4, 20, 14);
+        runes("Rune_Bourrasque");
     }
 }

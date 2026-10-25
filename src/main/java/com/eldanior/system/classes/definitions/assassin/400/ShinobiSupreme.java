@@ -13,5 +13,6 @@ public class ShinobiSupreme extends ClassModel {
         super("shinobi_supreme", "Shinobi Supreme", "Le shinobi ultime dont les techniques sont gardees secretes depuis des generations.",
                 Rarity.EPIC, ClassType.ASSASSIN, List.of(PassiveSkill.LIGHTNING_REFLEXES, PassiveSkill.GRAVITY_DEFIANCE, PassiveSkill.CRIMSON_BLADE), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 42, 24, 20, 14, 114, 48);
+        runes("Rune_WindStrike", "Rune_Bourrasque");
     }
 }

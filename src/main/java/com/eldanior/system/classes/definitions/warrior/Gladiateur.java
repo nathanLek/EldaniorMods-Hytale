@@ -24,5 +24,6 @@ public class Gladiateur extends ClassModel {
                 false,
                 50, 30, 4, 30, 50, 30
         );
+        runes("Rune_GroundSlam");
     }
 }

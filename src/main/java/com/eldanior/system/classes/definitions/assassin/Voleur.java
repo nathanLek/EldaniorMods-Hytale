@@ -16,5 +16,6 @@ public class Voleur extends ClassModel {
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
                 List.of("voleur_maitre", "prince_du_larcin", "main_d_argent"), 400, false,
                 8, 4, 2, 2, 20, 14);
+        runes("Rune_WindStrike");
     }
 }

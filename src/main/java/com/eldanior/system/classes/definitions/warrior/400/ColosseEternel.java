@@ -13,5 +13,6 @@ public class ColosseEternel extends ClassModel {
         super("colosse_eternel", "Colosse Eternel", "Le Colosse Eternel existe depuis les premiers ages du monde. Son corps immortel et sa forteresse interieure sont des monuments indestructibles.",
                 Rarity.UNIQUE, ClassType.WARRIOR, List.of(PassiveSkill.GOD_CONSTITUTION, PassiveSkill.INFINITE_LIFE, PassiveSkill.LIVING_FORTRESS), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 336, 504, 0, 240, 66, 34);
+        runes("Rune_GroundSlam", "Rune_Enrage");
     }
 }

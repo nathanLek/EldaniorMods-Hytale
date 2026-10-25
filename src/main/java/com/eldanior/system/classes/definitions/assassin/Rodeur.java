@@ -16,5 +16,6 @@ public class Rodeur extends ClassModel {
                 List.of(WeaponMastery.DAGGER, WeaponMastery.BOW),
                 List.of("rodeur_veteran", "chasseur_nocturne", "ombre_errante"), 400, false,
                 6, 6, 4, 4, 16, 12);
+        runes("Rune_WindStrike");
     }
 }

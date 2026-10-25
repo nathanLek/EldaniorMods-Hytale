@@ -13,5 +13,6 @@ public class PilierdesMondes extends ClassModel {
         super("pilier_des_mondes", "Pilier des Mondes", "Un pilier qui soutient la realite elle-meme. Sans lui, les mondes s'effondrent.",
                 Rarity.UNIQUE, ClassType.MAGE, List.of(PassiveSkill.GENIUS_MIND, PassiveSkill.HEART_OF_ETERNITY, PassiveSkill.MANA_CITADEL), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 54, 132, 344, 132, 64, 108);
+        runes("Rune_PuitsGravitationnel", "Rune_Fireball");
     }
 }

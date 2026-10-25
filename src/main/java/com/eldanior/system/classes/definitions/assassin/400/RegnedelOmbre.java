@@ -13,5 +13,6 @@ public class RegnedelOmbre extends ClassModel {
         super("regne_de_l_ombre", "Regne de l'Ombre", "Son regne est eternel. Les ombres sont sa couronne et les tenebres son royaume.",
                 Rarity.LEGENDARY, ClassType.ASSASSIN, List.of(PassiveSkill.GENESIS_EDGE, PassiveSkill.GOD_SLAYER_SWIFTNESS, PassiveSkill.ABSOLUTE_PRECISION), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 174, 132, 56, 96, 378, 344);
+        runes("Rune_PuitsGravitationnel", "Rune_AutoriteGravitationnelle", "Rune_WindStrike");
     }
 }

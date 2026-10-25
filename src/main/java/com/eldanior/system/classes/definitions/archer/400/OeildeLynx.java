@@ -13,5 +13,6 @@ public class OeildeLynx extends ClassModel {
         super("oeil_de_lynx", "Oeil de Lynx", "Son regard percant ne manque aucun detail. Chaque tir est parfait.",
                 Rarity.EPIC, ClassType.ARCHER, List.of(PassiveSkill.EAGLE_EYE, PassiveSkill.DEADLY_PRECISION, PassiveSkill.LIGHTNING_REFLEXES), List.of(WeaponMastery.BOW), List.of(), 400, false,
                 32, 24, 16, 16, 84, 88);
+        runes("Rune_ChargedShot", "Rune_ChainHook");
     }
 }

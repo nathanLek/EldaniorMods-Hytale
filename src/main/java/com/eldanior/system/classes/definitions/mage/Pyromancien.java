@@ -17,5 +17,6 @@ public class Pyromancien extends ClassModel {
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
                 List.of("maitre_des_flammes", "infernal_mage", "brasier_vivant"), 400, false,
                 4, 4, 26, 4, 6, 6);
+        runes("Rune_Fireball");
     }
 }

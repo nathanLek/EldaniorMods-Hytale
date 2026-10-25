@@ -13,5 +13,6 @@ public class SeigneurdesVenins extends ClassModel {
         super("seigneur_des_venins", "Seigneur des Venins", "Le seigneur de tous les venins. Chaque toxine lui obeit.",
                 Rarity.UNIQUE, ClassType.ASSASSIN, List.of(PassiveSkill.SPIRIT_DRAIN, PassiveSkill.HYDRA_BLOOD, PassiveSkill.FATAL_PRECISION), List.of(WeaponMastery.DAGGER), List.of(), 400, false,
                 98, 98, 72, 72, 200, 242);
+        runes("Rune_PoisonImbue", "Rune_WindStrike");
     }
 }

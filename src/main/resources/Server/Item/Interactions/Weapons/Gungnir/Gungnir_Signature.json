@@ -1,0 +1,44 @@
+{
+  "$Comment": "Signature de Gungnir, Oeil d'Odin (energie de signature pleine) : sort Java OeilOdin.",
+  "Type": "StatsCondition",
+  "Costs": {
+    "SignatureEnergy": 100
+  },
+  "ValueType": "Percent",
+  "Next": {
+    "Type": "Serial",
+    "Interactions": [
+      {
+        "Type": "Simple",
+        "RunTime": 0.35,
+        "Effects": {
+          "ItemAnimationId": "ThrowCharging",
+          "WorldSoundEventId": "SFX_Spear_Throw_Charge",
+          "LocalSoundEventId": "SFX_Spear_Throw_Charge_Local"
+        }
+      },
+      {
+        "Type": "RuneSpell",
+        "RunTime": 0.05,
+        "Spell": "OeilOdin"
+      },
+      {
+        "Type": "Simple",
+        "RunTime": 0.3,
+        "Effects": {
+          "ItemAnimationId": "ThrowCharged",
+          "WorldSoundEventId": "SFX_Spear_Throw",
+          "LocalSoundEventId": "SFX_Spear_Throw_Local",
+          "ClearAnimationOnFinish": true
+        }
+      },
+      {
+        "Type": "ChangeStat",
+        "StatModifiers": {
+          "SignatureEnergy": -100
+        },
+        "ValueType": "Percent"
+      }
+    ]
+  }
+}

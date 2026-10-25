@@ -16,5 +16,6 @@ public class Corsaire extends ClassModel {
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
                 List.of("capitaine_corsaire", "flibustier_noir", "roi_des_pirates"), 400, false,
                 30, 20, 5, 15, 45, 40);
+        runes("Rune_WindStrike");
     }
 }

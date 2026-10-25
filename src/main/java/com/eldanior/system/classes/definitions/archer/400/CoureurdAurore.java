@@ -13,5 +13,6 @@ public class CoureurdAurore extends ClassModel {
         super("coureur_d_aurore", "Coureur d'Aurore", "Il court avec l'aurore, premier rayon de lumiere et derniere fleche.",
                 Rarity.RARE, ClassType.ARCHER, List.of(PassiveSkill.LIGHT_REFLEXES, PassiveSkill.MARATHON_RUNNER, PassiveSkill.LUCKY_STRIKE), List.of(WeaponMastery.BOW, WeaponMastery.DAGGER), List.of(), 400, false,
                 6, 8, 8, 8, 30, 22);
+        runes("Rune_Bourrasque");
     }
 }

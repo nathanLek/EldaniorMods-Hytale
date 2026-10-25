@@ -13,5 +13,6 @@ public class EmpereurDeGuerre extends ClassModel {
         super("empereur_de_guerre", "Empereur de Guerre", "L'Empereur de Guerre domine le champ de bataille avec une autorite absolue. Sa lame legendaire et sa constitution cosmique inspirent terreur et respect.",
                 Rarity.UNIQUE, ClassType.WARRIOR, List.of(PassiveSkill.VOID_BLADE, PassiveSkill.COSMIC_CONSTITUTION, PassiveSkill.LIGHTNING_REFLEXES), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 168, 136, 50, 136, 85, 100);
+        runes("Rune_GroundSlam", "Rune_Enrage");
     }
 }

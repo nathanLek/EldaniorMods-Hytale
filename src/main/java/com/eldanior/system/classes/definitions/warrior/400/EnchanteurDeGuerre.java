@@ -13,5 +13,6 @@ public class EnchanteurDeGuerre extends ClassModel {
         super("enchanteur_de_guerre", "Enchanteur de Guerre", "L'Enchanteur de Guerre fusionne l'art de la guerre et la magie arcanique. Ses armes enchantees deviennent des conduits de puissance devastatrice.",
                 Rarity.EPIC, ClassType.WARRIOR, List.of(PassiveSkill.BRILLIANT_MIND, PassiveSkill.SPELLBLADE, PassiveSkill.MANA_OCEAN), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 68, 68, 100, 50, 50, 34);
+        runes("Rune_GroundSlam", "Rune_Enrage");
     }
 }

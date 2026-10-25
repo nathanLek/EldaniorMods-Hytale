@@ -13,5 +13,6 @@ public class EpeedesOmbres extends ClassModel {
         super("epee_des_ombres", "Epee des Ombres", "Une lame qui n'existe que dans les tenebres. Invisible et mortelle.",
                 Rarity.EPIC, ClassType.ASSASSIN, List.of(PassiveSkill.SHADOW_DODGE, PassiveSkill.RAZOR_SENSES, PassiveSkill.CRIMSON_BLADE), List.of(WeaponMastery.DAGGER), List.of(), 400, false,
                 58, 16, 10, 16, 92, 68);
+        runes("Rune_WindStrike", "Rune_PoisonImbue");
     }
 }

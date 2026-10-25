@@ -16,5 +16,6 @@ public class RangerElite extends ClassModel {
                 List.of(WeaponMastery.BOW, WeaponMastery.DAGGER, WeaponMastery.SWORD),
                 List.of("commandant_ranger", "garde_forestier", "sentinelle_d_elite"), 400, false,
                 25, 30, 10, 20, 40, 35);
+        runes("Rune_ChainHook");
     }
 }

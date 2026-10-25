@@ -136,6 +136,7 @@ public final class SpellFx {
     /** Ennemi valide : joueur ou creature, ni le lanceur ni un allie (groupe, guilde, famille). */
     static boolean isEnemy(Ref<EntityStore> caster, Ref<EntityStore> target, Store<EntityStore> store) {
         if (target == null || !target.isValid() || target.equals(caster)) return false;
+        if (AdventurerMagic.isAdventurer(caster, store)) return AdventurerMagic.isFoe(caster, target, store);   // rune lancee par un aventurier
         boolean isPlayer = store.getComponent(target, Player.getComponentType()) != null;
         boolean isNpc = store.getComponent(target, NPCEntity.getComponentType()) != null;
         if (!isPlayer && !isNpc) return false;

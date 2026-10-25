@@ -16,5 +16,6 @@ public class Prophete extends ClassModel {
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
                 List.of("prophete_absolu", "oracle_divin", "voix_de_l_eternel"), 400, false,
                 40, 100, 280, 80, 80, 120);
+        runes("Rune_Bourrasque", "Rune_Fireball", "Rune_PuitsGravitationnel");
     }
 }

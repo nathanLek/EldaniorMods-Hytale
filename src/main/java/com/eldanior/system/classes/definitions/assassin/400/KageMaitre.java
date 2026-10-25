@@ -13,5 +13,6 @@ public class KageMaitre extends ClassModel {
         super("kage_maitre", "Kage Maitre", "Le maitre des ombres. Nul ne connait son vrai visage.",
                 Rarity.EPIC, ClassType.ASSASSIN, List.of(PassiveSkill.SHADOW_DODGE, PassiveSkill.GALE_STEP, PassiveSkill.VOID_BLADE), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 40, 28, 16, 16, 108, 54);
+        runes("Rune_WindStrike", "Rune_Bourrasque");
     }
 }

@@ -13,5 +13,6 @@ public class DemiNeant extends ClassModel {
         super("demi_neant", "Demi-Neant", "A mi-chemin entre l'existence et le neant. Un etre transcendant les limites de la realite.",
                 Rarity.DIVINE, ClassType.ASSASSIN, List.of(PassiveSkill.CREATOR_EDGE, PassiveSkill.CREATOR_SWIFTNESS, PassiveSkill.CREATOR_PRECISION), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 306, 204, 68, 170, 680, 595);
+        runes("Rune_PuitsGravitationnel", "Rune_AutoriteGravitationnelle", "Rune_WindStrike");
     }
 }

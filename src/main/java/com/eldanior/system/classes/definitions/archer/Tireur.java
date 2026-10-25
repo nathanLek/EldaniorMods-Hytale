@@ -16,5 +16,6 @@ public class Tireur extends ClassModel {
                 List.of(WeaponMastery.BOW, WeaponMastery.DAGGER),
                 List.of("tireur_d_elite", "franc_tireur_royal", "arc_precis"), 400, false,
                 6, 6, 4, 4, 16, 14);
+        runes("Rune_ChargedShot");
     }
 }

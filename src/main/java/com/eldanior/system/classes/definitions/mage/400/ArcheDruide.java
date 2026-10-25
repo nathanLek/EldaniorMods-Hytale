@@ -13,5 +13,6 @@ public class ArcheDruide extends ClassModel {
         super("arche_druide", "Arche Druide", "Le druide supreme, gardien de l'equilibre naturel.",
                 Rarity.EPIC, ClassType.MAGE, List.of(PassiveSkill.VITAL_RECOVERY, PassiveSkill.TROLL_BLOOD, PassiveSkill.TITAN_CONSTITUTION), List.of(WeaponMastery.STAFF), List.of(), 400, false,
                 14, 70, 78, 52, 26, 34);
+        runes("Rune_Bourrasque", "Rune_Fireball");
     }
 }

@@ -13,5 +13,6 @@ public class TranscendanceLame extends ClassModel {
         super("transcendance_lame", "Transcendance Lame", "Il a transcende l'art de la lame. Son epee est une extension de son ame.",
                 Rarity.UNIQUE, ClassType.ASSASSIN, List.of(PassiveSkill.VOID_BLADE, PassiveSkill.FATAL_PRECISION, PassiveSkill.GOD_SLAYER_SWIFTNESS), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 166, 72, 16, 72, 300, 174);
+        runes("Rune_WindStrike", "Rune_PoisonImbue");
     }
 }

@@ -16,5 +16,6 @@ public class Archonte extends ClassModel {
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
                 List.of("archonte_supreme", "seigneur_arcanique", "pilier_des_mondes"), 400, false,
                 30, 80, 200, 80, 40, 60);
+        runes("Rune_PuitsGravitationnel", "Rune_Fireball");
     }
 }

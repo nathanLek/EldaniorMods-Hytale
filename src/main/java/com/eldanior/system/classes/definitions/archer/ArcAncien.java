@@ -16,5 +16,6 @@ public class ArcAncien extends ClassModel {
                 List.of(WeaponMastery.BOW, WeaponMastery.SPELLBOOK),
                 List.of("arc_primordial", "gardien_des_arcs_anciens", "arcane_supreme"), 400, false,
                 40, 50, 80, 40, 80, 100);
+        runes("Rune_ChargedShot", "Rune_ChainHook");
     }
 }

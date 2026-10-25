@@ -16,5 +16,6 @@ public class ArcMystique extends ClassModel {
                 List.of(WeaponMastery.BOW, WeaponMastery.SPELLBOOK),
                 List.of("arc_runique", "sagittaire_arcane", "arc_des_etoiles"), 400, false,
                 15, 15, 35, 10, 40, 40);
+        runes("Rune_ChargedShot");
     }
 }

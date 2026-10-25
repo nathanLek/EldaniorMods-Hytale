@@ -13,5 +13,6 @@ public class DevinCosmique extends ClassModel {
         super("devin_cosmique", "Devin Cosmique", "Un devin connecte aux forces cosmiques de l'univers.",
                 Rarity.EPIC, ClassType.MAGE, List.of(PassiveSkill.GENIUS_MIND, PassiveSkill.RAZOR_SENSES, PassiveSkill.ASTRAL_CLOAK), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 8, 42, 100, 36, 32, 58);
+        runes("Rune_Fireball", "Rune_Bourrasque");
     }
 }

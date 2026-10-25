@@ -16,5 +16,6 @@ public class LameEternelle extends ClassModel {
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
                 List.of("lame_infinie", "transcendance_lame", "lame_absolue"), 400, false,
                 100, 40, 10, 40, 180, 100);
+        runes("Rune_WindStrike", "Rune_PoisonImbue");
     }
 }

@@ -13,5 +13,6 @@ public class ChasseurdOmbres extends ClassModel {
         super("chasseur_d_ombres", "Chasseur d'Ombres", "Il traque meme les ombres. Personne ne peut se cacher de lui.",
                 Rarity.EPIC, ClassType.ASSASSIN, List.of(PassiveSkill.DARK_VISION, PassiveSkill.RAZOR_SENSES, PassiveSkill.BLOOD_HUNT), List.of(WeaponMastery.DAGGER, WeaponMastery.BOW), List.of(), 400, false,
                 36, 24, 10, 24, 84, 84);
+        runes("Rune_WindStrike", "Rune_PoisonImbue");
     }
 }

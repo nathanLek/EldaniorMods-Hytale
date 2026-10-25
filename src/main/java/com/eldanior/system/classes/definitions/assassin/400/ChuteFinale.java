@@ -13,5 +13,6 @@ public class ChuteFinale extends ClassModel {
         super("chute_finale", "Chute Finale", "Sa chute fut si profonde qu'il a touche le fond de l'abime.",
                 Rarity.UNIQUE, ClassType.ASSASSIN, List.of(PassiveSkill.ABYSS_BLADE, PassiveSkill.STORM_STEP, PassiveSkill.GRAVITY_DEFIANCE), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 72, 48, 16, 32, 220, 100);
+        runes("Rune_PuitsGravitationnel", "Rune_WindStrike");
     }
 }

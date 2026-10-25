@@ -13,5 +13,6 @@ public class Ascendant extends ClassModel {
         super("ascendant", "Ascendant", "L'Ascendant transcende les limites mortelles pour atteindre un etat superieur. Sa constitution divine et sa vie eternelle le placent au-dela de la mort.",
                 Rarity.UNIQUE, ClassType.WARRIOR, List.of(PassiveSkill.CREATOR_CONSTITUTION, PassiveSkill.ETERNAL_LIFE, PassiveSkill.CELESTIAL_IMMORTALITY), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 334, 500, 0, 236, 70, 36);
+        runes("Rune_GroundSlam", "Rune_Enrage");
     }
 }

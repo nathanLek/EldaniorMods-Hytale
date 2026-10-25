@@ -16,5 +16,6 @@ public class OeilDeFaucon extends ClassModel {
                 List.of(WeaponMastery.BOW),
                 List.of("vision_absolue", "oeil_du_destin", "regard_percant"), 400, false,
                 60, 40, 20, 30, 120, 150);
+        runes("Rune_ChargedShot", "Rune_ChainHook");
     }
 }

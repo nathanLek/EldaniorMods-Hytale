@@ -13,5 +13,6 @@ public class SeigneurNonMort extends ClassModel {
         super("seigneur_non_mort", "Seigneur Non-Mort", "Le seigneur des morts-vivants. Son empire s'etend au-dela de la tombe.",
                 Rarity.UNIQUE, ClassType.MAGE, List.of(PassiveSkill.SPIRIT_DRAIN, PassiveSkill.COSMIC_CONSTITUTION, PassiveSkill.ARCANE_SUPREMACY), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 28, 84, 194, 108, 32, 84);
+        runes("Rune_PuitsGravitationnel", "Rune_Fireball");
     }
 }

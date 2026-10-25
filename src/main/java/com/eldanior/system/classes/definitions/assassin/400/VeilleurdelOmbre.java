@@ -13,5 +13,6 @@ public class VeilleurdelOmbre extends ClassModel {
         super("veilleur_ombre", "Veilleur de l'Ombre", "La sentinelle invisible qui veille depuis les tenebres.",
                 Rarity.RARE, ClassType.ASSASSIN, List.of(PassiveSkill.DARK_VISION, PassiveSkill.LIGHT_REFLEXES, PassiveSkill.PHANTOM_DODGE), List.of(WeaponMastery.DAGGER, WeaponMastery.BOW), List.of(), 400, false,
                 6, 10, 6, 8, 30, 18);
+        runes("Rune_WindStrike");
     }
 }

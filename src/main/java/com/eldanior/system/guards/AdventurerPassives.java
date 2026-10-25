@@ -47,13 +47,6 @@ public final class AdventurerPassives {
         return cls != null ? cls.getSkillsPassiveIds() : List.of();
     }
 
-    /** Noms des passifs, pour la fenetre de recrutement. */
-    public static String names(GuardManager.Post p) {
-        StringBuilder sb = new StringBuilder();
-        for (PassiveSkill s : of(p)) sb.append(sb.length() > 0 ? ", " : "").append(s.getDisplayName());
-        return sb.toString();
-    }
-
     private static Stats stats(GuardManager.Post p) {
         return STATS.computeIfAbsent(p.id + ":" + p.level + ":" + p.skinSeed, k -> {
             float power = 1f, toughness = 1f, flatDamage = 0f, flatReduce = 0f, crit = 0f, dodge = 0f, regen = 1f;

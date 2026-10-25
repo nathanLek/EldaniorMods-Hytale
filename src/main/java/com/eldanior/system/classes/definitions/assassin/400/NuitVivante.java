@@ -13,5 +13,6 @@ public class NuitVivante extends ClassModel {
         super("nuit_vivante", "Nuit Vivante", "L'incarnation de la nuit elle-meme. Ou elle passe, les lumieres s'eteignent.",
                 Rarity.EPIC, ClassType.ASSASSIN, List.of(PassiveSkill.DARK_VISION, PassiveSkill.SHADOW_DODGE, PassiveSkill.DIMENSIONAL_STEP), List.of(WeaponMastery.DAGGER), List.of(), 400, false,
                 32, 28, 8, 20, 96, 80);
+        runes("Rune_WindStrike", "Rune_PoisonImbue");
     }
 }

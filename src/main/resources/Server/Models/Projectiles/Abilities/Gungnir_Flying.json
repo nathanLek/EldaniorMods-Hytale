@@ -1,0 +1,45 @@
+{
+  "$Comment": "Gungnir en vol (lancer, Oeil d'Odin) : montee comme une fleche vanilla, la pointe suit l'axe du projectile. Deplacee par le code. HitBox elargie en X (LOD serveur).",
+  "Model": "Items/Projectiles/Projectile.blockymodel",
+  "Texture": "Items/Projectiles/Projectile_default.png",
+  "DefaultAttachments": [
+    {
+      "Model": "Items/Weapons/artefacts/Artefact_Gungnir.blockymodel",
+      "Texture": "Items/Weapons/artefacts/Artefact_Gungnir.png"
+    }
+  ],
+  "AnimationSets": {
+    "FlyIdle": {
+      "Animations": [
+        {
+          "Animation": "Items/Animations/Fly/Fly_Vertical.blockyanim"
+        }
+      ]
+    }
+  },
+  "MinScale": 1.0,
+  "MaxScale": 1.0,
+  "HitBox": {
+    "Max": {
+      "X": 0.6,
+      "Y": 0.1,
+      "Z": 0.1
+    },
+    "Min": {
+      "X": -0.6,
+      "Y": -0.1,
+      "Z": -0.1
+    }
+  },
+  "Particles": [
+    {
+      "SystemId": "Gilgamesh_Sword_Glow",
+      "TargetNodeName": "",
+      "Scale": 1.0
+    }
+  ],
+  "Light": {
+    "Color": "#cfeeff",
+    "Radius": 7
+  }
+}

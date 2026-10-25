@@ -16,5 +16,6 @@ public class AvatarDuNeant extends ClassModel {
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
                 List.of("demi_neant"), 400, false,
                 180, 120, 40, 100, 400, 350);
+        runes("Rune_PuitsGravitationnel", "Rune_AutoriteGravitationnelle", "Rune_WindStrike");
     }
 }

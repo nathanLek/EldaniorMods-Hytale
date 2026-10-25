@@ -258,13 +258,18 @@ public final class GuardManager {
         if (p.type.hasRandomSkin()) applySkin(p, ref, store);
         store.putComponent(ref, Nameplate.getComponentType(), new Nameplate(nameplate(p)));
         AdventurerType adv = p.type == GuardType.AVENTURIER ? AdventurerType.of(p.skinSeed) : null;
-        List<String> armor = adv != null ? adv.getArmor(p.level, AdventurerTier.of(p)) : p.type.getArmor();
+        List<String> armor = adv != null ? adv.getArmor(p) : p.type.getArmor();
         NPCEntity npc = store.getComponent(ref, Objects.requireNonNull(NPCEntity.getComponentType()));
         var inv = npc != null ? npc.getInventory() : null;
         if (inv == null) return;
         if (adv != null && inv.getHotbar() != null) {                                    // arme de son type
-            inv.getHotbar().setItemStackForSlot((short) 0, new ItemStack(adv.getWeapon(p.level, AdventurerTier.of(p)), 1));
+            inv.getHotbar().setItemStackForSlot((short) 0, new ItemStack(adv.getWeapon(p), 1));
             inv.setActiveHotbarSlot(ref, (byte) 0, store);
+        }
+        String offHand = adv != null ? adv.getOffHand(p) : null;
+        if (offHand != null && inv.getUtility() != null) {                               // bouclier du guerrier
+            inv.getUtility().setItemStackForSlot((short) 0, new ItemStack(offHand, 1));
+            inv.setActiveUtilitySlot(ref, (byte) 0, store);
         }
         if (armor.isEmpty() || inv.getArmor() == null) return;
         for (String id : armor) {
@@ -285,8 +290,22 @@ public final class GuardManager {
 
     private static void applySkin(Post p, Ref<EntityStore> ref, Store<EntityStore> store) {
         PlayerSkin skin = CosmeticsModule.get().generateRandomSkin(new java.util.Random(p.skinSeed));
+        if (p.type == GuardType.AVENTURIER) wearHat(skin, AdventurerType.of(p.skinSeed).getHat(p));
         store.putComponent(ref, PlayerSkinComponent.getComponentType(), new PlayerSkinComponent(skin));
         store.putComponent(ref, ModelComponent.getComponentType(), new ModelComponent(CosmeticsModule.get().createModel(skin)));
+    }
+
+    /** Chapeau du mage : le premier candidat que le skin accepte (sinon son accessoire de tete d'origine). */
+    private static void wearHat(PlayerSkin skin, List<String> candidates) {
+        String before = skin.headAccessory;
+        for (String hat : candidates) {
+            skin.headAccessory = hat;
+            try {
+                CosmeticsModule.get().validateSkin(skin);
+                return;
+            } catch (Exception ignored) { }
+        }
+        skin.headAccessory = before;
     }
 
     /** Poste d'un PNJ (par son UUID), null si ce n'est pas un PNJ de poste. */
@@ -335,6 +354,7 @@ public final class GuardManager {
         Post a = postOf(attacker, store), t = postOf(target, store);
         boolean companionA = a != null && a.owner != null, companionT = t != null && t.owner != null;
         if (!companionA && !companionT) return false;
+        if (companionA && t != null) return true;                                       // ses runes epargnent gardes, villageois, aventuriers
         UUID ua = PostMovement.uuid(attacker, store), ut = PostMovement.uuid(target, store);
         if ((companionT && t.owner.equals(ua)) || (companionA && a.owner.equals(ut))) return true;
         if (companionA && companionT && a.owner.equals(t.owner)) return true;

@@ -16,5 +16,6 @@ public class Saboteur extends ClassModel {
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
                 List.of("saboteur_expert", "demolisseur_furtif", "piege_vivant"), 400, false,
                 8, 8, 4, 6, 14, 10);
+        runes("Rune_WindStrike");
     }
 }

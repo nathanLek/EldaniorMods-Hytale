@@ -13,5 +13,6 @@ public class ChasseurSupreme extends ClassModel {
         super("chasseur_supreme", "Chasseur Supreme", "Le chasseur ultime. Sa traque est une science perfectionnee.",
                 Rarity.EPIC, ClassType.ARCHER, List.of(PassiveSkill.RELENTLESS_HUNT, PassiveSkill.FATAL_PRECISION, PassiveSkill.RAZOR_SENSES), List.of(WeaponMastery.BOW, WeaponMastery.DAGGER), List.of(), 400, false,
                 34, 34, 8, 26, 96, 78);
+        runes("Rune_ChainHook", "Rune_ChargedShot");
     }
 }

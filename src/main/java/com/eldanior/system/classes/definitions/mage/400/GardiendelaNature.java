@@ -13,5 +13,6 @@ public class GardiendelaNature extends ClassModel {
         super("gardien_de_la_nature", "Gardien de la Nature", "Le gardien ultime de la nature dont les pouvoirs regenerent la terre.",
                 Rarity.EPIC, ClassType.MAGE, List.of(PassiveSkill.ENRICHED_BLOOD, PassiveSkill.OVERFLOWING_LIFE, PassiveSkill.MANA_STREAM), List.of(WeaponMastery.STAFF), List.of(), 400, false,
                 12, 66, 74, 50, 24, 36);
+        runes("Rune_Bourrasque", "Rune_Fireball");
     }
 }

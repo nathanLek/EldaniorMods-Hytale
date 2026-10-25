@@ -13,5 +13,6 @@ public class SeigneurArcanique extends ClassModel {
         super("seigneur_arcanique", "Seigneur Arcanique", "Le seigneur arcanique dont la magie est la loi.",
                 Rarity.UNIQUE, ClassType.MAGE, List.of(PassiveSkill.COSMIC_MIND, PassiveSkill.ARCANE_SUPREMACY, PassiveSkill.ETERNAL_LIFE), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 48, 140, 336, 140, 72, 96);
+        runes("Rune_PuitsGravitationnel", "Rune_Fireball");
     }
 }

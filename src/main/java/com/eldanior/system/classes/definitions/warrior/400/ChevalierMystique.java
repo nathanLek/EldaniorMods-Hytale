@@ -13,5 +13,6 @@ public class ChevalierMystique extends ClassModel {
         super("chevalier_mystique", "Chevalier Mystique", "Le Chevalier Mystique est un guerrier illumine par les arcanes. Sa maitrise duale de l'epee et de la magie en fait un adversaire impredictible.",
                 Rarity.EPIC, ClassType.WARRIOR, List.of(PassiveSkill.EXPANDED_MIND, PassiveSkill.SPELLBLADE, PassiveSkill.MANA_FORTRESS), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 64, 66, 98, 52, 48, 34);
+        runes("Rune_AuraBlade", "Rune_Enrage");
     }
 }

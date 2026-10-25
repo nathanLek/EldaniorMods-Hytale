@@ -13,5 +13,6 @@ public class TireurdeSiege extends ClassModel {
         super("tireur_de_siege", "Tireur de Siege", "Un specialiste du tir a longue portee capable de toucher depuis l'horizon.",
                 Rarity.RARE, ClassType.ARCHER, List.of(PassiveSkill.PRESSURE_POINT, PassiveSkill.HAWK_EYE, PassiveSkill.KEEN_SENSES), List.of(WeaponMastery.BOW), List.of(), 400, false,
                 12, 16, 4, 8, 22, 16);
+        runes("Rune_ChargedShot");
     }
 }

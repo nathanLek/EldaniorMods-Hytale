@@ -13,5 +13,6 @@ public class VipereNoire extends ClassModel {
         super("vipere_noire", "Vipere Noire", "Rapide et venimeuse comme son nom l'indique. Une morsure et c'est fini.",
                 Rarity.RARE, ClassType.ASSASSIN, List.of(PassiveSkill.HAUNTING_THRUST, PassiveSkill.LUCKY_STRIKE, PassiveSkill.PREDATORY_STRIKE), List.of(WeaponMastery.DAGGER), List.of(), 400, false,
                 12, 6, 8, 2, 30, 24);
+        runes("Rune_PoisonImbue");
     }
 }

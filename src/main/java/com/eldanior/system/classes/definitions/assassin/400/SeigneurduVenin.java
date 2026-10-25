@@ -13,5 +13,6 @@ public class SeigneurduVenin extends ClassModel {
         super("seigneur_du_venin", "Seigneur du Venin", "Le maitre absolu des poisons. Son souffle seul est mortel.",
                 Rarity.UNIQUE, ClassType.ASSASSIN, List.of(PassiveSkill.HYDRA_BLOOD, PassiveSkill.SPIRIT_DRAIN, PassiveSkill.ABSOLUTE_PRECISION), List.of(WeaponMastery.DAGGER), List.of(), 400, false,
                 68, 68, 52, 34, 138, 156);
+        runes("Rune_PoisonImbue", "Rune_WindStrike");
     }
 }

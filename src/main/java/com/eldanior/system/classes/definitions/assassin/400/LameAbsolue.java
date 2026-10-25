@@ -13,5 +13,6 @@ public class LameAbsolue extends ClassModel {
         super("lame_absolue", "Lame Absolue", "La lame absolue qui ne peut etre paree ni evitee.",
                 Rarity.UNIQUE, ClassType.ASSASSIN, List.of(PassiveSkill.GENESIS_EDGE, PassiveSkill.DEMIGOD_SWIFTNESS, PassiveSkill.CREATOR_PRECISION), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 174, 64, 20, 64, 310, 166);
+        runes("Rune_WindStrike", "Rune_PoisonImbue");
     }
 }

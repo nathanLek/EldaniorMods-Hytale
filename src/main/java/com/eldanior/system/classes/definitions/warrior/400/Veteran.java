@@ -13,5 +13,6 @@ public class Veteran extends ClassModel {
         super("veteran", "Veteran", "Le Veteran a survecu a d'innombrables batailles. Son experience lui confere une resistance et une endurance que seul le temps de guerre peut forger.",
                 Rarity.RARE, ClassType.WARRIOR, List.of(PassiveSkill.FORTIFIED_SKIN, PassiveSkill.STEEL_CONSTITUTION, PassiveSkill.IRON_RESOLVE), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 26, 50, 7, 34, 10, 7);
+        runes("Rune_GroundSlam");
     }
 }

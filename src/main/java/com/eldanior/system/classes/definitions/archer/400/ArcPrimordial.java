@@ -13,5 +13,6 @@ public class ArcPrimordial extends ClassModel {
         super("arc_primordial", "Arc Primordial", "L'arc le plus ancien du monde. Chaque fleche est chargee de magie primordiale.",
                 Rarity.UNIQUE, ClassType.ARCHER, List.of(PassiveSkill.ARCANE_ANNIHILATION, PassiveSkill.MANA_INFINITY, PassiveSkill.COSMIC_MIND), List.of(WeaponMastery.BOW, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 68, 85, 136, 68, 136, 170);
+        runes("Rune_ChargedShot", "Rune_ChainHook");
     }
 }

@@ -16,5 +16,6 @@ public class GrandMaitrePoison extends ClassModel {
                 List.of(WeaponMastery.DAGGER),
                 List.of("seigneur_du_venin", "hydre_empoisonnee", "venin_absolu"), 400, false,
                 40, 40, 30, 20, 80, 90);
+        runes("Rune_PoisonImbue", "Rune_WindStrike");
     }
 }

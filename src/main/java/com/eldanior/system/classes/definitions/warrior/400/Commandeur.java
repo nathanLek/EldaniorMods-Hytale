@@ -13,5 +13,6 @@ public class Commandeur extends ClassModel {
         super("commandeur", "Commandeur", "Le Commandeur dirige les armees avec une autorite absolue. Son endurance marathonienne et sa resilience mentale en font un leader indestructible.",
                 Rarity.EPIC, ClassType.WARRIOR, List.of(PassiveSkill.MARATHON_RUNNER, PassiveSkill.OVERFLOWING_LIFE, PassiveSkill.TENACITY), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 82, 82, 7, 82, 98, 102);
+        runes("Rune_GroundSlam", "Rune_Enrage");
     }
 }

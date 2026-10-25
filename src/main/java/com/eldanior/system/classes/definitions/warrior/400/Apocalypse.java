@@ -13,5 +13,6 @@ public class Apocalypse extends ClassModel {
         super("apocalypse", "Apocalypse", "L'Apocalypse est l'incarnation de la fin des temps. Sa lame de genese et sa vitesse divine annoncent la destruction totale de tout ce qui existe.",
                 Rarity.LEGENDARY, ClassType.WARRIOR, List.of(PassiveSkill.GENESIS_EDGE, PassiveSkill.GOD_SLAYER_SWIFTNESS, PassiveSkill.SOUL_CRUSHING_PRESSURE), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 476, 204, 68, 204, 204, 136);
+        runes("Rune_Enrage", "Rune_GroundSlam", "Rune_AuraBlade");
     }
 }

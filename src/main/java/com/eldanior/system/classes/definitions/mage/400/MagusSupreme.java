@@ -13,5 +13,6 @@ public class MagusSupreme extends ClassModel {
         super("magus_supreme", "Magus Supreme", "Le magus supreme dont la puissance magique eclipserait le soleil.",
                 Rarity.UNIQUE, ClassType.MAGE, List.of(PassiveSkill.GENIUS_MIND, PassiveSkill.ARCANE_ANNIHILATION, PassiveSkill.MANA_INFINITY), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 34, 104, 208, 86, 52, 70);
+        runes("Rune_PuitsGravitationnel", "Rune_Fireball");
     }
 }

@@ -13,5 +13,6 @@ public class RoidesPirates extends ClassModel {
         super("roi_des_pirates", "Roi des Pirates", "Le seigneur inconteste des mers. Sa flotte est une legende.",
                 Rarity.EPIC, ClassType.ASSASSIN, List.of(PassiveSkill.CRIMSON_BLADE, PassiveSkill.RAZOR_SENSES, PassiveSkill.LIGHTNING_REFLEXES), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 50, 36, 8, 28, 76, 72);
+        runes("Rune_WindStrike", "Rune_Bourrasque");
     }
 }

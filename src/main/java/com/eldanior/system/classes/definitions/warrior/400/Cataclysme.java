@@ -13,5 +13,6 @@ public class Cataclysme extends ClassModel {
         super("cataclysme", "Cataclysme", "Le Cataclysme dechaine des forces capables de remodeler les continents. Sa lame abyssale et sa rapidite surnaturelle sement le chaos absolu.",
                 Rarity.LEGENDARY, ClassType.WARRIOR, List.of(PassiveSkill.ABYSS_BLADE, PassiveSkill.DEMIGOD_SWIFTNESS, PassiveSkill.ANNIHILATING_PRESSURE), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 472, 200, 66, 200, 200, 140);
+        runes("Rune_Enrage", "Rune_GroundSlam", "Rune_AuraBlade");
     }
 }

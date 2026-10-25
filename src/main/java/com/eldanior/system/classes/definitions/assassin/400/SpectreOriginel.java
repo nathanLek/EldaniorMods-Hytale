@@ -13,5 +13,6 @@ public class SpectreOriginel extends ClassModel {
         super("spectre_originel", "Spectre Originel", "Le premier spectre, ne avant les tenebres elles-memes.",
                 Rarity.UNIQUE, ClassType.ASSASSIN, List.of(PassiveSkill.VOID_BLADE, PassiveSkill.FATAL_PRECISION, PassiveSkill.DIMENSIONAL_STEP), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 136, 85, 26, 68, 272, 204);
+        runes("Rune_PuitsGravitationnel", "Rune_WindStrike");
     }
 }

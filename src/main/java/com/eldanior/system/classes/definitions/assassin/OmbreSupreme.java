@@ -16,5 +16,6 @@ public class OmbreSupreme extends ClassModel {
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
                 List.of("ombre_absolue", "nuit_eternelle", "void_supreme"), 400, false,
                 120, 60, 20, 60, 250, 180);
+        runes("Rune_PuitsGravitationnel", "Rune_AutoriteGravitationnelle", "Rune_WindStrike");
     }
 }

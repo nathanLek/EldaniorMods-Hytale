@@ -16,5 +16,6 @@ public class Franc_Tireur extends ClassModel {
                 List.of(WeaponMastery.BOW),
                 List.of("tireur_legendaire", "oeil_de_lynx", "sniper_mystique"), 400, false,
                 20, 15, 10, 10, 50, 50);
+        runes("Rune_ChargedShot");
     }
 }

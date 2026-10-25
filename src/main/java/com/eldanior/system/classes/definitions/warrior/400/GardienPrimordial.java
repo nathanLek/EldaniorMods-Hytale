@@ -13,5 +13,6 @@ public class GardienPrimordial extends ClassModel {
         super("gardien_primordial", "Gardien Primordial", "Le Gardien Primordial protege les secrets ancestraux depuis l'aube des temps. Son corps diamante et sa forteresse de mana repoussent toute intrusion.",
                 Rarity.UNIQUE, ClassType.WARRIOR, List.of(PassiveSkill.DIAMOND_BODY, PassiveSkill.AWAKENED_MIND, PassiveSkill.MANA_CITADEL), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 132, 266, 200, 268, 32, 36);
+        runes("Rune_GroundSlam", "Rune_Enrage");
     }
 }

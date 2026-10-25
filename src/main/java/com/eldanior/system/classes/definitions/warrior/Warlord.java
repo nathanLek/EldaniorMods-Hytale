@@ -24,5 +24,6 @@ public class Warlord extends ClassModel {
                 false,
                 100, 80, 30, 80, 50, 60
         );
+        runes("Rune_GroundSlam", "Rune_Enrage");
     }
 }

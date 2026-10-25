@@ -13,5 +13,6 @@ public class VoixdelEternel extends ClassModel {
         super("voix_de_l_eternel", "Voix de l'Eternel", "La voix qui murmure les secrets de l'eternite.",
                 Rarity.LEGENDARY, ClassType.MAGE, List.of(PassiveSkill.ABSOLUTE_PRECISION, PassiveSkill.CREATOR_MIND, PassiveSkill.HEART_OF_GENESIS), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 64, 174, 480, 140, 132, 208);
+        runes("Rune_Fireball", "Rune_Bourrasque", "Rune_PuitsGravitationnel");
     }
 }

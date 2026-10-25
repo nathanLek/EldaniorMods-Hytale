@@ -16,5 +16,6 @@ public class Eclaireur extends ClassModel {
                 List.of(WeaponMastery.DAGGER, WeaponMastery.BOW),
                 List.of("eclaireur_d_elite", "oeil_percant", "veilleur_ombre"), 400, false,
                 4, 6, 4, 4, 20, 10);
+        runes("Rune_WindStrike");
     }
 }

@@ -16,5 +16,6 @@ public class DieuDesArcanes extends ClassModel {
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
                 List.of("demi_mage"), 400, false,
                 100, 250, 550, 200, 120, 250);
+        runes("Rune_PuitsGravitationnel", "Rune_AutoriteGravitationnelle", "Rune_Fireball");
     }
 }

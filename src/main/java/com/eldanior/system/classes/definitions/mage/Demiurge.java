@@ -16,5 +16,6 @@ public class Demiurge extends ClassModel {
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
                 List.of("demiurge_supreme", "createur_cosmique", "architecte_du_monde"), 400, false,
                 60, 120, 300, 100, 60, 80);
+        runes("Rune_PuitsGravitationnel", "Rune_AutoriteGravitationnelle", "Rune_Fireball");
     }
 }

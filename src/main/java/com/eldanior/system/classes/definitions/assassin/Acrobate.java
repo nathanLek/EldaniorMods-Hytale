@@ -16,5 +16,6 @@ public class Acrobate extends ClassModel {
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
                 List.of("acrobate_virtuose", "danseur_mortel", "artiste_du_combat"), 400, false,
                 6, 6, 2, 4, 24, 8);
+        runes("Rune_WindStrike");
     }
 }

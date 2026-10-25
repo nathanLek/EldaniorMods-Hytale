@@ -13,5 +13,6 @@ public class InfiltreurSupreme extends ClassModel {
         super("infiltreur_supreme", "Infiltreur Supreme", "Aucune forteresse ne peut le contenir. Il entre et sort comme un fantome.",
                 Rarity.EPIC, ClassType.ASSASSIN, List.of(PassiveSkill.DIMENSIONAL_STEP, PassiveSkill.DARK_VISION, PassiveSkill.STEEL_NERVES), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 28, 30, 24, 20, 72, 88);
+        runes("Rune_WindStrike", "Rune_PoisonImbue");
     }
 }

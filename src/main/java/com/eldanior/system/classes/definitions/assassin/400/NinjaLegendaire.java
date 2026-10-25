@@ -13,5 +13,6 @@ public class NinjaLegendaire extends ClassModel {
         super("ninja_legendaire", "Ninja Legendaire", "Un shinobi dont le nom est murmure avec crainte dans tout le continent.",
                 Rarity.EPIC, ClassType.ASSASSIN, List.of(PassiveSkill.STORM_STEP, PassiveSkill.THUNDER_REFLEXES, PassiveSkill.DEADLY_PRECISION), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 44, 26, 18, 18, 112, 52);
+        runes("Rune_WindStrike", "Rune_Bourrasque");
     }
 }

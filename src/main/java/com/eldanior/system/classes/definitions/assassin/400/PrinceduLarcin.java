@@ -13,5 +13,6 @@ public class PrinceduLarcin extends ClassModel {
         super("prince_du_larcin", "Prince du Larcin", "Le prince des voleurs, craint et respecte dans tous les bas-fonds du monde.",
                 Rarity.RARE, ClassType.ASSASSIN, List.of(PassiveSkill.KEEN_SENSES, PassiveSkill.LUCKY_STRIKE, PassiveSkill.PHANTOM_DODGE), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 12, 8, 4, 4, 32, 28);
+        runes("Rune_WindStrike");
     }
 }

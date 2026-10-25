@@ -13,5 +13,6 @@ public class VirtuoseDuSabre extends ClassModel {
         super("virtuose_du_sabre", "Virtuose du Sabre", "Le Virtuose du Sabre a atteint la perfection dans l'art de l'escrime. Chaque mouvement est calcule avec une precision mathematique et une grace mortelle.",
                 Rarity.EPIC, ClassType.WARRIOR, List.of(PassiveSkill.GALE_STEP, PassiveSkill.THUNDER_REFLEXES, PassiveSkill.DEADLY_PRECISION), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 66, 51, 16, 48, 116, 66);
+        runes("Rune_AuraBlade", "Rune_Enrage");
     }
 }

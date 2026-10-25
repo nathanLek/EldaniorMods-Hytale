@@ -231,7 +231,8 @@ public class CombatStatsSystem extends DamageEventSystem {
         float strengthBonus = StatConfig.STRENGTH_DAMAGE.getFinalValue(attackerData, attackerClass);
         float currentDamage = damage.getAmount() + strengthBonus;
 
-        boolean isCrit = LuckSystem.isCriticalHit(attackerData);
+        boolean isCrit = LuckSystem.isCriticalHit(attackerData)
+                || com.eldanior.system.skills.runes.spells.GungnirRavens.huginCrit(attackerRef, store);   // Gungnir : Hugin et Munin
         attackerData.setLastAttackWasCrit(isCrit);
         if (isCrit) {
             currentDamage *= CRIT_MULTIPLIER;

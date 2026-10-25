@@ -13,5 +13,6 @@ public class CreateurCosmique extends ClassModel {
         super("createur_cosmique", "Createur Cosmique", "Le createur cosmique qui donne forme aux etoiles.",
                 Rarity.LEGENDARY, ClassType.MAGE, List.of(PassiveSkill.CREATOR_MIND, PassiveSkill.ARCANE_ANNIHILATION, PassiveSkill.COSMIC_CONSTITUTION), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 98, 200, 506, 166, 98, 140);
+        runes("Rune_PuitsGravitationnel", "Rune_AutoriteGravitationnelle", "Rune_Fireball");
     }
 }

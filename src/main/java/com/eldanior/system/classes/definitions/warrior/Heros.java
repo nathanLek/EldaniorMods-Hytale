@@ -13,5 +13,6 @@ public class Heros extends ClassModel {
         super("heros", "Héros", "L'elu des propheties. Le Heros possede des statistiques parfaitement equilibrees et surpuissantes.",
                 Rarity.LEGENDARY, ClassType.WARRIOR, List.of(PassiveSkill.ABYSS_BLADE, PassiveSkill.COSMIC_CONSTITUTION, PassiveSkill.ABSOLUTE_PRECISION), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of("heros_mythique", "legende_vivante", "paragone"), 400, false,
                 150, 150, 150, 150, 80, 80);
+        runes("Rune_GroundSlam", "Rune_Enrage", "Rune_AuraBlade");
     }
 }

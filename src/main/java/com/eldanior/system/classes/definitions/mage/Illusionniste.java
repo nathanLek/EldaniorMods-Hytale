@@ -16,5 +16,6 @@ public class Illusionniste extends ClassModel {
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
                 List.of("grand_illusionniste", "maitre_du_mirage", "tisseur_d_illusions"), 400, false,
                 6, 20, 45, 15, 40, 35);
+        runes("Rune_Fireball");
     }
 }

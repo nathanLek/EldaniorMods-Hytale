@@ -24,5 +24,6 @@ public class Templier extends ClassModel {
                 false,
                 50, 50, 4, 50, 60, 60
         );
+        runes("Rune_GroundSlam");
     }
 }

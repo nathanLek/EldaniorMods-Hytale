@@ -13,5 +13,6 @@ public class TrancheurNoir extends ClassModel {
         super("trancheur_noir", "Trancheur Noir", "Le trancheur des tenebres dont les coups fendent la realite.",
                 Rarity.EPIC, ClassType.ASSASSIN, List.of(PassiveSkill.SHARP_BLADE, PassiveSkill.BLOOD_HUNT, PassiveSkill.DEADLY_PRECISION), List.of(WeaponMastery.DAGGER), List.of(), 400, false,
                 62, 14, 8, 14, 90, 72);
+        runes("Rune_WindStrike", "Rune_PoisonImbue");
     }
 }

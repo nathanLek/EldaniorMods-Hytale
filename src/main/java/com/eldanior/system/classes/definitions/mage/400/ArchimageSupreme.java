@@ -13,5 +13,6 @@ public class ArchimageSupreme extends ClassModel {
         super("archimage_supreme", "Archimage Supreme", "L'archimage supreme dont le savoir transcende les siecles.",
                 Rarity.EPIC, ClassType.MAGE, List.of(PassiveSkill.GENIUS_MIND, PassiveSkill.MANA_OCEAN, PassiveSkill.SPELLBLADE), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 16, 48, 108, 32, 36, 36);
+        runes("Rune_Fireball", "Rune_Bourrasque");
     }
 }

@@ -13,5 +13,6 @@ public class GrandTemplier extends ClassModel {
         super("grand_templier", "Grand Templier", "Le Grand Templier est le chef supreme de l'ordre sacre. Sa volonte d'acier et sa vitalite inepuisable inspirent ses freres d'armes au combat.",
                 Rarity.EPIC, ClassType.WARRIOR, List.of(PassiveSkill.STEEL_RESOLVE, PassiveSkill.BURSTING_LIFE, PassiveSkill.ATHLETICISM), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 85, 85, 7, 85, 100, 100);
+        runes("Rune_GroundSlam", "Rune_Enrage");
     }
 }

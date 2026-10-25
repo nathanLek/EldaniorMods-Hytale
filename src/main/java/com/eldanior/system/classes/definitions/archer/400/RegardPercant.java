@@ -13,5 +13,6 @@ public class RegardPercant extends ClassModel {
         super("regard_percant", "Regard Percant", "Un regard qui perce toute defense, toute illusion, toute verite.",
                 Rarity.UNIQUE, ClassType.ARCHER, List.of(PassiveSkill.FATAL_PRECISION, PassiveSkill.CRIMSON_BLADE, PassiveSkill.CREATOR_PRECISION), List.of(WeaponMastery.BOW), List.of(), 400, false,
                 96, 72, 32, 54, 196, 260);
+        runes("Rune_ChargedShot", "Rune_ChainHook");
     }
 }

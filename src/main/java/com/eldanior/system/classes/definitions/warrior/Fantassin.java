@@ -24,5 +24,6 @@ public class Fantassin extends ClassModel {
                 false,
                 16, 30, 4, 20, 6, 4
         );
+        runes("Rune_GroundSlam");
     }
 }

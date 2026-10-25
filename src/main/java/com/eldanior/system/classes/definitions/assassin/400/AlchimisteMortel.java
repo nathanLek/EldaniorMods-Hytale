@@ -13,5 +13,6 @@ public class AlchimisteMortel extends ClassModel {
         super("alchimiste_mortel", "Alchimiste Mortel", "Ses poisons sont si raffines qu'une goutte suffit a terrasser un geant.",
                 Rarity.RARE, ClassType.ASSASSIN, List.of(PassiveSkill.HAUNTING_THRUST, PassiveSkill.RAZOR_SENSES, PassiveSkill.DEADLY_PRECISION), List.of(WeaponMastery.DAGGER), List.of(), 400, false,
                 8, 8, 12, 4, 26, 26);
+        runes("Rune_PoisonImbue");
     }
 }

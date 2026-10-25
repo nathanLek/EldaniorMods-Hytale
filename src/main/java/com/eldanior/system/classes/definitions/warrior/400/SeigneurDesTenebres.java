@@ -13,5 +13,6 @@ public class SeigneurDesTenebres extends ClassModel {
         super("seigneur_des_tenebres", "Seigneur des Tenebres", "Le Seigneur des Tenebres regne sur l'obscurite elle-meme. Sa chasse sanglante et ses pas dimensionnels font de lui un predateur surnaturel.",
                 Rarity.UNIQUE, ClassType.WARRIOR, List.of(PassiveSkill.DEATH_HUNT, PassiveSkill.SOUL_CRUSHING_PRESSURE, PassiveSkill.VOID_STEP), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 200, 100, 34, 85, 136, 118);
+        runes("Rune_GroundSlam", "Rune_Enrage");
     }
 }

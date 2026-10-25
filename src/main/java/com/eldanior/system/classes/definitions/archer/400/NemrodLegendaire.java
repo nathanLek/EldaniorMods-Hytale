@@ -13,5 +13,6 @@ public class NemrodLegendaire extends ClassModel {
         super("nemrod_legendaire", "Nemrod Legendaire", "Le chasseur mythique dont les exploits resonnent a travers les ages.",
                 Rarity.EPIC, ClassType.ARCHER, List.of(PassiveSkill.RELENTLESS_HUNT, PassiveSkill.STORM_STEP, PassiveSkill.STEEL_NERVES), List.of(WeaponMastery.BOW, WeaponMastery.DAGGER), List.of(), 400, false,
                 32, 36, 8, 28, 90, 80);
+        runes("Rune_ChainHook", "Rune_ChargedShot");
     }
 }

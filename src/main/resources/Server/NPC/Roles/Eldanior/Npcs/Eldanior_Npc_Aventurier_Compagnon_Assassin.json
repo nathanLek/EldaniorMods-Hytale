@@ -31,7 +31,8 @@
     "LeashDistance": 30,
     "HardLeashDistance": 60,
     "UseCombatActionEvaluator": false,
-    "Attack": "Root_NPC_Attack_Melee",
+    "Attack": "Root_NPC_Eldanior_Assassin_Daggers",
+    "AttackPauseRange": [0.6, 1.0],
     "AttackDistance": 3,
     "DesiredAttackDistanceRange": [2, 2.5],
     "BlockAbility": "",
@@ -40,7 +41,7 @@
         "Interactions": [
           {
             "Parent": "NPC_Attack_Melee_Damage",
-            "DamageCalculator": { "BaseDamage": { "Physical": 14 } }
+            "DamageCalculator": { "BaseDamage": { "Physical": 9 } }
           }
         ]
       }

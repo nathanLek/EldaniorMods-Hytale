@@ -24,5 +24,6 @@ public class Duelliste extends ClassModel {
                 false,
                 16, 12, 4, 8, 18, 10
         );
+        runes("Rune_AuraBlade");
     }
 }

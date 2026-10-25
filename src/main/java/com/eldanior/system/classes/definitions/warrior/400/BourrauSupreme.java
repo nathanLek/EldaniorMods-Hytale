@@ -13,5 +13,6 @@ public class BourrauSupreme extends ClassModel {
         super("bourrau_supreme", "Bourreau Supreme", "Le Bourreau Supreme est l'executeur ultime dont la lame du vide tranche les ames. Sa precision fatale et sa chasse mortelle ne laissent aucun survivant.",
                 Rarity.UNIQUE, ClassType.WARRIOR, List.of(PassiveSkill.ABYSS_BLADE, PassiveSkill.FATAL_PRECISION, PassiveSkill.DEATH_HUNT), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 340, 136, 17, 136, 170, 152);
+        runes("Rune_GroundSlam", "Rune_Enrage");
     }
 }

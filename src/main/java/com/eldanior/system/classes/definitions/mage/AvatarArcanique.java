@@ -16,5 +16,6 @@ public class AvatarArcanique extends ClassModel {
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
                 List.of("demi_arcane"), 400, false,
                 80, 200, 500, 150, 100, 200);
+        runes("Rune_PuitsGravitationnel", "Rune_AutoriteGravitationnelle", "Rune_Fireball");
     }
 }

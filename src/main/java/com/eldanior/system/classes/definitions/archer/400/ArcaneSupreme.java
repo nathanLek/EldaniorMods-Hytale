@@ -13,5 +13,6 @@ public class ArcaneSupreme extends ClassModel {
         super("arcane_supreme", "Arcane Supreme", "La maitrise arcanique absolue. Magie et tir ne font qu'un.",
                 Rarity.UNIQUE, ClassType.ARCHER, List.of(PassiveSkill.ARCANE_ANNIHILATION, PassiveSkill.BRILLIANT_MIND, PassiveSkill.FATAL_PRECISION), List.of(WeaponMastery.BOW, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 64, 88, 140, 64, 132, 164);
+        runes("Rune_ChargedShot", "Rune_ChainHook");
     }
 }

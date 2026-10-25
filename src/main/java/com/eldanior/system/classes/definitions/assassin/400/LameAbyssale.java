@@ -13,5 +13,6 @@ public class LameAbyssale extends ClassModel {
         super("lame_abyssale", "Lame Abyssale", "Sa lame est forgee dans les abysses. Chaque coup draine l'ame.",
                 Rarity.EPIC, ClassType.ASSASSIN, List.of(PassiveSkill.VOID_BLADE, PassiveSkill.RELENTLESS_HUNT, PassiveSkill.SOUL_STEALER), List.of(WeaponMastery.DAGGER), List.of(), 400, false,
                 60, 18, 8, 18, 96, 70);
+        runes("Rune_WindStrike", "Rune_PoisonImbue");
     }
 }

@@ -24,5 +24,6 @@ public class Samourai extends ClassModel {
                 false,
                 45, 25, 10, 20, 60, 40
         );
+        runes("Rune_AuraBlade");
     }
 }

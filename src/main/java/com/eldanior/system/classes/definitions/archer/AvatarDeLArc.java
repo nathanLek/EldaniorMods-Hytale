@@ -16,5 +16,6 @@ public class AvatarDeLArc extends ClassModel {
                 List.of(WeaponMastery.BOW, WeaponMastery.DAGGER),
                 List.of("ascendant_de_l_arc", "arc_divin_leg", "legende_archere"), 400, false,
                 100, 80, 40, 60, 200, 200);
+        runes("Rune_ChargedShot", "Rune_ChainHook", "Rune_Bourrasque");
     }
 }

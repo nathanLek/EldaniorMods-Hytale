@@ -13,5 +13,6 @@ public class ToxineEternelle extends ClassModel {
         super("toxine_eternelle", "Toxine Eternelle", "Un poison qui ne guerit jamais. Eternel comme son createur.",
                 Rarity.UNIQUE, ClassType.ASSASSIN, List.of(PassiveSkill.HYDRA_BLOOD, PassiveSkill.SPIRIT_DRAIN, PassiveSkill.GOD_SLAYER_SWIFTNESS), List.of(WeaponMastery.DAGGER), List.of(), 400, false,
                 104, 96, 64, 64, 208, 234);
+        runes("Rune_PoisonImbue", "Rune_WindStrike");
     }
 }

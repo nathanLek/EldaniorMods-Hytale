@@ -13,5 +13,6 @@ public class SagittaireArcane extends ClassModel {
         super("sagittaire_arcane", "Sagittaire Arcane", "Un archer-mage dont les fleches sont des sorts a part entiere.",
                 Rarity.EPIC, ClassType.ARCHER, List.of(PassiveSkill.EXPANDED_MIND, PassiveSkill.ARCANE_STRIKE, PassiveSkill.MANA_STREAM), List.of(WeaponMastery.BOW, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 24, 24, 64, 16, 68, 68);
+        runes("Rune_ChargedShot", "Rune_ChainHook");
     }
 }

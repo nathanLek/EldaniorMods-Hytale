@@ -16,5 +16,6 @@ public class Alchimiste extends ClassModel {
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
                 List.of("grand_alchimiste", "philosophe_mage", "transmutateur_divin"), 400, false,
                 6, 25, 45, 20, 15, 50);
+        runes("Rune_Fireball");
     }
 }

@@ -16,5 +16,6 @@ public class MaitreOmbre extends ClassModel {
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
                 List.of("souverain_des_ombres", "ombre_eternelle", "void_walker"), 400, false,
                 50, 30, 10, 30, 100, 80);
+        runes("Rune_WindStrike", "Rune_PoisonImbue");
     }
 }

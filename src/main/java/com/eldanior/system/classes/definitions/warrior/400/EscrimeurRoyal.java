@@ -13,5 +13,6 @@ public class EscrimeurRoyal extends ClassModel {
         super("escrimeur_royal", "Escrimeur Royal", "L'Escrimeur Royal incarne la noblesse du combat a l'epee. Forme dans les plus grandes academies, son style est aussi mortel qu'elegant.",
                 Rarity.RARE, ClassType.WARRIOR, List.of(PassiveSkill.INSTINCTIVE_STRIKE, PassiveSkill.SWORD_MASTERY, PassiveSkill.GALE_STEP), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 38, 28, 7, 16, 27, 10);
+        runes("Rune_AuraBlade");
     }
 }

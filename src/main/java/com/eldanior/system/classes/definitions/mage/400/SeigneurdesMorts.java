@@ -13,5 +13,6 @@ public class SeigneurdesMorts extends ClassModel {
         super("seigneur_des_morts", "Seigneur des Morts", "Le seigneur qui commande aux morts. Son armee est infinie.",
                 Rarity.RARE, ClassType.MAGE, List.of(PassiveSkill.SPIRITUAL_SIPHON, PassiveSkill.EXPANDED_MIND, PassiveSkill.HYDRA_BLOOD), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 6, 12, 38, 8, 6, 12);
+        runes("Rune_Fireball");
     }
 }

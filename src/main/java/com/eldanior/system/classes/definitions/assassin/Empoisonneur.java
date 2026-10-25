@@ -16,5 +16,6 @@ public class Empoisonneur extends ClassModel {
                 List.of(WeaponMastery.DAGGER),
                 List.of("maitre_des_poisons", "alchimiste_mortel", "vipere_noire"), 400, false,
                 6, 4, 6, 2, 16, 16);
+        runes("Rune_PoisonImbue");
     }
 }

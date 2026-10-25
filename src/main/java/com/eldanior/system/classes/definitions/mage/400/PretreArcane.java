@@ -13,5 +13,6 @@ public class PretreArcane extends ClassModel {
         super("pretre_arcane", "Pretre Arcane", "Un pretre qui canalise la magie arcanique pour guerir.",
                 Rarity.RARE, ClassType.MAGE, List.of(PassiveSkill.MANA_FONT, PassiveSkill.ROBUST_CONSTITUTION, PassiveSkill.ENRICHED_BLOOD), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 2, 22, 36, 12, 4, 8);
+        runes("Rune_Fireball");
     }
 }

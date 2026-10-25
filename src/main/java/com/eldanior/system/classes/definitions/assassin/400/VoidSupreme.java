@@ -13,5 +13,6 @@ public class VoidSupreme extends ClassModel {
         super("void_supreme", "Void Supreme", "Le neant supreme. Au-dela des ombres, au-dela de tout.",
                 Rarity.LEGENDARY, ClassType.ASSASSIN, List.of(PassiveSkill.CREATOR_EDGE, PassiveSkill.SOUL_CRUSHING_PRESSURE, PassiveSkill.GOD_SLAYER_SWIFTNESS), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 196, 106, 32, 106, 416, 302);
+        runes("Rune_PuitsGravitationnel", "Rune_AutoriteGravitationnelle", "Rune_WindStrike");
     }
 }

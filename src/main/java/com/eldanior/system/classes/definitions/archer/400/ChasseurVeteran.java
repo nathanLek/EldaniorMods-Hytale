@@ -13,5 +13,6 @@ public class ChasseurVeteran extends ClassModel {
         super("chasseur_veteran_archer", "Chasseur Veteran", "Un chasseur aguerri par des decennies de traque dans les terres sauvages.",
                 Rarity.RARE, ClassType.ARCHER, List.of(PassiveSkill.EAGLE_EYE, PassiveSkill.RELENTLESS_HUNT, PassiveSkill.RAZOR_SENSES), List.of(WeaponMastery.BOW, WeaponMastery.DAGGER), List.of(), 400, false,
                 10, 14, 4, 10, 24, 20);
+        runes("Rune_ChainHook");
     }
 }

@@ -13,5 +13,6 @@ public class ArchangeNoir extends ClassModel {
         super("archange_noir", "Archange Noir", "Un archange corrompu dont la puissance rivale celle des dieux.",
                 Rarity.UNIQUE, ClassType.ASSASSIN, List.of(PassiveSkill.VOID_STEP, PassiveSkill.LIGHTNING_REFLEXES, PassiveSkill.ABSOLUTE_PRECISION), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 68, 52, 18, 34, 226, 104);
+        runes("Rune_PuitsGravitationnel", "Rune_WindStrike");
     }
 }

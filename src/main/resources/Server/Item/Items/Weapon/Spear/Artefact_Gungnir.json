@@ -1,0 +1,215 @@
+{
+  "TranslationProperties": {
+    "Name": "Gungnir, la Lance d'Odin",
+    "Description": "Artefact divin. Elle ne manque jamais sa cible et revient toujours dans la main de son porteur. Clic : combo de lance. Maintenir : lancer guidé qui revient (foudre runique à l'impact). Signature, Œil d'Odin : transperce en chaîne jusqu'à 6 ennemis. Hugin et Munin : +10 % de chance critique. Guerriers, Dragons et Marchands."
+  },
+  "Categories": [
+    "Eldanior_System.Artefacts",
+    "Items.Weapons"
+  ],
+  "Quality": "Divin",
+  "ItemLevel": 800,
+  "Model": "Items/Weapons/artefacts/Artefact_Gungnir.blockymodel",
+  "Texture": "Items/Weapons/artefacts/Artefact_Gungnir.png",
+  "Icon": "Icons/ItemsGenerated/Artefact_Gungnir.png",
+  "IconProperties": {
+    "Scale": 0.24,
+    "Translation": [
+      -58,
+      -58
+    ],
+    "Rotation": [
+      45,
+      90,
+      0
+    ]
+  },
+  "MaxStack": 1,
+  "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
+  "PlayerAnimationsId": "Spear",
+  "Reticle": "DefaultMelee",
+  "Interactions": {
+    "Primary": "Root_Gungnir_Attack",
+    "Secondary": "Spear_Block",
+    "Ability1": "Root_Gungnir_Signature"
+  },
+  "InteractionVars": {
+    "Spear_Stab_Damage": {
+      "Interactions": [
+        {
+          "Parent": "Spear_Stab_Damage",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Physical": 55
+            }
+          },
+          "EntityStatsOnHit": [
+            {
+              "EntityStatId": "SignatureEnergy",
+              "Amount": 4
+            }
+          ],
+          "DamageEffects": {
+            "WorldSoundEventId": "SFX_Spear_Impact",
+            "LocalSoundEventId": "SFX_Spear_Impact"
+          }
+        }
+      ]
+    },
+    "Spear_Swing_Left_Damage": {
+      "Interactions": [
+        {
+          "Parent": "Spear_Swing_Left_Damage",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Physical": 30
+            }
+          },
+          "EntityStatsOnHit": [
+            {
+              "EntityStatId": "SignatureEnergy",
+              "Amount": 3
+            }
+          ],
+          "DamageEffects": {
+            "WorldSoundEventId": "SFX_Sword_T2_Impact",
+            "LocalSoundEventId": "SFX_Sword_T2_Impact"
+          }
+        }
+      ]
+    },
+    "Spear_Swing_Right_Damage": {
+      "Interactions": [
+        {
+          "Parent": "Spear_Swing_Right_Damage",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Physical": 30
+            }
+          },
+          "EntityStatsOnHit": [
+            {
+              "EntityStatId": "SignatureEnergy",
+              "Amount": 3
+            }
+          ],
+          "DamageEffects": {
+            "WorldSoundEventId": "SFX_Sword_T2_Impact",
+            "LocalSoundEventId": "SFX_Sword_T2_Impact"
+          }
+        }
+      ]
+    },
+    "Spear_Spin_Swing_Left_Heavy_Damage": {
+      "Interactions": [
+        {
+          "Parent": "Spear_Spin_Swing_Left_Heavy_Damage",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Physical": 70
+            }
+          },
+          "EntityStatsOnHit": [
+            {
+              "EntityStatId": "SignatureEnergy",
+              "Amount": 6
+            }
+          ],
+          "DamageEffects": {
+            "WorldSoundEventId": "SFX_Sword_T2_Impact",
+            "LocalSoundEventId": "SFX_Sword_T2_Impact"
+          }
+        }
+      ]
+    }
+  },
+  "Tags": {
+    "Type": [
+      "Weapon"
+    ],
+    "Family": [
+      "Spear"
+    ]
+  },
+  "MaxDurability": 0,
+  "DurabilityLossOnHit": 0,
+  "Weapon": {
+    "EntityStatsToClear": [
+      "SignatureEnergy"
+    ],
+    "StatModifiers": {
+      "SignatureEnergy": [
+        {
+          "Amount": 20,
+          "CalculationType": "Additive"
+        }
+      ]
+    }
+  },
+  "ItemAppearanceConditions": {
+    "SignatureEnergy": [
+      {
+        "Condition": [
+          100,
+          100
+        ],
+        "ConditionValueType": "Percent",
+        "Particles": [
+          {
+            "SystemId": "Sword_Signature_Ready",
+            "TargetNodeName": "Handle",
+            "PositionOffset": {
+              "X": 1.6
+            },
+            "TargetEntityPart": "PrimaryItem"
+          },
+          {
+            "SystemId": "Sword_Signature_Status",
+            "TargetNodeName": "Handle",
+            "PositionOffset": {
+              "X": 1.4000000000000001
+            },
+            "TargetEntityPart": "PrimaryItem",
+            "Scale": 1.3
+          }
+        ],
+        "FirstPersonParticles": [
+          {
+            "SystemId": "Sword_Signature_Ready",
+            "TargetNodeName": "Handle",
+            "PositionOffset": {
+              "X": 1.2
+            },
+            "TargetEntityPart": "PrimaryItem"
+          },
+          {
+            "SystemId": "Sword_Signature_Status",
+            "TargetNodeName": "Handle",
+            "PositionOffset": {
+              "X": 1.0
+            },
+            "TargetEntityPart": "PrimaryItem",
+            "Scale": 1.3
+          }
+        ],
+        "ModelVFXId": "Sword_Signature_Status"
+      }
+    ]
+  },
+  "Trails": [
+    {
+      "TrailId": "Gungnir_Trail",
+      "TargetNodeName": "Handle",
+      "TargetEntityPart": "PrimaryItem",
+      "PositionOffset": {
+        "X": 1.5,
+        "Y": 0
+      },
+      "RotationOffset": {
+        "Roll": 90
+      }
+    }
+  ],
+  "ItemSoundSetId": "ISS_Weapons_Wood",
+  "Variant": false
+}

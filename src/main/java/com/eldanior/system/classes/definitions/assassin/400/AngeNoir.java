@@ -13,5 +13,6 @@ public class AngeNoir extends ClassModel {
         super("ange_noir", "Ange Noir", "Un ange dechu par choix. Sa justice est celle de la mort.",
                 Rarity.UNIQUE, ClassType.ASSASSIN, List.of(PassiveSkill.CRIMSON_BLADE, PassiveSkill.DEATH_HUNT, PassiveSkill.DIVINE_REFLEXES), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 130, 54, 12, 54, 148, 108);
+        runes("Rune_PuitsGravitationnel", "Rune_WindStrike");
     }
 }

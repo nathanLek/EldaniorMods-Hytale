@@ -13,5 +13,6 @@ public class SpectreSilencieux extends ClassModel {
         super("spectre_silencieux", "Spectre Silencieux", "Plus silencieux que le vent, plus mortel que la nuit.",
                 Rarity.EPIC, ClassType.ASSASSIN, List.of(PassiveSkill.PHANTOM_DODGE, PassiveSkill.GALE_STEP, PassiveSkill.VOID_STEP), List.of(WeaponMastery.DAGGER), List.of(), 400, false,
                 36, 24, 10, 16, 100, 74);
+        runes("Rune_WindStrike", "Rune_PoisonImbue");
     }
 }

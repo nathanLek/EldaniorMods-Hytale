@@ -13,5 +13,6 @@ public class LameduVide extends ClassModel {
         super("lame_du_vide", "Lame du Vide", "Forgee dans le neant, sa lame decoupe la realite elle-meme.",
                 Rarity.UNIQUE, ClassType.ASSASSIN, List.of(PassiveSkill.VOID_BLADE, PassiveSkill.VOID_STEP, PassiveSkill.SOUL_CRUSHING_PRESSURE), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 96, 46, 28, 46, 184, 126);
+        runes("Rune_PuitsGravitationnel", "Rune_WindStrike");
     }
 }

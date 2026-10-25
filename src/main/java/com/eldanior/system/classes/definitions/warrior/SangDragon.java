@@ -13,5 +13,6 @@ public class SangDragon extends ClassModel {
         super("sang_dragon", "Sang-Dragon", "Un guerrier dont les veines brulent d'une magie draconique antique. Choisi par le Dragon Ancestral.",
                 Rarity.DIVINE, ClassType.WARRIOR, List.of(PassiveSkill.GENESIS_EDGE, PassiveSkill.GOD_SLAYER_SWIFTNESS, PassiveSkill.GENESIS_STRIKE), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of("demi_dragon"), 400, false,
                 440, 320, 440, 300, 180, 440);
+        runes("Rune_Enrage", "Rune_GroundSlam", "Rune_AuraBlade");
     }
 }

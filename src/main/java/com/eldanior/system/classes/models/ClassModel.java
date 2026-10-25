@@ -30,6 +30,9 @@ public abstract class ClassModel {
     private final int bonusAgl;
     private final int bonusLck;
 
+    /** Runes de la classe (competences actives, objets Rune_*), declarees dans son constructeur comme ses passifs. */
+    private List<String> runeIds = Collections.emptyList();
+
     public ClassModel(
             String id,
             String displayName,
@@ -98,6 +101,10 @@ public abstract class ClassModel {
 
     public List<PassiveSkill> getSkillsPassiveIds() { return passiveSkills; }
     public List<String> getActiveSkillIds() { return activeSkillIds; }
+    public List<String> getRuneIds() { return runeIds; }
+
+    /** Runes de la classe, dans son constructeur apres super(...) (ecrit par scripts/classes/class_runes.py). */
+    protected final void runes(String... ids) { this.runeIds = List.of(ids); }
     public List<WeaponMastery> getAllowedMasteries() { return allowedMasteries; }
 
     public List<String> getNextClassId() { return nextClassId; }

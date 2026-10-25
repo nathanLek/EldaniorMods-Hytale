@@ -13,5 +13,6 @@ public class FlibustierNoir extends ClassModel {
         super("flibustier_noir", "Flibustier Noir", "Un pirate sans pitie dont le pavillon noir glace le sang.",
                 Rarity.EPIC, ClassType.ASSASSIN, List.of(PassiveSkill.SHARP_BLADE, PassiveSkill.WAR_FRENZY, PassiveSkill.BLOOD_HUNT), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 54, 32, 10, 24, 74, 66);
+        runes("Rune_WindStrike", "Rune_PoisonImbue");
     }
 }

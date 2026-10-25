@@ -16,5 +16,6 @@ public class MaitreChasse extends ClassModel {
                 List.of(WeaponMastery.BOW, WeaponMastery.DAGGER),
                 List.of("chasseur_supreme", "maitre_des_traques", "nemrod_legendaire"), 400, false,
                 20, 20, 5, 15, 55, 45);
+        runes("Rune_ChainHook");
     }
 }

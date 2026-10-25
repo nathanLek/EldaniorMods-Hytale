@@ -24,5 +24,6 @@ public class AvantGarde extends ClassModel {
                 false,
                 30, 80, 10, 70, 20, 10
         );
+        runes("Rune_GroundSlam");
     }
 }

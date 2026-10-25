@@ -13,5 +13,6 @@ public class OmbreEternelle extends ClassModel {
         super("ombre_eternelle", "Ombre Eternelle", "Une ombre qui existera pour toujours. Immortelle et omnipresente.",
                 Rarity.UNIQUE, ClassType.ASSASSIN, List.of(PassiveSkill.DIMENSIONAL_STEP, PassiveSkill.STORM_STEP, PassiveSkill.ABSOLUTE_PRECISION), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 82, 50, 16, 50, 170, 136);
+        runes("Rune_PuitsGravitationnel", "Rune_WindStrike");
     }
 }

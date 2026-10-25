@@ -16,5 +16,6 @@ public class Oracle extends ClassModel {
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
                 List.of("oracle_absolu", "visionnaire_supreme", "prophete_du_destin"), 400, false,
                 10, 40, 100, 30, 40, 80);
+        runes("Rune_Bourrasque", "Rune_Fireball");
     }
 }

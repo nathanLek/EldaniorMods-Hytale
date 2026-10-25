@@ -24,5 +24,6 @@ public class Bretteur extends ClassModel {
                 false,
                 40, 30, 10, 30, 70, 40
         );
+        runes("Rune_AuraBlade");
     }
 }

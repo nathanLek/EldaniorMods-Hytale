@@ -12,5 +12,6 @@ public class DivineApotre extends ClassModel {
         super("DivineApotre", "Apotre Divin", "Dieu t'accorde sa benediction. L'Apotre Divin porte la lumiere divine sur le champ de bataille.",
                 Rarity.DIVINE, ClassType.WARRIOR, List.of(PassiveSkill.CREATOR_EDGE, PassiveSkill.CREATOR_CONSTITUTION, PassiveSkill.CREATOR_PRECISION), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of("demi_dieu"), 400, false,
                 440, 360, 280, 360, 360, 480);
+        runes("Rune_GroundSlam", "Rune_Enrage", "Rune_AuraBlade");
     }
 }

@@ -16,5 +16,6 @@ public class Ninja extends ClassModel {
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
                 List.of("ninja_legendaire", "kage_maitre", "shinobi_supreme"), 400, false,
                 25, 15, 10, 10, 65, 30);
+        runes("Rune_WindStrike");
     }
 }

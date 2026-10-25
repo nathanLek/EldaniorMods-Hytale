@@ -16,5 +16,6 @@ public class Druide extends ClassModel {
                 List.of(WeaponMastery.STAFF),
                 List.of("arche_druide", "gardien_de_la_nature", "druide_primordial"), 400, false,
                 8, 40, 45, 30, 15, 20);
+        runes("Rune_Bourrasque");
     }
 }

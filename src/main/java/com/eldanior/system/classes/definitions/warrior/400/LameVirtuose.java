@@ -13,5 +13,6 @@ public class LameVirtuose extends ClassModel {
         super("lame_virtuose", "Lame Virtuose", "La Lame Virtuose manie l'epee avec une grace incomparable. Chaque mouvement est une oeuvre d'art letale, alliant precision et elegance mortelle.",
                 Rarity.RARE, ClassType.WARRIOR, List.of(PassiveSkill.DUELIST_SWIFTNESS, PassiveSkill.RAZOR_SENSES, PassiveSkill.VITAL_PRESSURE), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 26, 20, 7, 13, 30, 16);
+        runes("Rune_AuraBlade");
     }
 }

@@ -16,5 +16,6 @@ public class Espion extends ClassModel {
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
                 List.of("maitre_espion", "agent_double", "infiltreur_supreme"), 400, false,
                 15, 20, 15, 10, 40, 55);
+        runes("Rune_WindStrike");
     }
 }

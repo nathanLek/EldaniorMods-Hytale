@@ -16,5 +16,6 @@ public class Thaumaturge extends ClassModel {
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
                 List.of("grand_thaumaturge", "maitre_du_prodige", "thaumaturge_royal"), 400, false,
                 8, 35, 50, 25, 15, 25);
+        runes("Rune_Fireball");
     }
 }

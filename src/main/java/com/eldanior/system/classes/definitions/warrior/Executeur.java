@@ -13,5 +13,6 @@ public class Executeur extends ClassModel {
         super("executeur", "Exécuteur", "Le juge et le bourreau. L'Executeur porte des coups destines a tuer instantanement.",
                 Rarity.UNIQUE, ClassType.WARRIOR, List.of(PassiveSkill.VOID_BLADE, PassiveSkill.FATAL_PRECISION, PassiveSkill.DEATH_HUNT), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of("bourrau_supreme", "fauchese_de_guerre", "jugement_final"), 400, false,
                 200, 80, 10, 80, 100, 90);
+        runes("Rune_GroundSlam", "Rune_Enrage");
     }
 }

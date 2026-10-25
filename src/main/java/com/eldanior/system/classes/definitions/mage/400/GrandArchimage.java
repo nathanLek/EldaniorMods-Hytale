@@ -13,5 +13,6 @@ public class GrandArchimage extends ClassModel {
         super("grand_archimage", "Grand Archimage", "Le plus grand archimage vivant. Sa puissance magique est legendaire.",
                 Rarity.EPIC, ClassType.MAGE, List.of(PassiveSkill.BRILLIANT_MIND, PassiveSkill.MANA_FORTRESS, PassiveSkill.ARCANE_DEVASTATION), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 18, 52, 104, 34, 34, 34);
+        runes("Rune_Fireball", "Rune_Bourrasque");
     }
 }

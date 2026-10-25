@@ -13,5 +13,6 @@ public class Invaincu extends ClassModel {
         super("invaincu", "Invaincu", "L'Invaincu n'a jamais connu la defaite. Son corps indestructible et sa volonte d'acier repoussent chaque assaut, transformant l'impossible en victoire.",
                 Rarity.UNIQUE, ClassType.WARRIOR, List.of(PassiveSkill.LIGHTNING_REFLEXES, PassiveSkill.TITAN_CONSTITUTION, PassiveSkill.INVINCIBLE), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 194, 140, 34, 134, 96, 68);
+        runes("Rune_GroundSlam", "Rune_Enrage");
     }
 }

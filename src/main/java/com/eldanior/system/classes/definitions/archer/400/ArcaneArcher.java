@@ -13,5 +13,6 @@ public class ArcaneArcher extends ClassModel {
         super("arcane_archer", "Arcane Archer", "L'archer arcanique ultime. Ses fleches sont des tempetes de magie.",
                 Rarity.UNIQUE, ClassType.ARCHER, List.of(PassiveSkill.ARCANE_ANNIHILATION, PassiveSkill.GENIUS_MIND, PassiveSkill.MANA_OCEAN), List.of(WeaponMastery.BOW, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 52, 52, 86, 34, 122, 104);
+        runes("Rune_ChargedShot", "Rune_ChainHook");
     }
 }

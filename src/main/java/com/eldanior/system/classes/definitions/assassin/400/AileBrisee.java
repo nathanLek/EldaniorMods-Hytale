@@ -13,5 +13,6 @@ public class AileBrisee extends ClassModel {
         super("aile_brisee", "Aile Brisee", "Ses ailes sont brisees mais sa fureur n'a pas de limites.",
                 Rarity.UNIQUE, ClassType.ASSASSIN, List.of(PassiveSkill.CRIMSON_BLADE, PassiveSkill.ACROBATIC_POISE, PassiveSkill.DIVINE_REFLEXES), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 64, 54, 20, 36, 218, 108);
+        runes("Rune_PuitsGravitationnel", "Rune_WindStrike");
     }
 }

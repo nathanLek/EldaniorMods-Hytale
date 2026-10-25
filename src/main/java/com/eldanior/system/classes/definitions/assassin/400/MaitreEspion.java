@@ -13,5 +13,6 @@ public class MaitreEspion extends ClassModel {
         super("maitre_espion", "Maitre Espion", "Le roi des espions. Il connait tous les secrets du monde.",
                 Rarity.EPIC, ClassType.ASSASSIN, List.of(PassiveSkill.PHANTOM_DODGE, PassiveSkill.GOLDEN_TOUCH, PassiveSkill.RAZOR_SENSES), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 26, 34, 26, 18, 70, 96);
+        runes("Rune_WindStrike", "Rune_PoisonImbue");
     }
 }

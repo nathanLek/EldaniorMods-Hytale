@@ -24,5 +24,6 @@ public class Warrior extends ClassModel {
                 false,
                 10, 10, 4, 4, 6, 2
         );
+        runes("Rune_GroundSlam");
     }
 }

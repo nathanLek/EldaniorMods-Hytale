@@ -13,5 +13,6 @@ public class CommandeurdelElite extends ClassModel {
         super("commandeur_de_l_elite", "Commandeur de l'Elite", "Le commandeur de l'elite. Ses ordres sont la victoire.",
                 Rarity.UNIQUE, ClassType.ARCHER, List.of(PassiveSkill.TITAN_CONSTITUTION, PassiveSkill.DEADLY_PRECISION, PassiveSkill.DIVINE_REFLEXES), List.of(WeaponMastery.BOW, WeaponMastery.SWORD), List.of(), 400, false,
                 84, 102, 32, 88, 102, 100);
+        runes("Rune_ChargedShot", "Rune_ChainHook");
     }
 }

@@ -13,5 +13,6 @@ public class EclaireurFantome extends ClassModel {
         super("eclaireur_fantome_archer", "Eclaireur Fantome", "Un eclaireur si rapide qu'il semble se teleporter entre les ombres.",
                 Rarity.RARE, ClassType.ARCHER, List.of(PassiveSkill.GALE_STEP, PassiveSkill.THUNDER_REFLEXES, PassiveSkill.PHANTOM_DODGE), List.of(WeaponMastery.BOW, WeaponMastery.DAGGER), List.of(), 400, false,
                 7, 7, 7, 7, 34, 24);
+        runes("Rune_Bourrasque");
     }
 }

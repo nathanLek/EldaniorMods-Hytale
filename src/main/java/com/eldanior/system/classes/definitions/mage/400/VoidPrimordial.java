@@ -13,5 +13,6 @@ public class VoidPrimordial extends ClassModel {
         super("void_primordial", "Void Primordial", "Le vide primordial d'ou toute magie est nee.",
                 Rarity.UNIQUE, ClassType.MAGE, List.of(PassiveSkill.ABYSS_BLADE, PassiveSkill.ARCANE_SUPREMACY, PassiveSkill.DIMENSIONAL_DODGE), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 36, 98, 300, 82, 100, 140);
+        runes("Rune_PuitsGravitationnel", "Rune_Fireball");
     }
 }

@@ -13,5 +13,6 @@ public class LameSpectrale extends ClassModel {
         super("lame_spectrale", "Lame Spectrale", "Sa lame traverse les armures comme un spectre traverse les murs.",
                 Rarity.UNIQUE, ClassType.ASSASSIN, List.of(PassiveSkill.VOID_BLADE, PassiveSkill.CRUSHING_PRESSURE, PassiveSkill.ABSOLUTE_PRECISION), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 104, 44, 26, 44, 190, 122);
+        runes("Rune_PuitsGravitationnel", "Rune_WindStrike");
     }
 }

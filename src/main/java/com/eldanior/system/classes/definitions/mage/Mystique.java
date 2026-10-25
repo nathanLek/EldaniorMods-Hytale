@@ -16,5 +16,6 @@ public class Mystique extends ClassModel {
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
                 List.of("mystique_superieur", "voyant_arcane", "devin_cosmique"), 400, false,
                 6, 25, 55, 20, 20, 35);
+        runes("Rune_Fireball");
     }
 }

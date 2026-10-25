@@ -13,5 +13,6 @@ public class InfernalMage extends ClassModel {
         super("infernal_mage", "Infernal Mage", "Un mage infernal dont les flammes brulent meme les ames.",
                 Rarity.RARE, ClassType.MAGE, List.of(PassiveSkill.ARCANE_STRIKE, PassiveSkill.SPELLBLADE, PassiveSkill.INSTINCTIVE_STRIKE), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 8, 6, 42, 6, 12, 8);
+        runes("Rune_Fireball");
     }
 }

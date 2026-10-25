@@ -13,5 +13,6 @@ public class CapitaineCorsaire extends ClassModel {
         super("capitaine_corsaire", "Capitaine Corsaire", "Le capitaine des mers sombres, terreur des navires marchands.",
                 Rarity.EPIC, ClassType.ASSASSIN, List.of(PassiveSkill.CRIMSON_BLADE, PassiveSkill.CRITICAL_LUCK, PassiveSkill.BATTLE_FRENZY), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 52, 34, 8, 26, 78, 70);
+        runes("Rune_WindStrike", "Rune_Bourrasque");
     }
 }

@@ -16,5 +16,6 @@ public class Chasseur extends ClassModel {
                 List.of(WeaponMastery.DAGGER, WeaponMastery.BOW, WeaponMastery.SWORD),
                 List.of("chasseur_d_elite", "predateur_supreme", "traqueur_absolu"), 400, false,
                 25, 20, 5, 15, 45, 45);
+        runes("Rune_WindStrike");
     }
 }

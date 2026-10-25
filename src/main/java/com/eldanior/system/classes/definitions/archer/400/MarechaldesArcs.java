@@ -13,5 +13,6 @@ public class MarechaldesArcs extends ClassModel {
         super("marechal_des_arcs", "Marechal des Arcs", "Le plus haut grade des archers. Sa tactique est infaillible.",
                 Rarity.UNIQUE, ClassType.ARCHER, List.of(PassiveSkill.TITAN_CONSTITUTION, PassiveSkill.ABSOLUTE_PRECISION, PassiveSkill.CRIMSON_BLADE), List.of(WeaponMastery.BOW, WeaponMastery.SWORD), List.of(), 400, false,
                 86, 104, 34, 86, 104, 104);
+        runes("Rune_ChargedShot", "Rune_ChainHook");
     }
 }

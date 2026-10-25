@@ -16,5 +16,6 @@ public class EmpereurDesOmbres extends ClassModel {
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
                 List.of("tyran_des_ombres", "monarque_noir", "regne_de_l_ombre"), 400, false,
                 100, 80, 30, 60, 220, 200);
+        runes("Rune_PuitsGravitationnel", "Rune_AutoriteGravitationnelle", "Rune_WindStrike");
     }
 }

@@ -13,5 +13,6 @@ public class PaladinSacre extends ClassModel {
         super("paladin_sacre", "Paladin Sacre", "Le Paladin Sacre est beni par les divinites de la lumiere. Sa foi indefectible lui confere un pouvoir de guerison et de protection miraculeux.",
                 Rarity.EPIC, ClassType.WARRIOR, List.of(PassiveSkill.STEEL_RESOLVE, PassiveSkill.BURSTING_LIFE, PassiveSkill.VITAL_RECOVERY), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD, WeaponMastery.MACE), List.of(), 400, false,
                 66, 85, 34, 68, 34, 50);
+        runes("Rune_GroundSlam", "Rune_Enrage");
     }
 }

@@ -13,5 +13,6 @@ public class RevenantAbsolu extends ClassModel {
         super("revenant_absolu", "Revenant Absolu", "Un revenant que meme la mort ne peut retenir.",
                 Rarity.UNIQUE, ClassType.ASSASSIN, List.of(PassiveSkill.ABYSS_BLADE, PassiveSkill.ABSOLUTE_PRECISION, PassiveSkill.VOID_STEP), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 132, 82, 24, 72, 268, 200);
+        runes("Rune_PuitsGravitationnel", "Rune_WindStrike");
     }
 }

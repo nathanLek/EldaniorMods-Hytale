@@ -13,5 +13,6 @@ public class DemiDieu extends ClassModel {
         super("demi_dieu", "Demi-Dieu", "Le Demi-Dieu a transcende la condition mortelle pour toucher la divinite. Sa precision de createur et sa constitution cosmique en font un etre quasi-omnipotent.",
                 Rarity.DIVINE, ClassType.WARRIOR, List.of(PassiveSkill.CREATOR_EDGE, PassiveSkill.CREATOR_CONSTITUTION, PassiveSkill.CREATOR_PRECISION), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 748, 612, 476, 612, 612, 816);
+        runes("Rune_GroundSlam", "Rune_Enrage", "Rune_AuraBlade");
     }
 }

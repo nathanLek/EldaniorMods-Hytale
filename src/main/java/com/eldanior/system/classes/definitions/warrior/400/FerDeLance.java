@@ -13,5 +13,6 @@ public class FerDeLance extends ClassModel {
         super("fer_de_lance", "Fer de Lance", "Le Fer de Lance charge en premiere ligne avec une bravoure inegalee. Sa constitution d'acier et son esprit indomptable terrorisent l'ennemi.",
                 Rarity.EPIC, ClassType.WARRIOR, List.of(PassiveSkill.UNYIELDING, PassiveSkill.STEEL_CONSTITUTION, PassiveSkill.REACTIVE_BULWARK), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 52, 128, 16, 112, 34, 17);
+        runes("Rune_GroundSlam", "Rune_Enrage");
     }
 }

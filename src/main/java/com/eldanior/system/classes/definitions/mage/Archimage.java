@@ -16,5 +16,6 @@ public class Archimage extends ClassModel {
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
                 List.of("grand_archimage", "archimage_supreme", "archimage_royal"), 400, false,
                 10, 30, 60, 20, 20, 20);
+        runes("Rune_Fireball");
     }
 }

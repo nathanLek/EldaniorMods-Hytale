@@ -13,5 +13,6 @@ public class ArcdesEtoiles extends ClassModel {
         super("arc_des_etoiles", "Arc des Etoiles", "Son arc tire des fleches faites de lumiere stellaire.",
                 Rarity.EPIC, ClassType.ARCHER, List.of(PassiveSkill.SPELLBLADE, PassiveSkill.GENIUS_MIND, PassiveSkill.STORM_STEP), List.of(WeaponMastery.BOW, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 28, 28, 56, 20, 72, 66);
+        runes("Rune_ChargedShot", "Rune_ChainHook");
     }
 }

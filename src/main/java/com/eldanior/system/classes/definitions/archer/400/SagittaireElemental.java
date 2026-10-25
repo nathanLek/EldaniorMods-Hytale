@@ -13,5 +13,6 @@ public class SagittaireElemental extends ClassModel {
         super("sagittaire_elemental", "Sagittaire Elemental", "Le sagittaire maitre de tous les elements.",
                 Rarity.UNIQUE, ClassType.ARCHER, List.of(PassiveSkill.ARCANE_DEVASTATION, PassiveSkill.BRILLIANT_MIND, PassiveSkill.VOID_STEP), List.of(WeaponMastery.BOW, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 48, 50, 90, 32, 118, 100);
+        runes("Rune_ChargedShot", "Rune_ChainHook");
     }
 }

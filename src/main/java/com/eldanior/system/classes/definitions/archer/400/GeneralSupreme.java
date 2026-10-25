@@ -13,5 +13,6 @@ public class GeneralSupreme extends ClassModel {
         super("general_supreme", "General Supreme", "Le general supreme des armees, maitre de la guerre a distance.",
                 Rarity.UNIQUE, ClassType.ARCHER, List.of(PassiveSkill.COSMIC_CONSTITUTION, PassiveSkill.FATAL_PRECISION, PassiveSkill.LIGHTNING_REFLEXES), List.of(WeaponMastery.BOW, WeaponMastery.SWORD), List.of(), 400, false,
                 82, 100, 36, 82, 100, 108);
+        runes("Rune_ChargedShot", "Rune_ChainHook");
     }
 }

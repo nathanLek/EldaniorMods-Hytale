@@ -16,5 +16,6 @@ public class Liche extends ClassModel {
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
                 List.of("arche_liche", "liche_eternelle", "seigneur_non_mort"), 400, false,
                 15, 50, 110, 60, 20, 50);
+        runes("Rune_Fireball", "Rune_Bourrasque");
     }
 }

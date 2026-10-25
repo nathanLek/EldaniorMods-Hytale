@@ -24,5 +24,6 @@ public class LameMage extends ClassModel {
                 false,
                 40, 40, 60, 30, 30, 20
         );
+        runes("Rune_AuraBlade");
     }
 }

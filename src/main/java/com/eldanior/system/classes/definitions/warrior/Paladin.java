@@ -24,5 +24,6 @@ public class Paladin extends ClassModel {
                 false,
                 40, 50, 20, 40, 20, 30
         );
+        runes("Rune_GroundSlam");
     }
 }

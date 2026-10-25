@@ -13,5 +13,6 @@ public class Sentinelle extends ClassModel {
         super("sentinelle", "Sentinelle", "La Sentinelle veille sans relache sur les siens. Ses reflexes defensifs et sa recuperation naturelle font d'elle un gardien infatigable.",
                 Rarity.RARE, ClassType.WARRIOR, List.of(PassiveSkill.NATURAL_RECOVERY, PassiveSkill.ADAPTIVE_SHIELD, PassiveSkill.IRON_RESOLVE), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 20, 38, 4, 30, 11, 7);
+        runes("Rune_GroundSlam");
     }
 }

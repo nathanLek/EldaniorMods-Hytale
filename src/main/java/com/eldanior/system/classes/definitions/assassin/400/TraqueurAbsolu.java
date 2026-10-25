@@ -13,5 +13,6 @@ public class TraqueurAbsolu extends ClassModel {
         super("traqueur_absolu", "Traqueur Absolu", "Sa traque est implacable. Une fois la piste relevee, c'est deja fini.",
                 Rarity.EPIC, ClassType.ASSASSIN, List.of(PassiveSkill.RELENTLESS_HUNT, PassiveSkill.MARATHON_RUNNER, PassiveSkill.STORM_STEP), List.of(WeaponMastery.DAGGER, WeaponMastery.BOW, WeaponMastery.SWORD), List.of(), 400, false,
                 40, 36, 8, 28, 74, 74);
+        runes("Rune_WindStrike", "Rune_PoisonImbue");
     }
 }

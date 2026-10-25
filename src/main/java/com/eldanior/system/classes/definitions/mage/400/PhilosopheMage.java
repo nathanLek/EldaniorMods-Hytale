@@ -13,5 +13,6 @@ public class PhilosopheMage extends ClassModel {
         super("philosophe_mage", "Philosophe Mage", "Un philosophe-mage qui cherche la verite ultime par l'alchimie.",
                 Rarity.EPIC, ClassType.MAGE, List.of(PassiveSkill.EXPANDED_MIND, PassiveSkill.TROLL_BLOOD, PassiveSkill.BRILLIANT_MIND), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 8, 42, 76, 32, 24, 82);
+        runes("Rune_Fireball", "Rune_Bourrasque");
     }
 }

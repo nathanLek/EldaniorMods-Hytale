@@ -13,5 +13,6 @@ public class TraqueurImplacable extends ClassModel {
         super("traqueur_implacable", "Traqueur Implacable", "Une fois sa cible marquee, rien ne peut l'arreter.",
                 Rarity.EPIC, ClassType.ASSASSIN, List.of(PassiveSkill.RELENTLESS_HUNT, PassiveSkill.HAWK_EYE, PassiveSkill.FATAL_PRECISION), List.of(WeaponMastery.DAGGER, WeaponMastery.BOW), List.of(), 400, false,
                 34, 26, 8, 26, 86, 86);
+        runes("Rune_WindStrike", "Rune_PoisonImbue");
     }
 }

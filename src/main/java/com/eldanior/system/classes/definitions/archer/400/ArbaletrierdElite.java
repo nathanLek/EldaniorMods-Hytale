@@ -13,5 +13,6 @@ public class ArbaletrierdElite extends ClassModel {
         super("arbaletrier_d_elite", "Arbaletrier d'Elite", "Un arbaletrier d'elite dont les carreaux percent les armures les plus epaisses.",
                 Rarity.RARE, ClassType.ARCHER, List.of(PassiveSkill.PRESSURE_POINT, PassiveSkill.DEADLY_PRECISION, PassiveSkill.RAZOR_SENSES), List.of(WeaponMastery.BOW), List.of(), 400, false,
                 14, 14, 4, 10, 20, 20);
+        runes("Rune_ChargedShot");
     }
 }

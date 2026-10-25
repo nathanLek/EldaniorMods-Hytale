@@ -13,5 +13,6 @@ public class FaucheseDeGuerre extends ClassModel {
         super("fauchese_de_guerre", "Faucheuse de Guerre", "La Faucheuse de Guerre moissonne les vies sur le champ de bataille comme du ble. Sa lame abyssale et ses sens aiguises font d'elle l'incarnation de la mort.",
                 Rarity.UNIQUE, ClassType.WARRIOR, List.of(PassiveSkill.VOID_BLADE, PassiveSkill.ABSOLUTE_PRECISION, PassiveSkill.DEATH_HUNT), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 336, 132, 16, 132, 168, 154);
+        runes("Rune_GroundSlam", "Rune_Enrage");
     }
 }

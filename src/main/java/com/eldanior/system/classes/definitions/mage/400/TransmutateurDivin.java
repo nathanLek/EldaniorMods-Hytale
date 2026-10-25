@@ -13,5 +13,6 @@ public class TransmutateurDivin extends ClassModel {
         super("transmutateur_divin", "Transmutateur Divin", "Le transmutateur dont les creations rivalisent avec celles des dieux.",
                 Rarity.EPIC, ClassType.MAGE, List.of(PassiveSkill.GOLDEN_TOUCH, PassiveSkill.MANA_OCEAN, PassiveSkill.ENRICHED_BLOOD), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 12, 46, 74, 36, 28, 84);
+        runes("Rune_Fireball", "Rune_Bourrasque");
     }
 }

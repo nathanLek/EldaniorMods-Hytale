@@ -13,5 +13,6 @@ public class GardeForestier extends ClassModel {
         super("garde_forestier", "Garde Forestier", "Le gardien supreme de la foret dont l'arc ne rate jamais.",
                 Rarity.EPIC, ClassType.ARCHER, List.of(PassiveSkill.OVERFLOWING_LIFE, PassiveSkill.RAZOR_SENSES, PassiveSkill.CRITICAL_LUCK), List.of(WeaponMastery.BOW, WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 40, 50, 16, 36, 68, 62);
+        runes("Rune_ChainHook", "Rune_ChargedShot");
     }
 }

@@ -13,5 +13,6 @@ public class DemiDieuArcher extends ClassModel {
         super("demi_dieu_archer", "Demi-Dieu Archer", "A mi-chemin entre le mortel et le divin. Ses fleches percent les cieux.",
                 Rarity.DIVINE, ClassType.ARCHER, List.of(PassiveSkill.CREATOR_EDGE, PassiveSkill.CREATOR_PRECISION, PassiveSkill.CREATOR_SWIFTNESS), List.of(WeaponMastery.BOW, WeaponMastery.DAGGER), List.of(), 400, false,
                 255, 204, 102, 136, 595, 595);
+        runes("Rune_ChargedShot", "Rune_ChainHook", "Rune_Bourrasque");
     }
 }

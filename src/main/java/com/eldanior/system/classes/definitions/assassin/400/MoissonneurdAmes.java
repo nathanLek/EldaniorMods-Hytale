@@ -13,5 +13,6 @@ public class MoissonneurdAmes extends ClassModel {
         super("moissonneur_d_ames", "Moissonneur d'Ames", "Chaque coup recolte une ame. Son fardeau est eternel.",
                 Rarity.UNIQUE, ClassType.ASSASSIN, List.of(PassiveSkill.VOID_BLADE, PassiveSkill.CRIMSON_BLADE, PassiveSkill.SPIRIT_DRAIN), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 134, 50, 10, 50, 152, 100);
+        runes("Rune_PuitsGravitationnel", "Rune_WindStrike");
     }
 }

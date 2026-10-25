@@ -13,5 +13,6 @@ public class AgentDouble extends ClassModel {
         super("agent_double", "Agent Double", "Un maitre de la duplicite qui joue tous les camps a la fois.",
                 Rarity.EPIC, ClassType.ASSASSIN, List.of(PassiveSkill.SHADOW_DODGE, PassiveSkill.CRITICAL_LUCK, PassiveSkill.KEEN_SENSES), List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 24, 32, 28, 16, 68, 92);
+        runes("Rune_WindStrike", "Rune_PoisonImbue");
     }
 }

@@ -16,5 +16,6 @@ public class DieuDesOmbres extends ClassModel {
                 List.of(WeaponMastery.DAGGER, WeaponMastery.SWORD),
                 List.of("demi_ombre"), 400, false,
                 200, 150, 50, 120, 450, 400);
+        runes("Rune_PuitsGravitationnel", "Rune_AutoriteGravitationnelle", "Rune_WindStrike");
     }
 }

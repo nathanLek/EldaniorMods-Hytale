@@ -24,5 +24,6 @@ public class Epeiste extends ClassModel {
                 false,
                 24, 16, 4, 10, 16, 6
         );
+        runes("Rune_AuraBlade");
     }
 }

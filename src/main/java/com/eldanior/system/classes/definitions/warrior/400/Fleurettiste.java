@@ -13,5 +13,6 @@ public class Fleurettiste extends ClassModel {
         super("fleurettiste", "Fleurettiste", "Le Fleurettiste excelle dans l'art de la touche precise. Sa lame fine frappe comme l'eclair aux points vitaux, laissant l'ennemi sans defense.",
                 Rarity.RARE, ClassType.WARRIOR, List.of(PassiveSkill.PRESSURE_POINT, PassiveSkill.WIND_STEP, PassiveSkill.LIGHT_REFLEXES), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 26, 19, 6, 13, 32, 16);
+        runes("Rune_AuraBlade");
     }
 }

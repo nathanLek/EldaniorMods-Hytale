@@ -13,5 +13,6 @@ public class GardienRunique extends ClassModel {
         super("gardien_runique", "Gardien Runique", "Son armure est gravee de sceaux le rendant insensible aux elements. Le Gardien Runique allie magie et defense.",
                 Rarity.UNIQUE, ClassType.WARRIOR, List.of(PassiveSkill.DIAMOND_BODY, PassiveSkill.GENIUS_MIND, PassiveSkill.MANA_CITADEL), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of("archon_runique", "gardien_primordial", "sage_de_guerre"), 400, false,
                 80, 160, 120, 160, 20, 20);
+        runes("Rune_AuraBlade", "Rune_Enrage");
     }
 }

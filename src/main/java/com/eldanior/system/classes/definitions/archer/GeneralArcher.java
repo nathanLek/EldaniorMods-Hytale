@@ -16,5 +16,6 @@ public class GeneralArcher extends ClassModel {
                 List.of(WeaponMastery.BOW, WeaponMastery.SWORD),
                 List.of("marechal_des_arcs", "general_supreme", "commandeur_de_l_elite"), 400, false,
                 50, 60, 20, 50, 60, 60);
+        runes("Rune_ChargedShot", "Rune_ChainHook");
     }
 }

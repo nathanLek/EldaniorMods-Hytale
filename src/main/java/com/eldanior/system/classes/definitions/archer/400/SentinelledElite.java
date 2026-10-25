@@ -13,5 +13,6 @@ public class SentinelledElite extends ClassModel {
         super("sentinelle_d_elite", "Sentinelle d'Elite", "La sentinelle ultime. Rien ne passe sans qu'elle le sache.",
                 Rarity.EPIC, ClassType.ARCHER, List.of(PassiveSkill.MARATHON_RUNNER, PassiveSkill.LIGHTNING_REFLEXES, PassiveSkill.EAGLE_EYE), List.of(WeaponMastery.BOW, WeaponMastery.DAGGER, WeaponMastery.SWORD), List.of(), 400, false,
                 42, 54, 20, 32, 72, 58);
+        runes("Rune_ChargedShot", "Rune_ChainHook");
     }
 }

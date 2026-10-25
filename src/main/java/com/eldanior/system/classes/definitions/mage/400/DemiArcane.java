@@ -13,5 +13,6 @@ public class DemiArcane extends ClassModel {
         super("demi_arcane", "Demi-Arcane", "A mi-chemin entre le mortel et la pure magie. Un etre de pouvoir brut.",
                 Rarity.DIVINE, ClassType.MAGE, List.of(PassiveSkill.INFINITE_MIND, PassiveSkill.ARCANE_GENESIS, PassiveSkill.CREATOR_CONSTITUTION), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 136, 340, 850, 255, 170, 340);
+        runes("Rune_PuitsGravitationnel", "Rune_AutoriteGravitationnelle", "Rune_Fireball");
     }
 }

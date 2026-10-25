@@ -13,5 +13,6 @@ public class InvocateurSupreme extends ClassModel {
         super("invocateur_supreme", "Invocateur Supreme", "Le plus grand invocateur. Ses creatures sont les plus puissantes.",
                 Rarity.RARE, ClassType.MAGE, List.of(PassiveSkill.AWAKENED_MIND, PassiveSkill.MANA_STREAM, PassiveSkill.EXPANDED_MIND), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 4, 14, 40, 14, 7, 7);
+        runes("Rune_Fireball");
     }
 }

@@ -13,5 +13,6 @@ public class GrandGuerisseur extends ClassModel {
         super("grand_guerisseur", "Grand Guerisseur", "Le plus grand guerisseur connu. Ses soins guerissent meme les blessures de l'ame.",
                 Rarity.RARE, ClassType.MAGE, List.of(PassiveSkill.NATURAL_RECOVERY, PassiveSkill.VITAL_RECOVERY, PassiveSkill.OVERFLOWING_LIFE), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 4, 24, 34, 14, 4, 7);
+        runes("Rune_Bourrasque");
     }
 }

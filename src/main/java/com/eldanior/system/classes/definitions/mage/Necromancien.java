@@ -17,5 +17,6 @@ public class Necromancien extends ClassModel {
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
                 List.of("necromancien_noir", "seigneur_des_morts", "invocateur_d_ames"), 400, false,
                 4, 6, 24, 4, 4, 8);
+        runes("Rune_Fireball");
     }
 }

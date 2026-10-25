@@ -13,5 +13,6 @@ public class DemiurgeSupreme extends ClassModel {
         super("demiurge_supreme", "Demiurge Supreme", "Le demiurge supreme dont le pouvoir facon la realite.",
                 Rarity.LEGENDARY, ClassType.MAGE, List.of(PassiveSkill.COSMIC_MIND, PassiveSkill.MANA_INFINITY, PassiveSkill.HEART_OF_GENESIS), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 102, 204, 510, 170, 102, 136);
+        runes("Rune_PuitsGravitationnel", "Rune_AutoriteGravitationnelle", "Rune_Fireball");
     }
 }

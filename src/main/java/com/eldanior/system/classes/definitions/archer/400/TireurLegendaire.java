@@ -13,5 +13,6 @@ public class TireurLegendaire extends ClassModel {
         super("tireur_legendaire", "Tireur Legendaire", "Un tireur dont la legende est contee dans tous les royaumes.",
                 Rarity.EPIC, ClassType.ARCHER, List.of(PassiveSkill.HAWK_EYE, PassiveSkill.FATAL_PRECISION, PassiveSkill.CRIMSON_BLADE), List.of(WeaponMastery.BOW), List.of(), 400, false,
                 34, 26, 18, 18, 86, 86);
+        runes("Rune_ChargedShot", "Rune_ChainHook");
     }
 }

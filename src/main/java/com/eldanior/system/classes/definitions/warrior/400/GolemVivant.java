@@ -13,5 +13,6 @@ public class GolemVivant extends ClassModel {
         super("golem_vivant", "Golem Vivant", "Le Golem Vivant est une creation impossible de chair et de roche. Son corps indestructible regenere sans cesse, absorbant tout dommage sans broncher.",
                 Rarity.UNIQUE, ClassType.WARRIOR, List.of(PassiveSkill.STEEL_BODY, PassiveSkill.TROLL_BLOOD, PassiveSkill.UNMOVABLE_MOUNTAIN), List.of(WeaponMastery.SWORD, WeaponMastery.AXE, WeaponMastery.SHIELD), List.of(), 400, false,
                 96, 240, 16, 234, 32, 52);
+        runes("Rune_GroundSlam", "Rune_Enrage");
     }
 }
