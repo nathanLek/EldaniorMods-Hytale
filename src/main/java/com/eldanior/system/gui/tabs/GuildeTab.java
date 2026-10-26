@@ -84,7 +84,7 @@ public class GuildeTab {
         String role = data.getGuildRole();
         String roleDisplay = "CHEF".equals(role) ? "Chef" : "OFFICER".equals(role) ? "Officier" : "Membre";
         ui.set("#GuildeRole.Text", roleDisplay);
-        ui.set("#GuildeMemberCount.Text", String.valueOf(guild.getMemberCount()));
+        ui.set("#GuildeMemberCount.Text", guild.getMemberCount() + " / " + guild.getMaxMembers());
 
         // Treasury
         ui.set("#GuildeTreasury.Text", guild.getTreasury() + " Or");
@@ -95,6 +95,9 @@ public class GuildeTab {
         ui.set("#GuildeStatMobs.Text", String.valueOf(guild.getTotalMobKills()));
         ui.set("#GuildeStatPvP.Text", String.valueOf(guild.getTotalPlayerKills()));
         ui.set("#GuildeStatDeaths.Text", String.valueOf(guild.getTotalDeaths()));
+
+        populateUpgrades(ui, guild);
+        populateContracts(ui, guild, playerUUID);
 
         // Accordion state
         String currentAccordion = openAccordion.get(playerUUID);
@@ -138,6 +141,37 @@ public class GuildeTab {
 
         // Danger zone
         ui.set("#GuildeBtnDisband.Visible", isChef);
+    }
+
+    // ==================== AMELIORATIONS, CONTRATS, MISSIONS ====================
+
+    /** Ameliorations achetees chez le Maitre de guilde : niveau et bonus actuel. */
+    private static void populateUpgrades(UICommandBuilder ui, Guild guild) {
+        com.eldanior.system.guild.GuildUpgrade[] all = com.eldanior.system.guild.GuildUpgrade.values();
+        for (int i = 0; i < all.length; i++) {
+            int level = guild.getUpgrade(all[i]);
+            ui.set("#GuildeUpgLevel" + i + ".Text", level + "/" + all[i].getMaxLevel());
+            ui.set("#GuildeUpgEffect" + i + ".Text", level == 0 ? "Aucun bonus" : all[i].describe(level).replace(" pour tous les membres", ""));
+        }
+    }
+
+    /** Contrats de la semaine (tableau de guilde) : avancement de la guilde ; missions en cours du joueur. */
+    private static void populateContracts(UICommandBuilder ui, Guild guild, UUID playerUUID) {
+        List<com.eldanior.system.boards.GuildBoard.ContractView> contracts = com.eldanior.system.boards.GuildBoard.contractsOf(guild);
+        for (int i = 0; i < 3; i++) {
+            boolean shown = i < contracts.size();
+            ui.set("#GuildeContract" + i + ".Visible", shown);
+            if (!shown) continue;
+            var c = contracts.get(i);
+            ui.set("#GuildeContractName" + i + ".Text", c.title() + " - " + c.objective());
+            ui.set("#GuildeContractBar" + i + ".Value", (float) c.progress() / Math.max(1, c.count()));
+            ui.set("#GuildeContractProg" + i + ".Text", c.done() ? "ACCOMPLI" : c.progress() + " / " + c.count());
+            ui.set("#GuildeContractReward" + i + ".Text", c.treasury() + " Or");
+        }
+        long days = com.eldanior.system.boards.GuildBoard.daysLeft();
+        ui.set("#GuildeContractsEnd.Text", days == 0 ? "Fin ce soir" : "Fin dans " + days + " j");
+        int missions = com.eldanior.system.boards.GuildBoard.missionsOf(playerUUID).size();
+        ui.set("#GuildeMissions.Text", "Vos missions : " + missions + " / 2 (onglet Quetes)");
     }
 
     // ==================== MEMBERS ACCORDION ====================
@@ -349,7 +383,7 @@ public class GuildeTab {
                 cachedIds.add(g.getId());
                 ui.set("#GOpenGuild" + i + ".Visible", true);
                 ui.set("#GOpenGuildName" + i + ".Text", g.getName() + " " + g.getFormattedTag());
-                ui.set("#GOpenGuildMembers" + i + ".Text", g.getMemberCount() + " membres");
+                ui.set("#GOpenGuildMembers" + i + ".Text", g.getMemberCount() + " / " + g.getMaxMembers());
                 ui.set("#GOpenGuildBtn" + i + ".Text", "REJOINDRE");
             } else {
                 ui.set("#GOpenGuild" + i + ".Visible", false);
@@ -728,7 +762,7 @@ public class GuildeTab {
 
         String guildId = cachedGuilds.get(idx);
         Guild guild = GuildManager.get(guildId);
-        if (guild == null || !guild.isOpenRecruitment()) return false;
+        if (guild == null || !guild.isOpenRecruitment() || guild.isFull()) return false;   // complete : GuildUpgrade.EFFECTIFS
 
         ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
         PlayerLevelData data = store.getComponent(ref, type);

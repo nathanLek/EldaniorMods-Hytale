@@ -1,0 +1,46 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune du Mur de Flammes",
+    "Description": "Sort rare de feu (Mage, rune de prédilection du Maître des Flammes). Un mur de flammes de 10 blocs de large s'élève à l'endroit visé (jusqu'à 20 blocs), en travers de votre regard, pendant 6 s. Tout ennemi qui le touche ou le traverse subit 10 dégâts de feu toutes les demi-secondes et brûle (4 dégâts par seconde pendant 5 s). Parfait pour couper une charge ou protéger une retraite. Épargne votre groupe, votre guilde et votre famille. Coût : 120 mana. Recharge : 60 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_MurDeFlammes.png",
+  "Quality": "Rare",
+  "ItemLevel": 40,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_System.Competences_Actives"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_MurDeFlammes.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 60,
+    "Cost": 120,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Fire",
+      "Damage",
+      "Aoe",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_MurDeFlammes"
+  }
+}

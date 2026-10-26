@@ -1,0 +1,62 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_GolemDePierre",
+  "spell": "GolemDePierre",
+  "javaClass": "GolemDePierre",
+  "page": "rune_page_golem_de_pierre",
+  "name": "Rune du Golem de Pierre",
+  "type": "Terre",
+  "rarity": "Rare",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Golem",
+  "summary": "invoque un golem de pierre 20 s qui provoque les ennemis proches et se bat a vos cotes.",
+  "description": "Sort rare de terre (Mage, rune de prédilection de l'Invocateur Suprême). Un golem de pierre (600 PV) surgit du sol devant vous pendant 20 s. Il provoque les ennemis à moins de 8 blocs, qui s'acharnent sur lui, et frappe l'ennemi le plus proche ; sans ennemi, il vous suit. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin lourd, taillé dans une fine plaque d'ardoise. Enseigne le Golem de Pierre : un gardien qui encaisse les coups à votre place. Classes : tous les Mages (rune de prédilection de l'Invocateur Suprême). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.6,
+    "releaseTime": 0.5,
+    "moveSpeed": 0.4,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Golem_Frost_Wake",
+    "handParticles": "Gaia_Dust_Burst",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.6,
+    "range": 4,
+    "targets": "golem allie (PNJ Eldanior_Summon_Golem, Template_Summoned_Ally)",
+    "executionFx": "Gaia_Dust_Burst a l'apparition",
+    "effects": "golem 600 PV, attaque vanilla du golem de cristal ; provocation : ennemis a 8 blocs forces hostiles au golem + LockedTarget (1 s)",
+    "terrain": "aucun",
+    "persistentDurationS": 20,
+    "restrictions": "mage",
+    "limitations": "invocation : duree au-dela de la fourchette Rare (6 s) car une invocation de 6 s n'a pas de sens ; compensee par des PV limites et une recharge de 60 s",
+    "balance": {
+      "damage": 1,
+      "range": 1,
+      "duration": 3,
+      "mobility": 0,
+      "control": 2,
+      "defense": 3,
+      "targets": 2,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 0
+    }
+  }
+}

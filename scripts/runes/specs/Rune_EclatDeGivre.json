@@ -1,0 +1,66 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_EclatDeGivre",
+  "spell": "EclatDeGivre",
+  "javaClass": "EclatDeGivre",
+  "page": "rune_page_eclat_de_givre",
+  "name": "Rune d'Éclat de Givre",
+  "type": "Glace",
+  "rarity": "Common",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "EclatGivre",
+  "summary": "boule de givre rapide qui touche le premier ennemi et le ralentit.",
+  "description": "Sort commun de glace (Mage, rune de prédilection du Cryomancien). Vous lancez un éclat de givre qui file à 40 blocs par seconde (portée 30 blocs). Le premier ennemi touché subit 45 dégâts de glace et est ralenti de moitié pendant 6 s. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin couvert de givre qui ne fond jamais. Enseigne l'Éclat de Givre : un projectile glacé qui ralentit sa cible. Classes : tous les Mages (rune de prédilection du Cryomancien). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Projectile"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Spellbook",
+    "charging": "CastHurlCharging",
+    "release": "CastHurlCharged",
+    "chargeTime": 0.25,
+    "releaseTime": 0.3,
+    "moveSpeed": 0.7,
+    "cameraEffect": null,
+    "sound": null,
+    "releaseSound": "SFX_Arrow_Frost_Hit",
+    "handParticles": "Ice_Staff_Charging",
+    "handParticlesScale": 0.35,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.25,
+    "range": 30,
+    "radius": "contact 1.2",
+    "targets": "premier ennemi touche",
+    "executionFx": "modele Ice_Ball (Projectile_Config_EclatDeGivre) deplace par le code",
+    "impactFx": "Impact_Ice",
+    "sounds": "SFX_Arrow_Frost_Hit, SFX_Ice_Ball_Death",
+    "effects": "45 Ice + Elda_Givre (vitesse x0.5, 6 s)",
+    "terrain": "aucun",
+    "persistentDurationS": 1,
+    "restrictions": "mage",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 1,
+      "mobility": 0,
+      "control": 1,
+      "defense": 0,
+      "targets": 0,
+      "frequency": 2,
+      "terrain": 0,
+      "difficulty": 1
+    },
+    "edgeCases": "comme Flammeche"
+  }
+}

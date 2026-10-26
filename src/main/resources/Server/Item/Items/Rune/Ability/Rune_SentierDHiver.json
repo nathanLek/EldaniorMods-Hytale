@@ -1,0 +1,46 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune du Sentier d'Hiver",
+    "Description": "Sort rare de glace (Mage, rune de prédilection du Seigneur du Froid). Pendant 6 s, la neige recouvre le sol sous vos pas. Les ennemis qui marchent sur votre sentier subissent 8 dégâts de glace toutes les demi-secondes et sont ralentis ; après 2 s sur la neige, ils gèlent 1,5 s. La neige fond après 30 s. Épargne votre groupe, votre guilde et votre famille. Coût : 120 mana. Recharge : 60 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_SentierDHiver.png",
+  "Quality": "Rare",
+  "ItemLevel": 40,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_System.Competences_Actives"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_SentierDHiver.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 60,
+    "Cost": 120,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Water",
+      "Damage",
+      "Aoe",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_SentierDHiver"
+  }
+}

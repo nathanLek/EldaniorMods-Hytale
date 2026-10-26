@@ -86,6 +86,8 @@ public class EldaniorSystem extends JavaPlugin {
         com.eldanior.system.persistence.PersistenceManager.saveAll();
         com.eldanior.system.territory.ParcelManager.saveAll();
         com.eldanior.system.territory.ArenaManager.saveAll();
+        com.eldanior.system.boards.BountyBoard.save();
+        com.eldanior.system.boards.GuildBoard.save();
 
         // Cleanup farm/mine regen
         com.eldanior.system.territory.systems.FarmRegenSystem.cleanup();
@@ -128,6 +130,9 @@ public class EldaniorSystem extends JavaPlugin {
             com.eldanior.system.hologram.HologramManager.init(this.getDataDirectory());
             com.eldanior.system.skills.runes.spells.TerrainRestore.init(this.getDataDirectory());
             com.eldanior.system.guards.GuardManager.init(this.getDataDirectory());
+            com.eldanior.system.boards.BountyBoard.init(this.getDataDirectory());   // tableau de prime : registre sauvegarde, zones
+            com.eldanior.system.boards.MonsterContracts.init(this.getDataDirectory());   // contrats de monstres du jour
+            com.eldanior.system.boards.GuildBoard.init(this.getDataDirectory());   // contrats de guilde, missions
             LOGGER.atInfo().log("[OK] Managers et Registres initialisés.");
         } catch (Exception e) {
             LOGGER.atSevere().withCause(e).log("[ERREUR] Échec init Managers/Registres");
@@ -203,7 +208,9 @@ public class EldaniorSystem extends JavaPlugin {
             this.getEntityStoreRegistry().registerSystem(new DeathXPSystem());
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.guards.GuardAlertSystem()); // gardes : PvP pres d'un garde -> joueur recherche
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.guards.GuardDeathSystem()); // gardes : reapparition au poste
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.guards.GuardOrphanSystem()); // PNJ de poste orphelins (apparitions ratees)
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.guards.AdventurerSystem()); // aventuriers : recrutement contre de l'or
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.guards.GuildMasterSystem()); // maitre de guilde : fonder, ameliorer
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.guards.AdventurerLootSystem()); // aventuriers : ramassage du butin
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.skills.runes.spells.RoyalMageMagic()); // mage royal : soin, nova de givre, pluie de flammes
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.skills.runes.spells.AdventurerMagic()); // aventuriers recrutes : sorts de leur type
@@ -221,6 +228,10 @@ public class EldaniorSystem extends JavaPlugin {
             this.getEntityStoreRegistry().registerSystem(new TreasureContainerMonitoringSystem(OPENED_CONTAINER_TYPE));
             this.getEntityStoreRegistry().registerSystem(new TreasureChestInteractEvent());
             this.getEntityStoreRegistry().registerSystem(new TreasureChestPlaceBlockEvent());
+            // Tableaux de prime et de guilde : touche d'interaction -> fenetre ; pose et retrait reserves aux admins
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.boards.BoardInteractEvent());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.boards.BoardPlaceBlockEvent());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.boards.BoardBreakBlockEvent());
             this.getEventRegistry().registerGlobal(StartWorldEvent.class, TreasureStartWorldEventListener::onStartWorldEvent);
             // Detection interaction NPC de quetes (systeme ECS)
             this.getEntityStoreRegistry().registerSystem(

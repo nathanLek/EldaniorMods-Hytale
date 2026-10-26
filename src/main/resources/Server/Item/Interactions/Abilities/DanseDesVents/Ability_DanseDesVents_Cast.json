@@ -1,0 +1,71 @@
+{
+  "$Comment": "Rune de la Danse des Vents : incantation puis sort Java 'DanseDesVents' (RuneSpell). Genere par rune_tool.py, cout : start.",
+  "Type": "StatsCondition",
+  "UseAbilityCost": true,
+  "Failed": "Ability_Cast_Fail",
+  "Next": {
+    "Type": "Parallel",
+    "Interactions": [
+      {
+        "Interactions": [
+          {
+            "Type": "Simple",
+            "RunTime": 0.35,
+            "HorizontalSpeedMultiplier": 0.7,
+            "Effects": {
+              "ItemPlayerAnimationsId": "Spellbook",
+              "ItemAnimationId": "CastPushCharging",
+              "WaitForAnimationToFinish": false,
+              "Particles": [
+                {
+                  "SystemId": "Fujin_Gust",
+                  "TargetEntityPart": "Entity",
+                  "TargetNodeName": "R-Hand",
+                  "Scale": 0.3
+                },
+                {
+                  "SystemId": "Fujin_Gust",
+                  "TargetEntityPart": "Entity",
+                  "TargetNodeName": "L-Hand",
+                  "Scale": 0.3
+                }
+              ]
+            }
+          },
+          {
+            "Type": "RuneSpell",
+            "RunTime": 0.05,
+            "Spell": "DanseDesVents"
+          },
+          {
+            "Type": "Simple",
+            "RunTime": 0.35,
+            "HorizontalSpeedMultiplier": 0.8999999999999999,
+            "Effects": {
+              "ItemPlayerAnimationsId": "Spellbook",
+              "ItemAnimationId": "CastPushCharged",
+              "ClearAnimationOnFinish": true,
+              "WorldSoundEventId": "SFX_Ability_Wind_Strike_Slash"
+            }
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "TriggerCooldown",
+            "UseAbilityCooldown": true
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "ChangeStat",
+            "UseAbilityCost": true
+          }
+        ]
+      }
+    ]
+  }
+}

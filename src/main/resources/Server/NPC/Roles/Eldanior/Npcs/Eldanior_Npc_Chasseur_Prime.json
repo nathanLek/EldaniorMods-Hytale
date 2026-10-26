@@ -1,0 +1,66 @@
+{
+  "Type": "Variant",
+  "Reference": "Template_Intelligent",
+  "Modify": {
+    "DropList": "Empty",
+    "WakingPeriod": [
+      0,
+      24
+    ],
+    "BedBlockSet": "",
+    "Patrol": false,
+    "FollowPatrolPath": false,
+    "ViewRange": 30,
+    "ViewSector": 240,
+    "HearingRange": 12,
+    "AlertedRange": 45,
+    "AlertedTime": [
+      0.3,
+      0.6
+    ],
+    "LeashMinPlayerDistance": 4,
+    "LeashTimer": [
+      2,
+      3
+    ],
+    "SearchTimeRange": [
+      4,
+      6
+    ],
+    "BreathesInWater": true,
+    "NameTranslationKey": {
+      "Compute": "NameTranslationKey"
+    },
+    "Appearance": "Player",
+    "MaxHealth": 300,
+    "MaxSpeed": 12,
+    "RunThreshold": 0.3,
+    "KnockbackScale": 0.4,
+    "Weapons": [
+      "Weapon_Sword_Iron"
+    ],
+    "OffHand": [
+      "Weapon_Shield_Iron"
+    ],
+    "DefaultOffHandSlot": 0,
+    "NighttimeOffhandSlot": 0,
+    "WakingIdleBehaviorComponent": "Component_Instruction_Eldanior_Leash_Walk",
+    "WanderRadius": 10,
+    "LeashDistance": 80,
+    "HardLeashDistance": 150,
+    "UseCombatActionEvaluator": true,
+    "_CombatConfig": "CAE_Eldanior_Npc_Chevalier_Errant",
+    "AttitudeGroup": "Eldanior_Hunter",
+    "DefaultPlayerAttitude": "Ignore",
+    "DisableDamageGroups": [
+      "Self",
+      "Eldanior_Guards"
+    ]
+  },
+  "Parameters": {
+    "NameTranslationKey": {
+      "Value": "server.npcRoles.Eldanior_Npc_Chasseur_Prime.name",
+      "Description": "Translation key for NPC name display"
+    }
+  }
+}

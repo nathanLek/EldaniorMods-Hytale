@@ -1,0 +1,67 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_LanceDeCristal",
+  "spell": "LanceDeCristal",
+  "javaClass": "LanceDeCristal",
+  "page": "rune_page_lance_de_cristal",
+  "name": "Rune de la Lance de Cristal",
+  "type": "Glace",
+  "rarity": "Rare",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "LanceCristal",
+  "summary": "lance de glace qui traverse tous les ennemis alignes ; degats doubles sur les cibles gelees.",
+  "description": "Sort rare de glace (Mage, rune de prédilection du Maître du Givre). Vous projetez une lance de cristal qui traverse tout ennemi sur 30 blocs : 120 dégâts de glace et ralentissement 6 s. Une cible gelée vole en éclats et subit le double (240). Elle se brise contre un mur. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin aussi froid et tranchant qu'une arête de glace. Enseigne la Lance de Cristal : une lance qui perce les rangs et brise les ennemis gelés. Classes : tous les Mages (rune de prédilection du Maître du Givre). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Projectile"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Spellbook",
+    "charging": "CastHurlCharging",
+    "release": "CastHurlCharged",
+    "chargeTime": 0.5,
+    "releaseTime": 0.35,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Ice_Item_Impact",
+    "handParticles": "Ice_Staff_Charging",
+    "handParticlesScale": 0.35,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.5,
+    "range": 30,
+    "radius": "ligne, 1.3 bloc",
+    "targets": "tous les ennemis traverses (une fois chacun)",
+    "executionFx": "modele Ice_Bolt agrandi x1.8 (Projectile_Config_LanceDeCristal) deplace par le code",
+    "impactFx": "Impact_Ice ; Ability_Ice_Explosion sur cible gelee",
+    "sounds": "SFX_Ice_Item_Impact, SFX_Ice_Break",
+    "effects": "120 Ice (x2 si Elda_Gel ou Niflheim_Gel) + Elda_Givre",
+    "terrain": "aucun",
+    "persistentDurationS": 1,
+    "restrictions": "mage",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 0,
+      "mobility": 0,
+      "control": 1,
+      "defense": 0,
+      "targets": 2,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    },
+    "synergies": "Prison de glace et Sentier d'hiver gelent : la lance les brise",
+    "edgeCases": "cible deja touchee ignoree ; mur = fin"
+  }
+}

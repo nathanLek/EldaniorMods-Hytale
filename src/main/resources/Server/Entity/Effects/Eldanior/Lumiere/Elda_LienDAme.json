@@ -1,0 +1,40 @@
+{
+  "$Comment": "Lien d'Ame : l'allie lie subit 20 % de degats en moins (le transfert de vie est gere par le code).",
+  "Duration": 8,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#ffd96b",
+    "EntityTopTint": "#ffffff",
+    "Particles": [
+      {
+        "SystemId": "Aura_Heal",
+        "TargetEntityPart": "Entity",
+        "TargetNodeName": "Chest",
+        "Scale": 0.8
+      }
+    ]
+  },
+  "DamageResistance": {
+    "Physical": [
+      {
+        "Amount": 0.2,
+        "CalculationType": "Percent"
+      }
+    ],
+    "Elemental": [
+      {
+        "Amount": 0.2,
+        "CalculationType": "Percent"
+      }
+    ],
+    "Projectile": [
+      {
+        "Amount": 0.2,
+        "CalculationType": "Percent"
+      }
+    ]
+  },
+  "OverlapBehavior": "Overwrite",
+  "Infinite": false,
+  "Debuff": false,
+  "StatusEffectIcon": "UI/StatusEffects/Burn.png"
+}

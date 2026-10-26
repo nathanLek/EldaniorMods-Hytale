@@ -1,0 +1,71 @@
+{
+  "$Comment": "Rune du Halo Protecteur : incantation puis sort Java 'HaloProtecteur' (RuneSpell). Genere par rune_tool.py, cout : start.",
+  "Type": "StatsCondition",
+  "UseAbilityCost": true,
+  "Failed": "Ability_Cast_Fail",
+  "Next": {
+    "Type": "Parallel",
+    "Interactions": [
+      {
+        "Interactions": [
+          {
+            "Type": "Simple",
+            "RunTime": 0.25,
+            "HorizontalSpeedMultiplier": 0.7,
+            "Effects": {
+              "ItemPlayerAnimationsId": "Spellbook",
+              "ItemAnimationId": "CastPushCharging",
+              "WaitForAnimationToFinish": false,
+              "Particles": [
+                {
+                  "SystemId": "Bifrost_Divine",
+                  "TargetEntityPart": "Entity",
+                  "TargetNodeName": "R-Hand",
+                  "Scale": 0.2
+                },
+                {
+                  "SystemId": "Bifrost_Divine",
+                  "TargetEntityPart": "Entity",
+                  "TargetNodeName": "L-Hand",
+                  "Scale": 0.2
+                }
+              ]
+            }
+          },
+          {
+            "Type": "RuneSpell",
+            "RunTime": 0.05,
+            "Spell": "HaloProtecteur"
+          },
+          {
+            "Type": "Simple",
+            "RunTime": 0.3,
+            "HorizontalSpeedMultiplier": 0.8999999999999999,
+            "Effects": {
+              "ItemPlayerAnimationsId": "Spellbook",
+              "ItemAnimationId": "CastPushCharged",
+              "ClearAnimationOnFinish": true,
+              "WorldSoundEventId": "SFX_Portal_Void"
+            }
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "TriggerCooldown",
+            "UseAbilityCooldown": true
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "ChangeStat",
+            "UseAbilityCost": true
+          }
+        ]
+      }
+    ]
+  }
+}

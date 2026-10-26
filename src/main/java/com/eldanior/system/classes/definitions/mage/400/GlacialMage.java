@@ -13,6 +13,6 @@ public class GlacialMage extends ClassModel {
         super("glacial_mage", "Glacial Mage", "Un mage de glace dont les sorts gelent jusqu'a l'ame.",
                 Rarity.RARE, ClassType.MAGE, List.of(PassiveSkill.AWAKENED_MIND, PassiveSkill.EXPANDED_MIND, PassiveSkill.FORTIFIED_SKIN), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 2, 12, 42, 8, 12, 8);
-        runes("Rune_Bourrasque");
+        runes("Rune_PrisonDeGlace", "Rune_Bourrasque");
     }
 }

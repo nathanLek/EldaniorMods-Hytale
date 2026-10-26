@@ -1,0 +1,20 @@
+{
+  "$Comment": "Arme Benie : visuel seul (les eclats sacres sont geres par le code).",
+  "Duration": 10,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#ffcf40",
+    "EntityTopTint": "#fffbe6",
+    "Particles": [
+      {
+        "SystemId": "Gilgamesh_Sword_Glow",
+        "TargetEntityPart": "Entity",
+        "TargetNodeName": "R-Hand",
+        "Scale": 0.6
+      }
+    ]
+  },
+  "OverlapBehavior": "Overwrite",
+  "Infinite": false,
+  "Debuff": false,
+  "StatusEffectIcon": "UI/StatusEffects/Burn.png"
+}

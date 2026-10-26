@@ -171,9 +171,10 @@ public class AdventurerSystem extends EntityTickingSystem<EntityStore> {
         for (Vector3d center : new Vector3d[]{ownerPos, at})
             for (Ref<EntityStore> e : new java.util.ArrayList<>(com.hypixel.hytale.server.core.util.TargetUtil.getAllEntitiesInSphere(center, DANGER_RANGE, store))) {
                 NPCEntity n = e != null && e.isValid() ? store.getComponent(e, NPCEntity.getComponentType()) : null;
-                if (n == null || GuardType.fromRole(n.getRoleName()) != null) continue;
+                if (n == null || GuardType.isAlly(n.getRoleName())) continue;                   // criminels : ennemis
                 com.hypixel.hytale.server.npc.role.support.WorldSupport ws = com.hypixel.hytale.server.npc.role.support.WorldSupport.get(e, store);
-                if (ws == null || ws.getDefaultPlayerAttitude() != com.hypixel.hytale.server.core.asset.type.attitude.Attitude.HOSTILE) continue;
+                if (!GuardType.isOutlaw(n.getRoleName())
+                        && (ws == null || ws.getDefaultPlayerAttitude() != com.hypixel.hytale.server.core.asset.type.attitude.Attitude.HOSTILE)) continue;
                 TransformComponent et = store.getComponent(e, TransformComponent.getComponentType());
                 if (et == null) continue;
                 double d = et.getPosition().distanceSquared(ownerPos);

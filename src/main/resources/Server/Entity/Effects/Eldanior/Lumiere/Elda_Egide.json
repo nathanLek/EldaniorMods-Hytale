@@ -1,0 +1,32 @@
+{
+  "$Comment": "Egide Royale : -40 % de degats subis tant que l'allie est dans le dome.",
+  "Duration": 6,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#ffe9a8",
+    "EntityTopTint": "#ffffff"
+  },
+  "DamageResistance": {
+    "Physical": [
+      {
+        "Amount": 0.4,
+        "CalculationType": "Percent"
+      }
+    ],
+    "Elemental": [
+      {
+        "Amount": 0.4,
+        "CalculationType": "Percent"
+      }
+    ],
+    "Projectile": [
+      {
+        "Amount": 0.4,
+        "CalculationType": "Percent"
+      }
+    ]
+  },
+  "OverlapBehavior": "Overwrite",
+  "Infinite": false,
+  "Debuff": false,
+  "StatusEffectIcon": "UI/StatusEffects/Burn.png"
+}

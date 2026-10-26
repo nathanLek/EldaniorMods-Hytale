@@ -1,0 +1,45 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de la Fontaine de Vie",
+    "Description": "Sort rare de lumière (Mage, rune de prédilection du Grand Guérisseur). Une fontaine de vie jaillit à l'endroit visé (20 blocs) pendant 6 s. À son apparition, elle purifie les alliés à moins de 5 blocs de tous leurs malus ; ensuite elle leur rend 5 % de leurs points de vie chaque seconde (30 % au total). Coût : 120 mana. Recharge : 60 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_FontaineDeVie.png",
+  "Quality": "Rare",
+  "ItemLevel": 40,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_System.Competences_Actives"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_FontaineDeVie.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 60,
+    "Cost": 120,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Buff",
+      "Aoe",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_FontaineDeVie"
+  }
+}

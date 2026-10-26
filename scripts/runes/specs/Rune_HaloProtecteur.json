@@ -1,0 +1,63 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_HaloProtecteur",
+  "spell": "HaloProtecteur",
+  "javaClass": "HaloProtecteur",
+  "page": "rune_page_halo_protecteur",
+  "name": "Rune du Halo Protecteur",
+  "type": "Lumiere",
+  "rarity": "Common",
+  "classes": "mage",
+  "persistent": false,
+  "emblem": "Halo",
+  "summary": "halo de lumiere sur l'allie vise (ou soi) : -30 % de degats subis pendant 8 s et petit soin.",
+  "description": "Sort commun de lumière (Mage, rune de prédilection de l'Enchanteur). Un halo protecteur entoure l'allié visé (20 blocs), ou vous-même sans cible : il subit 30 % de dégâts en moins pendant 8 s et récupère 5 % de ses points de vie.",
+  "pageDescription": "Un parchemin doré, tiède comme une main posée sur l'épaule. Enseigne le Halo Protecteur : un bouclier de lumière pour vous ou un allié. Classes : tous les Mages (rune de prédilection de l'Enchanteur). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Buff",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Spellbook",
+    "charging": "CastPushCharging",
+    "release": "CastPushCharged",
+    "chargeTime": 0.25,
+    "releaseTime": 0.3,
+    "moveSpeed": 0.7,
+    "cameraEffect": null,
+    "sound": null,
+    "releaseSound": "SFX_Portal_Void",
+    "handParticles": "Bifrost_Divine",
+    "handParticlesScale": 0.2,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.25,
+    "range": 20,
+    "targets": "allie sous le curseur (groupe, guilde, famille) sinon soi",
+    "effects": "Elda_HaloProtecteur 8 s (resistance 30 % Physical/Elemental/Projectile) + soin 5 %",
+    "castFx": "Bifrost_Divine",
+    "impactFx": "Bifrost_Divine sur la cible",
+    "terrain": "aucun",
+    "restrictions": "mage",
+    "balance": {
+      "damage": 0,
+      "range": 2,
+      "duration": 2,
+      "mobility": 0,
+      "control": 0,
+      "defense": 2,
+      "targets": 0,
+      "frequency": 2,
+      "terrain": 0,
+      "difficulty": 1
+    },
+    "edgeCases": "ennemi sous le curseur : le halo va sur soi"
+  }
+}

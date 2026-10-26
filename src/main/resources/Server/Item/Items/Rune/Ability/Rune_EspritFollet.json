@@ -1,0 +1,45 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de l'Esprit Follet",
+    "Description": "Sort commun de lumière (Mage, rune de prédilection de l'Invocateur). Un esprit follet apparaît à votre épaule et tire, toutes les 1,2 s, un trait de lumière sur l'ennemi le plus proche (15 blocs) : 16 dégâts par trait, 5 traits. Épargne votre groupe, votre guilde et votre famille. Coût : 25 mana. Recharge : 15 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_EspritFollet.png",
+  "Quality": "Common",
+  "ItemLevel": 10,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_System.Competences_Actives"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_EspritFollet.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 15,
+    "Cost": 25,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Buff",
+      "Damage",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_EspritFollet"
+  }
+}

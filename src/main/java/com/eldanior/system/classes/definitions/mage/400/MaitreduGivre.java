@@ -13,6 +13,6 @@ public class MaitreduGivre extends ClassModel {
         super("maitre_du_givre", "Maitre du Givre", "Le maitre du froid absolu dont le gel paralyse tout.",
                 Rarity.RARE, ClassType.MAGE, List.of(PassiveSkill.MANA_BARRIER, PassiveSkill.BRILLIANT_MIND, PassiveSkill.STONE_SKIN), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 4, 14, 40, 10, 10, 7);
-        runes("Rune_Bourrasque");
+        runes("Rune_LanceDeCristal", "Rune_Bourrasque");
     }
 }

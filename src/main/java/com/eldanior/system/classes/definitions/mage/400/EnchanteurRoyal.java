@@ -13,6 +13,6 @@ public class EnchanteurRoyal extends ClassModel {
         super("enchanteur_royal", "Enchanteur Royal", "L'enchanteur de la cour royale dont les sorts protegent le royaume.",
                 Rarity.RARE, ClassType.MAGE, List.of(PassiveSkill.MANA_FONT, PassiveSkill.OVERFLOWING_LIFE, PassiveSkill.AWAKENED_MIND), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 4, 20, 34, 16, 6, 6);
-        runes("Rune_Fireball");
+        runes("Rune_EgideRoyale", "Rune_Fireball");
     }
 }

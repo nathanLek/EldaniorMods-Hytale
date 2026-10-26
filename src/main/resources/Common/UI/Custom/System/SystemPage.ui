@@ -1140,13 +1140,8 @@ Group {
                     Group { Anchor: (Height: 60); }
                     Label { Text: "VOUS N'ETES DANS AUCUNE GUILDE"; Style: (FontSize: 18, TextColor: #7d8fa3, HorizontalAlignment: Center, RenderBold: true); Anchor: (Height: 28); }
                     Group { Anchor: (Height: 8); }
-                    Label { Text: "Creez une guilde ou attendez une invitation !"; Style: (FontSize: 13, TextColor: #5a6a7d, HorizontalAlignment: Center); Anchor: (Height: 20); }
+                    Label { Text: "Fondez une guilde aupres d'un Maitre de guilde, ou rejoignez-en une !"; Style: (FontSize: 13, TextColor: #5a6a7d, HorizontalAlignment: Center); Anchor: (Height: 20); }
                     Group { Anchor: (Height: 20); }
-
-                    // Create button
-                    Group { LayoutMode: Center; Anchor: (Height: 44);
-                        TextButton #GuildeBtnCreate { Text: "CREER UNE GUILDE"; Anchor: (Width: 260, Height: 44); Style: (Default: (LabelStyle: (FontSize: 16, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true)), Hovered: (LabelStyle: (FontSize: 16, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, RenderBold: true))); Background: #162030(0.8); }
-                    }
 
                     Group { Anchor: (Height: 12); }
 
@@ -1166,7 +1161,7 @@ Group {
                     }
 
                     Group { Anchor: (Height: 8); }
-                    Label { Text: "Usage : /es guildcreate <nom> <tag>"; Style: (FontSize: 11, TextColor: #5a6a7d, HorizontalAlignment: Center); Anchor: (Height: 18); }
+                    Label { Text: "Rendez-vous chez un Maitre de guilde, en ville, pour fonder la votre."; Style: (FontSize: 11, TextColor: #5a6a7d, HorizontalAlignment: Center); Anchor: (Height: 18); }
 
                     // === OPEN GUILDS LIST (paginated) ===
                     Group #GuildeOpenGuildSection { LayoutMode: Top; Visible: false;
@@ -1303,6 +1298,92 @@ Group {
                                 Label { Text: "MORTS"; Style: (FontSize: 10, TextColor: #7d8fa3, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 80); }
                                 Label #GuildeStatDeaths { Text: "0"; Style: (FontSize: 14, TextColor: #aabbcc, VerticalAlignment: Center, RenderBold: true); }
                             }
+                        }
+                    }
+                    Group { Anchor: (Height: 10); }
+
+                    // 4b. AMELIORATIONS (achetees par le chef chez le Maitre de guilde)
+                    Group { Background: #11192680; Padding: (Horizontal: 12, Vertical: 8); LayoutMode: Top;
+                        Label { Text: "AMELIORATIONS - MAITRE DE GUILDE"; Style: (FontSize: 11, TextColor: #7d8fa3, RenderBold: true, RenderUppercase: true, LetterSpacing: 1, HorizontalAlignment: Center); Anchor: (Height: 16); }
+                        Group { Anchor: (Height: 6); }
+                        Group { LayoutMode: Left; Anchor: (Height: 40);
+                            Group { FlexWeight: 1; Background: #162030; LayoutMode: Left;
+                                Group { Anchor: (Width: 3); Background: #5b9bd5; }
+                                Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 10, Vertical: 4);
+                                    Group { LayoutMode: Left; Anchor: (Height: 16);
+                                        Label { Text: "Sagesse"; Style: (FontSize: 10, TextColor: #7d8fa3, RenderBold: true, RenderUppercase: true); FlexWeight: 1; }
+                                        Label #GuildeUpgLevel0 { Text: "0/5"; Style: (FontSize: 10, TextColor: #5a6a7d, RenderBold: true); }
+                                    }
+                                    Label #GuildeUpgEffect0 { Text: ""; Style: (FontSize: 13, TextColor: #5b9bd5, RenderBold: true); Anchor: (Height: 18); }
+                                }
+                            }
+                            Group { Anchor: (Width: 4); }
+                            Group { FlexWeight: 1; Background: #162030; LayoutMode: Left;
+                                Group { Anchor: (Width: 3); Background: #FFD700; }
+                                Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 10, Vertical: 4);
+                                    Group { LayoutMode: Left; Anchor: (Height: 16);
+                                        Label { Text: "Fortune"; Style: (FontSize: 10, TextColor: #7d8fa3, RenderBold: true, RenderUppercase: true); FlexWeight: 1; }
+                                        Label #GuildeUpgLevel1 { Text: "0/5"; Style: (FontSize: 10, TextColor: #5a6a7d, RenderBold: true); }
+                                    }
+                                    Label #GuildeUpgEffect1 { Text: ""; Style: (FontSize: 13, TextColor: #FFD700, RenderBold: true); Anchor: (Height: 18); }
+                                }
+                            }
+                            Group { Anchor: (Width: 4); }
+                            Group { FlexWeight: 1; Background: #162030; LayoutMode: Left;
+                                Group { Anchor: (Width: 3); Background: #5fc77e; }
+                                Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 10, Vertical: 4);
+                                    Group { LayoutMode: Left; Anchor: (Height: 16);
+                                        Label { Text: "Effectifs"; Style: (FontSize: 10, TextColor: #7d8fa3, RenderBold: true, RenderUppercase: true); FlexWeight: 1; }
+                                        Label #GuildeUpgLevel2 { Text: "0/5"; Style: (FontSize: 10, TextColor: #5a6a7d, RenderBold: true); }
+                                    }
+                                    Label #GuildeUpgEffect2 { Text: ""; Style: (FontSize: 13, TextColor: #5fc77e, RenderBold: true); Anchor: (Height: 18); }
+                                }
+                            }
+                        }
+                    }
+                    Group { Anchor: (Height: 10); }
+
+                    // 4c. CONTRATS DE GUILDE DE LA SEMAINE (tableau de guilde)
+                    Group { Background: #11192680; Padding: (Horizontal: 12, Vertical: 8); LayoutMode: Top;
+                        Group { LayoutMode: Left; Anchor: (Height: 16);
+                            Label { Text: "CONTRATS DE LA SEMAINE"; Style: (FontSize: 11, TextColor: #7d8fa3, RenderBold: true, RenderUppercase: true, LetterSpacing: 1); FlexWeight: 1; }
+                            Label #GuildeContractsEnd { Text: ""; Style: (FontSize: 10, TextColor: #5a6a7d, RenderBold: true); }
+                        }
+                        Group { Anchor: (Height: 6); }
+                        Group #GuildeContract0 { LayoutMode: Left; Anchor: (Height: 28); Background: #162030(0.5); Padding: (Horizontal: 10, Vertical: 4); Visible: false;
+                            Label #GuildeContractName0 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                            Group { Anchor: (Width: 150); LayoutMode: Middle;
+                                Group { Anchor: (Width: 150, Height: 8); Background: #333a47; ProgressBar #GuildeContractBar0 { BarTexturePath: "../Party/HPFill.png"; Value: 0.0; } }
+                            }
+                            Group { Anchor: (Width: 8); }
+                            Label #GuildeContractProg0 { Text: ""; Style: (FontSize: 11, TextColor: #5fc77e, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 90); }
+                            Label #GuildeContractReward0 { Text: ""; Style: (FontSize: 11, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center, HorizontalAlignment: End); Anchor: (Width: 100); }
+                        }
+                        Group { Anchor: (Height: 3); }
+                        Group #GuildeContract1 { LayoutMode: Left; Anchor: (Height: 28); Background: #162030(0.5); Padding: (Horizontal: 10, Vertical: 4); Visible: false;
+                            Label #GuildeContractName1 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                            Group { Anchor: (Width: 150); LayoutMode: Middle;
+                                Group { Anchor: (Width: 150, Height: 8); Background: #333a47; ProgressBar #GuildeContractBar1 { BarTexturePath: "../Party/HPFill.png"; Value: 0.0; } }
+                            }
+                            Group { Anchor: (Width: 8); }
+                            Label #GuildeContractProg1 { Text: ""; Style: (FontSize: 11, TextColor: #5fc77e, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 90); }
+                            Label #GuildeContractReward1 { Text: ""; Style: (FontSize: 11, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center, HorizontalAlignment: End); Anchor: (Width: 100); }
+                        }
+                        Group { Anchor: (Height: 3); }
+                        Group #GuildeContract2 { LayoutMode: Left; Anchor: (Height: 28); Background: #162030(0.5); Padding: (Horizontal: 10, Vertical: 4); Visible: false;
+                            Label #GuildeContractName2 { Text: ""; Style: (FontSize: 12, TextColor: #aabbcc, RenderBold: true, VerticalAlignment: Center); FlexWeight: 1; }
+                            Group { Anchor: (Width: 150); LayoutMode: Middle;
+                                Group { Anchor: (Width: 150, Height: 8); Background: #333a47; ProgressBar #GuildeContractBar2 { BarTexturePath: "../Party/HPFill.png"; Value: 0.0; } }
+                            }
+                            Group { Anchor: (Width: 8); }
+                            Label #GuildeContractProg2 { Text: ""; Style: (FontSize: 11, TextColor: #5fc77e, RenderBold: true, VerticalAlignment: Center); Anchor: (Width: 90); }
+                            Label #GuildeContractReward2 { Text: ""; Style: (FontSize: 11, TextColor: #FFD700, RenderBold: true, VerticalAlignment: Center, HorizontalAlignment: End); Anchor: (Width: 100); }
+                        }
+                        Group { Anchor: (Height: 3); }
+                        Group { Anchor: (Height: 3); }
+                        Group { LayoutMode: Left; Anchor: (Height: 18);
+                            Label #GuildeMissions { Text: ""; Style: (FontSize: 11, TextColor: #caa15a, RenderBold: true); FlexWeight: 1; }
+                            Label { Text: "Tableau de guilde, en ville"; Style: (FontSize: 10, TextColor: #5a6a7d); }
                         }
                     }
                     Group { Anchor: (Height: 10); }
@@ -2352,7 +2433,7 @@ Group {
                     }
                     Group { Anchor: (Height: 6); }
 
-                    // Grille 2x2 - Ligne 2
+                    // Ligne 2 : Principales (les primes sont au tableau de prime, en ville)
                     Group {
                         LayoutMode: Left;
                         FlexWeight: 1;
@@ -2369,19 +2450,6 @@ Group {
                             TextButton #QBlasonMain { Text: "OUVRIR"; Anchor: (Height: 22); Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #FFD700, HorizontalAlignment: Center, VerticalAlignment: Center, LetterSpacing: 1)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, LetterSpacing: 1))); Background: #0c0a06; }
                         }
 
-                        Group { Anchor: (Width: 8); }
-
-                        Group {
-                            FlexWeight: 1; Background: #100d07; LayoutMode: Top; Padding: (Horizontal: 16, Vertical: 12);
-                            Group { Anchor: (Height: 3); Background: #cc4444; }
-                            Group { Anchor: (Height: 10); }
-                            Label { Text: "Primes"; Style: (FontSize: 22, TextColor: #f0ead8, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 30); }
-                            Label { Text: "Tetes mises a prix"; Style: (FontSize: 14, TextColor: #8a7c5a, HorizontalAlignment: Center); FlexWeight: 1; }
-                            Group { Anchor: (Height: 1); Background: #cc4444; }
-                            Group { Anchor: (Height: 6); }
-                            Label #QBlasonBountyCount { Text: "0 primes"; Style: (FontSize: 16, TextColor: #cc4444, RenderBold: true, HorizontalAlignment: Center); Anchor: (Height: 20); }
-                            TextButton #QBlasonBounty { Text: "OUVRIR"; Anchor: (Height: 22); Style: (Default: (LabelStyle: (FontSize: 12, TextColor: #cc4444, HorizontalAlignment: Center, VerticalAlignment: Center, LetterSpacing: 1)), Hovered: (LabelStyle: (FontSize: 12, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center, LetterSpacing: 1))); Background: #0c0a06; }
-                        }
                     }
                     Group { Anchor: (Height: 6); }
 
@@ -3788,9 +3856,15 @@ Group {
                 Group #WikiPage5 { LayoutMode: Top; Visible: false;
                     Label { Text: "GUILDE"; Style: (FontSize: 26, TextColor: #2ECC71, RenderBold: true, RenderUppercase: true, LetterSpacing: 3); Anchor: (Height: 34); }
                     Group { Anchor: (Height: 5); }
-                    Group { Anchor: (Height: 140); Background: #0d1520(0.6); Padding: (Horizontal: 14, Vertical: 10); Label { Text: "Les guildes sont des organisations de joueurs avec hierarchie (Membre, Officier, Chef) et tresorerie commune. Creation : niveau 120 minimum + 150 000 or + rang Chevalier. Les membres peuvent etre invites, promus ou exclus. La guilde apparait dans les classements et peut se voir assigner des parcelles de terrain."; Style: (FontSize: 20, TextColor: #8899aa, Wrap: true); } }
+                    Group { Anchor: (Height: 140); Background: #0d1520(0.6); Padding: (Horizontal: 14, Vertical: 10); Label { Text: "Les guildes sont des organisations de joueurs avec hierarchie (Membre, Officier, Chef) et tresorerie commune. Fondation chez un Maitre de guilde, en ville : niveau 120 + 150 000 or. Le chef y achete des ameliorations avec le tresor. Au tableau de guilde : classement, contrats de la semaine et missions individuelles."; Style: (FontSize: 20, TextColor: #8899aa, Wrap: true); } }
                     Group { Anchor: (Height: 10); }
-                    Group { Anchor: (Height: 68); Background: #1a2030(0.6); LayoutMode: Left; Group { Anchor: (Width: 4); Background: #2ECC71; } Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 12, Vertical: 8); Label { Text: "/es guildcreate <nom> <tag>"; Style: (FontSize: 24, TextColor: #ffffff, RenderBold: true); Anchor: (Height: 28); } Label { Text: "Creer une guilde (Chevalier + Lvl 120 + 150k or)"; Style: (FontSize: 18, TextColor: #8899aa); Anchor: (Height: 22); } } }
+                    Group { Anchor: (Height: 68); Background: #1a2030(0.6); LayoutMode: Left; Group { Anchor: (Width: 4); Background: #2ECC71; } Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 12, Vertical: 8); Label { Text: "Maitre de guilde (PNJ, en ville)"; Style: (FontSize: 24, TextColor: #ffffff, RenderBold: true); Anchor: (Height: 28); } Label { Text: "Fonder une guilde, rejoindre une guilde qui recrute, acheter des ameliorations"; Style: (FontSize: 18, TextColor: #8899aa); Anchor: (Height: 22); } } }
+                    Group { Anchor: (Height: 5); }
+                    Group { Anchor: (Height: 68); Background: #1a2030(0.6); LayoutMode: Left; Group { Anchor: (Width: 4); Background: #2ECC71; } Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 12, Vertical: 8); Label { Text: "Ameliorations"; Style: (FontSize: 24, TextColor: #ffffff, RenderBold: true); Anchor: (Height: 28); } Label { Text: "Sagesse +3% XP, Fortune +3% or, Effectifs +5 places par niveau (tresor, chef)"; Style: (FontSize: 18, TextColor: #8899aa); Anchor: (Height: 22); } } }
+                    Group { Anchor: (Height: 5); }
+                    Group { Anchor: (Height: 68); Background: #1a2030(0.6); LayoutMode: Left; Group { Anchor: (Width: 4); Background: #2ECC71; } Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 12, Vertical: 8); Label { Text: "Tableau de guilde (en ville)"; Style: (FontSize: 24, TextColor: #ffffff, RenderBold: true); Anchor: (Height: 28); } Label { Text: "Classement, contrats de la semaine (toute la guilde), missions (2 max)"; Style: (FontSize: 18, TextColor: #8899aa); Anchor: (Height: 22); } } }
+                    Group { Anchor: (Height: 5); }
+                    Group { Anchor: (Height: 68); Background: #1a2030(0.6); LayoutMode: Left; Group { Anchor: (Width: 4); Background: #2ECC71; } Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 12, Vertical: 8); Label { Text: "Membres"; Style: (FontSize: 24, TextColor: #ffffff, RenderBold: true); Anchor: (Height: 28); } Label { Text: "15 places, plus 5 par niveau d'Effectifs"; Style: (FontSize: 18, TextColor: #8899aa); Anchor: (Height: 22); } } }
                     Group { Anchor: (Height: 5); }
                     Group { Anchor: (Height: 68); Background: #1a2030(0.6); LayoutMode: Left; Group { Anchor: (Width: 4); Background: #2ECC71; } Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 12, Vertical: 8); Label { Text: "/es guild invite <joueur>"; Style: (FontSize: 24, TextColor: #ffffff, RenderBold: true); Anchor: (Height: 28); } Label { Text: "Inviter un joueur dans votre guilde"; Style: (FontSize: 18, TextColor: #8899aa); Anchor: (Height: 22); } } }
                     Group { Anchor: (Height: 5); }
@@ -3911,8 +3985,28 @@ Group {
                     Group { Anchor: (Height: 68); Background: #1a2030(0.6); LayoutMode: Left; Group { Anchor: (Width: 4); Background: #D4AF37; } Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 12, Vertical: 8); Label { Text: "/es title info <id>"; Style: (FontSize: 24, TextColor: #ffffff, RenderBold: true); Anchor: (Height: 28); } Label { Text: "Consulter les details et bonus d'un titre"; Style: (FontSize: 18, TextColor: #8899aa); Anchor: (Height: 22); } } }
                 }
 
-                // === PAGE 12 : Admin (OP) ===
+                // === PAGE 12 : Primes ===
                 Group #WikiPage12 { LayoutMode: Top; Visible: false;
+                    Label { Text: "PRIMES & CRIMINELS"; Style: (FontSize: 26, TextColor: #cc4444, RenderBold: true, RenderUppercase: true, LetterSpacing: 3); Anchor: (Height: 34); }
+                    Group { Anchor: (Height: 5); }
+                    Group { Anchor: (Height: 140); Background: #0d1520(0.6); Padding: (Horizontal: 14, Vertical: 10); Label { Text: "Un joueur PK est recherche : une prime est mise sur sa tete et celui qui l'abat la touche. Les tableaux de prime, en ville, listent les PK et les criminels, et proposent chaque jour des contrats de monstres d'elite. Les chasseurs de prime traquent les PK et les criminels."; Style: (FontSize: 20, TextColor: #8899aa, Wrap: true); } }
+                    Group { Anchor: (Height: 10); }
+                    Group { Anchor: (Height: 68); Background: #2a1a1a(0.6); LayoutMode: Left; Group { Anchor: (Width: 4); Background: #cc4444; } Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 12, Vertical: 8); Label { Text: "Tableau de prime (en ville)"; Style: (FontSize: 24, TextColor: #ffffff, RenderBold: true); Anchor: (Height: 28); } Label { Text: "Recherches : PK et criminels, niveau, prime et derniere position"; Style: (FontSize: 18, TextColor: #8899aa); Anchor: (Height: 22); } } }
+                    Group { Anchor: (Height: 5); }
+                    Group { Anchor: (Height: 68); Background: #2a1a1a(0.6); LayoutMode: Left; Group { Anchor: (Width: 4); Background: #cc4444; } Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 12, Vertical: 8); Label { Text: "Placer une prime"; Style: (FontSize: 24, TextColor: #ffffff, RenderBold: true); Anchor: (Height: 28); } Label { Text: "Ajouter de l'or a la prime d'un recherche (+10% de commission)"; Style: (FontSize: 18, TextColor: #8899aa); Anchor: (Height: 22); } } }
+                    Group { Anchor: (Height: 5); }
+                    Group { Anchor: (Height: 68); Background: #2a1a1a(0.6); LayoutMode: Left; Group { Anchor: (Width: 4); Background: #cc4444; } Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 12, Vertical: 8); Label { Text: "Racheter sa prime"; Style: (FontSize: 24, TextColor: #ffffff, RenderBold: true); Anchor: (Height: 28); } Label { Text: "Un PK efface sa prime pour 2 fois son montant"; Style: (FontSize: 18, TextColor: #8899aa); Anchor: (Height: 22); } } }
+                    Group { Anchor: (Height: 5); }
+                    Group { Anchor: (Height: 68); Background: #2a1a1a(0.6); LayoutMode: Left; Group { Anchor: (Width: 4); Background: #cc4444; } Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 12, Vertical: 8); Label { Text: "Criminels"; Style: (FontSize: 24, TextColor: #ffffff, RenderBold: true); Anchor: (Height: 28); } Label { Text: "Hors-la-loi et leurs complices (1 a 10 selon le rang) ; ils epargnent les PK"; Style: (FontSize: 18, TextColor: #8899aa); Anchor: (Height: 22); } } }
+                    Group { Anchor: (Height: 5); }
+                    Group { Anchor: (Height: 68); Background: #2a1a1a(0.6); LayoutMode: Left; Group { Anchor: (Width: 4); Background: #cc4444; } Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 12, Vertical: 8); Label { Text: "Chasseurs de prime"; Style: (FontSize: 24, TextColor: #ffffff, RenderBold: true); Anchor: (Height: 28); } Label { Text: "Traquent PK et criminels ; leur part de la prime va au tresor de la ville"; Style: (FontSize: 18, TextColor: #8899aa); Anchor: (Height: 22); } } }
+                    Group { Anchor: (Height: 5); }
+                    Group { Anchor: (Height: 68); Background: #2a1a1a(0.6); LayoutMode: Left; Group { Anchor: (Width: 4); Background: #cc4444; } Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 12, Vertical: 8); Label { Text: "Contrats de monstres"; Style: (FontSize: 24, TextColor: #ffffff, RenderBold: true); Anchor: (Height: 28); } Label { Text: "3 monstres d'elite nommes par jour : le premier qui en abat un touche la prime"; Style: (FontSize: 18, TextColor: #8899aa); Anchor: (Height: 22); } } }
+                    Group { Anchor: (Height: 5); }
+                }
+
+                // === PAGE 13 : Admin (OP) ===
+                Group #WikiPage13 { LayoutMode: Top; Visible: false;
                     Label { Text: "COMMANDES ADMIN (OP)"; Style: (FontSize: 26, TextColor: #cc4444, RenderBold: true, RenderUppercase: true, LetterSpacing: 3); Anchor: (Height: 34); }
                     Group { Anchor: (Height: 5); }
                     Group { Anchor: (Height: 140); Background: #0d1520(0.6); Padding: (Horizontal: 14, Vertical: 10); Label { Text: "Panel d'administration reserve aux operateurs (OP). Modifiez XP, niveaux et classes des joueurs. Promouvez dans les hierarchies de noblesse et d'eglise. Assignez des familles nobles, gerez les parcelles territoriales, creez des hologrammes et configurez les coffres au tresor. L'interface /es admin offre une vue complete."; Style: (FontSize: 20, TextColor: #8899aa, Wrap: true); } }
@@ -3927,6 +4021,19 @@ Group {
                     Group { Anchor: (Height: 5); }
                     Group { Anchor: (Height: 68); Background: #2a1a1a(0.6); LayoutMode: Left; Group { Anchor: (Width: 4); Background: #cc4444; } Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 12, Vertical: 8); Label { Text: "/es setclass <joueur> <classId>"; Style: (FontSize: 24, TextColor: #ff6666, RenderBold: true); Anchor: (Height: 28); } Label { Text: "Changer la classe d'un joueur"; Style: (FontSize: 18, TextColor: #996666); Anchor: (Height: 22); } } }
                     Group { Anchor: (Height: 10); }
+                    Label { Text: "PRIMES, PNJ & CONTRATS"; Style: (FontSize: 22, TextColor: #cc4444, RenderBold: true, RenderUppercase: true, LetterSpacing: 2); Anchor: (Height: 28); }
+                    Group { Anchor: (Height: 5); }
+                    Group { Anchor: (Height: 68); Background: #2a1a1a(0.6); LayoutMode: Left; Group { Anchor: (Width: 4); Background: #cc4444; } Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 12, Vertical: 8); Label { Text: "/es garde poser chasseur|criminel"; Style: (FontSize: 24, TextColor: #ff6666, RenderBold: true); Anchor: (Height: 28); } Label { Text: "--type guerrier|archer|assassin --niveau N"; Style: (FontSize: 18, TextColor: #996666); Anchor: (Height: 22); } } }
+                    Group { Anchor: (Height: 5); }
+                    Group { Anchor: (Height: 68); Background: #2a1a1a(0.6); LayoutMode: Left; Group { Anchor: (Width: 4); Background: #cc4444; } Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 12, Vertical: 8); Label { Text: "/es garde poser maitre_guilde"; Style: (FontSize: 24, TextColor: #ff6666, RenderBold: true); Anchor: (Height: 28); } Label { Text: "Maitre de guilde : fonder, rejoindre, ameliorer"; Style: (FontSize: 18, TextColor: #996666); Anchor: (Height: 22); } } }
+                    Group { Anchor: (Height: 5); }
+                    Group { Anchor: (Height: 68); Background: #2a1a1a(0.6); LayoutMode: Left; Group { Anchor: (Width: 4); Background: #cc4444; } Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 12, Vertical: 8); Label { Text: "/es contrat zone <nom> [--niveau N]"; Style: (FontSize: 24, TextColor: #ff6666, RenderBold: true); Anchor: (Height: 28); } Label { Text: "Zone de contrat de monstre a votre position"; Style: (FontSize: 18, TextColor: #996666); Anchor: (Height: 22); } } }
+                    Group { Anchor: (Height: 5); }
+                    Group { Anchor: (Height: 68); Background: #2a1a1a(0.6); LayoutMode: Left; Group { Anchor: (Width: 4); Background: #cc4444; } Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 12, Vertical: 8); Label { Text: "/es contrat retirer | liste | relancer"; Style: (FontSize: 24, TextColor: #ff6666, RenderBold: true); Anchor: (Height: 28); } Label { Text: "Retirer une zone, lister, tirer les contrats du jour"; Style: (FontSize: 18, TextColor: #996666); Anchor: (Height: 22); } } }
+                    Group { Anchor: (Height: 5); }
+                    Group { Anchor: (Height: 68); Background: #2a1a1a(0.6); LayoutMode: Left; Group { Anchor: (Width: 4); Background: #cc4444; } Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 12, Vertical: 8); Label { Text: "Tableau de prime / de guilde"; Style: (FontSize: 24, TextColor: #ff6666, RenderBold: true); Anchor: (Height: 28); } Label { Text: "Blocs a poser en creatif (categorie Eldanior), au mur"; Style: (FontSize: 18, TextColor: #996666); Anchor: (Height: 22); } } }
+                    Group { Anchor: (Height: 5); }
+                    Group { Anchor: (Height: 5); }
                     Label { Text: "TITRES & NOBLESSE"; Style: (FontSize: 22, TextColor: #FFD700, RenderBold: true, RenderUppercase: true, LetterSpacing: 2); Anchor: (Height: 28); }
                     Group { Anchor: (Height: 5); }
                     Group { Anchor: (Height: 68); Background: #2a1a1a(0.6); LayoutMode: Left; Group { Anchor: (Width: 4); Background: #FFD700; } Group { LayoutMode: Top; FlexWeight: 1; Padding: (Horizontal: 12, Vertical: 8); Label { Text: "/es titleadmin grant <joueur> <titleId>"; Style: (FontSize: 24, TextColor: #ff6666, RenderBold: true); Anchor: (Height: 28); } Label { Text: "Accorder un titre a un joueur"; Style: (FontSize: 18, TextColor: #996666); Anchor: (Height: 22); } } }

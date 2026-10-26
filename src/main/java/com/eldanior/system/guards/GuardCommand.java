@@ -20,8 +20,9 @@ import javax.annotation.Nonnull;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * /es garde poser [ville|royal|chevalier|patrouilleur|mage|errant|villageois|aventurier] : PNJ de poste a votre position.
+ * /es garde poser [ville|royal|chevalier|patrouilleur|mage|errant|villageois|aventurier|chasseur|criminel|maitre_guilde] : PNJ de poste a votre position.
  *   Aventurier : --type guerrier|mage|archer|assassin, --statut ordinaire|exceptionnel|heros, --niveau 20..600 (sinon au hasard).
+ *   Chasseur de prime, criminel : --type guerrier|archer|assassin, --niveau 20..600 (sinon au hasard).
  * /es garde retirer : retire le poste le plus proche (6 blocs) et son garde.
  * /es garde liste : postes et etat des gardes.
  * (Sous-commandes : un argument optionnel de commande Hytale s'ecrit --nom valeur, pas en position.)
@@ -71,9 +72,9 @@ public class GuardCommand extends AbstractCommandCollection {
         Place() {
             super("poser", "Poste un PNJ ici : " + GuardType.args());
             this.rankArg = this.withRequiredArg("rang", GuardType.args(), ArgTypes.STRING);
-            this.typeArg = this.withOptionalArg("type", "Aventurier : guerrier|mage|archer|assassin", ArgTypes.STRING);
+            this.typeArg = this.withOptionalArg("type", "Aventurier : guerrier|mage|archer|assassin ; chasseur, criminel : guerrier|archer|assassin", ArgTypes.STRING);
             this.tierArg = this.withOptionalArg("statut", "Aventurier : ordinaire|exceptionnel|heros", ArgTypes.STRING);
-            this.levelArg = this.withOptionalArg("niveau", "Aventurier : 20 a 600", ArgTypes.INTEGER);
+            this.levelArg = this.withOptionalArg("niveau", "Aventurier, chasseur, criminel : 20 a 600", ArgTypes.INTEGER);
         }
 
         protected boolean canGeneratePermission() { return false; }
@@ -90,12 +91,20 @@ public class GuardCommand extends AbstractCommandCollection {
                 AdventurerType advType = AdventurerType.fromArg(typeName);
                 AdventurerTier advTier = AdventurerTier.fromArg(tierName);
                 if (typeName != null && advType == null) { sender.sendMessage(Message.raw("Type inconnu : " + typeName + " (guerrier, mage, archer, assassin)")); return; }
+                if ((type == GuardType.CHASSEUR_PRIME || type == GuardType.CRIMINEL) && advType != null && !BountyHunter.isHunterType(advType)) {
+                    sender.sendMessage(Message.raw(type.getLabel() + " : guerrier, archer ou assassin.")); return;
+                }
                 if (tierName != null && advTier == null) { sender.sendMessage(Message.raw("Statut inconnu : " + tierName + " (ordinaire, exceptionnel, heros)")); return; }
                 GuardManager.Post p = GuardManager.place(type, world, pos, yaw, advType, advTier, level != null ? level : 0);
                 sender.sendMessage(Message.raw(type.getLabel() + " poste ici (" + p.getId() + ")."
                         + switch (type) {
                     case PATROUILLEUR -> " Il fait sa ronde autour de ce point.";
                     case CHEVALIER_ERRANT -> " Il erre dans 200 blocs autour de ce point.";
+                    case CHASSEUR_PRIME -> " " + GuardManager.nameplate(p) + " (" + AdventurerType.of(p.getSkinSeed()).getLabel()
+                            + ", niveau " + p.level + ") erre dans 200 blocs autour de ce point et traque les PK.";
+                    case MAITRE_GUILDE -> " Parlez-lui (touche d'interaction) pour fonder, rejoindre ou améliorer une guilde.";
+                    case CRIMINEL -> " " + GuardManager.nameplate(p) + " (" + AdventurerType.of(p.getSkinSeed()).getLabel()
+                            + ", niveau " + p.level + ") rôde autour de ce repaire. Prime : " + Criminals.bounty(p) + " or.";
                     case VILLAGEOIS -> " Il se promene dans 30 blocs autour de ce point.";
                     case AVENTURIER -> " " + GuardManager.nameplate(p) + " (niveau " + p.level + ", "
                             + AdventurerTier.of(p).getLabel()
@@ -138,7 +147,8 @@ public class GuardCommand extends AbstractCommandCollection {
                     Vector3d c = p.position();
                     String state = p.isAlive() ? "en poste" : p.getRespawnAt() > 0
                                                               ? "tombe, retour dans " + Math.max(0, (p.getRespawnAt() - now) / 1000) + " s" : "a faire apparaitre";
-                    String label = p.getType() == GuardType.AVENTURIER ? GuardManager.nameplate(p) : p.getType().getLabel();
+                    String label = p.getType() == GuardType.AVENTURIER || p.getType() == GuardType.CHASSEUR_PRIME || p.getType() == GuardType.CRIMINEL
+                                   ? GuardManager.nameplate(p) : p.getType().getLabel();
                     sender.sendMessage(Message.raw(p.getId() + " - " + label + " - " + p.getWorld() + " "
                             + (int) c.x + " " + (int) c.y + " " + (int) c.z + " - " + state));
                 }

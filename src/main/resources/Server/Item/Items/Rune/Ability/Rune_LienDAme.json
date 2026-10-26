@@ -1,0 +1,44 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune du Lien d'Âme",
+    "Description": "Sort rare de lumière (Mage, rune de prédilection du Gardien des Âmes). Vous liez votre âme à celle de l'allié visé (25 blocs) pendant 8 s. Il subit 20 % de dégâts en moins, et toutes les demi-secondes, jusqu'à 4 % de points de vie passent de celui qui en a le plus (en proportion) à l'autre. Le lien se rompt au-delà de 30 blocs. Coût : 120 mana. Recharge : 60 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_LienDAme.png",
+  "Quality": "Rare",
+  "ItemLevel": 40,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_System.Competences_Actives"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_LienDAme.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 60,
+    "Cost": 120,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Buff",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_LienDAme"
+  }
+}

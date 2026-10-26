@@ -13,6 +13,6 @@ public class GardiendesAmes extends ClassModel {
         super("gardien_des_ames", "Gardien des Ames", "Le gardien qui protege et soigne les ames blessees.",
                 Rarity.RARE, ClassType.MAGE, List.of(PassiveSkill.NATURAL_RECOVERY, PassiveSkill.STEEL_CONSTITUTION, PassiveSkill.MANA_STREAM), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 4, 26, 32, 16, 2, 6);
-        runes("Rune_Fireball");
+        runes("Rune_LienDAme", "Rune_Fireball");
     }
 }

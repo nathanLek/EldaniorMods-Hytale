@@ -361,7 +361,15 @@ public class AdminTab {
         if (targetRef == null) return false;
         return executeOnTarget(targetRef, (tRef, tStore, data) -> {
             data.setForcePK(!data.isForcePK());
-            targetRef.sendMessage(Message.raw(data.isPK() ? "Vous etes maintenant PK !" : "PK retire."));
+            java.util.UUID uuid = com.eldanior.system.config.UUIDExtractor.getUUID(targetRef);
+            if (data.isForcePK()) {                                       // PK force : 1 000 or de prime, inscrit au tableau
+                data.addBounty(1_000);
+                com.eldanior.system.quest.QuestManager.registerBounty(uuid, targetRef.getUsername(), data.getLevel(), data.getBounty());
+            } else if (!data.isPK()) {                                    // plus PK : prime effacee
+                data.collectBounty();
+                com.eldanior.system.quest.QuestManager.unregisterBounty(uuid);
+            }
+            targetRef.sendMessage(Message.raw(data.isPK() ? "Vous etes maintenant PK ! (prime : " + data.getBounty() + " or)" : "PK retire."));
         });
     }
 

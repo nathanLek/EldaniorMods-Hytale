@@ -27,7 +27,8 @@ En cas de doute, commencer par la conception et la présenter avant de coder.
 4. **Pas de doublon** : consulter `references/library.md` ; deux sorts du même type doivent différer par leur mécanique, pas par la couleur ou les chiffres.
 5. **Honnêteté** : « compilé », « assets validés au chargement » et « testé en jeu » sont trois niveaux distincts ; ne jamais annoncer le troisième sans retour de l'utilisateur.
 6. **Pas de nouveau Divin** : ne jamais proposer de nouvelle compétence de rareté Divin (décision utilisateur).
-7. **Ne rien casser** : `rune_tool.py new` n'écrase rien sans `--force` ; ne pas modifier les sorts divins existants sans demande.
+7. **Une icône par rune** : chaque rune a son emblème dédié dans `rune_icons.py` (champ `emblem` de la fiche), jamais l'emblème générique du type ; prévisualiser en 128 et 64 px.
+8. **Ne rien casser** : `rune_tool.py new` n'écrase rien sans `--force` ; ne pas modifier les sorts divins existants sans demande.
 
 ## 3. Processus (implémentation)
 

@@ -1,0 +1,45 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de l'Égide Royale",
+    "Description": "Sort rare de lumière (Mage, rune de prédilection de l'Enchanteur Royal). Un dôme de lumière de 6 blocs de rayon se lève autour de vous pendant 6 s. Les projectiles qui y entrent sont détruits, les ennemis qui le franchissent sont repoussés (10 dégâts), et les alliés à l'intérieur subissent 40 % de dégâts en moins. Coût : 120 mana. Recharge : 60 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_EgideRoyale.png",
+  "Quality": "Rare",
+  "ItemLevel": 40,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_System.Competences_Actives"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_EgideRoyale.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 60,
+    "Cost": 120,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Buff",
+      "Aoe",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_EgideRoyale"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_SentinelleDeGivre",
+  "spell": "SentinelleDeGivre",
+  "javaClass": "SentinelleDeGivre",
+  "page": "rune_page_sentinelle_de_givre",
+  "name": "Rune de la Sentinelle de Givre",
+  "type": "Glace",
+  "rarity": "Rare",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Sentinelle",
+  "summary": "erige une tourelle de glace (vrais blocs) 12 s qui tire des eclats ralentissants sur l'ennemi le plus proche.",
+  "description": "Sort rare de glace (Mage, rune de prédilection du Conjurateur Maître). Une sentinelle de glace de 3 blocs de haut se dresse à l'endroit visé (20 blocs) pendant 12 s. Chaque seconde, elle tire un éclat de givre sur l'ennemi le plus proche (14 blocs) : 22 dégâts de glace et ralentissement. Elle fond ensuite. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin gelé en forme de flèche. Enseigne la Sentinelle de Givre : une tourelle de glace qui tient une position pour vous. Classes : tous les Mages (rune de prédilection du Conjurateur Maître). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.5,
+    "releaseTime": 0.45,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Ice_Build",
+    "handParticles": "Ice_Staff_Charging",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.5,
+    "range": 20,
+    "radius": "tir 14 blocs",
+    "targets": "ennemi le plus proche de la tourelle",
+    "executionFx": "pilier Rock_Ice 3 blocs + Rock_Ice_Icicles au sommet (cases vides seulement)",
+    "impactFx": "arc Impact_Ice + Ability_Ice_Impact",
+    "sounds": "SFX_Ice_Build, SFX_Arrow_Frost_Hit a chaque tir",
+    "effects": "22 Ice + Elda_Givre, un tir / s",
+    "terrain": "4 blocs de glace, restaures a la fin",
+    "persistentDurationS": 12,
+    "restrictions": "mage",
+    "limitations": "invocation : duree au-dela de la fourchette Rare (6 s) car une invocation de 6 s n'a pas de sens ; compensee par des PV limites et une recharge de 60 s",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 3,
+      "mobility": 0,
+      "control": 1,
+      "defense": 1,
+      "targets": 1,
+      "frequency": 1,
+      "terrain": 1,
+      "difficulty": 1
+    }
+  }
+}

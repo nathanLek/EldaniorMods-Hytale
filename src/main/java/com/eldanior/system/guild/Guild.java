@@ -70,6 +70,13 @@ public class Guild {
     public boolean isOpenRecruitment() { return openRecruitment; }
     public void setOpenRecruitment(boolean open) { this.openRecruitment = open; }
 
+    // Ameliorations (GuildUpgrade), achetees chez le Maitre de guilde
+    private final int[] upgrades = new int[GuildUpgrade.values().length];
+    public int getUpgrade(GuildUpgrade u) { return upgrades[u.ordinal()]; }
+    public void setUpgrade(GuildUpgrade u, int level) { upgrades[u.ordinal()] = Math.clamp(level, 0, u.getMaxLevel()); }
+    public int getMaxMembers() { return GuildUpgrade.BASE_MEMBERS + getUpgrade(GuildUpgrade.EFFECTIFS) * GuildUpgrade.SLOTS_PER_LEVEL; }
+    public boolean isFull() { return members.size() >= getMaxMembers(); }
+
     public String getFormattedTag() { return "[" + tag + "]"; }
     public String getFormattedName() { return name; }
 }

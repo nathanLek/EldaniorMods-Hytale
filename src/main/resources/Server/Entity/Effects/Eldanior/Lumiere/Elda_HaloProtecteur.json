@@ -1,0 +1,40 @@
+{
+  "$Comment": "Halo Protecteur : -30 % de degats subis (types parents Physical, Elemental, Projectile).",
+  "Duration": 8,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#ffd96b",
+    "EntityTopTint": "#fff6d0",
+    "Particles": [
+      {
+        "SystemId": "Aura_Sphere",
+        "TargetEntityPart": "Entity",
+        "TargetNodeName": "Chest",
+        "Scale": 1
+      }
+    ]
+  },
+  "DamageResistance": {
+    "Physical": [
+      {
+        "Amount": 0.3,
+        "CalculationType": "Percent"
+      }
+    ],
+    "Elemental": [
+      {
+        "Amount": 0.3,
+        "CalculationType": "Percent"
+      }
+    ],
+    "Projectile": [
+      {
+        "Amount": 0.3,
+        "CalculationType": "Percent"
+      }
+    ]
+  },
+  "OverlapBehavior": "Overwrite",
+  "Infinite": false,
+  "Debuff": false,
+  "StatusEffectIcon": "UI/StatusEffects/Burn.png"
+}

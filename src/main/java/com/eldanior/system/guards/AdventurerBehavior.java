@@ -128,7 +128,7 @@ public final class AdventurerBehavior {
             if (st != null && st.getStateName() != null && !st.getStateName().startsWith("Idle")) st.setState(ref, "Idle", null, store);
             for (Ref<EntityStore> e : new ArrayList<>(TargetUtil.getAllEntitiesInSphere(at, CALM_RANGE, store))) {
                 NPCEntity n = e != null && e.isValid() && !e.equals(ref) ? store.getComponent(e, NPCEntity.getComponentType()) : null;
-                if (n == null || GuardType.fromRole(n.getRoleName()) != null) continue;
+                if (n == null || GuardType.isAlly(n.getRoleName())) continue;
                 NpcAttitudes.force(ref, e, Attitude.IGNORE, 3.0, store);
             }
         } catch (Exception ignored) { }

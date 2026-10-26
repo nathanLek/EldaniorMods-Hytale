@@ -1,0 +1,71 @@
+{
+  "$Comment": "Rune de l'Esprit Follet : incantation puis sort Java 'EspritFollet' (RuneSpell). Genere par rune_tool.py, cout : start.",
+  "Type": "StatsCondition",
+  "UseAbilityCost": true,
+  "Failed": "Ability_Cast_Fail",
+  "Next": {
+    "Type": "Parallel",
+    "Interactions": [
+      {
+        "Interactions": [
+          {
+            "Type": "Simple",
+            "RunTime": 0.3,
+            "HorizontalSpeedMultiplier": 0.6,
+            "Effects": {
+              "ItemPlayerAnimationsId": "Staff",
+              "ItemAnimationId": "CastSummonCharging",
+              "WaitForAnimationToFinish": false,
+              "Particles": [
+                {
+                  "SystemId": "Bifrost_Divine",
+                  "TargetEntityPart": "Entity",
+                  "TargetNodeName": "R-Hand",
+                  "Scale": 0.2
+                },
+                {
+                  "SystemId": "Bifrost_Divine",
+                  "TargetEntityPart": "Entity",
+                  "TargetNodeName": "L-Hand",
+                  "Scale": 0.2
+                }
+              ]
+            }
+          },
+          {
+            "Type": "RuneSpell",
+            "RunTime": 0.05,
+            "Spell": "EspritFollet"
+          },
+          {
+            "Type": "Simple",
+            "RunTime": 0.35,
+            "HorizontalSpeedMultiplier": 0.8,
+            "Effects": {
+              "ItemPlayerAnimationsId": "Staff",
+              "ItemAnimationId": "CastSummon",
+              "ClearAnimationOnFinish": true,
+              "WorldSoundEventId": "SFX_Portal_Void"
+            }
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "TriggerCooldown",
+            "UseAbilityCooldown": true
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "ChangeStat",
+            "UseAbilityCost": true
+          }
+        ]
+      }
+    ]
+  }
+}

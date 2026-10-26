@@ -49,7 +49,8 @@ public class MobNameplateColorSystem extends EntityTickingSystem<EntityStore> {
         if (!mobRef.isValid()) return;
 
         NPCEntity npc = store.getComponent(mobRef, Objects.requireNonNull(NPCEntity.getComponentType()));
-        if (npc == null || com.eldanior.system.skills.runes.spells.RuneSpellRuntime.isSummonRole(npc.getNPCTypeId()) || com.eldanior.system.guards.GuardType.fromRole(npc.getNPCTypeId()) != null) return;   // copies et PNJ de poste : nom gere par leur systeme   // copies des sorts : gardent le nom du lanceur
+        if (npc == null || com.eldanior.system.skills.runes.spells.RuneSpellRuntime.isSummonRole(npc.getNPCTypeId()) || com.eldanior.system.guards.GuardType.fromRole(npc.getNPCTypeId()) != null
+                || com.eldanior.system.boards.MonsterContracts.isContractMob(mobRef, store)) return;   // monstres de contrat : nom gere par MonsterContracts ; copies et PNJ de poste : nom gere par leur systeme   // copies des sorts : gardent le nom du lanceur
 
         String mobTypeId = npc.getNPCTypeId();
 

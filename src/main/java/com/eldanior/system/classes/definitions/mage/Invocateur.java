@@ -17,6 +17,6 @@ public class Invocateur extends ClassModel {
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
                 List.of("invocateur_supreme", "conjurateur_maitre", "maitre_d_invocation"), 400, false,
                 2, 8, 24, 8, 4, 4);
-        runes("Rune_Fireball");
+        runes("Rune_EspritFollet", "Rune_Fireball");
     }
 }

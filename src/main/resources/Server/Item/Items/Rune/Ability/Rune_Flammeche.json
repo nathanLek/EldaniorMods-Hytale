@@ -1,0 +1,45 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de Flammèche",
+    "Description": "Sort commun de feu (Mage, rune de prédilection du Pyromancien). Vous lancez une flammèche qui file tout droit à 35 blocs par seconde (portée 30 blocs). Le premier ennemi touché subit 50 dégâts de feu et brûle pendant 5 s (4 dégâts par seconde). Elle s'éteint contre un mur. Épargne votre groupe, votre guilde et votre famille. Coût : 25 mana. Recharge : 15 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_Flammeche.png",
+  "Quality": "Common",
+  "ItemLevel": 10,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_System.Competences_Actives"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_Flammeche.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 15,
+    "Cost": 25,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Fire",
+      "Damage",
+      "Projectile"
+    ],
+    "Cast": "Root_Ability_Flammeche"
+  }
+}

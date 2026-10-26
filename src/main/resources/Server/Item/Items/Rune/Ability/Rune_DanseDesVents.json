@@ -1,0 +1,47 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de la Danse des Vents",
+    "Description": "Sort unique d'air (Mage, rune de prédilection de la Force Naturelle). Pendant 15 s, le vent vous porte : vitesse +50 % et aucun dégât de chute. Chaque clic droit vous fait bondir dans la direction du regard (au plus une fois par seconde) et libère une rafale qui inflige 45 dégâts de vent aux ennemis à moins de 5 blocs et les repousse. Épargne votre groupe, votre guilde et votre famille. Coût : 600 mana. Recharge : 180 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_DanseDesVents.png",
+  "Quality": "Unique",
+  "ItemLevel": 75,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_System.Competences_Actives"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_DanseDesVents.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 180,
+    "Cost": 600,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Wind",
+      "Damage",
+      "Aoe",
+      "Duration",
+      "Buff"
+    ],
+    "Cast": "Root_Ability_DanseDesVents"
+  }
+}

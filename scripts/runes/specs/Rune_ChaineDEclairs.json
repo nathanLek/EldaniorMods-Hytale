@@ -1,0 +1,66 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_ChaineDEclairs",
+  "spell": "ChaineDEclairs",
+  "javaClass": "ChaineDEclairs",
+  "page": "rune_page_chaine_d_eclairs",
+  "name": "Rune de la Chaîne d'Éclairs",
+  "type": "Foudre",
+  "rarity": "Rare",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Chaine",
+  "summary": "eclair qui saute de l'ennemi vise jusqu'a 4 autres ennemis proches, en perdant 15 % a chaque saut.",
+  "description": "Sort rare de foudre (Mage, rune de prédilection de l'Élémentaliste Maître). Un éclair frappe l'ennemi visé (25 blocs) puis saute sur l'ennemi le plus proche (8 blocs), jusqu'à 5 cibles : 140 dégâts de foudre à la première, 15 % de moins à chaque saut, et un bref étourdissement. Punit les groupes serrés. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin dont l'encre crépite d'un mot à l'autre. Enseigne la Chaîne d'Éclairs : un éclair qui bondit d'ennemi en ennemi. Classes : tous les Mages (rune de prédilection de l'Élémentaliste Maître). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Spellbook",
+    "charging": "CastPushCharging",
+    "release": "CastPushCharged",
+    "chargeTime": 0.4,
+    "releaseTime": 0.35,
+    "moveSpeed": 0.6,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Emit_Goblin_Electric_Fence_Zap",
+    "handParticles": "Taranis_Electric_Burst",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.4,
+    "range": 25,
+    "radius": "saut 8 blocs",
+    "targets": "5 ennemis max, chacun une fois",
+    "executionFx": "arcs Taranis_Electric_Burst entre cibles, un saut toutes les 120 ms",
+    "impactFx": "Taranis_Electric_Burst",
+    "sounds": "SFX_Emit_Goblin_Electric_Fence_Zap a chaque saut, SFX_Global_Weather_Thunder (2D) au premier",
+    "effects": "140/119/101/86/73 Lightning + Taranis_Foudroye 0.3 s",
+    "terrain": "aucun",
+    "persistentDurationS": 1,
+    "restrictions": "mage",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 0,
+      "mobility": 0,
+      "control": 1,
+      "defense": 0,
+      "targets": 3,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    },
+    "edgeCases": "cible morte entre deux sauts : le saut part de sa derniere position"
+  }
+}

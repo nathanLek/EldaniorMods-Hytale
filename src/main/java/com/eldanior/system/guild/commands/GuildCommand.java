@@ -153,6 +153,9 @@ public class GuildCommand extends AbstractAsyncCommand {
             if (!data.canJoinGuild()) {
                 sender.getPlayerRef().sendMessage(Message.raw("Vous ne pouvez pas rejoindre de guilde.")); return;
             }
+            if (guild.isFull()) {
+                sender.getPlayerRef().sendMessage(Message.raw("Cette guilde est complete (" + guild.getMaxMembers() + " membres).")); return;
+            }
 
             PlayerLevelData copy = (PlayerLevelData) data.clone();
             if (copy == null) return;
@@ -457,6 +460,9 @@ public class GuildCommand extends AbstractAsyncCommand {
 
             if (!guild.isOpenRecruitment()) {
                 sender.getPlayerRef().sendMessage(Message.raw("Cette guilde n'est pas en recrutement ouvert. Demandez une invitation.")); return;
+            }
+            if (guild.isFull()) {
+                sender.getPlayerRef().sendMessage(Message.raw("Cette guilde est complete (" + guild.getMaxMembers() + " membres).")); return;
             }
 
             UUID senderUUID = getSenderUUID(sender);

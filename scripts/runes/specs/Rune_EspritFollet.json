@@ -1,0 +1,63 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_EspritFollet",
+  "spell": "EspritFollet",
+  "javaClass": "EspritFollet",
+  "page": "rune_page_esprit_follet",
+  "name": "Rune de l'Esprit Follet",
+  "type": "Lumiere",
+  "rarity": "Common",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Follet",
+  "summary": "un esprit de lumiere flotte a l'epaule du lanceur et tire 5 traits sur l'ennemi le plus proche.",
+  "description": "Sort commun de lumière (Mage, rune de prédilection de l'Invocateur). Un esprit follet apparaît à votre épaule et tire, toutes les 1,2 s, un trait de lumière sur l'ennemi le plus proche (15 blocs) : 16 dégâts par trait, 5 traits. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin dont une petite lueur s'échappe quand on l'ouvre. Enseigne l'Esprit Follet : un petit esprit qui combat à vos côtés. Classes : tous les Mages (rune de prédilection de l'Invocateur). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.3,
+    "releaseTime": 0.35,
+    "moveSpeed": 0.6,
+    "cameraEffect": null,
+    "sound": null,
+    "releaseSound": "SFX_Portal_Void",
+    "handParticles": "Bifrost_Divine",
+    "handParticlesScale": 0.2,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.3,
+    "range": 15,
+    "targets": "ennemi le plus proche du lanceur",
+    "persistentFx": "esprit en particules Bifrost_Divine a l'epaule (100 ms)",
+    "impactFx": "arc de lumiere (SpellFx.arc Bifrost_Divine)",
+    "effects": "5 x 16 Elemental, un trait / 1.2 s",
+    "terrain": "aucun",
+    "persistentDurationS": 6,
+    "restrictions": "mage",
+    "balance": {
+      "damage": 1,
+      "range": 2,
+      "duration": 1,
+      "mobility": 0,
+      "control": 0,
+      "defense": 0,
+      "targets": 1,
+      "frequency": 2,
+      "terrain": 0,
+      "difficulty": 0
+    }
+  }
+}

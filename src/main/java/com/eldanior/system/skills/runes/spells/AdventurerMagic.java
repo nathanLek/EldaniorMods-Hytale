@@ -297,8 +297,8 @@ public class AdventurerMagic extends EntityTickingSystem<EntityStore> {
         if (e.equals(locked)) return true;
         if (store.getComponent(e, Player.getComponentType()) != null) return false;
         NPCEntity n = store.getComponent(e, Objects.requireNonNull(NPCEntity.getComponentType()));
-        if (n == null || GuardType.fromRole(n.getRoleName()) != null) return false;
-        return WorldSupport.get(e, store).getDefaultPlayerAttitude() == Attitude.HOSTILE;
+        if (n == null || GuardType.isAlly(n.getRoleName())) return false;                              // criminels : ennemis
+        return GuardType.isOutlaw(n.getRoleName()) || WorldSupport.get(e, store).getDefaultPlayerAttitude() == Attitude.HOSTILE;
     }
 
     /** Ennemis autour d'un point (isFoe). */

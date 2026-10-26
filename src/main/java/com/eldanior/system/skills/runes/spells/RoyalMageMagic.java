@@ -144,9 +144,9 @@ public class RoyalMageMagic extends EntityTickingSystem<EntityStore> {
             if (e == null || !e.isValid() || e.equals(mage) || RuneSpellRuntime.isSummon(e)) continue;
             if (e.equals(locked)) { out.add(e); continue; }
             NPCEntity n = store.getComponent(e, NPCEntity.getComponentType());
-            if (n == null || GuardType.fromRole(n.getRoleName()) != null) continue;
+            if (n == null || GuardType.isAlly(n.getRoleName())) continue;                       // criminels : ennemis
             WorldSupport ws = WorldSupport.get(e, store);
-            if (ws != null && ws.getDefaultPlayerAttitude() == Attitude.HOSTILE) out.add(e);
+            if (GuardType.isOutlaw(n.getRoleName()) || (ws != null && ws.getDefaultPlayerAttitude() == Attitude.HOSTILE)) out.add(e);
         }
         return out;
     }

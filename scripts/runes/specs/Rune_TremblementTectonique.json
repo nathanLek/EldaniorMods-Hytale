@@ -1,0 +1,66 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_TremblementTectonique",
+  "spell": "TremblementTectonique",
+  "javaClass": "TremblementTectonique",
+  "page": "rune_page_tremblement_tectonique",
+  "name": "Rune du Tremblement Tectonique",
+  "type": "Terre",
+  "rarity": "Unique",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Tectonique",
+  "summary": "quatre seismes en chaine qui avancent droit devant sur 20 blocs, fissurent le sol et etourdissent.",
+  "description": "Sort unique de terre (Mage, rune de prédilection de l'Élémentaire Suprême). Le sol se fend devant vous : quatre séismes se suivent en ligne droite, tous les 5 blocs (jusqu'à 20 blocs). Chacun ouvre des fissures et frappe les ennemis à moins de 6 blocs : 130 dégâts de terre, projection et étourdissement 1,5 s. Les fissures se referment après 2 minutes. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin lourd comme une pierre, couvert de lignes de faille. Enseigne le Tremblement Tectonique : une chaîne de séismes qui déchire le sol devant vous. Classes : tous les Mages (rune de prédilection de l'Élémentaire Suprême). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.7,
+    "releaseTime": 0.5,
+    "moveSpeed": 0.3,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Golem_Frost_Slam_Impact",
+    "handParticles": "Gaia_Dust_Burst",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.7,
+    "range": 20,
+    "radius": "6 blocs par seisme",
+    "targets": "ennemis autour de chaque epicentre (une fois par seisme)",
+    "executionFx": "un seisme toutes les 0.6 s",
+    "impactFx": "Gaia_Dust_Burst x3, secousse Impact_Strong",
+    "sounds": "SFX_Golem_Frost_Slam_Impact",
+    "effects": "130 Earth + projection + Gaia_Etourdi 1.5 s (verrou des monstres)",
+    "terrain": "5 fissures par epicentre (GraviteSol.crackPath + dig, basalte), restaurees apres 120 s, ~400 blocs max",
+    "persistentDurationS": 3,
+    "restrictions": "mage",
+    "balance": {
+      "damage": 3,
+      "range": 3,
+      "duration": 1,
+      "mobility": 0,
+      "control": 3,
+      "defense": 1,
+      "targets": 3,
+      "frequency": 1,
+      "terrain": 2,
+      "difficulty": 1
+    },
+    "edgeCases": "epicentre au-dessus du vide : ramene au sol (ground) ; zone protegee : pas de fissures"
+  }
+}

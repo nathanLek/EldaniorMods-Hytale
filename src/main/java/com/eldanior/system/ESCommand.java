@@ -30,6 +30,7 @@ public class ESCommand extends AbstractCommandCollection {
         this.addSubCommand(new AddXPCommand());
         this.addSubCommand(new SetLevelCommand());
         this.addSubCommand(new com.eldanior.system.guards.GuardCommand());
+        this.addSubCommand(new com.eldanior.system.boards.ContractCommand());   // contrats de monstres du tableau de prime
         this.addSubCommand(new ClassInfoCommand());
         this.addSubCommand(new SetClassCommand());
         this.addSubCommand(new GiveRelicCommand());

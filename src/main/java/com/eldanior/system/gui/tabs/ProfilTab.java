@@ -84,7 +84,7 @@ public class ProfilTab {
 
         // Eglise / PK
         if (data.isPK()) {
-            String bountyText = data.getBounty() > 0 ? " | Prime: " + data.getBounty() + " Or" : "";
+            String bountyText = " | Prime: " + data.getBounty() + " Or";                 // meme a 0 : tableau de prime
             ui.set("#ProfilChurch.Text", "CRIMINEL - EXCOMMUNIE" + bountyText);
         } else {
             String churchRank = data.getChurchRank();

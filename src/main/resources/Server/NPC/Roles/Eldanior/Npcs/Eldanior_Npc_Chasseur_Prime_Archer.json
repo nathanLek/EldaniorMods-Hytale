@@ -1,0 +1,79 @@
+{
+  "Type": "Variant",
+  "Reference": "Template_Intelligent",
+  "Modify": {
+    "DropList": "Empty",
+    "WakingPeriod": [
+      0,
+      24
+    ],
+    "BedBlockSet": "",
+    "Patrol": false,
+    "FollowPatrolPath": false,
+    "ViewRange": 30,
+    "ViewSector": 240,
+    "HearingRange": 12,
+    "AlertedRange": 45,
+    "AlertedTime": [
+      0.3,
+      0.6
+    ],
+    "LeashMinPlayerDistance": 4,
+    "LeashTimer": [
+      2,
+      3
+    ],
+    "SearchTimeRange": [
+      4,
+      6
+    ],
+    "BreathesInWater": true,
+    "NameTranslationKey": {
+      "Compute": "NameTranslationKey"
+    },
+    "Appearance": "Player",
+    "MaxHealth": 240,
+    "MaxSpeed": 12,
+    "RunThreshold": 0.3,
+    "KnockbackScale": 0.4,
+    "Weapons": [
+      "Weapon_Shortbow_Iron"
+    ],
+    "OffHand": [],
+    "DefaultOffHandSlot": -1,
+    "NighttimeOffhandSlot": -1,
+    "WakingIdleBehaviorComponent": "Component_Instruction_Eldanior_Leash_Walk",
+    "WanderRadius": 10,
+    "LeashDistance": 80,
+    "HardLeashDistance": 150,
+    "UseCombatActionEvaluator": false,
+    "Attack": "Outlander_Hunter_Bow_Shoot",
+    "AttackDistance": 22,
+    "DesiredAttackDistanceRange": [
+      8,
+      15
+    ],
+    "AttackPauseRange": [
+      1.0,
+      1.5
+    ],
+    "CombatBehaviorDistance": 25,
+    "TargetRange": 30,
+    "CombatBackOffAfterAttack": false,
+    "CombatStrafeWeight": 3,
+    "CombatFleeIfTooCloseDistance": 4,
+    "BlockAbility": "",
+    "AttitudeGroup": "Eldanior_Hunter",
+    "DefaultPlayerAttitude": "Ignore",
+    "DisableDamageGroups": [
+      "Self",
+      "Eldanior_Guards"
+    ]
+  },
+  "Parameters": {
+    "NameTranslationKey": {
+      "Value": "server.npcRoles.Eldanior_Npc_Chasseur_Prime.name",
+      "Description": "Translation key for NPC name display"
+    }
+  }
+}

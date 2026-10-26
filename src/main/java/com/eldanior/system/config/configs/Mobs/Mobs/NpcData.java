@@ -28,10 +28,13 @@ public enum NpcData implements IMobConfig {
     GARDE_PATROUILLEUR("Eldanior_Guard_Patrouilleur", "Patrouilleur", 0, 150),
     GARDE_MAGE_ROYAL("Eldanior_Guard_Mage", "Mage royal", 0, 600),
 
-    // PNJ de poste (guards/GuardManager) : chevalier errant, villageois, aventurier (recrutable et compagnon)
+    // PNJ de poste (guards/GuardManager) : chevalier errant, villageois, aventurier (recrutable et compagnon), chasseur de prime, criminel
     PNJ_CHEVALIER_ERRANT("Eldanior_Npc_Chevalier_Errant", "Chevalier errant", 0, 400),
     PNJ_VILLAGEOIS("Eldanior_Npc_Villageois", "Villageois", 0, 10),
     PNJ_AVENTURIER("Eldanior_Npc_Aventurier", "Aventurier", 0, 200),
+    PNJ_CHASSEUR_PRIME("Eldanior_Npc_Chasseur_Prime", "Chasseur de prime", 0, 300),
+    PNJ_CRIMINEL("Eldanior_Criminel", "Criminel", 300, 300),                    // XP : tuer un criminel est utile
+    PNJ_MAITRE_GUILDE("Eldanior_Npc_Maitre_Guilde", "Maître de guilde", true),   // pacifique, invincible
 
     // PNJ de quetes (norme : Quest_Npc_{Categorie}_{Type}_N{numero})
     QUEST_NPC_SECONDAIRE_MULTIPLE_N1("Quest_Npc_Secondaire_Multiple_N1", "Ancien Conseiller", true),

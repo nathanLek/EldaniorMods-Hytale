@@ -51,6 +51,12 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
 
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
     private final Map<UUID, Boolean> processedDeaths = new ConcurrentHashMap<>();
+    /**
+     * Donnees de joueur ecrites dans le tampon de commandes mais pas encore appliquees : plusieurs morts traitees dans le meme
+     * tick (un chef et ses complices, un sort de zone) partent de la derniere version. Sans cela, chacune repartait de la
+     * copie du store, perimee jusqu'au vidage du tampon : gains perdus (prime, XP) et montee de niveau affichee en boucle.
+     */
+    private final Map<UUID, PlayerLevelData> pending = new ConcurrentHashMap<>();
     private final Random random = new Random();
 
     @Override
@@ -89,6 +95,8 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
     private void processKillRewards(UUID killerUUID, UUID victimUUID, Ref<EntityStore> victimRef,
                                     Store<EntityStore> store, CommandBuffer<EntityStore> commandBuffer) {
         try {
+            // Chasseur de prime : un PK tue perd sa prime (part au tresor de la ville), pas d'autre recompense
+            if (com.eldanior.system.guards.BountyHunter.onKill(killerUUID, victimUUID, victimRef, store, commandBuffer)) return;
             UUID companionOwner = com.eldanior.system.guards.GuardManager.ownerOfCompanion(killerUUID);
             if (companionOwner != null) {
                 rewardCompanionKill(companionOwner, victimRef, store, commandBuffer);
@@ -103,7 +111,7 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
             Store<EntityStore> killerStore = killerEntityRef.getStore();
             ComponentType<EntityStore, PlayerLevelData> lvlType = EldaniorSystem.get().getPlayerLevelDataType();
 
-            PlayerLevelData killerDataRead = killerStore.getComponent(killerEntityRef, lvlType);
+            PlayerLevelData killerDataRead = latest(killerUUID, killerEntityRef, killerStore, lvlType);
             int killerLevel = (killerDataRead != null) ? killerDataRead.getLevel() : 1;
 
             int xpAmount = 0;
@@ -174,10 +182,23 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
             assert dataToWrite != null;
             int oldLvl = dataToWrite.getLevel();
 
+            // Criminel PNJ (guards/Criminals) ou monstre de contrat du jour (boards/MonsterContracts) : sa prime au tueur
+            if (isMob) {
+                long reward = com.eldanior.system.guards.Criminals.claim(victimRef, store, killerRefObj.getUsername())
+                        + com.eldanior.system.boards.MonsterContracts.claim(victimUUID, killerRefObj.getUsername());
+                if (reward > 0) {
+                    dataToWrite.addMoney(reward);
+                    QuestManager.onGoldGained(killerUUID, reward);
+                    NotificationHelper.sendNotification(killerRefObj,
+                            "<color:gold>PRIME TOUCHEE !</color> <color:green>+" + reward + " Or</color>", NotificationStyle.Success);
+                }
+            }
+
             // Bonus XP Diligence (+20%)
             if (dataToWrite.getActivePassives().contains(com.eldanior.system.skills.skillsInteraction.PassiveSkill.ANGE_DILIGENCE)) {
                 xpAmount = (int)(xpAmount * 1.20f);
             }
+            xpAmount = com.eldanior.system.guild.GuildUpgrade.applyXp(killerUUID, xpAmount);   // Sagesse de sa guilde
             dataToWrite.addExperience(xpAmount);
 
             // --- GUILD STATS TRACKING ---
@@ -274,6 +295,8 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
 
                     // Progression quete
                     QuestManager.onMobKill(killerUUID, mobTypeId);
+                    // Tableau de guilde : contrats de sa guilde, ses missions
+                    com.eldanior.system.boards.GuildBoard.onMobKill(killerUUID, mobTypeId);
 
                     // Verifier si de nouveaux titres sont debloques
                     java.util.List<TitleModel> newTitles = TitleManager.checkTitleUnlocks(dataToWrite);
@@ -293,7 +316,7 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
                 }
             }
 
-            commandBuffer.putComponent(killerEntityRef, lvlType, dataToWrite);
+            write(killerUUID, killerEntityRef, dataToWrite, lvlType, commandBuffer);
 
             String xpMsg = isPvP
                     ? "<color:gold>⚔ PvP : +" + xpAmount + " XP</color> <color:gray>(vs " + victimName + ")</color>"
@@ -315,13 +338,13 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
                     var memberEntityRef = memberRef.getReference();
                     if (memberEntityRef == null) continue;
                     Store<EntityStore> memberStore = memberEntityRef.getStore();
-                    PlayerLevelData memberData = memberStore.getComponent(memberEntityRef, lvlType);
+                    PlayerLevelData memberData = latest(memberUUID, memberEntityRef, memberStore, lvlType);
                     if (memberData == null) continue;
                     PlayerLevelData memberCopy = (PlayerLevelData) memberData.clone();
                     if (memberCopy == null) continue;
                     int memberOldLvl = memberCopy.getLevel();
                     memberCopy.addExperience(sharedXP);
-                    commandBuffer.putComponent(memberEntityRef, lvlType, memberCopy);
+                    write(memberUUID, memberEntityRef, memberCopy, lvlType, commandBuffer);
                     NotificationHelper.sendNotification(memberRef,
                             "<color:aqua>+" + sharedXP + " XP (groupe)</color>",
                             NotificationStyle.Success);
@@ -344,7 +367,7 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
 
                             // Quantité basée sur le level gap
                             int maxAmount = Math.max(1, Math.min(10, 5 + levelGap));
-                            int quantity = 1 + random.nextInt(maxAmount);
+                            int quantity = (int) com.eldanior.system.guild.GuildUpgrade.applyGold(killerUUID, 1 + random.nextInt(maxAmount));   // Fortune de sa guilde
 
                             // Type de coin scalé selon le niveau du mob tué
                             String coinType = com.eldanior.system.config.configs.CoinItemRegistry.getCoinTypeForLevel(victimLevel);
@@ -375,7 +398,7 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
 
             Store<EntityStore> playerStore = playerEntityRef.getStore();
             ComponentType<EntityStore, PlayerLevelData> lvlType = EldaniorSystem.get().getPlayerLevelDataType();
-            PlayerLevelData dataRead = playerStore.getComponent(playerEntityRef, lvlType);
+            PlayerLevelData dataRead = latest(playerUUID, playerEntityRef, playerStore, lvlType);
             if (dataRead == null) return;
 
             PlayerLevelData dataToWrite = (PlayerLevelData) dataRead.clone();
@@ -387,7 +410,7 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
             // PK perd 20% d'XP a la mort, non-PK perd 10%
             double deathPenalty = dataToWrite.isPK() ? 0.20 : 0.10;
             int xpLost = dataToWrite.removeExperiencePercent(deathPenalty);
-            commandBuffer.putComponent(playerEntityRef, lvlType, dataToWrite);
+            write(playerUUID, playerEntityRef, dataToWrite, lvlType, commandBuffer);
 
             String penaltyText = dataToWrite.isPK()
                     ? "<color:red>☠ Mort criminelle : -" + xpLost + " XP (-20%)</color>"
@@ -398,6 +421,21 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
         } catch (Exception e) {
             LOGGER.atSevere().withCause(e).log("ERREUR lors de la pénalité de mort");
         }
+    }
+
+    /** Derniere version des donnees d'un joueur : celle en attente d'ecriture, sinon celle du store. */
+    private PlayerLevelData latest(UUID player, Ref<EntityStore> ref, Store<EntityStore> store,
+                                   ComponentType<EntityStore, PlayerLevelData> lvlType) {
+        PlayerLevelData waiting = pending.get(player);
+        return waiting != null ? waiting : store.getComponent(ref, lvlType);
+    }
+
+    /** Ecrit les donnees d'un joueur (tampon de commandes) ; elles restent la derniere version jusqu'au vidage du tampon. */
+    private void write(UUID player, Ref<EntityStore> ref, PlayerLevelData data, ComponentType<EntityStore, PlayerLevelData> lvlType,
+                       CommandBuffer<EntityStore> commandBuffer) {
+        pending.put(player, data);
+        commandBuffer.putComponent(ref, lvlType, data);
+        commandBuffer.run(s -> pending.remove(player, data));
     }
 
     private int calculatePvEXP(String typeId) {
@@ -434,7 +472,7 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
         var entityRef = playerRef != null ? playerRef.getReference() : null;
         if (entityRef == null || !entityRef.isValid()) return;
         ComponentType<EntityStore, PlayerLevelData> lvlType = EldaniorSystem.get().getPlayerLevelDataType();
-        PlayerLevelData data = entityRef.getStore().getComponent(entityRef, lvlType);
+        PlayerLevelData data = latest(playerUUID, entityRef, entityRef.getStore(), lvlType);
         if (data == null) return;
         double multiplier = Math.clamp(1.0 + ((victimLevel - data.getLevel()) * 0.02), 0.2, 2.0);
         int sharedXP = Math.max(1, (int) Math.round(xpAmount * multiplier * 0.10));
@@ -442,7 +480,7 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
         if (copy == null) return;
         int oldLvl = copy.getLevel();
         copy.addExperience(sharedXP);
-        commandBuffer.putComponent(entityRef, lvlType, copy);
+        write(playerUUID, entityRef, copy, lvlType, commandBuffer);
         NotificationHelper.sendNotification(playerRef, "<color:aqua>+" + sharedXP + " XP (aventurier)</color>", NotificationStyle.Success);
         if (copy.getLevel() > oldLvl) NotificationHelper.showLevelUpTitle(playerRef, copy.getLevel());
     }

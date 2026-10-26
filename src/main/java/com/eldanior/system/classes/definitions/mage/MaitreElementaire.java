@@ -16,6 +16,6 @@ public class MaitreElementaire extends ClassModel {
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
                 List.of("seigneur_des_elements_mage", "elementaire_supreme", "force_naturelle"), 400, false,
                 25, 50, 120, 40, 50, 30);
-        runes("Rune_Bourrasque", "Rune_Fireball");
+        runes("Rune_Blizzard", "Rune_Bourrasque", "Rune_Fireball");
     }
 }

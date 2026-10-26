@@ -13,6 +13,6 @@ public class ForceNaturelle extends ClassModel {
         super("force_naturelle", "Force Naturelle", "Une force de la nature elle-meme. Indomptable et primordiale.",
                 Rarity.UNIQUE, ClassType.MAGE, List.of(PassiveSkill.ARCANE_ANNIHILATION, PassiveSkill.TITAN_CONSTITUTION, PassiveSkill.MANA_FORTRESS), List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK), List.of(), 400, false,
                 48, 90, 200, 74, 82, 48);
-        runes("Rune_Bourrasque", "Rune_Fireball");
+        runes("Rune_DanseDesVents", "Rune_Bourrasque", "Rune_Fireball");
     }
 }

@@ -24,7 +24,8 @@ import java.util.Random;
  * rend lui-meme (Seek + recherche de chemin : vraies animations, contourne les obstacles). Seulement au repos (pas en
  * combat ni en retour au poste). Sans progres pendant {@link #STUCK_MS}, le point est abandonne.
  *   - Patrouilleur : ronde en boucle sur un cercle de {@link #PATROL_RADIUS} blocs autour du poste.
- *   - Chevalier errant : erre de point en point ({@link #ROAM_STEP}) dans {@link #ROAM_RADIUS} blocs autour du poste.
+ *   - Chevalier errant et chasseur de prime : errent de point en point ({@link #ROAM_STEP}) dans {@link #ROAM_RADIUS} blocs
+ *     autour du poste ; criminel : de meme, dans Criminals.ROAM_RADIUS blocs autour de son repaire.
  *   - Villageois : se promene dans {@link #VILLAGE_RADIUS} blocs ; va voir un autre PNJ (ils se regardent, comme s'ils
  *     discutaient) ou un bloc utile (etabli, coffre, culture...) qu'il regarde un moment, ou fait quelques pas.
  * Points praticables : sol plein, deux blocs d'air, ciel libre (pas dans ni sur les batiments).
@@ -42,7 +43,16 @@ final class PostMovement {
     private static final Random RNG = new Random();
 
     static boolean moves(GuardType t) {
-        return t == GuardType.PATROUILLEUR || t == GuardType.CHEVALIER_ERRANT || t == GuardType.VILLAGEOIS;
+        return t == GuardType.PATROUILLEUR || roams(t) || t == GuardType.VILLAGEOIS;
+    }
+
+    /** Errance autour du poste : chevalier errant, chasseur de prime, criminel. */
+    static boolean roams(GuardType t) {
+        return t == GuardType.CHEVALIER_ERRANT || t == GuardType.CHASSEUR_PRIME || t == GuardType.CRIMINEL;
+    }
+
+    private static double roamRadius(GuardType t) {
+        return t == GuardType.CRIMINEL ? Criminals.ROAM_RADIUS : ROAM_RADIUS;
     }
 
     /** A l'apparition (ou au rechargement) : premier point. */
@@ -71,7 +81,7 @@ final class PostMovement {
             p.pauseUntil = now + pause;
             NpcFacing.lookAt(ref, p.lookAt, now + pause);
             if (p.visited != null) faceBack(p.visited, at, now + pause, store);
-        } else if (done && p.type == GuardType.CHEVALIER_ERRANT && RNG.nextInt(3) == 0) {
+        } else if (done && roams(p.type) && RNG.nextInt(3) == 0) {
             p.pauseUntil = now + 1_500 + RNG.nextInt(2_000);                                  // il marque une pause
         }
         if (done || stuck) { p.target = null; p.lookAt = null; p.visited = null; }
@@ -89,7 +99,7 @@ final class PostMovement {
     private static void pickNext(GuardManager.Post p, Ref<EntityStore> ref, Vector3d at, World world, Store<EntityStore> store, long now) {
         p.bestDistance = Double.MAX_VALUE;
         p.progressAt = now;
-        if (p.type == GuardType.CHEVALIER_ERRANT) { p.target = roamPoint(p, at, world); return; }
+        if (roams(p.type)) { p.target = roamPoint(p, at, world); return; }
         int roll = RNG.nextInt(10);
         if (roll < 4 && visitNpc(p, ref, at, world, store)) return;
         if (roll < 8 && visitBlock(p, at, world)) return;
@@ -152,17 +162,18 @@ final class PostMovement {
         return best;
     }
 
-    // ===== Chevalier errant =====
+    // ===== Chevalier errant, chasseur de prime =====
 
-    /** Prochain point a ~ROAM_STEP blocs ; au-dela de ROAM_RADIUS du poste, il repart vers son poste. */
+    /** Prochain point a ~ROAM_STEP blocs (moins pour un petit rayon) ; trop loin du poste, il y repart. */
     private static Vector3d roamPoint(GuardManager.Post p, Vector3d at, World world) {
         Vector3d home = p.position();
-        boolean far = Math.hypot(at.x - home.x, at.z - home.z) > ROAM_RADIUS - ROAM_STEP;
+        double radius = roamRadius(p.type), step = Math.min(ROAM_STEP, radius / 2);
+        boolean far = Math.hypot(at.x - home.x, at.z - home.z) > radius - step;
         for (int tries = 0; tries < 10; tries++) {
             double a = far ? Math.atan2(home.z - at.z, home.x - at.x) + (RNG.nextDouble() - 0.5) : RNG.nextDouble() * Math.PI * 2;
-            double r = ROAM_STEP * (0.5 + RNG.nextDouble() * 0.5);
+            double r = step * (0.5 + RNG.nextDouble() * 0.5);
             int x = (int) Math.floor(at.x + Math.cos(a) * r), z = (int) Math.floor(at.z + Math.sin(a) * r);
-            if (Math.hypot(x - home.x, z - home.z) > ROAM_RADIUS) continue;
+            if (Math.hypot(x - home.x, z - home.z) > radius) continue;
             Integer y = standY(world, x, (int) Math.floor(at.y), z, 8);
             if (y != null) return new Vector3d(x + 0.5, y, z + 0.5);
         }

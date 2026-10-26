@@ -41,6 +41,7 @@ public class GuardAlertSystem extends DamageEventSystem {
         if (victimIsPlayer) AdventurerSystem.onOwnerFight(victim, attacker, store);
         if (!attackerIsPlayer) return;
         UUID a = uuid(attacker, store);
+        if (!victimIsPlayer) Criminals.provoke(victim, a, store);                         // un PK qui frappe une bande la met en colere
         if (a == null || DuelManager.isInDuel(a) || ArenaManager.isInArena(a)) return;
 
         if (victimIsPlayer) {

@@ -35,7 +35,8 @@ TIERS = [
 PATROL = ("Patrouilleur", "Patrouilleur", "Iron", ["Weapon_Spear_Iron", "Furniture_Crude_Torch"], None, 200, 10, 12)
 HAIR = ("Characters/Haircuts/GenericShort.blockymodel", "Characters/Haircuts/GenericShort_Greyscale.png", "Hair", "BrownDark")
 
-HOSTILE_GROUPS = ["Undead", "Void", "Predators", "PredatorsBig", "Trork", "Goblin", "Outlander", "Scarak",
+# Eldanior_Criminals : criminels PNJ (guards/Criminals, roles Eldanior_Criminel*)
+HOSTILE_GROUPS = ["Eldanior_Criminals", "Undead", "Void", "Predators", "PredatorsBig", "Trork", "Goblin", "Outlander", "Scarak",
                   "Spiders", "Snakes", "Scorpions"]
 FRIENDLY_GROUPS = ["Eldanior_Guards", "Kweebec", "Feran"]
 

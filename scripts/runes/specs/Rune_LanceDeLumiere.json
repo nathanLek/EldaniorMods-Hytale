@@ -1,0 +1,64 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_LanceDeLumiere",
+  "spell": "LanceDeLumiere",
+  "javaClass": "LanceDeLumiere",
+  "page": "rune_page_lance_de_lumiere",
+  "name": "Rune de la Lance de Lumière",
+  "type": "Lumiere",
+  "rarity": "Rare",
+  "classes": "mage",
+  "persistent": false,
+  "emblem": "LanceLumiere",
+  "summary": "rayon sacre instantane de 30 blocs : blesse les ennemis traverses (double sur les morts-vivants) et soigne les allies traverses.",
+  "description": "Sort rare de lumière (Mage, rune de prédilection du Prêtre Arcane). Un rayon de lumière sacrée traverse tout sur 30 blocs jusqu'au premier mur : 110 dégâts sacrés aux ennemis touchés, le double aux morts-vivants (squelettes, zombies, goules…), et 10 % de soin aux alliés traversés.",
+  "pageDescription": "Un parchemin éblouissant qu'on lit les yeux plissés. Enseigne la Lance de Lumière : un rayon qui purge les morts et relève les vivants. Classes : tous les Mages (rune de prédilection du Prêtre Arcane). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Buff"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Spellbook",
+    "charging": "CastHurlCharging",
+    "release": "CastHurlCharged",
+    "chargeTime": 0.45,
+    "releaseTime": 0.35,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Portal_Void",
+    "handParticles": "Bifrost_Divine",
+    "handParticlesScale": 0.25,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.45,
+    "range": 30,
+    "radius": "ligne 1.4 bloc",
+    "targets": "ennemis et allies sur la ligne",
+    "executionFx": "Bifrost_Divine tous les blocs le long du rayon",
+    "impactFx": "Bifrost_Divine sur chaque cible ; Apollo_Heal_Pulse sur les allies",
+    "effects": "110 Elemental (x2 si role contient Skeleton/Zombie/Undead/Ghoul/Wraith/Mummy/Lich/Ghost) ; allies +10 % PV",
+    "terrain": "aucun",
+    "persistentDurationS": 0,
+    "restrictions": "mage",
+    "balance": {
+      "damage": 2,
+      "range": 3,
+      "duration": 0,
+      "mobility": 0,
+      "control": 0,
+      "defense": 1,
+      "targets": 2,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    }
+  }
+}

@@ -25,6 +25,6 @@ public class Mage extends ClassModel {
                 false,
                 2, 4, 20, 4, 4, 2
         );
-        runes("Rune_Fireball");
+        runes("Rune_Fireball", "Rune_OndeRepulsion");
     }
 }

@@ -1,0 +1,62 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_SoinMineur",
+  "spell": "SoinMineur",
+  "javaClass": "SoinMineur",
+  "page": "rune_page_soin_mineur",
+  "name": "Rune de Soin Mineur",
+  "type": "Lumiere",
+  "rarity": "Common",
+  "classes": "mage",
+  "persistent": false,
+  "emblem": "Soin",
+  "summary": "soin instantane de 15 % sur l'allie vise (ou soi) puis regeneration 5 s.",
+  "description": "Sort commun de lumière (Mage, rune de prédilection du Guérisseur). Soigne instantanément l'allié visé (20 blocs), ou vous-même sans cible, de 15 % de ses points de vie, puis 1 % par seconde pendant 5 s.",
+  "pageDescription": "Un parchemin qui sent la camomille et la cire d'abeille. Enseigne le Soin Mineur : un soin rapide pour vous ou un allié. Classes : tous les Mages (rune de prédilection du Guérisseur). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Buff"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Spellbook",
+    "charging": "CastPushCharging",
+    "release": "CastPushCharged",
+    "chargeTime": 0.25,
+    "releaseTime": 0.3,
+    "moveSpeed": 0.7,
+    "cameraEffect": null,
+    "sound": null,
+    "releaseSound": "SFX_Portal_Void",
+    "handParticles": "Bifrost_Divine",
+    "handParticlesScale": 0.25,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.25,
+    "range": 20,
+    "targets": "allie sous le curseur sinon soi",
+    "effects": "soin 15 % PV max + 5 x 1 % (une impulsion par seconde, gere par le code)",
+    "impactFx": "Apollo_Heal_Pulse",
+    "terrain": "aucun",
+    "persistentDurationS": 0,
+    "restrictions": "mage",
+    "balance": {
+      "damage": 0,
+      "range": 2,
+      "duration": 1,
+      "mobility": 0,
+      "control": 0,
+      "defense": 2,
+      "targets": 0,
+      "frequency": 2,
+      "terrain": 0,
+      "difficulty": 1
+    },
+    "edgeCases": "ennemi vise : soin sur soi"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de la Marque Infernale",
+    "Description": "Sort rare de feu (Mage, rune de prédilection du Infernal Mage). Vous marquez l'ennemi visé (25 blocs) d'un sceau infernal pendant 6 s (30 dégâts de feu). S'il meurt, il explose : 120 dégâts de feu dans un rayon de 5 blocs, ennemis embrasés, et le plus proche est marqué à son tour (jusqu'à 3 rebonds). S'il survit, le sceau détone sur lui à la fin. Épargne votre groupe, votre guilde et votre famille. Coût : 120 mana. Recharge : 60 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_MarqueInfernale.png",
+  "Quality": "Rare",
+  "ItemLevel": 40,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_System.Competences_Actives"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_MarqueInfernale.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 60,
+    "Cost": 120,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Fire",
+      "Damage",
+      "Aoe",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_MarqueInfernale"
+  }
+}

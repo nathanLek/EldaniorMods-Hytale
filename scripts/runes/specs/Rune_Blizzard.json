@@ -1,0 +1,67 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_Blizzard",
+  "spell": "Blizzard",
+  "javaClass": "Blizzard",
+  "page": "rune_page_blizzard",
+  "name": "Rune du Blizzard",
+  "type": "Glace",
+  "rarity": "Epic",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Blizzard",
+  "summary": "tempete de neige de 10 s sur la zone visee : degats, ralentissement, puis gel ; le sol se couvre de neige.",
+  "description": "Sort épique de glace (Mage, rune de prédilection du Maître Élémentaire). Un blizzard s'abat pendant 10 s sur la zone visée (25 blocs, rayon 8) et la couvre de neige. Les ennemis pris dedans subissent 8 dégâts de glace toutes les demi-secondes et sont ralentis ; après 3 s dans la tempête, ils gèlent 2 s. La neige fond après 1 minute. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin glacé d'où s'échappent des flocons. Enseigne le Blizzard : une tempête de neige qui fige vos ennemis sur place. Classes : tous les Mages (rune de prédilection du Maître Élémentaire). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.6,
+    "releaseTime": 0.5,
+    "moveSpeed": 0.4,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Ice_Build",
+    "handParticles": "Ice_Staff_Charging",
+    "handParticlesScale": 0.4,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.6,
+    "range": 25,
+    "radius": "8 blocs",
+    "targets": "ennemis dans la zone",
+    "executionFx": "Niflheim_Ring au centre",
+    "persistentFx": "Niflheim_Flurry en grille toutes les 2.5 s",
+    "sounds": "SFX_Ice_Build, SFX_Golem_Frost_Spin toutes les 3 s",
+    "effects": "8 Ice / 0.5 s + Elda_Givre ; 3 s cumulees -> Elda_Gel 2 s (une fois)",
+    "terrain": "Soil_Snow sur les sols naturels Soil_* en surface, 300 blocs max, restaure apres 60 s",
+    "persistentDurationS": 10,
+    "restrictions": "mage",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 3,
+      "mobility": 0,
+      "control": 3,
+      "defense": 1,
+      "targets": 3,
+      "frequency": 1,
+      "terrain": 1,
+      "difficulty": 1
+    },
+    "edgeCases": "zone protegee : pas de neige ; chunk non charge : cases ignorees"
+  }
+}

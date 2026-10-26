@@ -110,7 +110,7 @@ public final class RuneSpellRuntime {
      * reduction de degats) doivent l'ignorer, sinon la copie trahit le lanceur et perd ses PV calcules par le sort.
      */
     public static boolean isSummonRole(String npcTypeId) {
-        return npcTypeId != null && (npcTypeId.startsWith("Eldanior_Clone_") || npcTypeId.equals("Eldanior_Doppel"));
+        return npcTypeId != null && (npcTypeId.startsWith("Eldanior_Clone_") || npcTypeId.startsWith("Eldanior_Summon_") || npcTypeId.equals("Eldanior_Doppel"));
     }
 
     static boolean isDying(Ref<EntityStore> summon) { return summon != null && dying.contains(summon); }

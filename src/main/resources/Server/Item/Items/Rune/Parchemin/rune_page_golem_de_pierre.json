@@ -1,0 +1,37 @@
+{
+  "Id": "rune_page_golem_de_pierre",
+  "TranslationProperties": {
+    "Name": "Parchemin de Rune : Golem de Pierre",
+    "Description": "Un parchemin lourd, taillé dans une fine plaque d'ardoise. Enseigne le Golem de Pierre : un gardien qui encaisse les coups à votre place. Classes : tous les Mages (rune de prédilection de l'Invocateur Suprême). Utilisez-le pour ajouter la rune à votre sac de runes."
+  },
+  "Icon": "Icons/ItemsGenerated/Recipe_Page.png",
+  "Quality": "Rare",
+  "Categories": [
+    "Eldanior_System.Competences_Actives"
+  ],
+  "Tags": {
+    "Type": [
+      "Item",
+      "Consumable"
+    ]
+  },
+  "MaxStack": 1,
+  "PlayerAnimationsId": "Item",
+  "Model": "Items/Consumables/Recipes/Recipe.blockymodel",
+  "Texture": "Items/Consumables/Recipes/Recipe_Texture.png",
+  "IconProperties": {
+    "Scale": 0.76,
+    "Rotation": [
+      135,
+      135,
+      0
+    ],
+    "Translation": [
+      -1,
+      5
+    ]
+  },
+  "Interactions": {
+    "Use": "Root_ConsumableItemSkillInteraction"
+  }
+}

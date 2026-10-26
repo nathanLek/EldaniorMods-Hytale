@@ -19,12 +19,12 @@ import java.util.concurrent.ConcurrentHashMap;
 public class WikiTab {
 
     private static final ConcurrentHashMap<UUID, Integer> playerPages = new ConcurrentHashMap<>();
-    private static final int TOTAL_PAGES = 13;
-    private static final int ADMIN_PAGE = 12;
+    private static final int TOTAL_PAGES = 14;
+    private static final int ADMIN_PAGE = 13;
 
     private static final String[] PAGE_NAMES = {
         "General", "Leveling", "Groupe", "Duel", "Echange", "Guilde", "Famille",
-        "Noblesse", "Territoires", "Classes", "Competences", "Titres", "Admin"
+        "Noblesse", "Territoires", "Classes", "Competences", "Titres", "Primes", "Admin"
     };
 
     private static int getPage(UUID uuid) { return playerPages.getOrDefault(uuid, 0); }

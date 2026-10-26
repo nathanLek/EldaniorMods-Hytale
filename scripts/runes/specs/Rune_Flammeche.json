@@ -1,0 +1,71 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_Flammeche",
+  "spell": "Flammeche",
+  "javaClass": "Flammeche",
+  "page": "rune_page_flammeche",
+  "name": "Rune de Flammèche",
+  "type": "Feu",
+  "rarity": "Common",
+  "classes": "mage",
+  "persistent": true,
+  "summary": "petite boule de feu rapide qui touche le premier ennemi sur sa trajectoire et l'enflamme.",
+  "description": "Sort commun de feu (Mage, rune de prédilection du Pyromancien). Vous lancez une flammèche qui file tout droit à 35 blocs par seconde (portée 30 blocs). Le premier ennemi touché subit 50 dégâts de feu et brûle pendant 5 s (4 dégâts par seconde). Elle s'éteint contre un mur. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin tiède, roussi sur les bords. Enseigne la Flammèche : une boule de feu rapide qui enflamme sa cible. Classes : tous les Mages (rune de prédilection du Pyromancien). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Projectile"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "emblem": "Flammeche",
+  "cast": {
+    "animationSet": "Spellbook",
+    "charging": "CastHurlCharging",
+    "release": "CastHurlCharged",
+    "chargeTime": 0.25,
+    "releaseTime": 0.3,
+    "moveSpeed": 0.7,
+    "cameraEffect": null,
+    "sound": null,
+    "releaseSound": "SFX_Staff_Flame_Fireball_Launch",
+    "handParticles": "Fire_Charge_Soak1",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.25,
+    "animationTimeS": 0.55,
+    "range": 30,
+    "radius": "contact 1.2 bloc",
+    "targets": "premier ennemi touche",
+    "triggers": "clic de la rune equipee",
+    "characterAnimation": "Spellbook CastHurlCharging -> CastHurlCharged",
+    "castFx": "Fire_Charge_Soak1 dans la main",
+    "executionFx": "modele Fireball porte par Projectile_Config_Flammeche, deplace par le code",
+    "impactFx": "Impact_Fire",
+    "sounds": "SFX_Staff_Flame_Fireball_Launch, SFX_Fireball_Death a l'impact",
+    "effects": "50 degats Fire + Elda_Brulure (4/s, 5 s)",
+    "terrain": "aucun",
+    "persistentDurationS": 1,
+    "interruptions": "bloc solide, portee max, lanceur invalide",
+    "restrictions": "classe mage (toutes les sous-classes) ; rune de predilection du Pyromancien (runes() de la classe)",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 1,
+      "mobility": 0,
+      "control": 0,
+      "defense": 0,
+      "targets": 0,
+      "frequency": 2,
+      "terrain": 0,
+      "difficulty": 1
+    },
+    "edgeCases": "modele cree au tick suivant (delai de grace), cible morte avant impact ignoree, chunk non charge = arret"
+  }
+}

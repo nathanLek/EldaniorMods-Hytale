@@ -89,6 +89,10 @@ public class PersistenceManager {
             props.setProperty(prefix + ".deaths", String.valueOf(guild.getTotalDeaths()));
 
             props.setProperty(prefix + ".openRecruitment", String.valueOf(guild.isOpenRecruitment()));
+            StringBuilder upgrades = new StringBuilder();                                     // ameliorations (GuildUpgrade)
+            for (com.eldanior.system.guild.GuildUpgrade u : com.eldanior.system.guild.GuildUpgrade.values())
+                upgrades.append(upgrades.length() > 0 ? "," : "").append(guild.getUpgrade(u));
+            props.setProperty(prefix + ".upgrades", upgrades.toString());
 
             // Members as comma-separated UUIDs
             StringBuilder members = new StringBuilder();
@@ -247,6 +251,7 @@ public class PersistenceManager {
                 Guild existing = GuildManager.get(guildId);
                 existing.setTreasury(Long.parseLong(props.getProperty(guildId + ".treasury", "0")));
                 existing.setContribution(Long.parseLong(props.getProperty(guildId + ".contribution", "0")));
+                loadUpgrades(existing, props.getProperty(guildId + ".upgrades", ""));
                 continue;
             }
 
@@ -256,6 +261,7 @@ public class PersistenceManager {
             guild.setTreasury(Long.parseLong(props.getProperty(guildId + ".treasury", "0")));
             guild.setContribution(Long.parseLong(props.getProperty(guildId + ".contribution", "0")));
             guild.setOpenRecruitment(Boolean.parseBoolean(props.getProperty(guildId + ".openRecruitment", "false")));
+            loadUpgrades(guild, props.getProperty(guildId + ".upgrades", ""));
 
             // Restaurer les membres
             String membersStr = props.getProperty(guildId + ".members", "");
@@ -547,5 +553,13 @@ public class PersistenceManager {
             }
         }
         System.out.println("[Persistence] " + filename + " restaure: " + count + " annonces");
+    }
+
+    /** Ameliorations d'une guilde : niveaux separes par des virgules, dans l'ordre de GuildUpgrade. */
+    private static void loadUpgrades(Guild guild, String value) {
+        String[] levels = value.split(",");
+        com.eldanior.system.guild.GuildUpgrade[] all = com.eldanior.system.guild.GuildUpgrade.values();
+        for (int i = 0; i < levels.length && i < all.length; i++)
+            if (!levels[i].isBlank()) guild.setUpgrade(all[i], Integer.parseInt(levels[i].trim()));
     }
 }

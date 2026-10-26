@@ -1,0 +1,65 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_FontaineDeVie",
+  "spell": "FontaineDeVie",
+  "javaClass": "FontaineDeVie",
+  "page": "rune_page_fontaine_de_vie",
+  "name": "Rune de la Fontaine de Vie",
+  "type": "Lumiere",
+  "rarity": "Rare",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Fontaine",
+  "summary": "source de lumiere de 6 s au point vise : purifie les allies a l'apparition puis les soigne chaque seconde.",
+  "description": "Sort rare de lumière (Mage, rune de prédilection du Grand Guérisseur). Une fontaine de vie jaillit à l'endroit visé (20 blocs) pendant 6 s. À son apparition, elle purifie les alliés à moins de 5 blocs de tous leurs malus ; ensuite elle leur rend 5 % de leurs points de vie chaque seconde (30 % au total).",
+  "pageDescription": "Un parchemin qui reste humide quoi qu'on fasse. Enseigne la Fontaine de Vie : une source qui purifie et soigne vos alliés. Classes : tous les Mages (rune de prédilection du Grand Guérisseur). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Buff",
+    "Aoe",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.45,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Portal_Void",
+    "handParticles": "Bifrost_Divine",
+    "handParticlesScale": 0.25,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.45,
+    "range": 20,
+    "radius": "5 blocs",
+    "targets": "allies (groupe, guilde, famille) et soi",
+    "persistentFx": "Bifrost_Divine en jet au centre + anneau toutes les 0.5 s",
+    "impactFx": "Apollo_Heal_Pulse sur chaque allie soigne",
+    "effects": "cureAllDebuffs a l'apparition ; 5 % PV / s",
+    "terrain": "aucun",
+    "persistentDurationS": 6,
+    "restrictions": "mage",
+    "balance": {
+      "damage": 0,
+      "range": 2,
+      "duration": 2,
+      "mobility": 0,
+      "control": 0,
+      "defense": 3,
+      "targets": 2,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    }
+  }
+}

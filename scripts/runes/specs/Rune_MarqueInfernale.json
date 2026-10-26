@@ -1,0 +1,72 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_MarqueInfernale",
+  "spell": "MarqueInfernale",
+  "javaClass": "MarqueInfernale",
+  "page": "rune_page_marque_infernale",
+  "name": "Rune de la Marque Infernale",
+  "type": "Feu",
+  "rarity": "Rare",
+  "classes": "mage",
+  "persistent": true,
+  "summary": "marque un ennemi : a sa mort (ou au bout de 10 s) il explose et enflamme ses voisins, qui sont marques a leur tour.",
+  "description": "Sort rare de feu (Mage, rune de prédilection du Infernal Mage). Vous marquez l'ennemi visé (25 blocs) d'un sceau infernal pendant 6 s (30 dégâts de feu). S'il meurt, il explose : 120 dégâts de feu dans un rayon de 5 blocs, ennemis embrasés, et le plus proche est marqué à son tour (jusqu'à 3 rebonds). S'il survit, le sceau détone sur lui à la fin. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin scellé de cire noire qui fume encore. Enseigne la Marque Infernale : la mort de votre cible embrase ses alliés. Classes : tous les Mages (rune de prédilection du Infernal Mage). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "emblem": "Marque",
+  "cast": {
+    "animationSet": "Spellbook",
+    "charging": "CastHurlCharging",
+    "release": "CastHurlCharged",
+    "chargeTime": 0.4,
+    "releaseTime": 0.35,
+    "moveSpeed": 0.6,
+    "cameraEffect": null,
+    "sound": null,
+    "releaseSound": "SFX_Flame_Ignite",
+    "handParticles": "Fire_Charge_Soak1",
+    "handParticlesScale": 0.35,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.4,
+    "animationTimeS": 0.75,
+    "range": 25,
+    "radius": "explosion 5 blocs",
+    "targets": "ennemi vise puis voisins",
+    "triggers": "clic de la rune equipee",
+    "characterAnimation": "Spellbook CastHurlCharging -> CastHurlCharged",
+    "castFx": "Fire_Charge_Soak1",
+    "executionFx": "Elda_MarqueInfernale (teinte + flammes) sur la cible",
+    "impactFx": "Explosion_Medium + Effect_Death_Flames",
+    "sounds": "SFX_Flame_Ignite, SFX_Fireball_Death a l'explosion",
+    "effects": "marque 6 s (30 Fire) ; explosion 120 Fire rayon 5 + Elda_Embrasement ; 3 rebonds max",
+    "terrain": "aucun",
+    "persistentDurationS": 6,
+    "interruptions": "duree / plus de cible",
+    "restrictions": "classe mage (toutes les sous-classes) ; rune de predilection du Infernal Mage (runes() de la classe)",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 1,
+      "mobility": 0,
+      "control": 0,
+      "defense": 0,
+      "targets": 3,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    },
+    "edgeCases": "cible retiree (chunk) sans mort = detonation a la derniere position connue ; pas de cible sous le curseur = sort perdu sans effet"
+  }
+}

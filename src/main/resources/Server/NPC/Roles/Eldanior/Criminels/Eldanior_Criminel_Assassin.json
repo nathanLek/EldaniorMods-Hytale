@@ -1,0 +1,88 @@
+{
+  "Type": "Variant",
+  "Reference": "Template_Intelligent",
+  "Modify": {
+    "DropList": "Empty",
+    "WakingPeriod": [
+      0,
+      24
+    ],
+    "BedBlockSet": "",
+    "Patrol": false,
+    "FollowPatrolPath": false,
+    "ViewRange": 24,
+    "ViewSector": 240,
+    "HearingRange": 12,
+    "AlertedRange": 35,
+    "AlertedTime": [
+      0.3,
+      0.6
+    ],
+    "LeashMinPlayerDistance": 4,
+    "LeashTimer": [
+      2,
+      3
+    ],
+    "SearchTimeRange": [
+      4,
+      6
+    ],
+    "BreathesInWater": true,
+    "NameTranslationKey": {
+      "Compute": "NameTranslationKey"
+    },
+    "Appearance": "Player",
+    "MaxHealth": 240,
+    "MaxSpeed": 14,
+    "RunThreshold": 0.3,
+    "KnockbackScale": 0.5,
+    "Weapons": [
+      "Weapon_Daggers_Iron"
+    ],
+    "OffHand": [],
+    "DefaultOffHandSlot": -1,
+    "NighttimeOffhandSlot": -1,
+    "WakingIdleBehaviorComponent": "Component_Instruction_Eldanior_Leash_Walk",
+    "WanderRadius": 10,
+    "LeashDistance": 45,
+    "HardLeashDistance": 80,
+    "UseCombatActionEvaluator": false,
+    "Attack": "Root_NPC_Eldanior_Assassin_Daggers",
+    "AttackPauseRange": [
+      0.6,
+      1.0
+    ],
+    "AttackDistance": 3,
+    "DesiredAttackDistanceRange": [
+      2,
+      2.5
+    ],
+    "BlockAbility": "",
+    "_InteractionVars": {
+      "Melee_Damage": {
+        "Interactions": [
+          {
+            "Parent": "NPC_Attack_Melee_Damage",
+            "DamageCalculator": {
+              "BaseDamage": {
+                "Physical": 9
+              }
+            }
+          }
+        ]
+      }
+    },
+    "AttitudeGroup": "Eldanior_Criminal",
+    "DefaultPlayerAttitude": "Ignore",
+    "DisableDamageGroups": [
+      "Self",
+      "Eldanior_Criminals"
+    ]
+  },
+  "Parameters": {
+    "NameTranslationKey": {
+      "Value": "server.npcRoles.Eldanior_Criminel.name",
+      "Description": "Translation key for NPC name display"
+    }
+  }
+}

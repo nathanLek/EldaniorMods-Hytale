@@ -67,7 +67,35 @@ public final class RuneManager {
             Map.entry("Rune_AutoriteGravitationnelle", "mage, assassin, dragon"),
             Map.entry("Rune_Telekinesie", "mage, assassin, dragon"),
             Map.entry("Rune_Clonage", "dragon, warrior, assassin, archer"),
-            Map.entry("Rune_Doppelganger", "dragon, warrior, assassin, archer")
+            Map.entry("Rune_Doppelganger", "dragon, warrior, assassin, archer"),
+            Map.entry("Rune_OndeRepulsion", "mage"),
+            Map.entry("Rune_Flammeche", "mage"),
+            Map.entry("Rune_MurDeFlammes", "mage"),
+            Map.entry("Rune_MarqueInfernale", "mage"),
+            Map.entry("Rune_AuraDeBraise", "mage"),
+            Map.entry("Rune_EclatDeGivre", "mage"),
+            Map.entry("Rune_LanceDeCristal", "mage"),
+            Map.entry("Rune_PrisonDeGlace", "mage"),
+            Map.entry("Rune_SentierDHiver", "mage"),
+            Map.entry("Rune_Decharge", "mage"),
+            Map.entry("Rune_ChaineDEclairs", "mage"),
+            Map.entry("Rune_OrbeStatique", "mage"),
+            Map.entry("Rune_Blizzard", "mage"),
+            Map.entry("Rune_DomaineElementaire", "mage"),
+            Map.entry("Rune_TremblementTectonique", "mage"),
+            Map.entry("Rune_DanseDesVents", "mage"),
+            Map.entry("Rune_HaloProtecteur", "mage"),
+            Map.entry("Rune_ArmeBenie", "mage"),
+            Map.entry("Rune_GlyphesFoudroyants", "mage"),
+            Map.entry("Rune_EgideRoyale", "mage"),
+            Map.entry("Rune_SoinMineur", "mage"),
+            Map.entry("Rune_FontaineDeVie", "mage"),
+            Map.entry("Rune_LanceDeLumiere", "mage"),
+            Map.entry("Rune_LienDAme", "mage"),
+            Map.entry("Rune_EspritFollet", "mage"),
+            Map.entry("Rune_GolemDePierre", "mage"),
+            Map.entry("Rune_SentinelleDeGivre", "mage"),
+            Map.entry("Rune_MeuteSpectrale", "mage")
     );
 
     /** Parchemin -> rune enseignee. */
@@ -99,7 +127,35 @@ public final class RuneManager {
             Map.entry("rune_page_autorite_gravitationnelle", "Rune_AutoriteGravitationnelle"),
             Map.entry("rune_page_telekinesie", "Rune_Telekinesie"),
             Map.entry("rune_page_clonage", "Rune_Clonage"),
-            Map.entry("rune_page_doppelganger", "Rune_Doppelganger")
+            Map.entry("rune_page_doppelganger", "Rune_Doppelganger"),
+            Map.entry("rune_page_onde_repulsion", "Rune_OndeRepulsion"),
+            Map.entry("rune_page_flammeche", "Rune_Flammeche"),
+            Map.entry("rune_page_mur_de_flammes", "Rune_MurDeFlammes"),
+            Map.entry("rune_page_marque_infernale", "Rune_MarqueInfernale"),
+            Map.entry("rune_page_aura_de_braise", "Rune_AuraDeBraise"),
+            Map.entry("rune_page_eclat_de_givre", "Rune_EclatDeGivre"),
+            Map.entry("rune_page_lance_de_cristal", "Rune_LanceDeCristal"),
+            Map.entry("rune_page_prison_de_glace", "Rune_PrisonDeGlace"),
+            Map.entry("rune_page_sentier_d_hiver", "Rune_SentierDHiver"),
+            Map.entry("rune_page_decharge", "Rune_Decharge"),
+            Map.entry("rune_page_chaine_d_eclairs", "Rune_ChaineDEclairs"),
+            Map.entry("rune_page_orbe_statique", "Rune_OrbeStatique"),
+            Map.entry("rune_page_blizzard", "Rune_Blizzard"),
+            Map.entry("rune_page_domaine_elementaire", "Rune_DomaineElementaire"),
+            Map.entry("rune_page_tremblement_tectonique", "Rune_TremblementTectonique"),
+            Map.entry("rune_page_danse_des_vents", "Rune_DanseDesVents"),
+            Map.entry("rune_page_halo_protecteur", "Rune_HaloProtecteur"),
+            Map.entry("rune_page_arme_benie", "Rune_ArmeBenie"),
+            Map.entry("rune_page_glyphes_foudroyants", "Rune_GlyphesFoudroyants"),
+            Map.entry("rune_page_egide_royale", "Rune_EgideRoyale"),
+            Map.entry("rune_page_soin_mineur", "Rune_SoinMineur"),
+            Map.entry("rune_page_fontaine_de_vie", "Rune_FontaineDeVie"),
+            Map.entry("rune_page_lance_de_lumiere", "Rune_LanceDeLumiere"),
+            Map.entry("rune_page_lien_d_ame", "Rune_LienDAme"),
+            Map.entry("rune_page_esprit_follet", "Rune_EspritFollet"),
+            Map.entry("rune_page_golem_de_pierre", "Rune_GolemDePierre"),
+            Map.entry("rune_page_sentinelle_de_givre", "Rune_SentinelleDeGivre"),
+            Map.entry("rune_page_meute_spectrale", "Rune_MeuteSpectrale")
     );
 
     /** Joueurs dont on sait deja qu'ils possedent la Rune d'Aura (evite de rescanner l'inventaire). */
@@ -122,11 +178,15 @@ public final class RuneManager {
     /** Meme regle que les parchemins de sorts : la classe du joueur OU sa classe parente doit figurer dans la liste. */
     public static boolean isClassAllowed(String requiredClass, PlayerLevelData data) {
         if (requiredClass == null || requiredClass.equalsIgnoreCase("all")) return true;
-        String reqLower = requiredClass.toLowerCase();
         String playerClass = data.getPlayerClassId().toLowerCase();
         ClassModel classModel = ClassManager.get(data.getPlayerClassId());
         String parentClass = classModel != null ? classModel.getType().name().toLowerCase() : "";
-        return reqLower.contains(playerClass) || (!parentClass.isEmpty() && reqLower.contains(parentClass));
+        // Comparaison par jeton (pas de sous-chaine) : "mage" ne doit pas valider "infernal_mage"
+        for (String token : requiredClass.toLowerCase().split(",")) {
+            String t = token.trim();
+            if (t.equals(playerClass) || (!parentClass.isEmpty() && t.equals(parentClass))) return true;
+        }
+        return false;
     }
 
     public static boolean canUseRune(String runeId, PlayerLevelData data) {

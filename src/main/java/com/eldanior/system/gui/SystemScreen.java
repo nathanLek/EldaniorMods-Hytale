@@ -135,7 +135,6 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         GuildeTab.populate(ui, ref, store);
 
         // Guilde buttons
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#GuildeBtnCreate", EventData.of("Action", "guild_create"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#GuildeBtnLeave", EventData.of("Action", "guild_leave"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#GuildeBtnDisband", EventData.of("Action", "guild_disband"));
         for (int i = 0; i < GuildeTab.MAX_INVITE_SLOTS; i++) {
@@ -267,7 +266,6 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         events.addEventBinding(CustomUIEventBindingType.Activating, "#QBlasonDaily", EventData.of("Action", "quest_cat").append("Param", "daily"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#QBlasonSide", EventData.of("Action", "quest_cat").append("Param", "side"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#QBlasonMain", EventData.of("Action", "quest_cat").append("Param", "main"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#QBlasonBounty", EventData.of("Action", "quest_cat").append("Param", "bounty"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#QBannerEnCours", EventData.of("Action", "quest_cat").append("Param", "progress"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#QBannerAClaim", EventData.of("Action", "quest_cat").append("Param", "done"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#QListBtnBack", EventData.of("Action", "quest_back"));
@@ -1040,13 +1038,6 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         }
 
         // Guilde actions
-        if ("guild_create".equals(eventData.action)) {
-            com.hypixel.hytale.server.core.entity.entities.Player player = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
-            if (player != null) {
-                player.getPlayerRef().sendMessage(Message.raw("Tapez dans le chat : /es guildcreate <nom> <tag>"));
-            }
-            return;
-        }
         if ("guild_leave".equals(eventData.action)) {
             if (GuildeTab.handleLeave(ref, store)) refreshGuildeTab(ref, store);
             return;

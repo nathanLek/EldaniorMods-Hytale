@@ -1,0 +1,798 @@
+$C = "../Common.ui";
+
+// Fenetre des tableaux (prime, guilde) et du maitre de guilde, deux fois plus large que la fenetre de recrutement
+// (Npc/Recruit.ui) : arches larges a pans coupes et emblemes propres (BoardFrame*.png, BoardEmblem*.png :
+// scripts/boards/gen_boards.py). Arche du haut : embleme, titre, lieu, note. Corps a bords dores : replique, 4 tuiles de
+// chiffres, onglets (souligne dore sur l'actif), puis deux panneaux : a gauche la liste (7 lignes par page : rang, nom, detail,
+// valeur, oeil pour ouvrir la fiche), a droite la fiche de la ligne choisie (ou l'aide de l'onglet) avec montant, cout, boutons et message de
+// retour (et, pour le maitre de guilde, nom et tag d'une guilde a fonder) ; bourse du joueur. Arche du bas : note, bouton d'action.
+Group {
+  LayoutMode: Middle;
+  Background: #05080d(0.55);
+
+  Group #BoardCard {
+    Anchor: (Width: 878);
+    LayoutMode: Top;
+
+    // ===== Arche du haut : embleme, titre, lieu, note =====
+    Group {
+      Anchor: (Height: 200);
+      LayoutMode: Top;
+      Background: (TexturePath: "BoardFrameTop.png");
+
+      Group #BoardEmblemPrime {
+        Anchor: (Height: 0);
+        Background: (TexturePath: "BoardEmblemPrime.png", Anchor: (Width: 96, Height: 96, Top: -40));
+      }
+
+      Group #BoardEmblemGuilde {
+        Anchor: (Height: 0);
+        Visible: false;
+        Background: (TexturePath: "BoardEmblemGuilde.png", Anchor: (Width: 96, Height: 96, Top: -40));
+      }
+
+      Group { Anchor: (Height: 70); }
+
+      Label #BoardTitle {
+        Style: (FontSize: 24, RenderBold: true, RenderUppercase: true, TextColor: #d1dae6, HorizontalAlignment: Center);
+      }
+
+      Label #BoardPlace {
+        Anchor: (Top: 8);
+        Style: (FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center);
+      }
+
+      Label #BoardNote {
+        Anchor: (Top: 4);
+        Style: (FontSize: 13, RenderBold: true, TextColor: #878e9c, HorizontalAlignment: Center);
+      }
+    }
+
+    // ===== Corps =====
+    Group {
+      Anchor: (Height: 500);
+      LayoutMode: Left;
+
+      Group { Anchor: (Width: 3); Background: #16212f; }
+      Group { Anchor: (Width: 7); Background: #e8b34f; }
+      Group { Anchor: (Width: 2); Background: #16212f; }
+
+      Group {
+        FlexWeight: 1;
+        LayoutMode: Top;
+        Background: #0b141d(0.92);
+        Padding: (Horizontal: 18, Top: 4);
+
+        Group {
+          Anchor: (Height: 2);
+          Background: #c99436;
+        }
+
+        Label #BoardQuote {
+          Anchor: (Top: 6);
+          Style: (FontSize: 12, RenderBold: true, TextColor: #c9b37a, HorizontalAlignment: Center);
+        }
+
+        // ---- Chiffres ----
+        Group {
+          Anchor: (Top: 6, Height: 36);
+          LayoutMode: Left;
+
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Background: #132130;
+            Padding: (Top: 4);
+
+            Label #BoardStatValue0 {
+              Style: (FontSize: 15, RenderBold: true, TextColor: #f0c868, HorizontalAlignment: Center);
+            }
+
+            Label #BoardStatLabel0 {
+              Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #6f8296, HorizontalAlignment: Center);
+            }
+          }
+
+          Group { Anchor: (Width: 6); }
+
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Background: #132130;
+            Padding: (Top: 4);
+
+            Label #BoardStatValue1 {
+              Style: (FontSize: 15, RenderBold: true, TextColor: #f0c868, HorizontalAlignment: Center);
+            }
+
+            Label #BoardStatLabel1 {
+              Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #6f8296, HorizontalAlignment: Center);
+            }
+          }
+
+          Group { Anchor: (Width: 6); }
+
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Background: #132130;
+            Padding: (Top: 4);
+
+            Label #BoardStatValue2 {
+              Style: (FontSize: 15, RenderBold: true, TextColor: #f0c868, HorizontalAlignment: Center);
+            }
+
+            Label #BoardStatLabel2 {
+              Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #6f8296, HorizontalAlignment: Center);
+            }
+          }
+
+          Group { Anchor: (Width: 6); }
+
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Background: #132130;
+            Padding: (Top: 4);
+
+            Label #BoardStatValue3 {
+              Style: (FontSize: 15, RenderBold: true, TextColor: #f0c868, HorizontalAlignment: Center);
+            }
+
+            Label #BoardStatLabel3 {
+              Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #6f8296, HorizontalAlignment: Center);
+            }
+          }
+        }
+
+        // ---- Onglets ----
+        Group {
+          Anchor: (Top: 8, Height: 34);
+          LayoutMode: Left;
+
+        Group #BoardTabBox0 {
+          FlexWeight: 1;
+          LayoutMode: Top;
+
+          $C.@SmallSecondaryTextButton #BoardTab0 {
+            @Text = "";
+          }
+
+          Group #BoardTabLine0 {
+            Anchor: (Height: 2);
+            Background: #e8b34f;
+            Visible: false;
+          }
+        }
+        Group #BoardTabBox1 {
+          FlexWeight: 1;
+          LayoutMode: Top;
+          Padding: (Left: 6);
+
+          $C.@SmallSecondaryTextButton #BoardTab1 {
+            @Text = "";
+          }
+
+          Group #BoardTabLine1 {
+            Anchor: (Height: 2);
+            Background: #e8b34f;
+            Visible: false;
+          }
+        }
+        Group #BoardTabBox2 {
+          FlexWeight: 1;
+          LayoutMode: Top;
+          Padding: (Left: 6);
+
+          $C.@SmallSecondaryTextButton #BoardTab2 {
+            @Text = "";
+          }
+
+          Group #BoardTabLine2 {
+            Anchor: (Height: 2);
+            Background: #e8b34f;
+            Visible: false;
+          }
+        }
+        }
+
+        // ---- Deux panneaux : liste | fiche ----
+        Group {
+          Anchor: (Top: 6);
+          FlexWeight: 1;
+          LayoutMode: Left;
+
+          // Liste
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+
+            Group {
+              Anchor: (Height: 16);
+              LayoutMode: Left;
+
+              Group {
+                FlexWeight: 1;
+                LayoutMode: Top;
+                Padding: (Top: 8);
+
+                Group { Anchor: (Height: 1); Background: #c99436(0.55); }
+              }
+
+              Label #BoardSection {
+                Anchor: (Width: 240);
+                Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #e8b34f, HorizontalAlignment: Center);
+              }
+
+              Group {
+                FlexWeight: 1;
+                LayoutMode: Top;
+                Padding: (Top: 8);
+
+                Group { Anchor: (Height: 1); Background: #c99436(0.55); }
+              }
+            }
+
+            Label #BoardEmpty {
+              Anchor: (Top: 14);
+              Visible: false;
+              Style: (FontSize: 12, TextColor: #6f8296, HorizontalAlignment: Center, Wrap: true);
+            }
+
+            Group #BoardRow0 {
+              Anchor: (Top: 4, Height: 34);
+              LayoutMode: Left;
+              Background: #101c28;
+              Visible: false;
+
+              Group #BoardRowStrip0 { Anchor: (Width: 3); Background: #e8b34f; }
+
+              Label #BoardRowRank0 {
+                Anchor: (Width: 30);
+                Style: (FontSize: 15, RenderBold: true, TextColor: #6f8296, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+
+              Group {
+                FlexWeight: 1;
+                LayoutMode: Top;
+                Padding: (Top: 2);
+
+                Label #BoardRowName0 {
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #f0d58c);
+                }
+
+                Label #BoardRowMeta0 {
+                  Style: (FontSize: 10, TextColor: #a9b8c8);
+                }
+              }
+
+              Label #BoardRowValue0 {
+                Anchor: (Width: 120);
+                Style: (FontSize: 14, RenderBold: true, TextColor: #E8A93B, HorizontalAlignment: End, VerticalAlignment: Center);
+              }
+
+              Group { Anchor: (Width: 10); }
+
+              Group #BoardRowAct0 {
+                Anchor: (Width: 30);
+                LayoutMode: Middle;
+                Visible: false;
+
+                Button #BoardRowBtn0 {
+                  Anchor: (Width: 24, Height: 24);
+                  Style: (
+                    Default: (Background: (TexturePath: "BoardEye.png", Color: #8fa3b8)),
+                    Hovered: (Background: (TexturePath: "BoardEye.png", Color: #f0d58c)),
+                    Pressed: (Background: (TexturePath: "BoardEye.png", Color: #e8b34f)),
+                    Sounds: $C.@ButtonSounds
+                  );
+                }
+              }
+
+              Group { Anchor: (Width: 6); }
+            }
+            Group #BoardRow1 {
+              Anchor: (Top: 4, Height: 34);
+              LayoutMode: Left;
+              Background: #101c28;
+              Visible: false;
+
+              Group #BoardRowStrip1 { Anchor: (Width: 3); Background: #e8b34f; }
+
+              Label #BoardRowRank1 {
+                Anchor: (Width: 30);
+                Style: (FontSize: 15, RenderBold: true, TextColor: #6f8296, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+
+              Group {
+                FlexWeight: 1;
+                LayoutMode: Top;
+                Padding: (Top: 2);
+
+                Label #BoardRowName1 {
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #f0d58c);
+                }
+
+                Label #BoardRowMeta1 {
+                  Style: (FontSize: 10, TextColor: #a9b8c8);
+                }
+              }
+
+              Label #BoardRowValue1 {
+                Anchor: (Width: 120);
+                Style: (FontSize: 14, RenderBold: true, TextColor: #E8A93B, HorizontalAlignment: End, VerticalAlignment: Center);
+              }
+
+              Group { Anchor: (Width: 10); }
+
+              Group #BoardRowAct1 {
+                Anchor: (Width: 30);
+                LayoutMode: Middle;
+                Visible: false;
+
+                Button #BoardRowBtn1 {
+                  Anchor: (Width: 24, Height: 24);
+                  Style: (
+                    Default: (Background: (TexturePath: "BoardEye.png", Color: #8fa3b8)),
+                    Hovered: (Background: (TexturePath: "BoardEye.png", Color: #f0d58c)),
+                    Pressed: (Background: (TexturePath: "BoardEye.png", Color: #e8b34f)),
+                    Sounds: $C.@ButtonSounds
+                  );
+                }
+              }
+
+              Group { Anchor: (Width: 6); }
+            }
+            Group #BoardRow2 {
+              Anchor: (Top: 4, Height: 34);
+              LayoutMode: Left;
+              Background: #101c28;
+              Visible: false;
+
+              Group #BoardRowStrip2 { Anchor: (Width: 3); Background: #e8b34f; }
+
+              Label #BoardRowRank2 {
+                Anchor: (Width: 30);
+                Style: (FontSize: 15, RenderBold: true, TextColor: #6f8296, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+
+              Group {
+                FlexWeight: 1;
+                LayoutMode: Top;
+                Padding: (Top: 2);
+
+                Label #BoardRowName2 {
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #f0d58c);
+                }
+
+                Label #BoardRowMeta2 {
+                  Style: (FontSize: 10, TextColor: #a9b8c8);
+                }
+              }
+
+              Label #BoardRowValue2 {
+                Anchor: (Width: 120);
+                Style: (FontSize: 14, RenderBold: true, TextColor: #E8A93B, HorizontalAlignment: End, VerticalAlignment: Center);
+              }
+
+              Group { Anchor: (Width: 10); }
+
+              Group #BoardRowAct2 {
+                Anchor: (Width: 30);
+                LayoutMode: Middle;
+                Visible: false;
+
+                Button #BoardRowBtn2 {
+                  Anchor: (Width: 24, Height: 24);
+                  Style: (
+                    Default: (Background: (TexturePath: "BoardEye.png", Color: #8fa3b8)),
+                    Hovered: (Background: (TexturePath: "BoardEye.png", Color: #f0d58c)),
+                    Pressed: (Background: (TexturePath: "BoardEye.png", Color: #e8b34f)),
+                    Sounds: $C.@ButtonSounds
+                  );
+                }
+              }
+
+              Group { Anchor: (Width: 6); }
+            }
+            Group #BoardRow3 {
+              Anchor: (Top: 4, Height: 34);
+              LayoutMode: Left;
+              Background: #101c28;
+              Visible: false;
+
+              Group #BoardRowStrip3 { Anchor: (Width: 3); Background: #e8b34f; }
+
+              Label #BoardRowRank3 {
+                Anchor: (Width: 30);
+                Style: (FontSize: 15, RenderBold: true, TextColor: #6f8296, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+
+              Group {
+                FlexWeight: 1;
+                LayoutMode: Top;
+                Padding: (Top: 2);
+
+                Label #BoardRowName3 {
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #f0d58c);
+                }
+
+                Label #BoardRowMeta3 {
+                  Style: (FontSize: 10, TextColor: #a9b8c8);
+                }
+              }
+
+              Label #BoardRowValue3 {
+                Anchor: (Width: 120);
+                Style: (FontSize: 14, RenderBold: true, TextColor: #E8A93B, HorizontalAlignment: End, VerticalAlignment: Center);
+              }
+
+              Group { Anchor: (Width: 10); }
+
+              Group #BoardRowAct3 {
+                Anchor: (Width: 30);
+                LayoutMode: Middle;
+                Visible: false;
+
+                Button #BoardRowBtn3 {
+                  Anchor: (Width: 24, Height: 24);
+                  Style: (
+                    Default: (Background: (TexturePath: "BoardEye.png", Color: #8fa3b8)),
+                    Hovered: (Background: (TexturePath: "BoardEye.png", Color: #f0d58c)),
+                    Pressed: (Background: (TexturePath: "BoardEye.png", Color: #e8b34f)),
+                    Sounds: $C.@ButtonSounds
+                  );
+                }
+              }
+
+              Group { Anchor: (Width: 6); }
+            }
+            Group #BoardRow4 {
+              Anchor: (Top: 4, Height: 34);
+              LayoutMode: Left;
+              Background: #101c28;
+              Visible: false;
+
+              Group #BoardRowStrip4 { Anchor: (Width: 3); Background: #e8b34f; }
+
+              Label #BoardRowRank4 {
+                Anchor: (Width: 30);
+                Style: (FontSize: 15, RenderBold: true, TextColor: #6f8296, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+
+              Group {
+                FlexWeight: 1;
+                LayoutMode: Top;
+                Padding: (Top: 2);
+
+                Label #BoardRowName4 {
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #f0d58c);
+                }
+
+                Label #BoardRowMeta4 {
+                  Style: (FontSize: 10, TextColor: #a9b8c8);
+                }
+              }
+
+              Label #BoardRowValue4 {
+                Anchor: (Width: 120);
+                Style: (FontSize: 14, RenderBold: true, TextColor: #E8A93B, HorizontalAlignment: End, VerticalAlignment: Center);
+              }
+
+              Group { Anchor: (Width: 10); }
+
+              Group #BoardRowAct4 {
+                Anchor: (Width: 30);
+                LayoutMode: Middle;
+                Visible: false;
+
+                Button #BoardRowBtn4 {
+                  Anchor: (Width: 24, Height: 24);
+                  Style: (
+                    Default: (Background: (TexturePath: "BoardEye.png", Color: #8fa3b8)),
+                    Hovered: (Background: (TexturePath: "BoardEye.png", Color: #f0d58c)),
+                    Pressed: (Background: (TexturePath: "BoardEye.png", Color: #e8b34f)),
+                    Sounds: $C.@ButtonSounds
+                  );
+                }
+              }
+
+              Group { Anchor: (Width: 6); }
+            }
+            Group #BoardRow5 {
+              Anchor: (Top: 4, Height: 34);
+              LayoutMode: Left;
+              Background: #101c28;
+              Visible: false;
+
+              Group #BoardRowStrip5 { Anchor: (Width: 3); Background: #e8b34f; }
+
+              Label #BoardRowRank5 {
+                Anchor: (Width: 30);
+                Style: (FontSize: 15, RenderBold: true, TextColor: #6f8296, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+
+              Group {
+                FlexWeight: 1;
+                LayoutMode: Top;
+                Padding: (Top: 2);
+
+                Label #BoardRowName5 {
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #f0d58c);
+                }
+
+                Label #BoardRowMeta5 {
+                  Style: (FontSize: 10, TextColor: #a9b8c8);
+                }
+              }
+
+              Label #BoardRowValue5 {
+                Anchor: (Width: 120);
+                Style: (FontSize: 14, RenderBold: true, TextColor: #E8A93B, HorizontalAlignment: End, VerticalAlignment: Center);
+              }
+
+              Group { Anchor: (Width: 10); }
+
+              Group #BoardRowAct5 {
+                Anchor: (Width: 30);
+                LayoutMode: Middle;
+                Visible: false;
+
+                Button #BoardRowBtn5 {
+                  Anchor: (Width: 24, Height: 24);
+                  Style: (
+                    Default: (Background: (TexturePath: "BoardEye.png", Color: #8fa3b8)),
+                    Hovered: (Background: (TexturePath: "BoardEye.png", Color: #f0d58c)),
+                    Pressed: (Background: (TexturePath: "BoardEye.png", Color: #e8b34f)),
+                    Sounds: $C.@ButtonSounds
+                  );
+                }
+              }
+
+              Group { Anchor: (Width: 6); }
+            }
+            Group #BoardRow6 {
+              Anchor: (Top: 4, Height: 34);
+              LayoutMode: Left;
+              Background: #101c28;
+              Visible: false;
+
+              Group #BoardRowStrip6 { Anchor: (Width: 3); Background: #e8b34f; }
+
+              Label #BoardRowRank6 {
+                Anchor: (Width: 30);
+                Style: (FontSize: 15, RenderBold: true, TextColor: #6f8296, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+
+              Group {
+                FlexWeight: 1;
+                LayoutMode: Top;
+                Padding: (Top: 2);
+
+                Label #BoardRowName6 {
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #f0d58c);
+                }
+
+                Label #BoardRowMeta6 {
+                  Style: (FontSize: 10, TextColor: #a9b8c8);
+                }
+              }
+
+              Label #BoardRowValue6 {
+                Anchor: (Width: 120);
+                Style: (FontSize: 14, RenderBold: true, TextColor: #E8A93B, HorizontalAlignment: End, VerticalAlignment: Center);
+              }
+
+              Group { Anchor: (Width: 10); }
+
+              Group #BoardRowAct6 {
+                Anchor: (Width: 30);
+                LayoutMode: Middle;
+                Visible: false;
+
+                Button #BoardRowBtn6 {
+                  Anchor: (Width: 24, Height: 24);
+                  Style: (
+                    Default: (Background: (TexturePath: "BoardEye.png", Color: #8fa3b8)),
+                    Hovered: (Background: (TexturePath: "BoardEye.png", Color: #f0d58c)),
+                    Pressed: (Background: (TexturePath: "BoardEye.png", Color: #e8b34f)),
+                    Sounds: $C.@ButtonSounds
+                  );
+                }
+              }
+
+              Group { Anchor: (Width: 6); }
+            }
+
+            Group { FlexWeight: 1; }
+
+            Group #BoardPager {
+              Anchor: (Height: 30);
+              LayoutMode: Center;
+              Visible: false;
+
+              $C.@SmallSecondaryTextButton #BoardPrev {
+                @Text = "<";
+              }
+
+              Label #BoardPage {
+                Anchor: (Width: 80);
+                Style: (FontSize: 12, RenderBold: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+
+              $C.@SmallSecondaryTextButton #BoardNext {
+                @Text = ">";
+              }
+            }
+          }
+
+          Group { Anchor: (Width: 14); }
+
+          // Fiche
+          Group {
+            Anchor: (Width: 300);
+            LayoutMode: Left;
+            Background: #101c28;
+
+            Group #BoardSideStrip { Anchor: (Width: 3); Background: #e8b34f; }
+
+            Group {
+              FlexWeight: 1;
+              LayoutMode: Top;
+              Padding: (Horizontal: 12, Vertical: 10);
+
+              Label #BoardSideTitle {
+                Style: (FontSize: 16, RenderBold: true, TextColor: #f0d58c, Wrap: true);
+              }
+
+              Label #BoardSideSub {
+                Anchor: (Top: 2);
+                Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #6f8296, Wrap: true);
+              }
+
+              Group { Anchor: (Top: 8, Height: 1); Background: #c99436(0.55); }
+
+              Label #BoardSideText {
+                Anchor: (Top: 8);
+                Style: (FontSize: 12, TextColor: #a9b8c8, Wrap: true);
+              }
+
+              Group #BoardSideNames {
+                Anchor: (Top: 10);
+                LayoutMode: Top;
+                Visible: false;
+
+                Label {
+                  Text: "Nom de la guilde";
+                  Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #6f8296);
+                }
+
+                $C.@TextField #BoardInputName {
+                  @Anchor = Anchor(Top: 4);
+                  PlaceholderText: "3 à 24 caractères";
+                }
+
+                Label {
+                  Anchor: (Top: 8);
+                  Text: "Tag";
+                  Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #6f8296);
+                }
+
+                $C.@TextField #BoardInputTag {
+                  @Anchor = Anchor(Top: 4);
+                  PlaceholderText: "2 à 5 lettres";
+                }
+              }
+
+              Group #BoardSideField {
+                Anchor: (Top: 10);
+                LayoutMode: Top;
+                Visible: false;
+
+                Label #BoardSideFieldLabel {
+                  Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #6f8296, Wrap: true);
+                }
+
+                $C.@NumberField #BoardAmount {
+                  @Anchor = Anchor(Top: 4);
+                  Format: (MaxDecimalPlaces: 0, Step: 100);
+                }
+
+                Label #BoardSideCost {
+                  Anchor: (Top: 6);
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #E8A93B, Wrap: true);
+                }
+              }
+
+              Group { FlexWeight: 1; }
+
+              Label #BoardStatus {
+                Visible: false;
+                Style: (FontSize: 12, RenderBold: true, TextColor: #00e7b6, Wrap: true);
+              }
+
+              Group {
+                Anchor: (Top: 8, Height: 32);
+                LayoutMode: Left;
+
+                Group #BoardSideOkBox {
+                  FlexWeight: 1;
+                  LayoutMode: Top;
+                  Visible: false;
+
+                  $C.@SmallSecondaryTextButton #BoardSideOk {
+                    @Text = "";
+                  }
+                }
+
+                Group #BoardSideCancelBox {
+                  Anchor: (Width: 100);
+                  LayoutMode: Top;
+                  Padding: (Left: 8);
+                  Visible: false;
+
+                  $C.@SmallTertiaryTextButton #BoardSideCancel {
+                    @Text = "Fermer";
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        // ---- Bourse ----
+        Group {
+          Anchor: (Top: 4, Height: 36, Bottom: 4);
+          LayoutMode: Center;
+
+          Group {
+            Anchor: (Width: 220);
+            LayoutMode: Middle;
+
+            Label {
+              Text: "Votre bourse";
+              Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #6f8296, HorizontalAlignment: Center);
+            }
+
+            Label #BoardMoney {
+              Style: (FontSize: 15, RenderBold: true, TextColor: #E8A93B, HorizontalAlignment: Center);
+            }
+          }
+        }
+      }
+
+      Group { Anchor: (Width: 2); Background: #16212f; }
+      Group { Anchor: (Width: 7); Background: #e8b34f; }
+      Group { Anchor: (Width: 3); Background: #16212f; }
+    }
+
+    // ===== Arche du bas : note, bouton d'action =====
+    Group {
+      Anchor: (Height: 150);
+      LayoutMode: Top;
+      Background: (TexturePath: "BoardFrameBottom.png");
+
+      Label #BoardFooter {
+        Anchor: (Top: 6);
+        Style: (FontSize: 13, RenderBold: true, TextColor: #878e9c, HorizontalAlignment: Center, Wrap: true);
+      }
+
+      Group #BoardBtnBox {
+        Anchor: (Top: 8, Height: 44);
+        LayoutMode: Center;
+        Visible: false;
+
+        $C.@TextButton #BoardBtnOk {
+          @Text = "";
+          @Anchor = Anchor(MinWidth: 300);
+        }
+      }
+
+      Label {
+        Anchor: (Top: 8);
+        Text: "Echap : fermer";
+        Style: (FontSize: 12, TextColor: #5a6a7a, HorizontalAlignment: Center);
+      }
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de Soin Mineur",
+    "Description": "Sort commun de lumière (Mage, rune de prédilection du Guérisseur). Soigne instantanément l'allié visé (20 blocs), ou vous-même sans cible, de 15 % de ses points de vie, puis 1 % par seconde pendant 5 s. Coût : 25 mana. Recharge : 15 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_SoinMineur.png",
+  "Quality": "Common",
+  "ItemLevel": 10,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_System.Competences_Actives"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_SoinMineur.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 15,
+    "Cost": 25,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Buff"
+    ],
+    "Cast": "Root_Ability_SoinMineur"
+  }
+}

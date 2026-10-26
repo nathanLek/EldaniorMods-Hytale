@@ -1,0 +1,16 @@
+{
+  "Duration": 6,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#ff2200",
+    "EntityTopTint": "#ffaa00",
+    "Particles": [{"SystemId": "Effect_Fire"}, {"SystemId": "Fire_Charge_Charging_Constant"}],
+    "ModelVFXId": "Burn"
+  },
+  "DamageResistance": {
+    "Fire": [{"Amount": 1.0, "CalculationType": "Percent"}]
+  },
+  "OverlapBehavior": "Overwrite",
+  "Infinite": false,
+  "Debuff": false,
+  "StatusEffectIcon": "UI/StatusEffects/Burn.png"
+}

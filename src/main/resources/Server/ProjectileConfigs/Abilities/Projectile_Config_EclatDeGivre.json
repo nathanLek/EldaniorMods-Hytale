@@ -1,0 +1,40 @@
+{
+  "$Comment": "Porteur visuel de l'Eclat de Givre (modele Ice_Ball vanilla). Deplacement et degats geres par le code (allies epargnes) : interactions neutres.",
+  "Model": "Ice_Ball",
+  "Physics": {
+    "Type": "Standard",
+    "Gravity": 0,
+    "TerminalVelocityAir": 50,
+    "TerminalVelocityWater": 5,
+    "RotationMode": "Velocity",
+    "ComputePitch": false,
+    "Bounciness": 0.0
+  },
+  "LaunchForce": 1,
+  "DirectionalHitBox": {
+    "Width": 0.5,
+    "Depth": 0.5
+  },
+  "SpawnOffset": {
+    "X": 0,
+    "Z": -0.5
+  },
+  "Interactions": {
+    "ProjectileHit": {
+      "Interactions": [
+        {
+          "Type": "Simple",
+          "RunTime": 0.01
+        }
+      ]
+    },
+    "ProjectileMiss": {
+      "Interactions": [
+        {
+          "Type": "Simple",
+          "RunTime": 0.01
+        }
+      ]
+    }
+  }
+}

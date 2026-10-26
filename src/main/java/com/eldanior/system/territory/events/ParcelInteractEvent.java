@@ -33,6 +33,7 @@ public class ParcelInteractEvent extends EntityEventSystem<EntityStore, UseBlock
         if (player == null) return;
 
         if (player.getPlayerRef().hasPermission(EldaniorLogger.ADMIN_PERMISSION)) return;
+        if (event.getBlockType() != null && com.eldanior.system.boards.BoardType.of(event.getBlockType().getId()) != null) return;   // tableaux : pour tous
 
         Vector3i target = event.getTargetBlock();
         String world = player.getWorld() != null ? player.getWorld().getName() : "";

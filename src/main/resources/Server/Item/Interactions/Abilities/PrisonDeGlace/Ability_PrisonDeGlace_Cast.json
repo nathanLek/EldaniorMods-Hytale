@@ -1,0 +1,72 @@
+{
+  "$Comment": "Rune de la Prison de Glace : incantation puis sort Java 'PrisonDeGlace' (RuneSpell). Genere par rune_tool.py, cout : start.",
+  "Type": "StatsCondition",
+  "UseAbilityCost": true,
+  "Failed": "Ability_Cast_Fail",
+  "Next": {
+    "Type": "Parallel",
+    "Interactions": [
+      {
+        "Interactions": [
+          {
+            "Type": "Simple",
+            "RunTime": 0.45,
+            "HorizontalSpeedMultiplier": 0.5,
+            "Effects": {
+              "ItemPlayerAnimationsId": "Staff",
+              "ItemAnimationId": "CastSummonCharging",
+              "WaitForAnimationToFinish": false,
+              "CameraEffect": "Ability_Cast_Generic",
+              "Particles": [
+                {
+                  "SystemId": "Ice_Staff_Charging",
+                  "TargetEntityPart": "Entity",
+                  "TargetNodeName": "R-Hand",
+                  "Scale": 0.35
+                },
+                {
+                  "SystemId": "Ice_Staff_Charging",
+                  "TargetEntityPart": "Entity",
+                  "TargetNodeName": "L-Hand",
+                  "Scale": 0.35
+                }
+              ]
+            }
+          },
+          {
+            "Type": "RuneSpell",
+            "RunTime": 0.05,
+            "Spell": "PrisonDeGlace"
+          },
+          {
+            "Type": "Simple",
+            "RunTime": 0.4,
+            "HorizontalSpeedMultiplier": 0.7,
+            "Effects": {
+              "ItemPlayerAnimationsId": "Staff",
+              "ItemAnimationId": "CastSummon",
+              "ClearAnimationOnFinish": true,
+              "WorldSoundEventId": "SFX_Ice_Build"
+            }
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "TriggerCooldown",
+            "UseAbilityCooldown": true
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "ChangeStat",
+            "UseAbilityCost": true
+          }
+        ]
+      }
+    ]
+  }
+}

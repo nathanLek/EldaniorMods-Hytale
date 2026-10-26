@@ -1,0 +1,69 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_OrbeStatique",
+  "spell": "OrbeStatique",
+  "javaClass": "OrbeStatique",
+  "page": "rune_page_orbe_statique",
+  "name": "Rune de l'Orbe Statique",
+  "type": "Foudre",
+  "rarity": "Rare",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Orbe",
+  "summary": "orbe electrique lent qui avance 6 s en foudroyant les ennemis proches, puis explose.",
+  "description": "Sort rare de foudre (Mage, rune de prédilection du Catalyseur Arcane). Vous libérez un orbe statique qui avance lentement droit devant vous pendant 6 s. Toutes les demi-secondes, il foudroie les ennemis à moins de 4 blocs (12 dégâts). À la fin, ou contre un mur, il explose : 90 dégâts de foudre dans un rayon de 4 blocs et étourdissement 0,5 s. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin chargé d'électricité statique, aux bords qui se soulèvent seuls. Enseigne l'Orbe Statique : une boule d'orage qui ravage tout sur son passage. Classes : tous les Mages (rune de prédilection du Catalyseur Arcane). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe",
+    "Duration",
+    "Projectile"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.45,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Emit_Goblin_Electric_Sparks",
+    "handParticles": "Taranis_Electric_Burst",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.45,
+    "range": 30,
+    "radius": "4 blocs",
+    "targets": "ennemis proches de l'orbe",
+    "executionFx": "orbe en particules (Taranis_Electric_Burst toutes les 100 ms) a 1.3 bloc du sol, 5 b/s",
+    "persistentFx": "arcs vers chaque ennemi touche",
+    "impactFx": "Taranis_Bolt + Taranis_Electric_Burst x3",
+    "sounds": "SFX_Emit_Goblin_Electric_Sparks, SFX_Global_Weather_Thunder (2D) a l'explosion",
+    "effects": "12 Lightning / 0.5 s rayon 4 ; explosion 90 Lightning rayon 4 + Taranis_Foudroye 0.5 s",
+    "terrain": "aucun",
+    "persistentDurationS": 6,
+    "restrictions": "mage",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 2,
+      "mobility": 0,
+      "control": 1,
+      "defense": 1,
+      "targets": 2,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    },
+    "edgeCases": "bloc devant l'orbe = explosion ; sol suivi (ground) toutes les 250 ms"
+  }
+}

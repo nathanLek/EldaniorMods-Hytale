@@ -1,0 +1,20 @@
+{
+  "$Comment": "Aura des monstres de contrat du jour (boards/MonsterContracts) : Ability_Aura_Visual_7 a demi-echelle (x2 au lieu de x4), le monstre etant lui-meme agrandi x2.",
+  "ApplicationEffects": {
+    "Particles": [
+      {
+        "SystemId": "Buff_Aura_T7",
+        "TargetNodeName": "Chest",
+        "PositionOffset": {
+          "X": 0,
+          "Y": -1,
+          "Z": 0
+        },
+        "Scale": 2.0
+      }
+    ]
+  },
+  "Duration": 8.0,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": false
+}

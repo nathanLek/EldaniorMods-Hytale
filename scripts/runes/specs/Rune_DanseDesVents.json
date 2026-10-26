@@ -1,0 +1,70 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_DanseDesVents",
+  "spell": "DanseDesVents",
+  "javaClass": "DanseDesVents",
+  "page": "rune_page_danse_des_vents",
+  "name": "Rune de la Danse des Vents",
+  "type": "Air",
+  "rarity": "Unique",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "DanseVents",
+  "summary": "15 s portees par le vent : vitesse accrue, et chaque clic droit est un bond qui libere une rafale autour de soi.",
+  "description": "Sort unique d'air (Mage, rune de prédilection de la Force Naturelle). Pendant 15 s, le vent vous porte : vitesse +50 % et aucun dégât de chute. Chaque clic droit vous fait bondir dans la direction du regard (au plus une fois par seconde) et libère une rafale qui inflige 45 dégâts de vent aux ennemis à moins de 5 blocs et les repousse. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin si léger qu'il faut le tenir à deux mains. Enseigne la Danse des Vents : bondissez de rafale en rafale en balayant vos ennemis. Classes : tous les Mages (rune de prédilection de la Force Naturelle). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe",
+    "Duration",
+    "Buff"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Spellbook",
+    "charging": "CastPushCharging",
+    "release": "CastPushCharged",
+    "chargeTime": 0.35,
+    "releaseTime": 0.35,
+    "moveSpeed": 0.7,
+    "cameraEffect": null,
+    "sound": null,
+    "releaseSound": "SFX_Ability_Wind_Strike_Slash",
+    "handParticles": "Fujin_Gust",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.35,
+    "range": 0,
+    "radius": "rafale 5 blocs",
+    "targets": "soi + ennemis proches a chaque bond",
+    "triggers": "clic de la rune ; clic droit pendant 15 s = bond",
+    "executionFx": "Fujin_Cannon vers le haut au lancement",
+    "persistentFx": "Elda_Legerete (traînées de vent) sur le lanceur",
+    "impactFx": "Fujin_Gust en anneau a chaque bond",
+    "sounds": "SFX_Ability_Wind_Strike_Slash a chaque bond",
+    "effects": "Elda_Legerete 15 s (vitesse x1.5), protection de chute ; bond 14 b/s regard + 9 vers le haut ; rafale 45 Wind + projection",
+    "terrain": "aucun",
+    "persistentDurationS": 15,
+    "restrictions": "mage",
+    "balance": {
+      "damage": 2,
+      "range": 1,
+      "duration": 3,
+      "mobility": 3,
+      "control": 2,
+      "defense": 2,
+      "targets": 2,
+      "frequency": 2,
+      "terrain": 0,
+      "difficulty": 2
+    },
+    "edgeCases": "8 bonds max ; protection de chute prolongee 3 s apres la fin"
+  }
+}

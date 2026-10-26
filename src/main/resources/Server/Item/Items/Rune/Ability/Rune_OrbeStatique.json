@@ -1,0 +1,47 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de l'Orbe Statique",
+    "Description": "Sort rare de foudre (Mage, rune de prédilection du Catalyseur Arcane). Vous libérez un orbe statique qui avance lentement droit devant vous pendant 6 s. Toutes les demi-secondes, il foudroie les ennemis à moins de 4 blocs (12 dégâts). À la fin, ou contre un mur, il explose : 90 dégâts de foudre dans un rayon de 4 blocs et étourdissement 0,5 s. Épargne votre groupe, votre guilde et votre famille. Coût : 120 mana. Recharge : 60 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_OrbeStatique.png",
+  "Quality": "Rare",
+  "ItemLevel": 40,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_System.Competences_Actives"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_OrbeStatique.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 60,
+    "Cost": 120,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Charged",
+      "Damage",
+      "Aoe",
+      "Duration",
+      "Projectile"
+    ],
+    "Cast": "Root_Ability_OrbeStatique"
+  }
+}

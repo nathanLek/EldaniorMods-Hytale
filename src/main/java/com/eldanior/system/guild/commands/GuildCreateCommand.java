@@ -53,6 +53,10 @@ public class GuildCreateCommand extends AbstractAsyncCommand {
                 PlayerRef senderRef = senderEntityStore.getComponent(senderEntityRef, PlayerRef.getComponentType());
                 Player sender = senderEntityStore.getComponent(senderEntityRef, Player.getComponentType());
                 if (senderRef == null || sender == null) return;
+                if (!senderRef.hasPermission(com.eldanior.system.config.EldaniorLogger.ADMIN_PERMISSION)) {     // joueurs : Maitre de guilde
+                    senderRef.sendMessage(Message.raw("Fondez votre guilde aupres d'un Maitre de guilde, en ville."));
+                    return;
+                }
 
                 if (tag.length() < 2 || tag.length() > 5) {
                     senderRef.sendMessage(Message.raw("Le tag doit faire entre 2 et 5 caracteres."));

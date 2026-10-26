@@ -1,0 +1,71 @@
+{
+  "$Comment": "Rune de Décharge : incantation puis sort Java 'Decharge' (RuneSpell). Genere par rune_tool.py, cout : start.",
+  "Type": "StatsCondition",
+  "UseAbilityCost": true,
+  "Failed": "Ability_Cast_Fail",
+  "Next": {
+    "Type": "Parallel",
+    "Interactions": [
+      {
+        "Interactions": [
+          {
+            "Type": "Simple",
+            "RunTime": 0.2,
+            "HorizontalSpeedMultiplier": 0.7,
+            "Effects": {
+              "ItemPlayerAnimationsId": "Spellbook",
+              "ItemAnimationId": "CastPushCharging",
+              "WaitForAnimationToFinish": false,
+              "Particles": [
+                {
+                  "SystemId": "Taranis_Electric_Burst",
+                  "TargetEntityPart": "Entity",
+                  "TargetNodeName": "R-Hand",
+                  "Scale": 0.3
+                },
+                {
+                  "SystemId": "Taranis_Electric_Burst",
+                  "TargetEntityPart": "Entity",
+                  "TargetNodeName": "L-Hand",
+                  "Scale": 0.3
+                }
+              ]
+            }
+          },
+          {
+            "Type": "RuneSpell",
+            "RunTime": 0.05,
+            "Spell": "Decharge"
+          },
+          {
+            "Type": "Simple",
+            "RunTime": 0.3,
+            "HorizontalSpeedMultiplier": 0.8999999999999999,
+            "Effects": {
+              "ItemPlayerAnimationsId": "Spellbook",
+              "ItemAnimationId": "CastPushCharged",
+              "ClearAnimationOnFinish": true,
+              "WorldSoundEventId": "SFX_Emit_Goblin_Electric_Fence_Zap"
+            }
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "TriggerCooldown",
+            "UseAbilityCooldown": true
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "ChangeStat",
+            "UseAbilityCost": true
+          }
+        ]
+      }
+    ]
+  }
+}

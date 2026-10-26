@@ -1,0 +1,73 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_MurDeFlammes",
+  "spell": "MurDeFlammes",
+  "javaClass": "MurDeFlammes",
+  "page": "rune_page_mur_de_flammes",
+  "name": "Rune du Mur de Flammes",
+  "type": "Feu",
+  "rarity": "Rare",
+  "classes": "mage",
+  "persistent": true,
+  "summary": "mur de feu de 10 blocs perpendiculaire au regard qui brule tout ennemi qui le traverse ou s'en approche.",
+  "description": "Sort rare de feu (Mage, rune de prédilection du Maître des Flammes). Un mur de flammes de 10 blocs de large s'élève à l'endroit visé (jusqu'à 20 blocs), en travers de votre regard, pendant 6 s. Tout ennemi qui le touche ou le traverse subit 10 dégâts de feu toutes les demi-secondes et brûle (4 dégâts par seconde pendant 5 s). Parfait pour couper une charge ou protéger une retraite. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin dont l'encre ondule comme une flamme. Enseigne le Mur de Flammes : une barrière de feu qui brûle quiconque la franchit. Classes : tous les Mages (rune de prédilection du Maître des Flammes). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "emblem": "MurFlammes",
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.5,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Flame_Ignite",
+    "handParticles": "Fire_Charge_Soak1",
+    "handParticlesScale": 0.4,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.5,
+    "animationTimeS": 0.9,
+    "range": 20,
+    "radius": "segment 10 x 1.5 blocs, 3 de haut",
+    "targets": "ennemis au contact du mur",
+    "triggers": "clic de la rune equipee",
+    "characterAnimation": "Staff CastSummonCharging -> CastSummon",
+    "castFx": "Fire_Charge_Soak1",
+    "executionFx": "Fire_AoE_Spawn le long du mur a l'apparition",
+    "persistentFx": "Muspelheim_Fire_Pillar (echelle 0.3) tous les 1.25 bloc, reemis toutes les 3 s",
+    "impactFx": "Impact_Fire",
+    "sounds": "SFX_Flame_Ignite, SFX_Flame_Default_Loop toutes les 2 s",
+    "effects": "10 Fire / 0.5 s au contact + Elda_Brulure",
+    "terrain": "aucun",
+    "persistentDurationS": 6,
+    "interruptions": "duree",
+    "restrictions": "classe mage (toutes les sous-classes) ; rune de predilection du Maître des Flammes (runes() de la classe)",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 2,
+      "mobility": 0,
+      "control": 2,
+      "defense": 2,
+      "targets": 2,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    },
+    "edgeCases": "point vise dans le vide -> sol cherche sous le point ; plusieurs murs = instances separees"
+  }
+}

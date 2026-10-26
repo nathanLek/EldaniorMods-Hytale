@@ -37,8 +37,8 @@ public class CombatTrackerSystem extends DamageEventSystem {
         // 2. OPTIMISATION MAJEURE : Si l'attaquant n'est pas un JOUEUR, on s'arrête !
         // On ne track pas les combats Mob vs Mob pour économiser la RAM
         if (store.getComponent(attackerRef, Player.getComponentType()) == null
-                && com.eldanior.system.guards.GuardManager.companionPost(attackerRef, store) == null) {
-            return;                                                              // ni joueur, ni aventurier recrute
+                && !com.eldanior.system.guards.GuardManager.tracksKills(attackerRef, store)) {
+            return;                                                              // ni joueur, ni aventurier recrute, ni chasseur de prime
         }
 
         // 3. Récupération des UUIDs

@@ -1,0 +1,64 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_ArmeBenie",
+  "spell": "ArmeBenie",
+  "javaClass": "ArmeBenie",
+  "page": "rune_page_arme_benie",
+  "name": "Rune de l'Arme Bénie",
+  "type": "Lumiere",
+  "rarity": "Rare",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "ArmeBenie",
+  "summary": "10 s : chaque coup du lanceur inflige un eclat sacre en plus et le soigne un peu.",
+  "description": "Sort rare de lumière (Mage, rune de prédilection du Grand Enchanteur). Votre arme s'illumine pendant 10 s : chacun de vos coups (sorts compris) inflige 25 dégâts sacrés supplémentaires et vous rend 2 % de vos points de vie (au plus 4 fois par seconde).",
+  "pageDescription": "Un parchemin béni dont l'encre luit dans le noir. Enseigne l'Arme Bénie : chaque coup frappe deux fois et vous soigne. Classes : tous les Mages (rune de prédilection du Grand Enchanteur). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Buff",
+    "Duration",
+    "Damage"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.4,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.6,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Portal_Void",
+    "handParticles": "Bifrost_Divine",
+    "handParticlesScale": 0.25,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.4,
+    "range": 0,
+    "targets": "soi (coups portes)",
+    "effects": "Elda_ArmeBenie 10 s (visuel) ; onOwnerHit -> +25 Elemental (markEcho) + 2 % PV, 250 ms entre deux eclats",
+    "impactFx": "Bifrost_Divine petit sur la cible",
+    "terrain": "aucun",
+    "persistentDurationS": 10,
+    "restrictions": "mage",
+    "limitations": "l'idee 'arme d'un allie' n'est pas faisable : le moteur ne remonte que les coups du lanceur (onOwnerHit) ; la rune benit l'arme du lanceur",
+    "balance": {
+      "damage": 2,
+      "range": 0,
+      "duration": 2,
+      "mobility": 0,
+      "control": 0,
+      "defense": 1,
+      "targets": 1,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    }
+  }
+}

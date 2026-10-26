@@ -115,6 +115,29 @@ public final class SpellFx {
         }
     }
 
+    /** Arc electrique entre deux points : un eclat de particules tous les ~1.2 blocs, legerement decale (comme Taranis). */
+    static void arc(String fxId, Vector3d a, Vector3d b, float scale, Store<EntityStore> store, ComponentAccessor<EntityStore> accessor) {
+        int steps = (int) Math.min(16, Math.max(2, a.distance(b) / 1.2));
+        java.util.concurrent.ThreadLocalRandom rng = java.util.concurrent.ThreadLocalRandom.current();
+        for (int i = 0; i <= steps; i++) {
+            Vector3d p = new Vector3d(a).lerp(b, i / (double) steps);
+            if (i > 0 && i < steps) p.add(rng.nextDouble(-0.3, 0.3), rng.nextDouble(-0.3, 0.3), rng.nextDouble(-0.3, 0.3));
+            fx(fxId, p, scale, store, accessor);
+        }
+    }
+
+    /** Etourdissement bref : effet de paralysie (joueurs) et verrou de position (monstres, que l'effet ne fige pas). */
+    static void stun(Ref<EntityStore> target, String effectId, long durationMs, Store<EntityStore> store, ComponentAccessor<EntityStore> accessor) {
+        if (target == null || !target.isValid()) return;
+        try {
+            EffectsManager.applyCustomEffect(target, effectId, durationMs / 1000f,
+                    com.hypixel.hytale.server.core.asset.type.entityeffect.config.OverlapBehavior.OVERWRITE, accessor);
+        } catch (Exception e) {
+            EldaniorLogger.error("SpellFx: etourdissement " + effectId, e);
+        }
+        lockInPlace(target, durationMs, store);
+    }
+
     /** Tremblement de camera (asset CameraEffect) pour les joueurs dans le rayon, plus fort pres du centre. */
     static void shake(Vector3d pos, double radius, String cameraEffectId, Store<EntityStore> store) {
         try {

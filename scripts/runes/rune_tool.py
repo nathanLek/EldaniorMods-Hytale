@@ -10,6 +10,7 @@
 Regles (couts, recharges, loot, types) : scripts/runes/rune_rules.json. Fiches : scripts/runes/specs/.
 Assets vanilla lus dans Assets.zip (HYTALE_ASSETS_ZIP pour changer le chemin).
 """
+import zlib
 import argparse, json, os, re, sys, zipfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -291,7 +292,7 @@ def cmd_new(a):
         if not a.dry_run:
             import rune_icons
             rune_icons.generate(spec['type'], RULES['rarities'][spec['rarity']], RULES['types'][spec['type']], ZIP,
-                                *(os.path.join(RES, p) for p in icons), seed=len(spec['id']), emblem=spec.get('emblem'))
+                                *(os.path.join(RES, p) for p in icons), seed=zlib.crc32(spec['id'].encode()), emblem=spec.get('emblem'))
     else: print("  = icones deja presentes")
 
     java = os.path.join(SPELLS, spec['javaClass'] + '.java')
@@ -338,7 +339,7 @@ def cmd_icons(a):
     if not t or not r: sys.exit("ERREUR : type et rarete requis (fiche, ou --type et --rarity)")
     s = short(rid)
     paths = [f"Common/Icons/Abilities/{rid}.png", f"Common/Icons/ItemsGenerated/{rid}.png", f"Common/Items/Runes/Rune_Textures/Rune_Ability_{s}.png"]
-    rune_icons.generate(t, RULES['rarities'][r], RULES['types'][t], ZIP, *(os.path.join(RES, p) for p in paths), seed=len(rid), emblem=emblem)
+    rune_icons.generate(t, RULES['rarities'][r], RULES['types'][t], ZIP, *(os.path.join(RES, p) for p in paths), seed=zlib.crc32(rid.encode()), emblem=emblem)
     for p in paths: print("  ~", p)
 
 # ============================================================ CHECK ============================================================

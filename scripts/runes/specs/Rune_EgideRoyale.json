@@ -1,0 +1,66 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_EgideRoyale",
+  "spell": "EgideRoyale",
+  "javaClass": "EgideRoyale",
+  "page": "rune_page_egide_royale",
+  "name": "Rune de l'Égide Royale",
+  "type": "Lumiere",
+  "rarity": "Rare",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Egide",
+  "summary": "dome de lumiere de 6 blocs pendant 6 s : detruit les projectiles entrants, repousse les ennemis, protege les allies dedans.",
+  "description": "Sort rare de lumière (Mage, rune de prédilection de l'Enchanteur Royal). Un dôme de lumière de 6 blocs de rayon se lève autour de vous pendant 6 s. Les projectiles qui y entrent sont détruits, les ennemis qui le franchissent sont repoussés (10 dégâts), et les alliés à l'intérieur subissent 40 % de dégâts en moins.",
+  "pageDescription": "Un parchemin frappé d'un sceau royal. Enseigne l'Égide Royale : un dôme qui arrête flèches et assaillants. Classes : tous les Mages (rune de prédilection de l'Enchanteur Royal). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Buff",
+    "Aoe",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.4,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Portal_Void",
+    "handParticles": "Bifrost_Divine",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.4,
+    "range": 0,
+    "radius": "6 blocs (fixe, centre au lancement)",
+    "targets": "projectiles entrants, ennemis, allies",
+    "persistentFx": "anneau Bifrost_Divine (16 points) + 3 anneaux plus hauts toutes les 0.5 s",
+    "impactFx": "Taranis_Electric_Burst petit sur chaque projectile detruit",
+    "effects": "projectiles (composant Projectile) qui se rapprochent du centre retires ; ennemis dans le dome repousses 12 b/s + 10 Elemental ; allies : Elda_Egide (40 % resistance) tant qu'ils sont dedans",
+    "terrain": "aucun",
+    "persistentDurationS": 6,
+    "restrictions": "mage",
+    "limitations": "le tireur d'un projectile n'est pas lu : tout projectile qui se dirige vers l'interieur est detruit (y compris d'un allie a l'exterieur) ; les porteurs immobiles des sorts sont ignores",
+    "balance": {
+      "damage": 0,
+      "range": 1,
+      "duration": 2,
+      "mobility": 0,
+      "control": 2,
+      "defense": 3,
+      "targets": 2,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    }
+  }
+}

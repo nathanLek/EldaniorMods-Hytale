@@ -1,0 +1,59 @@
+{
+  "TranslationProperties": {
+    "Name": "Tableau de guilde"
+  },
+  "Quality": "Technical",
+  "PlayerAnimationsId": "Block",
+  "Categories": [
+    "Eldanior_System.Autres"
+  ],
+  "Icon": "Icons/ItemsGenerated/Eldanior_Tableau_Guilde.png",
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  },
+  "BlockType": {
+    "BlockParticleSetId": "Wood",
+    "BlockSoundSetId": "Wood",
+    "PhysicalMaterialId": "Wood",
+    "CustomModel": "Blocks/Eldanior/Tableaux/Tableau.blockymodel",
+    "CustomModelScale": 1,
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/Eldanior/Tableaux/Tableau_Guilde_Texture.png",
+        "Weight": 1
+      }
+    ],
+    "DrawType": "Model",
+    "Gathering": {
+      "Soft": {
+        "IsWeaponBreakable": false
+      }
+    },
+    "HitboxType": "Tableau_3x3",
+    "Material": "Solid",
+    "Opacity": "Transparent",
+    "ParticleColor": "#543022",
+    "Support": {
+      "North": [
+        {
+          "FaceType": "Full"
+        }
+      ]
+    },
+    "VariantRotation": "NESW",
+    "Interactions": {
+      "Use": {
+        "Interactions": [
+          {
+            "Type": "Simple"
+          }
+        ]
+      }
+    },
+    "TextureComputedColor": "#4F3A29"
+  },
+  "Scale": 0.3,
+  "MaxStack": 1,
+  "ItemSoundSetId": "ISS_Blocks_Wood"
+}

@@ -210,9 +210,24 @@ public class PlayerLoginSystem extends EntityTickingSystem<EntityStore> {
 
         initializedPlayers.add(uuid);
 
+        // Primes placees sur lui pendant son absence (tableau de prime)
+        long pendingBounty = com.eldanior.system.boards.BountyBoard.collectPending(uuid);
+        if (pendingBounty > 0) {
+            final PlayerLevelData bountyData = data;
+            commandBuffer.run(deferredStore -> {
+                bountyData.addBounty(pendingBounty);
+                deferredStore.putComponent(playerRef, type, bountyData);
+            });
+            com.hypixel.hytale.server.core.universe.PlayerRef pRefBounty = store.getComponent(playerRef, com.hypixel.hytale.server.core.universe.PlayerRef.getComponentType());
+            if (pRefBounty != null) {
+                pRefBounty.sendMessage(com.hypixel.hytale.server.core.Message.raw("Pendant votre absence, " + pendingBounty
+                        + " or ont été ajoutés à la prime sur votre tête."));
+            }
+        }
+
         // Enregistrer la prime si le joueur est PK avec bounty > 0
-        if (data.isPK() && data.getBounty() > 0) {
-            com.eldanior.system.quest.QuestManager.registerBounty(uuid, playerName, data.getLevel(), data.getBounty());
+        if (data.isPK() && data.getBounty() + pendingBounty > 0) {
+            com.eldanior.system.quest.QuestManager.registerBounty(uuid, playerName, data.getLevel(), data.getBounty() + pendingBounty);
         }
 
         // Message de bienvenue

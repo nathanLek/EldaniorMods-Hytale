@@ -1,0 +1,66 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_SentierDHiver",
+  "spell": "SentierDHiver",
+  "javaClass": "SentierDHiver",
+  "page": "rune_page_sentier_d_hiver",
+  "name": "Rune du Sentier d'Hiver",
+  "type": "Glace",
+  "rarity": "Rare",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "SentierHiver",
+  "summary": "6 s : le sol gele sous les pas du lanceur ; les ennemis qui foulent la trainee sont ralentis puis geles.",
+  "description": "Sort rare de glace (Mage, rune de prédilection du Seigneur du Froid). Pendant 6 s, la neige recouvre le sol sous vos pas. Les ennemis qui marchent sur votre sentier subissent 8 dégâts de glace toutes les demi-secondes et sont ralentis ; après 2 s sur la neige, ils gèlent 1,5 s. La neige fond après 30 s. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin qui laisse des traces de givre partout où on le pose. Enseigne le Sentier d'Hiver : vos pas répandent un hiver qui fige vos poursuivants. Classes : tous les Mages (rune de prédilection du Seigneur du Froid). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.4,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": null,
+    "sound": null,
+    "releaseSound": "SFX_Ice_Build",
+    "handParticles": "Ice_Staff_Charging",
+    "handParticlesScale": 0.35,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.4,
+    "range": 0,
+    "radius": "cases de la trainee (1.2 bloc)",
+    "targets": "ennemis sur la trainee",
+    "persistentFx": "Effect_Snow_Impact sur les cases, Niflheim_Mist sur le lanceur",
+    "sounds": "SFX_Ice_Build",
+    "effects": "8 Ice / 0.5 s + Elda_Givre ; 2 s cumulees -> Elda_Gel 1.5 s (une fois par ennemi)",
+    "terrain": "Soil_Snow sur la surface (sols naturels Soil_*), 50 blocs max, restaure apres 30 s",
+    "persistentDurationS": 6,
+    "restrictions": "mage",
+    "balance": {
+      "damage": 1,
+      "range": 1,
+      "duration": 2,
+      "mobility": 1,
+      "control": 2,
+      "defense": 2,
+      "targets": 2,
+      "frequency": 1,
+      "terrain": 1,
+      "difficulty": 1
+    },
+    "edgeCases": "zone protegee : pas de neige mais la trainee agit ; eau : rien"
+  }
+}

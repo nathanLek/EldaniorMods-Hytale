@@ -76,8 +76,8 @@ public class QuestTab {
         int dailyCount = QuestManager.countByCategory(myUUID, QuestCategory.JOURNALIERE, isPK);
         int sideCount = QuestManager.countByCategory(myUUID, QuestCategory.SECONDAIRE, isPK);
         int mainCount = QuestManager.countByCategory(myUUID, QuestCategory.PRINCIPAL, isPK);
-        int bountyCount = QuestManager.getActiveBounties().size();
-        int inProgressCount = QuestManager.getInProgressQuests(myUUID).size();
+        int inProgressCount = QuestManager.getInProgressQuests(myUUID).size()
+                + com.eldanior.system.boards.GuildBoard.missionsOf(myUUID).size();   // missions prises au tableau de guilde
         int claimableCount = QuestManager.getClaimableQuests(myUUID).size();
 
         // Bandeaux
@@ -94,7 +94,6 @@ public class QuestTab {
 
         // Blasons — compteurs
         ui.set("#QBlasonDailyCount.Text", dailyCount + " quetes");
-        ui.set("#QBlasonBountyCount.Text", bountyCount + " primes");
 
         // Secondaires et Principales : afficher "Verrouillee" si aucune quete disponible
         if (sideCount > 0) {
@@ -135,7 +134,6 @@ public class QuestTab {
             case "daily" -> { catTitle = "JOURNALIERES"; catColor = "#4CAF50"; }
             case "side" -> { catTitle = "SECONDAIRES"; catColor = "#C8A2C8"; }
             case "main" -> { catTitle = "PRINCIPALES"; catColor = "#FFD700"; }
-            case "bounty" -> { catTitle = "PRIMES"; catColor = "#cc4444"; }
             case "progress" -> { catTitle = "QUETES EN COURS"; catColor = "#caa15a"; }
             case "done" -> { catTitle = "A RECLAMER"; catColor = "#FFD700"; }
             default -> { catTitle = "QUETES"; catColor = "#FFD700"; }
@@ -146,12 +144,7 @@ public class QuestTab {
         List<String> displayCache = new ArrayList<>();
         int slotIdx = 0;
 
-        if ("bounty".equals(category)) {
-            // Listing special primes
-            slotIdx = renderBountyList(ui, myUUID, slotIdx, displayCache);
-            ui.set("#QListCount.Text", displayCache.size() + " PRIMES");
-            ui.set("#QListSection.Visible", false);
-        } else if ("progress".equals(category)) {
+        if ("progress".equals(category)) {
             // Vue agregee : toutes les quetes en cours
             slotIdx = renderInProgressList(ui, ref, store, myUUID, slotIdx, displayCache, player);
             ui.set("#QListCount.Text", displayCache.size() + " QUETES");
@@ -261,6 +254,47 @@ public class QuestTab {
             displayCache.add(pq.getQuestId());
             slotIdx++;
         }
+        return renderGuildMissions(ui, myUUID, slotIdx, displayCache);
+    }
+
+    /** Missions prises au tableau de guilde (boards/GuildBoard) : objectif, avancement, recompenses ; abandon possible ici. */
+    private static int renderGuildMissions(UICommandBuilder ui, UUID myUUID, int slotIdx, List<String> displayCache) {
+        for (com.eldanior.system.boards.GuildBoard.MissionView m : com.eldanior.system.boards.GuildBoard.missionsOf(myUUID)) {
+            if (slotIdx >= MAX_QUEST_SLOTS) break;
+            ui.set("#QSlot" + slotIdx + ".Visible", true);
+            ui.set("#QSlot" + slotIdx + ".Background", "#0d1610");
+            ui.set("#QSlotCat" + slotIdx + ".Text", "MISSION DE GUILDE");
+            ui.set("#QSlotCat" + slotIdx + ".Style.TextColor", "#caa15a");
+            ui.set("#QSlotDiff" + slotIdx + ".Text", m.done() ? "TERMINEE" : "");
+            ui.set("#QSlotDiff" + slotIdx + ".Style.TextColor", "#4CAF50");
+            ui.set("#QSlotName" + slotIdx + ".Text", m.title());
+            ui.set("#QSlotName" + slotIdx + ".Style.TextColor", "#ffffff");
+            ui.set("#QSlotProg" + slotIdx + ".Text", m.done() ? "A RECLAMER AU TABLEAU DE GUILDE" : "");
+            ui.set("#QSlotProg" + slotIdx + ".Style.TextColor", "#4CAF50");
+
+            ui.set("#QSlotObjABox" + slotIdx + ".Visible", true);
+            ui.set("#QSlotObjA" + slotIdx + ".Text", m.objective());
+            ui.set("#QSlotObjA" + slotIdx + ".Style.TextColor", m.done() ? "#4CAF50" : "#c8c8c8");
+            ui.set("#QSlotObjAC" + slotIdx + ".Text", m.done() ? "OK" : m.progress() + "/" + m.count());
+            ui.set("#QSlotObjAC" + slotIdx + ".Style.TextColor", m.done() ? "#4CAF50" : "#caa15a");
+            ui.set("#QSlotObjBBox" + slotIdx + ".Visible", false);
+            ui.set("#QSlotObjCBox" + slotIdx + ".Visible", false);
+
+            ui.set("#QSlotRewABox" + slotIdx + ".Visible", true);
+            ui.set("#QSlotRewA" + slotIdx + ".Text", "+" + formatNumber(m.gold()) + " Or");
+            ui.set("#QSlotRewBBox" + slotIdx + ".Visible", true);
+            ui.set("#QSlotRewB" + slotIdx + ".Text", "+" + formatNumber(m.xp()) + " XP");
+            ui.set("#QSlotRewCBox" + slotIdx + ".Visible", true);
+            ui.set("#QSlotRewC" + slotIdx + ".Text", "+" + formatNumber(m.contribution()) + " contribution");
+
+            ui.set("#QSlotBtnAccept" + slotIdx + ".Visible", false);
+            ui.set("#QSlotBtnActivate" + slotIdx + ".Visible", false);
+            ui.set("#QSlotBtnAbandon" + slotIdx + ".Visible", !m.done());
+            ui.set("#QSlotBtnClaim" + slotIdx + ".Visible", false);
+
+            displayCache.add("guild:" + m.id());
+            slotIdx++;
+        }
         return slotIdx;
     }
 
@@ -274,54 +308,6 @@ public class QuestTab {
 
             fillQuestSlot(ui, slotIdx, model, pq, true, "done", player);
             displayCache.add(pq.getQuestId());
-            slotIdx++;
-        }
-        return slotIdx;
-    }
-
-    private static int renderBountyList(UICommandBuilder ui, UUID myUUID, int slotIdx, List<String> displayCache) {
-        for (QuestManager.BountyInfo bounty : QuestManager.getActiveBounties()) {
-            if (slotIdx >= MAX_QUEST_SLOTS) break;
-            if (bounty.uuid.equals(myUUID)) continue; // Ne pas afficher sa propre prime
-
-            QuestDifficulty diff = QuestManager.difficultyFromLevel(bounty.level);
-            long bonus = QuestManager.calculateBountyBonus(diff);
-
-            ui.set("#QSlot" + slotIdx + ".Visible", true);
-            ui.set("#QSlotCat" + slotIdx + ".Text", "PRIME \u00B7 NIVEAU " + bounty.level);
-            ui.set("#QSlotCat" + slotIdx + ".Style.TextColor", "#6a5f42");
-            ui.set("#QSlotDiff" + slotIdx + ".Text", diff.getDisplayName());
-            ui.set("#QSlotDiff" + slotIdx + ".Style.TextColor", diff.getColor());
-            ui.set("#QSlotName" + slotIdx + ".Text", bounty.name);
-            ui.set("#QSlotName" + slotIdx + ".Style.TextColor", "#f0ead8");
-            ui.set("#QSlotProg" + slotIdx + ".Text", "");
-
-            // Objectif : retrouver et tuer
-            ui.set("#QSlotObjABox" + slotIdx + ".Visible", true);
-            ui.set("#QSlotObjA" + slotIdx + ".Text", "Retrouver et tuer " + bounty.name);
-            ui.set("#QSlotObjAC" + slotIdx + ".Text", "");
-            ui.set("#QSlotObjA" + slotIdx + ".Style.TextColor", "#cc4444");
-            ui.set("#QSlotObjBBox" + slotIdx + ".Visible", false);
-            ui.set("#QSlotObjCBox" + slotIdx + ".Visible", false);
-
-            // Recompenses
-            ui.set("#QSlotRewABox" + slotIdx + ".Visible", true);
-            ui.set("#QSlotRewA" + slotIdx + ".Text", "+" + formatNumber(bounty.bounty) + " Or (prime)");
-            ui.set("#QSlotRewBBox" + slotIdx + ".Visible", true);
-            ui.set("#QSlotRewB" + slotIdx + ".Text", "+" + formatNumber(bonus) + " Or (bonus)");
-            ui.set("#QSlotRewCBox" + slotIdx + ".Visible", false);
-
-            // Boutons : Traquer / Abandonner
-            ui.set("#QSlotBtnAccept" + slotIdx + ".Visible", true);
-            ui.set("#QSlotBtnAccept" + slotIdx + ".Text", "TRAQUER");
-            ui.set("#QSlotBtnActivate" + slotIdx + ".Visible", false);
-            ui.set("#QSlotBtnAbandon" + slotIdx + ".Visible", false);
-            ui.set("#QSlotBtnClaim" + slotIdx + ".Visible", false);
-
-            // Changer le style du slot pour les primes (fond rougeatre)
-            ui.set("#QSlot" + slotIdx + ".Background", "#1a0f0a");
-
-            displayCache.add("bounty:" + bounty.uuid.toString());
             slotIdx++;
         }
         return slotIdx;
@@ -465,10 +451,7 @@ public class QuestTab {
 
         String entry = cache.get(idx);
 
-        // Si c'est une prime (bounty:uuid), creer une quete d'execution
-        if (entry.startsWith("bounty:")) {
-            return handleTrack(entry.substring(7), uuid, ref, store);
-        }
+        if (entry.startsWith("guild:")) return false;                                    // mission de guilde : au tableau
 
         boolean ok = QuestManager.acceptQuest(uuid, entry);
         if (ok) saveQuestData(uuid, ref, store);
@@ -567,10 +550,15 @@ public class QuestTab {
         List<String> cache = getCache(uuid);
         if (idx < 0 || idx >= cache.size()) return false;
 
+        Player player = store.getComponent(ref, Player.getComponentType());
+        if (cache.get(idx).startsWith("guild:")) {                                         // mission du tableau de guilde
+            com.eldanior.system.boards.GuildBoard.abandonMission(uuid, cache.get(idx).substring(6));
+            if (player != null) player.getPlayerRef().sendMessage(Message.raw("Mission de guilde abandonnee."));
+            return true;
+        }
         QuestManager.abandonQuest(uuid, cache.get(idx));
         saveQuestData(uuid, ref, store);
 
-        Player player = store.getComponent(ref, Player.getComponentType());
         if (player != null) player.getPlayerRef().sendMessage(Message.raw("Quete abandonnee."));
         return true;
     }
@@ -587,27 +575,6 @@ public class QuestTab {
 
         Player player = store.getComponent(ref, Player.getComponentType());
         if (player != null) player.getPlayerRef().sendMessage(Message.raw("Quete abandonnee."));
-        return true;
-    }
-
-    /** Traquer une prime (envoyer un message — la mécanique complète sera dans un ticket dédié) */
-    private static boolean handleTrack(String targetUUIDStr, UUID killerUUID, Ref<EntityStore> ref, Store<EntityStore> store) {
-        try {
-            UUID targetUUID = UUID.fromString(targetUUIDStr);
-            QuestManager.BountyInfo bounty = null;
-            for (QuestManager.BountyInfo b : QuestManager.getActiveBounties()) {
-                if (b.uuid.equals(targetUUID)) { bounty = b; break; }
-            }
-            if (bounty == null) return false;
-
-            Player player = store.getComponent(ref, Player.getComponentType());
-            if (player != null) {
-                long bonus = QuestManager.calculateBountyBonus(QuestManager.difficultyFromLevel(bounty.level));
-                player.getPlayerRef().sendMessage(Message.raw(
-                        "<color:red>PRIME ACCEPTEE !</color> Traquez <color:gold>" + bounty.name +
-                        "</color> pour <color:gold>" + formatNumber(bounty.bounty + bonus) + " Or</color>"));
-            }
-        } catch (Exception e) { return false; }
         return true;
     }
 

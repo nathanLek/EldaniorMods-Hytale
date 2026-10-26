@@ -43,7 +43,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static com.eldanior.system.gui.tabs.ProfilTab.getAdventureRank;
 
 /**
- * PNJ de poste (gardes, mage royal, patrouilleur, chevalier errant, villageois, aventurier) : postes persistants, apparition
+ * PNJ de poste (gardes, mage royal, patrouilleur, chevalier errant, villageois, aventurier, chasseur de prime, criminel) : postes persistants, apparition
  * (skin de joueur aleatoire mais stable par poste, armure), reapparition apres la mort, deplacements (PostMovement),
  * contrats des aventuriers recrutes (AdventurerSystem) et joueurs recherches pour PvP.
  *
@@ -65,7 +65,9 @@ public final class GuardManager {
 
     // ===== Reglages =====
     static final double ALERT_RANGE = 24.0, PATROL_SIGHT = 20.0, PATROL_CALL = 60.0;
-    static final long WANTED_MS = 30_000, RESPAWN_MS = 120_000;
+    static final long WANTED_MS = 30_000, RESPAWN_MS = 120_000, SPAWN_RETRY_MS = 30_000;
+    /** Reapparition : seulement si un joueur est a moins de ce rayon (chunk charge). */
+    static final double SPAWN_NEAR = 64.0;
     /** Aventurier : duree du contrat, niveaux possibles (tire au hasard par poste). Prix : priceFor(niveau). */
     static final long CONTRACT_MS = 45 * 60_000;                                  // duree d une mission d aventurier
     static final int MAX_COMPANIONS = 2;                                           // aventuriers par joueur
@@ -103,6 +105,9 @@ public final class GuardManager {
         volatile long respawnAt;
         long skinSeed;                                                      // skin et prenom aleatoires, toujours les memes pour ce poste
         int level;                                                          // aventurier : niveau tire a la pose (0 : celui de NpcData)
+        long bounty;                                                        // criminel : or ajoute a sa prime au tableau
+        final List<UUID> allies = new java.util.concurrent.CopyOnWriteArrayList<>();   // criminel : ses complices (Criminals)
+        transient String leader;                                            // complice : poste de son chef
         volatile UUID owner;                                                // aventurier : joueur qui l'a recrute (null : libre)
         volatile long contractEnd;
         transient volatile boolean spawning;
@@ -177,19 +182,22 @@ public final class GuardManager {
     }
 
     /**
-     * Comme ci-dessus ; pour un aventurier, type, statut et niveau peuvent etre imposes (null / 0 : au hasard). Type et statut
-     * venant de la graine du poste, on tire des graines jusqu'a en trouver une qui les donne.
+     * Comme ci-dessus ; pour un aventurier ou un chasseur de prime, type, statut et niveau peuvent etre imposes (null / 0 : au
+     * hasard). Type et statut venant de la graine du poste, on tire des graines jusqu'a en trouver une qui les donne (chasseur :
+     * jamais mage).
      */
     public static Post place(GuardType type, World world, Vector3d pos, float yaw,
                              AdventurerType wantType, AdventurerTier wantTier, int level) {
         Post p = new Post("garde_" + nextId.getAndIncrement(), type, world.getName(), pos.x, pos.y, pos.z, yaw);
         java.util.Random rng = new java.util.Random();
         p.skinSeed = rng.nextLong();
-        if (type == GuardType.AVENTURIER) {
+        if (type == GuardType.AVENTURIER || type == GuardType.CHASSEUR_PRIME || type == GuardType.CRIMINEL) {
+            boolean hunter = type != GuardType.AVENTURIER;                  // chasseur, criminel : jamais mage
             p.level = level > 0 ? Math.clamp(level, ADVENTURER_MIN_LEVEL, ADVENTURER_MAX_LEVEL)
                     : ADVENTURER_MIN_LEVEL + rng.nextInt(ADVENTURER_MAX_LEVEL - ADVENTURER_MIN_LEVEL + 1);
-            for (int i = 0; i < 20_000 && (wantType != null || wantTier != null); i++) {
-                if ((wantType == null || AdventurerType.of(p.skinSeed) == wantType)
+            for (int i = 0; i < 20_000 && (wantType != null || wantTier != null || hunter); i++) {
+                AdventurerType t = AdventurerType.of(p.skinSeed);
+                if ((wantType != null ? t == wantType : !hunter || BountyHunter.isHunterType(t))
                         && (wantTier == null || AdventurerTier.of(p) == wantTier)) break;
                 p.skinSeed = rng.nextLong();
             }
@@ -211,6 +219,7 @@ public final class GuardManager {
         }
         if (best == null) return null;
         posts.remove(best.id);
+        if (best.type == GuardType.CRIMINEL) Criminals.removeAllies(best, world);
         UUID g = best.guard;
         if (g != null) {
             Store<EntityStore> store = world.getEntityStore().getStore();
@@ -223,7 +232,14 @@ public final class GuardManager {
 
     /** Fait apparaitre le PNJ d'un poste (thread du monde). Son point de laisse est le poste : il y revient toujours. */
     static void spawn(Post p, World world) {
-        spawnAs(p, world, p.type == GuardType.AVENTURIER ? AdventurerType.of(p.skinSeed).getRecruitRole() : p.type.getRoleId(), p.position());
+        String role = switch (p.type) {
+            case AVENTURIER -> AdventurerType.of(p.skinSeed).getRecruitRole();
+            case CHASSEUR_PRIME -> BountyHunter.role(p);
+            case CRIMINEL -> Criminals.role(p);
+            default -> p.type.getRoleId();
+        };
+        Ref<EntityStore> ref = spawnAs(p, world, role, p.position());
+        if (ref != null && p.type == GuardType.CRIMINEL) Criminals.spawnAllies(p, world);
     }
 
     /** Fait apparaitre le PNJ du poste avec le role donne (aventurier recrute : role compagnon), a la position donnee. */
@@ -233,7 +249,11 @@ public final class GuardManager {
             Rotation3f rot = new Rotation3f(0, p.yaw, 0);
             var pair = NPCPlugin.get().spawnNPC(store, roleId, null, at, rot);
             Ref<EntityStore> ref = pair != null ? pair.first() : null;
-            if (ref == null || !ref.isValid()) { EldaniorLogger.warn("[Guards] PNJ non cree : " + roleId); return null; }
+            if (ref == null || !ref.isValid()) {                                                // nouvel essai plus tard
+                EldaniorLogger.warn("[Guards] PNJ non cree : " + roleId);
+                if (posts.containsKey(p.id)) p.respawnAt = System.currentTimeMillis() + SPAWN_RETRY_MS;
+                return null;
+            }
             NPCEntity npc = store.getComponent(ref, NPCEntity.getComponentType());
             if (npc != null) npc.saveLeashInformation(p.position(), rot);
             if (p.level > 0)                                                                    // niveau du poste (avant le tirage du mod)
@@ -253,11 +273,12 @@ public final class GuardManager {
         }
     }
 
-    /** Apparence du PNJ : skin de joueur aleatoire (stable par poste), nom affiche, armure et arme (aventurier : selon son type). */
+    /** Apparence du PNJ : skin de joueur aleatoire (stable par poste), nom affiche, armure et arme (aventurier, chasseur : selon son type). */
     private static void dress(Post p, Ref<EntityStore> ref, String roleId, Store<EntityStore> store) {
         if (p.type.hasRandomSkin()) applySkin(p, ref, store);
         store.putComponent(ref, Nameplate.getComponentType(), new Nameplate(nameplate(p)));
-        AdventurerType adv = p.type == GuardType.AVENTURIER ? AdventurerType.of(p.skinSeed) : null;
+        AdventurerType adv = p.type == GuardType.AVENTURIER || p.type == GuardType.CHASSEUR_PRIME || p.type == GuardType.CRIMINEL
+                             ? AdventurerType.of(p.skinSeed) : null;
         List<String> armor = adv != null ? adv.getArmor(p) : p.type.getArmor();
         NPCEntity npc = store.getComponent(ref, Objects.requireNonNull(NPCEntity.getComponentType()));
         var inv = npc != null ? npc.getInventory() : null;
@@ -279,13 +300,20 @@ public final class GuardManager {
     }
 
     /**
-     * Nom affiche (les systemes de plaques des monstres ignorent les PNJ de poste) : pas de niveau, sauf pour l'aventurier
-     * (niveau et prix). Villageois : un prenom.
+     * Nom affiche (les systemes de plaques des monstres ignorent les PNJ de poste) : pas de niveau, sauf pour l'aventurier et le
+     * chasseur de prime (rang). Villageois : un prenom.
      */
     static String nameplate(Post p) {
-        if (p.type == GuardType.VILLAGEOIS) return VILLAGER_NAMES[(int) Math.floorMod(p.skinSeed, (long) VILLAGER_NAMES.length)];
+        if (p.type == GuardType.VILLAGEOIS) return firstName(p);
         if (p.type == GuardType.AVENTURIER) return "Aventurier [" + getAdventureRank(p.level) + "]";
+        if (p.type == GuardType.CHASSEUR_PRIME) return "Chasseur de prime [" + getAdventureRank(p.level) + "]";
+        if (p.type == GuardType.CRIMINEL) return Criminals.nameplate(p);
         return p.type.getLabel();
+    }
+
+    /** Prenom du PNJ de ce poste (tire de sa graine). */
+    static String firstName(Post p) {
+        return VILLAGER_NAMES[(int) Math.floorMod(p.skinSeed, (long) VILLAGER_NAMES.length)];
     }
 
     private static void applySkin(Post p, Ref<EntityStore> ref, Store<EntityStore> store) {
@@ -328,7 +356,20 @@ public final class GuardManager {
         return p != null && p.type == GuardType.AVENTURIER ? p : null;
     }
 
-    static Post post(String id) { return id != null ? posts.get(id) : null; }
+    public static Post post(String id) { return id != null ? posts.get(id) : null; }
+
+    /** Poste d'un chasseur de prime (par l'UUID du PNJ), null sinon. */
+    static Post hunterPost(UUID npc) {
+        if (npc == null) return null;
+        for (Post p : posts.values()) if (npc.equals(p.guard) && p.type == GuardType.CHASSEUR_PRIME) return p;
+        return null;
+    }
+
+    /** PNJ dont les kills sont suivis (CombatTrackerSystem) : aventurier recrute, chasseur de prime. */
+    public static boolean tracksKills(Ref<EntityStore> ref, ComponentAccessor<EntityStore> store) {
+        Post p = postOf(ref, store);
+        return p != null && (p.owner != null || p.type == GuardType.CHASSEUR_PRIME);
+    }
 
     /** Aventuriers recrutes par ce joueur (au plus MAX_COMPANIONS), dans l'ordre des postes. */
     static List<Post> companionsOf(UUID owner) {
@@ -389,31 +430,58 @@ public final class GuardManager {
 
     static void saveLater() { save(); }
 
-    /** Un garde est mort : son poste le fera reapparaitre apres RESPAWN_MS. */
+    /** Un garde est mort : son poste le fera reapparaitre apres RESPAWN_MS (criminel : Criminals.RESPAWN_MS, prime remise a sa base). */
     static void onGuardDeath(UUID guard) {
         if (guard == null) return;
         for (Post p : posts.values()) {
             if (guard.equals(p.guard) && p.respawnAt == 0) {
                 if (p.owner != null) AdventurerSystem.onCompanionDeath(p);
-                p.respawnAt = System.currentTimeMillis() + RESPAWN_MS;
+                boolean criminal = p.type == GuardType.CRIMINEL;
+                if (criminal) p.bounty = 0;
+                long delay = criminal ? Criminals.RESPAWN_MS : RESPAWN_MS;
+                p.respawnAt = System.currentTimeMillis() + delay;
                 save();
-                EldaniorLogger.info("[Guards] " + p.type.getLabel() + " (" + p.id + ") tombe, retour dans " + RESPAWN_MS / 1000 + " s");
+                EldaniorLogger.info("[Guards] " + p.type.getLabel() + " (" + p.id + ") tombe, retour dans " + delay / 1000 + " s");
             }
         }
     }
 
+    /**
+     * Postes dont le PNJ doit reapparaitre, seulement si un joueur est a moins de SPAWN_NEAR blocs : loin des joueurs, le chunk
+     * n'est pas charge ; spawnNPC y echoue mais cree quand meme l'entite (sans skin ni stats), et chaque nouvel essai en
+     * ajoutait une (des centaines de PNJ fantomes).
+     */
     private static void respawnDue() {
         long now = System.currentTimeMillis();
         boolean changed = false;
         for (Post p : posts.values()) {
             if (p.respawnAt == 0 || now < p.respawnAt || p.spawning) continue;
             World world = Universe.get().getWorld(p.world);
-            if (world == null) continue;
+            if (world == null || !playerNear(p.world, p.position(), SPAWN_NEAR)) continue;
             p.spawning = true;
             changed = true;
             world.execute(() -> { spawn(p, world); save(); });
         }
         if (changed) EldaniorLogger.info("[Guards] reapparition des gardes tombes");
+    }
+
+    /** Un joueur du monde world a moins de range blocs (positions relevees par PlayerPositionTracker). */
+    static boolean playerNear(String world, Vector3d at, double range) {
+        for (PlayerRef pr : Universe.get().getPlayers()) {
+            Ref<EntityStore> ref = pr.getReference();
+            World w = ref != null && ref.isValid() ? ref.getStore().getExternalData().getWorld() : null;
+            Vector3d pos = w != null && w.getName().equals(world)
+                           ? com.eldanior.system.config.Player.PlayerPositionTracker.PLAYER_POSITIONS.get(pr.getUuid()) : null;
+            if (pos != null && pos.distanceSquared(at) <= range * range) return true;
+        }
+        return false;
+    }
+
+    /** PNJ d'un poste ou complice d'un criminel (les autres PNJ a role de poste sont orphelins : GuardOrphanSystem). */
+    static boolean isKnown(UUID npc) {
+        if (npc == null) return false;
+        for (Post p : posts.values()) if (npc.equals(p.guard) || p.allies.contains(npc)) return true;
+        return false;
     }
 
     // ===== Recherches (PvP) =====
@@ -488,13 +556,15 @@ public final class GuardManager {
 
     /**
      * Chaque seconde, pour chaque PNJ de poste charge : deplacement (PostMovement), sentinelle du patrouilleur (un monstre
-     * proche : les gardes accourent), et toutes les 5 s skin regenere s'il a ete perdu (rechargement de la zone).
+     * proche : les gardes accourent), chasse aux PK du chasseur de prime et attaque des criminels (toutes les 2 s), et toutes
+     * les 5 s skin regenere s'il a ete perdu (rechargement de la zone).
      */
     private static void watchPosts() {
         boolean scan = ticks % 2 == 0, slow = ticks % 5 == 0;
         for (Post p : posts.values()) {
             boolean companion = p.owner != null;
             boolean moves = PostMovement.moves(p.type) && !companion, patrol = p.type == GuardType.PATROUILLEUR;
+            boolean hunter = p.type == GuardType.CHASSEUR_PRIME, criminal = p.type == GuardType.CRIMINEL;
             boolean stays = !moves && !companion;                                            // garde a son poste
             if (!p.isAlive()) continue;
             World world = Universe.get().getWorld(p.world);
@@ -526,6 +596,11 @@ public final class GuardManager {
                     if (companion) { AdventurerSystem.follow(p, ref, npc, at, world, store); return; }
                     if (stays) { if (p.type.isGuard()) faceDuty(p, ref, at, store); return; }   // l'aventurier libre regarde les joueurs
                     PostMovement.tick(p, ref, npc, at, world, store);
+                    if (hunter && scan) BountyHunter.hunt(ref, at, store);
+                    if (criminal) {
+                        if (scan) Criminals.aggress(ref, at, store, p.id);
+                        Criminals.lead(p, at, world, store, scan, slow);
+                    }
                     if (!patrol || !scan) return;
                     Ref<EntityStore> monster = nearestMonster(at, store);
                     if (monster == null) return;
@@ -535,6 +610,14 @@ public final class GuardManager {
                 }
             });
         }
+    }
+
+    /** Skin et nom d'un PNJ hors des postes enregistres (complice) : regeneres s'ils ont ete perdus (rechargement de la zone). */
+    static void refreshLook(Post p, Ref<EntityStore> ref, Store<EntityStore> store) {
+        if (p.type.hasRandomSkin() && store.getComponent(ref, PlayerSkinComponent.getComponentType()) == null) applySkin(p, ref, store);
+        Nameplate np = store.getComponent(ref, Nameplate.getComponentType());
+        String name = nameplate(p);
+        if (np == null || !name.equals(np.getText())) store.putComponent(ref, Nameplate.getComponentType(), new Nameplate(name));
     }
 
     /** Garde revenu a son poste (au repos) : il se remet face a sa direction d'origine. */
@@ -555,7 +638,7 @@ public final class GuardManager {
             NPCEntity npc = store.getComponent(e, NPCEntity.getComponentType());
             if (npc == null || isGuard(e, store)) continue;
             WorldSupport ws = WorldSupport.get(e, store);
-            if (ws == null || ws.getDefaultPlayerAttitude() != Attitude.HOSTILE) continue;
+            if (!GuardType.isOutlaw(npc.getRoleName()) && (ws == null || ws.getDefaultPlayerAttitude() != Attitude.HOSTILE)) continue;
             TransformComponent t = store.getComponent(e, TransformComponent.getComponentType());
             if (t == null) continue;
             double d = t.getPosition().distanceSquared(at);
@@ -585,10 +668,10 @@ public final class GuardManager {
         return t != null && t.isGuard();
     }
 
-    /** PNJ de poste protege par les gardes (tout sauf l'aventurier recrute, qui suit son joueur). */
+    /** PNJ de poste protege par les gardes (tout sauf l'aventurier recrute, qui suit son joueur, et le criminel). */
     static boolean isProtected(Ref<EntityStore> ref, ComponentAccessor<EntityStore> store) {
         NPCEntity npc = ref != null && ref.isValid() ? store.getComponent(ref, NPCEntity.getComponentType()) : null;
-        return npc != null && GuardType.fromRole(npc.getRoleName()) != null && !GuardType.isCompanionRole(npc.getRoleName());
+        return npc != null && GuardType.isAlly(npc.getRoleName()) && !GuardType.isCompanionRole(npc.getRoleName());
     }
     // ===== Persistance =====
 
@@ -609,6 +692,8 @@ public final class GuardManager {
                 props.setProperty(k + "skin", String.valueOf(p.skinSeed));
                 if (p.level > 0) props.setProperty(k + "level", String.valueOf(p.level));
                 if (p.owner != null) props.setProperty(k + "owner", p.owner.toString());
+                if (p.bounty > 0) props.setProperty(k + "bounty", String.valueOf(p.bounty));
+                if (!p.allies.isEmpty()) props.setProperty(k + "allies", String.join(",", p.allies.stream().map(UUID::toString).toList()));
             }
             PersistenceUtils.writeAtomicWithBackup(file, props, "Eldanior - postes de garde");
         } catch (Exception e) {
@@ -635,7 +720,9 @@ public final class GuardManager {
                 p.respawnAt = Long.parseLong(props.getProperty(k + "respawnAt", "0"));
                 p.skinSeed = Long.parseLong(props.getProperty(k + "skin", String.valueOf(id.hashCode())));
                 p.level = Integer.parseInt(props.getProperty(k + "level", "0"));
-                if (type == GuardType.AVENTURIER && p.level <= 0)
+                p.bounty = Long.parseLong(props.getProperty(k + "bounty", "0"));
+                for (String a : props.getProperty(k + "allies", "").split(",")) if (!a.isBlank()) p.allies.add(UUID.fromString(a.trim()));
+                if ((type == GuardType.AVENTURIER || type == GuardType.CHASSEUR_PRIME || type == GuardType.CRIMINEL) && p.level <= 0)
                     p.level = ADVENTURER_MIN_LEVEL + (int) Math.floorMod(p.skinSeed, (long) (ADVENTURER_MAX_LEVEL - ADVENTURER_MIN_LEVEL + 1));
                 // Aventurier recrute avant l'arret : le compagnon a disparu avec son joueur, il revient a son poste
                 if (props.getProperty(k + "owner") != null) p.respawnAt = System.currentTimeMillis() + 10_000;

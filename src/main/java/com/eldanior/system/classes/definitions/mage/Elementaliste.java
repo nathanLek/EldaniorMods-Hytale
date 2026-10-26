@@ -17,6 +17,6 @@ public class Elementaliste extends ClassModel {
                 List.of(WeaponMastery.STAFF, WeaponMastery.SPELLBOOK),
                 List.of("elementaliste_maitre", "seigneur_des_elements", "catalyseur_arcane"), 400, false,
                 2, 6, 26, 6, 6, 4);
-        runes("Rune_Bourrasque");
+        runes("Rune_Decharge", "Rune_Bourrasque");
     }
 }
