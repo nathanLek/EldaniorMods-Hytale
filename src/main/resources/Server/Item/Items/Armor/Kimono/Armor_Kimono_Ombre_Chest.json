@@ -1,0 +1,91 @@
+{
+  "TranslationProperties": {
+    "Name": "Shinobi-gi de l'Ombre",
+    "Description": "Tenue de l'Ordre de l'Ombre du Clan Luo. Un uwagi noir sur cotte de mailles, des épaulières lacées de cramoisi, un baudrier à trois kunai, des shuriken à l'obi et un tantō en travers du dos."
+  },
+  "Quality": "Unique",
+  "ItemLevel": 400,
+  "PlayerAnimationsId": "Block",
+  "ItemSoundSetId": "ISS_Armor_Cloth",
+  "Categories": [
+    "Eldanior_Empire_Luo.Kage",
+    "Items.Armors"
+  ],
+  "Icon": "Icons/ItemsGenerated/Armor_Kimono_Ombre_Chest.png",
+  "IconProperties": {
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Scale": 0.3,
+    "Translation": [
+      0,
+      0
+    ]
+  },
+  "Model": "Items/Armors/Kimono/Ombre/Chest.blockymodel",
+  "Texture": "Items/Armors/Kimono/Ombre/Chest_Texture.png",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    }
+  },
+  "Armor": {
+    "ArmorSlot": "Chest",
+    "BaseDamageResistance": 0,
+    "CosmeticsToHide": [
+      "Overtop",
+      "Cape"
+    ],
+    "StatModifiers": {
+      "Health": [
+        {
+          "Amount": 35,
+          "CalculationType": "Additive"
+        }
+      ],
+      "Mana": [
+        {
+          "Amount": 48,
+          "CalculationType": "Additive"
+        }
+      ]
+    },
+    "DamageResistance": {
+      "Physical": [
+        {
+          "Amount": 0.155,
+          "CalculationType": "Percent"
+        }
+      ],
+      "Projectile": [
+        {
+          "Amount": 0.155,
+          "CalculationType": "Percent"
+        }
+      ]
+    }
+  },
+  "Tags": {
+    "Type": [
+      "Armor"
+    ],
+    "Family": [
+      "Cloth_Kimono"
+    ]
+  },
+  "MaxDurability": 300,
+  "DurabilityLossOnHit": 0.5
+}

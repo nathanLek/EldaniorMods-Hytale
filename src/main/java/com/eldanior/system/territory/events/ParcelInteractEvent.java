@@ -34,6 +34,9 @@ public class ParcelInteractEvent extends EntityEventSystem<EntityStore, UseBlock
 
         if (player.getPlayerRef().hasPermission(EldaniorLogger.ADMIN_PERMISSION)) return;
         if (event.getBlockType() != null && com.eldanior.system.boards.BoardType.of(event.getBlockType().getId()) != null) return;   // tableaux : pour tous
+        if (com.eldanior.system.territory.pancarte.Pancartes.isPancarte(event.getBlockType())) return;   // pancartes de propriete : pour tous
+        if (com.eldanior.system.locks.DoorLock.of(event.getBlockType()) != null) return;   // portes verrouillees : la cle decide, pas la parcelle
+        if (com.eldanior.system.histoires.LivreUseEvent.isLivre(event.getBlockType())) return;   // livres poses : lecture pour tous
 
         Vector3i target = event.getTargetBlock();
         String world = player.getWorld() != null ? player.getWorld().getName() : "";

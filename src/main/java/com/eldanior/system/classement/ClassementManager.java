@@ -76,13 +76,20 @@ public class ClassementManager {
             FamilyManager.FamilyRuntimeData runtime = FamilyManager.getRuntimeData(family.getId());
             long score = runtime.getContribution() + (runtime.getTreasury() / 100);
             if (score > 0) {
-                entries.add(new RankEntry("[F] Von " + family.getDisplayName(), score));
+                entries.add(new RankEntry("[F] " + family.getDisplayName(), score));
             }
         }
 
         entries.sort((a, b) -> Long.compare(b.value(), a.value()));
         return entries.subList(0, Math.min(max, entries.size()));
     }
+
+    /** Scores d'un joueur (0 s'il n'est pas classe) : monstres, joueurs vaincus, duels gagnes. */
+    public static long mobKillsOf(String playerName) { return mobKillsBoard.getOrDefault(playerName, 0L); }
+
+    public static long pvpKillsOf(String playerName) { return pvpKillsBoard.getOrDefault(playerName, 0L); }
+
+    public static long duelWinsOf(String playerName) { return duelWinsBoard.getOrDefault(playerName, 0L); }
 
     // ==================== UTILS ====================
 

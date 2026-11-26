@@ -1,0 +1,92 @@
+{
+  "TranslationProperties": {
+    "Name": "Dōgi de Sama",
+    "Description": "Tenue du Clan Sama. Un dōgi cramoisi piqué de sashiko, aux manches arrachées pour libérer les bras, le soleil du clan au dos, la poitrine serrée de sarashi ; ceinture noire et corde tressée d'or."
+  },
+  "Quality": "Epic",
+  "ItemLevel": 340,
+  "PlayerAnimationsId": "Block",
+  "ItemSoundSetId": "ISS_Armor_Cloth",
+  "Categories": [
+    "Eldanior_Empire_Luo.Sama",
+    "Items.Armors"
+  ],
+  "Icon": "Icons/ItemsGenerated/Armor_Kimono_Sama_Chest.png",
+  "IconProperties": {
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Scale": 0.3,
+    "Translation": [
+      0,
+      0
+    ]
+  },
+  "Model": "Items/Armors/Kimono/Sama/Chest.blockymodel",
+  "Texture": "Items/Armors/Kimono/Sama/Chest_Texture.png",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    }
+  },
+  "Armor": {
+    "ArmorSlot": "Chest",
+    "BaseDamageResistance": 0,
+    "CosmeticsToHide": [
+      "Overtop",
+      "Undertop",
+      "Cape"
+    ],
+    "StatModifiers": {
+      "Health": [
+        {
+          "Amount": 33,
+          "CalculationType": "Additive"
+        }
+      ],
+      "Mana": [
+        {
+          "Amount": 46,
+          "CalculationType": "Additive"
+        }
+      ]
+    },
+    "DamageResistance": {
+      "Physical": [
+        {
+          "Amount": 0.15,
+          "CalculationType": "Percent"
+        }
+      ],
+      "Projectile": [
+        {
+          "Amount": 0.15,
+          "CalculationType": "Percent"
+        }
+      ]
+    }
+  },
+  "Tags": {
+    "Type": [
+      "Armor"
+    ],
+    "Family": [
+      "Cloth_Kimono"
+    ]
+  },
+  "MaxDurability": 265,
+  "DurabilityLossOnHit": 0.5
+}

@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_ColossePierre (remplace le parchemin rune_page_colosse_pierre).",
+  "TranslationProperties": {
+    "Name": "Manuel de Terre : Colosse de Pierre",
+    "Description": "Sort légendaire de terre (Mage, rune de prédilection du Démiurge). Vous vous revêtez d'une armure-colosse de pierre pendant 20 s : votre taille double, vous subissez 35 % de dégâts en moins mais vous êtes plus lent (-20 %). Votre transformation repousse les ennemis proches (150). Chacun de vos coups ouvre un petit cratère (80 dégâts à moins de 2 blocs de la cible, 3 fois par seconde au plus) et vos pas lourds font trembler le sol (25 dégâts à moins de 3 blocs, chaque seconde). Le terrain est restauré ensuite (jamais en ville ni sur une parcelle). Épargne votre groupe, votre guilde et votre famille. Coût : 1200 mana. Recharge : 300 s.\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Terre"
+  ],
+  "Quality": "Legendary",
+  "ItemLevel": 90,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Terre_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Terre_ColossePierre.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

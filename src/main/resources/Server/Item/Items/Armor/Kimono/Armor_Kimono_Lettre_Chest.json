@@ -1,0 +1,91 @@
+{
+  "TranslationProperties": {
+    "Name": "Kariginu du Lettré",
+    "Description": "Kariginu du Lettré, tenue des intendants et des lettrés de l'Empire Luo. Une robe de chasse à col rond, couleur d'eau, aux manches lacées de cordons ; un rouleau et une tablette de bois glissés à la ceinture."
+  },
+  "Quality": "Epic",
+  "ItemLevel": 330,
+  "PlayerAnimationsId": "Block",
+  "ItemSoundSetId": "ISS_Armor_Cloth",
+  "Categories": [
+    "Eldanior_Empire_Luo.Civils",
+    "Items.Armors"
+  ],
+  "Icon": "Icons/ItemsGenerated/Armor_Kimono_Lettre_Chest.png",
+  "IconProperties": {
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Scale": 0.3,
+    "Translation": [
+      0,
+      0
+    ]
+  },
+  "Model": "Items/Armors/Kimono/Lettre/Chest.blockymodel",
+  "Texture": "Items/Armors/Kimono/Lettre/Chest_Texture.png",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    }
+  },
+  "Armor": {
+    "ArmorSlot": "Chest",
+    "BaseDamageResistance": 0,
+    "CosmeticsToHide": [
+      "Overtop",
+      "Cape"
+    ],
+    "StatModifiers": {
+      "Health": [
+        {
+          "Amount": 32,
+          "CalculationType": "Additive"
+        }
+      ],
+      "Mana": [
+        {
+          "Amount": 45,
+          "CalculationType": "Additive"
+        }
+      ]
+    },
+    "DamageResistance": {
+      "Physical": [
+        {
+          "Amount": 0.147,
+          "CalculationType": "Percent"
+        }
+      ],
+      "Projectile": [
+        {
+          "Amount": 0.147,
+          "CalculationType": "Percent"
+        }
+      ]
+    }
+  },
+  "Tags": {
+    "Type": [
+      "Armor"
+    ],
+    "Family": [
+      "Cloth_Kimono"
+    ]
+  },
+  "MaxDurability": 255,
+  "DurabilityLossOnHit": 0.5
+}

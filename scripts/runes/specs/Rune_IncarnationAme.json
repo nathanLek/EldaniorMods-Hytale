@@ -1,0 +1,61 @@
+{
+  "$Comment": "Fiche de conception : competence de la voie martiale (classe Maître Suprême), validee le 2026-11-10 (docs/plan-clan-luo.md, B). Apprise par son manuel, aucun butin.",
+  "id": "Rune_IncarnationAme",
+  "spell": "IncarnationAme",
+  "javaClass": "IncarnationAme",
+  "page": "rune_page_incarnationame",
+  "name": "Rune de l'Incarnation de l'Âme",
+  "type": "Luo",
+  "rarity": "Legendaire",
+  "emblem": "IncarnationAme",
+  "classes": "maitre_supreme, dieu_martial",
+  "persistent": true,
+  "summary": "25 s (30 au Dieu Martial) : 1 double spirituel (2 au Dieu Martial), copie du lanceur en Ki blanc nacre (60 % de sa vie, son arme), combat seul les ennemis a 15 blocs ; il suit le lanceur.",
+  "description": "Compétence de la voie martiale, enseignée à la classe Maître Suprême. Votre âme se détache de votre corps et combat à vos côtés : un double spirituel (deux au Dieu Martial), copie de vous-même faite de Ki blanc nacré, avec votre arme et 60 % de votre vie, attaque seul les ennemis proches pendant 25 s (30 s au Dieu Martial).",
+  "pageDescription": "« Le corps n'est que la gaine ; l'âme est la lame. » Compétence de la voie martiale : elle s'apprend dans son manuel, jamais en butin.",
+  "keywords": [
+    "Damage",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": {},
+  "cast": {
+    "animationSet": "Sword",
+    "charging": "CastEnchant",
+    "release": "CastEnrage",
+    "chargeTime": 0.5,
+    "releaseTime": 0.5,
+    "moveSpeed": 0.6,
+    "cameraEffect": null,
+    "sound": null,
+    "releaseSound": "SFX_Portal_Neutral_Open",
+    "handParticles": null,
+    "handParticlesScale": 0.6,
+    "costMoment": "start"
+  },
+  "design": {
+    "radius": "0",
+    "persistentDurationS": 25,
+    "targets": "zone",
+    "effects": "doubles PNJ (CloneFx), autonomes",
+    "balance": {
+      "damage": 3,
+      "range": 0,
+      "duration": 3,
+      "mobility": 0,
+      "control": 0,
+      "defense": 1,
+      "targets": 2,
+      "frequency": 0,
+      "terrain": 0,
+      "difficulty": 0
+    }
+  },
+  "category": "Eldanior_Empire_Luo.Runes",
+  "manual": "Eldanior_Manuel_Luo_IncarnationAme",
+  "$Comment_manual": "Technique apprise par son manuel secret (gen_voie_martiale_objets.py) : pas de parchemin rune_page_*."
+}

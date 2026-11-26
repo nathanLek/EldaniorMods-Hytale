@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_PilierAscendant (remplace le parchemin rune_page_pilier_ascendant).",
+  "TranslationProperties": {
+    "Name": "Manuel de Terre : Pilier Ascendant",
+    "Description": "Sort épique de terre (Mage, rune de prédilection du Grand Thaumaturge). Un pilier de basalte jaillit sous vos pieds et vous élève de 6 blocs, avec les alliés qui se tiennent près de vous. Il tient 5 s, puis s'effondre dans un fracas : les ennemis à moins de 5 blocs de sa base subissent 200 dégâts et restent étourdis 1 s. Aucun dégât de chute pour vous. Épargne votre groupe, votre guilde et votre famille. Coût : 300 mana. Recharge : 120 s.\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Terre"
+  ],
+  "Quality": "Epic",
+  "ItemLevel": 60,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Terre_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Terre_PilierAscendant.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

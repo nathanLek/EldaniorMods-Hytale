@@ -1,0 +1,68 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_Supernova",
+  "spell": "Supernova",
+  "javaClass": "Supernova",
+  "page": "rune_page_supernova",
+  "name": "Rune de la Supernova",
+  "type": "Feu",
+  "rarity": "Legendaire",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Supernova",
+  "summary": "3 s de charge (lanceur ralenti, -50 % de degats, ennemis a 15 blocs attires et brules), puis explosion : 600 a 8 blocs, onde de choc jusqu'a 30 blocs (250), sol calcine.",
+  "description": "Sort légendaire de feu (Mage, rune de prédilection du Créateur Cosmique). Vous devenez une étoile qui s'effondre : pendant 3 s vous brûlez (ralenti, 50 % de dégâts subis en moins), attirant et consumant les ennemis à moins de 15 blocs (15 dégâts toutes les demi-secondes). Puis vous explosez : 600 dégâts de feu et brûlure à moins de 8 blocs, et une onde de choc parcourt le sol jusqu'à 30 blocs (250 dégâts). Le sol alentour reste calciné une minute (jamais en ville ni sur une parcelle). Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin calciné dont il ne reste que le cœur, encore rouge. Enseigne la Supernova : la mort d'une étoile, la naissance d'un monde. Classes : tous les Mages (rune de prédilection du Créateur Cosmique). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe",
+    "Charged"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.5,
+    "releaseTime": 0.5,
+    "moveSpeed": 0.3,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Gobliterator_Rocket_Barrage_Pre",
+    "handParticles": "Impact_Fire",
+    "handParticlesScale": 0.5,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 3.5,
+    "range": 0,
+    "radius": "15 (charge) / 8 (coeur) / 30 (onde)",
+    "targets": "ennemis autour du lanceur",
+    "executionFx": "charge : Impact_Fire en anneau qui se resserre, Muspelheim_Fire_Pillar sur le lanceur ; explosion : Chaos_Flash, Explosion_Big x5, Gobliterator_Furnace_Blast, Chaos_Shockwave",
+    "sounds": "SFX_Gobliterator_Rocket_Barrage_Pre a la charge, SFX_Gobliterator_Rocket_Barrage_Explosion a l'explosion",
+    "effects": "charge 3 s : Elda_Canalisation (x0,5), degats subis x0,5 (onOwnerHurt), attraction 3 b/s + 15 Fire / 0,5 s a 15 blocs ; explosion : 600 Fire + Elda_Brulure + recul 18 (r 8) ; onde 8 -> 30 blocs a 25 b/s : 250 Fire + recul 10 (une fois par ennemi, ennemis du coeur exclus)",
+    "terrain": "surface en Soil_Dirt_Burnt r 10 (~300 blocs), restauree apres 60 s",
+    "persistentDurationS": 4,
+    "interruptions": "lanceur mort pendant la charge : pas d'explosion ; deconnexion : idem",
+    "restrictions": "mage",
+    "edgeCases": "plantes, fluides, blocs conserves, zones protegees : jamais calcines",
+    "limitations": "",
+    "balance": {
+      "damage": 3,
+      "range": 3,
+      "duration": 1,
+      "mobility": 0,
+      "control": 2,
+      "defense": 2,
+      "targets": 3,
+      "frequency": 1,
+      "terrain": 2,
+      "difficulty": 1
+    }
+  }
+}

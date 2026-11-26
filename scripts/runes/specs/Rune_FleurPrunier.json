@@ -1,0 +1,61 @@
+{
+  "$Comment": "Fiche de conception : technique du Clan Luo (voie martiale), validee le 2026-11-09, type Luo le 2026-11-09 (docs/plan-clan-luo.md). Apprise par son manuel, aucun butin. Devenue technique de clan le 2026-11-10 (luo.LuoClans.TECHNIQUES) : reservee aux membres du clan, toutes classes.",
+  "id": "Rune_FleurPrunier",
+  "spell": "FleurPrunier",
+  "javaClass": "FleurPrunier",
+  "page": "rune_page_fleur_prunier",
+  "name": "Rune de la Fleur de Prunier",
+  "type": "Luo",
+  "rarity": "Unique",
+  "emblem": "FleurPrunier",
+  "classes": "clan",
+  "persistent": true,
+  "summary": "Fleur de Prunier : 40 petales de Ki dores en 2 s dans un cone de 10 blocs (25 chacun) ; un ennemi touche par 5 petales ou plus fleurit et explose (300, rayon 3).",
+  "description": "Technique du Clan Luo, enseignée à la classe Saint Martial de la voie martiale. Votre lame trace une rafale de 40 pétales de Ki dorés en 2 s dans un cône de 10 blocs : 25 dégâts par pétale. Un ennemi touché par 5 pétales ou plus fleurit : la fleur de Ki explose sur lui (300 dégâts, rayon 3). Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Rouleau de soie brodé de fleurs de prunier : la technique des saints, que l'on dit née d'un seul pétale tombé sur une lame. Technique du Clan Luo : elle s'apprend dans son manuel, jamais en butin.",
+  "keywords": [
+    "Damage",
+    "Aoe"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": {},
+  "cast": {
+    "animationSet": "Sword",
+    "charging": "SpinRightCharging",
+    "release": "SpinRightCharged",
+    "chargeTime": 0.4,
+    "releaseTime": 0.5,
+    "moveSpeed": 0.6,
+    "cameraEffect": null,
+    "sound": null,
+    "releaseSound": "SFX_Longsword_Steel_Charged_Swing",
+    "handParticles": null,
+    "handParticlesScale": 0.6,
+    "costMoment": "start"
+  },
+  "design": {
+    "range": 10,
+    "persistentDurationS": 2,
+    "targets": "ennemis en cone",
+    "effects": "40 petales (1 / 50 ms), 25 Physical, compteur par cible ; floraison 300 rayon 3",
+    "balance": {
+      "damage": 4,
+      "range": 2,
+      "duration": 0,
+      "mobility": 0,
+      "control": 0,
+      "defense": 0,
+      "targets": 3,
+      "frequency": 2,
+      "terrain": 0,
+      "difficulty": 2
+    }
+  },
+  "category": "Eldanior_Empire_Luo.Runes",
+  "manual": "Eldanior_Manuel_Luo_FleurPrunier",
+  "$Comment_manual": "Technique apprise par son manuel secret (gen_voie_martiale_objets.py) : pas de parchemin rune_page_*."
+}

@@ -1,0 +1,70 @@
+{
+  "Categories": [
+    "Items.Weapons"
+  ],
+  "Icon": "Icons/ItemsGenerated/Weapon_Mousquet.png",
+  "Texture": "Items/Weapons/artefacts/Weapon_Mousquet.png",
+  "PlayerAnimationsId": "Mousquet",
+  "IconProperties": {
+    "Scale": 0.3,
+    "Translation": [
+      -12,
+      -22
+    ],
+    "Rotation": [
+      320,
+      90,
+      0
+    ]
+  },
+  "Quality": "Uncommon",
+  "Model": "Items/Weapons/artefacts/Weapon_Mousquet.blockymodel",
+  "Scale": 1,
+  "Tags": {
+    "Type": [
+      "Weapon"
+    ],
+    "Family": [
+      "Gun"
+    ]
+  },
+  "Weapon": {
+    "StatModifiers": {
+      "SignatureEnergy": [
+        {
+          "Amount": 20,
+          "CalculationType": "Additive"
+        }
+      ]
+    }
+  },
+  "TranslationProperties": {
+    "Name": "Mousquet",
+    "Description": "Long mousquet à silex de l'infanterie : crosse de noyer, canon poli, garnitures de laiton. Réservé aux Mousquetaires. Chaque tir demande 1 Poudre à canon et 1 Balle de fer. Force : dégâts (70 à 2 000) et vitesse de la balle ; Agilité : rechargement (50 s, 1 s à 3 000 points) ; Endurance : portée sûre (10 à 500 blocs, 500 au plus), précision au-delà, grossissement de la lunette et entités vues de loin. Une balle qui tue annonce la distance du tir. Clic droit maintenu : viser à la lunette. Clic droit bref : coup de baïonnette (fixée le temps de l'estoc). Signature, Concentration : une balle à précision et dégâts doublés."
+  },
+  "$Comment": "Mousquet facon Brown Bess (v2, 2026-11-15) : tir Java (Mousquet, MousquetTirInteraction), visee et baionnette JSON. Genere par scripts/artefacts/gen_mousquets.py.",
+  "ItemLevel": 40,
+  "MaxStack": 1,
+  "Interactions": {
+    "Primary": {
+      "$Comment": "BlockedBy sans Secondary : on tire en visant.",
+      "Rules": {
+        "BlockedBy": [
+          "Primary",
+          "Ability1",
+          "Ability2",
+          "Ability3",
+          "Use",
+          "Pick",
+          "SwapFrom",
+          "SwapTo"
+        ]
+      },
+      "Interactions": [
+        "Mousquet_Tir"
+      ]
+    },
+    "Secondary": "Root_Mousquet_Secondaire",
+    "Ability1": "Root_Mousquet_Concentration"
+  }
+}

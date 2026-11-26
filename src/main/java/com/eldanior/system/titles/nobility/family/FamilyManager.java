@@ -63,6 +63,8 @@ public class FamilyManager {
         families.clear();
         takenFamilies.clear();
         runtimeData.clear();
+        elders.clear();
+        merchants.clear();
 
         // Famille royale
         register(new Eldanior());
@@ -70,7 +72,7 @@ public class FamilyManager {
         // Familles Marquis
         register(new Zippel());
         register(new Runkandel());
-        register(new Luminara());
+        register(new Luo());
         register(new Valmontis());
 
         // Familles Duc (8 familles — 2 par Marquisat)
@@ -80,10 +82,11 @@ public class FamilyManager {
         // Mages
         register(new Frostguard());     // Mage — resilience du givre
         register(new Spellweave());     // Mage — maitrise arcanique
-        // Assassin
-        register(new Nighthollow());    // Assassin — frappe de l'ombre
-        // Archer
-        register(new Swiftquiver());    // Archer — precision mortelle
+        // Les quatre grands clans de l'Empire Luo (familles sans territoire, rang de comte ; leurs chefs sont les Doyens)
+        register(new com.eldanior.system.titles.nobility.family.definitions.clan.Sama());
+        register(new com.eldanior.system.titles.nobility.family.definitions.clan.Hanazakura());   // ex-Swiftquiver
+        register(new com.eldanior.system.titles.nobility.family.definitions.clan.Kage());         // ex-Nighthollow
+        register(new com.eldanior.system.titles.nobility.family.definitions.clan.Setsuka());
         // Marchands
         register(new Goldcrest());      // Marchand — fortune doree
         register(new Silkroad());       // Marchand — routes du commerce
@@ -98,7 +101,20 @@ public class FamilyManager {
     }
 
     public static NobleFamilyModel get(String id) {
-        return families.get(id);
+        return id == null ? null : families.get(migrateId(id));
+    }
+
+    /** Anciens identifiants de famille encore presents dans les sauvegardes, et leur remplacant. */
+    private static final Map<String, String> RENAMED = Map.of("luminara", "luo",
+            "nighthollow", "kage", "swiftquiver", "hanazakura");                      // devenus des clans le 2026-11-10
+
+    /**
+     * Identifiant a jour d'une famille lu dans une sauvegarde (joueur, parcelle, ordre, tresorerie) :
+     * la famille Luminara est devenue le Clan Luo le 2026-11-05.
+     */
+    public static String migrateId(String id) {
+        if (id == null) return null;
+        return RENAMED.getOrDefault(id.toLowerCase(Locale.ROOT), id);
     }
 
     public static NobleFamilyModel getByDisplayName(String name) {
@@ -133,6 +149,78 @@ public class FamilyManager {
         takenFamilies.remove(familyId);
         // Reset runtime data (tresorerie + contribution reviennent aux valeurs par defaut)
         runtimeData.remove(familyId);
+        elders.remove(familyId);
+    }
+
+    // ==================== DOYENS ====================
+    // Registre des Doyens de chaque famille, connectes ou non : la limite de FamilyRole.MAX_ELDERS ne peut pas se compter
+    // sur les seuls joueurs en ligne. Sauvegarde dans families.properties (<famille>.elders).
+
+    private static final Map<String, Set<UUID>> elders = new ConcurrentHashMap<>();
+
+    public static Set<UUID> getElders(String familyId) {
+        Set<UUID> set = elders.get(familyId);
+        return set == null ? Set.of() : Collections.unmodifiableSet(set);
+    }
+
+    /** Inscrit un Doyen ; false si la famille en compte deja FamilyRole.MAX_ELDERS. */
+    public static synchronized boolean addElder(String familyId, UUID uuid) {
+        Set<UUID> set = elders.computeIfAbsent(familyId, k -> ConcurrentHashMap.newKeySet());
+        if (set.contains(uuid)) return true;
+        if (set.size() >= FamilyRole.MAX_ELDERS) return false;
+        set.add(uuid);
+        return true;
+    }
+
+    /** Chargement : inscrit sans controle de limite. */
+    public static void restoreElder(String familyId, UUID uuid) {
+        elders.computeIfAbsent(familyId, k -> ConcurrentHashMap.newKeySet()).add(uuid);
+    }
+
+    public static void removeElder(String familyId, UUID uuid) {
+        if (familyId == null || uuid == null) return;
+        Set<UUID> set = elders.get(familyId);
+        if (set != null) set.remove(uuid);
+    }
+
+    /** Retire un joueur de tous les registres de Doyens (il a quitte sa famille, ou change de rang). */
+    public static void removeElderEverywhere(UUID uuid) {
+        if (uuid == null) return;
+        for (Set<UUID> set : elders.values()) set.remove(uuid);
+    }
+
+    // ==================== MARCHANDS AGREES ====================
+    // Etrangers agrees par une famille (Clan Luo : Comptoir de la Porte du Dragon), uuid -> dernier nom connu, pour les
+    // retirer et les lister hors ligne. Sauvegarde dans families.properties (<famille>.merchants = uuid:nom,...).
+
+    private static final Map<String, Map<UUID, String>> merchants = new ConcurrentHashMap<>();
+
+    public static Map<UUID, String> getMerchants(String familyId) {
+        Map<UUID, String> map = merchants.get(familyId);
+        return map == null ? Map.of() : Collections.unmodifiableMap(map);
+    }
+
+    public static boolean isMerchant(String familyId, UUID uuid) {
+        Map<UUID, String> map = merchants.get(familyId);
+        return map != null && uuid != null && map.containsKey(uuid);
+    }
+
+    /** Agree un marchand ; false s'il l'etait deja (le nom est tout de meme mis a jour). */
+    public static boolean addMerchant(String familyId, UUID uuid, String name) {
+        return merchants.computeIfAbsent(familyId, k -> new ConcurrentHashMap<>()).put(uuid, name == null ? "" : name) == null;
+    }
+
+    /** Retire l'agrement d'un marchand, par nom (insensible a la casse) ; renvoie son uuid, ou null s'il n'etait pas agree. */
+    public static UUID removeMerchant(String familyId, String name) {
+        Map<UUID, String> map = merchants.get(familyId);
+        if (map == null || name == null) return null;
+        for (Map.Entry<UUID, String> e : map.entrySet()) {
+            if (e.getValue().equalsIgnoreCase(name)) {
+                map.remove(e.getKey());
+                return e.getKey();
+            }
+        }
+        return null;
     }
 
     /**

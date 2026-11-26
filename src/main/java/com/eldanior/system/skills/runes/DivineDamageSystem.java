@@ -37,10 +37,15 @@ public class DivineDamageSystem extends DamageEventSystem {
         if (com.eldanior.system.skills.runes.spells.ApolloSanctuary.isInvulnerable(target)) { damage.setCancelled(true); return; }
         // Sablier de Chronos : un coup sur une cible figee est mis en reserve (il s'abattra a la reprise du temps)
         if (com.eldanior.system.skills.runes.spells.ChronosHourglass.absorb(target, damage.getAmount())) { damage.setCancelled(true); return; }
+        if (com.eldanior.system.skills.runes.spells.ArretDuTemps.absorb(target, damage.getAmount())) { damage.setCancelled(true); return; }   // rune Arret du Temps
         // Invocations des sorts de rune (clones, double) : pas de tir ami avec leur lanceur, double intouchable
         Ref<EntityStore> attacker = damage.getSource() instanceof Damage.EntitySource es ? es.getRef() : null;
         if (com.eldanior.system.skills.runes.spells.RuneSpellRuntime.blocksDamage(attacker, target, damage.getAmount(), store)) { damage.setCancelled(true); return; }
         if (com.eldanior.system.guards.GuardManager.blocksFriendlyFire(attacker, target, store)) { damage.setCancelled(true); return; }   // joueur <-> son aventurier
+        if (com.eldanior.system.familiers.FamilierManager.onDamage(attacker, target, damage, store, commandBuffer)) { damage.setCancelled(true); return; }   // familiers : pas de PvP, mort, XP
+        if (com.eldanior.system.guards.Sensei.onAttacked(target, attacker, store)) { damage.setCancelled(true); return; }   // Sensei : riposte au katana de fer
+        if (com.eldanior.system.skills.runes.spells.LuoPassives.counter(target, attacker, store, commandBuffer)) { damage.setCancelled(true); return; }   // Bokken : contre parfait
+        if (com.eldanior.system.skills.runes.spells.MeditationMartiale.isMeditating(attacker, store)) { damage.setCancelled(true); return; }   // on n'attaque pas en meditant
         if (damage.getSource() instanceof Damage.EntitySource hitter && hitter.getRef() != null)          // sorts de rune qui copient les coups du lanceur
             com.eldanior.system.skills.runes.spells.RuneSpellRuntime.onDamageDealt(hitter.getRef(), target, damage.getAmount());
         float multiplier = NiflheimGate.onDamage(target, cause);
@@ -53,8 +58,15 @@ public class DivineDamageSystem extends DamageEventSystem {
         multiplier *= com.eldanior.system.skills.runes.spells.DragonAvatar.damageTakenMultiplier(target);
         multiplier *= com.eldanior.system.skills.runes.spells.YggdrasilAwakening.damageTakenMultiplier(target);
         multiplier *= com.eldanior.system.skills.runes.spells.NyxVeil.damageTakenMultiplier(target);
+        multiplier *= com.eldanior.system.skills.runes.spells.RuneSpellRuntime.damageTakenMultiplier(target);   // vulnerabilites des runes (Revelation)
         if (multiplier != 1f) damage.setAmount(damage.getAmount() * multiplier);
+        // Sorts de rune du lanceur touche (Forme spectrale, Phylactere...) : coup reduit, annule ou mort empechee
+        float hurt = com.eldanior.system.skills.runes.spells.RuneSpellRuntime.onOwnerHurt(target, attacker, damage.getAmount(), cause, store, commandBuffer);
+        if (hurt <= 0) { damage.setCancelled(true); return; }
+        hurt *= com.eldanior.system.skills.runes.spells.MartialNpcs.hurtFactor(target);   // PNJ martial : Renforcement corporel
+        if (hurt != damage.getAmount()) damage.setAmount(hurt);
         if (com.eldanior.system.skills.runes.spells.ApolloSanctuary.tryGrace(target, damage.getAmount(), store, commandBuffer)) damage.setCancelled(true);
+        com.eldanior.system.skills.runes.spells.LuoPassives.trainingCap(damage, attacker, target, store);   // Bokken : ne tue pas
     }
 
     // Meme groupe que les autres filtres de degats du mod (FallDamageSystem)

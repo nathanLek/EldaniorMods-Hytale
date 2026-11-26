@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_Surregime (remplace le parchemin rune_page_surregime).",
+  "TranslationProperties": {
+    "Name": "Manuel du Temps : Surrégime",
+    "Description": "Sort unique du temps (Mage, rune de prédilection du Chrono-Seigneur). Votre temps s'emballe pendant 15 s : vous allez 80 % plus vite, chacun de vos coups frappe une seconde fois à 40 % un instant plus tard, et vous regagnez 3 % de mana par seconde. Coût : 600 mana. Recharge : 180 s.\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Temps"
+  ],
+  "Quality": "Unique",
+  "ItemLevel": 75,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Temps_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Temps_Surregime.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

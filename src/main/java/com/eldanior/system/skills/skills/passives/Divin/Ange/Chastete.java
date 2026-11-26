@@ -1,30 +1,28 @@
 package com.eldanior.system.skills.skills.passives.Divin.Ange;
 
 import com.eldanior.system.config.Player.PlayerLevelData;
+import com.eldanior.system.skills.skills.passives.Divin.PouvoirsDivins;
 import com.eldanior.system.skills.skillsInteraction.IPassiveCombatSkill;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
-/**
- * Chasteté (Azraël) — +150% dégâts contre les mobs.
- * Église RELIGIEUX+ only.
- */
+/** Chastete (Azrael, Eglise) : contre les monstres, +150 % de degats et -25 % de degats recus. */
 public class Chastete implements IPassiveCombatSkill {
-
-    private static final float MOB_DAMAGE_MULTIPLIER = 2.5f; // +150% = x2.5
+    @Override
+    public boolean onAttack(Damage damage, PlayerLevelData data, Store<EntityStore> store, Ref<EntityStore> attackerRef,
+                            Ref<EntityStore> victimRef, int rank, boolean mastered) {
+        if (damage.isCancelled() || victimRef == null || PouvoirsDivins.isPlayer(victimRef, store)) return false;
+        damage.setAmount(damage.getAmount() * 2.5f);
+        return true;
+    }
 
     @Override
-    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store,
-                           Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
-        // Check if victim is NOT a player (= is a mob)
-        Player victimPlayer = store.getComponent(victimRef, Player.getComponentType());
-        if (victimPlayer != null) return false; // It's a player, no bonus
-
-        // Target is a mob → apply bonus
-        damage.setAmount(damage.getAmount() * MOB_DAMAGE_MULTIPLIER);
+    public boolean onDefend(Damage damage, PlayerLevelData data, Store<EntityStore> store, Ref<EntityStore> attackerRef,
+                            Ref<EntityStore> victimRef, int rank, boolean mastered) {
+        if (damage.isCancelled() || attackerRef == null || !attackerRef.isValid() || PouvoirsDivins.isPlayer(attackerRef, store)) return false;
+        damage.setAmount(damage.getAmount() * 0.75f);
         return true;
     }
 }

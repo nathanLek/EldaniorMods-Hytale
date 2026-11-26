@@ -1,0 +1,65 @@
+{
+  "$Comment": "Rune de classe de l'Observateur (classe unique, 2026-11-16 ; nommee « Arkies Domini » par l'utilisateur le 2026-11-17) : jamais en butin, donnee avec la classe (Observateur.runes).",
+  "id": "Rune_ArkiesDomini",
+  "spell": "ArkiesDomini",
+  "javaClass": "ArkiesDomini",
+  "page": "rune_page_arkiesdomini",
+  "name": "Rune Arkies Domini",
+  "type": "Tenebres",
+  "rarity": "Legendaire",
+  "emblem": "ArkiesDomini",
+  "classes": "observateur",
+  "persistent": true,
+  "summary": "Bascule (1,5 % du mana max de base par seconde, 10 au moins) : caracteristiques x2 (sans soin a l'activation) ; domaine de 100 blocs ; toutes les presences marquees (silhouettes, doubles devant les murs, invisibles reveles) vues du seul lanceur ; bruits du domaine rapportes (arrivees, combats, morts) ; entite visee (a travers les murs) = carte complete dans le HUD avec modele 3D (ItemPreviewComponent + portraits Eldanior_Visage_*).",
+  "description": "Compétence de l'Observateur, l'Œil et les Oreilles de l'Empereur. Tant qu'elle est active, toutes vos caractéristiques sont doublées et un domaine de 100 blocs de rayon s'ouvre autour de vous : chaque présence y est enveloppée d'une silhouette que vous seul voyez, même derrière les murs, et les présences invisibles sont révélées. Vous entendez tout : arrivées et départs, combats et morts vous sont rapportés. Un regard suffit : visez une créature ou un joueur, même à travers un mur, et sa carte complète s'affiche à droite de l'écran, avec son modèle en 3D ; même Sans Visage ne trompe pas l'Œil. Un second clic l'arrête ; elle consomme chaque seconde 1,5 % de votre mana maximal.",
+  "pageDescription": "« Les murs ont des oreilles. Les miennes. » Savoir de l'Observateur : il vient avec la classe, jamais en butin.",
+  "keywords": [
+    "Buff",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": 0,
+    "cooldown": 1,
+    "reason": "rune a bascule (comme le Sens martial) : un clic l'active, un second clic la coupe ; le mana (1,5 % du mana max de base /s, 10 au moins) est preleve chaque seconde dans le code"
+  },
+  "loot": {},
+  "cast": {
+    "animationSet": "Sword",
+    "charging": "CastEnchant",
+    "release": "CastEnchant",
+    "chargeTime": 0.1,
+    "releaseTime": 0.3,
+    "moveSpeed": 0.6,
+    "cameraEffect": null,
+    "sound": null,
+    "releaseSound": "SFX_Ability_Wind_Strike_Imbue",
+    "handParticles": null,
+    "handParticlesScale": 0.6,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.1,
+    "range": 100,
+    "radius": "100",
+    "targets": "zone (toutes les presences, allies compris)",
+    "triggers": "clic de la rune equipee ; second clic = arret",
+    "persistentFx": "silhouettes Sens_Silhouette_* + anneau Ki_Anneau_T1 (40 plus proches, fxFor), doubles rouges Sens_Fantome devant les murs (12 plus proches caches), onde Ki_Anneau_T8 toutes les 3 s",
+    "effects": "caracteristiques x2 (PlayerLevelData.statMultiplier) ; invisibles reveles ; HUD 'arkies_domini' (carte de l'entite visee, modele 3D par ItemPreviewComponent)",
+    "terrain": "aucun",
+    "persistentDurationS": 0,
+    "interruptions": "mana epuise, mort, deconnexion, second clic",
+    "restrictions": "classe observateur seulement",
+    "balance": {
+      "damage": 0,
+      "range": 5,
+      "duration": 4,
+      "mobility": 0,
+      "control": 0,
+      "defense": 0,
+      "targets": 5,
+      "frequency": 0,
+      "terrain": 0,
+      "difficulty": 0
+    }
+  }
+}

@@ -27,7 +27,7 @@ import java.util.UUID;
  *     montant, au tresor de la ville), en deux clics.
  *   - Contrats : monstres d'elite du jour (MonsterContracts), zone, recompense, etat (en chasse / reclame par X).
  */
-final class BountyBoardScreen extends BoardScreen {
+public final class BountyBoardScreen extends BoardScreen {
 
     private final String world;
     private final Vector3d at;
@@ -39,6 +39,11 @@ final class BountyBoardScreen extends BoardScreen {
     private int selectedContract = -1;
     private long amount = 1_000;
     private boolean buyBackArmed;
+
+    /** Fenetre des avis et mises a prix, ouverte depuis les cartes du tableau de prime (QuestChaptersPage). */
+    public static BountyBoardScreen open(@Nonnull PlayerRef playerRef, String place, String world, Vector3d at) {
+        return new BountyBoardScreen(playerRef, place, world, at);
+    }
 
     BountyBoardScreen(@Nonnull PlayerRef playerRef, String place, String world, Vector3d at) {
         super(playerRef, BoardType.PRIME, place);
@@ -103,7 +108,7 @@ final class BountyBoardScreen extends BoardScreen {
             MonsterContracts.Contract c = contracts.get(i);
             MonsterContracts.Zone z = c.zone();
             boolean claimed = c.getClaimedBy() != null;
-            rows.add(new Row(String.valueOf(i + 1), c.getName(), c.getSpecies() + " d'élite  ·  Niv. " + c.getLevel() + "  ·  " + (z != null ? z.name() : "?"),
+            rows.add(new Row(String.valueOf(i + 1), c.title(), c.getSpecies() + " " + c.grade() + "  ·  Niv. " + c.getLevel() + MonsterContracts.rankSuffix(c.getLevel()) + "  ·  " + (z != null ? z.name() : "?"),
                     claimed ? "Réclamé" : gold(c.getReward()) + " or", claimed ? MUTED : GOLD, true, false, i == selectedContract));
         }
         return new Tab("Contrats du jour", rows, "Aucun contrat de monstre aujourd'hui.",
@@ -142,7 +147,7 @@ final class BountyBoardScreen extends BoardScreen {
         String text = "Récompense : " + gold(c.getReward()) + " or\n"
                 + (z != null ? "Zone : " + z.name() + "\nPosition : " + (int) z.pos().x + ", " + (int) z.pos().y + ", " + (int) z.pos().z + "\n" : "")
                 + "\n" + state;
-        return Side.info(c.getName(), c.getSpecies() + " d'élite  ·  Niveau " + c.getLevel(), text);
+        return Side.info(c.title(), c.getSpecies() + " " + c.grade() + "  ·  Niveau " + c.getLevel() + MonsterContracts.rankSuffix(c.getLevel()), text);
     }
 
     // ===== Actions =====

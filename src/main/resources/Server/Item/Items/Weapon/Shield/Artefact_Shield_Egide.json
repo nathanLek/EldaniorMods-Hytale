@@ -1,0 +1,58 @@
+{
+  "Parent": "Template_Weapon_Shield",
+  "Model": "Items/Weapons/artefacts/Artefact_Shield_Egide.blockymodel",
+  "Texture": "Items/Weapons/artefacts/Artefact_Shield_Egide.png",
+  "Icon": "Icons/ItemsGenerated/Artefact_Shield_Egide.png",
+  "Quality": "Divin",
+  "ItemLevel": 800,
+  "InteractionVars": {
+    "Guard_Wield": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Shield_Secondary_Guard_Wield",
+          "StaminaCost": {
+            "Value": 14,
+            "CostType": "Damage"
+          }
+        }
+      ]
+    }
+  },
+  "TranslationProperties": {
+    "Name": "Égide, Bouclier d'Athéna",
+    "Description": "Artefact divin. Le bouclier d'Athéna, orné de la tête de Méduse. Tenu en main, il réduit de 25 % tous les dégâts subis. Compétence (toutes les 25 s), Regard de Méduse : le regard de la Gorgone balaie le terrain devant le porteur ; les ennemis touchés deviennent gris, se figent et sont pris dans une gangue de pierre pendant 4 secondes."
+  },
+  "Categories": [
+    "Eldanior_System.Artefacts",
+    "Items.Weapons"
+  ],
+  "MaxStack": 1,
+  "Variant": false,
+  "MaxDurability": 0,
+  "DurabilityLossOnHit": 0,
+  "Interactions": {
+    "Ability1": "Root_Divin_Egide_Signature"
+  },
+  "Recipe": {
+    "TimeSeconds": 30,
+    "Input": [
+      {
+        "ItemId": "Ingredient_Bar_Divin",
+        "Quantity": 24
+      },
+      {
+        "ItemId": "Ingredient_Bar_Adamantite",
+        "Quantity": 40
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "Forge_Divine",
+        "Categories": [
+          "Forge_Boucliers"
+        ]
+      }
+    ]
+  }
+}

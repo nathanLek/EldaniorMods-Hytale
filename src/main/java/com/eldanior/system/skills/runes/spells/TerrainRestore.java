@@ -39,12 +39,17 @@ public final class TerrainRestore {
 
     static final String EMPTY = "Empty";
     private static final int RESTORE_PER_TICK = 400;
+    /** Lot dont une partie est dans une section non chargee : nouvel essai apres ce delai. */
+    private static final long RETRY_MS = 5_000;
+    /** Restauration planifiee mais jamais executee (monde ferme entre-temps, ex. instance) : on replanifie apres ce delai. */
+    private static final long QUEUE_TIMEOUT_MS = 5_000;
     private static final Set<ParcelType> OPEN_PARCELS = Set.of(ParcelType.KINGDOM, ParcelType.GRAND_TERRITORY, ParcelType.TERRITORY);
     /** Blocs jamais remplaces (contenu, fonction, ou objet fin). */
     private static final String[] KEEP_KEYWORDS = {
             "Chest", "Bench", "Door", "Sign", "Bed", "Portal", "Container", "Barrel", "Crate", "Shelf", "Furnace",
             "Spawner", "Totem", "Trap", "Coffin", "Mailbox", "Torch", "Lantern", "Candle", "Light", "Banner",
-            "Carpet", "Ladder", "Rail", "Rope", "Chain", "Lever", "Button", "Pressure", "Teleporter", "Waypoint"
+            "Carpet", "Ladder", "Rail", "Rope", "Chain", "Lever", "Button", "Pressure", "Teleporter", "Waypoint",
+            "Barrier" // mur du royaume : les sorts ne le cassent pas
     };
 
     /** Blocs d'origine a remettre a une date donnee. */
@@ -52,6 +57,7 @@ public final class TerrainRestore {
         String world;
         long restoreAt;
         List<String[]> blocks = new ArrayList<>(); // {x, y, z, idOrigine, idPose, rotationOrigine}
+        transient long retryAt;                    // non sauvegarde : prochain essai si des cases n'etaient pas chargees
         Restore() {}
         Restore(String world, long restoreAt) { this.world = world; this.restoreAt = restoreAt; }
     }
@@ -62,7 +68,7 @@ public final class TerrainRestore {
     private static final java.util.Map<String, Owner> owners = new java.util.concurrent.ConcurrentHashMap<>();
     private static Path saveFile;
     private static final Gson GSON = new GsonBuilder().create();
-    private static volatile boolean restoreQueued;
+    private static volatile long queuedAt;      // 0 = aucune restauration en attente d'execution
 
     /** Au demarrage : recharge les restaurations en attente (serveur arrete avant la date prevue). */
     public static void init(Path dataDir) {
@@ -79,6 +85,11 @@ public final class TerrainRestore {
                 List<Restore> loaded = GSON.fromJson(Files.readString(saveFile), new TypeToken<List<Restore>>() {}.getType());
                 if (loaded != null) pending.addAll(loaded);
             }
+            // Les instances (donjons...) sont recreees a neuf : leurs lots ne seront jamais restaures
+            int stale = pending.size();
+            pending.removeIf(r -> r.world == null || r.world.startsWith("instance-"));
+            stale -= pending.size();
+            if (stale > 0) EldaniorLogger.info("[SortsDivins] " + stale + " zone(s) d'instance fermee abandonnee(s)");
             for (Restore r : pending) for (String[] b : r.blocks) owners.put(key(r.world, b), new Owner(r, b));
             EldaniorLogger.info("[SortsDivins] " + pending.size() + " zone(s) de terrain a restaurer");
             save();
@@ -221,16 +232,18 @@ public final class TerrainRestore {
 
     /** Planifie la restauration progressive des lots dont la date est passee (hors tick ECS, via world.execute). */
     static void tick(World world) {
-        if (world == null || pending.isEmpty() || restoreQueued) return;
+        if (world == null || pending.isEmpty()) return;
         long now = System.currentTimeMillis();
+        long queued = queuedAt;
+        if (queued != 0 && now - queued < QUEUE_TIMEOUT_MS) return;
         boolean due = false;
-        for (Restore r : pending) if (now >= r.restoreAt && world.getName().equals(r.world)) { due = true; break; }
+        for (Restore r : pending) if (now >= r.restoreAt && now >= r.retryAt && world.getName().equals(r.world)) { due = true; break; }
         if (!due) return;
-        restoreQueued = true;
+        queuedAt = now;
         world.execute(() -> {
             try { restoreStep(world); }
             catch (Exception e) { EldaniorLogger.error("TerrainRestore: restauration", e); }
-            finally { restoreQueued = false; }
+            finally { queuedAt = 0; }
         });
     }
 
@@ -245,22 +258,29 @@ public final class TerrainRestore {
         save();
     }
 
+    /**
+     * Restaure au plus RESTORE_PER_TICK blocs des lots echus, du dernier pose au premier. Une case dont la section n'est
+     * pas chargee est sautee (reprise RETRY_MS plus tard) : elle ne bloque ni le reste de son lot, ni les autres lots.
+     */
     private static void restoreStep(World world) {
         long now = System.currentTimeMillis();
+        int budget = RESTORE_PER_TICK;
+        boolean finished = false;
         for (Restore r : pending) {
-            if (now < r.restoreAt || !world.getName().equals(r.world)) continue;
-            int budget = RESTORE_PER_TICK;
-            while (!r.blocks.isEmpty() && budget-- > 0) {
-                String[] b = r.blocks.get(r.blocks.size() - 1);
-                if (!restoreEntry(world, b)) break; // section non chargee : on reessaiera plus tard
-                r.blocks.remove(r.blocks.size() - 1);
+            if (budget <= 0) break;
+            if (now < r.restoreAt || now < r.retryAt || !world.getName().equals(r.world)) continue;
+            boolean skipped = false;
+            int i = r.blocks.size() - 1;
+            for (; i >= 0 && budget > 0; i--) {
+                String[] b = r.blocks.get(i);
+                if (!restoreEntry(world, b)) { skipped = true; continue; } // section non chargee : plus tard
+                r.blocks.remove(i);
                 release(r, b);
+                budget--;
             }
-            if (r.blocks.isEmpty()) {
-                pending.remove(r);
-                save();
-            }
-            return; // un lot a la fois
+            if (r.blocks.isEmpty()) { pending.remove(r); finished = true; }
+            else if (skipped && i < 0) r.retryAt = now + RETRY_MS;          // tout le reste attend un chargement
         }
+        if (finished) save();
     }
 }

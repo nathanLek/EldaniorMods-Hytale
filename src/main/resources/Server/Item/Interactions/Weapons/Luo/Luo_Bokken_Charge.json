@@ -1,0 +1,28 @@
+{
+  "$Comment": "Bokken, maintien lame au clair : posture chargee ; relache avant 0,5 s = combo, apres = rafale du combo entier.",
+  "Type": "Charging",
+  "Rules": {
+    "InterruptedBy": [
+      "Secondary"
+    ]
+  },
+  "DisplayProgress": true,
+  "HorizontalSpeedMultiplier": 0.45,
+  "Effects": {
+    "ItemAnimationId": "IaiCharging",
+    "LocalSoundEventId": "SFX_Sword_T2_Lunge_Charge_Local"
+  },
+  "Next": {
+    "0": {
+      "Type": "Replace",
+      "Var": "Luo_Combo",
+      "DefaultOk": true,
+      "DefaultValue": {
+        "Interactions": [
+          "Luo_Combo"
+        ]
+      }
+    },
+    "0.5": "Luo_Bokken_Rafale"
+  }
+}

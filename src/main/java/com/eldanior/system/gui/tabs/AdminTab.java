@@ -51,7 +51,7 @@ public class AdminTab {
         ui.set("#AdminStatNpcs.Text", String.valueOf(com.eldanior.system.config.configs.MobXP.getTotalNpcCount()));
         ui.set("#AdminStatClasses.Text", String.valueOf(com.eldanior.system.classes.ClassManager.getAll().size()));
         ui.set("#AdminStatTitres.Text", String.valueOf(com.eldanior.system.titles.TitleManager.getAll().size()));
-        ui.set("#AdminStatSkills.Text", String.valueOf(com.eldanior.system.skills.SkillManager.getAllSkills().size()));
+        ui.set("#AdminStatSkills.Text", String.valueOf(com.eldanior.system.skills.skillsInteraction.PassiveSkill.values().length));
         ui.set("#AdminStatQuetes.Text", String.valueOf(com.eldanior.system.quest.QuestManager.getAllQuests().size()));
         ui.set("#AdminStatPlayers.Text", String.valueOf(Universe.get().getPlayers().size()));
 
@@ -403,6 +403,7 @@ public class AdminTab {
         return executeOnTarget(targetRef, (tRef, tStore, data) -> {
             data.setNobilityRank(newRank.name()); data.setDignity(newRank.getBaseDignity());
             NobilityManager.recordKingPromotion(newRank);
+            com.eldanior.system.titles.nobility.family.RoyalHouse.sync(tRef, tStore, data);                  // Roi : Patriarche d'Eldanior (2026-11-13)
             targetRef.sendMessage(Message.raw("Rang: " + newRank.getFormattedName()));
         });
     }

@@ -13,17 +13,16 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Onglet Wiki : affiche toutes les commandes disponibles avec explications.
- * Le contenu change selon que le joueur est admin ou non.
+ * Onglet Wiki : la page 0 liste les commandes joueur (seule page visible d'un joueur) ; les pages suivantes
+ * (systemes, commandes d'administration) ne s'affichent qu'aux admins.
  */
 public class WikiTab {
 
     private static final ConcurrentHashMap<UUID, Integer> playerPages = new ConcurrentHashMap<>();
     private static final int TOTAL_PAGES = 14;
-    private static final int ADMIN_PAGE = 13;
 
     private static final String[] PAGE_NAMES = {
-        "General", "Leveling", "Groupe", "Duel", "Echange", "Guilde", "Famille",
+        "Commandes joueur", "Leveling", "Groupe", "Duel", "Echange", "Guilde", "Famille",
         "Noblesse", "Territoires", "Classes", "Competences", "Titres", "Primes", "Admin"
     };
 
@@ -38,7 +37,6 @@ public class WikiTab {
 
     public static void populate(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store) {
         UUID uuid = getPlayerUUID(ref, store);
-        int currentPage = getPage(uuid);
 
         boolean isAdmin = false;
         try {
@@ -46,23 +44,15 @@ public class WikiTab {
             isAdmin = player != null && player.getPlayerRef().hasPermission(EldaniorLogger.ADMIN_PERMISSION);
         } catch (Exception ignored) {}
 
-        // Navigation
-        ui.set("#WikiPageInfo.Text", PAGE_NAMES[currentPage] + " (" + (currentPage + 1) + "/" + TOTAL_PAGES + ")");
-        ui.set("#WikiBtnPrev.Visible", currentPage > 0);
-        ui.set("#WikiBtnNext.Visible", currentPage < TOTAL_PAGES - 1);
+        // Joueur : la page 0 (commandes joueur) seule, sans navigation. Admin : toutes les pages (2026-11-12).
+        int currentPage = isAdmin ? getPage(uuid) : 0;
+        if (!isAdmin) setPage(uuid, 0);
 
-        // Cacher toutes les pages
+        ui.set("#WikiPageInfo.Text", isAdmin ? PAGE_NAMES[currentPage] + " (" + (currentPage + 1) + "/" + TOTAL_PAGES + ")" : PAGE_NAMES[0]);
+        ui.set("#WikiBtnPrev.Visible", isAdmin && currentPage > 0);
+        ui.set("#WikiBtnNext.Visible", isAdmin && currentPage < TOTAL_PAGES - 1);
         for (int i = 0; i < TOTAL_PAGES; i++) {
             ui.set("#WikiPage" + i + ".Visible", i == currentPage);
-        }
-
-        // Afficher/cacher la page admin
-        ui.set("#WikiPage" + ADMIN_PAGE + ".Visible", currentPage == ADMIN_PAGE && isAdmin);
-        if (currentPage == ADMIN_PAGE && !isAdmin) {
-            currentPage = 0;
-            setPage(uuid, currentPage);
-            ui.set("#WikiPage0.Visible", true);
-            ui.set("#WikiPageInfo.Text", PAGE_NAMES[0] + " (1/" + TOTAL_PAGES + ")");
         }
     }
 

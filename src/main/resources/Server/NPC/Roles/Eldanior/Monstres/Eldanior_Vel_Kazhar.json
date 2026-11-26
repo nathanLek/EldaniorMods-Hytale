@@ -1,0 +1,77 @@
+{
+  "$Comment": "Boss Mondial « Vel'Kazhar, le Dragon d'Ebene et d'Or » (gen_boss_mondiaux.py) : Dragon_Frost du jeu noir et or ; taille x1,5, couronnes, niveau et nom poses par WorldBosses.",
+  "Type": "Variant",
+  "Reference": "Template_Predator",
+  "Modify": {
+    "Appearance": "Eldanior_Vel_Kazhar",
+    "AttitudeGroup": "PredatorsBig",
+    "DropList": "Empty",
+    "MaxHealth": 4000,
+    "MaxSpeed": 8,
+    "WanderRadius": 10,
+    "ViewRange": 40,
+    "HearingRange": 32,
+    "AbsoluteDetectionRange": 4,
+    "AlertedRange": 48,
+    "AlertedTime": [
+      2,
+      2
+    ],
+    "MaintainDistanceWhileAlerted": false,
+    "ThreatenAnimation": "",
+    "ThreatenDelayRange": [
+      1,
+      1
+    ],
+    "FleeIfNotThreatened": false,
+    "LeashDistance": 120,
+    "HardLeashDistance": 180,
+    "LeashMinPlayerDistance": 16,
+    "LeashTimer": [
+      3,
+      4
+    ],
+    "CombatBehaviorDistance": 13,
+    "CombatRelativeTurnSpeed": 0.6,
+    "CombatDirectWeight": 10,
+    "CombatStrafeWeight": 0,
+    "CombatBackOffAfterAttack": false,
+    "CombatMovingRelativeSpeed": 0.4,
+    "Attack": "Root_NPC_Eldanior_Vel_Kazhar_Attack",
+    "AttackDistance": 8,
+    "TargetRange": 8,
+    "AttackPauseRange": [
+      1.5,
+      2.5
+    ],
+    "ChaseRelativeSpeed": 1,
+    "AlwaysSleepAtNight": false,
+    "DayFlavorAnimation": "",
+    "NightFlavorAnimation": "",
+    "DayTimeNapWeight": 0,
+    "KnockbackScale": 0,
+    "IsMemory": false,
+    "_InteractionVars": {
+      "Melee_Damage": {
+        "Interactions": [
+          {
+            "Parent": "NPC_Attack_Melee_Damage",
+            "DamageCalculator": {
+              "Type": "Absolute",
+              "BaseDamage": {
+                "Fire": 420
+              },
+              "RandomPercentageModifier": 0.1
+            },
+            "DamageEffects": {
+              "Knockback": {
+                "Force": 4
+              }
+            }
+          }
+        ]
+      }
+    },
+    "NameTranslationKey": "server.npcRoles.Dragon_Frost.name"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "$Comment": "Execution Celeste, Dieu Martial : ame de Ki blanc nacre (gen_execution_celeste.py).",
+  "Duration": 4.0,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": false,
+  "ApplicationEffects": {
+    "ModelVFXId": "Execution_Ame",
+    "EntityTopTint": "#ffffff",
+    "EntityBottomTint": "#e8d9ff",
+    "Particles": [
+      {
+        "SystemId": "Ki_Hwakyung",
+        "TargetEntityPart": "Entity"
+      }
+    ]
+  }
+}

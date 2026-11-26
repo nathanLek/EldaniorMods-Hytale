@@ -154,13 +154,14 @@ public class PartyHud extends CustomUIHud {
             PlayerLevelData data = store.getComponent(ref, type);
             if (data != null) {
                 info.level = data.getLevel();
-                info.className = data.getPlayerClass();
+                var shownCls = com.eldanior.system.skills.runes.spells.SansVisage.shownClass(playerRef.getUuid(), data);   // fausse classe (Sans Visage)
+                info.className = shownCls != null ? shownCls.getDisplayName() : data.getPlayerClass();
 
                 String familyId = data.getNobleFamilyId();
                 if (familyId != null && !familyId.isEmpty()) {
                     NobleFamilyModel family = FamilyManager.get(familyId);
                     if (family != null) {
-                        info.familyName = "Von " + family.getDisplayName();
+                        info.familyName = family.getDisplayName();
                     }
                 }
             }
@@ -178,7 +179,7 @@ public class PartyHud extends CustomUIHud {
                 float[] companion = com.eldanior.system.guards.GuardManager.companionInfo(playerUUID);   // aventurier recrute
                 if (companion != null) {
                     info.level = (int) companion[0];
-                    info.className = "Aventurier";
+                    info.className = com.eldanior.system.guards.GuardManager.companionClass(playerUUID);
                     info.hpRatio = companion[1];
                     return info;
                 }
@@ -206,11 +207,12 @@ public class PartyHud extends CustomUIHud {
             PlayerLevelData data = store.getComponent(ref, type);
             if (data != null) {
                 info.level = data.getLevel();
-                info.className = data.getPlayerClass();
+                var shownCls = com.eldanior.system.skills.runes.spells.SansVisage.shownClass(playerRef.getUuid(), data);   // fausse classe (Sans Visage)
+                info.className = shownCls != null ? shownCls.getDisplayName() : data.getPlayerClass();
                 String familyId = data.getNobleFamilyId();
                 if (familyId != null && !familyId.isEmpty()) {
                     NobleFamilyModel family = FamilyManager.get(familyId);
-                    if (family != null) info.familyName = "Von " + family.getDisplayName();
+                    if (family != null) info.familyName = family.getDisplayName();
                 }
             }
         } catch (Exception e) { EldaniorLogger.error("PartyHud", e); }

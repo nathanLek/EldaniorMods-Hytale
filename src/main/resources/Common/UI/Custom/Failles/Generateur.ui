@@ -1,0 +1,137 @@
+$C = "../Common.ui";
+
+// Generateur de monstres (bloc Eldanior_Generateur_Monstres, admins) : failles/GenerateurPage. Meme habillage que le poste de PNJ.
+Group {
+  LayoutMode: Middle;
+  Background: #05080d(0.55);
+
+  Group {
+    Anchor: (Width: 640);
+    LayoutMode: Top;
+    Padding: (Full: 3);
+    Background: #16212f;
+
+    Group {
+      LayoutMode: Top;
+      Padding: (Full: 3);
+      Background: #e8b34f;
+
+      Group {
+        LayoutMode: Top;
+        Padding: (Full: 2);
+        Background: #16212f;
+
+        Group {
+          LayoutMode: Top;
+          Background: #0b141d(0.96);
+          Padding: (Left: 26, Right: 26, Top: 16, Bottom: 14);
+
+          Group {
+            Anchor: (Height: 56);
+            LayoutMode: Top;
+            Label {
+              Text: "Générateur de monstres";
+              Style: (FontSize: 22, RenderBold: true, RenderUppercase: true, TextColor: #d1dae6);
+            }
+            Label #GenState {
+              Anchor: (Top: 4);
+              Style: (FontSize: 13, RenderBold: true, TextColor: #878e9c, Wrap: true);
+            }
+          }
+
+          Group { Anchor: (Top: 6, Height: 2); Background: #c99436; }
+
+          Group {
+            Anchor: (Top: 12, Height: 40);
+            LayoutMode: Left;
+            Group {
+              FlexWeight: 1;
+              LayoutMode: Top;
+              Label {
+                Text: "Famille";
+                Style: (FontSize: 15, RenderBold: true, TextColor: #c9b37a);
+              }
+              Label {
+                Text: "Filtre la liste des monstres.";
+                Style: (FontSize: 11, TextColor: #6f8296);
+              }
+            }
+            $C.@DropdownBox #GenFamily {
+              Anchor: (Width: 320, Height: 26);
+              Style: @DefaultDropdownBoxStyle;
+            }
+          }
+          Group {
+            Anchor: (Top: 8, Height: 40);
+            LayoutMode: Left;
+            Group {
+              FlexWeight: 1;
+              LayoutMode: Top;
+              Label {
+                Text: "Monstre";
+                Style: (FontSize: 15, RenderBold: true, TextColor: #c9b37a);
+              }
+              Label {
+                Text: "Le monstre qui apparaît sur ce bloc.";
+                Style: (FontSize: 11, TextColor: #6f8296);
+              }
+            }
+            $C.@DropdownBox #GenRole {
+              Anchor: (Width: 320, Height: 26);
+              Style: @DefaultDropdownBoxStyle;
+            }
+          }
+          Group {
+            Anchor: (Top: 8, Height: 40);
+            LayoutMode: Left;
+            Group {
+              FlexWeight: 1;
+              LayoutMode: Top;
+              Label {
+                Text: "Nombre";
+                Style: (FontSize: 15, RenderBold: true, TextColor: #c9b37a);
+              }
+              Label {
+                Text: "Monstres qui apparaissent ensemble (1 à 20).";
+                Style: (FontSize: 11, TextColor: #6f8296);
+              }
+            }
+            $C.@NumberField #GenCount {
+              Anchor: (Width: 320, Height: 26);
+              Format: (MaxDecimalPlaces: 0, Step: 1);
+            }
+          }
+
+          Label {
+            Anchor: (Top: 12);
+            Text: "Ils apparaissent quand un joueur approche (24 blocs). Tous abattus : ils reviennent 1 h plus tard.";
+            Style: (FontSize: 12, TextColor: #8fa3b8, Wrap: true);
+          }
+
+          Group { Anchor: (Top: 12, Height: 2); Background: #c99436; }
+
+          Group {
+            LayoutMode: Left;
+            Anchor: (Top: 14, Height: 44);
+            $C.@TextButton #GenSave {
+              @Anchor = (Right: 4);
+              Text: "Enregistrer";
+              FlexWeight: 1;
+            }
+            $C.@SecondaryTextButton #GenRemove {
+              @Anchor = (Left: 4);
+              Text: "Retirer le générateur";
+              FlexWeight: 1;
+            }
+          }
+
+          Label {
+            Anchor: (Top: 10);
+            Text: "Échap : fermer  ·  bloc invisible : tenez-le en main pour voir les générateurs posés";
+            Style: (FontSize: 11, TextColor: #5a6a7a, HorizontalAlignment: Center);
+          }
+        }
+      }
+    }
+  }
+}

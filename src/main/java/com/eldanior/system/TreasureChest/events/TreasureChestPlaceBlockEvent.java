@@ -44,6 +44,11 @@ public class TreasureChestPlaceBlockEvent extends EntityEventSystem<EntityStore,
         AUTO_REGISTER_CHESTS.put("ChestTreasureDungeonTier3", "donjon_tier3");
         AUTO_REGISTER_CHESTS.put("ChestTreasureDungeonTier4", "donjon_tier4");
         AUTO_REGISTER_CHESTS.put("ChestTreasureDungeonBoss", "donjon_boss");
+        // Coffres a cle de boss (une cle garantie par joueur)
+        AUTO_REGISTER_CHESTS.put("ChestTreasureCleBossED", "cle_boss_ed");
+        AUTO_REGISTER_CHESTS.put("ChestTreasureCleBossCB", "cle_boss_cb");
+        AUTO_REGISTER_CHESTS.put("ChestTreasureCleBossA", "cle_boss_a");
+        AUTO_REGISTER_CHESTS.put("ChestTreasureCleBossS", "cle_boss_s");
     }
 
     public static int getChestCount(String lootTableId) {
@@ -106,7 +111,8 @@ public class TreasureChestPlaceBlockEvent extends EntityEventSystem<EntityStore,
                 table = LootTableConfig.DEFAULT;
             }
             loot = table.generateLoot(pos.hashCode() + world.getWorldConfig().getSeed());
-            dropListName = table.getTableId();
+            // coffre avec profil (ChestLoot) : garder son identifiant (donjon_tier1... n'ont pas de table propre)
+            dropListName = com.eldanior.system.TreasureChest.ChestLoot.profile(lootTableId) != null ? lootTableId.toLowerCase() : table.getTableId();
         } else {
             dropListName = "custom";
         }

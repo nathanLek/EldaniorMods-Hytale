@@ -1,0 +1,26 @@
+{
+  "$Comment": "Tete de fumee noire de l'armure divine de l'Assassin (Voile d'Ombre de la Lune Noire). Pose en infini par ArmorVisualSystem tant que le casque est porte. Meme recette que l'aura de dignite (vue en jeu) : TargetEntityPart par defaut (Self), noeud Chest, montee jusqu'a la tete dans le particlesystem. Vue a la premiere personne : le client remplace Particles par FirstPersonParticles ; sans cette liste il reutilise Particles et la fumee bouche la vue, d'ou le systeme vide Eldanior_Vide.",
+  "ApplicationEffects": {
+    "Particles": [
+      {
+        "SystemId": "Eldanior_Fumee_Ombre",
+        "TargetNodeName": "Chest",
+        "PositionOffset": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0
+        },
+        "Scale": 1.0
+      }
+    ],
+    "FirstPersonParticles": [
+      {
+        "SystemId": "Eldanior_Vide",
+        "TargetNodeName": "Chest"
+      }
+    ]
+  },
+  "Duration": 8.0,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": false
+}

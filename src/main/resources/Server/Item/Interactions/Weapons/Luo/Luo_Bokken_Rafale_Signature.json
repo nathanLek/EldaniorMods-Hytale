@@ -1,0 +1,21 @@
+{
+  "$Comment": "Rafale du combo en competence : energie de signature pleine, videe au lancement (gen_luo_katanas.py).",
+  "Type": "StatsCondition",
+  "Costs": {
+    "SignatureEnergy": 100
+  },
+  "ValueType": "Percent",
+  "Next": {
+    "Type": "Serial",
+    "Interactions": [
+      {
+        "Type": "ChangeStat",
+        "StatModifiers": {
+          "SignatureEnergy": -100
+        },
+        "ValueType": "Percent"
+      },
+      "Luo_Bokken_Rafale"
+    ]
+  }
+}

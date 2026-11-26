@@ -29,8 +29,51 @@ public class MasterySystem extends EntityTickingSystem<EntityStore> {
     private final Map<Ref<EntityStore>, Integer> lastValidSlot = new WeakHashMap<>();
 
     /** Artefacts reserves a certains types de classe (quelle que soit la maitrise d'arme). */
-    private static final Map<String, Set<ClassType>> ARTIFACT_CLASSES = Map.of(
-            "Artefact_Gungnir", Set.of(ClassType.WARRIOR, ClassType.DRAGON, ClassType.MERCHANT));
+    private static final Set<ClassType> WARRIOR_ARTIFACT = Set.of(ClassType.WARRIOR, ClassType.DRAGON);
+    private static final Map<String, Set<ClassType>> ARTIFACT_CLASSES = Map.ofEntries(
+            Map.entry("Artefact_Gungnir", Set.of(ClassType.WARRIOR, ClassType.DRAGON, ClassType.MERCHANT)),
+            Map.entry("Artefact_Masamune_Celeste", WARRIOR_ARTIFACT),
+            // Epees a une main (Mythique, Legendaires)
+            Map.entry("Artefact_Sword_Excalibur", WARRIOR_ARTIFACT),
+            Map.entry("Artefact_Sword_Gram", WARRIOR_ARTIFACT),
+            Map.entry("Artefact_Sword_Solarys", WARRIOR_ARTIFACT),
+            Map.entry("Artefact_Sword_Katanas_Jumeaux", Set.of(ClassType.WARRIOR, ClassType.ASSASSIN, ClassType.DRAGON)),  // doubles katanas
+            // Armes divines (une par famille, scripts/artefacts/gen_divines.py)
+            Map.entry("Artefact_Staff_Ouas_Ra", Set.of(ClassType.MAGE, ClassType.DRAGON)),
+            Map.entry("Artefact_Wand_Circe", Set.of(ClassType.MAGE, ClassType.DRAGON)),
+            Map.entry("Artefact_Shield_Egide", WARRIOR_ARTIFACT),
+            Map.entry("Artefact_Longsword_Durandal", WARRIOR_ARTIFACT),
+            Map.entry("Artefact_Axe_Skadi", WARRIOR_ARTIFACT),
+            Map.entry("Artefact_Battleaxe_Labrys", WARRIOR_ARTIFACT),
+            Map.entry("Artefact_Battleaxe_Faux_Thanatos", Set.of(ClassType.WARRIOR, ClassType.ASSASSIN, ClassType.DRAGON)),
+            Map.entry("Artefact_Mace_Mjollnir", WARRIOR_ARTIFACT),
+            Map.entry("Artefact_Mace_Sharur", WARRIOR_ARTIFACT),
+            Map.entry("Artefact_Shortbow_Artemis", Set.of(ClassType.ARCHER, ClassType.DRAGON)),
+            Map.entry("Artefact_Shortbow_Apollon", Set.of(ClassType.ARCHER, ClassType.DRAGON)),
+            Map.entry("Artefact_Staff_Ruyi_Jingu_Bang", Set.of(ClassType.WARRIOR, ClassType.ASSASSIN, ClassType.DRAGON)),
+            Map.entry("Artefact_Club_Heracles", WARRIOR_ARTIFACT),
+            Map.entry("Artefact_Club_Dagda", WARRIOR_ARTIFACT),
+            Map.entry("Artefact_Daggers_Carnwennan", Set.of(ClassType.ASSASSIN, ClassType.DRAGON)),
+            Map.entry("Artefact_Spear_Guandao", WARRIOR_ARTIFACT),
+            // Mumei et Kagero, Lames de l'Observateur (2026-11-17, gen_lames_observateur.py) : sa classe seule
+            Map.entry(com.eldanior.system.classes.observateur.ObservateurLames.ITEM, Set.of(ClassType.OBSERVATEUR)));
+
+    /** Artefacts de famille : seuls les membres de la famille noble peuvent les tenir (quelle que soit leur classe). */
+    private static final Map<String, String> ARTIFACT_FAMILIES = Map.of(
+            "Artefact_Sword_Ryukiri", "runkandel",                                // Tranche-Dragon des Runkandel
+            "Artefact_Sword_Tenryumaru", "luo",                                   // Lame du Premier Serment, relique du Clan Luo
+            "Artefact_Sword_Tenryumaru_Degainee", "luo");                         // la meme, lame au clair
+
+    /** Famille a qui l'objet est reserve : artefacts de famille, et tous les katanas du Clan Luo (LuoKatanas). */
+    private static String familyOf(String itemId) {
+        String family = ARTIFACT_FAMILIES.get(itemId);
+        if (family == null && com.eldanior.system.skills.runes.spells.LuoKatanas.isClanItem(itemId)) family = "luo";
+        return family;
+    }
+
+    /** Reliques de famille : en plus du sang, il faut etre le Patriarche. */
+    private static final Set<String> PATRIARCH_RELICS = Set.of("Artefact_Sword_Tenryumaru", "Artefact_Sword_Tenryumaru_Degainee",
+            "Artefact_Sword_Kinryu", "Artefact_Sword_Kinryu_Degainee");                  // tresor du Patriarche Luo (FamilyKeySystem)
 
     @Override
     public void tick(float dt, int index, @Nonnull ArchetypeChunk<EntityStore> archetypeChunk, @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer) {
@@ -55,16 +98,53 @@ public class MasterySystem extends EntityTickingSystem<EntityStore> {
             PlayerLevelData playerData = store.getComponent(playerRef, EldaniorSystem.get().getPlayerLevelDataType());
             if (playerData == null) return;
 
-            // Verifier les items catalyst de competence active en premier
-            if (isCatalystWithoutSkill(heldItem, playerData)) {
-                int fallbackSlotInt = lastValidSlot.getOrDefault(playerRef, -1);
-                short fallbackSlot = (fallbackSlotInt == -1 || fallbackSlotInt == currentSlot) ? findSafeSlot(inv) : (short) fallbackSlotInt;
+            // Observateur (2026-11-16) : toutes les armes du mod (armes a feu, artefacts de classe et de famille compris, et catalyseurs de sorts)
+            if (com.eldanior.system.classes.observateur.ObservateurManager.isObservateur(playerData)) {
+                lastValidSlot.put(playerRef, (int) currentSlot);
+                return;
+            }
 
-                inv.setActiveHotbarSlot(playerRef, (byte) fallbackSlot, store);
 
-                NotificationHelper.sendNotification(netRef,
-                        "<color:red>Vous n'avez pas appris cette competence !</color>",
-                        NotificationStyle.Warning);
+            // Armes a feu (mousquets, leurs transformations, fusils et pistolets) : SEULEMENT le Mousquetaire (2026-11-15)
+            if (com.eldanior.system.skills.runes.spells.Mousquet.isFirearm(heldItem.getItemId())
+                    || ((required == WeaponMastery.GUN || required == WeaponMastery.RIFLE)          // fusils et pistolets vanilla
+                        && heldItem.getItemId().startsWith("Weapon_") && !ARTIFACT_CLASSES.containsKey(heldItem.getItemId()))) {
+                ClassModel shooterClass = ClassManager.get(playerData.getPlayerClassId());
+                if (shooterClass == null || shooterClass.getType() != ClassType.MOUSQUETAIRE) {
+                    int fallbackSlotInt = lastValidSlot.getOrDefault(playerRef, -1);
+                    short fallbackSlot = (fallbackSlotInt == -1 || fallbackSlotInt == currentSlot) ? findSafeSlot(inv) : (short) fallbackSlotInt;
+                    inv.setActiveHotbarSlot(playerRef, (byte) fallbackSlot, store);
+                    NotificationHelper.sendNotification(netRef,
+                            "<color:red>Seul un Mousquetaire sait se servir d'une arme à feu !</color>", NotificationStyle.Warning);
+                    return;
+                }
+                lastValidSlot.put(playerRef, (int) currentSlot);
+                return;
+            }
+
+            // Admin : tient tous les artefacts (famille et classe), pour les tester
+            boolean artifact = familyOf(heldItem.getItemId()) != null || ARTIFACT_CLASSES.containsKey(heldItem.getItemId());
+            if (artifact && netRef.hasPermission(com.eldanior.system.config.EldaniorLogger.ADMIN_PERMISSION)) {
+                lastValidSlot.put(playerRef, (int) currentSlot);
+                return;
+            }
+
+            String artifactFamily = familyOf(heldItem.getItemId());
+            if (artifactFamily != null) {                                         // artefact de famille : seul le sang compte
+                boolean refused = !artifactFamily.equalsIgnoreCase(playerData.getNobleFamilyId())
+                        || (PATRIARCH_RELICS.contains(heldItem.getItemId()) && !playerData.isPatriarch());
+                if (refused) {
+                    int fallbackSlotInt = lastValidSlot.getOrDefault(playerRef, -1);
+                    short fallbackSlot = (fallbackSlotInt == -1 || fallbackSlotInt == currentSlot) ? findSafeSlot(inv) : (short) fallbackSlotInt;
+                    inv.setActiveHotbarSlot(playerRef, (byte) fallbackSlot, store);
+                    NotificationHelper.sendNotification(netRef,
+                            PATRIARCH_RELICS.contains(heldItem.getItemId())
+                                    ? "<color:red>Cette relique ne répond qu'au Patriarche de sa famille !</color>"
+                                    : "<color:red>Cette lame ne répond qu'au sang de sa famille !</color>",
+                            NotificationStyle.Warning);
+                    return;
+                }
+                lastValidSlot.put(playerRef, (int) currentSlot);
                 return;
             }
 
@@ -114,24 +194,12 @@ public class MasterySystem extends EntityTickingSystem<EntityStore> {
         return Query.and(Player.getComponentType(), PlayerRef.getComponentType());
     }
 
-    private boolean isCatalystWithoutSkill(ItemStack item, PlayerLevelData data) {
-        if (item == null || item.isEmpty() || data == null) return false;
-        String itemId = item.getItemId();
-        for (var skill : com.eldanior.system.skills.SkillManager.getAllSkills()) {
-            if (itemId.equals(skill.catalystId())) {
-                // Vérifié dans les skills appris
-                if (data.getUnlockedSkills().contains(skill.skillId())) return false;
-                // Vérifié dans les skills actifs de la classe
-                var classModel = com.eldanior.system.classes.ClassManager.get(data.getPlayerClassId());
-                if (classModel != null && classModel.getActiveSkillIds().contains(skill.skillId())) return false;
-                return true;
-            }
-        }
-        return false;
-    }
 
     public WeaponMastery getWeaponMastery(ItemStack item) {
         if (item == null || item.isEmpty()) return WeaponMastery.ANY;
+        // armes a feu (mousquets et leurs transformations : Colts, SARS, canon) : maitrise GUN, reservee au Mousquetaire
+        String rawId = item.getItemId();
+        if (com.eldanior.system.skills.runes.spells.Mousquet.isFirearm(rawId)) return WeaponMastery.GUN;
 
         String itemId = item.getItemId().toLowerCase();
 
@@ -143,6 +211,7 @@ public class MasterySystem extends EntityTickingSystem<EntityStore> {
         if (itemId.contains("shield")) return WeaponMastery.SHIELD;
         if (itemId.contains("spear")) return WeaponMastery.SPEAR;
         if (itemId.contains("spellbook")) return WeaponMastery.SPELLBOOK;
+        if (itemId.contains("flail")) return WeaponMastery.FLAIL;           // avant club : le fleau vanilla est Weapon_Club_Steel_Flail_Rusty
         if (itemId.contains("mace")) return WeaponMastery.MACE;
         if (itemId.contains("gun")) return WeaponMastery.GUN;
         if (itemId.contains("club")) return WeaponMastery.CLUB;

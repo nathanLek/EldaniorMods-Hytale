@@ -1,0 +1,90 @@
+{
+  "TranslationProperties": {
+    "Name": "Brassards du Cerf Céleste",
+    "Description": "Armure divine de l'Archer. Un long brassard d'arc au bras gauche, plaqué d'argent runique, et un gant d'archer à la main droite."
+  },
+  "Quality": "Divin",
+  "ItemLevel": 800,
+  "PlayerAnimationsId": "Block",
+  "ItemSoundSetId": "ISS_Armor_Leather",
+  "Categories": [
+    "Eldanior_System.Armures",
+    "Items.Armors"
+  ],
+  "Icon": "Icons/ItemsGenerated/Armor_Divin_Archer_Hands.png",
+  "IconProperties": {
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Scale": 0.5,
+    "Translation": [
+      0,
+      0
+    ]
+  },
+  "Model": "Items/Armors/Divines/Archer/Hands.blockymodel",
+  "Texture": "Items/Armors/Divines/Archer/Hands_Texture.png",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    }
+  },
+  "Armor": {
+    "ArmorSlot": "Hands",
+    "BaseDamageResistance": 0,
+    "CosmeticsToHide": [
+      "Gloves"
+    ],
+    "StatModifiers": {
+      "Health": [
+        {
+          "Amount": 30,
+          "CalculationType": "Additive"
+        }
+      ],
+      "Mana": [
+        {
+          "Amount": 15,
+          "CalculationType": "Additive"
+        }
+      ]
+    },
+    "DamageResistance": {
+      "Physical": [
+        {
+          "Amount": 0.09,
+          "CalculationType": "Percent"
+        }
+      ],
+      "Projectile": [
+        {
+          "Amount": 0.09,
+          "CalculationType": "Percent"
+        }
+      ]
+    }
+  },
+  "Tags": {
+    "Type": [
+      "Armor"
+    ],
+    "Family": [
+      "Divine"
+    ]
+  },
+  "MaxDurability": 800,
+  "DurabilityLossOnHit": 0.5
+}

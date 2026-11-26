@@ -28,10 +28,10 @@ public class SellCommand extends AbstractAsyncCommand {
 
     public SellCommand() {
         super("sell", "Mettre en vente l'objet en main (prix en or)");
+        requireNoPermission();                                   // commande joueur : ouverte a tous
         this.priceArg = this.withRequiredArg("prix", "Prix en or", ArgTypes.INTEGER);
     }
 
-    protected boolean canGeneratePermission() { return false; }
 
     @Nonnull
     @Override

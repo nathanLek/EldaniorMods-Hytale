@@ -1,0 +1,36 @@
+{
+  "$Comment": "Poste de PNJ (guards/NpcPostBlocks) : bloc invisible et traversable ; le poser ou F dessus ouvre la fenetre du poste (admins).",
+  "TranslationProperties": {
+    "Name": "Poste de PNJ",
+    "Description": "Admins : posez ce bloc invisible et traversable à l'endroit voulu, puis choisissez le PNJ, ses options et son regard (touche F sur le bloc pour y revenir). Seuls les admins voient sa marque au sol. Le casser retire le PNJ."
+  },
+  "Categories": [
+    "Eldanior_System.Autres"
+  ],
+  "Quality": "Technical",
+  "PlayerAnimationsId": "Block",
+  "Icon": "Icons/ItemsGenerated/Editor_Empty.png",
+  "MaxStack": 64,
+  "BlockType": {
+    "Material": "Empty",
+    "DrawType": "Empty",
+    "Opacity": "Transparent",
+    "Support": {
+      "Down": [
+        {
+          "Support": "Ignored"
+        }
+      ]
+    },
+    "InteractionHint": "server.interactionHints.eldanior_npcpost",
+    "Interactions": {
+      "Use": {
+        "Interactions": [
+          {
+            "Type": "Simple"
+          }
+        ]
+      }
+    }
+  }
+}

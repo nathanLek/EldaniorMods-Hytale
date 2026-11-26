@@ -1,0 +1,80 @@
+{
+  "RenderMode": "BlendAdd",
+  "ParticleRotationInfluence": "Billboard",
+  "LinearFiltering": true,
+  "ParticleRotateWithSpawner": true,
+  "ParticleLifeSpan": {
+    "Min": 1,
+    "Max": 1
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Shapes/World_Goblin.png",
+    "ScaleRatioConstraint": "OneToOne",
+    "UVOption": "None",
+    "Animation": {
+      "0": {
+        "FrameIndex": {
+          "Min": 0,
+          "Max": 0
+        },
+        "Opacity": 0,
+        "Scale": {
+          "X": {
+            "Min": 1,
+            "Max": 1
+          },
+          "Y": {
+            "Min": 1,
+            "Max": 1
+          }
+        }
+      },
+      "50": {
+        "Opacity": 1
+      },
+      "100": {
+        "Opacity": 0
+      }
+    },
+    "InitialAnimationFrame": {
+      "Opacity": 1,
+      "FrameIndex": {
+        "Min": 0,
+        "Max": 0
+      },
+      "Scale": {
+        "X": {
+          "Min": 0.6,
+          "Max": 0.6
+        }
+      },
+      "Color": "#5ad7ff"
+    },
+    "SoftParticles": "Disable"
+  },
+  "SpawnBurst": false,
+  "CameraOffset": -0.4,
+  "UVMotion": {
+    "Texture": "Particles/Textures/UVMotion/FlowMap3.png",
+    "Strength": 1.8,
+    "Scale": 0.48,
+    "SpeedX": -0.08,
+    "SpeedY": 0.08
+  },
+  "MaxConcurrentParticles": 6,
+  "SpawnRate": {
+    "Min": 4,
+    "Max": 4
+  },
+  "EmitOffset": {
+    "X": {
+      "Max": 0.02
+    },
+    "Y": {
+      "Max": 0.02
+    },
+    "Z": {
+      "Max": 0.02
+    }
+  }
+}

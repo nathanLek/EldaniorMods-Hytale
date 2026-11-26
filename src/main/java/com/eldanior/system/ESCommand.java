@@ -4,12 +4,9 @@ import com.eldanior.system.Leveling.commands.AddXPCommand;
 import com.eldanior.system.Leveling.commands.SetLevelCommand;
 import com.eldanior.system.TreasureChest.commands.DeleteTreasureCommand;
 import com.eldanior.system.TreasureChest.commands.TreasureConfigCommand;
-import com.eldanior.system.classes.commands.ClassInfoCommand;
 import com.eldanior.system.classes.commands.SetClassCommand;
 import com.eldanior.system.skills.commands.GiveRelicCommand;
 import com.eldanior.system.skills.commands.WithdrawCommand;
-import com.eldanior.system.titles.commands.TitleListCommand;
-import com.eldanior.system.titles.commands.TitleOneArgCommand;
 import com.eldanior.system.titles.commands.TitleTwoArgCommand;
 import com.eldanior.system.guild.commands.GuildCommand;
 import com.eldanior.system.guild.commands.GuildCreateCommand;
@@ -27,29 +24,34 @@ public class ESCommand extends AbstractCommandCollection {
 
     public ESCommand() {
         super("es", "Commande principale Eldanior System");
+        // /es ouverte a tous : chaque sous-commande garde sa propre permission (generee = admin), sauf celles des
+        // joueurs qui appellent requireNoPermission(). canGeneratePermission() n'existe plus dans le serveur (ignoree).
+        requireNoPermission();
         this.addSubCommand(new AddXPCommand());
         this.addSubCommand(new SetLevelCommand());
+        this.addSubCommand(new com.eldanior.system.Leveling.commands.CombatLogCommand());   // /es combat log : journal de combat (admin, 2026-11-25)
         this.addSubCommand(new com.eldanior.system.guards.GuardCommand());
+        this.addSubCommand(new com.eldanior.system.guards.IntendantCommand());   // /es intendant fictifs ajouter|retirer (essai, admin)
+        this.addSubCommand(new com.eldanior.system.territory.commands.KingdomCommand());   // /es royaume barriere on|off
+        this.addSubCommand(new com.eldanior.system.territory.laws.InvasionCommand());
+        this.addSubCommand(new com.eldanior.system.territory.teleport.PortalCommand());
+        this.addSubCommand(new com.eldanior.system.guards.CityCommand());   // /es ville : registre de la ville du Comte (joueurs, 2026-11-19)   // /es portail info|retirer (admin, 2026-11-19)   // /es invasion lancer|arreter|liste (admin, 2026-11-18)
         this.addSubCommand(new com.eldanior.system.boards.ContractCommand());   // contrats de monstres du tableau de prime
-        this.addSubCommand(new ClassInfoCommand());
+        this.addSubCommand(new com.eldanior.system.familiers.FamilierCommand());   // /es familier info|relacher (+ tests admin)
         this.addSubCommand(new SetClassCommand());
+        this.addSubCommand(new com.eldanior.system.classes.observateur.ObservateurCommand());   // /es observateur : Observateur (Roi, Empereur Luo)
         this.addSubCommand(new GiveRelicCommand());
         this.addSubCommand(new DeleteTreasureCommand());
         this.addSubCommand(new TreasureConfigCommand());
         this.addSubCommand(new WithdrawCommand());
 
         // Titres
-        this.addSubCommand(new TitleListCommand());
-        this.addSubCommand(new TitleOneArgCommand());
         this.addSubCommand(new TitleTwoArgCommand());
 
         // Rangs
         this.addSubCommand(new RankCommand());
         this.addSubCommand(new RankPromoteCommand());
         this.addSubCommand(new KingdomCommand());
-
-        // Status
-        this.addSubCommand(new NobilityStatusCommand());
 
         // Eglise
         this.addSubCommand(new ChurchCommand());
@@ -66,9 +68,6 @@ public class ESCommand extends AbstractCommandCollection {
         // Famille
         this.addSubCommand(new FamilyCommand());
         this.addSubCommand(new FamilySetCommand());
-
-        // Ordres de Chevalier
-        this.addSubCommand(new com.eldanior.system.titles.nobility.family.commands.OrdreCommand());
 
         // Duel
         this.addSubCommand(new DuelCommand());
@@ -96,7 +95,8 @@ public class ESCommand extends AbstractCommandCollection {
 
         // Interface unifiee
         this.addSubCommand(new SystemCommand());
-        this.addSubCommand(new com.eldanior.system.skills.commands.RunesCommand());
+        this.addSubCommand(new com.eldanior.system.accueil.WelcomeCommand());   // /es accueil : apercu de l'accueil (admin, 2026-11-25)
+        // /es runes retiree le 2026-11-12 : les runes se gerent dans le menu systeme (onglet Competences, RunesTab)
 
         // Hologrammes
         this.addSubCommand(new com.eldanior.system.hologram.HologramCommand());
@@ -106,6 +106,7 @@ public class ESCommand extends AbstractCommandCollection {
 
         // Transactions (admin)
         this.addSubCommand(new com.eldanior.system.economy.commands.TransactionsCommand());
+        this.addSubCommand(new com.eldanior.system.economy.commands.PrixCommand());   // /es prix : editeur des prix (admin)
 
         // Eviction groupee (admin)
         this.addSubCommand(new com.eldanior.system.territory.commands.EvictAllCommand());
@@ -120,7 +121,4 @@ public class ESCommand extends AbstractCommandCollection {
         this.addSubCommand(new com.eldanior.system.config.commands.DebugCommand());
     }
 
-    protected boolean canGeneratePermission() {
-        return false;
-    }
 }

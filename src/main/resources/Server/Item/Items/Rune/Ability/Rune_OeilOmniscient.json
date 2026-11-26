@@ -1,0 +1,44 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de l'Œil Omniscient",
+    "Description": "Sort unique d'espace (Mage, rune de prédilection du Visionnaire Suprême). Un œil s'ouvre au-dessus de vous pendant 15 s. Un clic droit sur un ennemi visible (jusqu'à 40 blocs) échange instantanément vos places : il subit 150 dégâts et reste étourdi 1,5 s. 4 échanges au plus, une seconde d'écart entre deux. Le clic gauche reste une attaque normale. Coût : 600 mana. Recharge : 180 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_OeilOmniscient.png",
+  "Quality": "Unique",
+  "ItemLevel": 75,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_Runes.Espace"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_OeilOmniscient.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 180,
+    "Cost": 600,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Damage",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_OeilOmniscient"
+  }
+}

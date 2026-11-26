@@ -1,0 +1,91 @@
+{
+  "TranslationProperties": {
+    "Name": "Kariginu de l'Alchimiste Royal",
+    "Description": "Tenue de l'Alchimiste Royal de l'Empire Luo. Une robe à col rond vert de jade, aux manches lacées de cordons ; des rouleaux de formules glissés à la ceinture."
+  },
+  "Quality": "Epic",
+  "ItemLevel": 350,
+  "PlayerAnimationsId": "Block",
+  "ItemSoundSetId": "ISS_Armor_Cloth",
+  "Categories": [
+    "Eldanior_Empire_Luo.Luo",
+    "Items.Armors"
+  ],
+  "Icon": "Icons/ItemsGenerated/Armor_Kimono_Alchimiste_Chest.png",
+  "IconProperties": {
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Scale": 0.3,
+    "Translation": [
+      0,
+      0
+    ]
+  },
+  "Model": "Items/Armors/Kimono/Alchimiste/Chest.blockymodel",
+  "Texture": "Items/Armors/Kimono/Alchimiste/Chest_Texture.png",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    }
+  },
+  "Armor": {
+    "ArmorSlot": "Chest",
+    "BaseDamageResistance": 0,
+    "CosmeticsToHide": [
+      "Overtop",
+      "Cape"
+    ],
+    "StatModifiers": {
+      "Health": [
+        {
+          "Amount": 32,
+          "CalculationType": "Additive"
+        }
+      ],
+      "Mana": [
+        {
+          "Amount": 45,
+          "CalculationType": "Additive"
+        }
+      ]
+    },
+    "DamageResistance": {
+      "Physical": [
+        {
+          "Amount": 0.147,
+          "CalculationType": "Percent"
+        }
+      ],
+      "Projectile": [
+        {
+          "Amount": 0.147,
+          "CalculationType": "Percent"
+        }
+      ]
+    }
+  },
+  "Tags": {
+    "Type": [
+      "Armor"
+    ],
+    "Family": [
+      "Cloth_Kimono"
+    ]
+  },
+  "MaxDurability": 260,
+  "DurabilityLossOnHit": 0.5
+}

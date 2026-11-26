@@ -25,13 +25,13 @@ import java.util.Locale;
  * Fenetre d'un tableau (Board/Board.ui : carte large au style de la fenetre de recrutement), commune aux tableaux de prime et de
  * guilde : embleme, titre, lieu, replique, tuiles de chiffres, onglets ; a gauche la liste paginee (rang, nom, detail,
  * valeur, bouton), a droite la fiche de la ligne choisie (ou l'aide de l'onglet) avec montant et cout optionnels, boutons et
- * message de retour ; bourse, bouton d'action du bas. Chaque clic met la fenetre a jour sans la fermer. Le contenu vient des
- * sous-classes (BountyBoardScreen, GuildBoardScreen).
+ * message de retour (troisieme bouton optionnel) ; bourse, bouton d'action du bas. Chaque clic met la fenetre a jour sans la fermer. Le contenu vient des
+ * sous-classes (BountyBoardScreen, RankingBoardScreen...).
  */
 public abstract class BoardScreen extends InteractiveCustomUIPage<BoardScreen.BoardEventData> {
 
     /** Onglets, tuiles et lignes par page prevus dans Board/Board.ui. */
-    static final int TABS = 3, STATS = 4, ROWS = 7;
+    static final int TABS = 6, STATS = 4, ROWS = 7;   // 5e onglet : Domaines de l'intendant (2026-11-11) ; 6e : Biens (2026-11-12)
     static final String GREEN = "#00e7b6", RED = "#cc3361", GOLD = "#E8A93B", MUTED = "#6f8296";
 
     /** Tuile de chiffre. */
@@ -103,8 +103,39 @@ public abstract class BoardScreen extends InteractiveCustomUIPage<BoardScreen.Bo
 
     protected void onCancel() {}
 
+    /** Second bouton de la fiche (par defaut : onCancel). */
+    protected void onCancel(Ref<EntityStore> ref, Store<EntityStore> store) { onCancel(); }
+
     /** Onglet change : les sous-classes oublient leurs selections. */
     protected void onTab() {}
+
+    /** Troisieme bouton de la fiche (entre confirmer et fermer), null : aucun. */
+    protected String altButton(Ref<EntityStore> ref, Store<EntityStore> store) { return null; }
+
+    protected void onAlt(Ref<EntityStore> ref, Store<EntityStore> store) {}
+
+    /** Titre de la fenetre (par defaut : celui du tableau). */
+    protected String title() { return type.getLabel(); }
+
+    /** Bourse affichee en bas : libelle et valeur (par defaut : l'or du joueur). */
+    protected String purseLabel() { return "Votre bourse"; }
+
+    protected String purseValue(Ref<EntityStore> ref, Store<EntityStore> store) {
+        PlayerLevelData data = data(ref, store);
+        return gold(data != null ? data.getMoney() : 0) + " or";
+    }
+
+    /** Icone d'objet de la ligne index (de toute la liste de l'onglet), null : aucune. */
+    protected String rowIcon(int index) { return null; }
+
+    /** Grande icone d'objet de la fiche, null : aucune. */
+    protected String sideIcon(Ref<EntityStore> ref, Store<EntityStore> store) { return null; }
+
+    /** Replique sous le titre (par defaut : celle du tableau), relue a chaque mise a jour. */
+    protected String quote(Ref<EntityStore> ref, Store<EntityStore> store) { return type.getQuote(); }
+
+    /** Libelles des deux champs de texte de la fiche (Side.names). */
+    protected String[] nameLabels() { return new String[]{"Nom de la guilde", "Tag"}; }
 
     // ===== Outils des sous-classes =====
 
@@ -130,13 +161,33 @@ public abstract class BoardScreen extends InteractiveCustomUIPage<BoardScreen.Bo
     public void build(@Nonnull Ref<EntityStore> ref, @Nonnull UICommandBuilder ui, @Nonnull UIEventBuilder events,
                       @Nonnull Store<EntityStore> store) {
         ui.append("Board/Board.ui");
-        ui.set("#BoardEmblemPrime.Visible", type == BoardType.PRIME);
-        ui.set("#BoardEmblemGuilde.Visible", type != BoardType.PRIME);
-        ui.set("#BoardTitle.Text", type.getLabel());
+        String emblem = switch (type) {
+            case PRIME -> "Prime";
+            case QUETES -> "Quetes";
+            case CLASSEMENT -> "Classement";
+            case DUEL -> "Duel";
+            case INTENDANT, IMMOBILIER -> "Intendant";
+            default -> "Guilde";
+        };
+        for (String e : new String[]{"Prime", "Guilde", "Quetes", "Classement", "Duel", "Intendant"})
+            ui.set("#BoardEmblem" + e + ".Visible", e.equals(emblem));
+        ui.set("#BoardTitle.Text", title());
+        ui.set("#BoardMoneyLabel.Text", purseLabel());
+        String[] labels = nameLabels();
+        ui.set("#BoardInputNameLabel.Text", labels[0]);
+        ui.set("#BoardInputTagLabel.Text", labels[1]);
         ui.set("#BoardPlace.Text", "•  " + (place != null ? place : "Hors des villes"));
-        ui.set("#BoardQuote.Text", "« " + type.getQuote() + " »");
-        ui.set("#BoardNote.Text", type == BoardType.PRIME ? "Affiché par ordre de la couronne" : "Registre des guildes du royaume");
-        List<String> tabs = type.getTabs();
+
+        ui.set("#BoardNote.Text", switch (type) {
+            case PRIME -> "Affiché par ordre de la couronne";
+            case QUETES -> "Affiches renouvelées chaque jour à minuit";
+            case CLASSEMENT -> "Tenu à jour par les hérauts du royaume";
+            case DUEL -> "Registre des duels d'honneur";
+            case INTENDANT -> "Registre et réserve de la maison";
+            case IMMOBILIER -> "Actes de propriété du royaume";
+            default -> "Registre des guildes du royaume";
+        });
+        List<String> tabs = tabs();
         for (int i = 0; i < TABS; i++) {
             boolean shown = i < tabs.size();
             ui.set("#BoardTabBox" + i + ".Visible", shown);
@@ -152,10 +203,14 @@ public abstract class BoardScreen extends InteractiveCustomUIPage<BoardScreen.Bo
         bind(events, "#BoardSideOk", EventData.of("Action", "confirm").append("@Amount", "#BoardAmount.Value")
                 .append("@Name", "#BoardInputName.Value").append("@Tag", "#BoardInputTag.Value"));
         bind(events, "#BoardSideCancel", EventData.of("Action", "cancel"));
+        bind(events, "#BoardSideAlt", EventData.of("Action", "alt"));
         events.addEventBinding(CustomUIEventBindingType.ValueChanged, "#BoardAmount",
                 EventData.of("Action", "amount").append("@Amount", "#BoardAmount.Value"), false);
         show(ui, ref, store);
     }
+
+    /** Onglets de la fenetre (ceux du type ; une fenetre peut en montrer moins). */
+    protected List<String> tabs() { return type.getTabs(); }
 
     private static void bind(UIEventBuilder events, String id, EventData data) {
         events.addEventBinding(CustomUIEventBindingType.Activating, id, data);
@@ -169,7 +224,8 @@ public abstract class BoardScreen extends InteractiveCustomUIPage<BoardScreen.Bo
             ui.set("#BoardStatValue" + i + ".Text", s.value());
             ui.set("#BoardStatLabel" + i + ".Text", s.label());
         }
-        for (int i = 0; i < type.getTabs().size() && i < TABS; i++) ui.set("#BoardTabLine" + i + ".Visible", i == tab);
+        for (int i = 0; i < tabs().size() && i < TABS; i++) ui.set("#BoardTabLine" + i + ".Visible", i == tab);
+        ui.set("#BoardQuote.Text", "« " + quote(ref, store) + " »");
         Tab content = tab(tab, ref, store);
         ui.set("#BoardSection.Text", content.section());
         showRows(ui, content);
@@ -185,8 +241,13 @@ public abstract class BoardScreen extends InteractiveCustomUIPage<BoardScreen.Bo
         String action = content.action();
         ui.set("#BoardBtnBox.Visible", action != null);
         if (action != null) ui.set("#BoardBtnOk.Text", action);
-        PlayerLevelData data = data(ref, store);
-        ui.set("#BoardMoney.Text", gold(data != null ? data.getMoney() : 0) + " or");
+        ui.set("#BoardMoney.Text", purseValue(ref, store));
+        String icon = side != null ? sideIcon(ref, store) : null;
+        ui.set("#BoardSideIconBox.Visible", icon != null);
+        if (icon != null) ui.set("#BoardSideIcon.ItemId", icon);
+        String alt = side != null ? altButton(ref, store) : null;
+        ui.set("#BoardSideAltBox.Visible", alt != null);
+        if (alt != null) ui.set("#BoardSideAlt.Text", alt);
     }
 
     private void showRows(UICommandBuilder ui, Tab content) {
@@ -210,6 +271,9 @@ public abstract class BoardScreen extends InteractiveCustomUIPage<BoardScreen.Bo
             ui.set("#BoardRowValue" + i + ".Text", r.value() != null ? r.value() : "");
             ui.set("#BoardRowValue" + i + ".Style.TextColor", r.valueColor() != null ? r.valueColor() : GOLD);
             ui.set("#BoardRowAct" + i + ".Visible", r.details());
+            String icon = rowIcon(index);
+            ui.set("#BoardRowIconBox" + i + ".Visible", icon != null);
+            if (icon != null) ui.set("#BoardRowIcon" + i + ".ItemId", icon);
         }
         ui.set("#BoardPager.Visible", pages > 1);
         ui.set("#BoardPage.Text", (page + 1) + " / " + pages);
@@ -259,7 +323,7 @@ public abstract class BoardScreen extends InteractiveCustomUIPage<BoardScreen.Bo
             switch (data.action) {
                 case "tab" -> {
                     int index = parse(data.index);
-                    if (index < 0 || index >= type.getTabs().size() || index == tab) return;
+                    if (index < 0 || index >= tabs().size() || index == tab) return;
                     tab = index;
                     page = 0;
                     onTab();
@@ -273,6 +337,7 @@ public abstract class BoardScreen extends InteractiveCustomUIPage<BoardScreen.Bo
                     keepStatus = true;
                 }
                 case "action" -> { onAction(ref, store); keepStatus = true; }
+                case "alt" -> { onAlt(ref, store); keepStatus = true; }
                 case "amount" -> { onAmount(data.amount != null ? data.amount : 0); keepStatus = true; }
                 case "confirm" -> {
                     inputName = data.name != null ? data.name.trim() : "";
@@ -280,7 +345,11 @@ public abstract class BoardScreen extends InteractiveCustomUIPage<BoardScreen.Bo
                     onConfirm(data.amount != null ? data.amount : 0, ref, store);
                     keepStatus = true;
                 }
-                case "cancel" -> onCancel();
+                case "cancel" -> {                                                  // message garde s'il vient de ce clic
+                    String before = status;
+                    onCancel(ref, store);
+                    keepStatus = status != null && !status.equals(before);
+                }
                 default -> { return; }
             }
         } catch (Exception e) {

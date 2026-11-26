@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_Reflexion (remplace le parchemin rune_page_reflexion).",
+  "TranslationProperties": {
+    "Name": "Manuel de Lumière : Réflexion",
+    "Description": "Sort épique de lumière (Mage, rune de prédilection de l'Archimage Suprême). Un dôme miroitant de 5 blocs vous suit pendant 8 s. Les projectiles ennemis qui y entrent sont détruits et leur énergie est renvoyée en trait de lumière sur le tireur (80 dégâts). Les coups que vous subissez au corps à corps renvoient 30 % de leurs dégâts à l'attaquant. Coût : 300 mana. Recharge : 120 s.\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Lumiere"
+  ],
+  "Quality": "Epic",
+  "ItemLevel": 60,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Lumiere_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Lumiere_Reflexion.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

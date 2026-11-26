@@ -1,0 +1,378 @@
+{
+  "DisplayNameKey": "Poissonnier — Apprenti",
+  "RefreshInterval": {
+    "Days": 1
+  },
+  "RestockHour": 6,
+  "TradeSlots": [
+    {
+      "Type": "Pool",
+      "SlotCount": 11,
+      "Trades": [
+        {
+          "Output": {
+            "ItemId": "Fish_Bluegill_Item",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Silver_Coins",
+              "Quantity": 6
+            }
+          ],
+          "Stock": [
+            4,
+            12
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Fish_Catfish_Item",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Silver_Coins",
+              "Quantity": 6
+            }
+          ],
+          "Stock": [
+            4,
+            12
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Fish_Minnow_Item",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Silver_Coins",
+              "Quantity": 6
+            }
+          ],
+          "Stock": [
+            4,
+            12
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Fish_Tang_Blue_Item",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            4,
+            12
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Fish_Tang_Chevron_Item",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            4,
+            12
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Fish_Tang_Lemon_Peel_Item",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            4,
+            12
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Fish_Tang_Sailfin_Item",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            4,
+            12
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Food_Fish_Grilled",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Silver_Coins",
+              "Quantity": 6
+            }
+          ],
+          "Stock": [
+            4,
+            12
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Food_Fish_Raw",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Copper_Coins",
+              "Quantity": 10
+            }
+          ],
+          "Stock": [
+            4,
+            12
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Food_Fish_Raw_Rare",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Copper_Coins",
+              "Quantity": 13
+            }
+          ],
+          "Stock": [
+            4,
+            12
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Food_Fish_Raw_Uncommon",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Copper_Coins",
+              "Quantity": 10
+            }
+          ],
+          "Stock": [
+            4,
+            12
+          ],
+          "Weight": 40
+        }
+      ]
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Copper_Coins",
+          "Quantity": 2
+        },
+        "Input": [
+          {
+            "ItemId": "Food_Fish_Raw",
+            "Quantity": 10
+          }
+        ],
+        "Stock": 999
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Copper_Coins",
+          "Quantity": 3
+        },
+        "Input": [
+          {
+            "ItemId": "Fish_Salmon_Item",
+            "Quantity": 5
+          }
+        ],
+        "Stock": 999
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Copper_Coins",
+          "Quantity": 3
+        },
+        "Input": [
+          {
+            "ItemId": "Fish_Trout_Rainbow_Item",
+            "Quantity": 5
+          }
+        ],
+        "Stock": 999
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Copper_Coins",
+          "Quantity": 2
+        },
+        "Input": [
+          {
+            "ItemId": "Fish_Catfish_Item",
+            "Quantity": 5
+          }
+        ],
+        "Stock": 999
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Silver_Coins",
+          "Quantity": 3
+        },
+        "Input": [
+          {
+            "ItemId": "Fish_Crab_Item",
+            "Quantity": 3
+          }
+        ],
+        "Stock": 999
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Silver_Coins",
+          "Quantity": 8
+        },
+        "Input": [
+          {
+            "ItemId": "Fish_Lobster_Item",
+            "Quantity": 2
+          }
+        ],
+        "Stock": 999
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Silver_Coins",
+          "Quantity": 12
+        },
+        "Input": [
+          {
+            "ItemId": "Fish_Frostgill_Item",
+            "Quantity": 2
+          }
+        ],
+        "Stock": 999
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Silver_Coins",
+          "Quantity": 15
+        },
+        "Input": [
+          {
+            "ItemId": "Fish_Snapjaw_Item",
+            "Quantity": 1
+          }
+        ],
+        "Stock": 999
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Silver_Coins",
+          "Quantity": 25
+        },
+        "Input": [
+          {
+            "ItemId": "Food_Fish_Raw_Rare",
+            "Quantity": 1
+          }
+        ],
+        "Stock": 999
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Silver_Coins",
+          "Quantity": 50
+        },
+        "Input": [
+          {
+            "ItemId": "Food_Fish_Raw_Epic",
+            "Quantity": 1
+          }
+        ],
+        "Stock": 999
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Gold_Coins",
+          "Quantity": 2
+        },
+        "Input": [
+          {
+            "ItemId": "Food_Fish_Raw_Legendary",
+            "Quantity": 1
+          }
+        ],
+        "Stock": 999
+      }
+    }
+  ]
+}

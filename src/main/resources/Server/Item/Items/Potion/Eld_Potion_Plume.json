@@ -1,0 +1,93 @@
+{
+  "Parent": "Potion_Template",
+  "TranslationProperties": {
+    "Name": "Potion de Plume",
+    "Description": "Boire : immunité aux chutes pendant 3 min"
+  },
+  "Quality": "Uncommon",
+  "ItemLevel": 200,
+  "Categories": [
+    "Eldanior_System.Consommables"
+  ],
+  "Icon": "Icons/ItemsGenerated/Eld_Potion_Plume.png",
+  "Recipe": {
+    "KnowledgeRequired": false,
+    "Input": [
+      {
+        "ItemId": "Potion_Empty_Small",
+        "Quantity": 1
+      },
+      {
+        "ItemId": "Butin_Plume_Archeopteryx",
+        "Quantity": 1
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Id": "Alchemybench",
+        "Type": "Crafting",
+        "Categories": [
+          "Alchemy_Potions"
+        ],
+        "RequiredTierLevel": 2
+      }
+    ],
+    "OutputQuantity": 1,
+    "TimeSeconds": 1
+  },
+  "Interactions": {
+    "Secondary": "Root_Secondary_Consume_Potion"
+  },
+  "InteractionVars": {
+    "RemoveEffect": {
+      "Interactions": [
+        {
+          "Type": "Simple"
+        }
+      ]
+    },
+    "Effect": {
+      "Interactions": [
+        {
+          "Type": "ApplyEffect",
+          "EffectId": "Eld_Effet_Plume"
+        }
+      ]
+    },
+    "ConsumeSFX": {
+      "Interactions": [
+        {
+          "Parent": "Consume_SFX",
+          "Effects": {
+            "LocalSoundEventId": "SFX_Health_Potion_Low_Drink"
+          }
+        }
+      ]
+    },
+    "ConsumedSFX": {
+      "Interactions": [
+        {
+          "Parent": "Consumed_SFX",
+          "Effects": {
+            "LocalSoundEventId": "SFX_Potion_Drink_Success"
+          }
+        }
+      ]
+    }
+  },
+  "BlockType": {
+    "CustomModel": "Items/Consumables/Potions/Potion_Lesser.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Items/Consommables/Potions/Eld_Potion_Plume.png",
+        "Weight": 1
+      }
+    ],
+    "BlockParticleSetId": "GlassMagic",
+    "ParticleColor": "#f4f4ff",
+    "Light": {
+      "Color": "#3e3e4b"
+    },
+    "TextureComputedColor": "#A7A6A4"
+  }
+}

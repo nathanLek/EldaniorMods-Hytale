@@ -1,0 +1,18 @@
+{
+  "$Comment": "Marionnette : visuel du monstre controle (le comportement est force par le code).",
+  "Duration": 10,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#14001f",
+    "EntityTopTint": "#9b59ff",
+    "Particles": [
+      {
+        "SystemId": "Void_Spectre_Head"
+      }
+    ],
+    "ModelVFXId": "Intangible_Dark"
+  },
+  "OverlapBehavior": "Overwrite",
+  "Infinite": false,
+  "Debuff": true,
+  "StatusEffectIcon": "UI/StatusEffects/Burn.png"
+}

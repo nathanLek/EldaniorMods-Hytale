@@ -1,0 +1,40 @@
+{
+  "$Comment": "Mannequin d'entrainement du Dojo : cible immobile (Mannequins.java : vie, plaque, energie de signature). Genere par scripts/dojo/gen_mannequin.py.",
+  "Type": "Generic",
+  "Appearance": "Eldanior_Mannequin_Dojo",
+  "DropList": "Empty",
+  "KnockbackScale": 0,
+  "MotionControllerList": [
+    {
+      "Type": "Walk",
+      "MaxWalkSpeed": 1,
+      "Gravity": 10,
+      "MaxFallSpeed": 8,
+      "Acceleration": 10
+    }
+  ],
+  "MaxHealth": {
+    "Compute": "MaxHealth"
+  },
+  "Parameters": {
+    "MaxHealth": {
+      "Value": 1000000,
+      "Description": "Vie du mannequin (jamais atteinte : remise au plein a chaque coup)"
+    }
+  },
+  "Instructions": [
+    {
+      "Instructions": [
+        {
+          "Sensor": {
+            "Type": "Any"
+          },
+          "BodyMotion": {
+            "Type": "Nothing"
+          }
+        }
+      ]
+    }
+  ],
+  "NameTranslationKey": "server.npcRoles.Eldanior_Mannequin_Dojo.name"
+}

@@ -1,0 +1,20 @@
+{
+  "$Comment": "Voile de Fumee : grand nuage gris epais (rayon ~4,5 blocs, 3 de haut). Emission courte, reemise par le code chaque seconde.",
+  "Spawners": [
+    {
+      "SpawnerId": "Voile_Fumee_Nuage",
+      "PositionOffset": {
+        "Y": 0.8
+      }
+    },
+    {
+      "SpawnerId": "Voile_Fumee_Sol",
+      "PositionOffset": {
+        "Y": 0.3
+      }
+    }
+  ],
+  "LifeSpan": 1.1,
+  "IsImportant": true,
+  "CullDistance": 160
+}

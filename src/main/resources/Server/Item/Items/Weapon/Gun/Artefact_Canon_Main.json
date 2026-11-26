@@ -1,0 +1,60 @@
+{
+  "Categories": [],
+  "Icon": "Icons/ItemsGenerated/Artefact_Canon_Main.png",
+  "Texture": "Items/Weapons/artefacts/Artefact_Canon_Main.png",
+  "PlayerAnimationsId": "Mousquet",
+  "IconProperties": {
+    "Scale": 0.3,
+    "Translation": [
+      -12,
+      -22
+    ],
+    "Rotation": [
+      320,
+      90,
+      0
+    ]
+  },
+  "Quality": "Legendary",
+  "Model": "Items/Weapons/artefacts/Artefact_Canon_Main.blockymodel",
+  "Scale": 1,
+  "Tags": {
+    "Type": [
+      "Weapon"
+    ],
+    "Family": [
+      "Gun"
+    ]
+  },
+  "Weapon": {},
+  "TranslationProperties": {
+    "Name": "Canon de char à main (Blue Tiger)",
+    "Description": "Forme transformée de Blue Tiger, pour 5 minutes : canon de char porté à deux mains. Un Obus Divin par coup, 5 s de rechargement, 100 blocs en ligne droite : l'obus traverse les ennemis (dégâts ×5 de la balle de mousquet) puis explose et creuse le terrain (restauré après une minute)."
+  },
+  "$Comment": "Forme transformee de Blue Tiger (5 min, ArmeTransfo) : Mousquet.canonTrigger, sort CanonObus. Genere par scripts/artefacts/gen_mousquets.py.",
+  "ItemLevel": 560,
+  "MaxStack": 1,
+  "Interactions": {
+    "Primary": {
+      "$Comment": "BlockedBy sans Secondary : on tire en visant.",
+      "Rules": {
+        "BlockedBy": [
+          "Primary",
+          "Ability1",
+          "Ability2",
+          "Ability3",
+          "Use",
+          "Pick",
+          "SwapFrom",
+          "SwapTo"
+        ]
+      },
+      "Interactions": [
+        "Canon_Tir"
+      ]
+    },
+    "Secondary": "Root_Canon_Visee"
+  },
+  "MaxDurability": 0,
+  "DurabilityLossOnHit": 0
+}

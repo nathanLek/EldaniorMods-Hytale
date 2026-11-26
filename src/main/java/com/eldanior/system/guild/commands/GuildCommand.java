@@ -33,11 +33,11 @@ public class GuildCommand extends AbstractAsyncCommand {
 
     public GuildCommand() {
         super("guild", "Gestion de guilde (invite/kick/promote/demote/info/leave/accept/decline/recruitment/join)");
+        requireNoPermission();                                   // commande joueur : ouverte a tous
         this.actionArg = this.withRequiredArg("action", "invite|kick|promote|demote|info|leave|accept|decline|recruitment|join", ArgTypes.STRING);
         this.arg1 = this.withOptionalArg("arg", "Joueur ou nom de guilde", ArgTypes.STRING);
     }
 
-    protected boolean canGeneratePermission() { return false; }
 
     @Nonnull
     @Override

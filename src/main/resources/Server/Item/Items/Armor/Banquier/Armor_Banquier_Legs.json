@@ -1,0 +1,92 @@
+{
+  "TranslationProperties": {
+    "Name": "Hakama du Banquier",
+    "Description": "Tenue des Banquiers du royaume d'Eldanior. Un hakama rayé de gris et d'or, ourlé de vagues, des tabi blancs et des geta de laque."
+  },
+  "Quality": "Rare",
+  "ItemLevel": 150,
+  "PlayerAnimationsId": "Block",
+  "ItemSoundSetId": "ISS_Armor_Cloth",
+  "Categories": [
+    "Eldanior_System.Armures",
+    "Items.Armors"
+  ],
+  "Icon": "Icons/ItemsGenerated/Armor_Banquier_Legs.png",
+  "IconProperties": {
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Scale": 0.34,
+    "Translation": [
+      0,
+      0
+    ]
+  },
+  "Model": "Items/Armors/Banquier/Banquier/Legs.blockymodel",
+  "Texture": "Items/Armors/Banquier/Banquier/Legs_Texture.png",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    }
+  },
+  "Armor": {
+    "ArmorSlot": "Legs",
+    "BaseDamageResistance": 0,
+    "CosmeticsToHide": [
+      "Pants",
+      "Shoes",
+      "Overpants"
+    ],
+    "StatModifiers": {
+      "Health": [
+        {
+          "Amount": 12,
+          "CalculationType": "Additive"
+        }
+      ],
+      "Mana": [
+        {
+          "Amount": 17,
+          "CalculationType": "Additive"
+        }
+      ]
+    },
+    "DamageResistance": {
+      "Physical": [
+        {
+          "Amount": 0.065,
+          "CalculationType": "Percent"
+        }
+      ],
+      "Projectile": [
+        {
+          "Amount": 0.065,
+          "CalculationType": "Percent"
+        }
+      ]
+    }
+  },
+  "Tags": {
+    "Type": [
+      "Armor"
+    ],
+    "Family": [
+      "Cloth_Kimono"
+    ]
+  },
+  "MaxDurability": 150,
+  "DurabilityLossOnHit": 0.5
+}

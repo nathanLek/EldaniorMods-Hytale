@@ -1,0 +1,47 @@
+{
+  "$Comment": "Fourreau de Yamikiri, Tranche-Ténèbres, objet utilitaire pose dans la main gauche par TenryumaruSystem. Genere par scripts/artefacts/gen_luo_katanas.py.",
+  "TranslationProperties": {
+    "Name": "Fourreau — Yamikiri, Tranche-Ténèbres",
+    "Description": "Il accompagne la lame et disparaît sans elle."
+  },
+  "Quality": "Unique",
+  "ItemLevel": 380,
+  "Model": "Items/Weapons/artefacts/Artefact_Sword_Katana_Yamikiri_Fourreau_Vide.blockymodel",
+  "Texture": "Items/Weapons/artefacts/Artefact_Sword_Katana_Yamikiri.png",
+  "Icon": "Icons/ItemsGenerated/Artefact_Sword_Katana_Yamikiri_Fourreau.png",
+  "IconProperties": {
+    "Scale": 0.33,
+    "Rotation": [
+      45,
+      90,
+      0
+    ],
+    "Translation": [
+      -33,
+      -38
+    ]
+  },
+  "MaxStack": 1,
+  "Variant": false,
+  "Utility": {
+    "Usable": true
+  },
+  "DropOnDeath": false,
+  "PlayerAnimationsId": "Tenryumaru_Degainee",
+  "Interactions": {
+    "Secondary": "Root_Tenryumaru_Secondary_Degainee"
+  },
+  "InteractionVars": {
+    "Guard_Wield": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Secondary_Guard_Wield",
+          "StaminaCost": {
+            "Value": 10,
+            "CostType": "Damage"
+          }
+        }
+      ]
+    }
+  }
+}

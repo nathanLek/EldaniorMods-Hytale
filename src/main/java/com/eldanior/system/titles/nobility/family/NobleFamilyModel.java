@@ -1,9 +1,11 @@
 package com.eldanior.system.titles.nobility.family;
 
 import com.eldanior.system.config.configs.Rarity;
-import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
 import com.eldanior.system.titles.nobility.NobilityRank;
 
+/**
+ * Famille noble. Plus aucun passif de famille depuis le 2026-11-05 : chaque famille recevra une seule rune active (a venir).
+ */
 public abstract class NobleFamilyModel {
 
     private final String id;
@@ -12,7 +14,6 @@ public abstract class NobleFamilyModel {
     private final String history;
     private final Rarity rarity;
     private final NobilityRank minimumRank;
-    private final PassiveSkill familyPassive;
 
     public NobleFamilyModel(
             String id,
@@ -20,8 +21,7 @@ public abstract class NobleFamilyModel {
             String motto,
             String history,
             Rarity rarity,
-            NobilityRank minimumRank,
-            PassiveSkill familyPassive
+            NobilityRank minimumRank
     ) {
         this.id = id;
         this.displayName = displayName;
@@ -29,7 +29,6 @@ public abstract class NobleFamilyModel {
         this.history = history;
         this.rarity = rarity;
         this.minimumRank = minimumRank;
-        this.familyPassive = familyPassive;
     }
 
     public String getId() { return id; }
@@ -38,9 +37,8 @@ public abstract class NobleFamilyModel {
     public String getHistory() { return history; }
     public Rarity getRarity() { return rarity; }
     public NobilityRank getMinimumRank() { return minimumRank; }
-    public PassiveSkill getFamilyPassive() { return familyPassive; }
 
     public String getFormattedName() {
-        return rarity.getColorCode() + "Von " + displayName;
+        return rarity.getColorCode() + displayName;
     }
 }

@@ -1,0 +1,348 @@
+{
+  "DisplayNameKey": "Armurerie du Clan Luo — Négociant",
+  "RefreshInterval": {
+    "Days": 2
+  },
+  "RestockHour": 6,
+  "TradeSlots": [
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Eldanior_Weapon_Sword_Katana_Aonami",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Diamond_Coins",
+            "Quantity": 13
+          }
+        ],
+        "Stock": 2
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Eldanior_Weapon_Sword_Katana_Tsukikage",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Zenith_Coins",
+            "Quantity": 4
+          }
+        ],
+        "Stock": 1
+      }
+    },
+    {
+      "Type": "Pool",
+      "SlotCount": 1,
+      "Trades": [
+        {
+          "Output": {
+            "ItemId": "Artefact_Sword_Katana_Shirasagi",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Zenith_Coins",
+              "Quantity": 9
+            }
+          ],
+          "Stock": [
+            1,
+            1
+          ],
+          "Weight": 50
+        },
+        {
+          "Output": {
+            "ItemId": "Artefact_Sword_Katana_Hien",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Zenith_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            1
+          ],
+          "Weight": 50
+        }
+      ]
+    },
+    {
+      "Type": "Pool",
+      "SlotCount": 6,
+      "Trades": [
+        {
+          "Output": {
+            "ItemId": "Weapon_Sword_Cobalt",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 4
+            }
+          ],
+          "Stock": [
+            1,
+            2
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Sword_Thorium",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            2
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Daggers_Cobalt",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 4
+            }
+          ],
+          "Stock": [
+            1,
+            2
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Shortbow_Cobalt",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 4
+            }
+          ],
+          "Stock": [
+            1,
+            2
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Longsword_Thorium",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            2
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Shield_Cobalt",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 4
+            }
+          ],
+          "Stock": [
+            1,
+            2
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Sword_Mithril",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 6
+            }
+          ],
+          "Stock": [
+            1,
+            2
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Sword_Steel",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            2
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Daggers_Thorium",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            2
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Shield_Thorium",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            2
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Spear_Cobalt",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 4
+            }
+          ],
+          "Stock": [
+            1,
+            2
+          ],
+          "Weight": 20
+        }
+      ]
+    },
+    {
+      "Type": "Pool",
+      "SlotCount": 2,
+      "Trades": [
+        {
+          "Output": {
+            "ItemId": "Tool_Pickaxe_Cobalt",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 4
+            }
+          ],
+          "Stock": [
+            1,
+            2
+          ],
+          "Weight": 15
+        },
+        {
+          "Output": {
+            "ItemId": "Tool_Hatchet_Cobalt",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 4
+            }
+          ],
+          "Stock": [
+            1,
+            2
+          ],
+          "Weight": 15
+        },
+        {
+          "Output": {
+            "ItemId": "Tool_Pickaxe_Thorium",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            2
+          ],
+          "Weight": 15
+        },
+        {
+          "Output": {
+            "ItemId": "Tool_Hatchet_Thorium",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            2
+          ],
+          "Weight": 15
+        }
+      ]
+    }
+  ]
+}

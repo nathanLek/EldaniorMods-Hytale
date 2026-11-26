@@ -1,0 +1,71 @@
+{
+  "TranslationProperties": {
+    "Name": "Roche Fissurée Divine (Basalte)",
+    "Description": "Roche veinée de lumière. Il arrive qu'elle cache un fragment de minerai."
+  },
+  "Quality": "Divin",
+  "ItemLevel": 800,
+  "Categories": [
+    "Eldanior_System.Autres",
+    "Blocks.Ores"
+  ],
+  "Icon": "Icons/ItemsGenerated/Ore_Divin_Basalt_Cracked.png",
+  "IconProperties": {
+    "Scale": 0.58823,
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Translation": [
+      0,
+      -13.5
+    ]
+  },
+  "Tags": {
+    "Type": [
+      "Ore"
+    ],
+    "Family": [
+      "Divin"
+    ]
+  },
+  "Parent": "Rock_Basalt",
+  "BlockType": {
+    "Textures": [
+      {
+        "All": "BlockTextures/Rock_Basalt_Divin_Cracks.png",
+        "Weight": 1
+      }
+    ],
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks",
+        "DropList": {
+          "Container": {
+            "Type": "Multiple",
+            "Containers": [
+              {
+                "Weight": 25,
+                "$Comment": "Weight = pourcentage de chance",
+                "Type": "Single",
+                "Item": {
+                  "ItemId": "Ore_Divin"
+                }
+              },
+              {
+                "Type": "Single",
+                "Item": {
+                  "ItemId": "Rock_Basalt_Cobble"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "Light": {
+      "Color": "#468"
+    }
+  }
+}

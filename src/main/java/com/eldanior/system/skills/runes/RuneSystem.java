@@ -51,10 +51,22 @@ public class RuneSystem extends EntityTickingSystem<EntityStore> {
         RuneManager.migrateLegacyRunes(playerRef, store); // runes divines renommees
 
         if (data.getDignity() >= RuneManager.AURA_RUNE_MIN_DIGNITY
+                && com.eldanior.system.classes.definitions.luo.VoieMartiale.tier(data) == 0   // artistes martiaux : pas d'aura
                 && RuneManager.grantAuraRuneIfMissing(playerRef, store)) {
             NotificationHelper.sendSuccess(netRef,
-                    "<color:gold>Rune d'Aura debloquee !</color> <color:gray>Equipez-la depuis la fenetre des runes (/es runes).</color>");
+                    "<color:gold>Manuel de l'Aura reçu !</color> <color:gray>Maintenez le clic droit sur le manuel pour apprendre la Rune d'Aura.</color>");
         }
+
+        java.util.List<String> classRunes = RuneManager.grantClassRunes(playerRef, store, data);   // manuels de sa classe
+        if (!classRunes.isEmpty()) {
+            String names = String.join(", ", classRunes.stream().map(RuneSystem::bookLabel).toList());
+            NotificationHelper.sendSuccess(netRef,
+                    "<color:gold>Manuels de classe reçus : " + names + "</color> <color:gray>Maintenez le clic droit sur un manuel "
+                            + "pour le lire et apprendre sa rune.</color>");
+        }
+
+        // Cercle d'Ancrage : donne avec les runes d'Espace (jusqu'a la limite d'ancres du joueur)
+        com.eldanior.system.anchors.AnchorManager.grantCircles(playerRef, store, netRef);
 
         if (RuneManager.enforceAbilitySlots(playerRef, store, data) > 0) {
             NotificationHelper.sendWarning(netRef,
@@ -67,4 +79,16 @@ public class RuneSystem extends EntityTickingSystem<EntityStore> {
     public Query<EntityStore> getQuery() {
         return Player.getComponentType();
     }
+
+    /** Nom court d'un manuel remis : nom affiche de l'objet, sinon la fin de son identifiant. */
+    private static String bookLabel(String itemId) {
+        try {
+            var item = com.hypixel.hytale.server.core.asset.type.item.config.Item.getAssetMap().getAsset(itemId);
+            var tp = item != null ? item.getTranslationProperties() : null;
+            String name = tp != null ? tp.getName() : null;
+            if (name != null && !name.isBlank() && !name.startsWith("server.")) return name;
+        } catch (Exception ignored) { }
+        return itemId.replaceAll("^Eldanior_Manuel_(Magie_[A-Za-z]+_|Luo_)", "").replace("Rune_", "");
+    }
+
 }

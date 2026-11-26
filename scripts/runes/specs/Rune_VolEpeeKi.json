@@ -1,0 +1,61 @@
+{
+  "$Comment": "Fiche de conception : competence de la voie martiale (classe Saint Martial), validee le 2026-11-10 (docs/plan-clan-luo.md, B). Apprise par son manuel, aucun butin.",
+  "id": "Rune_VolEpeeKi",
+  "spell": "VolEpeeKi",
+  "javaClass": "VolEpeeKi",
+  "page": "rune_page_volepeeki",
+  "name": "Rune du Vol sur épée de Ki",
+  "type": "Luo",
+  "rarity": "Unique",
+  "emblem": "VolEpeeKi",
+  "classes": "saint_martial, maitre_supreme, dieu_martial",
+  "persistent": true,
+  "summary": "Bascule (mana/s 8 / 6 / 4 : Saint, Maitre Supreme, Dieu Martial) : une epee de Ki geante apparait sous les pieds, vol libre (vitesse 9 / 11 / 13) ; coupe a court de mana, protection de chute 6 s.",
+  "description": "Compétence de la voie martiale, enseignée à la classe Saint Martial. Une épée de Ki géante se forme sous vos pieds et vous porte dans les airs. Clic : envol, second clic : atterrissage. Vol libre (saut pour monter, accroupi pour descendre), plus rapide avec le palier. Mana prélevé chaque seconde (8, puis 6 et 4) ; le vol cesse à court de mana, sans dégâts de chute.",
+  "pageDescription": "« Les saints ne marchent plus : ils tracent leur chemin dans le ciel. » Compétence de la voie martiale : elle s'apprend dans son manuel, jamais en butin.",
+  "keywords": [
+    "Buff",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": 0,
+    "cooldown": 1,
+    "reason": "rune a bascule de la voie martiale (comme le Ki de l'Epee) : un clic l'active, un second clic la coupe ; le mana est preleve chaque seconde dans le code"
+  },
+  "loot": {},
+  "cast": {
+    "animationSet": "Sword",
+    "charging": "CastEnchant",
+    "release": "CastEnrage",
+    "chargeTime": 0.2,
+    "releaseTime": 0.3,
+    "moveSpeed": 0.6,
+    "cameraEffect": null,
+    "sound": null,
+    "releaseSound": "SFX_Ability_Wind_Strike_Imbue",
+    "handParticles": null,
+    "handParticlesScale": 0.6,
+    "costMoment": "start"
+  },
+  "design": {
+    "radius": "0",
+    "persistentDurationS": 0,
+    "targets": "self",
+    "effects": "FlyMode.Forced + epee de Ki tenue sous les pieds",
+    "balance": {
+      "damage": 0,
+      "range": 0,
+      "duration": 3,
+      "mobility": 5,
+      "control": 0,
+      "defense": 0,
+      "targets": 0,
+      "frequency": 0,
+      "terrain": 0,
+      "difficulty": 0
+    }
+  },
+  "category": "Eldanior_Empire_Luo.Runes",
+  "manual": "Eldanior_Manuel_Luo_VolEpeeKi",
+  "$Comment_manual": "Technique apprise par son manuel secret (gen_voie_martiale_objets.py) : pas de parchemin rune_page_*."
+}

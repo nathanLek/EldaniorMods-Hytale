@@ -1,0 +1,86 @@
+{
+  "$Comment": "Signature des Lames Jumelles, Eclipse des Jumeaux (energie de signature pleine) : les deux lames s'arment, bond en avant, taille a deux lames, puis le sort Java EclipseJumelle lance la croix geante qui explose en fin de course.",
+  "Type": "StatsCondition",
+  "Costs": {
+    "SignatureEnergy": 100
+  },
+  "ValueType": "Percent",
+  "Next": {
+    "Type": "Serial",
+    "Interactions": [
+      {
+        "Type": "Simple",
+        "RunTime": 0.45,
+        "HorizontalSpeedMultiplier": 0.5,
+        "Effects": {
+          "ItemAnimationId": "SwingLeftCharging",
+          "LocalSoundEventId": "SFX_Sword_T2_Lunge_Charge_Local",
+          "Particles": [
+            {
+              "SystemId": "Sword_Charging",
+              "TargetNodeName": "Handle",
+              "PositionOffset": {
+                "X": 0.6
+              },
+              "RotationOffset": {
+                "Roll": 90
+              }
+            }
+          ]
+        }
+      },
+      {
+        "Type": "ApplyForce",
+        "Force": 18,
+        "Direction": {
+          "X": 0,
+          "Y": 0,
+          "Z": -10
+        },
+        "AdjustVertical": true,
+        "VerticalClamp": [
+          -85,
+          20
+        ],
+        "WaitForGround": false,
+        "ChangeVelocityType": "Add",
+        "VelocityConfig": {
+          "AirResistance": 0.97,
+          "AirResistanceMax": 0.96,
+          "GroundResistance": 0.94,
+          "GroundResistanceMax": 0.82,
+          "Threshold": 3.0,
+          "Style": "Exp"
+        }
+      },
+      {
+        "Type": "Simple",
+        "RunTime": 0.15,
+        "Effects": {
+          "ItemAnimationId": "SwingDownStrong",
+          "WorldSoundEventId": "SFX_Sword_T2_Swing_Down",
+          "LocalSoundEventId": "SFX_Sword_T2_Swing_Down_Local"
+        }
+      },
+      {
+        "Type": "RuneSpell",
+        "RunTime": 0.05,
+        "Spell": "EclipseJumelle"
+      },
+      {
+        "Type": "Simple",
+        "RunTime": 0.25,
+        "Effects": {
+          "ClearAnimationOnFinish": true
+        }
+      },
+      {
+        "Type": "ChangeStat",
+        "StatModifiers": {
+          "SignatureEnergy": -100
+        },
+        "ValueType": "Percent"
+      }
+    ]
+  }
+}

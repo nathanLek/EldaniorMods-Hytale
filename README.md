@@ -160,7 +160,7 @@ Higher ranks can **promote vassals**, creating a living chain of allegiance. Eac
 Pledge your loyalty to one of **13 noble houses**, each with unique bonuses:
 
 - **Royal:** Eldanior
-- **Marquis:** Luminara, Valmontis, Runkandel, Zippel
+- **Marquis:** Luo, Valmontis, Runkandel, Zippel
 - **Duchy:** Goldcrest, Warbane, Ironveil, Spellweave, Nighthollow, Silkroad, Frostguard, Swiftquiver
 
 Family treasuries (thread-safe AtomicLong), contribution tracking, and inter-family rivalry fuel the political game.

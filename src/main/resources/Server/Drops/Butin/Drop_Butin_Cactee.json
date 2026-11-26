@@ -1,0 +1,49 @@
+{
+  "Container": {
+    "Type": "Multiple",
+    "Containers": [
+      {
+        "Type": "Choice",
+        "Weight": 30,
+        "Containers": [
+          {
+            "Type": "Single",
+            "Item": {
+              "ItemId": "Butin_Epine_Cactee",
+              "QuantityMin": 1,
+              "QuantityMax": 1
+            }
+          }
+        ]
+      },
+      {
+        "Type": "Choice",
+        "Weight": 8,
+        "Containers": [
+          {
+            "Type": "Single",
+            "Item": {
+              "ItemId": "Butin_Pulpe_Cactee",
+              "QuantityMin": 1,
+              "QuantityMax": 1
+            }
+          }
+        ]
+      },
+      {
+        "Type": "Choice",
+        "Weight": 1,
+        "Containers": [
+          {
+            "Type": "Single",
+            "Item": {
+              "ItemId": "Butin_Fleur_Cactee",
+              "QuantityMin": 1,
+              "QuantityMax": 1
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "TranslationProperties": {
+    "Name": "Pourpoint du Cerf Céleste",
+    "Description": "Armure divine de l'Archer. Un pourpoint de cuir lacé, des spalières de feuilles d'argent, une cape de forêt brodée du cerf et un grand carquois aux flèches empennées de jade."
+  },
+  "Quality": "Divin",
+  "ItemLevel": 800,
+  "PlayerAnimationsId": "Block",
+  "ItemSoundSetId": "ISS_Armor_Leather",
+  "Categories": [
+    "Eldanior_System.Armures",
+    "Items.Armors"
+  ],
+  "Icon": "Icons/ItemsGenerated/Armor_Divin_Archer_Chest.png",
+  "IconProperties": {
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Scale": 0.3,
+    "Translation": [
+      0,
+      0
+    ]
+  },
+  "Model": "Items/Armors/Divines/Archer/Chest.blockymodel",
+  "Texture": "Items/Armors/Divines/Archer/Chest_Texture.png",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    }
+  },
+  "Armor": {
+    "ArmorSlot": "Chest",
+    "BaseDamageResistance": 0,
+    "CosmeticsToHide": [
+      "Overtop",
+      "Cape"
+    ],
+    "StatModifiers": {
+      "Health": [
+        {
+          "Amount": 80,
+          "CalculationType": "Additive"
+        }
+      ],
+      "Mana": [
+        {
+          "Amount": 40,
+          "CalculationType": "Additive"
+        }
+      ]
+    },
+    "DamageResistance": {
+      "Physical": [
+        {
+          "Amount": 0.21,
+          "CalculationType": "Percent"
+        }
+      ],
+      "Projectile": [
+        {
+          "Amount": 0.21,
+          "CalculationType": "Percent"
+        }
+      ]
+    }
+  },
+  "Tags": {
+    "Type": [
+      "Armor"
+    ],
+    "Family": [
+      "Divine"
+    ]
+  },
+  "MaxDurability": 800,
+  "DurabilityLossOnHit": 0.5
+}

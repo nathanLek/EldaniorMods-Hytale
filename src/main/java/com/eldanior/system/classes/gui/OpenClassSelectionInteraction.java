@@ -71,24 +71,27 @@ public class OpenClassSelectionInteraction extends SimpleInteraction {
                     baseClassIds.add(m.getId());
                 }
             }
+            // 2026-11-25 : meme fenetre a cartes que l'accueil (ClassChoicePage)
             player.getPageManager().openCustomPage(entityRef, store,
-                    new ClassIntroScreen(playerRef, baseClassIds, false));
+                    new ClassChoicePage(playerRef, baseClassIds, false, false, 0,
+                            player.getPlayerRef().hasPermission(EldaniorLogger.ADMIN_PERMISSION)));
             return;
         }
 
-        // --- 2. ÉVOLUTION DE CLASSE (Niveau 120, etc.) ---
+        // --- 2. ÉVOLUTION DE CLASSE (niveaux 180, 400, puis 650) ---
         ClassModel currentClass = ClassManager.get(currentClassId);
         if (currentClass == null) return;
 
-        if (level < currentClass.getPromotionLevel()) {
-            int remaining = currentClass.getPromotionLevel() - level;
+        int promotionLevel = currentClass.getPromotionLevel();
+        if (level < promotionLevel) {
+            int remaining = promotionLevel - level;
             NotificationHelper.sendNotification(playerRef,
-                    "<color:gold>Prochaine évolution au niveau " + currentClass.getPromotionLevel() + "</color> <color:gray>(" + remaining + " niveaux restants)</color>",
+                    "<color:gold>Prochaine évolution au niveau " + promotionLevel + "</color> <color:gray>(" + remaining + " niveaux restants)</color>",
                     NotificationStyle.Warning);
             return;
         }
 
-        List<String> possibleEvolutions = currentClass.getNextClassId();
+        List<String> possibleEvolutions = com.eldanior.system.classes.definitions.luo.VoieMartiale.filter(currentClass.getNextClassId(), playerData);
 
         if (possibleEvolutions == null || possibleEvolutions.isEmpty()) {
             NotificationHelper.sendNotification(playerRef,
@@ -97,30 +100,62 @@ public class OpenClassSelectionInteraction extends SimpleInteraction {
             return;
         }
 
-        // --- 3. SYSTÈME DE GACHA AVEC SAUVEGARDE ---
-        // Tier 2 (promotionLevel >= 400) : 1 seul choix proposé
-        // Tier 1 (promotionLevel < 400) : 3 choix proposés
-        int numChoices = currentClass.getPromotionLevel() >= 400 ? 1 : 3;
-
-        // Si le joueur a déjà des choix sauvegardés, on les repropose
-        List<String> savedChoices = playerData.getSavedEvolutionChoices();
+        // --- 3. VOIES PROPOSEES (2026-11-26) ---
+        // Palier 2 et au-dela : choix libre parmi toutes les evolutions (meme rarete : le tirage n'apportait rien).
+        // Classe de base : 3 voies tirees selon leur rarete, avec la pitie ; tirage sauvegarde, 2 relances.
+        boolean free = isFreeChoice(currentClass);
         List<String> proposedIds;
-
-        if (!savedChoices.isEmpty()) {
-            // Vérifier que les choix sauvegardés sont toujours valides
-            boolean allValid = true;
-            for (String id : savedChoices) {
-                if (ClassManager.get(id) == null) { allValid = false; break; }
-            }
-            proposedIds = allValid ? savedChoices : performGachaRoll(possibleEvolutions, numChoices);
+        if (free) {
+            proposedIds = new ArrayList<>(possibleEvolutions);
         } else {
-            proposedIds = performGachaRoll(possibleEvolutions, numChoices);
+            List<String> savedChoices = playerData.getSavedEvolutionChoices();
+            boolean allValid = !savedChoices.isEmpty();
+            for (String id : savedChoices) {
+                if (ClassManager.get(id) == null || !possibleEvolutions.contains(id)) { allValid = false; break; }
+            }
+            proposedIds = allValid ? savedChoices : roll(possibleEvolutions, playerData);
         }
 
-        // La sauvegarde se fait dans ClassEvolutionIntroScreen.build()
+        proposedIds = com.eldanior.system.classes.definitions.luo.VoieMartiale.ensure(proposedIds, possibleEvolutions, playerData);   // Clan Luo
+
+        // Sauvegarde du tirage et de la pitie (modifiee par roll) : ClassChoicePage.build(), pas ici (jamais de
+        // putComponent pendant le traitement du store)
         boolean isAdmin = player.getPlayerRef().hasPermission(EldaniorLogger.ADMIN_PERMISSION);
         player.getPageManager().openCustomPage(entityRef, store,
-                new ClassEvolutionIntroScreen(playerRef, proposedIds, playerData.getEvolutionRerolls(), isAdmin));
+                new ClassChoicePage(playerRef, proposedIds, true, free, playerData.getEvolutionRerolls(), isAdmin));
+    }
+
+    /** Choix libre (pas de tirage, pas de relance) : a partir du palier 2. */
+    public static boolean isFreeChoice(ClassModel current) {
+        return current != null && current.getTier() >= 2;
+    }
+
+    // ==========================================================
+    // PITIE (2026-11-26)
+    // ==========================================================
+
+    /** Pitie maximale prise en compte : x11 sur les chances d'Unique, Legendaire et Divine. */
+    public static final int MAX_PITY = 20;
+
+    /**
+     * Tire 3 voies selon leur rarete et la pitie du joueur, puis met la pitie a jour : remise a zero si une voie Unique ou
+     * mieux sort, +1 sinon. La pitie n'est pas effacee par la remise a zero du personnage (CharacterWipe).
+     */
+    public static List<String> roll(List<String> pool, PlayerLevelData data) {
+        int pity = Math.min(MAX_PITY, data.getEvolutionPity());
+        List<String> result = performGachaRoll(pool, 3, pity);
+        boolean jackpot = false;
+        for (String id : result) {
+            ClassModel m = ClassManager.get(id);
+            if (m != null && m.getRarity().ordinal() >= Rarity.UNIQUE.ordinal()) jackpot = true;
+        }
+        data.setEvolutionPity(jackpot ? 0 : data.getEvolutionPity() + 1);
+        return result;
+    }
+
+    /** Multiplicateur de pitie d'une rarete : +50 % par point pour Unique, Legendaire et Divine. */
+    static double pityFactor(Rarity rarity, int pity) {
+        return rarity.ordinal() >= Rarity.UNIQUE.ordinal() ? 1.0 + 0.5 * pity : 1.0;
     }
 
     // ==========================================================
@@ -130,28 +165,30 @@ public class OpenClassSelectionInteraction extends SimpleInteraction {
     /**
      * Effectue un tirage au sort pondéré pour choisir 'amount' classes uniques.
      */
-    public static List<String> performGachaRoll(List<String> pool, int amount) {
+    public static List<String> performGachaRoll(List<String> pool, int amount) { return performGachaRoll(pool, amount, 0); }
+
+    public static List<String> performGachaRoll(List<String> pool, int amount, int pity) {
         List<String> result = new ArrayList<>();
         List<String> remainingPool = new ArrayList<>(pool);
 
         int maxChoices = Math.min(amount, remainingPool.size());
 
         for (int i = 0; i < maxChoices; i++) {
-            int totalWeight = 0;
+            double totalWeight = 0;
 
             // Étape A : Calcul du poids total de l'urne restante
             for (String id : remainingPool) {
                 ClassModel model = ClassManager.get(id);
                 if (model != null) {
-                    totalWeight += getRarityWeight(model.getRarity());
+                    totalWeight += weight(model.getRarity(), pity);
                 }
             }
 
-            if (totalWeight == 0) break; // Sécurité
+            if (totalWeight <= 0) break; // Sécurité
 
             // Étape B : On lance un dé de 0 à totalWeight
-            int roll = RANDOM.nextInt(totalWeight);
-            int currentWeightSum = 0;
+            double roll = RANDOM.nextDouble() * totalWeight;
+            double currentWeightSum = 0;
 
             // Étape C : On cherche sur quelle classe le dé est tombé
             for (int j = 0; j < remainingPool.size(); j++) {
@@ -159,7 +196,7 @@ public class OpenClassSelectionInteraction extends SimpleInteraction {
                 ClassModel model = ClassManager.get(id);
 
                 if (model != null) {
-                    currentWeightSum += getRarityWeight(model.getRarity());
+                    currentWeightSum += weight(model.getRarity(), pity);
 
                     // Si on dépasse le lancer de dé, c'est que c'est cette classe qui a été piochée !
                     if (currentWeightSum > roll) {
@@ -172,6 +209,8 @@ public class OpenClassSelectionInteraction extends SimpleInteraction {
         }
         return result;
     }
+
+    private static double weight(Rarity rarity, int pity) { return getRarityWeight(rarity) * pityFactor(rarity, pity); }
 
     private static int getRarityWeight(Rarity rarity) {
         return switch (rarity) {

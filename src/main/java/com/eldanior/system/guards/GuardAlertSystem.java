@@ -34,11 +34,14 @@ public class GuardAlertSystem extends DamageEventSystem {
         if (!(damage.getSource() instanceof Damage.EntitySource source)) return;
         Ref<EntityStore> attacker = source.getRef(), victim = chunk.getReferenceTo(index);
         if (attacker == null || !attacker.isValid() || victim == null || !victim.isValid() || attacker.equals(victim)) return;
+        if (com.eldanior.system.dojo.Mannequins.isDummy(victim, store)) return;          // mannequin du dojo : entrainement, pas un combat
         boolean attackerIsPlayer = store.getComponent(attacker, Player.getComponentType()) != null;
         boolean victimIsPlayer = store.getComponent(victim, Player.getComponentType()) != null;
         // Aventurier recrute : il s'en prend a ce que son joueur frappe et a ceux qui frappent son joueur
         if (attackerIsPlayer) AdventurerSystem.onOwnerFight(attacker, victim, store);
         if (victimIsPlayer) AdventurerSystem.onOwnerFight(victim, attacker, store);
+        if (attackerIsPlayer) com.eldanior.system.familiers.FamilierManager.onOwnerFight(attacker, victim, store);   // familier : ce que son maitre frappe
+        if (victimIsPlayer) com.eldanior.system.familiers.FamilierManager.onOwnerFight(victim, attacker, store);     // ... et ce qui frappe son maitre
         if (!attackerIsPlayer) return;
         UUID a = uuid(attacker, store);
         if (!victimIsPlayer) Criminals.provoke(victim, a, store);                         // un PK qui frappe une bande la met en colere

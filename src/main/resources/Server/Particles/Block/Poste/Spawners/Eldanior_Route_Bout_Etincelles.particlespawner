@@ -1,0 +1,71 @@
+{
+  "$Comment": "Bout de route de PNJ (le PNJ y fait demi-tour) : meme marque, en orange.",
+  "RenderMode": "BlendAdd",
+  "ParticleRotationInfluence": "Billboard",
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "MaxConcurrentParticles": 10,
+  "ParticleRotateWithSpawner": false,
+  "SpawnRate": {
+    "Min": 10,
+    "Max": 10
+  },
+  "SpawnBurst": true,
+  "ParticleLifeSpan": {
+    "Min": 1.1,
+    "Max": 1.4
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Basic/Spark.png",
+    "ScaleRatioConstraint": "OneToOne",
+    "UVOption": "None",
+    "SoftParticles": "Disable",
+    "InitialAnimationFrame": {
+      "Opacity": 1,
+      "Color": "#ffd9a0",
+      "Scale": {
+        "X": {
+          "Min": 0.35,
+          "Max": 0.45
+        }
+      }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 1,
+        "Color": "#ffd9a0"
+      },
+      "100": {
+        "Opacity": 0,
+        "Color": "#ff7a2a"
+      }
+    }
+  },
+  "EmitOffset": {
+    "X": {
+      "Min": -0.12,
+      "Max": 0.12
+    },
+    "Y": {
+      "Max": 0.05
+    },
+    "Z": {
+      "Min": -0.12,
+      "Max": 0.12
+    }
+  },
+  "InitialVelocity": {
+    "Speed": {
+      "Min": 1.6,
+      "Max": 2.4
+    },
+    "Yaw": {
+      "Min": -180,
+      "Max": 180
+    },
+    "Pitch": {
+      "Min": 84,
+      "Max": 90
+    }
+  }
+}

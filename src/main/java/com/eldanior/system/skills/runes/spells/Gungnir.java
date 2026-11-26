@@ -400,12 +400,24 @@ public final class Gungnir {
         public void cleanup(CommandBuffer<EntityStore> cb) {
             SpellFx.remove(spear, cb);
             inFlight.remove(caster);
+            saveTerrain();
         }
 
         @Override
         public void abort() {
             RuneSpellRuntime.removeLater(spear);
             inFlight.remove(caster);
+            saveTerrain();
+        }
+
+        /**
+         * Tunnel et cratere ecrits sur disque (apres les blocs : meme file world.execute), sinon un arret du serveur
+         * avant RESTORE_MS les laissait pour toujours.
+         */
+        private void saveTerrain() {
+            if (world == null || terrain == null) return;
+            try { world.execute(TerrainRestore::save); }
+            catch (Exception e) { EldaniorLogger.error("Gungnir: sauvegarde du terrain", e); }
         }
     }
 }

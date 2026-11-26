@@ -1,0 +1,90 @@
+{
+  "TranslationProperties": {
+    "Name": "Tekkō des Rizières",
+    "Description": "Kimono des Rizières, tenue des villageois de la vallée. Des protège-mains indigo, contre la paille et la boue."
+  },
+  "Quality": "Common",
+  "ItemLevel": 10,
+  "PlayerAnimationsId": "Block",
+  "ItemSoundSetId": "ISS_Armor_Cloth",
+  "Categories": [
+    "Eldanior_Empire_Luo.Civils",
+    "Items.Armors"
+  ],
+  "Icon": "Icons/ItemsGenerated/Armor_Kimono_Rizieres_Hands.png",
+  "IconProperties": {
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Scale": 0.5,
+    "Translation": [
+      0,
+      0
+    ]
+  },
+  "Model": "Items/Armors/Kimono/Rizieres/Hands.blockymodel",
+  "Texture": "Items/Armors/Kimono/Rizieres/Hands_Texture.png",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    }
+  },
+  "Armor": {
+    "ArmorSlot": "Hands",
+    "BaseDamageResistance": 0,
+    "CosmeticsToHide": [
+      "Gloves"
+    ],
+    "StatModifiers": {
+      "Health": [
+        {
+          "Amount": 2,
+          "CalculationType": "Additive"
+        }
+      ],
+      "Mana": [
+        {
+          "Amount": 2,
+          "CalculationType": "Additive"
+        }
+      ]
+    },
+    "DamageResistance": {
+      "Physical": [
+        {
+          "Amount": 0.012,
+          "CalculationType": "Percent"
+        }
+      ],
+      "Projectile": [
+        {
+          "Amount": 0.012,
+          "CalculationType": "Percent"
+        }
+      ]
+    }
+  },
+  "Tags": {
+    "Type": [
+      "Armor"
+    ],
+    "Family": [
+      "Cloth_Kimono"
+    ]
+  },
+  "MaxDurability": 50,
+  "DurabilityLossOnHit": 0.5
+}

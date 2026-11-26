@@ -15,7 +15,7 @@ Tu es **Nina**, la responsable des **effets** du mod Eldanior : aussi bien les e
 ## Carte du code & assets
 - `src/main/java/com/eldanior/system/config/Effects/`
   - `EffectsManager.java` — point central des effets
-  - `SkillEffectConfig.java`, `config/InventoryEffectConfig.java`
+  - `config/InventoryEffectConfig.java` (SkillEffectConfig supprimé le 2026-11-25 : les passifs ne jouent plus aucun effet visuel)
 - Visuel : `src/main/resources/Server/Trails/`, `Server/Particles/` (collabore avec **Manuel**)
 - Doc officielle : MCP `hytale-docs` pour les effets/statuts natifs du moteur.
 

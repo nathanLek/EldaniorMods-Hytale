@@ -1,0 +1,71 @@
+$C = "../Common.ui";
+
+// Lecture d'un livre (histoires/LivrePage) : histoires et Tomes Imperiaux, poses ou tenus en main. Meme habillage que la
+// page de lecture des notes du jeu (Pages/BlockLorePage.ui), plus large, texte qui defile et pages precedente / suivante.
+$C.@PageOverlay {
+  LayoutMode: Middle;
+
+  $C.@DecoratedContainer {
+    Anchor: (Width: 660, Height: 620);
+
+    #Title {
+      Label #LivreTitre {
+        Style: (
+          ...$C.@TitleStyle,
+          HorizontalAlignment: Center,
+          ShrinkTextToFit: true,
+          MinShrinkTextToFitFontSize: 11
+        );
+        Padding: (Horizontal: 19);
+      }
+    }
+
+    #Content {
+      LayoutMode: Top;
+      Padding: (Full: 16);
+
+      Label #LivreSurtitre {
+        Text: "";
+        Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #c9a65a, HorizontalAlignment: Center);
+      }
+
+      Group #LivreDefile {
+        Anchor: (Top: 10);
+        FlexWeight: 1;
+        LayoutMode: TopScrolling;
+        Padding: (Right: 8);
+        ScrollbarStyle: $C.@DefaultScrollbarStyle;
+
+        Label #LivreTexte {
+          Anchor: (Bottom: 12, Left: 6, Right: 6);
+          Style: (...$C.@DefaultLabelStyle, Wrap: true);
+        }
+      }
+
+      Group #LivreNav {
+        Anchor: (Top: 10, Height: 40);
+        LayoutMode: Left;
+
+        Group #LivrePrecCase {
+          Anchor: (Width: 210);
+          LayoutMode: Left;
+          $C.@SecondaryTextButton #LivrePrec { Text: "Page précédente"; FlexWeight: 1; }
+        }
+
+        Label #LivreNumero {
+          FlexWeight: 1;
+          Text: "";
+          Style: (FontSize: 13, TextColor: #94a7bb, HorizontalAlignment: Center, VerticalAlignment: Center);
+        }
+
+        Group #LivreSuivCase {
+          Anchor: (Width: 210);
+          LayoutMode: Left;
+          $C.@SecondaryTextButton #LivreSuiv { Text: "Page suivante"; FlexWeight: 1; }
+        }
+      }
+    }
+  }
+}
+
+$C.@BackButton {}

@@ -1,0 +1,59 @@
+{
+  "$Comment": "Morsure des dragons etoiles (scripts/monstres/gen_dragons_etoiles.py) : pas d'animation, le modele n'en a pas.",
+  "Type": "Simple",
+  "RunTime": 0.6,
+  "Next": {
+    "Type": "Parallel",
+    "Interactions": [
+      {
+        "Interactions": [
+          {
+            "Type": "Selector",
+            "RunTime": 0.2,
+            "Selector": {
+              "Id": "Horizontal",
+              "Direction": "ToLeft",
+              "TestLineOfSight": true,
+              "ExtendTop": 2,
+              "ExtendBottom": 1,
+              "StartDistance": 0.5,
+              "EndDistance": 6,
+              "Length": 120,
+              "RollOffset": 0,
+              "YawStartOffset": -60,
+              "PitchOffset": -10
+            },
+            "HitEntity": {
+              "Interactions": [
+                {
+                  "Type": "Replace",
+                  "DefaultValue": {
+                    "Interactions": [
+                      "NPC_Attack_Melee_Damage"
+                    ]
+                  },
+                  "Var": "Melee_Damage"
+                }
+              ]
+            },
+            "Next": {
+              "Type": "Simple",
+              "RunTime": 0.8
+            }
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "Simple",
+            "RunTime": 0.25,
+            "Effects": {
+              "WorldSoundEventId": "SFX_Golem_Earth_Swing"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "$Comment": "Signature de Hache de Skaði, Croc de l'Hiver (energie de signature pleine) : sort Java HiverDeSkadi (ArmesDivines). Genere par gen_divines.py.",
+  "Type": "StatsCondition",
+  "Costs": {
+    "SignatureEnergy": 100
+  },
+  "ValueType": "Percent",
+  "Next": {
+    "Type": "Serial",
+    "Interactions": [
+      {
+        "Type": "Simple",
+        "RunTime": 0.45,
+        "Effects": {
+          "ItemAnimationId": "SwingLeftCharging"
+        }
+      },
+      {
+        "Type": "Simple",
+        "RunTime": 0.3,
+        "Effects": {
+          "ItemAnimationId": "SwingDown",
+          "ClearAnimationOnFinish": true
+        }
+      },
+      {
+        "Type": "RuneSpell",
+        "RunTime": 0.05,
+        "Spell": "HiverDeSkadi"
+      },
+      {
+        "Type": "ChangeStat",
+        "StatModifiers": {
+          "SignatureEnergy": -100
+        },
+        "ValueType": "Percent"
+      }
+    ]
+  }
+}

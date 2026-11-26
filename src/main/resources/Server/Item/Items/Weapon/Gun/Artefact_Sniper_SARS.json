@@ -1,0 +1,60 @@
+{
+  "Categories": [],
+  "Icon": "Icons/ItemsGenerated/Artefact_Sniper_SARS.png",
+  "Texture": "Items/Weapons/artefacts/Artefact_Sniper_SARS.png",
+  "PlayerAnimationsId": "Mousquet",
+  "IconProperties": {
+    "Scale": 0.3,
+    "Translation": [
+      -12,
+      -22
+    ],
+    "Rotation": [
+      320,
+      90,
+      0
+    ]
+  },
+  "Quality": "Legendary",
+  "Model": "Items/Weapons/artefacts/Artefact_Sniper_SARS.blockymodel",
+  "Scale": 1,
+  "Tags": {
+    "Type": [
+      "Weapon"
+    ],
+    "Family": [
+      "Gun"
+    ]
+  },
+  "Weapon": {},
+  "TranslationProperties": {
+    "Name": "SARS militaire (Black Bess)",
+    "Description": "Forme transformée de Black Bess, pour 5 minutes : fusil de précision militaire à verrou. Chargeurs de 5 Balles de sniper divines (2,5 s), portée 2 000 blocs, précision parfaite, dégâts ×1,5 de la balle de mousquet. Clic droit maintenu : lunette de combat (jusqu'à ×20 avec l'Endurance)."
+  },
+  "$Comment": "Forme transformee de Black Bess (5 min, ArmeTransfo) : Mousquet.sarsTrigger, sort SarsBalle. Genere par scripts/artefacts/gen_mousquets.py.",
+  "ItemLevel": 560,
+  "MaxStack": 1,
+  "Interactions": {
+    "Primary": {
+      "$Comment": "BlockedBy sans Secondary : on tire en visant.",
+      "Rules": {
+        "BlockedBy": [
+          "Primary",
+          "Ability1",
+          "Ability2",
+          "Ability3",
+          "Use",
+          "Pick",
+          "SwapFrom",
+          "SwapTo"
+        ]
+      },
+      "Interactions": [
+        "Sars_Tir"
+      ]
+    },
+    "Secondary": "Root_Sars_Visee"
+  },
+  "MaxDurability": 0,
+  "DurabilityLossOnHit": 0
+}

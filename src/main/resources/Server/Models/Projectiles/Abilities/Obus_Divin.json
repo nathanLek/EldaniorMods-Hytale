@@ -1,0 +1,39 @@
+{
+  "$Comment": "Obus_Divin, deplace par le code (Mousquet). Genere par scripts/artefacts/gen_mousquets.py.",
+  "Model": "Items/Projectiles/Obus_Divin.blockymodel",
+  "Texture": "Items/Projectiles/Obus_Divin.png",
+  "MinScale": 1.0,
+  "MaxScale": 1.0,
+  "HitBox": {
+    "Max": {
+      "X": 0.3,
+      "Y": 0.3,
+      "Z": 0.6
+    },
+    "Min": {
+      "X": -0.3,
+      "Y": -0.3,
+      "Z": -0.6
+    }
+  },
+  "Trails": [
+    {
+      "TrailId": "Obus_Divin_Trail",
+      "TargetNodeName": "Root",
+      "RotationOffset": {
+        "Roll": 0
+      }
+    },
+    {
+      "TrailId": "Obus_Divin_Trail",
+      "TargetNodeName": "Root",
+      "RotationOffset": {
+        "Roll": 90
+      }
+    }
+  ],
+  "Light": {
+    "Color": "#9fd0ff",
+    "Radius": 4
+  }
+}

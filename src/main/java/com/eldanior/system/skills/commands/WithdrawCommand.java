@@ -27,6 +27,8 @@ public class WithdrawCommand extends AbstractPlayerCommand {
     private static final LinkedHashMap<String, Long> COINS = new LinkedHashMap<>();
 
     static {
+        COINS.put("Elda_Imperial_Coins", 1000000L);
+        COINS.put("Elda_Astral_Coins",  100000L);
         COINS.put("Elda_Zenith_Coins",   10000L);
         COINS.put("Elda_Diamond_Coins",   1000L);
         COINS.put("Elda_Gold_Coins",       100L);
@@ -48,6 +50,10 @@ public class WithdrawCommand extends AbstractPlayerCommand {
         Player player = store.getComponent(ref, Player.getComponentType());
         PlayerLevelData data = store.getComponent(ref, EldaniorSystem.get().getPlayerLevelDataType());
         if (player == null || data == null) return;
+        if (!playerRef.hasPermission(com.eldanior.system.config.EldaniorLogger.ADMIN_PERMISSION)) {   // 2026-11-12 : admin, le banquier gere l'argent
+            playerRef.sendMessage(Message.raw("Commande reservee aux admins : passez par le banquier."));
+            return;
+        }
 
         long amount = this.amountArg.get(ctx).longValue();
 
@@ -129,6 +135,8 @@ public class WithdrawCommand extends AbstractPlayerCommand {
 
     private String getCoinLabel(String itemId) {
         return switch (itemId) {
+            case "Elda_Imperial_Coins" -> "Imperiale";
+            case "Elda_Astral_Coins"  -> "Astrale";
             case "Elda_Zenith_Coins"  -> "Zenith";
             case "Elda_Diamond_Coins" -> "Diamond";
             case "Elda_Gold_Coins"    -> "Gold";

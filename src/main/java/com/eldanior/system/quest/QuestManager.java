@@ -61,6 +61,8 @@ public class QuestManager {
 
     public static long calculateBountyBonus(QuestDifficulty diff) {
         return switch (diff) {
+            case EX -> 20000;
+            case SS -> 15000;
             case S -> 12000;
             case A -> 5000;
             case B -> 2000;
@@ -116,6 +118,7 @@ public class QuestManager {
         for (PlayerQuest pq : getPlayerQuests(playerUUID)) {
             if (pq.isCompleted()) {
                 QuestModel model = getQuest(pq.getQuestId());
+                if (model instanceof com.eldanior.system.quest.chapitres.ChapterQuests.ActQuest) continue; // acte rendu au PNJ : garde comme memoire
                 if (model != null && !(model instanceof com.eldanior.system.quest.dialogue.NpcDialogueQuest nq && nq.isInfoOnly())) {
                     result.add(pq);
                 }
@@ -160,244 +163,22 @@ public class QuestManager {
     }
 
     private static void registerQuests() {
-        // Principal - Histoire
+        // 2026-11-14 : quetes remises a zero (demande de l'utilisateur) ; les nouvelles se creent avec le skill quest-creation.
+        // Principale - Histoire (chaine de dialogues : Ancien Conseiller -> Tavernier -> Naissance d'un Roi)
         register(new com.eldanior.system.quest.definitions.principal.MainQuest_NaissanceRoi());
-
-        // Secondaire
-        register(new com.eldanior.system.quest.definitions.secondaire.SideQuest_Explorateur());
-        register(new com.eldanior.system.quest.definitions.secondaire.SideQuest_Duelliste());
         register(new com.eldanior.system.quest.definitions.secondaire.SecQuest_AncienConseiller());
         register(new com.eldanior.system.quest.definitions.secondaire.InfoQuest_Tavernier());
 
-        // === Secondaire - Chasse (20 quetes NPC) ===
-        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N1());
-        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N2());
-        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N3());
-        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N4());
-        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N5());
-        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N6());
-        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N7());
-        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N8());
-        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N9());
-        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N10());
-        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N11());
-        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N12());
-        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N13());
-        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N14());
-        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N15());
-        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N16());
-        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N17());
-        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N18());
-        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N19());
-        register(new com.eldanior.system.quest.definitions.secondaire.chasse.SecQuest_Chasse_N20());
-
-        // === Secondaire - Minage (15 quetes NPC) ===
-        register(new com.eldanior.system.quest.definitions.secondaire.minage.SecQuest_Minage_N1());
-        register(new com.eldanior.system.quest.definitions.secondaire.minage.SecQuest_Minage_N2());
-        register(new com.eldanior.system.quest.definitions.secondaire.minage.SecQuest_Minage_N3());
-        register(new com.eldanior.system.quest.definitions.secondaire.minage.SecQuest_Minage_N4());
-        register(new com.eldanior.system.quest.definitions.secondaire.minage.SecQuest_Minage_N5());
-        register(new com.eldanior.system.quest.definitions.secondaire.minage.SecQuest_Minage_N6());
-        register(new com.eldanior.system.quest.definitions.secondaire.minage.SecQuest_Minage_N7());
-        register(new com.eldanior.system.quest.definitions.secondaire.minage.SecQuest_Minage_N8());
-        register(new com.eldanior.system.quest.definitions.secondaire.minage.SecQuest_Minage_N9());
-        register(new com.eldanior.system.quest.definitions.secondaire.minage.SecQuest_Minage_N10());
-        register(new com.eldanior.system.quest.definitions.secondaire.minage.SecQuest_Minage_N11());
-        register(new com.eldanior.system.quest.definitions.secondaire.minage.SecQuest_Minage_N12());
-        register(new com.eldanior.system.quest.definitions.secondaire.minage.SecQuest_Minage_N13());
-        register(new com.eldanior.system.quest.definitions.secondaire.minage.SecQuest_Minage_N14());
-        register(new com.eldanior.system.quest.definitions.secondaire.minage.SecQuest_Minage_N15());
-
-        // === Secondaire - Recolte (15 quetes NPC) ===
-        register(new com.eldanior.system.quest.definitions.secondaire.recolte.SecQuest_Recolte_N1());
-        register(new com.eldanior.system.quest.definitions.secondaire.recolte.SecQuest_Recolte_N2());
-        register(new com.eldanior.system.quest.definitions.secondaire.recolte.SecQuest_Recolte_N3());
-        register(new com.eldanior.system.quest.definitions.secondaire.recolte.SecQuest_Recolte_N4());
-        register(new com.eldanior.system.quest.definitions.secondaire.recolte.SecQuest_Recolte_N5());
-        register(new com.eldanior.system.quest.definitions.secondaire.recolte.SecQuest_Recolte_N6());
-        register(new com.eldanior.system.quest.definitions.secondaire.recolte.SecQuest_Recolte_N7());
-        register(new com.eldanior.system.quest.definitions.secondaire.recolte.SecQuest_Recolte_N8());
-        register(new com.eldanior.system.quest.definitions.secondaire.recolte.SecQuest_Recolte_N9());
-        register(new com.eldanior.system.quest.definitions.secondaire.recolte.SecQuest_Recolte_N10());
-        register(new com.eldanior.system.quest.definitions.secondaire.recolte.SecQuest_Recolte_N11());
-        register(new com.eldanior.system.quest.definitions.secondaire.recolte.SecQuest_Recolte_N12());
-        register(new com.eldanior.system.quest.definitions.secondaire.recolte.SecQuest_Recolte_N13());
-        register(new com.eldanior.system.quest.definitions.secondaire.recolte.SecQuest_Recolte_N14());
-        register(new com.eldanior.system.quest.definitions.secondaire.recolte.SecQuest_Recolte_N15());
-
-        // === Secondaire - Collection (15 quetes NPC) ===
-        register(new com.eldanior.system.quest.definitions.secondaire.collection.SecQuest_Collection_N1());
-        register(new com.eldanior.system.quest.definitions.secondaire.collection.SecQuest_Collection_N2());
-        register(new com.eldanior.system.quest.definitions.secondaire.collection.SecQuest_Collection_N3());
-        register(new com.eldanior.system.quest.definitions.secondaire.collection.SecQuest_Collection_N4());
-        register(new com.eldanior.system.quest.definitions.secondaire.collection.SecQuest_Collection_N5());
-        register(new com.eldanior.system.quest.definitions.secondaire.collection.SecQuest_Collection_N6());
-        register(new com.eldanior.system.quest.definitions.secondaire.collection.SecQuest_Collection_N7());
-        register(new com.eldanior.system.quest.definitions.secondaire.collection.SecQuest_Collection_N8());
-        register(new com.eldanior.system.quest.definitions.secondaire.collection.SecQuest_Collection_N9());
-        register(new com.eldanior.system.quest.definitions.secondaire.collection.SecQuest_Collection_N10());
-        register(new com.eldanior.system.quest.definitions.secondaire.collection.SecQuest_Collection_N11());
-        register(new com.eldanior.system.quest.definitions.secondaire.collection.SecQuest_Collection_N12());
-        register(new com.eldanior.system.quest.definitions.secondaire.collection.SecQuest_Collection_N13());
-        register(new com.eldanior.system.quest.definitions.secondaire.collection.SecQuest_Collection_N14());
-        register(new com.eldanior.system.quest.definitions.secondaire.collection.SecQuest_Collection_N15());
-
-        // === Secondaire - Exploration (15 quetes NPC) ===
-        register(new com.eldanior.system.quest.definitions.secondaire.exploration.SecQuest_Exploration_N1());
-        register(new com.eldanior.system.quest.definitions.secondaire.exploration.SecQuest_Exploration_N2());
-        register(new com.eldanior.system.quest.definitions.secondaire.exploration.SecQuest_Exploration_N3());
-        register(new com.eldanior.system.quest.definitions.secondaire.exploration.SecQuest_Exploration_N4());
-        register(new com.eldanior.system.quest.definitions.secondaire.exploration.SecQuest_Exploration_N5());
-        register(new com.eldanior.system.quest.definitions.secondaire.exploration.SecQuest_Exploration_N6());
-        register(new com.eldanior.system.quest.definitions.secondaire.exploration.SecQuest_Exploration_N7());
-        register(new com.eldanior.system.quest.definitions.secondaire.exploration.SecQuest_Exploration_N8());
-        register(new com.eldanior.system.quest.definitions.secondaire.exploration.SecQuest_Exploration_N9());
-        register(new com.eldanior.system.quest.definitions.secondaire.exploration.SecQuest_Exploration_N10());
-        register(new com.eldanior.system.quest.definitions.secondaire.exploration.SecQuest_Exploration_N11());
-        register(new com.eldanior.system.quest.definitions.secondaire.exploration.SecQuest_Exploration_N12());
-        register(new com.eldanior.system.quest.definitions.secondaire.exploration.SecQuest_Exploration_N13());
-        register(new com.eldanior.system.quest.definitions.secondaire.exploration.SecQuest_Exploration_N14());
-        register(new com.eldanior.system.quest.definitions.secondaire.exploration.SecQuest_Exploration_N15());
-
-        // === Secondaire - Duel (20 quetes NPC) ===
-        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N1());
-        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N2());
-        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N3());
-        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N4());
-        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N5());
-        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N6());
-        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N7());
-        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N8());
-        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N9());
-        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N10());
-        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N11());
-        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N12());
-        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N13());
-        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N14());
-        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N15());
-        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N16());
-        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N17());
-        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N18());
-        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N19());
-        register(new com.eldanior.system.quest.definitions.secondaire.duel.SecQuest_Duel_N20());
-
-        // === Journalieres (auto-generated: 116 quetes) ===
-        register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_Bear());
-        register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_DinosaureHunt());
-        register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_DragonHunt());
-        register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_FeranHunt());
-        register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_FeranWindwalker());
-        register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_GoblinHermit());
-        register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_GoblinPatrol());
-        register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_GoblinRaid());
-        register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_GolemCrystal());
-        register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_OutlanderBrute());
-        register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_OutlanderHunt());
-        register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_Owl());
-        register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_Pigeon());
-        register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_SaurianHunt());
-        register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_ScarakHunt());
-        register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_SkeletonBase());
-        register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_SkeletonBurnt());
-        register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_SkeletonFrost());
-        register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_SkeletonIncandescent());
-        register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_SkeletonSand());
-        register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_SlothianThreat());
-        register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_SpiritHunt());
-        register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_Squelettes());
-        register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_TrorkScout());
+        // Journalieres : les 5 affiches du tableau des quetes (tout le tirage du jour)
         register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_TrorkWarrior());
-        register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_VoidCrawler());
-        register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_VoidLarva());
-        register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_VoidNecro());
-        register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_VoidSpectre());
-        register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_ZombieBase());
-        register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_Zombies());
-        register(new com.eldanior.system.quest.definitions.journaliere.collection.DailyCollect_Big());
-        register(new com.eldanior.system.quest.definitions.journaliere.collection.DailyCollect_CollectB2());
+        register(new com.eldanior.system.quest.definitions.journaliere.chasse.DailyChasse_SkeletonBurnt());
         register(new com.eldanior.system.quest.definitions.journaliere.collection.DailyCollect_CollectC2());
-        register(new com.eldanior.system.quest.definitions.journaliere.collection.DailyCollect_CollectD2());
-        register(new com.eldanior.system.quest.definitions.journaliere.collection.DailyCollect_CollectE2());
-        register(new com.eldanior.system.quest.definitions.journaliere.collection.DailyCollect_CollectF2());
-        register(new com.eldanior.system.quest.definitions.journaliere.collection.DailyCollect_CollectS());
-        register(new com.eldanior.system.quest.definitions.journaliere.collection.DailyCollect_Fortune());
-        register(new com.eldanior.system.quest.definitions.journaliere.collection.DailyCollect_Huge());
-        register(new com.eldanior.system.quest.definitions.journaliere.collection.DailyCollect_Legend());
-        register(new com.eldanior.system.quest.definitions.journaliere.collection.DailyCollect_Medium());
-        register(new com.eldanior.system.quest.definitions.journaliere.collection.DailyCollect_PetitTresor());
-        register(new com.eldanior.system.quest.definitions.journaliere.collection.DailyCollect_Small());
-        register(new com.eldanior.system.quest.definitions.journaliere.collection.DailyCollect_Tiny());
-        register(new com.eldanior.system.quest.definitions.journaliere.duel.DailyDuel_Champion());
-        register(new com.eldanior.system.quest.definitions.journaliere.duel.DailyDuel_ChampionDuJour());
-        register(new com.eldanior.system.quest.definitions.journaliere.duel.DailyDuel_DuelA2());
-        register(new com.eldanior.system.quest.definitions.journaliere.duel.DailyDuel_DuelB2());
-        register(new com.eldanior.system.quest.definitions.journaliere.duel.DailyDuel_DuelD());
-        register(new com.eldanior.system.quest.definitions.journaliere.duel.DailyDuel_DuelF());
-        register(new com.eldanior.system.quest.definitions.journaliere.duel.DailyDuel_Duo());
-        register(new com.eldanior.system.quest.definitions.journaliere.duel.DailyDuel_First());
-        register(new com.eldanior.system.quest.definitions.journaliere.duel.DailyDuel_Invincible());
-        register(new com.eldanior.system.quest.definitions.journaliere.duel.DailyDuel_PremierSang());
-        register(new com.eldanior.system.quest.definitions.journaliere.duel.DailyDuel_Triple());
-        register(new com.eldanior.system.quest.definitions.journaliere.exploration.DailyExplore_Big());
-        register(new com.eldanior.system.quest.definitions.journaliere.exploration.DailyExplore_ChasseurCoffres());
-        register(new com.eldanior.system.quest.definitions.journaliere.exploration.DailyExplore_ExploreA());
         register(new com.eldanior.system.quest.definitions.journaliere.exploration.DailyExplore_ExploreB2());
-        register(new com.eldanior.system.quest.definitions.journaliere.exploration.DailyExplore_ExploreE());
-        register(new com.eldanior.system.quest.definitions.journaliere.exploration.DailyExplore_ExploreE2());
-        register(new com.eldanior.system.quest.definitions.journaliere.exploration.DailyExplore_GrandExplorateur());
-        register(new com.eldanior.system.quest.definitions.journaliere.exploration.DailyExplore_Huge());
-        register(new com.eldanior.system.quest.definitions.journaliere.exploration.DailyExplore_Legend());
-        register(new com.eldanior.system.quest.definitions.journaliere.exploration.DailyExplore_Medium());
-        register(new com.eldanior.system.quest.definitions.journaliere.exploration.DailyExplore_Small());
-        register(new com.eldanior.system.quest.definitions.journaliere.exploration.DailyExplore_Tiny());
-        register(new com.eldanior.system.quest.definitions.journaliere.massacre.DailyMassacre_Carnage());
-        register(new com.eldanior.system.quest.definitions.journaliere.massacre.DailyMassacre_Easy());
-        register(new com.eldanior.system.quest.definitions.journaliere.massacre.DailyMassacre_Exterminateur());
-        register(new com.eldanior.system.quest.definitions.journaliere.massacre.DailyMassacre_Extreme());
-        register(new com.eldanior.system.quest.definitions.journaliere.massacre.DailyMassacre_Hard());
         register(new com.eldanior.system.quest.definitions.journaliere.massacre.DailyMassacre_Legend());
-        register(new com.eldanior.system.quest.definitions.journaliere.massacre.DailyMassacre_MassacreA());
-        register(new com.eldanior.system.quest.definitions.journaliere.massacre.DailyMassacre_MassacreC());
-        register(new com.eldanior.system.quest.definitions.journaliere.massacre.DailyMassacre_MassacreC2());
-        register(new com.eldanior.system.quest.definitions.journaliere.massacre.DailyMassacre_MassacreD2());
-        register(new com.eldanior.system.quest.definitions.journaliere.massacre.DailyMassacre_MassacreE());
-        register(new com.eldanior.system.quest.definitions.journaliere.massacre.DailyMassacre_MassacreE2());
-        register(new com.eldanior.system.quest.definitions.journaliere.massacre.DailyMassacre_MassacreF2());
-        register(new com.eldanior.system.quest.definitions.journaliere.massacre.DailyMassacre_MassacreS());
-        register(new com.eldanior.system.quest.definitions.journaliere.massacre.DailyMassacre_Medium());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_Assassin());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_Assassin1());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_Assassin10());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_Assassin2());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_Assassin3());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_Assassin4());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_Assassin5());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_Assassin6());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_Assassin7());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_Assassin8());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_Assassin9());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_Duel1());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_Duel2());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_Duel3());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_Duel4());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_Duel5());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_Duel6());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_DuelSombre());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_Pillard());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_Pillard1());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_Pillard2());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_Pillard3());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_Pillard4());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_Pillard5());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_Terreur());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_Terreur1());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_Terreur2());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_Terreur3());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_Terreur4());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_Terreur5());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_Terreur6());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_Terreur7());
-        register(new com.eldanior.system.quest.definitions.journaliere.pk.DailyPK_Terreur8());    }
+
+        // Actes des quetes en chapitres (quest.chapitres, fenetre des PNJ facon Chapitres)
+        for (QuestModel m : com.eldanior.system.quest.chapitres.ChapterQuests.models()) register(m);
+    }
 
     private static void register(QuestModel quest) {
         allQuests.put(quest.getId(), quest);
@@ -405,7 +186,13 @@ public class QuestManager {
 
     // ==================== GETTERS ====================
 
-    public static QuestModel getQuest(String id) { return allQuests.get(id); }
+    public static QuestModel getQuest(String id) {
+        QuestModel q = allQuests.get(id);
+        if (q != null || id == null) return q;
+        var house = com.eldanior.system.quest.chapitres.HouseQuests.model(id);       // quetes des maisons (2026-11-18)
+        if (house == null) house = com.eldanior.system.quest.chapitres.GuildQuests.model(id);   // tableau de guilde (2026-11-19)
+        return house != null ? house : com.eldanior.system.quest.chapitres.Primes.model(id);   // contrats de prime (a la volee)
+    }
 
     /**
      * Trouve la prochaine quete dialogue pour un NPC specifique.
@@ -480,6 +267,7 @@ public class QuestManager {
 
         for (QuestModel quest : allQuests.values()) {
             if (ownedIds.contains(quest.getId())) continue;
+            if (quest instanceof com.eldanior.system.quest.chapitres.ChapterQuests.ActQuest) continue; // se prennent au PNJ
 
             // Filtrer PK : quetes PK seulement pour les PK, quetes normales seulement pour non-PK
             if (quest.isPKOnly() && !isPK) continue;
@@ -606,11 +394,49 @@ public class QuestManager {
         return playerQuests.computeIfAbsent(playerUUID, k -> new CopyOnWriteArrayList<>());
     }
 
+    /** Parcourt les quetes de tous les joueurs en memoire (listes modifiables : CopyOnWriteArrayList). */
+    public static void forEachPlayerQuests(java.util.function.BiConsumer<UUID, List<PlayerQuest>> fn) {
+        playerQuests.forEach(fn);
+    }
+
     public static PlayerQuest getActiveQuest(UUID playerUUID) {
         for (PlayerQuest pq : getPlayerQuests(playerUUID)) {
             if (pq.isActive()) return pq;
         }
         return null;
+    }
+
+    /** Quetes en cours a la fois par joueur, hors quete principale (2026-11-13 : 1, puis 2 a la demande de l'utilisateur). */
+    public static final int MAX_ACTIVE = 2;
+
+    /**
+     * Regle de l'utilisateur (2026-11-13) : au plus MAX_ACTIVE quetes en cours, plus la quete principale qui s'ajoute toujours.
+     * Renvoie une des quetes en cours qui empechent d'accepter questId (null : rien ne l'empeche).
+     */
+    public static QuestModel blockingQuest(UUID playerUUID, String questId) {
+        QuestModel model = getQuest(questId);
+        if (model == null || model.isMainStory() || infoOnly(model)) return null;      // info : rendue aussitot
+        if (com.eldanior.system.quest.chapitres.GuildQuests.isGuild(questId)) return null;   // tableau de guilde : sa propre limite
+        int running = 0;
+        QuestModel last = null;
+        for (PlayerQuest pq : getPlayerQuests(playerUUID)) {
+            if (pq.isCompleted() || pq.getQuestId().equals(questId)
+                    || com.eldanior.system.quest.chapitres.GuildQuests.isGuild(pq.getQuestId())) continue;   // hors limite (2026-11-19)
+            QuestModel other = getQuest(pq.getQuestId());
+            if (other != null && !other.isMainStory() && !infoOnly(other)) { running++; last = other; }
+        }
+        return running >= MAX_ACTIVE ? last : null;
+    }
+
+    private static boolean infoOnly(QuestModel m) {
+        return m instanceof com.eldanior.system.quest.dialogue.NpcDialogueQuest nq && nq.isInfoOnly();
+    }
+
+    /** Message de refus d'une quete (une seule a la fois), null si elle peut etre acceptee. */
+    public static String refusal(UUID playerUUID, String questId) {
+        QuestModel other = blockingQuest(playerUUID, questId);
+        return other == null ? null
+                : "Vous avez déjà " + MAX_ACTIVE + " quêtes en cours (dont « " + other.getName() + " »). Terminez-en ou abandonnez-en une d'abord (la quête principale s'ajoute toujours).";
     }
 
     public static boolean acceptQuest(UUID playerUUID, String questId) {
@@ -621,6 +447,7 @@ public class QuestManager {
         for (PlayerQuest pq : quests) {
             if (pq.getQuestId().equals(questId)) return false; // Deja acceptee
         }
+        if (blockingQuest(playerUUID, questId) != null) return false;            // une seule quete a la fois (hors principale)
 
         PlayerQuest pq = new PlayerQuest(questId);
         quests.add(pq);
@@ -651,73 +478,67 @@ public class QuestManager {
     // ==================== PROGRESSION ====================
 
     /**
-     * Appele quand un mob est tue. Verifie la quete active du joueur.
+     * Fait avancer de amount toutes les quetes en cours du joueur que match accepte (2026-11-13 : 2 quetes en cours a la fois,
+     * les deux avancent, plus seulement la quete suivie). Les quetes de PNJ a condition n'avancent pas par ces crochets.
      */
+    private static void progressAll(UUID playerUUID, java.util.function.Predicate<QuestModel> match, int amount) {
+        if (playerUUID == null || amount <= 0) return;
+        for (PlayerQuest pq : getPlayerQuests(playerUUID)) {
+            if (pq.isCompleted()) continue;
+            QuestModel model = getQuest(pq.getQuestId());
+            if (model == null || model instanceof com.eldanior.system.quest.chapitres.ChapterQuests.ActQuest) continue;   // leurs propres crochets
+            if (model instanceof com.eldanior.system.quest.dialogue.NpcDialogueQuest nq && nq.getCompletionCondition() != null) continue;
+            if (!match.test(model)) continue;
+            pq.addProgress(amount);
+            checkCompletion(playerUUID, pq, model);
+        }
+    }
+
+    /** Appele quand un mob est tue : quetes de massacre et de chasse en cours. */
     public static void onMobKill(UUID playerUUID, String mobTypeId) {
-        PlayerQuest active = getActiveQuest(playerUUID);
-        if (active == null || active.isCompleted()) return;
-
-        QuestModel model = getQuest(active.getQuestId());
-        if (model == null) return;
-
-        // Les quetes NPC (avec QuestCondition) ne progressent pas via les hooks auto
-        if (model instanceof com.eldanior.system.quest.dialogue.NpcDialogueQuest nq
-                && nq.getCompletionCondition() != null) return;
-
-        boolean progress = false;
-        if (model.getType() == QuestType.MASSACRE) {
-            progress = true;
-        } else if (model.getType() == QuestType.CHASSE && model.getTargetId() != null) {
-            if (mobTypeId.toLowerCase().contains(model.getTargetId().toLowerCase())) {
-                progress = true;
-            }
-        }
-
-        if (progress) {
-            active.addProgress(1);
-            checkCompletion(playerUUID, active, model);
-        }
+        com.eldanior.system.quest.chapitres.ChapterQuests.onMobKill(playerUUID, mobTypeId);
+        String mob = mobTypeId != null ? mobTypeId.toLowerCase() : "";
+        progressAll(playerUUID, m -> m.getType() == QuestType.MASSACRE
+                || m.getType() == QuestType.CHASSE && m.getTargetId() != null && mob.contains(m.getTargetId().toLowerCase()), 1);
     }
 
     public static void onChestDiscovered(UUID playerUUID) {
-        PlayerQuest active = getActiveQuest(playerUUID);
-        if (active == null || active.isCompleted()) return;
-        QuestModel model = getQuest(active.getQuestId());
-        if (model == null || model.getType() != QuestType.EXPLORATION) return;
-        if (model instanceof com.eldanior.system.quest.dialogue.NpcDialogueQuest nq && nq.getCompletionCondition() != null) return;
-        active.addProgress(1);
-        checkCompletion(playerUUID, active, model);
+        progressAll(playerUUID, m -> m.getType() == QuestType.EXPLORATION, 1);
     }
 
     public static void onDuelWin(UUID playerUUID) {
-        PlayerQuest active = getActiveQuest(playerUUID);
-        if (active == null || active.isCompleted()) return;
-        QuestModel model = getQuest(active.getQuestId());
-        if (model == null || model.getType() != QuestType.DUEL) return;
-        if (model instanceof com.eldanior.system.quest.dialogue.NpcDialogueQuest nq && nq.getCompletionCondition() != null) return;
-        active.addProgress(1);
-        checkCompletion(playerUUID, active, model);
+        com.eldanior.system.quest.chapitres.ChapterQuests.onPlayerDuelWon(playerUUID);       // cartes : Kind.DUEL_PLAYER
+        progressAll(playerUUID, m -> m.getType() == QuestType.DUEL, 1);
     }
 
+    /** Or gagne : quetes de collection en cours (progression du montant gagne, pas du total). */
     public static void onGoldGained(UUID playerUUID, long amountGained) {
-        PlayerQuest active = getActiveQuest(playerUUID);
-        if (active == null || active.isCompleted()) return;
-        QuestModel model = getQuest(active.getQuestId());
-        if (model == null || model.getType() != QuestType.COLLECTION) return;
-        if (model instanceof com.eldanior.system.quest.dialogue.NpcDialogueQuest nq && nq.getCompletionCondition() != null) return;
-        // Incrementer la progression du montant gagne (pas le total)
-        active.addProgress((int) amountGained);
-        checkCompletion(playerUUID, active, model);
+        progressAll(playerUUID, QuestManager::isMoneyQuest, (int) Math.min(Integer.MAX_VALUE, amountGained));
+    }
+
+    /**
+     * Quetes d'argent liees a la banque (2026-11-14, demande de l'utilisateur : les pieces ne se convertissent plus qu'au
+     * banquier) : elles avancent avec l'argent verse au compte (depot de pieces chez le banquier, primes touchees) et
+     * reculent d'autant a chaque retrait (pas de boucle retirer / redeposer). Les prets ne comptent pas.
+     */
+    public static void onBankDeposit(UUID playerUUID, long amount) { onGoldGained(playerUUID, amount); }
+
+    public static void onBankWithdraw(UUID playerUUID, long amount) {
+        if (playerUUID == null || amount <= 0) return;
+        for (PlayerQuest pq : getPlayerQuests(playerUUID)) {
+            if (pq.isCompleted() || !isMoneyQuest(getQuest(pq.getQuestId()))) continue;
+            pq.addProgress(-(int) Math.min(pq.getProgress(), amount));
+        }
+    }
+
+    /** Quete d'argent : type COLLECTION, hors dialogues d'information (talk_tavernier... ont aussi ce type). */
+    private static boolean isMoneyQuest(QuestModel m) {
+        return m != null && m.getType() == QuestType.COLLECTION
+                && !(m instanceof com.eldanior.system.quest.dialogue.NpcDialogueQuest nq && nq.isInfoOnly());
     }
 
     public static void onPKKilled(UUID killerUUID, UUID pkUUID) {
-        PlayerQuest active = getActiveQuest(killerUUID);
-        if (active == null || active.isCompleted()) return;
-        QuestModel model = getQuest(active.getQuestId());
-        if (model == null || model.getType() != QuestType.EXECUTION) return;
-        if (model instanceof com.eldanior.system.quest.dialogue.NpcDialogueQuest nq && nq.getCompletionCondition() != null) return;
-        active.addProgress(1);
-        checkCompletion(killerUUID, active, model);
+        progressAll(killerUUID, m -> m.getType() == QuestType.EXECUTION, 1);
     }
 
     // MINAGE/RECOLTE : la progression est basee sur l'inventaire du joueur.
@@ -767,6 +588,8 @@ public class QuestManager {
         // Retirer le namespace "hytale:" si present
         if (actualLower.contains(":")) actualLower = actualLower.substring(actualLower.indexOf(':') + 1);
         if (targetLower.contains(":")) targetLower = targetLower.substring(targetLower.indexOf(':') + 1);
+        // 2026-11-14 : butin de monstre = identifiant exact (« Butin_Croc_Loup » ne doit pas compter « Butin_Croc_Loup_Trork »)
+        if (targetLower.startsWith("butin_")) return actualLower.equals(targetLower);
         return actualLower.equals(targetLower) || actualLower.contains(targetLower);
     }
 

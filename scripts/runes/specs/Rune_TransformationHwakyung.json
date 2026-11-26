@@ -1,0 +1,61 @@
+{
+  "$Comment": "Fiche de conception : technique du Clan Luo (voie martiale), validee le 2026-11-09, type Luo le 2026-11-09 (docs/plan-clan-luo.md). Apprise par son manuel, aucun butin. Devenue technique de clan le 2026-11-10 (luo.LuoClans.TECHNIQUES) : reservee aux membres du clan, toutes classes.",
+  "id": "Rune_TransformationHwakyung",
+  "spell": "TransformationHwakyung",
+  "javaClass": "TransformationHwakyung",
+  "page": "rune_page_transformation_hwakyung",
+  "name": "Rune de la Transformation Hwakyung",
+  "type": "Luo",
+  "rarity": "Legendaire",
+  "emblem": "Hwakyung",
+  "classes": "clan",
+  "persistent": true,
+  "summary": "Transformation Hwakyung : 20 s, +35 % de degats, -30 % de degats subis, insensible aux controles, chaque coup libere une onde de Ki (rayon 3, 40 % du coup).",
+  "description": "Technique du Clan Luo, enseignée à la classe Maître Suprême de la voie martiale. Votre corps devient Ki pendant 20 s : +35 % de dégâts, −30 % de dégâts subis, insensible aux étourdissements et ralentissements, et chacun de vos coups libère une onde de Ki autour de la cible (40 % du coup, rayon 3). Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Rouleau sans texte, seulement une silhouette d'encre entourée de rayons : le seuil du Hwakyung, où le corps se refait. Technique du Clan Luo : elle s'apprend dans son manuel, jamais en butin.",
+  "keywords": [
+    "Buff",
+    "Duration",
+    "Damage"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": {},
+  "cast": {
+    "animationSet": "Sword",
+    "charging": "CastEnrage",
+    "release": "CastEnrage",
+    "chargeTime": 0.6,
+    "releaseTime": 0.5,
+    "moveSpeed": 0.6,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Ability_Wind_Strike_Imbue",
+    "handParticles": null,
+    "handParticlesScale": 0.6,
+    "costMoment": "start"
+  },
+  "design": {
+    "persistentDurationS": 20,
+    "targets": "soi",
+    "effects": "Hwakyung_Corps (visuel), degats +35 % (CombatStatsSystem), subis -30 % et purge des controles chaque 0,25 s, onde 40 % rayon 3 par coup",
+    "balance": {
+      "damage": 4,
+      "range": 0,
+      "duration": 4,
+      "mobility": 0,
+      "control": 2,
+      "defense": 4,
+      "targets": 0,
+      "frequency": 0,
+      "terrain": 0,
+      "difficulty": 1
+    }
+  },
+  "category": "Eldanior_Empire_Luo.Runes",
+  "manual": "Eldanior_Manuel_Luo_TransformationHwakyung",
+  "$Comment_manual": "Technique apprise par son manuel secret (gen_voie_martiale_objets.py) : pas de parchemin rune_page_*."
+}

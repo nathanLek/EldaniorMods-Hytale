@@ -1,0 +1,102 @@
+{
+  "Parent": "Potion_Template",
+  "TranslationProperties": {
+    "Name": "Élixir de Mana Vive",
+    "Description": "Boire : rend 8 % de mana par seconde pendant 10 s"
+  },
+  "Quality": "Epic",
+  "ItemLevel": 600,
+  "Categories": [
+    "Eldanior_System.Consommables"
+  ],
+  "Icon": "Icons/ItemsGenerated/Eld_Potion_Mana_Vive.png",
+  "Recipe": {
+    "KnowledgeRequired": false,
+    "Input": [
+      {
+        "ItemId": "Potion_Empty",
+        "Quantity": 1
+      },
+      {
+        "ItemId": "Butin_Ame_Foudre",
+        "Quantity": 1
+      },
+      {
+        "ItemId": "Butin_Larme_Gelee",
+        "Quantity": 1
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Id": "Alchemybench",
+        "Type": "Crafting",
+        "Categories": [
+          "Alchemy_Potions"
+        ],
+        "RequiredTierLevel": 3
+      }
+    ],
+    "OutputQuantity": 1,
+    "TimeSeconds": 1
+  },
+  "Interactions": {
+    "Secondary": "Root_Secondary_Consume_Potion_Mana"
+  },
+  "InteractionVars": {
+    "RemoveEffect": {
+      "Interactions": [
+        {
+          "Type": "Simple"
+        }
+      ]
+    },
+    "Effect": {
+      "Interactions": [
+        {
+          "Type": "ApplyEffect",
+          "EffectId": "Eld_Effet_Mana_Vive"
+        }
+      ]
+    },
+    "ConsumeCooldown": {
+      "Interactions": [
+        "Consume_Potion_Mana_Cooldown"
+      ]
+    },
+    "ConsumeSFX": {
+      "Interactions": [
+        {
+          "Parent": "Consume_SFX",
+          "Effects": {
+            "LocalSoundEventId": "SFX_Health_Potion_Low_Drink"
+          }
+        }
+      ]
+    },
+    "ConsumedSFX": {
+      "Interactions": [
+        {
+          "Parent": "Consumed_SFX",
+          "Effects": {
+            "LocalSoundEventId": "SFX_Potion_Drink_Success"
+          }
+        }
+      ]
+    }
+  },
+  "BlockType": {
+    "CustomModel": "Items/Consumables/Potions/Potion.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Items/Consommables/Potions/Eld_Potion_Mana_Vive.png",
+        "Weight": 1
+      }
+    ],
+    "BlockParticleSetId": "GlassMagic",
+    "ParticleColor": "#5af0e8",
+    "Light": {
+      "Color": "#062f3e"
+    },
+    "TextureComputedColor": "#A7A6A4"
+  }
+}

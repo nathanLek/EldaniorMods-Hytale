@@ -1,0 +1,34 @@
+{
+  "Id": "rune_page_sansvisage",
+  "TranslationProperties": {
+    "Name": "Parchemin de Rune : Sans Visage",
+    "Description": "« Je suis le marchand qui vous sourit, le chien qui vous suit, et l'ami qui vous tend la main. » Savoir de l'Observateur : il vient avec la classe, jamais en butin. (Ancien parchemin : la rune s'apprend désormais dans un manuel.)"
+  },
+  "Icon": "Icons/ItemsGenerated/Recipe_Page.png",
+  "Quality": "Legendary",
+  "Tags": {
+    "Type": [
+      "Item",
+      "Consumable"
+    ]
+  },
+  "MaxStack": 1,
+  "PlayerAnimationsId": "Item",
+  "Model": "Items/Consumables/Recipes/Recipe.blockymodel",
+  "Texture": "Items/Consumables/Recipes/Recipe_Texture.png",
+  "IconProperties": {
+    "Scale": 0.76,
+    "Rotation": [
+      135,
+      135,
+      0
+    ],
+    "Translation": [
+      -1,
+      5
+    ]
+  },
+  "Interactions": {
+    "Use": "Root_ConsumableItemSkillInteraction"
+  }
+}

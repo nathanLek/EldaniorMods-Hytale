@@ -56,6 +56,10 @@ public class ParcelCommand extends AbstractAsyncCommand {
                 UUID senderUUID = UUIDExtractor.getUUID(senderRef);
                 if (senderUUID == null) return;
                 boolean isAdmin = senderRef.hasPermission(EldaniorLogger.ADMIN_PERMISSION);
+                if (!isAdmin) {                                    // 2026-11-12 : biens achetes et loues aux pancartes de propriete
+                    senderRef.sendMessage(Message.raw("Commande reservee aux admins : achetez ou louez un bien a sa pancarte."));
+                    return;
+                }
 
                 switch (action.toLowerCase()) {
                     case "pos1" -> handlePos1(sender, senderUUID);

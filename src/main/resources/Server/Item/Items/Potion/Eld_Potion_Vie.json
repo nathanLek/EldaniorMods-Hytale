@@ -1,0 +1,105 @@
+{
+  "Parent": "Potion_Template",
+  "TranslationProperties": {
+    "Name": "Potion de Vie",
+    "Description": "Boire : rend 25 % de vie, puis 35 % en 5 s"
+  },
+  "Quality": "Uncommon",
+  "ItemLevel": 100,
+  "Categories": [
+    "Eldanior_System.Consommables"
+  ],
+  "Icon": "Icons/ItemsGenerated/Eld_Potion_Vie.png",
+  "Recipe": {
+    "KnowledgeRequired": false,
+    "Input": [
+      {
+        "ItemId": "Potion_Empty",
+        "Quantity": 1
+      },
+      {
+        "ItemId": "Butin_Coeur_Loup",
+        "Quantity": 1
+      },
+      {
+        "ItemId": "Butin_Seve_Spirituelle",
+        "Quantity": 1
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Id": "Alchemybench",
+        "Type": "Crafting",
+        "Categories": [
+          "Alchemy_Potions"
+        ]
+      }
+    ],
+    "OutputQuantity": 1,
+    "TimeSeconds": 1
+  },
+  "Interactions": {
+    "Secondary": "Root_Secondary_Consume_Potion_Health"
+  },
+  "InteractionVars": {
+    "RemoveEffect": {
+      "Interactions": [
+        {
+          "Type": "Simple"
+        }
+      ]
+    },
+    "Effect": {
+      "Interactions": [
+        {
+          "Type": "ApplyEffect",
+          "EffectId": "Potion_Health_Instant",
+          "Next": {
+            "Type": "ApplyEffect",
+            "EffectId": "Potion_Health_Regen"
+          }
+        }
+      ]
+    },
+    "ConsumeCooldown": {
+      "Interactions": [
+        "Consume_Potion_Health_Cooldown"
+      ]
+    },
+    "ConsumeSFX": {
+      "Interactions": [
+        {
+          "Parent": "Consume_SFX",
+          "Effects": {
+            "LocalSoundEventId": "SFX_Health_Potion_Low_Drink"
+          }
+        }
+      ]
+    },
+    "ConsumedSFX": {
+      "Interactions": [
+        {
+          "Parent": "Consumed_SFX",
+          "Effects": {
+            "LocalSoundEventId": "SFX_Potion_Drink_Success"
+          }
+        }
+      ]
+    }
+  },
+  "BlockType": {
+    "CustomModel": "Items/Consumables/Potions/Potion_Normal.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Items/Consommables/Potions/Eld_Potion_Vie.png",
+        "Weight": 1
+      }
+    ],
+    "BlockParticleSetId": "GlassMagic",
+    "ParticleColor": "#ff4a5a",
+    "Light": {
+      "Color": "#360610"
+    },
+    "TextureComputedColor": "#A7A6A4"
+  }
+}

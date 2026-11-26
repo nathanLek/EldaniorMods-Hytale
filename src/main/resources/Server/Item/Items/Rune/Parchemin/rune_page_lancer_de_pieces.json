@@ -1,0 +1,34 @@
+{
+  "Id": "rune_page_lancer_de_pieces",
+  "TranslationProperties": {
+    "Name": "Parchemin de Rune : Lancer de Pièces",
+    "Description": "Un parchemin qui tinte comme une bourse pleine. Enseigne le Lancer de Pièces : de l'or en pleine figure, et ce qu'il rapporte. Classes : Marchand, Dragon. Utilisez-le pour ajouter la rune à votre sac de runes. (Ancien parchemin : la rune s'apprend désormais dans un manuel.)"
+  },
+  "Icon": "Icons/ItemsGenerated/Recipe_Page.png",
+  "Quality": "Common",
+  "Tags": {
+    "Type": [
+      "Item",
+      "Consumable"
+    ]
+  },
+  "MaxStack": 1,
+  "PlayerAnimationsId": "Item",
+  "Model": "Items/Consumables/Recipes/Recipe.blockymodel",
+  "Texture": "Items/Consumables/Recipes/Recipe_Texture.png",
+  "IconProperties": {
+    "Scale": 0.76,
+    "Rotation": [
+      135,
+      135,
+      0
+    ],
+    "Translation": [
+      -1,
+      5
+    ]
+  },
+  "Interactions": {
+    "Use": "Root_ConsumableItemSkillInteraction"
+  }
+}

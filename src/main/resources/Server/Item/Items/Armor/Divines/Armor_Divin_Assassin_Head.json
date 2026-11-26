@@ -1,0 +1,90 @@
+{
+  "TranslationProperties": {
+    "Name": "Voile d'Ombre de la Lune Noire",
+    "Description": "Armure divine de l'Assassin. Aucun casque : une marque d'encre noire au front, et la tête noyée dans une fumée d'ombre qui tourbillonne autour d'elle et la traverse."
+  },
+  "Quality": "Divin",
+  "ItemLevel": 800,
+  "PlayerAnimationsId": "Block",
+  "ItemSoundSetId": "ISS_Armor_Leather",
+  "Categories": [
+    "Eldanior_System.Armures",
+    "Items.Armors"
+  ],
+  "Icon": "Icons/ItemsGenerated/Armor_Divin_Assassin_Head.png",
+  "IconProperties": {
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Scale": 0.34,
+    "Translation": [
+      0,
+      0
+    ]
+  },
+  "Model": "Items/Armors/Divines/Assassin/Head.blockymodel",
+  "Texture": "Items/Armors/Divines/Assassin/Head_Texture.png",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    }
+  },
+  "Armor": {
+    "ArmorSlot": "Head",
+    "BaseDamageResistance": 0,
+    "CosmeticsToHide": [
+      "HeadAccessory"
+    ],
+    "StatModifiers": {
+      "Health": [
+        {
+          "Amount": 40,
+          "CalculationType": "Additive"
+        }
+      ],
+      "Mana": [
+        {
+          "Amount": 30,
+          "CalculationType": "Additive"
+        }
+      ]
+    },
+    "DamageResistance": {
+      "Physical": [
+        {
+          "Amount": 0.1,
+          "CalculationType": "Percent"
+        }
+      ],
+      "Projectile": [
+        {
+          "Amount": 0.1,
+          "CalculationType": "Percent"
+        }
+      ]
+    }
+  },
+  "Tags": {
+    "Type": [
+      "Armor"
+    ],
+    "Family": [
+      "Divine"
+    ]
+  },
+  "MaxDurability": 800,
+  "DurabilityLossOnHit": 0.5
+}

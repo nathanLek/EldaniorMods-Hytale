@@ -1,0 +1,26 @@
+{
+  "Type": "Serial",
+  "Interactions": [
+    {
+      "Type": "Simple",
+      "RunTime": 0.45,
+      "Effects": {
+        "ItemAnimationId": "Guard"
+      }
+    },
+    {
+      "Type": "Simple",
+      "RunTime": 0.3,
+      "Effects": {
+        "ItemAnimationId": "GuardBash",
+        "ClearAnimationOnFinish": true
+      }
+    },
+    {
+      "Type": "RuneSpell",
+      "RunTime": 0.05,
+      "Spell": "RegardDeMeduse"
+    }
+  ],
+  "$Comment": "Competence de Égide, Bouclier d'Athéna (recharge 25 s) : sort Java RegardDeMeduse. Genere par gen_divines.py."
+}

@@ -1,0 +1,67 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_Petrification",
+  "spell": "Petrification",
+  "javaClass": "Petrification",
+  "page": "rune_page_petrification",
+  "name": "Rune de la Pétrification",
+  "type": "Terre",
+  "rarity": "Epic",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Petrification",
+  "summary": "l'ennemi vise et 2 voisins (3 blocs) changes en pierre 2 s : vos coups x2 sur eux, puis ils volent en eclats (120).",
+  "description": "Sort épique de terre (Mage, rune de prédilection du Transmutateur Divin). L'ennemi visé (jusqu'à 25 blocs) et jusqu'à 2 ennemis à moins de 3 blocs de lui sont changés en pierre pendant 2 s : ils ne bougent plus et vos coups leur infligent le double de dégâts. Quand la pierre se brise, ils subissent 120 dégâts. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin froid et lourd comme une tablette de granit. Enseigne la Pétrification : figez vos ennemis dans la pierre, puis brisez-les. Classes : tous les Mages (rune de prédilection du Transmutateur Divin). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Duration"
+  ],
+  "cast": {
+    "animationSet": "Spellbook",
+    "charging": "CastHurlCharging",
+    "release": "CastHurlCharged",
+    "chargeTime": 0.5,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Golem_Earth_Wake",
+    "handParticles": "Gaia_Dust_Burst",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.5,
+    "range": 25,
+    "radius": "3 (voisins)",
+    "targets": "3 ennemis",
+    "persistentFx": "effet Elda_Petrifie (teinte pierre, ModelVFX Stoneskin, mouvement desactive pour les joueurs) 2 s ; lockInPlace",
+    "impactFx": "Gaia_Dust_Burst + Block_Break_Dust a la brisure",
+    "sounds": "SFX_Golem_Earth_Wake a la petrification, SFX_Crystal_Break a la brisure",
+    "effects": "lockInPlace 2 s ; vos coups sur un petrifie : +100 % (markEcho) ; brisure : 120 Bludgeoning",
+    "terrain": "aucun",
+    "persistentDurationS": 2,
+    "interruptions": "aucune",
+    "restrictions": "mage",
+    "edgeCases": "aucune cible visee : l'ennemi le plus proche devant (25 blocs) ; aucune : rien",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 1,
+      "mobility": 0,
+      "control": 3,
+      "defense": 0,
+      "targets": 2,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    }
+  },
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null
+}

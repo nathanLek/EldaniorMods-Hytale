@@ -1,0 +1,66 @@
+{
+  "$Comment": "Troisieme competence de l'Observateur, sa technique ultime d'assassinat (demandee le 2026-11-17) : jamais en butin, donnee avec la classe.",
+  "id": "Rune_SentenceSilencieuse",
+  "spell": "SentenceSilencieuse",
+  "javaClass": "SentenceSilencieuse",
+  "page": "rune_page_sentencesilencieuse",
+  "name": "Rune Sentence Silencieuse",
+  "type": "Tenebres",
+  "rarity": "Legendaire",
+  "emblem": "SentenceSilencieuse",
+  "classes": "observateur",
+  "persistent": true,
+  "summary": "Technique ultime : la cible visee (40 blocs, a travers les murs et jusqu'a 100 blocs si Arkies Domini est ouverte) est marquee et figee, l'Observateur se fond dans l'ombre (invisible), surgit dans son dos et frappe : execution sous 40 % de vie (50 % si Sans Visage le masquait), sinon 35 % de la vie max ; joueurs 30 % / 25 %, boss jamais executes (15 %).",
+  "description": "Technique ultime de l'Observateur, l'assassin privé du Roi. Visez une cible : elle est figée, vous disparaissez dans l'ombre et surgissez dans son dos pour une frappe unique. Sous 40 % de vie, c'est une exécution ; sinon elle perd 35 % de sa vie maximale. Avec Arkies Domini, la portée passe à 100 blocs et traverse les murs ; sous Sans Visage, le seuil d'exécution monte à 50 % mais le masque tombe. Vous restez invisible un court instant après le coup. Coût 1200 de mana, recharge 300 s, prélevés seulement si une cible est trouvée.",
+  "pageDescription": "« Le Roi n'a jamais prononcé cette sentence. Personne ne l'a entendue. » Savoir de l'Observateur : il vient avec la classe, jamais en butin.",
+  "keywords": [
+    "Damage",
+    "Melee"
+  ],
+  "overrides": {
+    "mana": 0,
+    "cooldown": 1,
+    "reason": "le cout de la rarete (1200 mana, 300 s) est preleve dans le code seulement quand une cible est trouvee (SentenceSilencieuse.MANA / COOLDOWN_MS) : un clic dans le vide ne gaspille pas une technique ultime"
+  },
+  "loot": {},
+  "cast": {
+    "animationSet": "Daggers",
+    "charging": "PounceStabCharging",
+    "release": "PounceStab",
+    "chargeTime": 0.15,
+    "releaseTime": 0.35,
+    "moveSpeed": 0.6,
+    "cameraEffect": null,
+    "sound": null,
+    "releaseSound": "SFX_Daggers_T1_Pounce",
+    "handParticles": null,
+    "handParticlesScale": 0.6,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.1,
+    "range": 40,
+    "radius": "",
+    "targets": "ennemis (une cible)",
+    "triggers": "clic de la rune equipee, cible sous le viseur",
+    "castFx": "Smoke_Black au depart, marque Nyx_Void sur la cible (vue du seul lanceur)",
+    "impactFx": "Dungeon_Goblin_Void_Strike + Effect_Death_Void a l'execution",
+    "effects": "Bomb_Explode_Stun 1,2 s sur la cible ; Elda_InvisTotal sur le lanceur pendant 2,4 s",
+    "terrain": "aucun",
+    "persistentDurationS": 1,
+    "interruptions": "cible morte ou disparue avant la frappe (rien n'est rendu : le cout est deja pris), lanceur mort",
+    "restrictions": "classe observateur seulement",
+    "balance": {
+      "damage": 5,
+      "range": 3,
+      "duration": 1,
+      "mobility": 4,
+      "control": 2,
+      "defense": 1,
+      "targets": 1,
+      "frequency": 0,
+      "terrain": 0,
+      "difficulty": 2
+    }
+  }
+}

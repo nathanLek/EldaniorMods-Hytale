@@ -703,7 +703,7 @@ public class ProprietesTab {
     /**
      * Envoie le montant net au proprio joueur, ou a la ville si pas de proprio joueur.
      */
-    private static void payOwnerOrCity(ParcelData parcel, long netAmount, String reason) {
+    public static void payOwnerOrCity(ParcelData parcel, long netAmount, String reason) {
         if (netAmount <= 0) return;
 
         if (parcel.getOwnerUUID() != null) {

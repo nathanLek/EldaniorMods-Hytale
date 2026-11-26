@@ -12,10 +12,10 @@
     "Swing_Left_Damage": {
       "Interactions": [
         {
-          "Parent": "DamageEntityParentMasamuneCeleste",
+          "Parent": "Weapon_Sword_Primary_Swing_Left_Damage",
           "DamageCalculator": {
             "BaseDamage": {
-              "Physical": 14
+              "Physical": 38
             }
           },
           "DamageEffects": {
@@ -31,7 +31,7 @@
           "Parent": "Weapon_Sword_Primary_Swing_Right_Damage",
           "DamageCalculator": {
             "BaseDamage": {
-              "Physical": 14
+              "Physical": 38
             }
           },
           "DamageEffects": {
@@ -47,7 +47,7 @@
           "Parent": "Weapon_Sword_Primary_Swing_Down_Damage",
           "DamageCalculator": {
             "BaseDamage": {
-              "Physical": 28
+              "Physical": 68
             }
           },
           "DamageEffects": {
@@ -63,7 +63,7 @@
           "Parent": "Weapon_Sword_Primary_Thrust_Damage",
           "DamageCalculator": {
             "BaseDamage": {
-              "Physical": 41
+              "Physical": 99
             }
           },
           "EntityStatsOnHit": [
@@ -85,7 +85,7 @@
           "Parent": "Weapon_Sword_Signature_Vortexstrike_Spin_Damage",
           "DamageCalculator": {
             "BaseDamage": {
-              "Physical": 29
+              "Physical": 72
             }
           },
           "EntityStatsOnHit": [],
@@ -102,7 +102,7 @@
           "Parent": "Weapon_Sword_Signature_Vortexstrike_Stab_Damage",
           "DamageCalculator": {
             "BaseDamage": {
-              "Physical": 87
+              "Physical": 213
             }
           },
           "EntityStatsOnHit": [],
@@ -140,29 +140,24 @@
     ]
   },
   "Recipe": {
-    "TimeSeconds": 4.5,
+    "TimeSeconds": 20,
     "Input": [
       {
+        "ItemId": "Ingredient_Bar_Divin",
+        "Quantity": 12
+      },
+      {
         "ItemId": "Ingredient_Bar_Adamantite",
-        "Quantity": 11
-      },
-      {
-        "ItemId": "Ingredient_Leather_Heavy",
-        "Quantity": 4
-      },
-      {
-        "ItemId": "Ingredient_Fabric_Scrap_Cindercloth",
-        "Quantity": 3
+        "Quantity": 20
       }
     ],
     "BenchRequirement": [
       {
         "Type": "Crafting",
+        "Id": "Forge_Divine",
         "Categories": [
-          "Weapon_Sword"
-        ],
-        "Id": "Weapon_Bench",
-        "RequiredTierLevel": 3
+          "Forge_Epees"
+        ]
       }
     ]
   },

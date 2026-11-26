@@ -1,0 +1,67 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_OndeOriginelle",
+  "spell": "OndeOriginelle",
+  "javaClass": "OndeOriginelle",
+  "page": "rune_page_onde_originelle",
+  "name": "Rune de l'Onde Originelle",
+  "type": "Spatial",
+  "rarity": "Unique",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "OndeOriginelle",
+  "summary": "onde de gravite qui part du lanceur jusqu'a 25 blocs (12 b/s) : ennemis 150, souleves 1,5 s puis plaques (200) ; la surface du sol est arrachee et retombe.",
+  "description": "Sort unique spatial (Mage, rune de prédilection de la Force Originelle). Une onde de la force originelle part de vous et parcourt 25 blocs. Les ennemis qu'elle traverse subissent 150 dégâts et sont soulevés dans les airs ; 1,5 s plus tard, la gravité revient d'un coup et les plaque au sol (200 dégâts). Sur son passage, l'onde arrache des blocs du sol qui s'élèvent puis retombent ; le terrain est restauré ensuite (jamais en ville ni sur une parcelle). Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin qui se soulève tout seul au-dessus de la table. Enseigne l'Onde Originelle : la première force, celle qui sépara le ciel de la terre. Classes : tous les Mages (rune de prédilection de la Force Originelle). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Spellbook",
+    "charging": "CastPushCharging",
+    "release": "CastPushCharged",
+    "chargeTime": 0.6,
+    "releaseTime": 0.5,
+    "moveSpeed": 0.4,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Golem_Earth_Stomp_Impact",
+    "handParticles": "Chaos_Flash",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.6,
+    "range": 0,
+    "radius": "25",
+    "targets": "ennemis autour du lanceur",
+    "executionFx": "blocs de surface arraches (entites-blocs) le long du front, qui montent de 3 blocs puis retombent en 1,2 s ; pas de poussiere (gravite invisible)",
+    "sounds": "SFX_Golem_Earth_Stomp_Impact au depart, SFX_Golem_Earth_Slam_Impact au plaquage",
+    "effects": "front a 12 b/s : 150 Crush, levitation a sol + 4 (vitesse verticale imposee) 1,5 s, puis plaquage -25 + 200 Crush",
+    "terrain": "jusqu'a 6 blocs de surface arraches tous les 0,15 s (~90 max), restaures a la fin du sort",
+    "persistentDurationS": 5,
+    "interruptions": "lanceur mort ou deconnecte : debris retires, terrain restaure",
+    "restrictions": "mage",
+    "edgeCases": "plantes, fluides, blocs conserves, zones protegees : jamais arraches ; invocations exclues",
+    "limitations": "",
+    "balance": {
+      "damage": 3,
+      "range": 3,
+      "duration": 1,
+      "mobility": 0,
+      "control": 3,
+      "defense": 1,
+      "targets": 3,
+      "frequency": 1,
+      "terrain": 2,
+      "difficulty": 0
+    }
+  }
+}

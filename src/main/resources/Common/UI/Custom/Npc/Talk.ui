@@ -1,0 +1,221 @@
+$C = "../Common.ui";
+
+// Discussion avec un PNJ (guards/NpcTalkPage), generee par scripts/npcs/gen_talk_ui.py : voir ce script.
+Group {
+  LayoutMode: Middle;
+  Background: #05080d(0.55);
+
+  Group {
+    Anchor: (Width: 520);
+    LayoutMode: Top;
+    Padding: (Full: 3);
+    Background: #16212f;
+    Group {
+      LayoutMode: Top;
+      Padding: (Full: 3);
+      Background: #e8b34f;
+      Group {
+        LayoutMode: Top;
+        Padding: (Full: 2);
+        Background: #16212f;
+        Group {
+          LayoutMode: Top;
+          Background: #0b141d(0.96);
+          Padding: (Left: 22, Right: 22, Top: 16, Bottom: 14);
+
+          Group {
+            Anchor: (Height: 64);
+            LayoutMode: Left;
+            Group { Anchor: (Width: 64, Height: 64); Background: (TexturePath: "RecruitEmblem.png"); }
+            Group {
+              FlexWeight: 1;
+              LayoutMode: Top;
+              Padding: (Left: 14, Top: 10);
+              Label #TalkName {
+                Style: (FontSize: 19, RenderBold: true, RenderUppercase: true, TextColor: #d1dae6, Wrap: true);
+              }
+              Label {
+                Anchor: (Top: 2);
+                Text: "Que voulez-vous ?";
+                Style: (FontSize: 12, RenderBold: true, TextColor: #878e9c);
+              }
+            }
+          }
+
+          Group { Anchor: (Top: 10, Height: 2); Background: #c99436; }
+
+          Group {
+            Anchor: (Top: 12);
+            LayoutMode: Top;
+            Background: #132130;
+            Padding: (Left: 16, Right: 16, Top: 12, Bottom: 12);
+            Label #TalkText {
+              Style: (FontSize: 14, RenderBold: true, TextColor: #c9b37a, Wrap: true, HorizontalAlignment: Center);
+            }
+          }
+
+          Group {
+            Anchor: (Top: 8);
+            LayoutMode: Top;
+            Button #TalkOpt0 {
+              Anchor: (Top: 6, Height: 50);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #132130),
+                Hovered: (Background: #1d3044),
+                Pressed: (Background: #24405a),
+                Sounds: $C.@ButtonSounds
+              );
+              Group { Anchor: (Width: 4); Background: #c99436; }
+              Group {
+                FlexWeight: 1;
+                LayoutMode: Top;
+                Padding: (Left: 14, Top: 6);
+                Label #TalkOptTitle0 {
+                  Style: (FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #f0c868);
+                }
+                Label #TalkOptDesc0 {
+                  Anchor: (Top: 2);
+                  Style: (FontSize: 12, TextColor: #8a96a8);
+                }
+              }
+              Label {
+                Anchor: (Width: 30);
+                Text: "›";
+                Style: (FontSize: 22, RenderBold: true, TextColor: #c99436, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+            }
+            Button #TalkOpt1 {
+              Anchor: (Top: 6, Height: 50);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #132130),
+                Hovered: (Background: #1d3044),
+                Pressed: (Background: #24405a),
+                Sounds: $C.@ButtonSounds
+              );
+              Group { Anchor: (Width: 4); Background: #c99436; }
+              Group {
+                FlexWeight: 1;
+                LayoutMode: Top;
+                Padding: (Left: 14, Top: 6);
+                Label #TalkOptTitle1 {
+                  Style: (FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #f0c868);
+                }
+                Label #TalkOptDesc1 {
+                  Anchor: (Top: 2);
+                  Style: (FontSize: 12, TextColor: #8a96a8);
+                }
+              }
+              Label {
+                Anchor: (Width: 30);
+                Text: "›";
+                Style: (FontSize: 22, RenderBold: true, TextColor: #c99436, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+            }
+            Button #TalkOpt2 {
+              Anchor: (Top: 6, Height: 50);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #132130),
+                Hovered: (Background: #1d3044),
+                Pressed: (Background: #24405a),
+                Sounds: $C.@ButtonSounds
+              );
+              Group { Anchor: (Width: 4); Background: #c99436; }
+              Group {
+                FlexWeight: 1;
+                LayoutMode: Top;
+                Padding: (Left: 14, Top: 6);
+                Label #TalkOptTitle2 {
+                  Style: (FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #f0c868);
+                }
+                Label #TalkOptDesc2 {
+                  Anchor: (Top: 2);
+                  Style: (FontSize: 12, TextColor: #8a96a8);
+                }
+              }
+              Label {
+                Anchor: (Width: 30);
+                Text: "›";
+                Style: (FontSize: 22, RenderBold: true, TextColor: #c99436, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+            }
+            Button #TalkOpt3 {
+              Anchor: (Top: 6, Height: 50);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #132130),
+                Hovered: (Background: #1d3044),
+                Pressed: (Background: #24405a),
+                Sounds: $C.@ButtonSounds
+              );
+              Group { Anchor: (Width: 4); Background: #c99436; }
+              Group {
+                FlexWeight: 1;
+                LayoutMode: Top;
+                Padding: (Left: 14, Top: 6);
+                Label #TalkOptTitle3 {
+                  Style: (FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #f0c868);
+                }
+                Label #TalkOptDesc3 {
+                  Anchor: (Top: 2);
+                  Style: (FontSize: 12, TextColor: #8a96a8);
+                }
+              }
+              Label {
+                Anchor: (Width: 30);
+                Text: "›";
+                Style: (FontSize: 22, RenderBold: true, TextColor: #c99436, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+            }
+            Button #TalkOpt4 {
+              Anchor: (Top: 6, Height: 50);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #132130),
+                Hovered: (Background: #1d3044),
+                Pressed: (Background: #24405a),
+                Sounds: $C.@ButtonSounds
+              );
+              Group { Anchor: (Width: 4); Background: #c99436; }
+              Group {
+                FlexWeight: 1;
+                LayoutMode: Top;
+                Padding: (Left: 14, Top: 6);
+                Label #TalkOptTitle4 {
+                  Style: (FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #f0c868);
+                }
+                Label #TalkOptDesc4 {
+                  Anchor: (Top: 2);
+                  Style: (FontSize: 12, TextColor: #8a96a8);
+                }
+              }
+              Label {
+                Anchor: (Width: 30);
+                Text: "›";
+                Style: (FontSize: 22, RenderBold: true, TextColor: #c99436, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+            }
+          }
+
+          Group { Anchor: (Top: 12, Height: 2); Background: #c99436; }
+
+          Group {
+            Anchor: (Top: 12, Height: 44);
+            LayoutMode: Center;
+            $C.@TextButton #TalkBye {
+              @Anchor = Anchor(MinWidth: 220);
+              Text: "Au revoir";
+            }
+          }
+        }
+      }
+    }
+  }
+}

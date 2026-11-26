@@ -1,0 +1,12 @@
+{
+  "$Comment": "Suite d'un coup du Sabre du Vent : interruption vanilla, puis le porteur est allege (Arme_Vent).",
+  "Type": "Serial",
+  "Interactions": [
+    "DamageEntityParent_Hit_Interrupt_On_Hit",
+    {
+      "Type": "ApplyEffect",
+      "Entity": "User",
+      "EffectId": "Arme_Vent"
+    }
+  ]
+}

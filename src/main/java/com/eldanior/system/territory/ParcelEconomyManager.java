@@ -251,7 +251,8 @@ public class ParcelEconomyManager {
                     + parcelName + " (id=" + parcelId + ")");
             TransactionLogger.logRentEviction(parcelName, parcelId);
 
-            ParcelManager.evict(parcelId);
+            // 2026-11-17 : fin de location seulement (evict effacait aussi le proprietaire du bien)
+            ParcelManager.quitRental(parcelId);
             changed = true;
         }
 
@@ -260,6 +261,42 @@ public class ParcelEconomyManager {
             // pas besoin d'un save supplementaire
             System.out.println("[Economy] Evictions de locations expirees terminees.");
         }
+    }
+
+    // ==================== TAXE DU COMMERCE (demande du 2026-11-11) ====================
+
+    /** Part du prix d'un achat chez un PNJ marchand versee a la tresorerie du territoire ou se fait le commerce. */
+    public static final double TRADE_TAX = 0.10;
+
+    /**
+     * Zone qui encaisse la taxe du commerce a cette position : la zone la plus precise si c'est une ville, un territoire, un
+     * grand territoire ou un royaume ; sinon (parcelle, logement, mine...) sa premiere zone parente de ces types. null hors zone.
+     */
+    public static ParcelData tradeTaxZone(String world, double x, double y, double z) {
+        ParcelData p = world != null ? ParcelManager.getParcelAt(world, x, y, z) : null;
+        int depth = 8;
+        while (p != null && depth-- > 0) {
+            ParcelType t = p.getType();
+            if (t == ParcelType.CITY || t == ParcelType.TERRITORY || t == ParcelType.GRAND_TERRITORY || t == ParcelType.KINGDOM) return p;
+            p = p.getParentId() != null ? ParcelManager.get(p.getParentId()) : null;
+        }
+        return null;
+    }
+
+    /**
+     * Verse TRADE_TAX du montant paye (cuivres = « or » des tresoreries, la banque convertit 1 pour 1) au territoire de la position.
+     * Le prix paye par le client ne change pas : la taxe est la part du territoire sur la recette du marchand. Rend la zone
+     * creditee (null si hors zone ou montant trop petit).
+     */
+    public static ParcelData payTradeTax(String world, double x, double y, double z, long paid) {
+        long tax = (long) Math.floor(paid * TRADE_TAX);
+        if (tax <= 0) return null;
+        ParcelData zone = tradeTaxZone(world, x, y, z);
+        if (zone == null) return null;
+        zone.addTreasury(tax);
+        zone.addTradeTax(tax);                                                        // suivi par domaine (intendant, 2026-11-18)
+        ParcelManager.save();
+        return zone;
     }
 
     // ==================== UTILS ====================

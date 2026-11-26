@@ -1,0 +1,33 @@
+{
+  "TranslationProperties": {
+    "Name": "Voile du Portail Continental",
+    "Description": "Bloc technique : il remplit la porte quand un voyageur a payé son passage, puis disparaît."
+  },
+  "Icon": "Icons/ItemsGenerated/Teleporter.png",
+  "Categories": [
+    "Eldanior_System.Autres"
+  ],
+  "MaxStack": 1,
+  "Quality": "Technical",
+  "BlockType": {
+    "Material": "Empty",
+    "DrawType": "Cube",
+    "Opacity": "Transparent",
+    "RequiresAlphaBlending": true,
+    "VariantRotation": "NESW",
+    "Textures": [
+      {
+        "All": "BlockTextures/Eldanior_Voile_Portail.png"
+      }
+    ],
+    "ParticleColor": "#4ee4ff",
+    "TextureComputedColor": "#3f8fd8",
+    "Support": {
+      "Down": [
+        {
+          "Support": "Ignored"
+        }
+      ]
+    }
+  }
+}

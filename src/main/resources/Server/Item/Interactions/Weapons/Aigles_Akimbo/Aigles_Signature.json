@@ -1,0 +1,296 @@
+{
+  "$Comment": "Signature des Aigles du Desert, Jugement Celeste (energie pleine, 15 Balles Divines) : rafale de 12 balles qui cherchent les ennemis (AiglesRafaleDroite/Gauche), puis les deux pistolets tirent la balle de jugement (AiglesJugement). Genere par scripts/artefacts/gen_aigles_akimbo.py.",
+  "Type": "StatsCondition",
+  "Costs": {
+    "SignatureEnergy": 100
+  },
+  "ValueType": "Percent",
+  "Next": {
+    "Type": "ModifyInventory",
+    "ItemToRemove": {
+      "Id": "Munition_Balle_Divine",
+      "Quantity": 15
+    },
+    "Next": {
+      "Type": "Serial",
+      "Interactions": [
+        {
+          "Type": "Simple",
+          "RunTime": 0.3,
+          "HorizontalSpeedMultiplier": 0.5,
+          "Effects": {
+            "ItemAnimationId": "ShootBoth",
+            "LocalSoundEventId": "SFX_Sword_T2_Lunge_Charge_Local",
+            "Particles": [
+              {
+                "SystemId": "Sword_Charging",
+                "TargetNodeName": "Handle",
+                "PositionOffset": {
+                  "X": 0.3
+                }
+              }
+            ]
+          }
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.02,
+          "Effects": {
+            "CameraEffect": "Handgun_Shoot",
+            "WorldSoundEventId": "SFX_Handgun_Fire",
+            "LocalSoundEventId": "SFX_Handgun_Fire_Local",
+            "ItemAnimationId": "Shoot"
+          }
+        },
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.05,
+          "Spell": "AiglesRafaleDroite"
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.04
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.02,
+          "Effects": {
+            "CameraEffect": "Handgun_Shoot",
+            "WorldSoundEventId": "SFX_Handgun_Fire",
+            "LocalSoundEventId": "SFX_Handgun_Fire_Local",
+            "ItemAnimationId": "ShootLeft"
+          }
+        },
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.05,
+          "Spell": "AiglesRafaleGauche"
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.04
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.02,
+          "Effects": {
+            "CameraEffect": "Handgun_Shoot",
+            "WorldSoundEventId": "SFX_Handgun_Fire",
+            "LocalSoundEventId": "SFX_Handgun_Fire_Local",
+            "ItemAnimationId": "Shoot"
+          }
+        },
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.05,
+          "Spell": "AiglesRafaleDroite"
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.04
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.02,
+          "Effects": {
+            "CameraEffect": "Handgun_Shoot",
+            "WorldSoundEventId": "SFX_Handgun_Fire",
+            "LocalSoundEventId": "SFX_Handgun_Fire_Local",
+            "ItemAnimationId": "ShootLeft"
+          }
+        },
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.05,
+          "Spell": "AiglesRafaleGauche"
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.04
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.02,
+          "Effects": {
+            "CameraEffect": "Handgun_Shoot",
+            "WorldSoundEventId": "SFX_Handgun_Fire",
+            "LocalSoundEventId": "SFX_Handgun_Fire_Local",
+            "ItemAnimationId": "Shoot"
+          }
+        },
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.05,
+          "Spell": "AiglesRafaleDroite"
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.04
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.02,
+          "Effects": {
+            "CameraEffect": "Handgun_Shoot",
+            "WorldSoundEventId": "SFX_Handgun_Fire",
+            "LocalSoundEventId": "SFX_Handgun_Fire_Local",
+            "ItemAnimationId": "ShootLeft"
+          }
+        },
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.05,
+          "Spell": "AiglesRafaleGauche"
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.04
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.02,
+          "Effects": {
+            "CameraEffect": "Handgun_Shoot",
+            "WorldSoundEventId": "SFX_Handgun_Fire",
+            "LocalSoundEventId": "SFX_Handgun_Fire_Local",
+            "ItemAnimationId": "Shoot"
+          }
+        },
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.05,
+          "Spell": "AiglesRafaleDroite"
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.04
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.02,
+          "Effects": {
+            "CameraEffect": "Handgun_Shoot",
+            "WorldSoundEventId": "SFX_Handgun_Fire",
+            "LocalSoundEventId": "SFX_Handgun_Fire_Local",
+            "ItemAnimationId": "ShootLeft"
+          }
+        },
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.05,
+          "Spell": "AiglesRafaleGauche"
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.04
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.02,
+          "Effects": {
+            "CameraEffect": "Handgun_Shoot",
+            "WorldSoundEventId": "SFX_Handgun_Fire",
+            "LocalSoundEventId": "SFX_Handgun_Fire_Local",
+            "ItemAnimationId": "Shoot"
+          }
+        },
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.05,
+          "Spell": "AiglesRafaleDroite"
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.04
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.02,
+          "Effects": {
+            "CameraEffect": "Handgun_Shoot",
+            "WorldSoundEventId": "SFX_Handgun_Fire",
+            "LocalSoundEventId": "SFX_Handgun_Fire_Local",
+            "ItemAnimationId": "ShootLeft"
+          }
+        },
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.05,
+          "Spell": "AiglesRafaleGauche"
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.04
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.02,
+          "Effects": {
+            "CameraEffect": "Handgun_Shoot",
+            "WorldSoundEventId": "SFX_Handgun_Fire",
+            "LocalSoundEventId": "SFX_Handgun_Fire_Local",
+            "ItemAnimationId": "Shoot"
+          }
+        },
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.05,
+          "Spell": "AiglesRafaleDroite"
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.04
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.02,
+          "Effects": {
+            "CameraEffect": "Handgun_Shoot",
+            "WorldSoundEventId": "SFX_Handgun_Fire",
+            "LocalSoundEventId": "SFX_Handgun_Fire_Local",
+            "ItemAnimationId": "ShootLeft"
+          }
+        },
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.05,
+          "Spell": "AiglesRafaleGauche"
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.04
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.25,
+          "Effects": {
+            "CameraEffect": "Handgun_Shoot",
+            "WorldSoundEventId": "SFX_Handgun_Fire",
+            "LocalSoundEventId": "SFX_Handgun_Fire_Local",
+            "ItemAnimationId": "ShootBoth"
+          }
+        },
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.05,
+          "Spell": "AiglesJugement"
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.3,
+          "Effects": {
+            "ClearAnimationOnFinish": true
+          }
+        },
+        {
+          "Type": "ChangeStat",
+          "StatModifiers": {
+            "SignatureEnergy": -100
+          },
+          "ValueType": "Percent"
+        }
+      ]
+    },
+    "Failed": "Gun_Shoot_Fail"
+  }
+}

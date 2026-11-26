@@ -1,7 +1,7 @@
 {
   "TranslationProperties": {
     "Name": "Pièce d'Or",
-    "Description": "[Clic F]: Transférer Dans la Banque"
+    "Description": "Monnaie d'Eldanior. Elle se dépose et se change chez le banquier."
   },
   "Categories": [
     "Eldanior_System.Coins"
@@ -64,8 +64,5 @@
   "Icon": "Icons/ItemsGenerated/Elda_Gold_Coins_Icone.png",
   "ItemSoundSetId": "ISS_Blocks_Wood",
   "Quality": "Common",
-  "DropOnDeath": true,
-  "Interactions": {
-    "Use": "Root_ConsumableItemMoneyInteraction"
-  }
+  "DropOnDeath": true
 }

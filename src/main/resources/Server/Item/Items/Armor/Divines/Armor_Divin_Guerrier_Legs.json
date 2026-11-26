@@ -1,0 +1,92 @@
+{
+  "TranslationProperties": {
+    "Name": "Grèves du Séraphin",
+    "Description": "Armure divine du Guerrier. Des cuissards cannelés et des grèves d'argent bordées d'or, sur une cotte de mailles claire."
+  },
+  "Quality": "Divin",
+  "ItemLevel": 800,
+  "PlayerAnimationsId": "Block",
+  "ItemSoundSetId": "ISS_Armor_Heavy",
+  "Categories": [
+    "Eldanior_System.Armures",
+    "Items.Armors"
+  ],
+  "Icon": "Icons/ItemsGenerated/Armor_Divin_Guerrier_Legs.png",
+  "IconProperties": {
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Scale": 0.34,
+    "Translation": [
+      0,
+      0
+    ]
+  },
+  "Model": "Items/Armors/Divines/Guerrier/Legs.blockymodel",
+  "Texture": "Items/Armors/Divines/Guerrier/Legs_Texture.png",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    }
+  },
+  "Armor": {
+    "ArmorSlot": "Legs",
+    "BaseDamageResistance": 0,
+    "CosmeticsToHide": [
+      "Pants",
+      "Shoes",
+      "Overpants"
+    ],
+    "StatModifiers": {
+      "Health": [
+        {
+          "Amount": 85,
+          "CalculationType": "Additive"
+        }
+      ],
+      "Mana": [
+        {
+          "Amount": 12,
+          "CalculationType": "Additive"
+        }
+      ]
+    },
+    "DamageResistance": {
+      "Physical": [
+        {
+          "Amount": 0.22,
+          "CalculationType": "Percent"
+        }
+      ],
+      "Projectile": [
+        {
+          "Amount": 0.22,
+          "CalculationType": "Percent"
+        }
+      ]
+    }
+  },
+  "Tags": {
+    "Type": [
+      "Armor"
+    ],
+    "Family": [
+      "Divine"
+    ]
+  },
+  "MaxDurability": 800,
+  "DurabilityLossOnHit": 0.5
+}

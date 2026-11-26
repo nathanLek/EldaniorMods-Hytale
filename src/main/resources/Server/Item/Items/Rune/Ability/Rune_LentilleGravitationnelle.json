@@ -1,0 +1,45 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de la Lentille Gravitationnelle",
+    "Description": "Sort unique spatial (Mage, rune de prédilection de l'Archonte). Une lentille de gravité s'ouvre au point visé (rayon 8, jusqu'à 25 blocs) pendant 12 s. Elle courbe tout ce qui la traverse : les ennemis sont déviés et tournent autour de son cœur, vos coups sur eux sont concentrés (+40 % de dégâts), et les projectiles ennemis qui y entrent sont capturés en orbite (12 au plus). À la fin, la lentille s'effondre : les ennemis sont attirés en son centre et subissent 200 dégâts, plus 30 par projectile capturé. Épargne votre groupe, votre guilde et votre famille. Coût : 600 mana. Recharge : 180 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_LentilleGravitationnelle.png",
+  "Quality": "Unique",
+  "ItemLevel": 75,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_Runes.Spatial"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_LentilleGravitationnelle.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 180,
+    "Cost": 600,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Damage",
+      "Aoe",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_LentilleGravitationnelle"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "$Comment": "Percee depuis le fourreau : degaine, echange de forme, puis LuoPercee.",
+  "Type": "Serial",
+  "Interactions": [
+    {
+      "Type": "Simple",
+      "RunTime": 0.05,
+      "HorizontalSpeedMultiplier": 0.75,
+      "Effects": {
+        "ItemAnimationId": "Degainer",
+        "WorldSoundEventId": "SFX_Sword_T2_Swing",
+        "LocalSoundEventId": "SFX_Sword_T2_Swing_RL_Local"
+      }
+    },
+    {
+      "Type": "RuneSpell",
+      "RunTime": 0.0,
+      "Spell": "TenryumaruDegaine"
+    },
+    {
+      "Type": "RuneSpell",
+      "RunTime": 0.05,
+      "Spell": "LuoPercee",
+      "OnItemChangeBehavior": "Ignore"
+    },
+    {
+      "Type": "Simple",
+      "RunTime": 0.35,
+      "Effects": {
+        "ClearAnimationOnFinish": true
+      },
+      "OnItemChangeBehavior": "Ignore"
+    }
+  ]
+}

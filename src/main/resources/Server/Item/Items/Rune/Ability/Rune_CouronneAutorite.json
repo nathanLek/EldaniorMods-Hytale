@@ -1,0 +1,46 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de la Couronne d'Autorité",
+    "Description": "Sort unique spatial (Mage, rune de prédilection de l'Archonte Suprême). Une couronne d'autorité flotte au-dessus de votre tête pendant 15 s : aucun ennemi ne peut s'approcher à moins de 6 blocs (il est repoussé et subit 40 dégâts, une fois par seconde au plus) et les projectiles qui entrent dans ce cercle sont anéantis. Trois fois pendant ce temps, un clic prononce un décret : tous les ennemis à moins de 12 blocs subissent 150 dégâts et sont éjectés. Épargne votre groupe, votre guilde et votre famille. Coût : 600 mana. Recharge : 180 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_CouronneAutorite.png",
+  "Quality": "Unique",
+  "ItemLevel": 75,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_Runes.Spatial"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_CouronneAutorite.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 180,
+    "Cost": 600,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Damage",
+      "Aoe",
+      "Duration",
+      "Buff"
+    ],
+    "Cast": "Root_Ability_CouronneAutorite"
+  }
+}

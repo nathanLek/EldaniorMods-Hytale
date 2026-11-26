@@ -1,0 +1,56 @@
+{
+  "Type": "Variant",
+  "Reference": "Template_Intelligent",
+  "Modify": {
+    "MaxHealth": 2500,
+    "HearingRange": 24,
+    "WakingPeriod": [
+      0,
+      24
+    ],
+    "DropList": "Drop_Wraith",
+    "Appearance": "Eldanior_Roi_De_La_Mort",
+    "Weapons": [
+      "Weapon_Battleaxe_Scythe_Void"
+    ],
+    "OffHand": [],
+    "FlockArray": [],
+    "Attack": "Root_NPC_Eldanior_Roi_Mort_Attack",
+    "AttackDistance": 8,
+    "TargetRange": 8,
+    "BlockProbability": 10,
+    "DesiredAttackDistanceRange": [
+      4,
+      6
+    ],
+    "_InteractionVars": {
+      "Melee_Damage": {
+        "Interactions": [
+          {
+            "Parent": "NPC_Attack_Melee_Damage",
+            "$Comment": "Sets damage and onhit effects",
+            "DamageCalculator": {
+              "Type": "Absolute",
+              "BaseDamage": {
+                "Physical": 160
+              },
+              "RandomPercentageModifier": 0.1
+            }
+          }
+        ]
+      }
+    },
+    "IsMemory": false,
+    "NameTranslationKey": {
+      "Compute": "NameTranslationKey"
+    },
+    "ViewRange": 40
+  },
+  "Parameters": {
+    "NameTranslationKey": {
+      "Value": "server.npcRoles.Wraith.name",
+      "Description": "Translation key for NPC name display"
+    }
+  },
+  "$Comment": "Boss Mondial « Roi de la Mort » (gen_roi_mort.py) : Wraith du jeu, texture blanche, flammes violettes ; taille x5, couronne, niveau et nom poses par WorldBosses."
+}

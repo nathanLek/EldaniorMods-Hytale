@@ -1,0 +1,22 @@
+{
+  "$Comment": "Transformation Hwakyung : corps de Ki. Rafraichi par TransformationHwakyung (gen_voie_martiale.py). Nom : Corps Hwakyung.",
+  "ApplicationEffects": {
+    "Particles": [
+      {
+        "SystemId": "Ki_Hwakyung",
+        "TargetNodeName": "Chest",
+        "PositionOffset": {
+          "X": 0,
+          "Y": -1,
+          "Z": 0
+        },
+        "Scale": 1.5
+      }
+    ],
+    "EntityBottomTint": "#3a3020",
+    "EntityTopTint": "#fff3e6"
+  },
+  "Duration": 2.5,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": false
+}

@@ -1,0 +1,90 @@
+{
+  "TranslationProperties": {
+    "Name": "Kote de la Lune Noire",
+    "Description": "Armure divine de l'Assassin. Des manches de mailles à attelles laquées et des tekko ; au poignet gauche, une lame cachée au fil de lumière spectrale."
+  },
+  "Quality": "Divin",
+  "ItemLevel": 800,
+  "PlayerAnimationsId": "Block",
+  "ItemSoundSetId": "ISS_Armor_Leather",
+  "Categories": [
+    "Eldanior_System.Armures",
+    "Items.Armors"
+  ],
+  "Icon": "Icons/ItemsGenerated/Armor_Divin_Assassin_Hands.png",
+  "IconProperties": {
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Scale": 0.5,
+    "Translation": [
+      0,
+      0
+    ]
+  },
+  "Model": "Items/Armors/Divines/Assassin/Hands.blockymodel",
+  "Texture": "Items/Armors/Divines/Assassin/Hands_Texture.png",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    }
+  },
+  "Armor": {
+    "ArmorSlot": "Hands",
+    "BaseDamageResistance": 0,
+    "CosmeticsToHide": [
+      "Gloves"
+    ],
+    "StatModifiers": {
+      "Health": [
+        {
+          "Amount": 28,
+          "CalculationType": "Additive"
+        }
+      ],
+      "Mana": [
+        {
+          "Amount": 18,
+          "CalculationType": "Additive"
+        }
+      ]
+    },
+    "DamageResistance": {
+      "Physical": [
+        {
+          "Amount": 0.08,
+          "CalculationType": "Percent"
+        }
+      ],
+      "Projectile": [
+        {
+          "Amount": 0.08,
+          "CalculationType": "Percent"
+        }
+      ]
+    }
+  },
+  "Tags": {
+    "Type": [
+      "Armor"
+    ],
+    "Family": [
+      "Divine"
+    ]
+  },
+  "MaxDurability": 800,
+  "DurabilityLossOnHit": 0.5
+}

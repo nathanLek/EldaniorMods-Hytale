@@ -13,5 +13,6 @@ public enum WeaponMastery {
     GUN,
     CLUB,
     RIFLE,
+    FLAIL,
     ANY
 }

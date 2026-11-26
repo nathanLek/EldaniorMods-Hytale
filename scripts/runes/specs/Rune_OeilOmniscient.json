@@ -1,0 +1,67 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_OeilOmniscient",
+  "spell": "OeilOmniscient",
+  "javaClass": "OeilOmniscient",
+  "page": "rune_page_oeil_omniscient",
+  "name": "Rune de l'Œil Omniscient",
+  "type": "Espace",
+  "rarity": "Unique",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "OeilOmniscient",
+  "summary": "15 s : clic droit sur un ennemi vu (40 blocs) = echange de places, 150 degats et etourdissement 1,5 s ; 4 echanges.",
+  "description": "Sort unique d'espace (Mage, rune de prédilection du Visionnaire Suprême). Un œil s'ouvre au-dessus de vous pendant 15 s. Un clic droit sur un ennemi visible (jusqu'à 40 blocs) échange instantanément vos places : il subit 150 dégâts et reste étourdi 1,5 s. 4 échanges au plus, une seconde d'écart entre deux. Le clic gauche reste une attaque normale.",
+  "pageDescription": "Un parchemin au centre duquel un œil cligne. Enseigne l'Œil Omniscient : tout ce que vous voyez, vous pouvez l'atteindre. Classes : tous les Mages (rune de prédilection du Visionnaire Suprême). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Duration"
+  ],
+  "cast": {
+    "animationSet": "Spellbook",
+    "charging": "CastPushCharging",
+    "release": "CastPushCharged",
+    "chargeTime": 0.5,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Portal_Neutral_Open",
+    "handParticles": "Astral_Esprit",
+    "handParticlesScale": 0.25,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.5,
+    "range": 40,
+    "radius": "0",
+    "targets": "ennemi vise",
+    "persistentFx": "oeil Astral_Esprit au-dessus de la tete toutes les 150 ms",
+    "impactFx": "Bifrost_Divine aux deux positions",
+    "sounds": "SFX_Portal_Neutral_Open a l'ouverture, SFX_Portal_Neutral a chaque echange",
+    "effects": "echange de positions (teleport des deux), 150 Elemental, stun Gaia_Etourdi 1,5 s, protection de chute 2 s",
+    "terrain": "aucun",
+    "persistentDurationS": 15,
+    "interruptions": "clic droit = echange ; fin apres 4 echanges ou 15 s",
+    "restrictions": "mage",
+    "edgeCases": "cible derriere un mur : non visee (targetEntity) ; invocations et allies ignores",
+    "balance": {
+      "damage": 2,
+      "range": 3,
+      "duration": 2,
+      "mobility": 3,
+      "control": 2,
+      "defense": 1,
+      "targets": 1,
+      "frequency": 2,
+      "terrain": 0,
+      "difficulty": 2
+    }
+  },
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null
+}

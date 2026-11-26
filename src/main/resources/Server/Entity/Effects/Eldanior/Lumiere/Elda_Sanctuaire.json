@@ -1,0 +1,31 @@
+{
+  "$Comment": "Sanctuaire mineur : -40 % de degats subis tant que l'allie est dans le dome (pose a l'entree, retire a la sortie).",
+  "Duration": 8.0,
+  "ApplicationEffects": {
+    "EntityTopTint": "#fffbe6",
+    "EntityBottomTint": "#ffcf5a"
+  },
+  "DamageResistance": {
+    "Physical": [
+      {
+        "Amount": 0.4,
+        "CalculationType": "Percent"
+      }
+    ],
+    "Elemental": [
+      {
+        "Amount": 0.4,
+        "CalculationType": "Percent"
+      }
+    ],
+    "Projectile": [
+      {
+        "Amount": 0.4,
+        "CalculationType": "Percent"
+      }
+    ]
+  },
+  "OverlapBehavior": "Overwrite",
+  "Debuff": false,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Rune_SanctuaireMineur.png"
+}

@@ -7,6 +7,9 @@ description: Rune_Skills_System — conçoit, équilibre et implémente les comp
 
 Fabrique de compétences de rune du mod Eldanior (plugin serveur Hytale, Java 25, `server_version ~0.7.x`).
 Une rune = un item à bloc `Ability` équipé dans les slots de compétence ; elle s'apprend avec un parchemin trouvé dans le loot.
+Depuis le 2026-11-24, une rune ne s'obtient **que par son manuel de magie** (classe, Dignité, butin : toujours le manuel ; aucune recette de rune) (`scripts/runes/gen_manuels_magie.py`, liste
+`scripts/runes/manuels_magie.json`) : un livre par type, un manuel par rune (`Eldanior_Manuel_Magie_<Type>_<Rune>`, lecture
+2,5 s, sort `ManuelMagieApprendre`). Pour un type déjà fait, `rune_tool.py new` convertit seul le parchemin en manuel.
 
 ## 1. Choisir le mode
 

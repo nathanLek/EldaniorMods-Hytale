@@ -1,0 +1,177 @@
+{
+  "Parent": "Template_Weapon_Sword",
+  "TranslationProperties": {
+    "Name": "Excalibur, Lame du Créateur",
+    "Description": "Artefact divin. Une épée divine qui purifie les ténèbres : ses coups infligent +50 % de dégâts aux morts-vivants et aux créatures du Néant. Signature, Jugement d'Avalon : un pilier de lumière s'abat devant le porteur, foudroie les ennemis proches, les éblouit et soigne le porteur. Guerriers et Dragons."
+  },
+  "Quality": "Divin",
+  "ItemLevel": 800,
+  "Model": "Items/Weapons/Sword/Mithril.blockymodel",
+  "Texture": "Items/Weapons/Sword/Mithril_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Weapon_Sword_Mithril.png",
+  "IconProperties": {
+    "Scale": 0.35,
+    "Rotation": [
+      45,
+      90,
+      0
+    ],
+    "Translation": [
+      -35,
+      -35
+    ]
+  },
+  "Categories": [
+    "Eldanior_System.Artefacts",
+    "Items.Weapons"
+  ],
+  "MaxStack": 1,
+  "Variant": false,
+  "Interactions": {
+    "Ability1": "Root_Excalibur_Signature"
+  },
+  "InteractionVars": {
+    "Swing_Left_Damage": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Primary_Swing_Left_Damage",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Physical": 50
+            }
+          },
+          "DamageEffects": {
+            "WorldSoundEventId": "SFX_Sword_T2_Impact",
+            "LocalSoundEventId": "SFX_Sword_T2_Impact"
+          }
+        }
+      ]
+    },
+    "Swing_Right_Damage": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Primary_Swing_Right_Damage",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Physical": 50
+            }
+          },
+          "DamageEffects": {
+            "WorldSoundEventId": "SFX_Sword_T2_Impact",
+            "LocalSoundEventId": "SFX_Sword_T2_Impact"
+          }
+        }
+      ]
+    },
+    "Swing_Down_Damage": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Primary_Swing_Down_Damage",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Physical": 90
+            }
+          },
+          "DamageEffects": {
+            "WorldSoundEventId": "SFX_Sword_T2_Impact",
+            "LocalSoundEventId": "SFX_Sword_T2_Impact"
+          }
+        }
+      ]
+    },
+    "Thrust_Damage": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Primary_Thrust_Damage",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Physical": 130
+            }
+          },
+          "DamageEffects": {
+            "WorldSoundEventId": "SFX_Sword_T2_Impact",
+            "LocalSoundEventId": "SFX_Sword_T2_Impact"
+          }
+        }
+      ]
+    },
+    "Vortexstrike_Spin_Damage": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Signature_Vortexstrike_Spin_Damage",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Physical": 95
+            }
+          },
+          "DamageEffects": {
+            "WorldSoundEventId": "SFX_Sword_T2_Impact",
+            "LocalSoundEventId": "SFX_Sword_T2_Impact"
+          }
+        }
+      ]
+    },
+    "Vortexstrike_Stab_Damage": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Signature_Vortexstrike_Stab_Damage",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Physical": 280
+            }
+          },
+          "DamageEffects": {
+            "WorldSoundEventId": "SFX_Sword_T2_Impact",
+            "LocalSoundEventId": "SFX_Sword_T2_Impact"
+          }
+        }
+      ]
+    },
+    "Guard_Wield": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Secondary_Guard_Wield",
+          "StaminaCost": {
+            "Value": 10,
+            "CostType": "Damage"
+          }
+        }
+      ]
+    }
+  },
+  "MaxDurability": 0,
+  "DurabilityLossOnHit": 0,
+  "Trails": [
+    {
+      "TrailId": "Excalibur_Trail",
+      "TargetNodeName": "Handle",
+      "TargetEntityPart": "PrimaryItem",
+      "PositionOffset": {
+        "X": 0.8,
+        "Y": 0
+      }
+    }
+  ],
+  "Recipe": {
+    "TimeSeconds": 30,
+    "Input": [
+      {
+        "ItemId": "Ingredient_Bar_Divin",
+        "Quantity": 24
+      },
+      {
+        "ItemId": "Ingredient_Bar_Adamantite",
+        "Quantity": 40
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "Forge_Divine",
+        "Categories": [
+          "Forge_Epees"
+        ]
+      }
+    ]
+  }
+}

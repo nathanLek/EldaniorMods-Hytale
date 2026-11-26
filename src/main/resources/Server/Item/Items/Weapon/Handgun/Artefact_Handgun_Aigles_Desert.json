@@ -1,0 +1,54 @@
+{
+  "$Comment": "Aigles du Desert : deux pistolets lourds (modele maison sur la hierarchie du pistolet vanilla), rendus dans les deux mains, animations Aigles_Akimbo, balles divines deplacees par le code (AiglesDuDesert.java). Modele, textures, icone, animations, interactions et ce fichier : scripts/artefacts/gen_aigles_akimbo.py.",
+  "TranslationProperties": {
+    "Name": "Colts de cavalerie (Green Colt)",
+    "Description": "Forme transformée de Green Colt, pour 5 minutes : deux Colt Single Action Army 1873 à canon de cavalerie, carcasse trempée, crosses d'ivoire à émeraude. Chargeurs de 5 Balles Divines par pistolet, rechargés en 0,6 s ; portée 40 blocs ; dégâts ×1,5, augmentés par la Force. Cadence (clics) : droite, gauche, droite, puis les deux ensemble ; une balle sur sept est une Balle de Jugement (colonne de lumière). Maintenir : Balle Perforante (3 balles). Clic droit, gun-kata : crosse droite, crosse gauche, bond et double tir à bout portant. Rythme du Pistolero : +6 % par touche enchaînée (jusqu'à +60 %). Signature, Jugement Céleste (15 Balles Divines de l'inventaire) : rafale de douze balles chercheuses puis une balle géante et une immense colonne de lumière."
+  },
+  "Quality": "Legendary",
+  "ItemLevel": 580,
+  "Model": "Items/Weapons/artefacts/Artefact_Handgun_Aigles_Desert.blockymodel",
+  "Texture": "Items/Weapons/artefacts/Artefact_Handgun_Aigles_Desert.png",
+  "Icon": "Icons/ItemsGenerated/Artefact_Handgun_Aigles_Desert.png",
+  "IconProperties": {
+    "Scale": 0.67,
+    "Translation": [
+      0.69,
+      -10.11
+    ],
+    "Rotation": [
+      315,
+      90,
+      0
+    ]
+  },
+  "PlayerAnimationsId": "Aigles_Akimbo",
+  "Categories": [],
+  "MaxStack": 1,
+  "Variant": false,
+  "Interactions": {
+    "Primary": "Root_Aigles_Tir",
+    "Secondary": "Root_Aigles_Kata",
+    "Ability1": "Root_Aigles_Signature"
+  },
+  "Weapon": {
+    "EntityStatsToClear": [
+      "SignatureEnergy"
+    ],
+    "StatModifiers": {
+      "SignatureEnergy": [
+        {
+          "Amount": 20,
+          "CalculationType": "Additive"
+        }
+      ]
+    },
+    "RenderDualWielded": true
+  },
+  "MaxDurability": 0,
+  "DurabilityLossOnHit": 0,
+  "Tags": {
+    "Type": [
+      "Weapon"
+    ]
+  }
+}

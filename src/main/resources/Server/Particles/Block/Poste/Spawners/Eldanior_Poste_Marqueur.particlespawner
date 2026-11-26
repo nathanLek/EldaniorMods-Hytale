@@ -1,0 +1,71 @@
+{
+  "$Comment": "Poste de PNJ : quelques etoiles blanches qui montent doucement du sol.",
+  "RenderMode": "BlendAdd",
+  "ParticleRotationInfluence": "Billboard",
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "MaxConcurrentParticles": 7,
+  "ParticleRotateWithSpawner": false,
+  "SpawnRate": {
+    "Min": 7,
+    "Max": 7
+  },
+  "SpawnBurst": true,
+  "ParticleLifeSpan": {
+    "Min": 1.0,
+    "Max": 1.4
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Basic/Spark.png",
+    "ScaleRatioConstraint": "OneToOne",
+    "UVOption": "None",
+    "SoftParticles": "Disable",
+    "InitialAnimationFrame": {
+      "Opacity": 1,
+      "Color": "#ffffff",
+      "Scale": {
+        "X": {
+          "Min": 0.2,
+          "Max": 0.3
+        }
+      }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 1,
+        "Color": "#ffffff"
+      },
+      "100": {
+        "Opacity": 0,
+        "Color": "#fff0c0"
+      }
+    }
+  },
+  "EmitOffset": {
+    "X": {
+      "Min": -0.35,
+      "Max": 0.35
+    },
+    "Y": {
+      "Max": 0.05
+    },
+    "Z": {
+      "Min": -0.35,
+      "Max": 0.35
+    }
+  },
+  "InitialVelocity": {
+    "Speed": {
+      "Min": 0.25,
+      "Max": 0.5
+    },
+    "Yaw": {
+      "Min": -180,
+      "Max": 180
+    },
+    "Pitch": {
+      "Min": 75,
+      "Max": 90
+    }
+  }
+}

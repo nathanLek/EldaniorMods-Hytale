@@ -1,0 +1,108 @@
+$C = "../Common.ui";
+
+// Serment de la Voie Martiale du Clan Luo (luo/VoieMartialePage), ouvert par le Rouleau de la Voie Martiale.
+// Style japonais : cadre de laque noire filete d'or, papier washi, encre, sceau cramoisi.
+Group {
+  LayoutMode: Middle;
+  Background: #05040a(0.62);
+
+  Group {
+    Anchor: (Width: 560);
+    LayoutMode: Top;
+    Padding: (Full: 4);
+    Background: #120c08;
+    Group {
+      LayoutMode: Top;
+      Padding: (Full: 2);
+      Background: #c9a24a;
+      Group {
+        LayoutMode: Top;
+        Padding: (Full: 6);
+        Background: #1c120c;
+        Group {
+          LayoutMode: Top;
+          Background: #efe4c9;
+          Padding: (Left: 30, Right: 30, Top: 20, Bottom: 20);
+
+          Group {
+            Anchor: (Height: 72);
+            LayoutMode: Left;
+            Group { Anchor: (Width: 64, Height: 64, Top: 4); Background: (TexturePath: "VoieRouleau.png"); }
+            Group {
+              FlexWeight: 1;
+              LayoutMode: Top;
+              Padding: (Left: 14, Top: 6);
+              Label {
+                Text: "Voie Martiale";
+                Style: (FontSize: 24, RenderBold: true, RenderUppercase: true, TextColor: #2a1a10);
+              }
+              Label {
+                Anchor: (Top: 2);
+                Text: "Serment du dojo du Clan Luo";
+                Style: (FontSize: 13, RenderBold: true, TextColor: #8a2420);
+              }
+            }
+            Group { Anchor: (Width: 56, Height: 56, Top: 8); Background: (TexturePath: "VoieMon.png"); }
+          }
+
+          Group { Anchor: (Top: 10, Height: 2); Background: #2a1a10; }
+          Group { Anchor: (Top: 2, Height: 1); Background: #8a2420; }
+
+          Label #VoieText {
+            Anchor: (Top: 14);
+            Style: (FontSize: 14, TextColor: #2a1a10, Wrap: true);
+          }
+
+          Group {
+            Anchor: (Top: 12);
+            LayoutMode: Top;
+            Background: #8a2420(0.12);
+            Padding: (Left: 14, Right: 14, Top: 10, Bottom: 10);
+            Label #VoieWarn {
+              Style: (FontSize: 14, RenderBold: true, TextColor: #8a2420, Wrap: true, HorizontalAlignment: Center);
+            }
+          }
+
+          Label #VoieKeep {
+            Anchor: (Top: 10);
+            Style: (FontSize: 12, TextColor: #5a4630, Wrap: true, HorizontalAlignment: Center);
+          }
+
+          Group {
+            Anchor: (Top: 16, Height: 46);
+            LayoutMode: Left;
+            Button #VoieCancel {
+              FlexWeight: 1;
+              LayoutMode: Middle;
+              Style: (
+                Default: (Background: #3a2c22),
+                Hovered: (Background: #4c3a2c),
+                Pressed: (Background: #5c4836),
+                Sounds: $C.@ButtonSounds
+              );
+              Label {
+                Text: "Renoncer";
+                Style: (FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #e8dcc0, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+            }
+            Group { Anchor: (Width: 14); }
+            Button #VoieAccept {
+              FlexWeight: 1;
+              LayoutMode: Middle;
+              Style: (
+                Default: (Background: #8a2420),
+                Hovered: (Background: #a52c26),
+                Pressed: (Background: #bf3a30),
+                Sounds: $C.@ButtonSounds
+              );
+              Label {
+                Text: "Prêter serment";
+                Style: (FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #fff3d6, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

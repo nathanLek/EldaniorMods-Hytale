@@ -1,0 +1,61 @@
+{
+  "$Comment": "Fiche de conception : rune de famille du Clan Luo (une active par famille, decision du 2026-11-05), idee de l'utilisateur developpee et validee le 2026-11-11 (docs/plan-clan-luo.md). Technique de famille (luo.LuoClans.TECHNIQUES, famille luo) : reservee aux membres, toutes classes, version selon la classe de la voie martiale. Apprise par son manuel (vendu par le Sensei Luo), aucun butin.",
+  "id": "Rune_ExecutionCeleste",
+  "spell": "ExecutionCeleste",
+  "javaClass": "ExecutionCeleste",
+  "page": "rune_page_execution_celeste",
+  "name": "Rune de l'Exécution Céleste",
+  "type": "Luo",
+  "rarity": "Legendaire",
+  "emblem": "ExecutionCeleste",
+  "classes": "clan",
+  "persistent": true,
+  "summary": "Katana Luo en main. Apprenti, Disciple : posture iai accroupie puis degaine court arrete devant soi (3,5 / 4,5 blocs). Expert, Maitre, Grand Maitre : ruee de 8 / 10 / 12 blocs qui traverse la cible visee, images remanentes qui la tranchent, epees de Ki qui l'encerclent et tombent au rengainage. Saint, Maitre Supreme, Dieu Martial : katana presente au fourreau, la lame sort de quelques centimetres et tous les ennemis de la zone (8 / 11 / 15 blocs) sont tranches (images remanentes, eclairs, ame de Ki). Execution sous 10 a 25 % de vie (boss : degats x2, joueurs : degats seuls). Degats x la puissance du katana.",
+  "description": "Technique de famille du Clan Luo, réservée à ses membres. Il faut tenir un katana du clan. Apprenti et Disciple : posture iai accroupie, la main sur la poignée, puis un dégainé éclair qui s'arrête net devant vous. Expert à Grand Maître : vous traversez l'ennemi visé d'un pas léger (8 à 12 blocs), vos images rémanentes le tranchent au passage, des épées de Ki l'encerclent et tombent quand vous rengainez. Saint Martial et au-delà : vous présentez votre katana au fourreau, la lame sort de quelques centimètres… et tous les ennemis de la zone (8 à 15 blocs) sont déjà tranchés. Un ennemi qui tombe sous le seuil d'exécution est décapité (10 à 25 % de sa vie selon la classe ; boss : dégâts doublés ; joueurs : dégâts seuls). Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "« La lame n'a pas quitté le fourreau. L'ennemi le croit encore. » Technique de la famille Luo : elle s'apprend dans son manuel secret, auprès du Sensei de la famille, jamais en butin.",
+  "keywords": [
+    "Damage",
+    "Melee"
+  ],
+  "overrides": {
+    "mana": 60,
+    "cooldown": 20,
+    "reason": "rune de famille du Clan Luo, utilisable des l'Apprenti en Arts Martiaux (niveau 20) et qui grandit avec la classe : cout et recharge d'une technique martiale frequente, la puissance vient du palier et du katana (ExecutionCeleste.java)"
+  },
+  "loot": {},
+  "cast": {
+    "animationSet": "Tenryumaru_Degainee",
+    "charging": "IaiCharging",
+    "release": "IaiCharging",
+    "chargeTime": 0.05,
+    "releaseTime": 0.05,
+    "moveSpeed": 0.5,
+    "cameraEffect": null,
+    "sound": null,
+    "releaseSound": null,
+    "handParticles": null,
+    "handParticlesScale": 0.6,
+    "costMoment": "start"
+  },
+  "design": {
+    "range": 15,
+    "persistentDurationS": 2,
+    "targets": "1 cible visee (paliers 1-5), tous les ennemis de la zone (paliers 6-8)",
+    "effects": "degaine court / ruee traversante + images remanentes + epees Ki_Epee_Holo / koiguchi + coupes de zone, execution",
+    "balance": {
+      "damage": 4,
+      "range": 2,
+      "duration": 0,
+      "mobility": 3,
+      "control": 1,
+      "defense": 1,
+      "targets": 3,
+      "frequency": 2,
+      "terrain": 0,
+      "difficulty": 2
+    }
+  },
+  "category": "Eldanior_Empire_Luo.Runes",
+  "manual": "Eldanior_Mouvement_Luo_01",
+  "$Comment_manual": "Technique apprise par son manuel secret (gen_voie_martiale_objets.py) : pas de parchemin rune_page_*."
+}

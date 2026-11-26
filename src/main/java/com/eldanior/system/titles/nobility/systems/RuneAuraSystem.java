@@ -39,6 +39,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * - Palier DRAGON (dignite >= 1000) : zone de domination draconique sur joueurs ET monstres
  *   (voir {@link #applyDragonZone}) — degats de chaleur croissants a l'approche, overlay ecran
  *   sombre, et barriere de repulsion a 7 blocs ; les monstres faibles sont repousses au bord (fuite).
+ * - Artistes martiaux (voie martiale du Clan Luo, 2026-11-24) : pas d'aura a eux, et l'aura des autres n'a aucune prise
+ *   sur eux (ni ralentissement, ni zone draconique, ni bonus de degats contre eux : CombatStatsSystem).
  */
 public class RuneAuraSystem extends EntityTickingSystem<EntityStore> {
 
@@ -212,6 +214,9 @@ public class RuneAuraSystem extends EntityTickingSystem<EntityStore> {
                 deactivate(selfUUID, playerRef, store);
                 NotificationHelper.sendWarning(selfPlayerRef,
                         "<color:gray>" + getAuraName(selfDignity) + " dissipee.</color>");
+            } else if (isMartial(selfData)) {
+                NotificationHelper.sendWarning(selfPlayerRef,
+                        "<color:red>La voie martiale ne connait pas l'aura de dignite : votre force est le Ki.</color>");
             } else if (selfDignity < MIN_DIGNITY) {
                 NotificationHelper.sendWarning(selfPlayerRef,
                         "<color:red>Dignite insuffisante pour invoquer l'aura (" + MIN_DIGNITY + " min).</color>");
@@ -291,8 +296,11 @@ public class RuneAuraSystem extends EntityTickingSystem<EntityStore> {
             }
         }
 
+        if (isMartial(selfData) && activeAura.contains(selfUUID)) deactivate(selfUUID, playerRef, store);   // devenu artiste martial
+
         // === 3. Effets subis par CE joueur (emetteurs = auras actives) ===
         if (activeAura.isEmpty()) return;
+        if (isMartial(selfData)) return;                                // artiste martial : resiste a l'aura des autres
 
         TransformComponent selfTransform = store.getComponent(playerRef, TransformComponent.getComponentType());
         if (selfTransform == null) return;
@@ -402,6 +410,11 @@ public class RuneAuraSystem extends EntityTickingSystem<EntityStore> {
             }
         }
         return best;
+    }
+
+    /** Artiste martial (une des 8 classes de la voie martiale) : sans aura, et insensible a celle des autres. */
+    public static boolean isMartial(PlayerLevelData data) {
+        return com.eldanior.system.classes.definitions.luo.VoieMartiale.tier(data) > 0;
     }
 
     private void deactivate(UUID uuid, Ref<EntityStore> playerRef, Store<EntityStore> store) {

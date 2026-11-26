@@ -1,0 +1,68 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_SablesMouvants",
+  "spell": "SablesMouvants",
+  "javaClass": "SablesMouvants",
+  "page": "rune_page_sables_mouvants",
+  "name": "Rune des Sables Mouvants",
+  "type": "Terre",
+  "rarity": "Rare",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "SablesMouvants",
+  "summary": "sol de sables mouvants 6 s (rayon 4) : ennemis tres ralentis, 10 degats / 0,5 s, englues 1 s apres 2 s dedans.",
+  "description": "Sort rare de terre (Mage, rune de prédilection de l'Alchimiste). Le sol du point visé (rayon 4, jusqu'à 20 blocs) se change en sables mouvants pendant 6 s. Les ennemis qui s'y trouvent avancent à peine (vitesse -70 %), subissent 10 dégâts toutes les demi-secondes, et ceux qui y restent 2 s sont englués sur place 1 s. Le sol redevient normal ensuite (jamais en ville ni sur une parcelle). Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin qui laisse couler du sable fin entre les doigts. Enseigne les Sables Mouvants : que la terre avale vos ennemis. Classes : tous les Mages (rune de prédilection de l'Alchimiste). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe",
+    "Duration"
+  ],
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.4,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Golem_Sand_Slam",
+    "handParticles": "Gaia_Dust_Burst",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.4,
+    "range": 20,
+    "radius": "4",
+    "targets": "ennemis de la zone",
+    "persistentFx": "Gaia_Dust_Burst en remous dans la zone / 0,5 s",
+    "impactFx": "Gaia_Dust_Burst a la transformation",
+    "sounds": "SFX_Golem_Sand_Slam a la transformation",
+    "effects": "Elda_Enlisement (x0,3, 1 s, reapplique / 0,5 s), 10 Earth / 0,5 s ; apres 2 s dans la zone : lockInPlace 1 s (une fois par ennemi)",
+    "terrain": "couche de surface en Soil_Sand rayon 4 (~50 blocs), restauree apres 6 s",
+    "persistentDurationS": 6,
+    "interruptions": "aucune",
+    "restrictions": "mage",
+    "edgeCases": "blocs conserves, plantes, fluides, zone protegee : intouches",
+    "balance": {
+      "damage": 1,
+      "range": 2,
+      "duration": 2,
+      "mobility": 0,
+      "control": 2,
+      "defense": 0,
+      "targets": 2,
+      "frequency": 1,
+      "terrain": 1,
+      "difficulty": 1
+    }
+  },
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null
+}

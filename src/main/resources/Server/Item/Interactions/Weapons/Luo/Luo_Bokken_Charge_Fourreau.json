@@ -1,0 +1,19 @@
+{
+  "$Comment": "Bokken au fourreau, maintien : posture chargee ; relache avant 0,5 s = degaine simple, apres = degaine + rafale.",
+  "Type": "Charging",
+  "Rules": {
+    "InterruptedBy": [
+      "Secondary"
+    ]
+  },
+  "DisplayProgress": true,
+  "HorizontalSpeedMultiplier": 0.45,
+  "Effects": {
+    "ItemAnimationId": "IaiCharging",
+    "LocalSoundEventId": "SFX_Sword_T2_Lunge_Charge_Local"
+  },
+  "Next": {
+    "0": "Tenryumaru_Degainer",
+    "0.5": "Luo_Bokken_Rafale_Fourreau"
+  }
+}

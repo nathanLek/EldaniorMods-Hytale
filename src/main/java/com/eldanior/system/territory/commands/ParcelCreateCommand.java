@@ -239,15 +239,15 @@ public class ParcelCreateCommand extends AbstractAsyncCommand {
                 null, "", worldStr, kx2 - M, yMin, kz1, kx2, yMax, kz1 + M, kingdomId);
         ParcelManager.assignToFamily(marqNE, "runkandel");
 
-        String marqSO = ParcelManager.createParcel("Marquisat_Luminara", ParcelType.GRAND_TERRITORY,
+        String marqSO = ParcelManager.createParcel("Marquisat_Luo", ParcelType.GRAND_TERRITORY,
                 null, "", worldStr, kx1, yMin, kz2 - M, kx1 + M, yMax, kz2, kingdomId);
-        ParcelManager.assignToFamily(marqSO, "luminara");
+        ParcelManager.assignToFamily(marqSO, "luo");
 
         String marqSE = ParcelManager.createParcel("Marquisat_Valmontis", ParcelType.GRAND_TERRITORY,
                 null, "", worldStr, kx2 - M, yMin, kz2 - M, kx2, yMax, kz2, kingdomId);
         ParcelManager.assignToFamily(marqSE, "valmontis");
 
-        sender.getPlayerRef().sendMessage(Message.raw("  4 Marquisats (Zippel, Runkandel, Luminara, Valmontis)"));
+        sender.getPlayerRef().sendMessage(Message.raw("  4 Marquisats (Zippel, Runkandel, Luo, Valmontis)"));
 
         int duchW = 1500;
         int gap = 1000;
@@ -268,13 +268,8 @@ public class ParcelCreateCommand extends AbstractAsyncCommand {
                 kx2 - duchW, yMin, kz1, kx2, yMax, kz1 + M, marqNE);
         ParcelManager.assignToFamily(dNE2, "warbane");
 
-        String dSO1 = ParcelManager.createParcel("Duche_Nighthollow", ParcelType.TERRITORY, null, "", worldStr,
-                kx1, yMin, kz2 - M, kx1 + duchW, yMax, kz2, marqSO);
-        ParcelManager.assignToFamily(dSO1, "nighthollow");
-
-        String dSO2 = ParcelManager.createParcel("Duche_Swiftquiver", ParcelType.TERRITORY, null, "", worldStr,
-                kx1 + duchW + gap, yMin, kz2 - M, kx1 + M, yMax, kz2, marqSO);
-        ParcelManager.assignToFamily(dSO2, "swiftquiver");
+        // Marquisat Luo : pas de duche, c'est l'Empire Luo ; ses quatre clans (Sama, Hanazakura, Kage, Setsuka) n'ont pas de
+        // territoire et achetent des villes.
 
         String dSE1 = ParcelManager.createParcel("Duche_Goldcrest", ParcelType.TERRITORY, null, "", worldStr,
                 kx2 - M, yMin, kz2 - M, kx2 - M + duchW, yMax, kz2, marqSE);
@@ -284,10 +279,10 @@ public class ParcelCreateCommand extends AbstractAsyncCommand {
                 kx2 - duchW, yMin, kz2 - M, kx2, yMax, kz2, marqSE);
         ParcelManager.assignToFamily(dSE2, "silkroad");
 
-        sender.getPlayerRef().sendMessage(Message.raw("  8 Duches (familles assignees automatiquement)"));
+        sender.getPlayerRef().sendMessage(Message.raw("  6 Duches (familles assignees automatiquement ; pas de duche dans l'Empire Luo)"));
         sender.getPlayerRef().sendMessage(Message.raw("  4 Zones Neutres (bras de la croix, terres de la couronne)"));
         sender.getPlayerRef().sendMessage(Message.raw("  1 Domaine Royal (Famille Eldanior)"));
-        sender.getPlayerRef().sendMessage(Message.raw("=== 14 parcelles creees ! ==="));
+        sender.getPlayerRef().sendMessage(Message.raw("=== 12 parcelles creees ! ==="));
 
         ParcelManager.optimizeHierarchy();
     }

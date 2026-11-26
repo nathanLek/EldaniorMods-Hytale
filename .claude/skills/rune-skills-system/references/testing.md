@@ -1,5 +1,11 @@
 # Valider une rune et rendre compte
 
+## Avant de déployer
+`./gradlew jar` écrit dans `UserData/Mods` : **le jar de la partie en cours**. Si `pgrep -fl HytaleServer.jar` montre un serveur `--singleplayer`, ne lancer ni `jar` ni `runServer` (NoClassDefFoundError, freezes) : s'arrêter à `compileJava` + `check` et demander à l'utilisateur de quitter le jeu.
+
+## Performance des visuels
+`SpellFx.fx` / `arc` / `shake` / `sound2dNear` trouvent les joueurs via la liste du monde (`playersNear`), jamais par une sphère d'entités : ne pas réintroduire `getAllEntitiesInSphere` sur un grand rayon dans une boucle de particules.
+
 ## Vérifications automatiques (toujours)
 1. `./gradlew compileJava -q` : aucune erreur.
 2. `python3 scripts/runes/rune_tool.py check <Id>` : 0 erreur. Vérifie l'item, la qualité, les icônes, la racine et les interactions,
@@ -13,7 +19,7 @@
    grep -iE "Failed to validate|Asset validation FAILED|Exception|<Id>" /tmp/runserver.out
    pkill -f HytaleServer.jar
    ```
-   Bruit connu, sans rapport : `SkillEffectConfig: Asset introuvable`, `Launch_Projectile_Spell` (deprecated),
+   Bruit connu, sans rapport : `Launch_Projectile_Spell` (deprecated),
    `skill_page_* ... incorrect format`, `rune_page_* ... incorrect format` / `Unused key: Id` (convention de nommage des parchemins).
    Le serveur écrit dans `run/` (logs, monde) : le signaler.
 

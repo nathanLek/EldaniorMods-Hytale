@@ -1,0 +1,45 @@
+{
+  "$Comment": "Arme divine en vol, deplacee par le code (ArmesDivines). Genere par gen_divines.py.",
+  "Model": "Items/Projectiles/Projectile.blockymodel",
+  "Texture": "Items/Projectiles/Projectile_default.png",
+  "DefaultAttachments": [
+    {
+      "Model": "Items/Weapons/artefacts/Artefact_Spear_Guandao.blockymodel",
+      "Texture": "Items/Weapons/artefacts/Artefact_Spear_Guandao.png"
+    }
+  ],
+  "AnimationSets": {
+    "FlyIdle": {
+      "Animations": [
+        {
+          "Animation": "Items/Animations/Fly/Fly_Vertical.blockyanim"
+        }
+      ]
+    }
+  },
+  "MinScale": 1.0,
+  "MaxScale": 1.0,
+  "HitBox": {
+    "Max": {
+      "X": 0.6,
+      "Y": 0.1,
+      "Z": 0.1
+    },
+    "Min": {
+      "X": -0.6,
+      "Y": -0.1,
+      "Z": -0.1
+    }
+  },
+  "Light": {
+    "Color": "#80ffb0",
+    "Radius": 7
+  },
+  "Particles": [
+    {
+      "SystemId": "Gilgamesh_Sword_Glow",
+      "TargetNodeName": "",
+      "Scale": 1.0
+    }
+  ]
+}

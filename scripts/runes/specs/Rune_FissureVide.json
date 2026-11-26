@@ -1,0 +1,69 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_FissureVide",
+  "spell": "FissureVide",
+  "javaClass": "FissureVide",
+  "page": "rune_page_fissure_vide",
+  "name": "Rune de la Fissure du Vide",
+  "type": "Espace",
+  "rarity": "Unique",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "FissureVide",
+  "summary": "fissure de 12 blocs en travers du regard, 12 s : l'ennemi qui la touche est jete au hasard (8-16 blocs, 10 blocs plus haut) : 80 ; vous la traversez d'un bond de 12 blocs.",
+  "description": "Sort unique d'espace (Mage, rune de prédilection du Void Primordial). Une fissure du vide de 12 blocs s'ouvre en travers de votre regard, au point visé (jusqu'à 20 blocs), pendant 12 s. Tout ennemi qui la touche est englouti puis recraché au hasard, entre 8 et 16 blocs plus loin et 10 blocs plus haut : 80 dégâts (3 fois au plus par ennemi). Vous, en revanche, la franchissez : y entrer vous projette 12 blocs plus loin dans la direction de votre regard. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin fendu de part en part, dont la déchirure ne se referme jamais. Enseigne la Fissure du Vide : un pas de travers dans l'espace. Classes : tous les Mages (rune de prédilection du Void Primordial). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Spellbook",
+    "charging": "CastPushCharging",
+    "release": "CastPushCharged",
+    "chargeTime": 0.6,
+    "releaseTime": 0.5,
+    "moveSpeed": 0.4,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Portal_Void",
+    "handParticles": "Nyx_Void",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.6,
+    "range": 20,
+    "radius": "12 x 1,5 (fissure)",
+    "targets": "ennemis qui la touchent ; lanceur",
+    "persistentFx": "3 failles Chaos_Rift (modeles) le long de la fissure, Nyx_Void tous les 1,5 blocs reemis / 0,6 s",
+    "impactFx": "Nyx_Void au depart et Chaos_Flash a l'arrivee de chaque renvoi",
+    "sounds": "SFX_Portal_Void a l'ouverture, SFX_Portal_Neutral a chaque passage",
+    "effects": "ennemi : teleporte a 8-16 blocs dans une direction au hasard, 10 blocs au-dessus d'une case libre, 80 Elemental, 3 fois max, 1 s d'immunite ; lanceur : 12 blocs vers le regard (case libre), protection de chute 3 s, 1,5 s entre deux passages",
+    "terrain": "aucun",
+    "persistentDurationS": 12,
+    "interruptions": "lanceur mort ou deconnecte : fin",
+    "restrictions": "mage",
+    "edgeCases": "pas de case libre : renvoi annule ; invocations exclues",
+    "limitations": "",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 2,
+      "mobility": 2,
+      "control": 2,
+      "defense": 2,
+      "targets": 3,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 2
+    }
+  }
+}

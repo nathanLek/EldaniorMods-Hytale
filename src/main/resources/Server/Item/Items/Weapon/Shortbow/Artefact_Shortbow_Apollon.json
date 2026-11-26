@@ -1,0 +1,246 @@
+{
+  "Parent": "Template_Weapon_Shortbow",
+  "Quality": "Divin",
+  "Model": "Items/Weapons/artefacts/Artefact_Shortbow_Apollon.blockymodel",
+  "Texture": "Items/Weapons/artefacts/Artefact_Shortbow_Apollon.png",
+  "Icon": "Icons/ItemsGenerated/Artefact_Shortbow_Apollon.png",
+  "ItemLevel": 800,
+  "InteractionVars": {
+    "Primary_Shoot_Damage_Strength_0": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Shortbow_Primary_Shoot_Damage_Strength_0",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Projectile": 5.0
+            }
+          },
+          "EntityStatsOnHit": [
+            {
+              "EntityStatId": "SignatureEnergy",
+              "Amount": 4
+            }
+          ]
+        }
+      ]
+    },
+    "Primary_Shoot_Damage_Strength_1": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Shortbow_Primary_Shoot_Damage_Strength_1",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Projectile": 10.0
+            }
+          },
+          "EntityStatsOnHit": [
+            {
+              "EntityStatId": "SignatureEnergy",
+              "Amount": 4
+            }
+          ]
+        }
+      ]
+    },
+    "Primary_Shoot_Damage_Strength_2": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Shortbow_Primary_Shoot_Damage_Strength_2",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Projectile": 20.0
+            }
+          },
+          "EntityStatsOnHit": [
+            {
+              "EntityStatId": "SignatureEnergy",
+              "Amount": 4
+            }
+          ]
+        }
+      ]
+    },
+    "Primary_Shoot_Damage_Strength_3": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Shortbow_Primary_Shoot_Damage_Strength_3",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Projectile": 35.0
+            }
+          },
+          "EntityStatsOnHit": [
+            {
+              "EntityStatId": "SignatureEnergy",
+              "Amount": 4
+            }
+          ]
+        }
+      ]
+    },
+    "Primary_Shoot_Damage_Strength_4": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Shortbow_Primary_Shoot_Damage_Strength_4",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Projectile": 95.0
+            }
+          },
+          "TargetedDamage": {
+            "Head": {
+              "DamageCalculator": {
+                "BaseDamage": {
+                  "Projectile": 25
+                }
+              },
+              "DamageEffects": {
+                "Knockback": {
+                  "Type": "Force",
+                  "VelocityConfig": {
+                    "AirResistance": 0.99,
+                    "AirResistanceMax": 0.98,
+                    "GroundResistance": 0.94,
+                    "GroundResistanceMax": 0.3,
+                    "Threshold": 3.0,
+                    "Style": "Linear"
+                  },
+                  "Direction": {
+                    "X": 0.0,
+                    "Y": 0.5,
+                    "Z": -1
+                  },
+                  "Force": 8,
+                  "VelocityType": "Add"
+                },
+                "WorldParticles": [
+                  {
+                    "SystemId": "Impact_Critical",
+                    "Scale": 1,
+                    "RotationOffset": {
+                      "Yaw": 180,
+                      "Pitch": 0,
+                      "Roll": 0
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "EntityStatsOnHit": [
+            {
+              "EntityStatId": "SignatureEnergy",
+              "Amount": 4
+            }
+          ]
+        }
+      ]
+    },
+    "Signature_Volley_Damage": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Shortbow_Signature_Volley_Damage",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Projectile": 70.0
+            }
+          },
+          "EntityStatsOnHit": [
+            {
+              "EntityStatId": "SignatureEnergy",
+              "Amount": 4
+            }
+          ]
+        }
+      ]
+    },
+    "Guard_Wield": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Shortbow_Secondary_Guard_Wield",
+          "StaminaCost": {
+            "Value": 10,
+            "CostType": "Damage"
+          }
+        }
+      ]
+    },
+    "Primary_Shoot_Strength_0": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Shortbow_Primary_Shoot_Strength_0",
+          "Config": "Projectile_Config_Divin_Apollon_Strength_0"
+        }
+      ]
+    },
+    "Primary_Shoot_Strength_1": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Shortbow_Primary_Shoot_Strength_1",
+          "Config": "Projectile_Config_Divin_Apollon_Strength_1"
+        }
+      ]
+    },
+    "Primary_Shoot_Strength_2": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Shortbow_Primary_Shoot_Strength_2",
+          "Config": "Projectile_Config_Divin_Apollon_Strength_2"
+        }
+      ]
+    },
+    "Primary_Shoot_Strength_3": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Shortbow_Primary_Shoot_Strength_3",
+          "Config": "Projectile_Config_Divin_Apollon_Strength_3"
+        }
+      ]
+    },
+    "Primary_Shoot_Strength_4": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Shortbow_Primary_Shoot_Strength_4",
+          "Config": "Projectile_Config_Divin_Apollon_Strength_4"
+        }
+      ]
+    }
+  },
+  "MaxDurability": 0,
+  "DurabilityLossOnHit": 0,
+  "TranslationProperties": {
+    "Name": "Arc d'Apollon, l'Arc du Soleil",
+    "Description": "Artefact divin. L'arc d'or du dieu du soleil. Ses flèches embrasent et soignent l'archer de 6 % des dégâts infligés. Signature, Flèche du Soleil : une immense flèche d'or file sur 80 blocs, transperce tout, embrase son sillage et explose en un soleil au bout de sa course."
+  },
+  "Categories": [
+    "Eldanior_System.Artefacts",
+    "Items.Weapons"
+  ],
+  "MaxStack": 1,
+  "Variant": false,
+  "Interactions": {
+    "Ability1": "Root_Divin_Apollon_Signature"
+  },
+  "Recipe": {
+    "TimeSeconds": 30,
+    "Input": [
+      {
+        "ItemId": "Ingredient_Bar_Divin",
+        "Quantity": 24
+      },
+      {
+        "ItemId": "Ingredient_Bar_Adamantite",
+        "Quantity": 40
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "Forge_Divine",
+        "Categories": [
+          "Forge_Arcs"
+        ]
+      }
+    ]
+  }
+}

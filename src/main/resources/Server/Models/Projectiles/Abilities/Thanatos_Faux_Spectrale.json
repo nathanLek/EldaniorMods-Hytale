@@ -1,0 +1,23 @@
+{
+  "$Comment": "Sort d'arme divine, deplace par le code (ArmesDivines). HitBox elargie (LOD serveur). Genere par gen_divines.py.",
+  "Model": "Items/Projectiles/Thanatos_Faux_Spectrale.blockymodel",
+  "Texture": "Items/Projectiles/Thanatos_Faux_Spectrale.png",
+  "MinScale": 1.0,
+  "MaxScale": 1.0,
+  "HitBox": {
+    "Max": {
+      "X": 1.5,
+      "Y": 1.5,
+      "Z": 1.5
+    },
+    "Min": {
+      "X": -1.5,
+      "Y": -1.5,
+      "Z": -1.5
+    }
+  },
+  "Light": {
+    "Color": "#70ffb0",
+    "Radius": 8
+  }
+}

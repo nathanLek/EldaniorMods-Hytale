@@ -1,0 +1,183 @@
+{
+  "RenderMode": "BlendLinear",
+  "EmitOffset": {
+    "X": {
+      "Min": -0.14,
+      "Max": 0.14
+    },
+    "Y": {
+      "Min": 0.05,
+      "Max": 0.25
+    },
+    "Z": {
+      "Min": -0.14,
+      "Max": 0.14
+    }
+  },
+  "ParticleRotationInfluence": "Billboard",
+  "LinearFiltering": true,
+  "LightInfluence": 0.5,
+  "ParticleRotateWithSpawner": false,
+  "TrailSpawnerPositionMultiplier": 0,
+  "TrailSpawnerRotationMultiplier": 0,
+  "MaxConcurrentParticles": 160,
+  "ParticleLifeSpan": {
+    "Min": 0.9,
+    "Max": 1.3
+  },
+  "SpawnRate": {
+    "Min": 90,
+    "Max": 110
+  },
+  "InitialVelocity": {
+    "Speed": {
+      "Min": 0.12,
+      "Max": 0.28
+    },
+    "Yaw": {
+      "Min": -180,
+      "Max": 180
+    },
+    "Pitch": {
+      "Min": 82,
+      "Max": 98
+    }
+  },
+  "Attractors": [
+    {
+      "Position": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "RadialAxis": {
+        "X": 0,
+        "Y": 1,
+        "Z": 0
+      },
+      "Radius": 0,
+      "RadialAcceleration": -0.35,
+      "RadialTangentAcceleration": 0.45,
+      "DampingMultiplier": {
+        "X": 1,
+        "Y": 0.5314410000000002,
+        "Z": 1
+      }
+    }
+  ],
+  "Particle": {
+    "Texture": "Particles/Textures/Smoke/Smoke_Smooth2.png",
+    "FrameSize": {
+      "Width": 64,
+      "Height": 64
+    },
+    "ScaleRatioConstraint": "None",
+    "UVOption": "RandomFlipU",
+    "Animation": {
+      "0": {
+        "Opacity": 0,
+        "Color": "#040306",
+        "Scale": {
+          "X": {
+            "Min": 1,
+            "Max": 1
+          },
+          "Y": {
+            "Min": 1,
+            "Max": 1
+          }
+        },
+        "Rotation": {
+          "X": {
+            "Min": 0,
+            "Max": 0
+          },
+          "Y": {
+            "Min": 0,
+            "Max": 0
+          },
+          "Z": {
+            "Min": 0,
+            "Max": 0
+          }
+        }
+      },
+      "12": {
+        "Opacity": 1,
+        "Color": "#0b0910"
+      },
+      "75": {
+        "Opacity": 1,
+        "Color": "#0b0910"
+      },
+      "100": {
+        "Opacity": 0,
+        "Color": "#000000",
+        "Scale": {
+          "X": {
+            "Min": 1.0,
+            "Max": 1.2
+          },
+          "Y": {
+            "Min": 1.0,
+            "Max": 1.2
+          }
+        },
+        "Rotation": {
+          "X": {
+            "Min": 0,
+            "Max": 0
+          },
+          "Y": {
+            "Min": 0,
+            "Max": 0
+          },
+          "Z": {
+            "Min": 0,
+            "Max": 0
+          }
+        }
+      }
+    },
+    "InitialAnimationFrame": {
+      "Rotation": {
+        "X": {
+          "Min": 0,
+          "Max": 0
+        },
+        "Y": {
+          "Min": 0,
+          "Max": 0
+        },
+        "Z": {
+          "Min": -180,
+          "Max": 180
+        }
+      },
+      "Scale": {
+        "X": {
+          "Min": 0.26,
+          "Max": 0.34
+        },
+        "Y": {
+          "Min": 0.26,
+          "Max": 0.34
+        }
+      },
+      "Opacity": 0.5,
+      "Color": "#040306",
+      "FrameIndex": {
+        "Min": 0,
+        "Max": 3
+      }
+    }
+  },
+  "UVMotion": {
+    "Texture": "Particles/Textures/UVMotion/FlowMapSmoke.png",
+    "SpeedY": 0.48,
+    "Scale": 1.04,
+    "StrengthCurveType": "IncreaseLinear",
+    "Strength": 18
+  },
+  "CameraOffset": 0
+}

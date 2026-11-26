@@ -73,36 +73,18 @@ public class TreasureChestInteractEvent extends EntityEventSystem<EntityStore, U
 
         if (savedInventory == null || savedInventory.isEmpty()) {
             String droplist = template.getDropList(target.x(), target.y(), target.z());
-            LootTableConfig table = LootTableConfig.getById(droplist);
 
             long currentTime = System.currentTimeMillis();
             long lastLootTime = playerData.getLastLootTime(target.x(), target.y(), target.z(), worldName);
-            long cooldownMillis = table.getCooldownMillis();
+            long cooldownMillis = com.eldanior.system.TreasureChest.ChestLoot.cooldownMillis(droplist);
 
             if (!discovered || (currentTime - lastLootTime) >= cooldownMillis) {
-                List<ItemStack> rawLoot = table.generateLoot(ThreadLocalRandom.current().nextLong());
+                // Tirage des coffres (refonte du 2026-11-25, ChestLoot) : famille, rang, objet ; Chance du joueur = objet de plus
+                PlayerLevelData levelData = store.getComponent(playerRef, EldaniorSystem.get().getPlayerLevelDataType());
+                float luck = LuckSystem.getLootQualityBonus(levelData);
+                List<ItemStack> finalSelection = new ArrayList<>(com.eldanior.system.TreasureChest.ChestLoot.generate(droplist, luck));
 
-                if (!rawLoot.isEmpty()) {
-                    PlayerLevelData levelData = store.getComponent(playerRef, EldaniorSystem.get().getPlayerLevelDataType());
-                    float luckBonus = LuckSystem.getLootQualityBonus(levelData);
-
-                    // Base : 1 ou 2 items (0 chance)
-                    // Bonus : jusqu'à +4 items à 3000 points de chance → max 6 items
-                    int baseCount = 1 + ThreadLocalRandom.current().nextInt(2);
-                    float luckRatio = Math.min(Math.max(luckBonus, 0) / 3000.0f, 1.0f);
-                    float preciseExtra = luckRatio * 4.0f;
-                    int extraItems = (int) preciseExtra;
-
-                    if (ThreadLocalRandom.current().nextFloat() < (preciseExtra - extraItems)) {
-                        extraItems++;
-                    }
-
-                    int targetCount = Math.min(baseCount + extraItems, 6);
-                    targetCount = Math.min(targetCount, rawLoot.size());
-                    Collections.shuffle(rawLoot);
-
-                    List<ItemStack> finalSelection = new ArrayList<>(rawLoot.subList(0, targetCount));
-
+                if (!finalSelection.isEmpty()) {
                     shuffleAndFill(itemContainer, finalSelection);
 
                     playerData.setDiscovered(target.x(), target.y(), target.z(), worldName, true);

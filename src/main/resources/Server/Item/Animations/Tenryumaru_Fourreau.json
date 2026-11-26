@@ -1,0 +1,633 @@
+{
+  "Animations": {
+    "Idle": {
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Idle_FPS.blockyanim",
+      "Speed": 0.5,
+      "Looping": true,
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Garde_Fourreau.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "Walk": {
+      "Speed": 1.0,
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Walk_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Garde_Fourreau.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "WalkBackward": {
+      "Speed": 1.0,
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Walk_Backward_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Garde_Fourreau.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "Run": {
+      "Speed": 0.9,
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Run_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Garde_Fourreau.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "RunBackward": {
+      "Speed": 0.9,
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Run_Backward_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Garde_Fourreau.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "Sprint": {
+      "Speed": 1.1,
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Sprint_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Garde_Fourreau.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "Crouch": {
+      "BlendingDuration": 0.1,
+      "Speed": 0.5,
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Crouch_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Garde_Fourreau.blockyanim"
+    },
+    "CrouchWalk": {
+      "BlendingDuration": 0.1,
+      "Speed": 0.8,
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Crouch_Walk_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Garde_Fourreau.blockyanim"
+    },
+    "CrouchWalkBackward": {
+      "BlendingDuration": 0.1,
+      "Speed": 0.8,
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Crouch_Walk_Backward_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Garde_Fourreau.blockyanim"
+    },
+    "CrouchSlide": {
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Slide/Slide_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Lame_Cachee.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "StepWalk": {
+      "Looping": false,
+      "KeepPreviousFirstPersonAnimation": true,
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Lame_Cachee.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "StepRun": {
+      "Looping": false,
+      "KeepPreviousFirstPersonAnimation": true,
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Lame_Cachee.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "StepSprint": {
+      "Looping": false,
+      "KeepPreviousFirstPersonAnimation": true,
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Lame_Cachee.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "StepCrouchWalk": {
+      "Looping": false,
+      "KeepPreviousFirstPersonAnimation": true,
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Lame_Cachee.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "Jump": {
+      "Looping": false,
+      "KeepPreviousFirstPersonAnimation": true,
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Garde_Fourreau.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "JumpWalk": {
+      "Looping": false,
+      "KeepPreviousFirstPersonAnimation": true,
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Garde_Fourreau.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "JumpRun": {
+      "Looping": false,
+      "KeepPreviousFirstPersonAnimation": true,
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Garde_Fourreau.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "JumpCrouch": {
+      "Looping": false,
+      "KeepPreviousFirstPersonAnimation": true,
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Lame_Cachee.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "Fall": {
+      "BlendingDuration": 0.4,
+      "Speed": 1,
+      "Looping": true,
+      "KeepPreviousFirstPersonAnimation": true,
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Garde_Fourreau.blockyanim"
+    },
+    "FallFar": {
+      "BlendingDuration": 0.4,
+      "Speed": 1,
+      "Looping": true,
+      "KeepPreviousFirstPersonAnimation": true,
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Garde_Fourreau.blockyanim"
+    },
+    "FlyIdle": {
+      "Speed": 0.5,
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Fly/Fly_Idle_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Lame_Cachee.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "Fly": {
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Fly/Fly_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Lame_Cachee.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "FlyBackward": {
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Fly/Fly_Backward_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Lame_Cachee.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "FlyFast": {
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Fly/Fly_Fast_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Lame_Cachee.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "FlyCrouchIdle": {
+      "Speed": 0.5,
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Fly/Fly_Idle_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Lame_Cachee.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "FlyCrouch": {
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Fly/Fly_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Lame_Cachee.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "FlyCrouchBackward": {
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Fly/Fly_Backward_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Lame_Cachee.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "SwimIdle": {
+      "Speed": 1,
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Swim/Swim_Idle_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Lame_Cachee.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "Swim": {
+      "Speed": 0.6,
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Swim/Swim_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Lame_Cachee.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "SwimBackward": {
+      "Speed": 1,
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Swim/Swim_Backward_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Lame_Cachee.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "SwimFast": {
+      "Speed": 0.6,
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Swim/Swim_Fast_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Lame_Cachee.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "SwimJump": {
+      "BlendingDuration": 0.1,
+      "Speed": 0.8,
+      "Looping": false,
+      "FirstPerson": "Characters/Animations/Swim/Swim_Jump_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Lame_Cachee.blockyanim"
+    },
+    "SwimFloat": {
+      "Speed": 1,
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Swim/Swim_Float_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Lame_Cachee.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "SwimSink": {
+      "Speed": 1,
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Swim/Swim_Sink_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Lame_Cachee.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "SwimDive": {
+      "Speed": 0.6,
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Swim/Swim_Dive_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Lame_Cachee.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "SwimDiveBackward": {
+      "Speed": 1,
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Swim/Swim_Dive_Backward_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Lame_Cachee.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "SwimDiveFast": {
+      "Speed": 0.6,
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Swim/Swim_Dive_Fast_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Lame_Cachee.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "FluidIdle": {
+      "Speed": 0.3,
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Idle_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Garde_Fourreau.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "FluidWalk": {
+      "Speed": 0.6,
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Walk_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Garde_Fourreau.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "FluidWalkBackward": {
+      "Speed": 0.6,
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Walk_Backward_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Garde_Fourreau.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "FluidRun": {
+      "Speed": 0.6,
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Run_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Garde_Fourreau.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "ClimbIdle": {
+      "Speed": 0.5,
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Climb/Climb_Idle_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Lame_Cachee.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "ClimbUp": {
+      "Speed": 1,
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Climb/Climb_Up_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Lame_Cachee.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "ClimbDown": {
+      "Speed": 1,
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Climb/Climb_Down_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Lame_Cachee.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "ClimbLeft": {
+      "Speed": 1,
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Climb/Climb_Left_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Lame_Cachee.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "ClimbRight": {
+      "Speed": 1,
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Climb/Climb_Right_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Lame_Cachee.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "MantleIdle": {
+      "Speed": 0.5,
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Mantle/Mantle_Idle_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Lame_Cachee.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "MantleUp": {
+      "Speed": 1,
+      "Looping": false,
+      "BlendingDuration": 0,
+      "FirstPerson": "Characters/Animations/Mantle/Mantle_Up_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Lame_Cachee.blockyanim"
+    },
+    "MantleLeft": {
+      "Speed": 1,
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Mantle/Mantle_Left_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Lame_Cachee.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "MantleRight": {
+      "Speed": 1,
+      "Looping": true,
+      "FirstPerson": "Characters/Animations/Mantle/Mantle_Right_FPS.blockyanim",
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Lame_Cachee.blockyanim",
+      "BlendingDuration": 0.2
+    },
+    "Interact": {
+      "FirstPerson": "Characters/Animations/Default/Interact_FPS.blockyanim",
+      "Speed": 1,
+      "BlendingDuration": 0.1,
+      "KeepPreviousFirstPersonAnimation": false,
+      "ThirdPerson": "Characters/Animations/Default/Interact.blockyanim"
+    },
+    "SwingLeft": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Degainee/Attacks/Swing_Left/Swing_Left.blockyanim",
+      "ThirdPersonMoving": "Characters/Animations/Items/Main_Handed/Tenryumaru/Degainee/Attacks/Swing_Left/Swing_Left_Moving.blockyanim",
+      "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Degainee/Attacks/Swing_Left/Swing_Left_FPS.blockyanim",
+      "KeepPreviousFirstPersonAnimation": true,
+      "Speed": 1.05,
+      "ClipsGeometry": true,
+      "BlendingDuration": 0.2
+    },
+    "SwingRight": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Degainee/Attacks/Swing_Right/Swing_Right.blockyanim",
+      "ThirdPersonMoving": "Characters/Animations/Items/Main_Handed/Tenryumaru/Degainee/Attacks/Swing_Right/Swing_Right_Moving.blockyanim",
+      "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Degainee/Attacks/Swing_Right/Swing_Right_FPS.blockyanim",
+      "KeepPreviousFirstPersonAnimation": true,
+      "Speed": 1.05,
+      "ClipsGeometry": true,
+      "BlendingDuration": 0.2
+    },
+    "SwingUpLeft": {
+      "ThirdPerson": "Characters/Animations/Items/Dual_Handed/Unarmed/Attacks/Swing_Right/Swing_Right.blockyanim",
+      "ThirdPersonMoving": "Characters/Animations/Items/Dual_Handed/Unarmed/Attacks/Swing_Up_Left/Swing_Up_Left_Moving.blockyanim",
+      "ThirdPersonFace": "Characters/Animations/Expressions/Angry.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Dual_Handed/Unarmed/Attacks/Swing_Up_Left/Swing_Up_Left_FPS.blockyanim",
+      "KeepPreviousFirstPersonAnimation": true,
+      "Speed": 1.5,
+      "BlendingDuration": 0.1
+    },
+    "Guard": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Garde_Fourreau_Parade.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Idle_FPS_Rengainee.blockyanim",
+      "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim",
+      "KeepPreviousFirstPersonAnimation": false,
+      "BlendingDuration": 0.1,
+      "Looping": true
+    },
+    "SwingDown": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Degainee/Attacks/Swing_Down/Swing_Down.blockyanim",
+      "ThirdPersonMoving": "Characters/Animations/Items/Main_Handed/Tenryumaru/Degainee/Attacks/Swing_Down/Swing_Down_Moving.blockyanim",
+      "ThirdPersonFace": "Characters/Animations/Expressions/Angry.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Degainee/Attacks/Swing_Down/Swing_Down_FPS.blockyanim",
+      "KeepPreviousFirstPersonAnimation": true,
+      "Speed": 1,
+      "ClipsGeometry": true,
+      "BlendingDuration": 0.2
+    },
+    "SwingDownStrong": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Degainee/Attacks/Swing_Down_Strong/Swing_Down_Strong.blockyanim",
+      "ThirdPersonMoving": "Characters/Animations/Items/Main_Handed/Tenryumaru/Degainee/Attacks/Swing_Down_Strong/Swing_Down_Strong_Moving.blockyanim",
+      "ThirdPersonFace": "Characters/Animations/Expressions/Angry.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Degainee/Attacks/Swing_Down_Strong/Swing_Down_Strong_FPS.blockyanim",
+      "KeepPreviousFirstPersonAnimation": true,
+      "Speed": 1.2,
+      "BlendingDuration": 0.3,
+      "ClipsGeometry": true
+    },
+    "Stab": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Degainee/Attacks/Stab/Stab.blockyanim",
+      "ThirdPersonMoving": "Characters/Animations/Items/Main_Handed/Tenryumaru/Degainee/Attacks/Stab/Stab_Moving.blockyanim",
+      "ThirdPersonFace": "Characters/Animations/Expressions/Angry.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Degainee/Attacks/Stab/Stab_FPS.blockyanim",
+      "KeepPreviousFirstPersonAnimation": true,
+      "Speed": 1,
+      "ClipsGeometry": true,
+      "BlendingDuration": 0.2
+    },
+    "GuardBash": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Degainee/Attacks/Guard_Bash/Guard_Bash.blockyanim",
+      "ThirdPersonMoving": "Characters/Animations/Items/Main_Handed/Tenryumaru/Degainee/Attacks/Guard_Bash/Guard_Bash_Moving.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Degainee/Attacks/Guard_Bash/Guard_Bash_FPS.blockyanim",
+      "ThirdPersonFace": "Characters/Animations/Expressions/Angry.blockyanim",
+      "KeepPreviousFirstPersonAnimation": true,
+      "Speed": 1.15,
+      "BlendingDuration": 0.2
+    },
+    "Degainer": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Degainer.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Degainer_FPS.blockyanim",
+      "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim",
+      "KeepPreviousFirstPersonAnimation": false,
+      "Speed": 1.0,
+      "ClipsGeometry": true,
+      "BlendingDuration": 0.08
+    },
+    "IaiCharging": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Iai_Charging_Fourreau.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Idle_FPS_Rengainee.blockyanim",
+      "Looping": false,
+      "Speed": 1.0,
+      "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim",
+      "KeepPreviousFirstPersonAnimation": false,
+      "ClipsGeometry": true,
+      "BlendingDuration": 0.12
+    },
+    "IaiCharged": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Iai_Charged.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Iai_Charged_FPS.blockyanim",
+      "Speed": 1.0,
+      "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim",
+      "KeepPreviousFirstPersonAnimation": false,
+      "ClipsGeometry": true,
+      "BlendingDuration": 0.05
+    },
+    "Rengainer": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Rengainer.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Idle_FPS_Rengainee.blockyanim",
+      "Speed": 1.0,
+      "KeepPreviousFirstPersonAnimation": false,
+      "BlendingDuration": 0.15
+    },
+    "LuoCoup1": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/LuoCoup1.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/LuoCoup1_FPS.blockyanim",
+      "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim",
+      "KeepPreviousFirstPersonAnimation": false,
+      "Speed": 1.0,
+      "ClipsGeometry": true,
+      "BlendingDuration": 0.08
+    },
+    "LuoCoup2": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/LuoCoup2.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/LuoCoup2_FPS.blockyanim",
+      "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim",
+      "KeepPreviousFirstPersonAnimation": false,
+      "Speed": 1.0,
+      "ClipsGeometry": true,
+      "BlendingDuration": 0.08
+    },
+    "LuoCoup3": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/LuoCoup3.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/LuoCoup3_FPS.blockyanim",
+      "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim",
+      "KeepPreviousFirstPersonAnimation": false,
+      "Speed": 1.0,
+      "ClipsGeometry": true,
+      "BlendingDuration": 0.08
+    },
+    "LuoCoup4": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/LuoCoup4.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/LuoCoup4_FPS.blockyanim",
+      "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim",
+      "KeepPreviousFirstPersonAnimation": false,
+      "Speed": 1.0,
+      "ClipsGeometry": true,
+      "BlendingDuration": 0.08
+    },
+    "IaiCourt": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/IaiCourt.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/IaiCourt_FPS.blockyanim",
+      "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim",
+      "KeepPreviousFirstPersonAnimation": false,
+      "Speed": 1.0,
+      "ClipsGeometry": true,
+      "BlendingDuration": 0.1
+    },
+    "Koiguchi": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Koiguchi.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Idle_FPS_Rengainee.blockyanim",
+      "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim",
+      "KeepPreviousFirstPersonAnimation": false,
+      "Speed": 1.0,
+      "ClipsGeometry": true,
+      "BlendingDuration": 0.1
+    },
+    "KoiguchiFin": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/KoiguchiFin.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Fourreau/Idle_FPS_Rengainee.blockyanim",
+      "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim",
+      "KeepPreviousFirstPersonAnimation": false,
+      "Speed": 1.0,
+      "ClipsGeometry": true,
+      "BlendingDuration": 0.1
+    },
+    "Tsuki": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Tsuki.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/Tsuki_FPS.blockyanim",
+      "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim",
+      "KeepPreviousFirstPersonAnimation": false,
+      "Speed": 1.0,
+      "ClipsGeometry": true,
+      "BlendingDuration": 0.05,
+      "Looping": false
+    },
+    "TsukiCeleste": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/TsukiCeleste.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/TsukiCeleste_FPS.blockyanim",
+      "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim",
+      "KeepPreviousFirstPersonAnimation": false,
+      "Speed": 1.0,
+      "ClipsGeometry": true,
+      "BlendingDuration": 0.05,
+      "Looping": false
+    },
+    "TsukiRafale": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/TsukiRafale.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/TsukiRafale_FPS.blockyanim",
+      "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim",
+      "KeepPreviousFirstPersonAnimation": false,
+      "Speed": 1.0,
+      "ClipsGeometry": true,
+      "BlendingDuration": 0.05,
+      "Looping": false
+    },
+    "TsukiCharge": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/TsukiCharge.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/TsukiCharge_FPS.blockyanim",
+      "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim",
+      "KeepPreviousFirstPersonAnimation": false,
+      "Speed": 1.0,
+      "ClipsGeometry": true,
+      "BlendingDuration": 0.08,
+      "Looping": true
+    },
+    "TsukiPosture": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/TsukiPosture.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/TsukiPosture_FPS.blockyanim",
+      "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim",
+      "KeepPreviousFirstPersonAnimation": false,
+      "Speed": 1.0,
+      "ClipsGeometry": true,
+      "BlendingDuration": 0.08,
+      "Looping": false
+    },
+    "TsukiDouble": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/TsukiDouble.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/TsukiDouble_FPS.blockyanim",
+      "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim",
+      "KeepPreviousFirstPersonAnimation": false,
+      "Speed": 1.0,
+      "ClipsGeometry": true,
+      "BlendingDuration": 0.05,
+      "Looping": false
+    },
+    "TsukiRuee": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/TsukiRuee.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/TsukiRuee_FPS.blockyanim",
+      "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim",
+      "KeepPreviousFirstPersonAnimation": false,
+      "Speed": 1.0,
+      "ClipsGeometry": true,
+      "BlendingDuration": 0.05,
+      "Looping": false
+    },
+    "TsukiCinq": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/TsukiCinq.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Tenryumaru/TsukiCinq_FPS.blockyanim",
+      "ThirdPersonFace": "Characters/Animations/Expressions/Frown.blockyanim",
+      "KeepPreviousFirstPersonAnimation": false,
+      "Speed": 1.0,
+      "ClipsGeometry": true,
+      "BlendingDuration": 0.05,
+      "Looping": false
+    }
+  },
+  "Camera": {
+    "Pitch": {
+      "AngleRange": {
+        "Max": 45,
+        "Min": -45
+      },
+      "TargetNodes": [
+        "Head"
+      ]
+    },
+    "Yaw": {
+      "AngleRange": {
+        "Max": 45,
+        "Min": -45
+      },
+      "TargetNodes": [
+        "Head"
+      ]
+    }
+  },
+  "WiggleWeights": {
+    "Pitch": 2,
+    "PitchDeceleration": 0.1,
+    "Roll": 0.1,
+    "RollDeceleration": 0.1,
+    "X": 3,
+    "XDeceleration": 0.1,
+    "Y": 0.1,
+    "YDeceleration": 0.1,
+    "Z": 0.1,
+    "ZDeceleration": 0.1
+  }
+}

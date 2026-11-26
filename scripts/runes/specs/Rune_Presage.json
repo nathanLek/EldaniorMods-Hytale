@@ -1,0 +1,68 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_Presage",
+  "spell": "Presage",
+  "javaClass": "Presage",
+  "page": "rune_page_presage",
+  "name": "Rune du Présage",
+  "type": "Temps",
+  "rarity": "Epic",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Presage",
+  "summary": "3 salves (toutes les 3 s) : sceaux dores la ou les ennemis proches (15 blocs, 6 max) seront dans 1,5 s ; le sceau frappe alors : 120 + fige 1 s (2 blocs).",
+  "description": "Sort épique de temps (Mage, rune de prédilection du Prophète). Vous lisez l'avenir proche des ennemis à moins de 15 blocs, trois fois en 9 s. À chaque lecture, un sceau doré apparaît là où chacun d'eux (6 au plus) se trouvera dans 1,5 s ; à l'échéance, le sceau frappe tout ce qui s'y tient : 120 dégâts et figé 1 s. Un ennemi qui change de trajectoire peut y échapper. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin où l'encre apparaît une seconde avant qu'on écrive. Enseigne le Présage : frappez là où l'ennemi sera, pas là où il est. Classes : tous les Mages (rune de prédilection du Prophète). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Spellbook",
+    "charging": "CastHurlCharging",
+    "release": "CastHurlCharged",
+    "chargeTime": 0.5,
+    "releaseTime": 0.5,
+    "moveSpeed": 0.4,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Portal_Neutral",
+    "handParticles": "Chronos_Gold",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.5,
+    "range": 15,
+    "radius": "15 (lecture) / 2 (sceau)",
+    "targets": "6 ennemis par salve",
+    "persistentFx": "sceau : Chronos_Gold + Bifrost_Divine / 0,3 s au point predit pendant 1,5 s",
+    "impactFx": "Chronos_Burst + Bifrost_Pillar (reduit) a la frappe",
+    "sounds": "SFX_Portal_Neutral a chaque lecture et a chaque frappe",
+    "effects": "prediction : position + deplacement des 0,5 dernieres secondes x3 (6 blocs max) ; frappe : 120 Elemental + Chronos_Fige 1 s (stun) aux ennemis a 2 blocs du sceau",
+    "terrain": "aucun",
+    "persistentDurationS": 9,
+    "interruptions": "lanceur mort ou deconnecte : fin",
+    "restrictions": "mage",
+    "edgeCases": "ennemi immobile : le sceau tombe sur lui ; invocations exclues",
+    "limitations": "la prediction repose sur le deplacement observe (les PNJ n'ont pas de vitesse fiable)",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 2,
+      "mobility": 0,
+      "control": 2,
+      "defense": 0,
+      "targets": 3,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 2
+    }
+  }
+}

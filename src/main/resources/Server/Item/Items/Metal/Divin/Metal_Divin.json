@@ -1,0 +1,92 @@
+{
+  "TranslationProperties": {
+    "Name": "Bloc Divin"
+  },
+  "Quality": "Divin",
+  "MaxStack": 50,
+  "Categories": [
+    "Eldanior_System.Autres",
+    "Blocks.Metal"
+  ],
+  "PlayerAnimationsId": "Block",
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Cube",
+    "Group": "Metal",
+    "HitboxType": "Full",
+    "Flags": {},
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks"
+      }
+    },
+    "BlockParticleSetId": "Metal",
+    "Textures": [
+      {
+        "Weight": 1,
+        "All": "BlockTextures/Metal_Divin.png"
+      },
+      {
+        "Weight": 1,
+        "All": "BlockTextures/Metal_Divin02.png"
+      }
+    ],
+    "ParticleColor": "#9fe8ff",
+    "BlockSoundSetId": "Metal",
+    "PhysicalMaterialId": "Metal",
+    "TransitionToGroups": [
+      "Stone",
+      "Sand",
+      "Wood",
+      "Mud",
+      "Dirt"
+    ],
+    "CubeShadingMode": "Standard",
+    "Light": {
+      "Color": "#68a"
+    }
+  },
+  "Tags": {
+    "Type": [
+      "Metal"
+    ],
+    "Family": [
+      "Divin"
+    ]
+  },
+  "IconProperties": {
+    "Scale": 0.58823,
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Translation": [
+      0,
+      -13.5
+    ]
+  },
+  "Icon": "Icons/ItemsGenerated/Metal_Divin.png",
+  "ItemSoundSetId": "ISS_Items_Metal",
+  "ItemLevel": 800,
+  "ResourceTypes": [],
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "Ingredient_Bar_Divin",
+        "Quantity": 4
+      }
+    ],
+    "OutputQuantity": 1,
+    "TimeSeconds": 4,
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "Forge_Divine",
+        "Categories": [
+          "Forge_Blocs"
+        ]
+      }
+    ]
+  }
+}

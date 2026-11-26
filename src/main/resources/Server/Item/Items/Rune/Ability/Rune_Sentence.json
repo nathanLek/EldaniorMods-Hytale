@@ -1,0 +1,44 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de la Sentence",
+    "Description": "Sort unique du temps (Mage, rune de prédilection du Prophète du Destin). Vous condamnez l'ennemi visé et jusqu'à 2 ennemis proches (6 blocs) : une horloge tourne au-dessus d'eux pendant 8 s. À l'échéance, la sentence tombe : chacun subit à nouveau tous les dégâts que vous lui avez infligés pendant ce temps (au moins 100, au plus 800). Épargne votre groupe, votre guilde et votre famille. Coût : 600 mana. Recharge : 180 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_Sentence.png",
+  "Quality": "Unique",
+  "ItemLevel": 75,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_Runes.Temps"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_Sentence.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 180,
+    "Cost": 600,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Duration",
+      "Damage"
+    ],
+    "Cast": "Root_Ability_Sentence"
+  }
+}

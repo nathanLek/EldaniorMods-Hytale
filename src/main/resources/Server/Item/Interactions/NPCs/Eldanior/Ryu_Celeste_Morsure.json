@@ -1,0 +1,72 @@
+{
+  "$Comment": "Morsure en plongée de Kokuō-Ryū (gen_ryu_celeste.py) : animation Bite du modèle (la gueule claque à 0,62 s), portée à la taille x6, atteint vers le bas (il attaque en vol). Dégâts posés ici (rôle volant sans _InteractionVars).",
+  "Type": "Simple",
+  "RunTime": 0.68,
+  "Effects": {
+    "ItemPlayerAnimationsId": "Eldanior_Ryu_Celeste",
+    "ItemAnimationId": "Bite"
+  },
+  "Next": {
+    "Type": "Parallel",
+    "Interactions": [
+      {
+        "Interactions": [
+          {
+            "Type": "Selector",
+            "RunTime": 0.2,
+            "Selector": {
+              "Id": "Horizontal",
+              "Direction": "ToLeft",
+              "TestLineOfSight": true,
+              "ExtendTop": 8.0,
+              "ExtendBottom": 14.0,
+              "StartDistance": 1.0,
+              "EndDistance": 24.0,
+              "Length": 120,
+              "RollOffset": 0,
+              "YawStartOffset": -60,
+              "PitchOffset": -20
+            },
+            "HitEntity": {
+              "Interactions": [
+                {
+                  "Parent": "NPC_Attack_Melee_Damage",
+                  "DamageCalculator": {
+                    "Type": "Absolute",
+                    "BaseDamage": {
+                      "Physical": 650
+                    },
+                    "RandomPercentageModifier": 0.1
+                  },
+                  "Effects": {
+                    "WorldSoundEventId": "SFX_Bone_Hit"
+                  },
+                  "DamageEffects": {
+                    "Knockback": {
+                      "Force": 9
+                    }
+                  }
+                }
+              ]
+            },
+            "Next": {
+              "Type": "Simple",
+              "RunTime": 0.6
+            }
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "Simple",
+            "RunTime": 0.25,
+            "Effects": {
+              "WorldSoundEventId": "SFX_Rex_Bite"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

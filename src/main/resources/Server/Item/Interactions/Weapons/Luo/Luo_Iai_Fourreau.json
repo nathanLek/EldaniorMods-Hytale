@@ -1,0 +1,19 @@
+{
+  "$Comment": "Posture iai, lame au fourreau : relache avant la fin = degaine simple, charge pleine = degaine foudroyant (LuoIai).",
+  "Type": "Charging",
+  "Rules": {
+    "InterruptedBy": [
+      "Secondary"
+    ]
+  },
+  "DisplayProgress": true,
+  "HorizontalSpeedMultiplier": 0.45,
+  "Effects": {
+    "ItemAnimationId": "IaiCharging",
+    "LocalSoundEventId": "SFX_Sword_T2_Lunge_Charge_Local"
+  },
+  "Next": {
+    "0": "Tenryumaru_Degainer",
+    "0.75": "Luo_Iai_Release_Fourreau"
+  }
+}

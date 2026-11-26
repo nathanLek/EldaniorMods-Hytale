@@ -1,0 +1,17 @@
+{
+  "$Comment": "Echos du passe : remanence du lanceur (voile vert lumineux). Pose une fois a la creation de l'echo (15 s).",
+  "Duration": 15.0,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": false,
+  "ApplicationEffects": {
+    "EntityTopTint": "#e8fff0",
+    "EntityBottomTint": "#8dffbe",
+    "ModelVFXId": "Chronos_Ghost",
+    "Particles": [
+      {
+        "SystemId": "Chronos_Afterimage",
+        "TargetEntityPart": "Entity"
+      }
+    ]
+  }
+}

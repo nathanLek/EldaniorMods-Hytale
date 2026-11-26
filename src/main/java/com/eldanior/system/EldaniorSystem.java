@@ -88,19 +88,41 @@ public class EldaniorSystem extends JavaPlugin {
         com.eldanior.system.territory.ArenaManager.saveAll();
         com.eldanior.system.boards.BountyBoard.save();
         com.eldanior.system.boards.GuildBoard.save();
+        com.eldanior.system.familiers.FamilierManager.shutdown();   // familiers : sauvegarde immediate
+        com.eldanior.system.poche.PocheDimensionnelle.saveAll();    // poches dimensionnelles (2026-11-16)
 
         // Cleanup farm/mine regen
         com.eldanior.system.territory.systems.FarmRegenSystem.cleanup();
 
         // Annuler les timers et schedulers
+        com.eldanior.system.skills.runes.RuneStats.save();   // lancers de runes
         com.eldanior.system.persistence.PersistenceManager.shutdown();
         EldaniorLogger.SCHEDULER.shutdown();
+    }
+
+    @Override
+    protected void start() {
+        com.eldanior.system.locks.DoorLockManager.init(this.getDataDirectory());   // portes a cle : refermer celles restees ouvertes
+        com.eldanior.system.presentoir.PresentoirManager.init(this.getDataDirectory());   // apres le chargement des assets : decode des objets exposes
+        com.eldanior.system.anchors.AnchorManager.init(this.getDataDirectory());
+        com.eldanior.system.skills.runes.RuneStats.init(this.getDataDirectory());   // lancers de runes (stats admin, 2026-11-25)   // ancres (Cercles d'Ancrage) de la Porte des Mondes
+        com.eldanior.system.familiers.FamilierManager.init(this.getDataDirectory());   // familiers (oeufs, Fenrir) : un par joueur
+        com.eldanior.system.dojo.Mannequins.init(this.getDataDirectory());   // mannequins d'entrainement du dojo (socles poses)
+        com.eldanior.system.classes.observateur.ObservateurManager.init(this.getDataDirectory());   // Observateur : une place par trone
+        com.eldanior.system.economy.PriceBook.init(this.getDataDirectory());   // bareme des prix (eldanior/economie.json + prix_jeu.json)
+        com.eldanior.system.config.NoPocketCrafting.apply();   // fabrication rapide desactivee pour tous (2026-11-25)
     }
 
     @Override
 
     protected void setup() {
         LOGGER.atInfo().log(">>> ELDANIOR SYSTEM : DÉMARRAGE DU SETUP <<<");
+
+        // Générateur de la carte du continent (WorldGen "Eldanior", Server/World/Eldanior) : enregistré avant le
+        // chargement des mondes. Au-delà de la carte, il délègue au générateur normal de Hytale.
+        com.hypixel.hytale.server.core.universe.world.worldgen.provider.IWorldGenProvider.CODEC.register(
+                com.eldanior.system.carte.EldaniorWorldGen.ID, com.eldanior.system.carte.EldaniorWorldGen.Provider.class,
+                com.eldanior.system.carte.EldaniorWorldGen.Provider.CODEC);
 
         // 1. Enregistrement des MobData
         this.mobLevelDataType = this.getEntityStoreRegistry().registerComponent(
@@ -123,6 +145,7 @@ public class EldaniorSystem extends JavaPlugin {
 
             com.eldanior.system.trade.TradeManager.init();
             com.eldanior.system.territory.ParcelManager.init(this.getDataDirectory());
+            com.eldanior.system.territory.systems.KingdomBarrierSystem.init(this.getDataDirectory()); // mur des royaumes
             com.eldanior.system.territory.ParcelEconomyManager.init();
             com.eldanior.system.territory.ArenaManager.init(this.getDataDirectory());
             com.eldanior.system.shop.ShopManager.init();
@@ -130,19 +153,28 @@ public class EldaniorSystem extends JavaPlugin {
             com.eldanior.system.hologram.HologramManager.init(this.getDataDirectory());
             com.eldanior.system.skills.runes.spells.TerrainRestore.init(this.getDataDirectory());
             com.eldanior.system.guards.GuardManager.init(this.getDataDirectory());
+            com.eldanior.system.guards.NpcPostBlocks.init(this.getDataDirectory());
+            com.eldanior.system.territory.borne.Bornes.init();                       // bornes de territoire : marques, borne toujours posee
+            com.eldanior.system.guards.NpcRouteBlocks.init(this.getDataDirectory());              // balises de route des PNJ
+            com.eldanior.system.titles.nobility.family.FamilyRegistry.init(this.getDataDirectory());   // registres des maisons (intendant)
             com.eldanior.system.boards.BountyBoard.init(this.getDataDirectory());   // tableau de prime : registre sauvegarde, zones
+            com.eldanior.system.boards.BoardQuests.init(this.getDataDirectory());      // quetes ajoutees aux tableaux
+            com.eldanior.system.quest.chapitres.Primes.init(this.getDataDirectory());   // contrats de prime (quetes PRIME)
+            com.eldanior.system.quest.chapitres.HouseQuests.init(this.getDataDirectory());   // quetes des maisons (intendant, 2026-11-18)
+            com.eldanior.system.guards.BankLoans.init(this.getDataDirectory());     // prets de la banque : echeances, Criminel ★
+            com.eldanior.system.territory.pancarte.Pancartes.init();                 // affiches : etat a vendre / a louer / occupe
             com.eldanior.system.boards.MonsterContracts.init(this.getDataDirectory());   // contrats de monstres du jour
+            com.eldanior.system.boards.DungeonBosses.init(this.getDataDirectory());      // boss de donjon (2026-11-16)
+            com.eldanior.system.boards.WorldBosses.init(this.getDataDirectory());        // Boss Mondial (2026-11-19)
+            com.eldanior.system.territory.laws.Invasions.init(this.getDataDirectory());  // failles d'invasion (2026-11-19)
+            com.eldanior.system.failles.FailleManager.init(this, this.getDataDirectory());     // failles-donjons (2026-11-23)
+            com.eldanior.system.failles.Generateurs.init(this.getDataDirectory());           // generateurs de monstres (2026-11-23)
+            com.eldanior.system.territory.systems.KingdomMap.init(this.getDataDirectory());  // carte du royaume entier (2026-11-19)
+            com.eldanior.system.poche.PocheDimensionnelle.init(this.getDataDirectory());  // poches dimensionnelles (2026-11-16)
             com.eldanior.system.boards.GuildBoard.init(this.getDataDirectory());   // contrats de guilde, missions
             LOGGER.atInfo().log("[OK] Managers et Registres initialisés.");
         } catch (Exception e) {
             LOGGER.atSevere().withCause(e).log("[ERREUR] Échec init Managers/Registres");
-        }
-
-        // Validation des assets d'effets visuels (ELD-11)
-        try {
-            com.eldanior.system.config.Effects.SkillEffectConfig.validateAtStartup();
-        } catch (Exception e) {
-            LOGGER.atSevere().withCause(e).log("[ERREUR] Validation SkillEffectConfig");
         }
 
         // 2. Enregistrement des Composants Joueurs (EntityStore)
@@ -209,11 +241,11 @@ public class EldaniorSystem extends JavaPlugin {
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.guards.GuardAlertSystem()); // gardes : PvP pres d'un garde -> joueur recherche
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.guards.GuardDeathSystem()); // gardes : reapparition au poste
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.guards.GuardOrphanSystem()); // PNJ de poste orphelins (apparitions ratees)
-            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.guards.AdventurerSystem()); // aventuriers : recrutement contre de l'or
-            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.guards.GuildMasterSystem()); // maitre de guilde : fonder, ameliorer
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.guards.NpcInteractSystem()); // PNJ civils : services (commerce, quetes, discussion, recrutement, guilde)
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.guards.AdventurerLootSystem()); // aventuriers : ramassage du butin
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.skills.runes.spells.RoyalMageMagic()); // mage royal : soin, nova de givre, pluie de flammes
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.skills.runes.spells.AdventurerMagic()); // aventuriers recrutes : sorts de leur type
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.skills.runes.spells.MartialNpcs());   // gardes, chevaliers... : rang martial
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.skills.runes.spells.DoppelPoseSystem());
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.skills.runes.spells.GungnirRavens()); // Gungnir : corbeaux Hugin et Munin // Doppelganger : pose miroir apres l'IA des PNJ
             this.getEntityStoreRegistry().registerSystem(new PlayerPositionTracker());
@@ -222,6 +254,7 @@ public class EldaniorSystem extends JavaPlugin {
             this.getEntityStoreRegistry().registerSystem(new MobDamageReductionSystem());
             this.getEntityStoreRegistry().registerSystem(new MobDeathCheckSystem());
             this.getEntityStoreRegistry().registerSystem(new MobNameplateColorSystem());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.boards.EmblemOrphanSystem());   // monstres a embleme sans contrat ni boss
 
             this.getEntityStoreRegistry().registerSystem(new DetectionSystem());
 
@@ -230,8 +263,69 @@ public class EldaniorSystem extends JavaPlugin {
             this.getEntityStoreRegistry().registerSystem(new TreasureChestPlaceBlockEvent());
             // Tableaux de prime et de guilde : touche d'interaction -> fenetre ; pose et retrait reserves aux admins
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.boards.BoardInteractEvent());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.familiers.FamilierInteractEvent());   // F sur son familier
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.boards.BoardPlaceBlockEvent());
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.boards.BoardBreakBlockEvent());
+            // Presentoirs : exposer armes, artefacts et armures (touche d'interaction)
+            com.eldanior.system.presentoir.PresentoirEntity.setType(this.getEntityStoreRegistry().registerComponent(
+                    com.eldanior.system.presentoir.PresentoirEntity.class, com.eldanior.system.presentoir.PresentoirEntity::new));
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.presentoir.PresentoirEntitySystem());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.presentoir.PresentoirUseEvent());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.failles.FailleNpcSystem());        // failles : PNJ des pieces collees retires
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.failles.FailleBlockEvents.Place()); // faille scellee posee
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.failles.GenerateurEvents.Place()); // generateur de monstres pose
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.failles.GenerateurEvents.Use());   // F sur un generateur
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.failles.GenerateurEvents.Break()); // generateur casse
+            // Livres poses (histoires, Tomes Imperiaux) : F ou clic droit dessus = lecture
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.histoires.LivreUseEvent());
+            // Bibliotheque evolutive : contenant d'ouvrages, etagere vide -> bibliotheque remplie
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.bibliotheque.BibliothequeUseEvent());
+            // Portes a cle : salles au tresor des familles, portes de boss
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.locks.DoorLockUseEvent());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.locks.DoorLockBreakEvent());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.guards.NpcPostEvents.Place());   // bloc de poste de PNJ
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.guards.NpcPostEvents.Use());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.guards.NpcPostEvents.Break());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.territory.borne.BorneEvents.Place());   // borne de territoire
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.territory.borne.BorneEvents.Use());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.territory.borne.BorneEvents.Break());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.territory.pancarte.PancarteEvents.Place());   // pancarte / affiche de propriete
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.territory.pancarte.PancarteEvents.Use());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.territory.pancarte.PancarteEvents.Break());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.guards.NpcRouteBlocks.Place());  // balise de route
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.guards.NpcRouteBlocks.Break());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.locks.FamilyKeySystem());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.luo.LuoPlaqueSystem());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.luo.LuoClanSystem());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.territory.laws.DomainLawSystem());   // lois des domaines (2026-11-18)
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.presentoir.PresentoirBreakEvent());
+            // Effets visuels d'armure (fumee noire du casque divin de l'Assassin)
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.armors.ArmorVisualSystem());
+            // Bonus de tenue complete : Dieu-Dragon d'Or (vitesse, sauts illimites par echange du hakama eveille)
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.armors.ArmorSetBonusSystem());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.skills.runes.spells.TenryumaruSystem()); // rengainage de Tenryumaru
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.classes.observateur.ObservateurLames()); // fourreaux dans le dos de l'Observateur
+            // Cercles d'Ancrage : pose (limite d'ancres, nom), effacement (proprietaire), touche d'interaction (renommer)
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.anchors.AnchorPlaceEvent());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.anchors.AnchorBreakEvent());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.anchors.AnchorUseEvent());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.territory.teleport.TeleporterEvents.GatePlace());   // Portail Continental (2026-11-19)
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.territory.teleport.GateSystem());
+            // Borne de ville (2026-11-19) : posee par le Comte, ouvre le registre de la ville
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.guards.CityBornes.Place());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.guards.CityBornes.Use());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.guards.CityBornes.Break());
+            // Familiers : oeuf (pose = lien, casse = ramasser, interaction = suivre / rester), entites orphelines
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.familiers.FamilierEvents.Place());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.familiers.FamilierEvents.Break());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.familiers.FamilierEvents.Use());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.familiers.FamilierManager.Orphans());
+            // Mannequins d'entrainement du dojo : socle (pose, casse), coups recus (jamais de mort, plaque, energie de signature), doublons
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.dojo.MannequinEvents.Place());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.dojo.MannequinEvents.Break());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.dojo.MannequinDamage.Filter());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.dojo.MannequinDamage.Inspect());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.dojo.MannequinDamage.Entities());
             this.getEventRegistry().registerGlobal(StartWorldEvent.class, TreasureStartWorldEventListener::onStartWorldEvent);
             // Detection interaction NPC de quetes (systeme ECS)
             this.getEntityStoreRegistry().registerSystem(
@@ -278,6 +372,7 @@ public class EldaniorSystem extends JavaPlugin {
                     // PlayerLoginSystem (initializedPlayers — permet re-init au reconnect)
                     var loginSystem = PlayerLoginSystem.getInstance();
                     if (loginSystem != null) loginSystem.invalidate(uuid);
+                    com.eldanior.system.poche.PocheDimensionnelle.unload(uuid);      // poche dimensionnelle : sauvee, dechargee
 
                     // GuildManager (pendingInvites)
                     GuildManager.handleDisconnect(uuid);
@@ -296,10 +391,14 @@ public class EldaniorSystem extends JavaPlugin {
 
                     // RuneManager (cache Rune d'Aura)
                     com.eldanior.system.skills.runes.RuneManager.handleDisconnect(uuid);
+                    com.eldanior.system.luo.LuoClans.forget(uuid);
+                    com.eldanior.system.anchors.AnchorManager.handleDisconnect(uuid);
+                    com.eldanior.system.familiers.FamilierManager.handleDisconnect(uuid);   // le familier rentre avec son maitre
                     com.eldanior.system.skills.runes.spells.MuspelheimWrath.handleDisconnect(uuid);
                     com.eldanior.system.skills.runes.spells.TaranisSanctuary.handleDisconnect(uuid);
                     com.eldanior.system.skills.runes.spells.BahamutAdvent.handleDisconnect(uuid);
                     com.eldanior.system.skills.runes.spells.DragonAvatar.handleDisconnect(uuid);
+                    com.eldanior.system.skills.runes.spells.SansVisage.handleDisconnect(uuid);
                     com.eldanior.system.skills.runes.spells.ChronosHourglass.handleDisconnect(uuid);
                     com.eldanior.system.skills.runes.spells.ChaosAbyss.handleDisconnect(uuid);
                     com.eldanior.system.skills.runes.spells.BifrostBridge.handleDisconnect(uuid);
@@ -326,8 +425,15 @@ public class EldaniorSystem extends JavaPlugin {
             this.getEntityStoreRegistry().registerSystem(new MorphFlightSystem());
             this.getEntityStoreRegistry().registerSystem(new PlayerNameplateSystem());
             this.getEntityStoreRegistry().registerSystem(new PartyHudUpdateSystem());
+            try {                                                               // doubles du Sens martial (vus du seul lanceur)
+                this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.skills.runes.spells.PrivateVisibility());
+            } catch (Exception e) {
+                EldaniorLogger.error("PrivateVisibility: enregistrement", e);
+            }
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.duel.DuelProtectionSystem());
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.quest.QuestHudUpdateSystem());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.hud.XpHud.UpdateSystem()); // barre d'XP en bas a gauche
+            com.eldanior.system.gui.InventoryOpenProbe.register();             // sonde : la touche Tab est-elle visible du serveur ?
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.quest.QuestBlockBreakEvent());
             this.getEntityStoreRegistry().registerSystem(new DignityAuraSystem());
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.titles.nobility.systems.RuneAuraSystem());
@@ -344,7 +450,11 @@ public class EldaniorSystem extends JavaPlugin {
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.territory.events.ParcelDamageBlockEvent());
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.territory.events.ParcelInteractEvent());
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.territory.systems.ParcelRangeSystem());
+            this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.territory.systems.KingdomBarrierSystem()); // mur Barrier autour des royaumes
             this.getEntityStoreRegistry().registerSystem(new com.eldanior.system.territory.systems.FarmRegenSystem());
+
+            // Fabrication rapide desactivee (2026-11-25) : reappliquee au demarrage de chaque monde (ordre des plugins)
+            this.getEventRegistry().registerGlobal(StartWorldEvent.class, event -> com.eldanior.system.config.NoPocketCrafting.apply());
 
             // Carte du monde : zones colorees
             this.getEventRegistry().registerGlobal(StartWorldEvent.class,
@@ -368,6 +478,7 @@ public class EldaniorSystem extends JavaPlugin {
 
         // 6. Commandes
         this.getCommandRegistry().registerCommand(new ESCommand());
+        this.getCommandRegistry().registerCommand(new com.eldanior.system.luo.InclinerCommand());
 
         // Spawn hologrammes (delai pour attendre que les mondes soient prets)
         new java.util.Timer("EldaniorHologramSpawn", true).schedule(new java.util.TimerTask() {

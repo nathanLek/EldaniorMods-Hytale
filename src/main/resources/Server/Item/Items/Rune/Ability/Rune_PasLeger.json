@@ -1,0 +1,43 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune du Pas léger",
+    "Description": "Compétence de la voie martiale, enseignée à la classe Expert Martial. Une ruée légère comme une plume, qui s'améliore à chaque classe : 8 blocs (Expert), 10 et intouchable pendant le pas (Maître), 12 dans la direction du regard, même en l'air (Grand Maître), 15 (Saint), 18 puis 24 blocs en tranchant les ennemis traversés (Maître Suprême, Dieu Martial). Recharge de 3 s, qui diminue avec la classe et disparaît au Maître Suprême. Après le pas, vous courez plus vite pendant 4 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_PasLeger.png",
+  "Quality": "Rare",
+  "ItemLevel": 40,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_Empire_Luo.Runes"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_PasLeger.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 0.25,
+    "Cost": 10,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Physical",
+      "Melee"
+    ],
+    "Cast": "Root_Ability_PasLeger"
+  }
+}

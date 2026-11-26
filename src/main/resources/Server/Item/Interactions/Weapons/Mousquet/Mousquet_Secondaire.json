@@ -1,0 +1,11 @@
+{
+  "$Comment": "Clic droit : relache avant 0,2 s = coup de baionnette ; maintenu = visee (aucune barre de charge).",
+  "Type": "Charging",
+  "AllowIndefiniteHold": false,
+  "DisplayProgress": false,
+  "CancelOnOtherClick": false,
+  "Next": {
+    "0": "Mousquet_Baionnette",
+    "0.2": "Mousquet_Visee"
+  }
+}

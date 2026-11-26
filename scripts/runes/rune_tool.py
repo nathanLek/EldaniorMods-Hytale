@@ -10,7 +10,7 @@
 Regles (couts, recharges, loot, types) : scripts/runes/rune_rules.json. Fiches : scripts/runes/specs/.
 Assets vanilla lus dans Assets.zip (HYTALE_ASSETS_ZIP pour changer le chemin).
 """
-import zlib
+import functools, zlib
 import argparse, json, os, re, sys, zipfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -34,6 +34,19 @@ def zip_names():
     if _zip_names is None:
         _zip_names = zipfile.ZipFile(ZIP).namelist() if os.path.exists(ZIP) else []
     return _zip_names
+
+_zip_file = None
+def zip_file():
+    """Assets.zip ouvert une seule fois (relire l'index central a chaque lecture coute plusieurs secondes)."""
+    global _zip_file
+    if _zip_file is None: _zip_file = zipfile.ZipFile(ZIP)
+    return _zip_file
+
+_zip_set = None
+def zip_has(path):
+    global _zip_set
+    if _zip_set is None: _zip_set = set(zip_names())
+    return path in _zip_set
 
 def mod_files():
     for d, _, fs in os.walk(RES):
@@ -70,11 +83,34 @@ def set_zip():
 
 def read_asset(src, path):
     if src == 'mod': return open(os.path.join(RES, path), encoding='utf-8-sig').read()
-    return zipfile.ZipFile(ZIP).read(path).decode('utf-8-sig')
+    return zip_file().read(path).decode('utf-8-sig')
 
 def load_json(src, path):
     try: return json.loads(read_asset(src, path))
     except Exception: return None
+
+def ogg_channels(rel):
+    """Nombre de canaux d'un .ogg (en-tete Vorbis), fichier du mod ou de Assets.zip ; None si introuvable."""
+    try:
+        mod = os.path.join(RES, 'Common', rel)
+        if os.path.exists(mod):
+            with open(mod, 'rb') as f: head = f.read(64)
+        elif zip_has('Common/' + rel):
+            with zip_file().open('Common/' + rel) as f: head = f.read(64)
+        else: return None
+        i = head.find(b'\x01vorbis')
+        return head[i + 11] if i >= 0 else None
+    except Exception: return None
+
+@functools.lru_cache(maxsize=None)
+def sound_is_stereo(sid, depth=0):
+    """Vrai si un evenement sonore joue un fichier stereo (refuse comme WorldSoundEventId : echec des assets)."""
+    hits = find('.json', sid, 'Server/Audio/SoundEvents/')
+    if not hits or depth > 5: return False
+    d = load_json(*hits[0]) or {}
+    chans = [c for L in d.get('Layers', []) for f in L.get('Files', []) for c in [ogg_channels(f)] if c]
+    if chans: return max(chans) > 1
+    return sound_is_stereo(d['Parent'], depth + 1) if d.get('Parent') else False
 
 # ============================================================ noms ============================================================
 def short(rune_id): return rune_id[5:] if rune_id.startswith('Rune_') else rune_id
@@ -102,7 +138,7 @@ def build_item(spec, mana, cd):
         "TranslationProperties": {"Name": spec['name'], "Description": desc},
         "Icon": f"Icons/ItemsGenerated/{spec['id']}.png",
         "Quality": r['quality'], "ItemLevel": r['itemLevel'],
-        "Categories": ["Items.Ingredients", "Eldanior_System.Competences_Actives"],
+        "Categories": ["Items.Ingredients", spec.get('category') or f"Eldanior_Runes.{spec['type']}"],
         "Model": "Items/Runes/Rune_Ability.blockymodel",
         "Texture": f"Items/Runes/Rune_Textures/Rune_Ability_{s}.png",
         "PlayerAnimationsId": "Item",
@@ -124,7 +160,7 @@ def build_page(spec):
         "TranslationProperties": {"Name": f"Parchemin de Rune : {page_title(spec['name'])}",
                                   "Description": spec.get('pageDescription') or (spec['description'] + " Utilisez-le pour ajouter la rune à votre sac de runes.")},
         "Icon": "Icons/ItemsGenerated/Recipe_Page.png", "Quality": r['quality'],
-        "Categories": ["Eldanior_System.Competences_Actives"], "Tags": {"Type": ["Item", "Consumable"]},
+        "Categories": [spec.get('category') or f"Eldanior_Runes.{spec['type']}"], "Tags": {"Type": ["Item", "Consumable"]},
         "MaxStack": 1, "PlayerAnimationsId": "Item",
         "Model": "Items/Consumables/Recipes/Recipe.blockymodel", "Texture": "Items/Consumables/Recipes/Recipe_Texture.png",
         "IconProperties": {"Scale": 0.76, "Rotation": [135, 135, 0], "Translation": [-1, 5]},
@@ -132,6 +168,16 @@ def build_page(spec):
     }
 
 def build_cast(spec):
+    """Chaine d'incantation ; avec spec["gate"] (type d'interaction Java a Next/Failed), la garde passe AVANT le cout et la
+    recharge : refusee, la rune ne coute rien (ex. Eldanior_ArmeLegendaireTenue : il faut tenir un mousquet legendaire)."""
+    chain = _build_cast(spec)
+    gate = spec.get('gate')
+    if not gate:
+        return chain
+    return {"$Comment": f"{spec['name']} : garde '{gate}' avant le cout et la recharge. Genere par rune_tool.py.",
+            "Type": gate, "Next": chain, "Failed": "Ability_Cast_Fail"}
+
+def _build_cast(spec):
     c = {"animationSet": "Staff", "charging": "CastSummonCharging", "release": "CastSummon", "chargeTime": 0.4, "releaseTime": 0.4,
          "moveSpeed": 0.5, "cameraEffect": "Ability_Cast_Generic", "sound": None, "releaseSound": None, "handParticles": None,
          "handParticlesScale": 0.6, "costMoment": "start"}
@@ -149,6 +195,23 @@ def build_cast(spec):
     if c['releaseSound']: release['Effects']['WorldSoundEventId'] = c['releaseSound']
     cooldown = {"Type": "TriggerCooldown", "UseAbilityCooldown": True}
     stat = {"Type": "ChangeStat", "UseAbilityCost": True}
+    if c.get('hold'):                      # maintenir la touche pour charger, relacher pour lancer (modele : Ability_ChargedShot vanilla)
+        h = c['hold']
+        early = {"Type": "TriggerCooldown", "Cooldown": {"Id": f"Root_Ability_{spec['spell']}", "Cooldown": h.get('earlyCooldown', 0.5)}}
+        charge = {"Type": "Charging", "AllowIndefiniteHold": True, "DisplayProgress": True, "CancelOnOtherClick": False,
+                  "HorizontalSpeedMultiplier": c['moveSpeed'],
+                  "Effects": {"ItemPlayerAnimationsId": c['animationSet'], "ItemAnimationId": c['charging'],
+                              "ClearAnimationOnFinish": True, "ClearSoundEventOnFinish": True}}
+        if c['sound']: charge['Effects']['WorldSoundEventId'] = c['sound']
+        if h.get('localSound'): charge['Effects']['LocalSoundEventId'] = h['localSound']
+        if h.get('particles'): charge['Effects']['Particles'] = h['particles']
+        charge['Next'] = {"0.0": early,          # relache trop tot : rien n'est tire, ni mana ni recharge
+                          f"{float(h.get('minTime', 0.6))}": {"Type": "StatsCondition", "UseAbilityCost": True, "Failed": early,
+                                                       "Next": {"Type": "Parallel", "Interactions": [
+                                                           {"Interactions": [spell, release]}, {"Interactions": [cooldown]}, {"Interactions": [stat]}]}}}
+        return {"$Comment": f"{spec['name']} : maintenir pour charger ({h.get('minTime', 0.6)} s min.), relacher pour lancer le sort Java "
+                            f"'{spec['spell']}' (RuneSpell). Genere par rune_tool.py, cout au relachement.",
+                "Type": "StatsCondition", "UseAbilityCost": True, "Failed": "Ability_Cast_Fail", "Next": charge}
     if c['costMoment'] == 'release':      # mana et recharge seulement si l'incantation va au bout
         branches = [{"Interactions": [charge, stat, cooldown, spell, release]}]
     else:                                  # mana et recharge des le debut (comportement des sorts divins actuels)
@@ -271,6 +334,20 @@ def insert_loot(src, table, page, chance):
     line_end = src.index('\n', m.end())
     return src[:line_end + 1] + f'            new LootEntry("{page}", 1, 1, 1, {chance}),\n' + src[line_end + 1:], True
 
+def manual_of(rid):
+    """Manuel qui enseigne la rune (champ "manual" de sa fiche), sinon None."""
+    sp = os.path.join(ROOT, 'scripts', 'runes', 'specs', rid + '.json')
+    try: return json.load(open(sp, encoding='utf-8')).get('manual')
+    except Exception: return None
+
+
+def no_loot(rid):
+    """true si la fiche de la rune demande explicitement aucun butin ("loot": {})."""
+    sp = os.path.join(ROOT, 'scripts', 'runes', 'specs', rid + '.json')
+    try: return json.load(open(sp, encoding='utf-8')).get('loot') == {}
+    except Exception: return False
+
+
 def cmd_new(a):
     spec = json.load(open(a.spec, encoding='utf-8'))
     for k in ('id', 'spell', 'javaClass', 'name', 'type', 'rarity', 'classes', 'description'):
@@ -282,7 +359,8 @@ def cmd_new(a):
     created = []
     print(f"== {spec['id']} ({spec['type']}, {spec['rarity']}) : {mana} mana, {cd} s ==")
     write_json(f"Server/Item/Items/Rune/Ability/{spec['id']}.json", build_item(spec, mana, cd), a.force, a.dry_run, created)
-    write_json(f"Server/Item/Items/Rune/Parchemin/{spec['page']}.json", build_page(spec), a.force, a.dry_run, created)
+    if not spec.get('manual'):                       # "manual" : la rune s'apprend dans un manuel (voie martiale Luo), pas de parchemin
+        write_json(f"Server/Item/Items/Rune/Parchemin/{spec['page']}.json", build_page(spec), a.force, a.dry_run, created)
     write_json(f"Server/Item/RootInteractions/Abilities/Root_Ability_{s}.json", {"Interactions": [f"Ability_{s}_Cast"], "RequireNewClick": True}, a.force, a.dry_run, created)
     write_json(f"Server/Item/Interactions/Abilities/{s}/Ability_{s}_Cast.json", build_cast(spec), a.force, a.dry_run, created)
 
@@ -313,16 +391,27 @@ def cmd_new(a):
         if not a.dry_run: open(REGISTRY, 'w', encoding='utf-8').write(reg)
     rm = open(RUNE_MANAGER, encoding='utf-8').read()
     rm, e1 = insert_map_entry(rm, 'RUNE_CLASSES = Map.ofEntries(', f'Map.entry("{spec["id"]}", "{spec["classes"]}")', spec['id'])
-    rm, e2 = insert_map_entry(rm, 'PAGE_TO_RUNE = Map.ofEntries(', f'Map.entry("{spec["page"]}", "{spec["id"]}")', spec['page'])
+    rm, e2 = (rm, False) if spec.get('manual') else insert_map_entry(rm, 'PAGE_TO_RUNE = Map.ofEntries(', f'Map.entry("{spec["page"]}", "{spec["id"]}")', spec['page'])
     if e1: edits.append('RuneManager.RUNE_CLASSES')
     if e2: edits.append('RuneManager.PAGE_TO_RUNE')
     if (e1 or e2) and not a.dry_run: open(RUNE_MANAGER, 'w', encoding='utf-8').write(rm)
     loot = open(LOOT, encoding='utf-8').read()
-    loot_rules = spec.get('loot') or RULES['rarities'][spec['rarity']]['loot']
+    # loot : null = tables de la rarete ; {} = aucun butin (objets reserves, ex. runes de la voie martiale Luo)
+    loot_rules = spec['loot'] if spec.get('loot') is not None else RULES['rarities'][spec['rarity']]['loot']
     for table, chance in loot_rules.items():
         loot, e = insert_loot(loot, table, spec['page'], chance)
         if e: edits.append(f'LootTableConfig.{table} ({chance} %)')
     if not a.dry_run: open(LOOT, 'w', encoding='utf-8').write(loot)
+    # Manuels de magie (2026-11-24) : type deja passe aux manuels (manuels_magie.json « faits ») -> le parchemin devient un manuel
+    # (objet, icone, butin et prix remplaces par gen_manuels_magie.py ; le parchemin reste en reserve hors de l'onglet creatif).
+    if not spec.get('manual') and not a.dry_run and spec['type'] in magic_manual_types():
+        import gen_manuels_magie
+        gen_manuels_magie.generate(spec['type'])
+        edits.append(f"manuel de magie du type {spec['type']} (gen_manuels_magie.py) ; relancer scripts/economie/gen_economie.py")
+    # Index des runes du panneau admin (statistiques des competences actives, 2026-11-25)
+    if not a.dry_run:
+        import gen_runes_index  # noqa: F401  (le module regenere l'index en s'important)
+        edits.append("eldanior/runes.json (gen_runes_index.py : statistiques admin)")
 
     print("  fichiers crees :" if created else "  aucun fichier cree")
     for p in created: print("   +", p)
@@ -405,6 +494,7 @@ def check_interaction_file(rep, who, src, path, java_src, registered_types, seen
     for key in ('WorldSoundEventId', 'SoundEventId', 'LocalSoundEventId'):
         for sid, _ in walk(d, key):
             if not find('.json', sid, 'Server/Audio/SoundEvents/'): rep.err(who, f"son introuvable : {sid}")
+            elif key == 'WorldSoundEventId' and sound_is_stereo(sid): rep.err(who, f"son stereo '{sid}' en WorldSoundEventId ({path}) : refuse au chargement (echec des assets), prendre un son mono")
     for aid, node in walk(d, 'ItemAnimationId'):
         aset = node.get('ItemPlayerAnimationsId')
         if aset:
@@ -417,8 +507,21 @@ def check_interaction_file(rep, who, src, path, java_src, registered_types, seen
     for lst in (v for v, _ in walk(d, 'Interactions') if isinstance(v, str)):
         for s, p in find('.json', lst, 'Server/Item/Interactions/'): check_interaction_file(rep, who, s, p, java_src, registered_types, seen)
 
+def magic_manual_types():
+    """Types de magie dont les runes s'apprennent par manuel (scripts/runes/manuels_magie.json)."""
+    path = os.path.join(HERE, 'manuels_magie.json')
+    return json.load(open(path, encoding='utf-8')).get('faits', []) if os.path.exists(path) else []
+
+
+def magic_manuals():
+    """Parchemin remplace -> manuel de magie."""
+    path = os.path.join(HERE, 'manuels_magie.json')
+    return json.load(open(path, encoding='utf-8')).get('manuels', {}) if os.path.exists(path) else {}
+
+
 def cmd_check(a):
     rep = Report()
+    books = magic_manuals()
     java_src = ''
     for d, _, fs in os.walk(SPELLS):
         for f in fs:
@@ -453,10 +556,17 @@ def cmd_check(a):
                 for hs, hp in hits: check_interaction_file(rep, rid, hs, hp, java_src, registered_types, set())
         if rid not in classes and rid != 'Rune_Aura': rep.warn(rid, "absente de RuneManager.RUNE_CLASSES (utilisable par toutes les classes)")
         my_pages = [p for p, r in pages.items() if r == rid]
-        if not my_pages and rid != 'Rune_Aura': rep.warn(rid, "aucun parchemin ne l'enseigne (PAGE_TO_RUNE)")
+        manual = manual_of(rid)
+        if manual and not os.path.exists(os.path.join(RES, f'Server/Item/Items/Eldanior/Luo/{manual}.json')): rep.err(rid, f"manuel {manual} introuvable")
+        if not my_pages and not manual and rid != 'Rune_Aura': rep.warn(rid, "aucun parchemin ne l'enseigne (PAGE_TO_RUNE)")
         for p in my_pages:
+            book = books.get(p)
             if not os.path.exists(os.path.join(RES, f'Server/Item/Items/Rune/Parchemin/{p}.json')): rep.err(rid, f"parchemin {p} reference mais fichier absent")
-            elif f'"{p}"' not in loot: rep.warn(rid, f"parchemin {p} absent des tables de loot")
+            elif book:                                                     # manuel de magie a la place du parchemin
+                btype = book[len('Eldanior_Manuel_Magie_'):].split('_')[0]
+                if not os.path.exists(os.path.join(RES, f'Server/Item/Items/Rune/Manuels/{btype}/{book}.json')): rep.err(rid, f"manuel {book} introuvable")
+                elif f'"{book}"' not in loot and not no_loot(rid): rep.warn(rid, f"manuel {book} absent des tables de loot")
+            elif f'"{p}"' not in loot and not no_loot(rid): rep.warn(rid, f"parchemin {p} absent des tables de loot")
         rarity = rarity_of_quality(item.get('Quality'))
         if rarity:
             r = RULES['rarities'][rarity]
@@ -468,12 +578,17 @@ def cmd_check(a):
                 (rep.info if why else rep.warn)(rid, msg + (f" - exception : {why}" if why else " - exception non documentee (rune_rules.json > exceptions)"))
 
     print("-- Effets emis par le code (SpellFx.fx) : systemes sans LifeSpan = boucle infinie")
-    for sid in sorted(set(re.findall(r'(?<![A-Z])FX_[A-Z0-9_]+\s*=\s*"([^"]+)"', java_src))):
+    fx_ids = set()
+    for sid in set(re.findall(r'(?<![A-Z])FX_[A-Z0-9_]+\s*=\s*"([^"]+)"', java_src)):
+        # prefixe de palier (ex. "Percee_Pointe_T" + palier, 2026-11-12) : les huit variantes _T1.._T8 doivent exister
+        fx_ids |= {sid + str(n) for n in range(1, 9)} if sid.endswith('_T') else {sid}
+    for sid in sorted(fx_ids):
         hits = find('.particlesystem', sid)
         if not hits: rep.err('Java', f"systeme de particules introuvable : {sid}")
         elif not any(particle_is_finite(s, p) for s, p in hits): rep.warn('Java', f"{sid} : ni LifeSpan ni spawners en rafale, emis par SpellFx.fx il boucle a l'infini (faire une copie du mod avec LifeSpan)")
     for sid in sorted(set(re.findall(r'SFX_[A-Z0-9_]+\s*=\s*"([^"]+)"', java_src))):
         if not find('.json', sid, 'Server/Audio/SoundEvents/'): rep.err('Java', f"son introuvable : {sid}")
+        elif sound_is_stereo(sid): rep.warn('Java', f"son stereo '{sid}' : seulement en 2D (SpellFx.sound2dNear), pas en SpellFx.sound 3D")
 
     print("-- Modeles du mod (Server/Models)")
     for p in [p for p in mod_files() if p.startswith('Server/Models/') and p.endswith('.json')]:

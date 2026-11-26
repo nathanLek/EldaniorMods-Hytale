@@ -1,0 +1,44 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de Prescience",
+    "Description": "Sort épique du temps (Mage, rune de prédilection du Voyant Arcane). Pendant 10 s, vous voyez chaque coup avant qu'il parte : les 3 prochaines attaques d'une créature ou d'un joueur sont esquivées (aucun dégât), vous faites un pas de côté de 2 blocs en laissant une image rémanente, et l'attaquant est figé 1 s. Votre coup suivant une esquive inflige 50 % de dégâts en plus. Coût : 300 mana. Recharge : 120 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_Prescience.png",
+  "Quality": "Epic",
+  "ItemLevel": 60,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_Runes.Temps"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_Prescience.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 120,
+    "Cost": 300,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Duration",
+      "Buff"
+    ],
+    "Cast": "Root_Ability_Prescience"
+  }
+}

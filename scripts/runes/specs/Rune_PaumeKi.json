@@ -1,0 +1,60 @@
+{
+  "$Comment": "Fiche de conception : technique du Clan Luo (voie martiale), validee le 2026-11-09, type Luo le 2026-11-09 (docs/plan-clan-luo.md). Apprise par son manuel, aucun butin. Devenue technique de clan le 2026-11-10 (luo.LuoClans.TECHNIQUES) : reservee aux membres du clan, toutes classes.",
+  "id": "Rune_PaumeKi",
+  "spell": "PaumeKi",
+  "javaClass": "PaumeKi",
+  "page": "rune_page_paume_ki",
+  "name": "Rune de la Paume de Ki",
+  "type": "Luo",
+  "rarity": "Common",
+  "emblem": "PaumeKi",
+  "classes": "clan",
+  "persistent": false,
+  "summary": "Paume de Ki : frappe de paume sur le premier ennemi a 3 blocs, 70 degats, gros recul, etourdi 0,5 s ; marche sans arme.",
+  "description": "Technique du Clan Luo, enseignée à la classe Apprenti en Arts Martiaux de la voie martiale. Vous concentrez votre Ki dans la paume et frappez le premier ennemi à 3 blocs devant vous : 70 dégâts, il est violemment repoussé et étourdi 0,5 s. Fonctionne même sans arme.",
+  "pageDescription": "Rouleau du dojo Luo : la première leçon de l'apprenti, la paume avant la lame. Technique du Clan Luo : elle s'apprend dans son manuel, jamais en butin.",
+  "keywords": [
+    "Damage",
+    "Melee"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": {},
+  "cast": {
+    "animationSet": "Sword",
+    "charging": "SwingLeftCharging",
+    "release": "Stab",
+    "chargeTime": 0.15,
+    "releaseTime": 0.3,
+    "moveSpeed": 0.6,
+    "cameraEffect": null,
+    "sound": null,
+    "releaseSound": "SFX_Light_Melee_T2_Lunge",
+    "handParticles": null,
+    "handParticlesScale": 0.6,
+    "costMoment": "start"
+  },
+  "design": {
+    "range": 3,
+    "targets": "ennemis",
+    "effects": "70 degats Physical, recul 10 b/s, etourdissement 0,5 s (Stun)",
+    "balance": {
+      "damage": 2,
+      "range": 1,
+      "duration": 0,
+      "mobility": 0,
+      "control": 1,
+      "defense": 0,
+      "targets": 0,
+      "frequency": 0,
+      "terrain": 0,
+      "difficulty": 0
+    }
+  },
+  "category": "Eldanior_Empire_Luo.Runes",
+  "manual": "Eldanior_Manuel_Luo_PaumeKi",
+  "$Comment_manual": "Technique apprise par son manuel secret (gen_voie_martiale_objets.py) : pas de parchemin rune_page_*."
+}

@@ -1,0 +1,41 @@
+{
+  "$Comment": "Lame d'air du katana Luo Gōtetsu, l'Acier Cramoisi (iai, Iaigiri, lames de Ki du kata), deplacee par le code. Genere par gen_luo_katanas.py.",
+  "Model": "Items/Projectiles/Tenryumaru_Lame_Gotetsu_G.blockymodel",
+  "Texture": "Items/Projectiles/Tenryumaru_Lame_Gotetsu_H.png",
+  "MinScale": 1.0,
+  "MaxScale": 1.0,
+  "HitBox": {
+    "Max": {
+      "X": 1.2,
+      "Y": 0.6,
+      "Z": 0.6
+    },
+    "Min": {
+      "X": -1.2,
+      "Y": -0.6,
+      "Z": -0.6
+    }
+  },
+  "Trails": [
+    {
+      "TrailId": "Katana_Gotetsu_Trail",
+      "TargetNodeName": "Lame",
+      "PositionOffset": {
+        "X": 1.0,
+        "Z": 0.5
+      }
+    },
+    {
+      "TrailId": "Katana_Gotetsu_Trail",
+      "TargetNodeName": "Lame",
+      "PositionOffset": {
+        "X": -1.0,
+        "Z": 0.5
+      }
+    }
+  ],
+  "Light": {
+    "Color": "#ffb6a0",
+    "Radius": 5
+  }
+}

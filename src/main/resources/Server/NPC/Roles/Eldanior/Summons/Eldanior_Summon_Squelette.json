@@ -1,0 +1,36 @@
+{
+  "$Comment": "Squelette releve par la Rune_ReleveDesMorts ; cibles et duree geres par ReleveDesMorts.java (SummonPack).",
+  "Type": "Variant",
+  "Reference": "Template_Summoned_Ally",
+  "Modify": {
+    "MaxHealth": 120,
+    "HearingRange": 12,
+    "ViewSector": 270,
+    "Appearance": "Skeleton_Fighter",
+    "Weapons": [
+      "Droplist:Skeleton_Fighter_Random_Weapon"
+    ],
+    "OffHand": [],
+    "DefaultOffHandSlot": -1,
+    "FlockArray": [
+      "Skeleton_Fighter"
+    ],
+    "Attack": "Root_NPC_Skeleton_Fighter_Attack",
+    "AttackDistance": 2.5,
+    "AttackPauseRange": [
+      1,
+      1.5
+    ],
+    "CombatAttackPreDelay": [
+      0.1,
+      0.3
+    ],
+    "DesiredAttackDistanceRange": [
+      1.5,
+      2
+    ],
+    "MaxSpeed": 7,
+    "ApplySeparation": true,
+    "DespawnTimer": 40
+  }
+}

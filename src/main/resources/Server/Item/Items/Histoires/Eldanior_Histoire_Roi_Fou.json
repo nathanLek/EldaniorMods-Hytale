@@ -1,0 +1,33 @@
+{
+  "Parent": "Template_Lore_Note_Goblin_Journal_Open",
+  "Quality": "Uncommon",
+  "Categories": [
+    "Eldanior_System.Histoires"
+  ],
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Root_Eldanior_Livre"
+  },
+  "BlockType": {
+    "Interactions": {
+      "Use": {
+        "Interactions": [
+          {
+            "Type": "Simple"
+          }
+        ]
+      },
+      "Secondary": {
+        "Interactions": [
+          {
+            "Type": "Simple"
+          }
+        ]
+      }
+    }
+  },
+  "TranslationProperties": {
+    "Name": "server.items.Eldanior_Histoire_Roi_Fou.name",
+    "Description": "server.items.Eldanior_Histoire_Roi_Fou.description"
+  }
+}

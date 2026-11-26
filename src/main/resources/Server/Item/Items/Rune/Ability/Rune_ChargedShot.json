@@ -1,0 +1,55 @@
+{
+  "$Comment": "Copie de la rune du jeu de base SANS sa recette du Labo gobelin (2026-11-24) : une rune ne s'obtient que par son manuel (gen_manuels_magie.py).",
+  "TranslationProperties": {
+    "Name": "server.items.Rune_ChargedShot.name",
+    "Description": "server.items.Rune_ChargedShot.description"
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_ChargedShot.png",
+  "Quality": "Rare",
+  "ItemLevel": 10,
+  "Categories": [
+    "Items.Ingredients"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_ChargedShot.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 4,
+    "Cost": 35,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Damage",
+      "Elemental",
+      "Water",
+      "Projectile",
+      "Charged",
+      "Duration"
+    ],
+    "Attributes": {
+      "Duration": 2.0,
+      "FreezeDuration": 1.5,
+      "ShortFreezeDuration": 0.8,
+      "Fork": 3,
+      "SplitChildDamage": 0.35,
+      "SplitChildScale": 0.5,
+      "SplitChildFreezeDuration": 0.02
+    },
+    "Cast": "Root_Ability_ChargedShot"
+  }
+}

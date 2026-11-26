@@ -1,0 +1,351 @@
+$C = "../Common.ui";
+
+// Borne de territoire (bloc Eldanior_Borne_Territoire, admins), genere par scripts/territoire/gen_borne.py : voir ce script.
+Group {
+  LayoutMode: Middle;
+  Background: #05080d(0.55);
+
+  Group {
+    Anchor: (Width: 760);
+    LayoutMode: Top;
+    Padding: (Full: 3);
+    Background: #16212f;
+
+    Group {
+      LayoutMode: Top;
+      Padding: (Full: 3);
+      Background: #e8b34f;
+
+      Group {
+        LayoutMode: Top;
+        Padding: (Full: 2);
+        Background: #16212f;
+
+        Group {
+          LayoutMode: Top;
+          Background: #0b141d(0.96);
+          Padding: (Left: 26, Right: 26, Top: 16, Bottom: 14);
+
+          Group {
+            Anchor: (Height: 56);
+            LayoutMode: Top;
+            Label {
+              Text: "Borne de territoire";
+              Style: (FontSize: 22, RenderBold: true, RenderUppercase: true, TextColor: #d1dae6);
+            }
+            Label #BorneState {
+              Anchor: (Top: 4);
+              Style: (FontSize: 13, RenderBold: true, TextColor: #878e9c, Wrap: true);
+            }
+          }
+
+          Group { Anchor: (Top: 10, Height: 2); Background: #c99436; }
+
+        Group {
+          Anchor: (Top: 14, Height: 18);
+          LayoutMode: Left;
+          Group { FlexWeight: 1; LayoutMode: Top; Padding: (Top: 8); Group { Anchor: (Height: 1); Background: #c99436(0.55); } }
+          Label {
+            Anchor: (Left: 10, Right: 10);
+            Text: "Zone";
+            Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #c99436, VerticalAlignment: Center);
+          }
+          Group { FlexWeight: 1; LayoutMode: Top; Padding: (Top: 8); Group { Anchor: (Height: 1); Background: #c99436(0.55); } }
+        }
+        Group {
+          Anchor: (Top: 8, Height: 40);
+          LayoutMode: Left;
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Label {
+              Text: "Type";
+              Style: (FontSize: 15, RenderBold: true, TextColor: #c9b37a);
+            }
+            Label {
+              Text: "Royaume, grand territoire, territoire ou ville (hiérarchie des zones).";
+              Style: (FontSize: 11, TextColor: #6f8296);
+            }
+          }
+          $C.@DropdownBox #BorneType {
+            Anchor: (Width: 360, Height: 26);
+            Style: @DefaultDropdownBoxStyle;
+          }
+        }
+        Group {
+          Anchor: (Top: 8, Height: 40);
+          LayoutMode: Left;
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Label {
+              Text: "Nom";
+              Style: (FontSize: 15, RenderBold: true, TextColor: #c9b37a);
+            }
+            Label {
+              Text: "Nom affiché à l'entrée de la zone.";
+              Style: (FontSize: 11, TextColor: #6f8296);
+            }
+          }
+          $C.@TextField #BorneName {
+            Anchor: (Width: 360, Height: 28);
+            PlaceholderText: "Marquisat du Nord";
+          }
+        }
+        Group {
+          Anchor: (Top: 8, Height: 40);
+          LayoutMode: Left;
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Label {
+              Text: "Famille";
+              Style: (FontSize: 15, RenderBold: true, TextColor: #c9b37a);
+            }
+            Label {
+              Text: "Famille propriétaire (aucune : terres de la couronne).";
+              Style: (FontSize: 11, TextColor: #6f8296);
+            }
+          }
+          $C.@DropdownBox #BorneFamily {
+            Anchor: (Width: 360, Height: 26);
+            Style: @DefaultDropdownBoxStyle;
+          }
+        }
+
+        Group {
+          Anchor: (Top: 14, Height: 18);
+          LayoutMode: Left;
+          Group { FlexWeight: 1; LayoutMode: Top; Padding: (Top: 8); Group { Anchor: (Height: 1); Background: #c99436(0.55); } }
+          Label {
+            Anchor: (Left: 10, Right: 10);
+            Text: "Dimensions";
+            Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #c99436, VerticalAlignment: Center);
+          }
+          Group { FlexWeight: 1; LayoutMode: Top; Padding: (Top: 8); Group { Anchor: (Height: 1); Background: #c99436(0.55); } }
+        }
+        Group {
+          Anchor: (Top: 8, Height: 40);
+          LayoutMode: Left;
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Label {
+              Text: "Forme";
+              Style: (FontSize: 15, RenderBold: true, TextColor: #c9b37a);
+            }
+            Label {
+              Text: "Rectangle autour de la borne, ou cylindre centré sur elle.";
+              Style: (FontSize: 11, TextColor: #6f8296);
+            }
+          }
+          $C.@DropdownBox #BorneShape {
+            Anchor: (Width: 360, Height: 26);
+            Style: @DefaultDropdownBoxStyle;
+          }
+        }
+        Group {
+          Anchor: (Top: 8, Height: 40);
+          LayoutMode: Left;
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Label {
+              Text: "Est-ouest";
+              Style: (FontSize: 15, RenderBold: true, TextColor: #c9b37a);
+            }
+            Label {
+              Text: "Demi-largeur en blocs depuis la borne (rayon du cylindre).";
+              Style: (FontSize: 11, TextColor: #6f8296);
+            }
+          }
+          $C.@NumberField #BorneSizeX {
+            Anchor: (Width: 360, Height: 26);
+            Format: (MaxDecimalPlaces: 0, Step: 10);
+          }
+        }
+        Group {
+          Anchor: (Top: 8, Height: 40);
+          LayoutMode: Left;
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Label {
+              Text: "Nord-sud";
+              Style: (FontSize: 15, RenderBold: true, TextColor: #c9b37a);
+            }
+            Label {
+              Text: "Demi-largeur en blocs depuis la borne (ignoré pour un cylindre).";
+              Style: (FontSize: 11, TextColor: #6f8296);
+            }
+          }
+          $C.@NumberField #BorneSizeZ {
+            Anchor: (Width: 360, Height: 26);
+            Format: (MaxDecimalPlaces: 0, Step: 10);
+          }
+        }
+        Group {
+          Anchor: (Top: 8, Height: 40);
+          LayoutMode: Left;
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Label {
+              Text: "Hauteur min.";
+              Style: (FontSize: 15, RenderBold: true, TextColor: #c9b37a);
+            }
+            Label {
+              Text: "Hauteur basse de la zone (0 : bas du monde).";
+              Style: (FontSize: 11, TextColor: #6f8296);
+            }
+          }
+          $C.@NumberField #BorneYMin {
+            Anchor: (Width: 360, Height: 26);
+            Format: (MaxDecimalPlaces: 0, Step: 10);
+          }
+        }
+        Group {
+          Anchor: (Top: 8, Height: 40);
+          LayoutMode: Left;
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Label {
+              Text: "Hauteur max.";
+              Style: (FontSize: 15, RenderBold: true, TextColor: #c9b37a);
+            }
+            Label {
+              Text: "Hauteur haute de la zone (319 : haut du monde).";
+              Style: (FontSize: 11, TextColor: #6f8296);
+            }
+          }
+          $C.@NumberField #BorneYMax {
+            Anchor: (Width: 360, Height: 26);
+            Format: (MaxDecimalPlaces: 0, Step: 10);
+          }
+        }
+
+        Group {
+          Anchor: (Top: 14, Height: 18);
+          LayoutMode: Left;
+          Group { FlexWeight: 1; LayoutMode: Top; Padding: (Top: 8); Group { Anchor: (Height: 1); Background: #c99436(0.55); } }
+          Label {
+            Anchor: (Left: 10, Right: 10);
+            Text: "Règles";
+            Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #c99436, VerticalAlignment: Center);
+          }
+          Group { FlexWeight: 1; LayoutMode: Top; Padding: (Top: 8); Group { Anchor: (Height: 1); Background: #c99436(0.55); } }
+        }
+        Group {
+          Anchor: (Top: 8, Height: 40);
+          LayoutMode: Left;
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Label {
+              Text: "PvP";
+              Style: (FontSize: 15, RenderBold: true, TextColor: #c9b37a);
+            }
+            Label {
+              Text: "Combat entre joueurs autorisé dans la zone.";
+              Style: (FontSize: 11, TextColor: #6f8296);
+            }
+          }
+          $C.@DropdownBox #BornePvp {
+            Anchor: (Width: 360, Height: 26);
+            Style: @DefaultDropdownBoxStyle;
+          }
+        }
+        Group {
+          Anchor: (Top: 8, Height: 40);
+          LayoutMode: Left;
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Label {
+              Text: "Protection";
+              Style: (FontSize: 15, RenderBold: true, TextColor: #c9b37a);
+            }
+            Label {
+              Text: "Blocs protégés par défaut (seuls les membres construisent).";
+              Style: (FontSize: 11, TextColor: #6f8296);
+            }
+          }
+          $C.@DropdownBox #BorneProtect {
+            Anchor: (Width: 360, Height: 26);
+            Style: @DefaultDropdownBoxStyle;
+          }
+        }
+        Group {
+          Anchor: (Top: 8, Height: 40);
+          LayoutMode: Left;
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Label {
+              Text: "Régénération";
+              Style: (FontSize: 15, RenderBold: true, TextColor: #c9b37a);
+            }
+            Label {
+              Text: "Secondes avant qu'un bloc cassé revienne ; 0 : pas de régénération.";
+              Style: (FontSize: 11, TextColor: #6f8296);
+            }
+          }
+          $C.@NumberField #BorneRegen {
+            Anchor: (Width: 360, Height: 26);
+            Format: (MaxDecimalPlaces: 0, Step: 30);
+          }
+        }
+        Group {
+          Anchor: (Top: 8, Height: 40);
+          LayoutMode: Left;
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Label {
+              Text: "Annonce";
+              Style: (FontSize: 15, RenderBold: true, TextColor: #c9b37a);
+            }
+            Label {
+              Text: "Titre affiché aux joueurs qui entrent dans la zone.";
+              Style: (FontSize: 11, TextColor: #6f8296);
+            }
+          }
+          $C.@DropdownBox #BorneAnnounce {
+            Anchor: (Width: 360, Height: 26);
+            Style: @DefaultDropdownBoxStyle;
+          }
+        }
+
+          Group { Anchor: (Top: 14, Height: 2); Background: #c99436; }
+
+          Group {
+            LayoutMode: Left;
+            Anchor: (Top: 14, Height: 44);
+            $C.@TextButton #BorneSave {
+              @Anchor = (Right: 4);
+              Text: "Créer / mettre à jour";
+              FlexWeight: 1;
+            }
+            $C.@SecondaryTextButton #BorneLink {
+              @Anchor = (Left: 4, Right: 4);
+              Text: "Lier la zone existante";
+              FlexWeight: 1;
+            }
+            $C.@SecondaryTextButton #BorneDelete {
+              @Anchor = (Left: 4);
+              Text: "Supprimer la zone";
+              FlexWeight: 1;
+            }
+          }
+
+          Label {
+            Anchor: (Top: 10);
+            Text: "Échap : fermer  ·  Tenez une borne en main pour voir les bornes et les bords des zones  ·  Casser la borne supprime la zone";
+            Style: (FontSize: 11, TextColor: #5a6a7a, HorizontalAlignment: Center);
+          }
+        }
+      }
+    }
+  }
+}

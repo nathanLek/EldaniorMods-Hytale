@@ -1,0 +1,1110 @@
+$C = "../Common.ui";
+
+// Registre de la maison (intendant), facon fenetre Chapitres. Genere par scripts/intendant/gen_intendant_ui.py.
+Group {
+  LayoutMode: Middle;
+  Background: (TexturePath: "../Quest/ChapBackground.png");
+
+  Group #IntPage {
+    Anchor: (Width: 1920, Height: 1080);
+
+    // ---- fond : voile de droite, bande d'encre, lueur, eclats ----
+    Group { Anchor: (Left: 1003, Top: 0, Width: 917, Height: 1080); Background: #181822(0.5); }
+    Group { Anchor: (Left: 499, Top: 0, Width: 504, Height: 1080); Background: (TexturePath: "../Quest/ChapSeparator.png"); }
+    Group { Anchor: (Left: 480, Top: 25, Width: 488, Height: 1055); Background: (TexturePath: "../Quest/ChapGlows.png"); }
+    Group { Anchor: (Left: 0, Top: 0, Width: 1920, Height: 1080); Background: (TexturePath: "../Quest/ChapShards.png"); }
+    Group { Anchor: (Left: 599, Top: 0, Width: 1321, Height: 1080); Background: #0b0b12(0.45); }
+
+    // ---- categories ----
+    Group { Anchor: (Left: 603, Top: 28, Width: 1272, Height: 90); Background: #0b0b12(0.55); }
+    Group { Anchor: (Left: 603, Top: 118, Width: 1272, Height: 8); Background: (TexturePath: "../Quest/ChapDivider.png", HorizontalBorder: 24, VerticalBorder: 0); }
+    Button #IntCat0 {
+      Anchor: (Left: 611, Top: 34, Width: 136, Height: 78);
+      Visible: false;
+      Style: (Default: (Background: #000000(0)), Hovered: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Sounds: $C.@ButtonSounds);
+      Group #IntCatGlow0 { Anchor: (Left: 0, Top: 0, Width: 136, Height: 78); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); Visible: false; }
+      ItemIcon #IntCatIcon0 { Anchor: (Left: 46, Top: 6, Width: 44, Height: 44); }
+      Label #IntCatLabel0 {
+        Anchor: (Left: 4, Top: 50, Width: 128, Height: 20);
+        Style: (FontSize: 13, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group #IntCatOn0 { Anchor: (Left: 18, Top: 73, Width: 100, Height: 3); Background: #f2c45e; Visible: false; }
+    }
+    Button #IntCat1 {
+      Anchor: (Left: 751, Top: 34, Width: 136, Height: 78);
+      Visible: false;
+      Style: (Default: (Background: #000000(0)), Hovered: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Sounds: $C.@ButtonSounds);
+      Group #IntCatGlow1 { Anchor: (Left: 0, Top: 0, Width: 136, Height: 78); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); Visible: false; }
+      ItemIcon #IntCatIcon1 { Anchor: (Left: 46, Top: 6, Width: 44, Height: 44); }
+      Label #IntCatLabel1 {
+        Anchor: (Left: 4, Top: 50, Width: 128, Height: 20);
+        Style: (FontSize: 13, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group #IntCatOn1 { Anchor: (Left: 18, Top: 73, Width: 100, Height: 3); Background: #f2c45e; Visible: false; }
+    }
+    Button #IntCat2 {
+      Anchor: (Left: 891, Top: 34, Width: 136, Height: 78);
+      Visible: false;
+      Style: (Default: (Background: #000000(0)), Hovered: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Sounds: $C.@ButtonSounds);
+      Group #IntCatGlow2 { Anchor: (Left: 0, Top: 0, Width: 136, Height: 78); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); Visible: false; }
+      ItemIcon #IntCatIcon2 { Anchor: (Left: 46, Top: 6, Width: 44, Height: 44); }
+      Label #IntCatLabel2 {
+        Anchor: (Left: 4, Top: 50, Width: 128, Height: 20);
+        Style: (FontSize: 13, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group #IntCatOn2 { Anchor: (Left: 18, Top: 73, Width: 100, Height: 3); Background: #f2c45e; Visible: false; }
+    }
+    Button #IntCat3 {
+      Anchor: (Left: 1031, Top: 34, Width: 136, Height: 78);
+      Visible: false;
+      Style: (Default: (Background: #000000(0)), Hovered: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Sounds: $C.@ButtonSounds);
+      Group #IntCatGlow3 { Anchor: (Left: 0, Top: 0, Width: 136, Height: 78); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); Visible: false; }
+      ItemIcon #IntCatIcon3 { Anchor: (Left: 46, Top: 6, Width: 44, Height: 44); }
+      Label #IntCatLabel3 {
+        Anchor: (Left: 4, Top: 50, Width: 128, Height: 20);
+        Style: (FontSize: 13, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group #IntCatOn3 { Anchor: (Left: 18, Top: 73, Width: 100, Height: 3); Background: #f2c45e; Visible: false; }
+    }
+    Button #IntCat4 {
+      Anchor: (Left: 1171, Top: 34, Width: 136, Height: 78);
+      Visible: false;
+      Style: (Default: (Background: #000000(0)), Hovered: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Sounds: $C.@ButtonSounds);
+      Group #IntCatGlow4 { Anchor: (Left: 0, Top: 0, Width: 136, Height: 78); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); Visible: false; }
+      ItemIcon #IntCatIcon4 { Anchor: (Left: 46, Top: 6, Width: 44, Height: 44); }
+      Label #IntCatLabel4 {
+        Anchor: (Left: 4, Top: 50, Width: 128, Height: 20);
+        Style: (FontSize: 13, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group #IntCatOn4 { Anchor: (Left: 18, Top: 73, Width: 100, Height: 3); Background: #f2c45e; Visible: false; }
+    }
+    Button #IntCat5 {
+      Anchor: (Left: 1311, Top: 34, Width: 136, Height: 78);
+      Visible: false;
+      Style: (Default: (Background: #000000(0)), Hovered: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Sounds: $C.@ButtonSounds);
+      Group #IntCatGlow5 { Anchor: (Left: 0, Top: 0, Width: 136, Height: 78); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); Visible: false; }
+      ItemIcon #IntCatIcon5 { Anchor: (Left: 46, Top: 6, Width: 44, Height: 44); }
+      Label #IntCatLabel5 {
+        Anchor: (Left: 4, Top: 50, Width: 128, Height: 20);
+        Style: (FontSize: 13, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group #IntCatOn5 { Anchor: (Left: 18, Top: 73, Width: 100, Height: 3); Background: #f2c45e; Visible: false; }
+    }
+    Button #IntCat6 {
+      Anchor: (Left: 1451, Top: 34, Width: 136, Height: 78);
+      Visible: false;
+      Style: (Default: (Background: #000000(0)), Hovered: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Sounds: $C.@ButtonSounds);
+      Group #IntCatGlow6 { Anchor: (Left: 0, Top: 0, Width: 136, Height: 78); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); Visible: false; }
+      ItemIcon #IntCatIcon6 { Anchor: (Left: 46, Top: 6, Width: 44, Height: 44); }
+      Label #IntCatLabel6 {
+        Anchor: (Left: 4, Top: 50, Width: 128, Height: 20);
+        Style: (FontSize: 13, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group #IntCatOn6 { Anchor: (Left: 18, Top: 73, Width: 100, Height: 3); Background: #f2c45e; Visible: false; }
+    }
+    Button #IntCat7 {
+      Anchor: (Left: 1591, Top: 34, Width: 136, Height: 78);
+      Visible: false;
+      Style: (Default: (Background: #000000(0)), Hovered: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Sounds: $C.@ButtonSounds);
+      Group #IntCatGlow7 { Anchor: (Left: 0, Top: 0, Width: 136, Height: 78); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); Visible: false; }
+      ItemIcon #IntCatIcon7 { Anchor: (Left: 46, Top: 6, Width: 44, Height: 44); }
+      Label #IntCatLabel7 {
+        Anchor: (Left: 4, Top: 50, Width: 128, Height: 20);
+        Style: (FontSize: 13, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group #IntCatOn7 { Anchor: (Left: 18, Top: 73, Width: 100, Height: 3); Background: #f2c45e; Visible: false; }
+    }
+    Button #IntCat8 {
+      Anchor: (Left: 1731, Top: 34, Width: 136, Height: 78);
+      Visible: false;
+      Style: (Default: (Background: #000000(0)), Hovered: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Sounds: $C.@ButtonSounds);
+      Group #IntCatGlow8 { Anchor: (Left: 0, Top: 0, Width: 136, Height: 78); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); Visible: false; }
+      ItemIcon #IntCatIcon8 { Anchor: (Left: 46, Top: 6, Width: 44, Height: 44); }
+      Label #IntCatLabel8 {
+        Anchor: (Left: 4, Top: 50, Width: 128, Height: 20);
+        Style: (FontSize: 13, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group #IntCatOn8 { Anchor: (Left: 18, Top: 73, Width: 100, Height: 3); Background: #f2c45e; Visible: false; }
+    }
+
+    // ---- replique de l'intendant ----
+    Label #IntQuote {
+      Anchor: (Left: 611, Top: 126, Width: 1248, Height: 46);
+      Style: (FontSize: 17, RenderBold: true, TextColor: #C58643, HorizontalAlignment: Center, VerticalAlignment: Center, Wrap: true);
+    }
+
+    // ---- tuiles ----
+    Group #IntStat0 {
+      Anchor: (Left: 611, Top: 182, Width: 300, Height: 82);
+      Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16);
+      Label #IntStatV0 {
+        Anchor: (Left: 12, Top: 10, Width: 276, Height: 38);
+        Style: (FontName: "Secondary", FontSize: 26, RenderBold: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 14);
+      }
+      Group { Anchor: (Left: 110, Top: 50, Width: 80, Height: 1); Background: #c58643(0.5); }
+      Label #IntStatL0 {
+        Anchor: (Left: 12, Top: 54, Width: 276, Height: 20);
+        Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #77879D, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 9);
+      }
+    }
+    Group #IntStat1 {
+      Anchor: (Left: 927, Top: 182, Width: 300, Height: 82);
+      Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16);
+      Label #IntStatV1 {
+        Anchor: (Left: 12, Top: 10, Width: 276, Height: 38);
+        Style: (FontName: "Secondary", FontSize: 26, RenderBold: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 14);
+      }
+      Group { Anchor: (Left: 110, Top: 50, Width: 80, Height: 1); Background: #c58643(0.5); }
+      Label #IntStatL1 {
+        Anchor: (Left: 12, Top: 54, Width: 276, Height: 20);
+        Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #77879D, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 9);
+      }
+    }
+    Group #IntStat2 {
+      Anchor: (Left: 1243, Top: 182, Width: 300, Height: 82);
+      Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16);
+      Label #IntStatV2 {
+        Anchor: (Left: 12, Top: 10, Width: 276, Height: 38);
+        Style: (FontName: "Secondary", FontSize: 26, RenderBold: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 14);
+      }
+      Group { Anchor: (Left: 110, Top: 50, Width: 80, Height: 1); Background: #c58643(0.5); }
+      Label #IntStatL2 {
+        Anchor: (Left: 12, Top: 54, Width: 276, Height: 20);
+        Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #77879D, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 9);
+      }
+    }
+    Group #IntStat3 {
+      Anchor: (Left: 1559, Top: 182, Width: 300, Height: 82);
+      Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16);
+      Label #IntStatV3 {
+        Anchor: (Left: 12, Top: 10, Width: 276, Height: 38);
+        Style: (FontName: "Secondary", FontSize: 26, RenderBold: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 14);
+      }
+      Group { Anchor: (Left: 110, Top: 50, Width: 80, Height: 1); Background: #c58643(0.5); }
+      Label #IntStatL3 {
+        Anchor: (Left: 12, Top: 54, Width: 276, Height: 20);
+        Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #77879D, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 9);
+      }
+    }
+
+    // ---- section ----
+    Label #IntSection {
+      Anchor: (Left: 611, Top: 278, Width: 700, Height: 30);
+      Style: (FontName: "Secondary", FontSize: 21, RenderBold: true, RenderUppercase: true, TextColor: #C4CEDC, VerticalAlignment: Center);
+    }
+    Group { Anchor: (Left: 611, Top: 310, Width: 1248, Height: 8); Background: (TexturePath: "../Quest/ChapDivider.png", HorizontalBorder: 24, VerticalBorder: 0); }
+    Label #IntFooter {
+      Anchor: (Left: 1311, Top: 278, Width: 548, Height: 30);
+      Style: (FontSize: 13, RenderBold: true, TextColor: #77879D, HorizontalAlignment: End, VerticalAlignment: Center);
+    }
+
+    // ---- cartes ----
+    Button #IntCard0 {
+      Anchor: (Left: 611, Top: 328, Width: 408, Height: 128);
+      Visible: false;
+      Style: (Default: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Hovered: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23, Color: #ffffff(0.7))), Sounds: $C.@ButtonSounds);
+      Group #IntCardBar0 { Anchor: (Left: 4, Top: 14, Width: 3, Height: 100); Background: #56677a; }
+      Group #IntCardSel0 {
+        Anchor: (Left: 0, Top: 0, Width: 408, Height: 128);
+        Visible: false;
+        Group { Anchor: (Left: 2, Top: 2, Width: 404, Height: 124); Background: #f2c45e(0.07); }
+        Group { Anchor: (Left: 0, Top: 0, Width: 408, Height: 2); Background: #f2c45e; }
+        Group { Anchor: (Left: 0, Top: 126, Width: 408, Height: 2); Background: #f2c45e; }
+        Group { Anchor: (Left: 0, Top: 0, Width: 2, Height: 128); Background: #f2c45e; }
+        Group { Anchor: (Left: 406, Top: 0, Width: 2, Height: 128); Background: #f2c45e; }
+      }
+      Group { Anchor: (Left: 14, Top: 24, Width: 80, Height: 80); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #IntCardIcon0 { Anchor: (Left: 22, Top: 32, Width: 64, Height: 64); }
+      Label #IntCardMark0 {
+        Anchor: (Left: 14, Top: 24, Width: 80, Height: 80);
+        Visible: false;
+        Style: (FontName: "Secondary", FontSize: 40, RenderBold: true, TextColor: #c58643, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+      Label #IntCardName0 {
+        Anchor: (Left: 106, Top: 12, Width: 186, Height: 28);
+        Style: (FontSize: 17, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 12);
+      }
+      Label #IntCardValue0 {
+        Anchor: (Left: 292, Top: 12, Width: 102, Height: 28);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #e8d9b0, HorizontalAlignment: End, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group { Anchor: (Left: 106, Top: 42, Width: 288, Height: 1); Background: #48455c; }
+      Label #IntCardMeta0 {
+        Anchor: (Left: 106, Top: 48, Width: 288, Height: 70);
+        Style: (FontSize: 13, RenderBold: true, TextColor: #9aa7b8, Wrap: true);
+      }
+    }
+    Button #IntCard1 {
+      Anchor: (Left: 1031, Top: 328, Width: 408, Height: 128);
+      Visible: false;
+      Style: (Default: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Hovered: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23, Color: #ffffff(0.7))), Sounds: $C.@ButtonSounds);
+      Group #IntCardBar1 { Anchor: (Left: 4, Top: 14, Width: 3, Height: 100); Background: #56677a; }
+      Group #IntCardSel1 {
+        Anchor: (Left: 0, Top: 0, Width: 408, Height: 128);
+        Visible: false;
+        Group { Anchor: (Left: 2, Top: 2, Width: 404, Height: 124); Background: #f2c45e(0.07); }
+        Group { Anchor: (Left: 0, Top: 0, Width: 408, Height: 2); Background: #f2c45e; }
+        Group { Anchor: (Left: 0, Top: 126, Width: 408, Height: 2); Background: #f2c45e; }
+        Group { Anchor: (Left: 0, Top: 0, Width: 2, Height: 128); Background: #f2c45e; }
+        Group { Anchor: (Left: 406, Top: 0, Width: 2, Height: 128); Background: #f2c45e; }
+      }
+      Group { Anchor: (Left: 14, Top: 24, Width: 80, Height: 80); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #IntCardIcon1 { Anchor: (Left: 22, Top: 32, Width: 64, Height: 64); }
+      Label #IntCardMark1 {
+        Anchor: (Left: 14, Top: 24, Width: 80, Height: 80);
+        Visible: false;
+        Style: (FontName: "Secondary", FontSize: 40, RenderBold: true, TextColor: #c58643, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+      Label #IntCardName1 {
+        Anchor: (Left: 106, Top: 12, Width: 186, Height: 28);
+        Style: (FontSize: 17, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 12);
+      }
+      Label #IntCardValue1 {
+        Anchor: (Left: 292, Top: 12, Width: 102, Height: 28);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #e8d9b0, HorizontalAlignment: End, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group { Anchor: (Left: 106, Top: 42, Width: 288, Height: 1); Background: #48455c; }
+      Label #IntCardMeta1 {
+        Anchor: (Left: 106, Top: 48, Width: 288, Height: 70);
+        Style: (FontSize: 13, RenderBold: true, TextColor: #9aa7b8, Wrap: true);
+      }
+    }
+    Button #IntCard2 {
+      Anchor: (Left: 1451, Top: 328, Width: 408, Height: 128);
+      Visible: false;
+      Style: (Default: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Hovered: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23, Color: #ffffff(0.7))), Sounds: $C.@ButtonSounds);
+      Group #IntCardBar2 { Anchor: (Left: 4, Top: 14, Width: 3, Height: 100); Background: #56677a; }
+      Group #IntCardSel2 {
+        Anchor: (Left: 0, Top: 0, Width: 408, Height: 128);
+        Visible: false;
+        Group { Anchor: (Left: 2, Top: 2, Width: 404, Height: 124); Background: #f2c45e(0.07); }
+        Group { Anchor: (Left: 0, Top: 0, Width: 408, Height: 2); Background: #f2c45e; }
+        Group { Anchor: (Left: 0, Top: 126, Width: 408, Height: 2); Background: #f2c45e; }
+        Group { Anchor: (Left: 0, Top: 0, Width: 2, Height: 128); Background: #f2c45e; }
+        Group { Anchor: (Left: 406, Top: 0, Width: 2, Height: 128); Background: #f2c45e; }
+      }
+      Group { Anchor: (Left: 14, Top: 24, Width: 80, Height: 80); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #IntCardIcon2 { Anchor: (Left: 22, Top: 32, Width: 64, Height: 64); }
+      Label #IntCardMark2 {
+        Anchor: (Left: 14, Top: 24, Width: 80, Height: 80);
+        Visible: false;
+        Style: (FontName: "Secondary", FontSize: 40, RenderBold: true, TextColor: #c58643, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+      Label #IntCardName2 {
+        Anchor: (Left: 106, Top: 12, Width: 186, Height: 28);
+        Style: (FontSize: 17, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 12);
+      }
+      Label #IntCardValue2 {
+        Anchor: (Left: 292, Top: 12, Width: 102, Height: 28);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #e8d9b0, HorizontalAlignment: End, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group { Anchor: (Left: 106, Top: 42, Width: 288, Height: 1); Background: #48455c; }
+      Label #IntCardMeta2 {
+        Anchor: (Left: 106, Top: 48, Width: 288, Height: 70);
+        Style: (FontSize: 13, RenderBold: true, TextColor: #9aa7b8, Wrap: true);
+      }
+    }
+    Button #IntCard3 {
+      Anchor: (Left: 611, Top: 466, Width: 408, Height: 128);
+      Visible: false;
+      Style: (Default: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Hovered: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23, Color: #ffffff(0.7))), Sounds: $C.@ButtonSounds);
+      Group #IntCardBar3 { Anchor: (Left: 4, Top: 14, Width: 3, Height: 100); Background: #56677a; }
+      Group #IntCardSel3 {
+        Anchor: (Left: 0, Top: 0, Width: 408, Height: 128);
+        Visible: false;
+        Group { Anchor: (Left: 2, Top: 2, Width: 404, Height: 124); Background: #f2c45e(0.07); }
+        Group { Anchor: (Left: 0, Top: 0, Width: 408, Height: 2); Background: #f2c45e; }
+        Group { Anchor: (Left: 0, Top: 126, Width: 408, Height: 2); Background: #f2c45e; }
+        Group { Anchor: (Left: 0, Top: 0, Width: 2, Height: 128); Background: #f2c45e; }
+        Group { Anchor: (Left: 406, Top: 0, Width: 2, Height: 128); Background: #f2c45e; }
+      }
+      Group { Anchor: (Left: 14, Top: 24, Width: 80, Height: 80); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #IntCardIcon3 { Anchor: (Left: 22, Top: 32, Width: 64, Height: 64); }
+      Label #IntCardMark3 {
+        Anchor: (Left: 14, Top: 24, Width: 80, Height: 80);
+        Visible: false;
+        Style: (FontName: "Secondary", FontSize: 40, RenderBold: true, TextColor: #c58643, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+      Label #IntCardName3 {
+        Anchor: (Left: 106, Top: 12, Width: 186, Height: 28);
+        Style: (FontSize: 17, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 12);
+      }
+      Label #IntCardValue3 {
+        Anchor: (Left: 292, Top: 12, Width: 102, Height: 28);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #e8d9b0, HorizontalAlignment: End, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group { Anchor: (Left: 106, Top: 42, Width: 288, Height: 1); Background: #48455c; }
+      Label #IntCardMeta3 {
+        Anchor: (Left: 106, Top: 48, Width: 288, Height: 70);
+        Style: (FontSize: 13, RenderBold: true, TextColor: #9aa7b8, Wrap: true);
+      }
+    }
+    Button #IntCard4 {
+      Anchor: (Left: 1031, Top: 466, Width: 408, Height: 128);
+      Visible: false;
+      Style: (Default: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Hovered: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23, Color: #ffffff(0.7))), Sounds: $C.@ButtonSounds);
+      Group #IntCardBar4 { Anchor: (Left: 4, Top: 14, Width: 3, Height: 100); Background: #56677a; }
+      Group #IntCardSel4 {
+        Anchor: (Left: 0, Top: 0, Width: 408, Height: 128);
+        Visible: false;
+        Group { Anchor: (Left: 2, Top: 2, Width: 404, Height: 124); Background: #f2c45e(0.07); }
+        Group { Anchor: (Left: 0, Top: 0, Width: 408, Height: 2); Background: #f2c45e; }
+        Group { Anchor: (Left: 0, Top: 126, Width: 408, Height: 2); Background: #f2c45e; }
+        Group { Anchor: (Left: 0, Top: 0, Width: 2, Height: 128); Background: #f2c45e; }
+        Group { Anchor: (Left: 406, Top: 0, Width: 2, Height: 128); Background: #f2c45e; }
+      }
+      Group { Anchor: (Left: 14, Top: 24, Width: 80, Height: 80); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #IntCardIcon4 { Anchor: (Left: 22, Top: 32, Width: 64, Height: 64); }
+      Label #IntCardMark4 {
+        Anchor: (Left: 14, Top: 24, Width: 80, Height: 80);
+        Visible: false;
+        Style: (FontName: "Secondary", FontSize: 40, RenderBold: true, TextColor: #c58643, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+      Label #IntCardName4 {
+        Anchor: (Left: 106, Top: 12, Width: 186, Height: 28);
+        Style: (FontSize: 17, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 12);
+      }
+      Label #IntCardValue4 {
+        Anchor: (Left: 292, Top: 12, Width: 102, Height: 28);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #e8d9b0, HorizontalAlignment: End, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group { Anchor: (Left: 106, Top: 42, Width: 288, Height: 1); Background: #48455c; }
+      Label #IntCardMeta4 {
+        Anchor: (Left: 106, Top: 48, Width: 288, Height: 70);
+        Style: (FontSize: 13, RenderBold: true, TextColor: #9aa7b8, Wrap: true);
+      }
+    }
+    Button #IntCard5 {
+      Anchor: (Left: 1451, Top: 466, Width: 408, Height: 128);
+      Visible: false;
+      Style: (Default: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Hovered: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23, Color: #ffffff(0.7))), Sounds: $C.@ButtonSounds);
+      Group #IntCardBar5 { Anchor: (Left: 4, Top: 14, Width: 3, Height: 100); Background: #56677a; }
+      Group #IntCardSel5 {
+        Anchor: (Left: 0, Top: 0, Width: 408, Height: 128);
+        Visible: false;
+        Group { Anchor: (Left: 2, Top: 2, Width: 404, Height: 124); Background: #f2c45e(0.07); }
+        Group { Anchor: (Left: 0, Top: 0, Width: 408, Height: 2); Background: #f2c45e; }
+        Group { Anchor: (Left: 0, Top: 126, Width: 408, Height: 2); Background: #f2c45e; }
+        Group { Anchor: (Left: 0, Top: 0, Width: 2, Height: 128); Background: #f2c45e; }
+        Group { Anchor: (Left: 406, Top: 0, Width: 2, Height: 128); Background: #f2c45e; }
+      }
+      Group { Anchor: (Left: 14, Top: 24, Width: 80, Height: 80); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #IntCardIcon5 { Anchor: (Left: 22, Top: 32, Width: 64, Height: 64); }
+      Label #IntCardMark5 {
+        Anchor: (Left: 14, Top: 24, Width: 80, Height: 80);
+        Visible: false;
+        Style: (FontName: "Secondary", FontSize: 40, RenderBold: true, TextColor: #c58643, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+      Label #IntCardName5 {
+        Anchor: (Left: 106, Top: 12, Width: 186, Height: 28);
+        Style: (FontSize: 17, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 12);
+      }
+      Label #IntCardValue5 {
+        Anchor: (Left: 292, Top: 12, Width: 102, Height: 28);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #e8d9b0, HorizontalAlignment: End, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group { Anchor: (Left: 106, Top: 42, Width: 288, Height: 1); Background: #48455c; }
+      Label #IntCardMeta5 {
+        Anchor: (Left: 106, Top: 48, Width: 288, Height: 70);
+        Style: (FontSize: 13, RenderBold: true, TextColor: #9aa7b8, Wrap: true);
+      }
+    }
+    Button #IntCard6 {
+      Anchor: (Left: 611, Top: 604, Width: 408, Height: 128);
+      Visible: false;
+      Style: (Default: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Hovered: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23, Color: #ffffff(0.7))), Sounds: $C.@ButtonSounds);
+      Group #IntCardBar6 { Anchor: (Left: 4, Top: 14, Width: 3, Height: 100); Background: #56677a; }
+      Group #IntCardSel6 {
+        Anchor: (Left: 0, Top: 0, Width: 408, Height: 128);
+        Visible: false;
+        Group { Anchor: (Left: 2, Top: 2, Width: 404, Height: 124); Background: #f2c45e(0.07); }
+        Group { Anchor: (Left: 0, Top: 0, Width: 408, Height: 2); Background: #f2c45e; }
+        Group { Anchor: (Left: 0, Top: 126, Width: 408, Height: 2); Background: #f2c45e; }
+        Group { Anchor: (Left: 0, Top: 0, Width: 2, Height: 128); Background: #f2c45e; }
+        Group { Anchor: (Left: 406, Top: 0, Width: 2, Height: 128); Background: #f2c45e; }
+      }
+      Group { Anchor: (Left: 14, Top: 24, Width: 80, Height: 80); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #IntCardIcon6 { Anchor: (Left: 22, Top: 32, Width: 64, Height: 64); }
+      Label #IntCardMark6 {
+        Anchor: (Left: 14, Top: 24, Width: 80, Height: 80);
+        Visible: false;
+        Style: (FontName: "Secondary", FontSize: 40, RenderBold: true, TextColor: #c58643, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+      Label #IntCardName6 {
+        Anchor: (Left: 106, Top: 12, Width: 186, Height: 28);
+        Style: (FontSize: 17, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 12);
+      }
+      Label #IntCardValue6 {
+        Anchor: (Left: 292, Top: 12, Width: 102, Height: 28);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #e8d9b0, HorizontalAlignment: End, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group { Anchor: (Left: 106, Top: 42, Width: 288, Height: 1); Background: #48455c; }
+      Label #IntCardMeta6 {
+        Anchor: (Left: 106, Top: 48, Width: 288, Height: 70);
+        Style: (FontSize: 13, RenderBold: true, TextColor: #9aa7b8, Wrap: true);
+      }
+    }
+    Button #IntCard7 {
+      Anchor: (Left: 1031, Top: 604, Width: 408, Height: 128);
+      Visible: false;
+      Style: (Default: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Hovered: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23, Color: #ffffff(0.7))), Sounds: $C.@ButtonSounds);
+      Group #IntCardBar7 { Anchor: (Left: 4, Top: 14, Width: 3, Height: 100); Background: #56677a; }
+      Group #IntCardSel7 {
+        Anchor: (Left: 0, Top: 0, Width: 408, Height: 128);
+        Visible: false;
+        Group { Anchor: (Left: 2, Top: 2, Width: 404, Height: 124); Background: #f2c45e(0.07); }
+        Group { Anchor: (Left: 0, Top: 0, Width: 408, Height: 2); Background: #f2c45e; }
+        Group { Anchor: (Left: 0, Top: 126, Width: 408, Height: 2); Background: #f2c45e; }
+        Group { Anchor: (Left: 0, Top: 0, Width: 2, Height: 128); Background: #f2c45e; }
+        Group { Anchor: (Left: 406, Top: 0, Width: 2, Height: 128); Background: #f2c45e; }
+      }
+      Group { Anchor: (Left: 14, Top: 24, Width: 80, Height: 80); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #IntCardIcon7 { Anchor: (Left: 22, Top: 32, Width: 64, Height: 64); }
+      Label #IntCardMark7 {
+        Anchor: (Left: 14, Top: 24, Width: 80, Height: 80);
+        Visible: false;
+        Style: (FontName: "Secondary", FontSize: 40, RenderBold: true, TextColor: #c58643, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+      Label #IntCardName7 {
+        Anchor: (Left: 106, Top: 12, Width: 186, Height: 28);
+        Style: (FontSize: 17, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 12);
+      }
+      Label #IntCardValue7 {
+        Anchor: (Left: 292, Top: 12, Width: 102, Height: 28);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #e8d9b0, HorizontalAlignment: End, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group { Anchor: (Left: 106, Top: 42, Width: 288, Height: 1); Background: #48455c; }
+      Label #IntCardMeta7 {
+        Anchor: (Left: 106, Top: 48, Width: 288, Height: 70);
+        Style: (FontSize: 13, RenderBold: true, TextColor: #9aa7b8, Wrap: true);
+      }
+    }
+    Button #IntCard8 {
+      Anchor: (Left: 1451, Top: 604, Width: 408, Height: 128);
+      Visible: false;
+      Style: (Default: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Hovered: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23, Color: #ffffff(0.7))), Sounds: $C.@ButtonSounds);
+      Group #IntCardBar8 { Anchor: (Left: 4, Top: 14, Width: 3, Height: 100); Background: #56677a; }
+      Group #IntCardSel8 {
+        Anchor: (Left: 0, Top: 0, Width: 408, Height: 128);
+        Visible: false;
+        Group { Anchor: (Left: 2, Top: 2, Width: 404, Height: 124); Background: #f2c45e(0.07); }
+        Group { Anchor: (Left: 0, Top: 0, Width: 408, Height: 2); Background: #f2c45e; }
+        Group { Anchor: (Left: 0, Top: 126, Width: 408, Height: 2); Background: #f2c45e; }
+        Group { Anchor: (Left: 0, Top: 0, Width: 2, Height: 128); Background: #f2c45e; }
+        Group { Anchor: (Left: 406, Top: 0, Width: 2, Height: 128); Background: #f2c45e; }
+      }
+      Group { Anchor: (Left: 14, Top: 24, Width: 80, Height: 80); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #IntCardIcon8 { Anchor: (Left: 22, Top: 32, Width: 64, Height: 64); }
+      Label #IntCardMark8 {
+        Anchor: (Left: 14, Top: 24, Width: 80, Height: 80);
+        Visible: false;
+        Style: (FontName: "Secondary", FontSize: 40, RenderBold: true, TextColor: #c58643, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+      Label #IntCardName8 {
+        Anchor: (Left: 106, Top: 12, Width: 186, Height: 28);
+        Style: (FontSize: 17, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 12);
+      }
+      Label #IntCardValue8 {
+        Anchor: (Left: 292, Top: 12, Width: 102, Height: 28);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #e8d9b0, HorizontalAlignment: End, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group { Anchor: (Left: 106, Top: 42, Width: 288, Height: 1); Background: #48455c; }
+      Label #IntCardMeta8 {
+        Anchor: (Left: 106, Top: 48, Width: 288, Height: 70);
+        Style: (FontSize: 13, RenderBold: true, TextColor: #9aa7b8, Wrap: true);
+      }
+    }
+    Button #IntCard9 {
+      Anchor: (Left: 611, Top: 742, Width: 408, Height: 128);
+      Visible: false;
+      Style: (Default: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Hovered: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23, Color: #ffffff(0.7))), Sounds: $C.@ButtonSounds);
+      Group #IntCardBar9 { Anchor: (Left: 4, Top: 14, Width: 3, Height: 100); Background: #56677a; }
+      Group #IntCardSel9 {
+        Anchor: (Left: 0, Top: 0, Width: 408, Height: 128);
+        Visible: false;
+        Group { Anchor: (Left: 2, Top: 2, Width: 404, Height: 124); Background: #f2c45e(0.07); }
+        Group { Anchor: (Left: 0, Top: 0, Width: 408, Height: 2); Background: #f2c45e; }
+        Group { Anchor: (Left: 0, Top: 126, Width: 408, Height: 2); Background: #f2c45e; }
+        Group { Anchor: (Left: 0, Top: 0, Width: 2, Height: 128); Background: #f2c45e; }
+        Group { Anchor: (Left: 406, Top: 0, Width: 2, Height: 128); Background: #f2c45e; }
+      }
+      Group { Anchor: (Left: 14, Top: 24, Width: 80, Height: 80); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #IntCardIcon9 { Anchor: (Left: 22, Top: 32, Width: 64, Height: 64); }
+      Label #IntCardMark9 {
+        Anchor: (Left: 14, Top: 24, Width: 80, Height: 80);
+        Visible: false;
+        Style: (FontName: "Secondary", FontSize: 40, RenderBold: true, TextColor: #c58643, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+      Label #IntCardName9 {
+        Anchor: (Left: 106, Top: 12, Width: 186, Height: 28);
+        Style: (FontSize: 17, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 12);
+      }
+      Label #IntCardValue9 {
+        Anchor: (Left: 292, Top: 12, Width: 102, Height: 28);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #e8d9b0, HorizontalAlignment: End, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group { Anchor: (Left: 106, Top: 42, Width: 288, Height: 1); Background: #48455c; }
+      Label #IntCardMeta9 {
+        Anchor: (Left: 106, Top: 48, Width: 288, Height: 70);
+        Style: (FontSize: 13, RenderBold: true, TextColor: #9aa7b8, Wrap: true);
+      }
+    }
+    Button #IntCard10 {
+      Anchor: (Left: 1031, Top: 742, Width: 408, Height: 128);
+      Visible: false;
+      Style: (Default: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Hovered: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23, Color: #ffffff(0.7))), Sounds: $C.@ButtonSounds);
+      Group #IntCardBar10 { Anchor: (Left: 4, Top: 14, Width: 3, Height: 100); Background: #56677a; }
+      Group #IntCardSel10 {
+        Anchor: (Left: 0, Top: 0, Width: 408, Height: 128);
+        Visible: false;
+        Group { Anchor: (Left: 2, Top: 2, Width: 404, Height: 124); Background: #f2c45e(0.07); }
+        Group { Anchor: (Left: 0, Top: 0, Width: 408, Height: 2); Background: #f2c45e; }
+        Group { Anchor: (Left: 0, Top: 126, Width: 408, Height: 2); Background: #f2c45e; }
+        Group { Anchor: (Left: 0, Top: 0, Width: 2, Height: 128); Background: #f2c45e; }
+        Group { Anchor: (Left: 406, Top: 0, Width: 2, Height: 128); Background: #f2c45e; }
+      }
+      Group { Anchor: (Left: 14, Top: 24, Width: 80, Height: 80); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #IntCardIcon10 { Anchor: (Left: 22, Top: 32, Width: 64, Height: 64); }
+      Label #IntCardMark10 {
+        Anchor: (Left: 14, Top: 24, Width: 80, Height: 80);
+        Visible: false;
+        Style: (FontName: "Secondary", FontSize: 40, RenderBold: true, TextColor: #c58643, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+      Label #IntCardName10 {
+        Anchor: (Left: 106, Top: 12, Width: 186, Height: 28);
+        Style: (FontSize: 17, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 12);
+      }
+      Label #IntCardValue10 {
+        Anchor: (Left: 292, Top: 12, Width: 102, Height: 28);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #e8d9b0, HorizontalAlignment: End, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group { Anchor: (Left: 106, Top: 42, Width: 288, Height: 1); Background: #48455c; }
+      Label #IntCardMeta10 {
+        Anchor: (Left: 106, Top: 48, Width: 288, Height: 70);
+        Style: (FontSize: 13, RenderBold: true, TextColor: #9aa7b8, Wrap: true);
+      }
+    }
+    Button #IntCard11 {
+      Anchor: (Left: 1451, Top: 742, Width: 408, Height: 128);
+      Visible: false;
+      Style: (Default: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Hovered: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23, Color: #ffffff(0.7))), Sounds: $C.@ButtonSounds);
+      Group #IntCardBar11 { Anchor: (Left: 4, Top: 14, Width: 3, Height: 100); Background: #56677a; }
+      Group #IntCardSel11 {
+        Anchor: (Left: 0, Top: 0, Width: 408, Height: 128);
+        Visible: false;
+        Group { Anchor: (Left: 2, Top: 2, Width: 404, Height: 124); Background: #f2c45e(0.07); }
+        Group { Anchor: (Left: 0, Top: 0, Width: 408, Height: 2); Background: #f2c45e; }
+        Group { Anchor: (Left: 0, Top: 126, Width: 408, Height: 2); Background: #f2c45e; }
+        Group { Anchor: (Left: 0, Top: 0, Width: 2, Height: 128); Background: #f2c45e; }
+        Group { Anchor: (Left: 406, Top: 0, Width: 2, Height: 128); Background: #f2c45e; }
+      }
+      Group { Anchor: (Left: 14, Top: 24, Width: 80, Height: 80); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #IntCardIcon11 { Anchor: (Left: 22, Top: 32, Width: 64, Height: 64); }
+      Label #IntCardMark11 {
+        Anchor: (Left: 14, Top: 24, Width: 80, Height: 80);
+        Visible: false;
+        Style: (FontName: "Secondary", FontSize: 40, RenderBold: true, TextColor: #c58643, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+      Label #IntCardName11 {
+        Anchor: (Left: 106, Top: 12, Width: 186, Height: 28);
+        Style: (FontSize: 17, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 12);
+      }
+      Label #IntCardValue11 {
+        Anchor: (Left: 292, Top: 12, Width: 102, Height: 28);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #e8d9b0, HorizontalAlignment: End, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group { Anchor: (Left: 106, Top: 42, Width: 288, Height: 1); Background: #48455c; }
+      Label #IntCardMeta11 {
+        Anchor: (Left: 106, Top: 48, Width: 288, Height: 70);
+        Style: (FontSize: 13, RenderBold: true, TextColor: #9aa7b8, Wrap: true);
+      }
+    }
+    Label #IntEmpty {
+      Anchor: (Left: 611, Top: 468, Width: 1248, Height: 60);
+      Visible: false;
+      Style: (FontSize: 18, RenderBold: true, TextColor: #77879D, HorizontalAlignment: Center, VerticalAlignment: Center, Wrap: true);
+    }
+
+    // ---- pages ----
+    Group {
+      Anchor: (Left: 611, Top: 892, Width: 1248, Height: 40);
+      LayoutMode: Center;
+      Group #IntPager {
+        LayoutMode: Left;
+        Visible: false;
+        $C.@SmallSecondaryTextButton #IntPrev {
+          @Anchor = Anchor(Width: 130, Right: 14);
+          Text: "Précédente";
+        }
+        Label #IntPageLabel {
+          Anchor: (Width: 90);
+          Style: (FontSize: 15, RenderBold: true, TextColor: #b8c2d0, HorizontalAlignment: Center, VerticalAlignment: Center);
+        }
+        $C.@SmallSecondaryTextButton #IntNext {
+          @Anchor = Anchor(Width: 130, Left: 14);
+          Text: "Suivante";
+        }
+      }
+    }
+
+    Group {
+      Anchor: (Left: 1639, Top: 960, Width: 220, Height: 44);
+      $C.@SecondaryTextButton #IntClose {
+        @Anchor = Anchor(Left: 0, Top: 0, Width: 220);
+        Text: "Fermer";
+      }
+    }
+    Label #IntPurse {
+      Anchor: (Left: 611, Top: 960, Width: 760, Height: 44);
+      Style: (FontSize: 15, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center);
+    }
+    Label {
+      Anchor: (Left: 1639, Top: 1010, Width: 220, Height: 24);
+      Text: "Échap  ·  Retour";
+      Style: (FontSize: 13, RenderBold: true, RenderUppercase: true, TextColor: #77879d, HorizontalAlignment: Center, VerticalAlignment: Center);
+    }
+
+    // ---- fiche (refaite le 2026-11-19 : embleme compact, faits, actions groupees) ----
+    Group { Anchor: (Left: 80, Top: 20, Width: 445, Height: 1040); Background: #0b0b12(0.35); }
+    Group { Anchor: (Left: 219, Top: 30, Width: 168, Height: 168); Background: (TexturePath: "../Quest/ChapEmblemFrame.png"); }
+    Group { Anchor: (Left: 249, Top: 60, Width: 108, Height: 108); Background: (TexturePath: "../Quest/ChapEmblemBack.png"); }
+    ItemIcon #IntEmblem { Anchor: (Left: 263, Top: 74, Width: 80, Height: 80); }
+    Label #IntEmblemMark {
+      Anchor: (Left: 249, Top: 64, Width: 108, Height: 100);
+      Visible: false;
+      Style: (FontName: "Secondary", FontSize: 52, RenderBold: true, TextColor: #ffe98a, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 24);
+    }
+    Label #IntKicker {
+      Anchor: (Left: 96, Top: 202, Width: 415, Height: 20);
+      Style: (FontSize: 13, RenderBold: true, RenderUppercase: true, TextColor: #b9a2d8, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 9);
+    }
+    Label #IntTitle {
+      Anchor: (Left: 96, Top: 224, Width: 415, Height: 40);
+      Style: (FontName: "Secondary", FontSize: 27, RenderBold: true, RenderUppercase: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 15);
+    }
+    Label #IntTagline {
+      Anchor: (Left: 96, Top: 264, Width: 415, Height: 46);
+      Style: (FontSize: 16, RenderBold: true, TextColor: #C58643, HorizontalAlignment: Center, VerticalAlignment: Center, Wrap: true);
+    }
+    Group { Anchor: (Left: 94, Top: 316, Width: 418, Height: 8); Background: (TexturePath: "../Quest/ChapDivider.png", HorizontalBorder: 24, VerticalBorder: 0); }
+
+    Group #IntBody {
+      Anchor: (Left: 96, Top: 334, Width: 429, Height: 432);
+      LayoutMode: TopScrolling;
+      ScrollbarStyle: $C.@DefaultScrollbarStyle;
+      Padding: (Right: 14);
+
+        Group #IntFactRow0 {
+          Anchor: (Top: 0, Height: 52);
+          LayoutMode: Left;
+          Visible: false;
+          Group #IntFact0 {
+            FlexWeight: 1;
+            Anchor: (Right: 4);
+            LayoutMode: Top;
+            Padding: (Left: 12, Right: 8, Top: 7);
+            Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16);
+            Label #IntFactK0 {
+              Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+            }
+            Label #IntFactV0 {
+              Anchor: (Top: 2);
+              Style: (FontSize: 15, RenderBold: true, TextColor: #e8d9b0, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+            }
+          }
+          Group #IntFact1 {
+            FlexWeight: 1;
+            Anchor: (Left: 4);
+            LayoutMode: Top;
+            Padding: (Left: 12, Right: 8, Top: 7);
+            Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16);
+            Label #IntFactK1 {
+              Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+            }
+            Label #IntFactV1 {
+              Anchor: (Top: 2);
+              Style: (FontSize: 15, RenderBold: true, TextColor: #e8d9b0, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+            }
+          }
+        }
+        Group #IntFactRow1 {
+          Anchor: (Top: 6, Height: 52);
+          LayoutMode: Left;
+          Visible: false;
+          Group #IntFact2 {
+            FlexWeight: 1;
+            Anchor: (Right: 4);
+            LayoutMode: Top;
+            Padding: (Left: 12, Right: 8, Top: 7);
+            Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16);
+            Label #IntFactK2 {
+              Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+            }
+            Label #IntFactV2 {
+              Anchor: (Top: 2);
+              Style: (FontSize: 15, RenderBold: true, TextColor: #e8d9b0, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+            }
+          }
+          Group #IntFact3 {
+            FlexWeight: 1;
+            Anchor: (Left: 4);
+            LayoutMode: Top;
+            Padding: (Left: 12, Right: 8, Top: 7);
+            Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16);
+            Label #IntFactK3 {
+              Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+            }
+            Label #IntFactV3 {
+              Anchor: (Top: 2);
+              Style: (FontSize: 15, RenderBold: true, TextColor: #e8d9b0, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+            }
+          }
+        }
+        Group #IntFactRow2 {
+          Anchor: (Top: 6, Height: 52);
+          LayoutMode: Left;
+          Visible: false;
+          Group #IntFact4 {
+            FlexWeight: 1;
+            Anchor: (Right: 4);
+            LayoutMode: Top;
+            Padding: (Left: 12, Right: 8, Top: 7);
+            Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16);
+            Label #IntFactK4 {
+              Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+            }
+            Label #IntFactV4 {
+              Anchor: (Top: 2);
+              Style: (FontSize: 15, RenderBold: true, TextColor: #e8d9b0, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+            }
+          }
+          Group #IntFact5 {
+            FlexWeight: 1;
+            Anchor: (Left: 4);
+            LayoutMode: Top;
+            Padding: (Left: 12, Right: 8, Top: 7);
+            Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16);
+            Label #IntFactK5 {
+              Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+            }
+            Label #IntFactV5 {
+              Anchor: (Top: 2);
+              Style: (FontSize: 15, RenderBold: true, TextColor: #e8d9b0, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+            }
+          }
+        }
+        Group #IntFactRow3 {
+          Anchor: (Top: 6, Height: 52);
+          LayoutMode: Left;
+          Visible: false;
+          Group #IntFact6 {
+            FlexWeight: 1;
+            Anchor: (Right: 4);
+            LayoutMode: Top;
+            Padding: (Left: 12, Right: 8, Top: 7);
+            Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16);
+            Label #IntFactK6 {
+              Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+            }
+            Label #IntFactV6 {
+              Anchor: (Top: 2);
+              Style: (FontSize: 15, RenderBold: true, TextColor: #e8d9b0, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+            }
+          }
+          Group #IntFact7 {
+            FlexWeight: 1;
+            Anchor: (Left: 4);
+            LayoutMode: Top;
+            Padding: (Left: 12, Right: 8, Top: 7);
+            Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16);
+            Label #IntFactK7 {
+              Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+            }
+            Label #IntFactV7 {
+              Anchor: (Top: 2);
+              Style: (FontSize: 15, RenderBold: true, TextColor: #e8d9b0, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+            }
+          }
+        }
+      Label #IntText {
+        Anchor: (Top: 10);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #b8c2d0, Wrap: true);
+      }
+        Group #IntNote0 {
+          Anchor: (Top: 10);
+          LayoutMode: Left;
+          Visible: false;
+          Group { Anchor: (Width: 22); LayoutMode: Top; Group { Anchor: (Width: 20, Height: 20); Background: (TexturePath: "../Quest/ChapBullet.png"); } }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Left: 10, Top: 1);
+            Label #IntNoteText0 { Style: (FontSize: 15, RenderBold: true, TextColor: #77879D, Wrap: true); }
+          }
+        }
+        Group #IntNote1 {
+          Anchor: (Top: 10);
+          LayoutMode: Left;
+          Visible: false;
+          Group { Anchor: (Width: 22); LayoutMode: Top; Group { Anchor: (Width: 20, Height: 20); Background: (TexturePath: "../Quest/ChapBullet.png"); } }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Left: 10, Top: 1);
+            Label #IntNoteText1 { Style: (FontSize: 15, RenderBold: true, TextColor: #77879D, Wrap: true); }
+          }
+        }
+        Group #IntNote2 {
+          Anchor: (Top: 10);
+          LayoutMode: Left;
+          Visible: false;
+          Group { Anchor: (Width: 22); LayoutMode: Top; Group { Anchor: (Width: 20, Height: 20); Background: (TexturePath: "../Quest/ChapBullet.png"); } }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Left: 10, Top: 1);
+            Label #IntNoteText2 { Style: (FontSize: 15, RenderBold: true, TextColor: #77879D, Wrap: true); }
+          }
+        }
+        Group #IntNote3 {
+          Anchor: (Top: 10);
+          LayoutMode: Left;
+          Visible: false;
+          Group { Anchor: (Width: 22); LayoutMode: Top; Group { Anchor: (Width: 20, Height: 20); Background: (TexturePath: "../Quest/ChapBullet.png"); } }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Left: 10, Top: 1);
+            Label #IntNoteText3 { Style: (FontSize: 15, RenderBold: true, TextColor: #77879D, Wrap: true); }
+          }
+        }
+        Group #IntNote4 {
+          Anchor: (Top: 10);
+          LayoutMode: Left;
+          Visible: false;
+          Group { Anchor: (Width: 22); LayoutMode: Top; Group { Anchor: (Width: 20, Height: 20); Background: (TexturePath: "../Quest/ChapBullet.png"); } }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Left: 10, Top: 1);
+            Label #IntNoteText4 { Style: (FontSize: 15, RenderBold: true, TextColor: #77879D, Wrap: true); }
+          }
+        }
+        Group #IntNote5 {
+          Anchor: (Top: 10);
+          LayoutMode: Left;
+          Visible: false;
+          Group { Anchor: (Width: 22); LayoutMode: Top; Group { Anchor: (Width: 20, Height: 20); Background: (TexturePath: "../Quest/ChapBullet.png"); } }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Left: 10, Top: 1);
+            Label #IntNoteText5 { Style: (FontSize: 15, RenderBold: true, TextColor: #77879D, Wrap: true); }
+          }
+        }
+        Group #IntNote6 {
+          Anchor: (Top: 10);
+          LayoutMode: Left;
+          Visible: false;
+          Group { Anchor: (Width: 22); LayoutMode: Top; Group { Anchor: (Width: 20, Height: 20); Background: (TexturePath: "../Quest/ChapBullet.png"); } }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Left: 10, Top: 1);
+            Label #IntNoteText6 { Style: (FontSize: 15, RenderBold: true, TextColor: #77879D, Wrap: true); }
+          }
+        }
+        Group #IntNote7 {
+          Anchor: (Top: 10);
+          LayoutMode: Left;
+          Visible: false;
+          Group { Anchor: (Width: 22); LayoutMode: Top; Group { Anchor: (Width: 20, Height: 20); Background: (TexturePath: "../Quest/ChapBullet.png"); } }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Left: 10, Top: 1);
+            Label #IntNoteText7 { Style: (FontSize: 15, RenderBold: true, TextColor: #77879D, Wrap: true); }
+          }
+        }
+        Group #IntNote8 {
+          Anchor: (Top: 10);
+          LayoutMode: Left;
+          Visible: false;
+          Group { Anchor: (Width: 22); LayoutMode: Top; Group { Anchor: (Width: 20, Height: 20); Background: (TexturePath: "../Quest/ChapBullet.png"); } }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Left: 10, Top: 1);
+            Label #IntNoteText8 { Style: (FontSize: 15, RenderBold: true, TextColor: #77879D, Wrap: true); }
+          }
+        }
+        Group #IntNote9 {
+          Anchor: (Top: 10);
+          LayoutMode: Left;
+          Visible: false;
+          Group { Anchor: (Width: 22); LayoutMode: Top; Group { Anchor: (Width: 20, Height: 20); Background: (TexturePath: "../Quest/ChapBullet.png"); } }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Left: 10, Top: 1);
+            Label #IntNoteText9 { Style: (FontSize: 15, RenderBold: true, TextColor: #77879D, Wrap: true); }
+          }
+        }
+        Group #IntField0 {
+          Anchor: (Top: 12);
+          LayoutMode: Top;
+          Visible: false;
+          Label #IntFieldLabel0 {
+            Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #77879D);
+          }
+          $C.@NumberField #IntInput0 {
+          @Anchor = Anchor(Top: 4);
+          Format: (MaxDecimalPlaces: 0, Step: 1);
+          }
+        }
+        Group #IntField1 {
+          Anchor: (Top: 12);
+          LayoutMode: Top;
+          Visible: false;
+          Label #IntFieldLabel1 {
+            Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #77879D);
+          }
+          $C.@NumberField #IntInput1 {
+          @Anchor = Anchor(Top: 4);
+          Format: (MaxDecimalPlaces: 0, Step: 1);
+          }
+        }
+        Group #IntField4 {
+          Anchor: (Top: 12);
+          LayoutMode: Top;
+          Visible: false;
+          Label #IntFieldLabel4 {
+            Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #77879D);
+          }
+          $C.@NumberField #IntInput4 {
+          @Anchor = Anchor(Top: 4);
+          Format: (MaxDecimalPlaces: 0, Step: 1);
+          }
+        }
+        Group #IntField2 {
+          Anchor: (Top: 12);
+          LayoutMode: Top;
+          Visible: false;
+          Label #IntFieldLabel2 {
+            Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #77879D);
+          }
+          $C.@TextField #IntInput2 {
+          @Anchor = Anchor(Top: 4);
+          PlaceholderText: "";
+          }
+        }
+        Group #IntField3 {
+          Anchor: (Top: 12);
+          LayoutMode: Top;
+          Visible: false;
+          Label #IntFieldLabel3 {
+            Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #77879D);
+          }
+          $C.@TextField #IntInput3 {
+          @Anchor = Anchor(Top: 4);
+          PlaceholderText: "";
+          }
+        }
+    }
+
+    Label #IntStatus {
+      Anchor: (Left: 96, Top: 770, Width: 415, Height: 36);
+      Style: (FontSize: 14, RenderBold: true, TextColor: #00e7b6, HorizontalAlignment: Center, VerticalAlignment: Center, Wrap: true);
+    }
+
+    // ---- actions ----
+    Group #IntActHead {
+      Anchor: (Left: 96, Top: 810, Width: 415, Height: 20);
+      LayoutMode: Left;
+      Label {
+        Anchor: (Width: 84);
+        Text: "Actions";
+        Style: (FontSize: 13, RenderBold: true, RenderUppercase: true, TextColor: #C58643, VerticalAlignment: Center);
+      }
+      Group { FlexWeight: 1; LayoutMode: Middle; Group { Anchor: (Height: 1); Background: #c58643(0.6); } }
+    }
+    Group {
+      Anchor: (Left: 96, Top: 836, Width: 415, Height: 44);
+      $C.@TextButton #IntAct0 {
+        @Anchor = Anchor(Left: 0, Top: 0, Width: 415);
+        Text: "Action";
+        Visible: false;
+      }
+      $C.@CancelTextButton #IntActD0 {
+        @Anchor = Anchor(Left: 0, Top: 0, Width: 415);
+        Text: "Action";
+        Visible: false;
+      }
+    }
+    Group {
+      Anchor: (Left: 96, Top: 888, Width: 203, Height: 44);
+      $C.@SecondaryTextButton #IntAct1 {
+        @Anchor = Anchor(Left: 0, Top: 0, Width: 203);
+        Text: "Action";
+        Visible: false;
+      }
+      $C.@CancelTextButton #IntActD1 {
+        @Anchor = Anchor(Left: 0, Top: 0, Width: 203);
+        Text: "Action";
+        Visible: false;
+      }
+    }
+    Group {
+      Anchor: (Left: 307, Top: 888, Width: 203, Height: 44);
+      $C.@SecondaryTextButton #IntAct2 {
+        @Anchor = Anchor(Left: 0, Top: 0, Width: 203);
+        Text: "Action";
+        Visible: false;
+      }
+      $C.@CancelTextButton #IntActD2 {
+        @Anchor = Anchor(Left: 0, Top: 0, Width: 203);
+        Text: "Action";
+        Visible: false;
+      }
+    }
+    Group {
+      Anchor: (Left: 96, Top: 938, Width: 203, Height: 44);
+      $C.@SecondaryTextButton #IntAct3 {
+        @Anchor = Anchor(Left: 0, Top: 0, Width: 203);
+        Text: "Action";
+        Visible: false;
+      }
+      $C.@CancelTextButton #IntActD3 {
+        @Anchor = Anchor(Left: 0, Top: 0, Width: 203);
+        Text: "Action";
+        Visible: false;
+      }
+    }
+    Group {
+      Anchor: (Left: 307, Top: 938, Width: 203, Height: 44);
+      $C.@SecondaryTextButton #IntAct4 {
+        @Anchor = Anchor(Left: 0, Top: 0, Width: 203);
+        Text: "Action";
+        Visible: false;
+      }
+      $C.@CancelTextButton #IntActD4 {
+        @Anchor = Anchor(Left: 0, Top: 0, Width: 203);
+        Text: "Action";
+        Visible: false;
+      }
+    }
+    Group {
+      Anchor: (Left: 96, Top: 988, Width: 203, Height: 44);
+      $C.@SecondaryTextButton #IntAct5 {
+        @Anchor = Anchor(Left: 0, Top: 0, Width: 203);
+        Text: "Action";
+        Visible: false;
+      }
+      $C.@CancelTextButton #IntActD5 {
+        @Anchor = Anchor(Left: 0, Top: 0, Width: 203);
+        Text: "Action";
+        Visible: false;
+      }
+    }
+  }
+}

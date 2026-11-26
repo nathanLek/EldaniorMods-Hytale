@@ -1,0 +1,103 @@
+{
+  "TranslationProperties": {
+    "Name": "Présentoir",
+    "Description": "Expose armes, artefacts, armures et trophées. Interagir avec un objet en main pour l'exposer, la main vide pour le reprendre."
+  },
+  "Icon": "Icons/ItemsGenerated/Eldanior_Presentoir.png",
+  "Categories": [
+    "Eldanior_System.Autres",
+    "Furniture.Furniture"
+  ],
+  "Recipe": {
+    "TimeSeconds": 4,
+    "Input": [
+      {
+        "ResourceTypeId": "Rock",
+        "Quantity": 16
+      },
+      {
+        "ItemId": "Ingredient_Bar_Gold",
+        "Quantity": 4
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Categories": [
+          "Furniture_Misc"
+        ],
+        "Id": "Furniture_Bench"
+      }
+    ]
+  },
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/Eldanior/Presentoir.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/Eldanior/Presentoir_Texture.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "Eldanior_Presentoir",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Benches"
+      }
+    },
+    "BlockParticleSetId": "Stone",
+    "ParticleColor": "#dcd8d0",
+    "BlockSoundSetId": "Stone",
+    "PhysicalMaterialId": "Stone",
+    "TextureComputedColor": "#DCD8D0",
+    "Support": {
+      "Down": [
+        {
+          "FaceType": "Full"
+        }
+      ]
+    },
+    "Light": {
+      "Color": "#58a"
+    },
+    "Particles": [
+      {
+        "SystemId": "Block_Gem_Sparks",
+        "Color": "#7fd8ff",
+        "TargetNodeName": "Gemme"
+      }
+    ],
+    "Interactions": {
+      "Use": {
+        "Interactions": [
+          {
+            "Type": "Simple"
+          }
+        ]
+      }
+    }
+  },
+  "PlayerAnimationsId": "Block",
+  "IconProperties": {
+    "Scale": 0.28,
+    "Translation": [
+      0,
+      -24
+    ],
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ]
+  },
+  "MaxStack": 1,
+  "ItemLevel": 20,
+  "ItemSoundSetId": "ISS_Blocks_Wood",
+  "Quality": "Uncommon"
+}

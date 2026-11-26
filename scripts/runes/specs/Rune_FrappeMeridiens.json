@@ -1,0 +1,62 @@
+{
+  "$Comment": "Fiche de conception : technique du Clan Luo (voie martiale), validee le 2026-11-09, type Luo le 2026-11-09 (docs/plan-clan-luo.md). Apprise par son manuel, aucun butin. Devenue technique de clan le 2026-11-10 (luo.LuoClans.TECHNIQUES) : reservee aux membres du clan, toutes classes.",
+  "id": "Rune_FrappeMeridiens",
+  "spell": "FrappeMeridiens",
+  "javaClass": "FrappeMeridiens",
+  "page": "rune_page_frappe_meridiens",
+  "name": "Rune de la Frappe des Méridiens",
+  "type": "Luo",
+  "rarity": "Uncommon",
+  "emblem": "FrappeMeridiens",
+  "classes": "clan",
+  "persistent": true,
+  "summary": "Frappe des Meridiens : 3 frappes eclair (3 x 40) sur l'ennemi vise a 4 blocs ; meridiens scelles 4 s : ralenti, +15 % de degats subis.",
+  "description": "Technique du Clan Luo, enseignée à la classe Disciple Martial de la voie martiale. Trois frappes éclair sur les points vitaux de l'ennemi visé à 4 blocs : 3 × 40 dégâts. Ses méridiens sont scellés pendant 4 s : il est ralenti et subit 15 % de dégâts supplémentaires de toutes sources.",
+  "pageDescription": "Planche anatomique annotée à l'encre rouge : les trois points que nul ne doit toucher deux fois. Technique du Clan Luo : elle s'apprend dans son manuel, jamais en butin.",
+  "keywords": [
+    "Damage",
+    "Melee",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": {},
+  "cast": {
+    "animationSet": "Daggers",
+    "charging": "FlurryStabDoubleCharging",
+    "release": "StabLeftRight",
+    "chargeTime": 0.15,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.6,
+    "cameraEffect": null,
+    "sound": null,
+    "releaseSound": "SFX_Light_Melee_T2_Lunge",
+    "handParticles": null,
+    "handParticlesScale": 0.6,
+    "costMoment": "start"
+  },
+  "design": {
+    "range": 4,
+    "targets": "ennemis",
+    "persistentDurationS": 4,
+    "effects": "3 x 40 Physical a 0,15 s d'intervalle, ralentissement (Rune_Aura_Slow_Medium), RuneSpellRuntime.expose x1,15 4 s",
+    "balance": {
+      "damage": 2,
+      "range": 1,
+      "duration": 2,
+      "mobility": 0,
+      "control": 2,
+      "defense": 0,
+      "targets": 0,
+      "frequency": 0,
+      "terrain": 0,
+      "difficulty": 0
+    }
+  },
+  "category": "Eldanior_Empire_Luo.Runes",
+  "manual": "Eldanior_Manuel_Luo_FrappeMeridiens",
+  "$Comment_manual": "Technique apprise par son manuel secret (gen_voie_martiale_objets.py) : pas de parchemin rune_page_*."
+}

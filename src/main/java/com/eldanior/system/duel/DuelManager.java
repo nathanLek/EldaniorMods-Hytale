@@ -315,6 +315,14 @@ public class DuelManager {
     /**
      * Retourne le nombre de duels actifs (chaque duel = 2 entrees dans la map).
      */
+    /** Duels en cours, chacun une fois (tableau des duels). */
+    public static List<ActiveDuel> getActiveDuels() {
+        List<ActiveDuel> out = new ArrayList<>();
+        for (ActiveDuel d : activeDuels.values()) if (!out.contains(d)) out.add(d);
+        out.sort(Comparator.comparingLong(ActiveDuel::getStartTime));
+        return out;
+    }
+
     public static int getActiveDuelCount() {
         return activeDuels.size() / 2;
     }

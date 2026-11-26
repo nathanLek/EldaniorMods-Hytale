@@ -6,6 +6,8 @@ import com.eldanior.system.config.UUIDExtractor;
 import com.eldanior.system.config.EldaniorLogger;
 import com.eldanior.system.titles.nobility.NobilityRank;
 import com.eldanior.system.titles.nobility.family.FamilyManager;
+import com.eldanior.system.titles.nobility.family.FamilyRegistry;
+import com.eldanior.system.titles.nobility.family.FamilyRole;
 import com.eldanior.system.titles.nobility.family.KnightOrder;
 import com.eldanior.system.titles.nobility.family.KnightOrderManager;
 import com.eldanior.system.titles.nobility.family.KnightOrderRole;
@@ -51,6 +53,34 @@ public class FamilleTab {
 
     // ==================== POPULATE ====================
 
+    /**
+     * Joueurs qui gerent leur famille aupres de l'intendant (SystemScreen en mode intendant, guards/LuoMerchants) : eux seuls
+     * voient et utilisent la gestion (promouvoir, retrograder, exclure, inviter, retirer de la tresorerie, dissoudre, creer un
+     * ordre). Le menu systeme garde la lecture, le depot, Quitter et le choix d'une famille (decision du 2026-11-09).
+     */
+    public static final java.util.Set<UUID> STEWARD = java.util.concurrent.ConcurrentHashMap.newKeySet();
+
+    /** Actions de gestion, reservees a la fenetre de l'intendant. */
+    /** Categorie ouverte dans la fenetre de l'intendant, par joueur (LISTES par defaut). */
+    private static final ConcurrentHashMap<UUID, String> STEWARD_CAT = new ConcurrentHashMap<>();
+    public static final String CAT_LISTES = "listes", CAT_ORDRES = "ordres", CAT_GESTION = "gestion", CAT_ACHATS = "achats";
+
+    public static void setCategory(UUID uuid, String cat) {
+        if (uuid != null && cat != null) STEWARD_CAT.put(uuid, cat);
+    }
+
+    /** Boutique de la reserve de la famille (scripts/guards/gen_intendant.py), null si elle n'existe pas. */
+    public static String reserveShop(String familyId) {
+        if (familyId == null || familyId.isEmpty()) return null;
+        String id = FamilyManager.migrateId(familyId);
+        String shop = "Eldanior_Intendant_" + Character.toUpperCase(id.charAt(0)) + id.substring(1);
+        return com.hypixel.hytale.builtin.adventure.shop.barter.BarterShopAsset.getAssetMap().getAsset(shop) != null ? shop : null;
+    }
+
+    public static final java.util.Set<String> MANAGEMENT_ACTIONS = java.util.Set.of("fam_reserve", "fam_cat_listes", "fam_cat_ordres",
+            "fam_cat_gestion", "fam_cat_achats", "fam_withdraw", "fam_invite", "fam_toggle_invite",
+            "fam_invite_prev", "fam_invite_next", "fam_promote", "fam_demote", "fam_kick", "fam_disband", "fam_create_ordre");
+
     public static void populate(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store) {
         ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
         PlayerLevelData data = store.getComponent(ref, type);
@@ -90,28 +120,35 @@ public class FamilleTab {
         if (family == null) return;
 
         boolean isPatriarch = data.isPatriarch();
-        boolean isVice = data.isVicePatriarch();
+        boolean manage = uuid != null && STEWARD.contains(uuid);
+        FamilyRole viewerRole = data.getFamilyRole();
+        ui.set("#FamManageHint.Visible", !manage && viewerRole != null && viewerRole.ordinal() >= FamilyRole.VICE.ordinal());
 
         // 1. Header
-        ui.set("#FamName.Text", "Von " + family.getDisplayName());
+        ui.set("#FamName.Text", family.getDisplayName());
         ui.set("#FamMotto.Text", "\"" + family.getMotto() + "\"");
 
         // 2. Info cards
         ui.set("#FamRarity.Text", family.getRarity().name());
         ui.set("#FamRank.Text", family.getMinimumRank().getDisplayName());
         String status = data.getStatus();
-        ui.set("#FamStatus.Text", "PATRIARCH".equals(status) ? "Patriarche" : "VICE".equals(status) ? "Vice-Patriarche" : "Membre");
+        ui.set("#FamStatus.Text", FamilyRole.labelOf(status));
 
         // 3. Treasury + Contribution
         FamilyManager.FamilyRuntimeData runtime = FamilyManager.getRuntimeData(familyId);
         ui.set("#FamTreasury.Text", runtime.getTreasury() + " Or");
         ui.set("#FamContribution.Text", String.valueOf(runtime.getContribution()));
-        ui.set("#FamBtnWithdraw.Visible", isPatriarch);
+        ui.set("#FamBtnWithdraw.Visible", isPatriarch && manage);
 
-        // 4. Family passive
-        if (family.getFamilyPassive() != null) {
-            ui.set("#FamPassiveName.Text", family.getFamilyPassive().getDisplayName());
-            ui.set("#FamPassiveDesc.Text", family.getFamilyPassive().getDescription());
+        // 4. Competences de famille : les Mouvements (2026-11-12, titles.nobility.family.FamilyMovements)
+        var movements = com.eldanior.system.titles.nobility.family.FamilyMovements.of(familyId);
+        if (!movements.isEmpty()) {
+            ui.set("#FamPassiveName.Text", "Les " + movements.size() + " Mouvements");
+            ui.set("#FamPassiveDesc.Text", "Le manuel du " + movements.get(0).title() + " est remis à l'entrée dans la famille ; "
+                    + "les suivants s'apprennent auprès du Sensei, selon votre rang martial.");
+        } else {
+            ui.set("#FamPassiveName.Text", "A venir");
+            ui.set("#FamPassiveDesc.Text", "Chaque famille recevra sa propre rune.");
         }
 
         // 5. History
@@ -125,8 +162,37 @@ public class FamilleTab {
         boolean ordresOpen = "ordres".equals(currentAccordion) || currentAccordion == null;
         boolean inviteOpen = "invite".equals(currentAccordion);
 
+        // Fenetre de l'intendant (2026-11-10) : quatre categories au lieu d'une longue page. Listes = fiche de la famille et
+        // membres ; Ordres = ordres de chevalier ; Gestions = tresorerie, invitations, dissolution ; Achats = reserve de la
+        // famille. Le menu systeme (manage faux) garde la page entiere, sans la barre.
+        String cat = manage ? STEWARD_CAT.getOrDefault(uuid, CAT_LISTES) : null;
+        ui.set("#FamCatBar.Visible", manage);
+        ui.set("#FamCatLine.Visible", manage);
+        if (manage) {
+            ui.set("#FamCatListes.Text", CAT_LISTES.equals(cat) ? "[ LISTES ]" : "LISTES");
+            ui.set("#FamCatOrdres.Text", CAT_ORDRES.equals(cat) ? "[ ORDRES ]" : "ORDRES");
+            ui.set("#FamCatGestion.Text", CAT_GESTION.equals(cat) ? "[ GESTIONS ]" : "GESTIONS");
+            ui.set("#FamCatAchats.Text", CAT_ACHATS.equals(cat) ? "[ ACHATS ]" : "ACHATS");
+            membersOpen = CAT_LISTES.equals(cat);
+            ordresOpen = CAT_ORDRES.equals(cat);
+            inviteOpen = CAT_GESTION.equals(cat);
+        }
+        ui.set("#FamSecCards.Visible", !manage || CAT_LISTES.equals(cat));
+        ui.set("#FamSecLore.Visible", !manage || CAT_LISTES.equals(cat));
+        ui.set("#FamSecMembers.Visible", !manage || CAT_LISTES.equals(cat));
+        ui.set("#FamSecOrdres.Visible", !manage || CAT_ORDRES.equals(cat));
+        ui.set("#FamSecTreasury.Visible", !manage || CAT_GESTION.equals(cat));
+        ui.set("#FamSecInvite.Visible", !manage || CAT_GESTION.equals(cat));
+        ui.set("#FamSecDanger.Visible", !manage || CAT_GESTION.equals(cat));
+        ui.set("#FamSecAchats.Visible", manage && CAT_ACHATS.equals(cat));
+        if (manage && CAT_ACHATS.equals(cat))
+            ui.set("#FamAchatsInfo.Text", reserveShop(familyId) != null
+                    ? "Bannière, présentoir et tenues de la famille " + family.getDisplayName() + ". Réassort tous les deux jours ; "
+                      + "payé avec vos pièces (le paiement par la trésorerie viendra plus tard)."
+                    : "La réserve de la famille " + family.getDisplayName() + " est vide pour l'instant.");
+
         // === Members accordion ===
-        populateMembers(ui, familyId, uuid, isPatriarch, isVice);
+        populateMembers(ui, familyId, uuid, manage ? data.getFamilyRole() : FamilyRole.MEMBER);
         ui.set("#FamBtnToggleMembers.Text", (membersOpen ? "v" : ">") + " MEMBRES");
         ui.set("#FamMembersContent.Visible", membersOpen);
 
@@ -165,10 +231,10 @@ public class FamilleTab {
         NobilityRank playerRank = NobilityRank.fromString(rankStr);
         boolean canCreateOrdre = KnightOrderManager.canCreateOrder(familyId)
                 && (isPatriarch || (playerRank != null && playerRank.ordinal() >= NobilityRank.CHEVALIER.ordinal()));
-        ui.set("#FamBtnCreateOrdre.Visible", ordresOpen && canCreateOrdre);
+        ui.set("#FamBtnCreateOrdre.Visible", ordresOpen && canCreateOrdre && manage);
 
-        // === Invite accordion (Patriarch + Vice only) ===
-        boolean canInvite = isPatriarch || isVice;
+        // === Invite accordion (Patriarche, Doyens, Seigneur) ===
+        boolean canInvite = data.canInviteToFamily() && manage;
         ui.set("#FamInviteAccordion.Visible", canInvite);
         if (canInvite) {
             ui.set("#FamBtnToggleInvite.Text", (inviteOpen ? "v" : ">") + " INVITER");
@@ -185,7 +251,7 @@ public class FamilleTab {
 
         // 9. Danger zone
         ui.set("#FamBtnLeave.Visible", !isPatriarch);
-        ui.set("#FamBtnDisband.Visible", isPatriarch);
+        ui.set("#FamBtnDisband.Visible", isPatriarch && manage);
     }
 
     // ==================== FAMILY CHOICES (NO FAMILY STATE) ====================
@@ -194,7 +260,8 @@ public class FamilleTab {
         NobilityRank rank = NobilityRank.fromString(data.getNobilityRank());
         if (rank == null) rank = NobilityRank.ROTURIER;
 
-        ui.set("#FamChooseTitle.Text", "CHOISIR VOTRE FAMILLE (" + rank.getDisplayName() + ")");
+        ui.set("#FamChooseTitle.Text", rank == NobilityRank.MARQUIS ? "ACHETER UN GRAND TERRITOIRE (Marquis)"
+                : "CHOISIR VOTRE FAMILLE (" + rank.getDisplayName() + ")");
 
         List<NobleFamilyModel> available = FamilyManager.getAvailableFamiliesForRank(rank);
         List<String> cachedFamilyIds = playerCachedFamilyIds.computeIfAbsent(uuid, k -> new ArrayList<>());
@@ -206,10 +273,11 @@ public class FamilleTab {
                 cachedFamilyIds.add(fam.getId());
 
                 ui.set("#FamChoice" + i + ".Visible", true);
-                ui.set("#FamCName" + i + ".Text", "Von " + fam.getDisplayName());
+                ui.set("#FamCName" + i + ".Text", fam.getDisplayName());
                 ui.set("#FamCMotto" + i + ".Text", "\"" + fam.getMotto() + "\"");
                 ui.set("#FamCRarity" + i + ".Text", fam.getRarity().name());
-                ui.set("#FamCPassive" + i + ".Text", fam.getFamilyPassive() != null ? fam.getFamilyPassive().getDisplayName() : "");
+                var land = com.eldanior.system.territory.ParcelManager.getFamilyParcel(fam.getId());   // son grand territoire (2026-11-13)
+                ui.set("#FamCPassive" + i + ".Text", land != null ? land.getType().getLabel() + " : " + land.getName().replace('_', ' ') : "");
                 String hist = fam.getHistory();
                 ui.set("#FamCHistory" + i + ".Text", hist != null && !hist.isEmpty() ? hist : "");
                 ui.set("#FamCHistory" + i + ".Visible", hist != null && !hist.isEmpty());
@@ -240,14 +308,13 @@ public class FamilleTab {
 
     // ==================== MEMBERS ACCORDION ====================
 
-    private static void populateMembers(UICommandBuilder ui, String familyId, UUID viewerUUID, boolean isPatriarch, boolean isVice) {
+    private static void populateMembers(UICommandBuilder ui, String familyId, UUID viewerUUID, FamilyRole viewerRole) {
         ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
 
-        // Build sorted member list: Patriarch first, then Vice, then Members
-        List<UUID> patriarchs = new ArrayList<>();
-        List<UUID> vices = new ArrayList<>();
-        List<UUID> members = new ArrayList<>();
-
+        // Membres connectes, du plus haut rang au plus bas : Patriarche, Doyens, Seigneur, Nobles, membres sans titre
+        Map<UUID, FamilyRole> roles = new HashMap<>();
+        Map<UUID, String> names = new HashMap<>();
+        Map<UUID, Integer> levels = new HashMap<>();
         for (PlayerRef pRef : Universe.get().getPlayers()) {
             try {
                 var eRef = pRef.getReference();
@@ -259,22 +326,15 @@ public class FamilleTab {
 
                 UUID memberUUID = extractUUID(pRef);
                 if (memberUUID == null) continue;
-
-                String memberStatus = mData.getStatus();
-                if ("PATRIARCH".equals(memberStatus)) {
-                    patriarchs.add(memberUUID);
-                } else if ("VICE".equals(memberStatus)) {
-                    vices.add(memberUUID);
-                } else {
-                    members.add(memberUUID);
-                }
+                FamilyRole role = mData.getFamilyRole();
+                roles.put(memberUUID, role != null ? role : FamilyRole.MEMBER);
+                names.put(memberUUID, pRef.getUsername());
+                levels.put(memberUUID, mData.getLevel());
             } catch (Exception e) { EldaniorLogger.error("FamilleTab", e); }
         }
 
-        List<UUID> sortedMembers = new ArrayList<>();
-        sortedMembers.addAll(patriarchs);
-        sortedMembers.addAll(vices);
-        sortedMembers.addAll(members);
+        List<UUID> sortedMembers = new ArrayList<>(roles.keySet());
+        sortedMembers.sort(Comparator.comparing((UUID u) -> roles.get(u).ordinal()).reversed().thenComparing(names::get));
 
         // Cache for action buttons
         playerCachedMembers.put(viewerUUID, sortedMembers);
@@ -290,65 +350,30 @@ public class FamilleTab {
         int startIdx = currentPage * MAX_MEMBER_SLOTS;
 
         ui.set("#FMemberPage.Text", (currentPage + 1) + "/" + totalPages);
+        boolean eldersFull = FamilyManager.getElders(familyId).size() >= FamilyRole.MAX_ELDERS;
 
         for (int i = 0; i < MAX_MEMBER_SLOTS; i++) {
             int memberIdx = startIdx + i;
             if (memberIdx < totalMembers) {
                 UUID memberUUID = sortedMembers.get(memberIdx);
                 ui.set("#FMemberSlot" + i + ".Visible", true);
+                ui.set("#FMemberStatus" + i + ".Text", "\u25cf");
 
-                PlayerRef pRef = Universe.get().getPlayer(memberUUID);
-                boolean isOnline = pRef != null;
+                FamilyRole role = roles.get(memberUUID);
+                int memberLevel = levels.getOrDefault(memberUUID, 0);
+                ui.set("#FMemberName" + i + ".Text", names.get(memberUUID) + (memberLevel > 0 ? " Niv." + memberLevel : ""));
+                ui.set("#FMemberRole" + i + ".Text", role.label());
 
-                // Status indicator
-                if (isOnline) {
-                    ui.set("#FMemberStatus" + i + ".Text", "\u25cf");
-                } else {
-                    ui.set("#FMemberStatus" + i + ".Text", "\u25cf hors ligne");
-                }
-
-                // Get member data
-                String memberName = "Inconnu";
-                int memberLevel = 0;
-                String memberStatus = "MEMBER";
-
-                if (isOnline) {
-                    try {
-                        var eRef = pRef.getReference();
-                        if (eRef != null) {
-                            var s = eRef.getStore();
-                            PlayerLevelData mData = s.getComponent(eRef, type);
-                            if (mData != null) {
-                                memberLevel = mData.getLevel();
-                                memberStatus = mData.getStatus();
-                            }
-                        }
-                        memberName = pRef.getUsername();
-                    } catch (Exception e) { EldaniorLogger.error("FamilleTab", e); }
-                } else {
-                    if (patriarchs.contains(memberUUID)) memberStatus = "PATRIARCH";
-                    else if (vices.contains(memberUUID)) memberStatus = "VICE";
-                }
-
-                // Name + level
-                String nameDisplay = memberName + (memberLevel > 0 ? " Niv." + memberLevel : "");
-                ui.set("#FMemberName" + i + ".Text", nameDisplay);
-
-                // Role display
-                String roleLabel = "PATRIARCH".equals(memberStatus) ? "Patriarche" : "VICE".equals(memberStatus) ? "Vice-Patriarche" : "Membre";
-                ui.set("#FMemberRole" + i + ".Text", roleLabel);
-
-                if ("PATRIARCH".equals(memberStatus)) {
-                } else if ("VICE".equals(memberStatus)) {
-                } else {
-                }
-
-                // Action buttons (Patriarch only, not on self)
+                // Boutons : une marche a la fois, selon les droits du rang de celui qui regarde, jamais sur soi
                 boolean isSelf = memberUUID.equals(viewerUUID);
-                boolean canAct = isPatriarch && !isSelf;
-                ui.set("#FMemberBtnPromote" + i + ".Visible", canAct && !"PATRIARCH".equals(memberStatus) && !"VICE".equals(memberStatus));
-                ui.set("#FMemberBtnDemote" + i + ".Visible", canAct && "VICE".equals(memberStatus));
-                ui.set("#FMemberBtnKick" + i + ".Visible", canAct);
+                FamilyRole up = role.promoted();
+                FamilyRole down = role.demoted();
+                boolean canUp = !isSelf && viewerRole != null && viewerRole.canChange(role, up) && !(up == FamilyRole.ELDER && eldersFull);
+                boolean canDown = !isSelf && viewerRole != null && viewerRole.canChange(role, down);
+                ui.set("#FMemberBtnPromote" + i + ".Visible", canUp);
+                if (canUp) ui.set("#FMemberBtnPromote" + i + ".Text", "\u2191 " + up.label().toUpperCase());
+                ui.set("#FMemberBtnDemote" + i + ".Visible", canDown);
+                ui.set("#FMemberBtnKick" + i + ".Visible", !isSelf && viewerRole == FamilyRole.PATRIARCH);
             } else {
                 ui.set("#FMemberSlot" + i + ".Visible", false);
             }
@@ -663,130 +688,191 @@ public class FamilleTab {
     // ==================== MEMBER ACTION HANDLERS ====================
 
     public static boolean handlePromote(String slotIndex, Ref<EntityStore> ref, Store<EntityStore> store) {
-        int idx;
-        try { idx = Integer.parseInt(slotIndex); } catch (NumberFormatException e) { return false; }
-
-        ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
-        PlayerLevelData data = store.getComponent(ref, type);
-        if (data == null || !data.isPatriarch()) return false;
-
-        UUID myUUID = getPlayerUUID(ref, store);
-        List<UUID> cached = playerCachedMembers.getOrDefault(myUUID, new ArrayList<>());
-        int page = memberPages.getOrDefault(myUUID, 0);
-        int memberIdx = page * MAX_MEMBER_SLOTS + idx;
-        if (memberIdx < 0 || memberIdx >= cached.size()) return false;
-
-        UUID targetUUID = cached.get(memberIdx);
-        if (targetUUID.equals(myUUID)) return false;
-
-        // Find target online and change status to VICE
-        PlayerRef targetRef = Universe.get().getPlayer(targetUUID);
-        if (targetRef == null) {
-            Player player = store.getComponent(ref, Player.getComponentType());
-            if (player != null) player.getPlayerRef().sendMessage(Message.raw("Ce joueur est hors ligne."));
-            return false;
-        }
-
-        try {
-            var tRef = targetRef.getReference();
-            if (tRef != null) {
-                var tStore = tRef.getStore();
-                PlayerLevelData tData = tStore.getComponent(tRef, type);
-                if (tData != null) {
-                    PlayerLevelData tCopy = (PlayerLevelData) tData.clone();
-                    if (tCopy != null) { tCopy.setStatus("VICE"); tStore.putComponent(tRef, type, tCopy); }
-                }
-            }
-            targetRef.sendMessage(Message.raw("Vous avez ete promu Vice-Patriarche !"));
-        } catch (Exception e) { EldaniorLogger.error("FamilleTab", e); return false; }
-
-        Player player = store.getComponent(ref, Player.getComponentType());
-        if (player != null) player.getPlayerRef().sendMessage(Message.raw(targetRef.getUsername() + " promu Vice-Patriarche."));
-        return true;
+        return changeRole(slotIndex, ref, store, true);
     }
 
     public static boolean handleDemote(String slotIndex, Ref<EntityStore> ref, Store<EntityStore> store) {
+        return changeRole(slotIndex, ref, store, false);
+    }
+
+    /** Fait monter ou descendre d'une marche le membre de la ligne cliquee, si le rang de l'auteur le permet. */
+    private static boolean changeRole(String slotIndex, Ref<EntityStore> ref, Store<EntityStore> store, boolean up) {
         int idx;
         try { idx = Integer.parseInt(slotIndex); } catch (NumberFormatException e) { return false; }
-
-        ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
-        PlayerLevelData data = store.getComponent(ref, type);
-        if (data == null || !data.isPatriarch()) return false;
-
         UUID myUUID = getPlayerUUID(ref, store);
         List<UUID> cached = playerCachedMembers.getOrDefault(myUUID, new ArrayList<>());
-        int page = memberPages.getOrDefault(myUUID, 0);
-        int memberIdx = page * MAX_MEMBER_SLOTS + idx;
+        int memberIdx = memberPages.getOrDefault(myUUID, 0) * MAX_MEMBER_SLOTS + idx;
         if (memberIdx < 0 || memberIdx >= cached.size()) return false;
+        return tell(ref, store, changeRoleOf(cached.get(memberIdx), up, ref, store));
+    }
 
-        UUID targetUUID = cached.get(memberIdx);
-        if (targetUUID.equals(myUUID)) return false;
+    /** Resultat d'une action de gestion : reussie ou non, message pour celui qui l'a faite. */
+    public record Outcome(boolean ok, String message) {
+        static Outcome no(String m) { return new Outcome(false, m); }
+        static Outcome yes(String m) { return new Outcome(true, m); }
+    }
 
-        PlayerRef targetRef = Universe.get().getPlayer(targetUUID);
-        if (targetRef == null) {
-            Player player = store.getComponent(ref, Player.getComponentType());
-            if (player != null) player.getPlayerRef().sendMessage(Message.raw("Ce joueur est hors ligne."));
-            return false;
+    /** Envoie le message d'une action au joueur (menu systeme) ; true si elle a reussi. */
+    private static boolean tell(Ref<EntityStore> ref, Store<EntityStore> store, Outcome o) {
+        Player player = store.getComponent(ref, Player.getComponentType());
+        if (player != null && o.message() != null) player.getPlayerRef().sendMessage(Message.raw(o.message()));
+        return o.ok();
+    }
+
+    /** Membre connecte de la famille (fenetre de l'intendant, liste des membres). */
+    public record Member(UUID uuid, String name, FamilyRole role, int level, String classId) {}
+
+    /** Membres connectes de la famille, du plus haut rang au plus bas, puis par nom. */
+    public static List<Member> onlineMembers(String familyId) {
+        ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
+        List<Member> out = new ArrayList<>();
+        if (familyId == null) return out;
+        for (PlayerRef pRef : Universe.get().getPlayers()) {
+            try {
+                var eRef = pRef.getReference();
+                if (eRef == null) continue;
+                PlayerLevelData m = eRef.getStore().getComponent(eRef, type);
+                if (m == null || !familyId.equals(FamilyManager.migrateId(m.getNobleFamilyId()))) continue;
+                UUID id = extractUUID(pRef);
+                if (id == null) continue;
+                FamilyRole r = m.getFamilyRole() != null ? m.getFamilyRole() : FamilyRole.MEMBER;
+                out.add(new Member(id, pRef.getUsername(), r, m.getLevel(), m.getPlayerClassId()));
+                com.eldanior.system.titles.nobility.family.FamilyRegistry.touch(familyId, id, pRef.getUsername(), r.code(), m.getLevel(),
+                        m.getPlayerClassId());
+            } catch (Exception e) { EldaniorLogger.error("FamilleTab", e); }
         }
+        out.sort(Comparator.comparing((Member m) -> m.role().ordinal()).reversed().thenComparing(Member::name));
+        return out;
+    }
 
+    /** Joueurs connectes qu'on peut inviter : Baron ou plus, sans famille. */
+    public static List<String> invitableNames() {
+        ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
+        List<String> out = new ArrayList<>();
+        for (PlayerRef pRef : Universe.get().getPlayers()) {
+            try {
+                var eRef = pRef.getReference();
+                if (eRef == null) continue;
+                PlayerLevelData d = eRef.getStore().getComponent(eRef, type);
+                if (d == null) continue;
+                NobilityRank rank = NobilityRank.fromString(d.getNobilityRank());
+                if (rank == null || rank.ordinal() < NobilityRank.BARON.ordinal()) continue;
+                if (d.getNobleFamilyId() != null && !d.getNobleFamilyId().isEmpty()) continue;
+                out.add(pRef.getUsername());
+            } catch (Exception e) { EldaniorLogger.error("FamilleTab", e); }
+        }
+        out.sort(String.CASE_INSENSITIVE_ORDER);
+        return out;
+    }
+
+    /** Fait monter (up) ou descendre d'une marche ce membre connecte, si le rang de l'auteur le permet. */
+    public static Outcome changeRoleOf(UUID targetUUID, boolean up, Ref<EntityStore> ref, Store<EntityStore> store) {
+        PlayerLevelData data = store.getComponent(ref, EldaniorSystem.get().getPlayerLevelDataType());
+        if (data == null || data.getFamilyRole() == null) return Outcome.no("Vous n'avez pas de rang dans cette famille.");
+        return changeRoleOf(data.getNobleFamilyId(), data.getFamilyRole(), getPlayerUUID(ref, store), targetUUID, up);
+    }
+
+    /** Meme chose pour la famille famId et un auteur de rang actor (intendant : un admin agit en Patriarche). */
+    public static Outcome changeRoleOf(String famId, FamilyRole actor, UUID actorUUID, UUID targetUUID, boolean up) {
+        ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
+        if (famId == null || actor == null) return Outcome.no("Vous n'avez pas de rang dans cette famille.");
+        if (targetUUID == null || targetUUID.equals(actorUUID)) return Outcome.no("Vous ne pouvez pas changer votre propre rang.");
+        PlayerRef targetRef = Universe.get().getPlayer(targetUUID);
+        if (targetRef == null || targetRef.getReference() == null) return changeRoleAbsent(famId, actor, targetUUID, up);
         try {
             var tRef = targetRef.getReference();
-            if (tRef != null) {
-                var tStore = tRef.getStore();
-                PlayerLevelData tData = tStore.getComponent(tRef, type);
-                if (tData != null) {
-                    PlayerLevelData tCopy = (PlayerLevelData) tData.clone();
-                    if (tCopy != null) { tCopy.setStatus("MEMBER"); tStore.putComponent(tRef, type, tCopy); }
-                }
-            }
-            targetRef.sendMessage(Message.raw("Vous avez ete retrograde au rang de Membre."));
-        } catch (Exception e) { EldaniorLogger.error("FamilleTab", e); return false; }
+            var tStore = tRef.getStore();
+            PlayerLevelData tData = tStore.getComponent(tRef, type);
+            if (tData == null || !famId.equals(FamilyManager.migrateId(tData.getNobleFamilyId()))) return Outcome.no("Ce joueur n'est plus de la famille.");
+            FamilyRole from = tData.getFamilyRole() != null ? tData.getFamilyRole() : FamilyRole.MEMBER;
+            FamilyRole to = up ? from.promoted() : from.demoted();
+            if (to == from || !actor.canChange(from, to)) return Outcome.no("Votre rang ne vous permet pas ce changement.");
+            if (to == FamilyRole.ELDER && !FamilyManager.addElder(famId, targetUUID))
+                return Outcome.no("La famille compte déjà " + FamilyRole.MAX_ELDERS + " Doyens.");
+            if (from == FamilyRole.ELDER) FamilyManager.removeElder(famId, targetUUID);
+            PlayerLevelData tCopy = (PlayerLevelData) tData.clone();
+            if (tCopy == null) return Outcome.no("Une erreur est survenue.");
+            tCopy.setStatus(to.code());
+            tStore.putComponent(tRef, type, tCopy);
+            String title = to.label();
+            targetRef.sendMessage(Message.raw(up ? "Vous etes maintenant " + title + " de la famille !" : "Vous etes retrograde : " + title + "."));
+            com.eldanior.system.titles.nobility.family.FamilyRegistry.touch(famId, targetUUID, targetRef.getUsername(), to.code(),
+                    tData.getLevel(), tData.getPlayerClassId());
+            com.eldanior.system.titles.nobility.family.FamilyRegistry.log(famId, targetRef.getUsername() + (up ? " est élevé au rang de " : " redescend au rang de ") + title);
+            return Outcome.yes(targetRef.getUsername() + " est maintenant " + title + ".");
+        } catch (Exception e) {
+            EldaniorLogger.error("FamilleTab", e);
+            return Outcome.no("Une erreur est survenue.");
+        }
+    }
 
-        Player player = store.getComponent(ref, Player.getComponentType());
-        if (player != null) player.getPlayerRef().sendMessage(Message.raw(targetRef.getUsername() + " retrograde a Membre."));
-        return true;
+    /**
+     * Rang d'un membre absent (2026-11-18) : lu au registre (rang en attente compris), applique a sa connexion
+     * (FamilyRegistry.roleLater, PlayerLoginSystem). Le registre des Doyens est tenu tout de suite.
+     */
+    private static Outcome changeRoleAbsent(String famId, FamilyRole actor, UUID targetUUID, boolean up) {
+        com.eldanior.system.titles.nobility.family.FamilyRegistry.Entry entry = null;
+        for (var e : com.eldanior.system.titles.nobility.family.FamilyRegistry.members(famId)) if (e.uuid().equals(targetUUID)) entry = e;
+        if (entry == null) return Outcome.no("Ce nom n'est plus au registre de la maison.");
+        FamilyRole pending = com.eldanior.system.titles.nobility.family.FamilyRegistry.pendingRole(famId, targetUUID);
+        FamilyRole from = pending != null ? pending : FamilyRole.of(entry.role()) != null ? FamilyRole.of(entry.role()) : FamilyRole.MEMBER;
+        FamilyRole to = up ? from.promoted() : from.demoted();
+        if (to == null || to == from || !actor.canChange(from, to)) return Outcome.no("Votre rang ne vous permet pas ce changement.");
+        if (to == FamilyRole.ELDER && !FamilyManager.addElder(famId, targetUUID))
+            return Outcome.no("La famille compte déjà " + FamilyRole.MAX_ELDERS + " Doyens.");
+        if (from == FamilyRole.ELDER) FamilyManager.removeElder(famId, targetUUID);
+        com.eldanior.system.titles.nobility.family.FamilyRegistry.roleLater(famId, targetUUID, to);
+        com.eldanior.system.titles.nobility.family.FamilyRegistry.log(famId, entry.name() + (up ? " est élevé au rang de " : " redescend au rang de ")
+                + to.label() + " (absent)");
+        return Outcome.yes(entry.name() + " sera " + to.label() + " à sa prochaine visite.");
     }
 
     public static boolean handleKick(String slotIndex, Ref<EntityStore> ref, Store<EntityStore> store) {
         int idx;
         try { idx = Integer.parseInt(slotIndex); } catch (NumberFormatException e) { return false; }
-
-        ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
-        PlayerLevelData data = store.getComponent(ref, type);
-        if (data == null || !data.isPatriarch()) return false;
-
         UUID myUUID = getPlayerUUID(ref, store);
         List<UUID> cached = playerCachedMembers.getOrDefault(myUUID, new ArrayList<>());
-        int page = memberPages.getOrDefault(myUUID, 0);
-        int memberIdx = page * MAX_MEMBER_SLOTS + idx;
+        int memberIdx = memberPages.getOrDefault(myUUID, 0) * MAX_MEMBER_SLOTS + idx;
         if (memberIdx < 0 || memberIdx >= cached.size()) return false;
+        return tell(ref, store, kickMember(cached.get(memberIdx), ref, store));
+    }
 
-        UUID targetUUID = cached.get(memberIdx);
-        if (targetUUID.equals(myUUID)) return false;
+    /** Exclusion d'un membre (Patriarche seul). */
+    public static Outcome kickMember(UUID targetUUID, Ref<EntityStore> ref, Store<EntityStore> store) {
+        PlayerLevelData data = store.getComponent(ref, EldaniorSystem.get().getPlayerLevelDataType());
+        if (data == null || !data.isPatriarch()) return Outcome.no("Seul le Patriarche peut exclure un membre.");
+        return kickMember(data.getNobleFamilyId(), FamilyRole.PATRIARCH, getPlayerUUID(ref, store), targetUUID, null);
+    }
 
-        // Clear family data for target if online
+    /** Exclusion d'un membre de famId ; absent : appliquee a sa prochaine connexion (FamilyRegistry.kickLater). */
+    public static Outcome kickMember(String famId, FamilyRole actor, UUID actorUUID, UUID targetUUID, String targetName) {
+        ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
+        if (actor != FamilyRole.PATRIARCH) return Outcome.no("Seul le Patriarche peut exclure un membre.");
+        if (targetUUID == null || targetUUID.equals(actorUUID)) return Outcome.no("Vous ne pouvez pas vous exclure.");
+        if (roleOf(targetUUID, type) == FamilyRole.PATRIARCH) return Outcome.no("On n'exclut pas un Patriarche.");
         PlayerRef targetRef = Universe.get().getPlayer(targetUUID);
-        if (targetRef != null) {
-            try {
-                var tRef = targetRef.getReference();
-                if (tRef != null) {
-                    var tStore = tRef.getStore();
-                    PlayerLevelData tData = tStore.getComponent(tRef, type);
-                    if (tData != null) {
-                        PlayerLevelData tCopy = (PlayerLevelData) tData.clone();
-                        if (tCopy != null) { tCopy.setNobleFamilyId(""); tCopy.setStatus(""); tStore.putComponent(tRef, type, tCopy); }
-                    }
+        String name = targetRef != null ? targetRef.getUsername() : targetName != null ? targetName : "Le joueur";
+        FamilyManager.removeElder(famId, targetUUID);
+        if (targetRef == null) {
+            com.eldanior.system.titles.nobility.family.FamilyRegistry.kickLater(famId, targetUUID);
+            com.eldanior.system.titles.nobility.family.FamilyRegistry.log(famId, name + " est rayé du registre (absent)");
+            return Outcome.yes(name + " est rayé du registre ; il l'apprendra à son retour.");
+        }
+        try {
+            var tRef = targetRef.getReference();
+            if (tRef != null) {
+                var tStore = tRef.getStore();
+                PlayerLevelData tData = tStore.getComponent(tRef, type);
+                if (tData != null) {
+                    PlayerLevelData tCopy = (PlayerLevelData) tData.clone();
+                    if (tCopy != null) { tCopy.setNobleFamilyId(""); tCopy.setStatus(""); tStore.putComponent(tRef, type, tCopy); }
                 }
-                targetRef.sendMessage(Message.raw("Vous avez ete expulse de la famille."));
-            } catch (Exception e) { EldaniorLogger.error("FamilleTab", e); }
-        }
-
-        Player player = store.getComponent(ref, Player.getComponentType());
-        if (player != null) {
-            String targetName = targetRef != null ? targetRef.getUsername() : "Joueur";
-            player.getPlayerRef().sendMessage(Message.raw(targetName + " a ete expulse de la famille."));
-        }
-        return true;
+            }
+            targetRef.sendMessage(Message.raw("Vous avez ete expulse de la famille."));
+        } catch (Exception e) { EldaniorLogger.error("FamilleTab", e); }
+        com.eldanior.system.titles.nobility.family.FamilyRegistry.remove(famId, targetUUID);
+        com.eldanior.system.titles.nobility.family.FamilyRegistry.log(famId, name + " est exclu de la maison");
+        return Outcome.yes(name + " a été exclu de la famille.");
     }
 
     // ==================== ORDER MEMBER ACTION HANDLERS ====================
@@ -1019,27 +1105,29 @@ public class FamilleTab {
         String famId = data.getNobleFamilyId();
         if (famId == null || famId.isEmpty()) return false;
 
-        // Si Patriarch -> chercher un Vice pour transferer, sinon dissoudre
+        // Si Patriarche -> transmettre a un Doyen connecte, a defaut au Seigneur ; sinon dissoudre
         if (data.isPatriarch()) {
-            // Chercher un Vice-Patriarche pour transferer le role
             PlayerRef viceRef = null;
             UUID viceUUID = null;
+            FamilyRole heirRole = null;
             for (PlayerRef pRef : Universe.get().getPlayers()) {
                 try {
                     var eRef = pRef.getReference();
                     if (eRef == null) continue;
                     var s = eRef.getStore();
                     PlayerLevelData mData = s.getComponent(eRef, type);
-                    if (mData != null && famId.equals(mData.getNobleFamilyId()) && mData.isVicePatriarch()) {
+                    if (mData == null || !famId.equals(mData.getNobleFamilyId())) continue;
+                    FamilyRole r = mData.getFamilyRole();
+                    if ((r == FamilyRole.ELDER || r == FamilyRole.VICE) && (heirRole == null || r.ordinal() > heirRole.ordinal())) {
                         viceRef = pRef;
                         viceUUID = UUIDExtractor.getUUID(pRef);
-                        break;
+                        heirRole = r;
                     }
                 } catch (Exception e) { /* skip */ }
             }
 
             if (viceRef != null && viceUUID != null) {
-                // Transferer au Vice-Patriarche
+                // Transferer a l'heritier (Doyen, sinon Seigneur)
                 try {
                     var vRef = viceRef.getReference();
                     if (vRef != null) {
@@ -1047,7 +1135,8 @@ public class FamilleTab {
                         PlayerLevelData vData = vStore.getComponent(vRef, type);
                         if (vData != null) {
                             PlayerLevelData vCopy = (PlayerLevelData) vData.clone();
-                            if (vCopy != null) { vCopy.setStatus("PATRIARCH"); vStore.putComponent(vRef, type, vCopy); }
+                            if (vCopy != null) { vCopy.setStatus(FamilyRole.PATRIARCH.code()); vStore.putComponent(vRef, type, vCopy); }
+                            FamilyManager.removeElder(famId, viceUUID);
                             viceRef.sendMessage(Message.raw("Vous etes maintenant Patriarche de la famille !"));
                             // Transferer la propriete des parcelles au nouveau Patriarche
                             com.eldanior.system.territory.ParcelManager.transferFamilyParcelsOwnership(
@@ -1081,6 +1170,7 @@ public class FamilleTab {
             }
         } else {
             // Membre simple -> juste quitter
+            FamilyManager.removeElder(famId, getPlayerUUID(ref, store));
             PlayerLevelData simpleCopy = (PlayerLevelData) data.clone();
             if (simpleCopy != null) { simpleCopy.setNobleFamilyId(""); simpleCopy.setStatus(""); store.putComponent(ref, type, simpleCopy); }
         }
@@ -1131,51 +1221,98 @@ public class FamilleTab {
         UUID uuid = getPlayerUUID(ref, store);
         List<String> cachedInviteNames = playerCachedInviteNames.getOrDefault(uuid, new ArrayList<>());
         if (idx < 0 || idx >= cachedInviteNames.size()) return false;
+        return tell(ref, store, inviteByName(cachedInviteNames.get(idx), ref, store));
+    }
 
-        String targetName = cachedInviteNames.get(idx);
+    /** Fait entrer ce joueur connecte dans la famille (Baron ou plus, sans famille). */
+    public static Outcome inviteByName(String targetName, Ref<EntityStore> ref, Store<EntityStore> store) {
+        PlayerLevelData data = store.getComponent(ref, EldaniorSystem.get().getPlayerLevelDataType());
+        if (data == null || !data.canInviteToFamily()) return Outcome.no("Votre rang ne vous permet pas d'inviter.");
+        return inviteByName(data.getNobleFamilyId(), data.getFamilyRole(), targetName);
+    }
 
+    public static Outcome inviteByName(String famId, FamilyRole actor, String targetName) {
+        ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
+        if (actor == null || !actor.canInvite()) return Outcome.no("Votre rang ne vous permet pas d'inviter.");
+        NobleFamilyModel family = famId == null || famId.isEmpty() ? null : FamilyManager.get(famId);
+        if (family == null) return Outcome.no("Maison inconnue.");
+        PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
+        var tRef = targetRef != null ? targetRef.getReference() : null;
+        if (tRef == null) return Outcome.no(targetName + " n'est plus en ligne.");
+        var tStore = tRef.getStore();
+        PlayerLevelData tData = tStore.getComponent(tRef, type);
+        if (tData == null) return Outcome.no("Joueur introuvable.");
+        NobilityRank tRank = NobilityRank.fromString(tData.getNobilityRank());
+        if (tRank == null || tRank.ordinal() < NobilityRank.BARON.ordinal()) return Outcome.no(targetName + " doit être au moins Baron.");
+        if (tData.getNobleFamilyId() != null && !tData.getNobleFamilyId().isEmpty()) return Outcome.no(targetName + " a déjà une famille.");
+        PlayerLevelData tCopy = (PlayerLevelData) tData.clone();
+        if (tCopy == null) return Outcome.no("Une erreur est survenue.");
+        tCopy.setNobleFamilyId(family.getId());
+        tCopy.setStatus(FamilyRole.MEMBER.code());
+        tStore.putComponent(tRef, type, tCopy);
+        targetRef.sendMessage(Message.raw("Vous avez rejoint la famille " + family.getDisplayName() + " !"));
+        UUID tu = extractUUID(targetRef);
+        com.eldanior.system.titles.nobility.family.FamilyRegistry.touch(family.getId(), tu, targetName, FamilyRole.MEMBER.code(),
+                tData.getLevel(), tData.getPlayerClassId());
+        com.eldanior.system.titles.nobility.family.FamilyRegistry.log(family.getId(), targetName + " entre dans la maison");
+        return Outcome.yes(targetName + " a rejoint la famille !");
+    }
+
+    /** Depot (deposit) ou retrait (Patriarche) d'un montant a la tresorerie de la famille. */
+    public static Outcome treasury(boolean deposit, long amount, Ref<EntityStore> ref, Store<EntityStore> store) {
+        PlayerLevelData data = store.getComponent(ref, EldaniorSystem.get().getPlayerLevelDataType());
+        if (data == null) return Outcome.no("Joueur introuvable.");
+        return treasury(deposit, amount, data.getNobleFamilyId(), data.isPatriarch() ? FamilyRole.PATRIARCH : data.getFamilyRole(), ref, store);
+    }
+
+    /** Depot ou retrait a la tresorerie de famId, avec la bourse de l'auteur (de rang actor). */
+    public static Outcome treasury(boolean deposit, long amount, String famId, FamilyRole actor, Ref<EntityStore> ref, Store<EntityStore> store) {
         ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
         PlayerLevelData data = store.getComponent(ref, type);
-        if (data == null || !data.canInviteToFamily()) return false;
-
-        String famId = data.getNobleFamilyId();
-        if (famId == null || famId.isEmpty()) return false;
-        NobleFamilyModel family = FamilyManager.get(famId);
-        if (family == null) return false;
-
-        PlayerRef targetRef = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
-        if (targetRef == null) return false;
-
-        // Check target is noble enough and has no family
-        var tRef = targetRef.getReference();
-        if (tRef != null) {
-            var tStore = tRef.getStore();
-            PlayerLevelData tData = tStore.getComponent(tRef, type);
-            if (tData != null) {
-                // Minimum Baron pour rejoindre une famille
-                NobilityRank tRank = NobilityRank.fromString(tData.getNobilityRank());
-                if (tRank == null || tRank.ordinal() < NobilityRank.BARON.ordinal()) return false;
-                if (tData.getNobleFamilyId() != null && !tData.getNobleFamilyId().isEmpty()) return false;
-            }
+        PlayerRef pr = store.getComponent(ref, PlayerRef.getComponentType());
+        if (data == null) return Outcome.no("Joueur introuvable.");
+        if (famId == null || famId.isEmpty()) return Outcome.no("Maison inconnue.");
+        if (amount <= 0) return Outcome.no("Indiquez un montant.");
+        String who = pr != null ? pr.getUsername() : "?";
+        FamilyManager.FamilyRuntimeData runtime = FamilyManager.getRuntimeData(famId);
+        PlayerLevelData copy = (PlayerLevelData) data.clone();
+        if (copy == null) return Outcome.no("Une erreur est survenue.");
+        if (deposit) {
+            if (data.getMoney() < amount) return Outcome.no("Votre bourse ne suffit pas.");
+            copy.removeMoney(amount);
+            store.putComponent(ref, type, copy);
+            runtime.addTreasury(amount);
+            com.eldanior.system.titles.nobility.family.FamilyRegistry.log(famId, who + " dépose " + amount + " or aux coffres");
+            return Outcome.yes("Déposé à la trésorerie : " + amount + " or.");
         }
+        if (actor != FamilyRole.PATRIARCH) return Outcome.no("Seul le Patriarche puise dans la trésorerie.");
+        if (!runtime.withdrawTreasury(amount)) return Outcome.no("La trésorerie ne contient pas autant.");
+        copy.addMoney(amount);
+        store.putComponent(ref, type, copy);
+        com.eldanior.system.titles.nobility.family.FamilyRegistry.log(famId, who + " retire " + amount + " or des coffres");
+        return Outcome.yes("Retiré de la trésorerie : " + amount + " or.");
+    }
 
-        // Set family on target
-        if (tRef != null) {
-            var tStore = tRef.getStore();
-            PlayerLevelData tData = tStore.getComponent(tRef, type);
-            if (tData != null) {
-                PlayerLevelData tCopy = (PlayerLevelData) tData.clone();
-                if (tCopy != null) { tCopy.setNobleFamilyId(famId); tCopy.setStatus("MEMBER"); tStore.putComponent(tRef, type, tCopy); }
-            }
+    /** Dissolution de famId : membres connectes congedies, ordres dissous, terres rendues, registre vide. */
+    public static void disbandFamily(String famId) {
+        ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
+        for (PlayerRef pRef : Universe.get().getPlayers()) {
+            try {
+                var eRef = pRef.getReference();
+                if (eRef == null) continue;
+                var s = eRef.getStore();
+                PlayerLevelData mData = s.getComponent(eRef, type);
+                if (mData == null || !famId.equals(FamilyManager.migrateId(mData.getNobleFamilyId()))) continue;
+                PlayerLevelData dCopy = (PlayerLevelData) mData.clone();
+                if (dCopy != null) { dCopy.setNobleFamilyId(""); dCopy.setStatus(""); s.putComponent(eRef, type, dCopy); }
+                pRef.sendMessage(Message.raw("La famille a ete dissoute par le Patriarche."));
+            } catch (Exception e) { EldaniorLogger.error("FamilleTab", e); }
         }
-
-        targetRef.sendMessage(Message.raw("Vous avez rejoint la famille Von " + family.getDisplayName() + " !"));
-
-        Player player = store.getComponent(ref, Player.getComponentType());
-        if (player != null) {
-            player.getPlayerRef().sendMessage(Message.raw(targetName + " a rejoint la famille !"));
-        }
-        return true;
+        for (KnightOrder order : KnightOrderManager.getOrdersForFamily(famId)) KnightOrderManager.disbandOrder(order.getId());
+        com.eldanior.system.territory.ParcelManager.clearFamilyParcelsOwnership(famId);
+        FamilyManager.releaseFamily(famId);
+        com.eldanior.system.titles.nobility.family.FamilyRegistry.clear(famId);
+        com.eldanior.system.titles.nobility.family.FamilyRegistry.log(famId, "La maison est dissoute");
     }
 
     public static boolean handleChoose(String slotIndex, Ref<EntityStore> ref, Store<EntityStore> store) {
@@ -1185,66 +1322,61 @@ public class FamilleTab {
         List<String> cachedFamilyIds = playerCachedFamilyIds.getOrDefault(uuid, new ArrayList<>());
         if (idx < 0 || idx >= cachedFamilyIds.size()) return false;
 
-        String chosenId = cachedFamilyIds.get(idx);
-        NobleFamilyModel family = FamilyManager.get(chosenId);
-        if (family == null) return false;
+        String refused = claim(cachedFamilyIds.get(idx), ref, store);
+        PlayerRef pr = store.getComponent(ref, PlayerRef.getComponentType());
+        if (pr != null) pr.sendMessage(com.hypixel.hytale.server.core.Message.raw(refused != null ? refused
+                : "Vous êtes le Patriarche de la maison " + FamilyManager.get(cachedFamilyIds.get(idx)).getDisplayName() + " et le maître de ses terres."));
+        if (refused == null) FamilyRegistry.log(cachedFamilyIds.get(idx), (pr != null ? pr.getUsername() : "?") + " achète les terres et prend la tête de la maison");
+        return refused == null;
+    }
 
+    /**
+     * Prendre la tete d'une maison libre : rang suffisant, sans famille, territoire de la maison paye ; le joueur en devient le
+     * Patriarche et recoit ses parcelles. Retourne le refus, ou null si c'est fait. Utilise par l'intendant (2026-11-12 : tout ce
+     * qui touche a la famille passe par lui).
+     */
+    public static String claim(String chosenId, Ref<EntityStore> ref, Store<EntityStore> store) {
+        NobleFamilyModel family = FamilyManager.get(chosenId);
+        if (family == null) return "Cette maison n'existe pas.";
         ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
         PlayerLevelData data = store.getComponent(ref, type);
-        if (data == null) return false;
-
-        // Check player doesn't already have a family
-        if (data.getNobleFamilyId() != null && !data.getNobleFamilyId().isEmpty()) return false;
-
-        // Check rank matches
+        if (data == null) return "Données introuvables.";
+        if (data.getNobleFamilyId() != null && !data.getNobleFamilyId().isEmpty()) return "Vous appartenez déjà à une maison.";
         NobilityRank rank = NobilityRank.fromString(data.getNobilityRank());
-        if (rank == null || rank.ordinal() < family.getMinimumRank().ordinal()) return false;
-
-        // Check not taken
-        if (FamilyManager.isFamilyTaken(chosenId)) return false;
-
-        // Verifier le prix du territoire associe a la famille
+        if (rank == null || rank.ordinal() < family.getMinimumRank().ordinal())
+            return "Il faut être au moins " + family.getMinimumRank().getDisplayName() + " pour prendre la tête de cette maison.";
+        if (FamilyManager.isFamilyTaken(chosenId)) return "Cette maison a déjà un Patriarche.";
         long price = com.eldanior.system.territory.ParcelManager.getFamilyTerritoryPrice(chosenId);
+        PlayerLevelData claimCopy = (PlayerLevelData) data.clone();
+        if (claimCopy == null) return "Données introuvables.";
         if (price > 0) {
-            if (data.getMoney() < price) {
-                // Pas assez d'argent
-                try {
-                    PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
-                    if (pRef != null) {
-                        pRef.sendMessage(Message.raw("Pas assez d'Or ! Il faut " + String.format("%,d", price) + " Or pour acheter ce territoire."));
-                    }
-                } catch (Exception e) { EldaniorLogger.error("FamilleTab", e); }
-                return false;
-            }
-            // Deduire l'argent
-            data.removeMoney(price);
+            if (claimCopy.getMoney() < price) return "Il faut " + String.format("%,d", price) + " or sur votre compte pour acheter les terres de la maison.";
+            claimCopy.removeMoney(price);
         }
-
-        // Assigner la propriete de TOUTES les parcelles de la famille au nouveau Patriarche
         try {
             PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
             if (pRef != null) {
                 UUID playerUUID = UUIDExtractor.getUUID(pRef);
-                String playerName = pRef.getUsername();
-                if (playerUUID != null) {
-                    com.eldanior.system.territory.ParcelManager.transferFamilyParcelsOwnership(
-                            chosenId, playerUUID, playerName);
-                }
+                if (playerUUID != null)
+                    com.eldanior.system.territory.ParcelManager.transferFamilyParcelsOwnership(chosenId, playerUUID, pRef.getUsername());
             }
         } catch (Exception e) { EldaniorLogger.error("FamilleTab", e); }
-
-        // Claim famille
-        PlayerLevelData claimCopy = (PlayerLevelData) data.clone();
-        if (claimCopy == null) return false;
         claimCopy.setNobleFamilyId(chosenId);
-        claimCopy.setStatus("PATRIARCH");
+        claimCopy.setStatus(FamilyRole.PATRIARCH.code());
         store.putComponent(ref, type, claimCopy);
         FamilyManager.claimFamily(chosenId);
-
-        return true;
+        return null;
     }
 
     // ==================== UTILS ====================
+
+    /** Rang d'un joueur connecte, null s'il est hors ligne ou sans famille. */
+    private static FamilyRole roleOf(UUID uuid, ComponentType<EntityStore, PlayerLevelData> type) {
+        PlayerRef pRef = Universe.get().getPlayer(uuid);
+        if (pRef == null || pRef.getReference() == null) return null;
+        PlayerLevelData d = pRef.getReference().getStore().getComponent(pRef.getReference(), type);
+        return d == null ? null : d.getFamilyRole();
+    }
 
     private static UUID getPlayerUUID(Ref<EntityStore> ref, Store<EntityStore> store) {
         PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());

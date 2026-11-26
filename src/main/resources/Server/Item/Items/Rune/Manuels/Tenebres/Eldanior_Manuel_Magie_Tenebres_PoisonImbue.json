@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_PoisonImbue (remplace le parchemin rune_page_poison_imbue).",
+  "TranslationProperties": {
+    "Name": "Manuel des Ténèbres : Imprégnation de poison",
+    "Description": "Imprégnez votre arme de poison pendant 8 secondes. Les attaques au corps à corps et à distance appliquent un poison cumulable jusqu’à 3 fois. Chaque cumul inflige 4 dégâts de poison toutes les 2 secondes pendant 6 secondes. Classes : Assassin, Dragon.\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Tenebres"
+  ],
+  "Quality": "Rare",
+  "ItemLevel": 10,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Tenebres_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Tenebres_PoisonImbue.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

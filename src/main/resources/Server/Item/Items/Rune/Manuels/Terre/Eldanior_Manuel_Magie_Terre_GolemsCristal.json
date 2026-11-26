@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_GolemsCristal (remplace le parchemin rune_page_golems_cristal).",
+  "TranslationProperties": {
+    "Name": "Manuel de Terre : Golems de Cristal",
+    "Description": "Sort épique de terre (Mage, rune de prédilection du Démiurge). Trois golems de cristal (250 PV chacun) sortent de terre autour de vous pendant 15 s : un de feu, un de givre, un de foudre. Ils combattent les ennemis proches, et toutes les 1,5 s chacun inflige 25 dégâts de son élément à sa cible (brûlure, givre ou étourdissement bref). Quand un golem tombe ou que le sort prend fin, il éclate : 120 dégâts de son élément à moins de 3 blocs. Sans ennemi, ils vous suivent. Épargne votre groupe, votre guilde et votre famille. Coût : 300 mana. Recharge : 120 s.\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Terre"
+  ],
+  "Quality": "Epic",
+  "ItemLevel": 60,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Terre_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Terre_GolemsCristal.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

@@ -95,6 +95,7 @@ public class RankPromoteCommand extends AbstractAsyncCommand {
                 if (copy == null) return;
                 copy.setNobilityRank(newRank.name());
                 copy.setDignity(newRank.getBaseDignity());
+                com.eldanior.system.titles.nobility.family.RoyalHouse.sync(ref, store, copy);                // Roi : Patriarche d'Eldanior (2026-11-13)
                 store.putComponent(ref, type, copy);
 
                 NobilityManager.recordKingPromotion(newRank);

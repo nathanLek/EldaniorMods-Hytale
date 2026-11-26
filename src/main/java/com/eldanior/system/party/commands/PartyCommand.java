@@ -29,11 +29,11 @@ public class PartyCommand extends AbstractAsyncCommand {
 
     public PartyCommand() {
         super("party", "Groupe (create/invite/kick/leave/disband/accept/decline/list)");
+        requireNoPermission();                                   // commande joueur : ouverte a tous
         this.actionArg = this.withRequiredArg("action", "create|invite|kick|leave|disband|accept|decline|list", ArgTypes.STRING);
         this.playerArg = this.withOptionalArg("joueur", "Joueur cible", ArgTypes.STRING);
     }
 
-    protected boolean canGeneratePermission() { return false; }
 
     @Nonnull
     @Override

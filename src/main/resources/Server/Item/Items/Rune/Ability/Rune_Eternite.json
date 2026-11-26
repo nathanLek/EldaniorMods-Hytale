@@ -1,0 +1,44 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de l'Éternité",
+    "Description": "Sort unique du temps (Mage, rune de prédilection du Magus Éternel). Pendant 10 s, le temps refuse votre fin : aucun coup ne peut vous faire passer sous 1 PV. Si l'Éternité vous a sauvé au moins une fois, vous regagnez 20 % de vos PV max quand elle prend fin. Coût : 600 mana. Recharge : 180 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_Eternite.png",
+  "Quality": "Unique",
+  "ItemLevel": 75,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_Runes.Temps"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_Eternite.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 180,
+    "Cost": 600,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Duration",
+      "Buff"
+    ],
+    "Cast": "Root_Ability_Eternite"
+  }
+}

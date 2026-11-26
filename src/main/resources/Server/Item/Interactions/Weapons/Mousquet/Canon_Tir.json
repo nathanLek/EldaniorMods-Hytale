@@ -1,0 +1,15 @@
+{
+  "$Comment": "Canon de char : un Obus Divin par coup, 5 s de rechargement (Mousquet.canonTrigger, sort CanonObus).",
+  "Type": "Eldanior_MousquetTir",
+  "Next": {
+    "Type": "Simple",
+    "RunTime": 0.8,
+    "Effects": {
+      "ItemAnimationId": "ShootFlintlockCharged",
+      "CameraEffect": "Handgun_Shoot",
+      "WorldSoundEventId": "SFX_Weapon_Goblin_Cannon_Fire",
+      "LocalSoundEventId": "SFX_Weapon_Goblin_Cannon_Fire"
+    }
+  },
+  "Failed": "Gun_Shoot_Fail"
+}

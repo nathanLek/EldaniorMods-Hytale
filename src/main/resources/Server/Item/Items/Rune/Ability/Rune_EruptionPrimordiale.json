@@ -1,0 +1,46 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de l'Éruption Primordiale",
+    "Description": "Sort unique de feu (Mage, rune de prédilection du Primordial). Le sol du point visé (rayon 10, jusqu'à 25 blocs) s'éveille pendant 12 s : six geysers de lave jaillissent l'un après l'autre, de préférence sous vos ennemis, chacun annoncé par une lueur rouge 0,8 s avant. Un geyser inflige 180 dégâts, projette en l'air et enflamme ; il laisse une mare de lave qui brûle quiconque s'y tient (15 dégâts toutes les demi-secondes). Le sol est restauré ensuite (jamais en ville ni sur une parcelle). Épargne votre groupe, votre guilde et votre famille. Coût : 600 mana. Recharge : 180 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_EruptionPrimordiale.png",
+  "Quality": "Unique",
+  "ItemLevel": 75,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_Runes.Feu"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_EruptionPrimordiale.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 180,
+    "Cost": 600,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Fire",
+      "Damage",
+      "Aoe",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_EruptionPrimordiale"
+  }
+}

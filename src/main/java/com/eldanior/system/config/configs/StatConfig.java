@@ -47,22 +47,23 @@ public enum StatConfig {
     AGILITY_FALL_RESISTANCE(StatType.MECHANIC, -1, "Agility_Fall", 0.0f, 0.0007f, 0.0f, 1.0f,
             PlayerLevelData::getAgility, ClassModel::getBonusAgl),
 
-    ATTACK_SPEED(StatType.MECHANIC, -1, "Eldanior_Attack_Speed", 1.0f, 0.005f, 0.0f, 4.0f, // Cap à x4
+    // Esquive automatique : courbe propre (voir getFinalValue), 30 % vers 3 500 points d'Agilite, plafond dur 30 %.
+    // La vitesse d'attaque (ATTACK_SPEED) a ete retiree le 2026-11-25 : elle n'etait lue nulle part.
+    DODGE_CHANCE(StatType.MECHANIC, -1, "Agility_Dodge", 0.0f, 0.0f, 0.0f, 30.0f,
             PlayerLevelData::getAgility, ClassModel::getBonusAgl),
 
-    DODGE_CHANCE(StatType.MECHANIC, -1, "Agility_Dodge", 0.0f, 0.5f, 0.0f, 80.0f,
-            PlayerLevelData::getAgility, ClassModel::getBonusAgl),
-
-    // 5. DEGATS FORCE : +0.032 dégâts par point
-    STRENGTH_DAMAGE(StatType.MECHANIC, -1, "Strength_Dmg", 0.0f, 0.50f, 0.0f, 50.0f,
+    // 5. DEGATS FORCE : +0,5 % de dégâts par point, sans plafond (2026-11-25 ; avant +0,5 fixe plafonné à 50 ;
+    //    0,15 % essayé en jeu : trop faible, 1 158 points ne donnaient que x2,7)
+    STRENGTH_DAMAGE(StatType.MECHANIC, -1, "Strength_Dmg", 0.0f, 0.5f, 0.0f, 0.0f,
             PlayerLevelData::getStrength, ClassModel::getBonusStr),
 
-    // 6. DEFENSE ENDURANCE : -0.3 dégâts reçus par point
-    ENDURANCE_DEFENSE(StatType.MECHANIC, -1, "Endurance_Def", 0.0f, 0.10f, 0.0f, 35.0f,
+    // 6. DEFENSE ENDURANCE : % de dégâts reçus en moins, courbe 50 × pts / (pts + 1 000), passifs compris plafond dur 60 %
+    //    (2026-11-25 ; avant -0,1 dégât fixe par point, plafond 35)
+    ENDURANCE_DEFENSE(StatType.MECHANIC, -1, "Endurance_Def", 0.0f, 0.0f, 0.0f, 60.0f,
             PlayerLevelData::getEndurance, ClassModel::getBonusEnd),
 
     // === MÉCANIQUES DE CHANCE (Nouveau !) ===
-    // 1. CRITIQUE : Ratio 0.027%, Cap à 80%
+    // 1. CRITIQUE : 0.05 % par point, Cap à 80 %
     LUCK_CRITICAL(StatType.MECHANIC, -1, "Luck_Crit", 0.0f, 0.05f, 0.0f, 80.0f,
             PlayerLevelData::getLuck, ClassModel::getBonusLck),
 
@@ -106,6 +107,25 @@ public enum StatConfig {
         this.classProvider = classProvider;
     }
 
+    /** Esquive automatique : plafond (en %) et points d'Agilite pour l'atteindre (decide le 2026-11-25). */
+    public static final float DODGE_MAX = 30.0f;
+    public static final float DODGE_FULL_POINTS = 3500.0f;
+
+    /** 30 x racine(points / 3 500) : 100 pts = 5 %, 500 = 11 %, 1 000 = 16 %, 2 000 = 23 %, 3 500 = 30 %. */
+    public static float dodgeCurve(int points) {
+        if (points <= 0) return 0f;
+        return DODGE_MAX * (float) Math.sqrt(Math.min(points, DODGE_FULL_POINTS) / DODGE_FULL_POINTS);
+    }
+
+    /** Defense : 50 × pts / (pts + 1 000) : 100 pts = 4,5 %, 500 = 16,7 %, 1 000 = 25 %, 3 000 = 37,5 %. */
+    public static final float DEFENSE_MAX = 50.0f;
+    public static final float DEFENSE_HALF_POINTS = 1000.0f;
+
+    public static float defenseCurve(int points) {
+        if (points <= 0) return 0f;
+        return DEFENSE_MAX * points / (points + DEFENSE_HALF_POINTS);
+    }
+
     // --- GETTERS ---
     public StatType getType() { return type; }
     public int getStatId() { return statId; }
@@ -135,7 +155,8 @@ public enum StatConfig {
                 }
             }
         }
-        return playerPoints + classPoints + titlePoints;
+        int total = playerPoints + classPoints + titlePoints;
+        return data != null ? data.boosted(total) : total;   // x2 pendant la rune Arkies Domini (2026-11-17)
     }
 
     private int getTitleBonusForStat(com.eldanior.system.titles.models.TitleBonus b) {
@@ -144,7 +165,7 @@ public enum StatConfig {
             case INTELLIGENCE -> b.intelligence();
             case ENDURANCE, ENDURANCE_DEFENSE -> b.endurance();
             case STRENGTH_DAMAGE -> b.strength();
-            case AGILITY_SPEED, AGILITY_JUMP, AGILITY_FALL_RESISTANCE, ATTACK_SPEED, DODGE_CHANCE,
+            case AGILITY_SPEED, AGILITY_JUMP, AGILITY_FALL_RESISTANCE, DODGE_CHANCE,
                  DETECTION_RANGE, STEALTH_DETECTION -> b.agility();
             case LUCK_CRITICAL, LUCK_LOOT, LUCK_EVENT, THREAT_AWARENESS,
                  LOW_LIGHT_VISIBILITY, TRACKING_EVIDENCE -> b.luck();
@@ -158,7 +179,7 @@ public enum StatConfig {
     private boolean isAuraPhysicalStat() {
         return switch (this) {
             case ENDURANCE, ENDURANCE_DEFENSE, STRENGTH_DAMAGE,
-                 AGILITY_SPEED, AGILITY_JUMP, ATTACK_SPEED, DODGE_CHANCE -> true;
+                 AGILITY_SPEED, AGILITY_JUMP, DODGE_CHANCE -> true;
             default -> false;
         };
     }
@@ -166,18 +187,16 @@ public enum StatConfig {
     // Calcule la valeur finale (Base + (Points * Ratio)), en respectant le CAP
     public float getFinalValue(PlayerLevelData data, ClassModel model) {
         int points = getTotalPoints(data, model);
-        float value = baseValue + (points * ratio);
+        float value = this == DODGE_CHANCE ? dodgeCurve(points)
+                : this == ENDURANCE_DEFENSE ? defenseCurve(points)
+                : baseValue + (points * ratio);
 
         // --- LA MAGIE DES PASSIFS EST ICI ---
-        if (data != null && data.getActivePassives() != null) {
-            for (PassiveSkill skill : data.getActivePassives()) {
-                if (skill.getLogic() != null) {
-                    // 1. On ajoute les bonus bruts (ex: +20% de chances de crit brutes)
-                    value += skill.getLogic().getFlatStatBonus(this);
-
-                    // 2. On applique les multiplicateurs (ex: x1.15 vitesse)
-                    value *= skill.getLogic().getStatMultiplier(this);
-                }
+        if (data != null) {
+            for (PlayerLevelData.ActivePassive a : data.getActivePassiveEntries()) {
+                boolean mastered = data.isSkillMastered(a.skill().name());
+                value += a.skill().getLogic().getFlatStatBonus(this, a.rank(), mastered);     // bonus bruts (+3 % de critique...)
+                value *= a.skill().getLogic().getStatMultiplier(this, a.rank(), mastered);    // multiplicateurs (+5 % de vitesse...)
             }
         }
         // ------------------------------------
@@ -189,7 +208,9 @@ public enum StatConfig {
 
         // Rendements décroissants au-delà du cap (soft cap)
         // Au lieu d'un mur dur, les points au-delà donnent 30% d'efficacité
-        // Plafond absolu : cap + 15% (ex: dodge 80% → max 92%)
+        // Plafond absolu : cap + 15% (ex: critique 80% → max 92%)
+        if (this == DODGE_CHANCE) return Math.min(value, DODGE_MAX);   // plafond dur, pas de plafond souple
+        if (this == ENDURANCE_DEFENSE) return Math.min(value, cap);     // 60 % au plus, passifs compris
         if (cap > 0 && value > cap) {
             float overflow = value - cap;
             float bonus = overflow * 0.3f;

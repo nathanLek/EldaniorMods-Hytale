@@ -1,0 +1,31 @@
+{
+  "Parent": "Wolf_Black",
+  "Texture": "NPC/Eldanior/Familiers/Fenrir/Fenrir_Adulte.png",
+  "MinScale": 1.8,
+  "MaxScale": 1.8,
+  "Icon": "Icons/ModelsGenerated/Wolf_White.png",
+  "Model": "NPC/Eldanior/Familiers/Fenrir/Fenrir_Adulte.blockymodel",
+  "Particles": [
+    {
+      "SystemId": "Bat_Ice",
+      "TargetNodeName": "Tail",
+      "TargetEntityPart": "Entity",
+      "Scale": 1.2,
+      "PositionOffset": {}
+    },
+    {
+      "SystemId": "Effect_Snow",
+      "TargetNodeName": "Chest",
+      "TargetEntityPart": "Entity",
+      "Scale": 1.6,
+      "PositionOffset": {}
+    },
+    {
+      "SystemId": "Weapon_Frost_Mist",
+      "TargetNodeName": "Pelvis",
+      "TargetEntityPart": "Entity",
+      "Scale": 1.4,
+      "PositionOffset": {}
+    }
+  ]
+}

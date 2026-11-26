@@ -45,8 +45,13 @@ final class SummonPack {
 
     /** Cree une creature (PNJ du role) a pos ; effectId : teinte optionnelle. */
     Member spawn(World world, String roleId, Vector3d pos, Rotation3f rot, float maxHealth, String effectId, long now) {
-        CloneFx.Look look = new CloneFx.Look(null, null, null);
-        Member m = new Member(CloneFx.spawn(world, roleId, owner, pos, rot, look, null, maxHealth, effectId, false, now), members.size(), pos);
+        return spawn(world, roleId, pos, rot, new CloneFx.Look(null, null, null), null, maxHealth, effectId, now);
+    }
+
+    /** Variante pour les reflets du lanceur : apparence (look) et objet en main copies. */
+    Member spawn(World world, String roleId, Vector3d pos, Rotation3f rot, CloneFx.Look look, com.hypixel.hytale.server.core.inventory.ItemStack held,
+                 float maxHealth, String effectId, long now) {
+        Member m = new Member(CloneFx.spawn(world, roleId, owner, pos, rot, look, held, maxHealth, effectId, false, now), members.size(), pos);
         members.add(m);
         return m;
     }

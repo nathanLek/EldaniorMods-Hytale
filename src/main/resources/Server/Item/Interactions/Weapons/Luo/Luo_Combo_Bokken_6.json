@@ -1,0 +1,203 @@
+{
+  "$Comment": "Combo du Bokken, 6 coups (palier de la voie martiale, effet Voie_Combo_6).",
+  "Type": "Chaining",
+  "ChainingAllowance": 1.6,
+  "ChainId": "Luo_Bokken_6",
+  "Next": [
+    {
+      "Type": "Serial",
+      "Interactions": [
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.0,
+          "Spell": "LuoEndurance"
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.111,
+          "HorizontalSpeedMultiplier": 0.75,
+          "Effects": {
+            "ItemAnimationId": "LuoCoup1",
+            "WorldSoundEventId": "SFX_Sword_T2_Swing",
+            "LocalSoundEventId": "SFX_Sword_T2_Swing_RL_Local"
+          },
+          "Next": {
+            "Type": "Replace",
+            "Var": "Swing_Left_Selector",
+            "DefaultOk": true,
+            "DefaultValue": {
+              "Interactions": [
+                "Weapon_Sword_Primary_Swing_Left_Selector"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Type": "Serial",
+      "Interactions": [
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.0,
+          "Spell": "LuoEndurance"
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.111,
+          "HorizontalSpeedMultiplier": 0.75,
+          "Effects": {
+            "ItemAnimationId": "LuoCoup2",
+            "WorldSoundEventId": "SFX_Sword_T2_Swing",
+            "LocalSoundEventId": "SFX_Sword_T2_Swing_RL_Local"
+          },
+          "Next": {
+            "Type": "Replace",
+            "Var": "Swing_Left_Selector",
+            "DefaultOk": true,
+            "DefaultValue": {
+              "Interactions": [
+                "Weapon_Sword_Primary_Swing_Left_Selector"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Type": "Serial",
+      "Interactions": [
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.0,
+          "Spell": "LuoEndurance"
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.111,
+          "HorizontalSpeedMultiplier": 0.75,
+          "Effects": {
+            "ItemAnimationId": "LuoCoup3",
+            "WorldSoundEventId": "SFX_Sword_T2_Swing",
+            "LocalSoundEventId": "SFX_Sword_T2_Swing_RL_Local"
+          },
+          "Next": {
+            "Type": "Replace",
+            "Var": "Swing_Right_Selector",
+            "DefaultOk": true,
+            "DefaultValue": {
+              "Interactions": [
+                "Weapon_Sword_Primary_Swing_Right_Selector"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Type": "Serial",
+      "Interactions": [
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.0,
+          "Spell": "LuoEndurance"
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.111,
+          "HorizontalSpeedMultiplier": 0.75,
+          "Effects": {
+            "ItemAnimationId": "LuoCoup4",
+            "WorldSoundEventId": "SFX_Sword_T2_Swing",
+            "LocalSoundEventId": "SFX_Sword_T2_Swing_RL_Local"
+          },
+          "Next": {
+            "Type": "Replace",
+            "Var": "Swing_Down_Selector",
+            "DefaultOk": true,
+            "DefaultValue": {
+              "Interactions": [
+                "Weapon_Sword_Primary_Swing_Down_Selector"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Type": "Serial",
+      "Interactions": [
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.0,
+          "Spell": "LuoEndurance"
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.111,
+          "HorizontalSpeedMultiplier": 0.75,
+          "Effects": {
+            "ItemAnimationId": "Stab",
+            "WorldSoundEventId": "SFX_Sword_T2_Swing",
+            "LocalSoundEventId": "SFX_Sword_T2_Swing_RL_Local"
+          },
+          "Next": {
+            "Type": "Replace",
+            "Var": "Swing_Right_Selector",
+            "DefaultOk": true,
+            "DefaultValue": {
+              "Interactions": [
+                "Weapon_Sword_Primary_Swing_Right_Selector"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Type": "Serial",
+      "Interactions": [
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.0,
+          "Spell": "LuoEndurance"
+        },
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.0,
+          "Spell": "LuoPas"
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.2,
+          "HorizontalSpeedMultiplier": 0.75,
+          "Effects": {
+            "ItemAnimationId": "SpinRightCharged",
+            "CameraEffect": "Sword_Stab",
+            "WorldSoundEventId": "SFX_Sword_T2_Swing_Down",
+            "LocalSoundEventId": "SFX_Sword_T2_Swing_Down_Local"
+          }
+        },
+        {
+          "Type": "Replace",
+          "Var": "Swing_Left_Selector",
+          "DefaultOk": true,
+          "DefaultValue": {
+            "Interactions": [
+              "Weapon_Sword_Primary_Swing_Left_Selector"
+            ]
+          }
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.12
+        },
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.0,
+          "Spell": "LuoFinCombo"
+        }
+      ]
+    }
+  ]
+}

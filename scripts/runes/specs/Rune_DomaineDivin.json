@@ -1,0 +1,62 @@
+{
+  "$Comment": "Fiche de conception : competence de la voie martiale (classe Dieu Martial), validee le 2026-11-10 (docs/plan-clan-luo.md, B). Apprise par son manuel, aucun butin.",
+  "id": "Rune_DomaineDivin",
+  "spell": "DomaineDivin",
+  "javaClass": "DomaineDivin",
+  "page": "rune_page_domainedivin",
+  "name": "Rune du Domaine Divin",
+  "type": "Luo",
+  "rarity": "Legendaire",
+  "emblem": "DomaineDivin",
+  "classes": "dieu_martial",
+  "persistent": true,
+  "summary": "12 s, 15 blocs autour du lanceur (il le suit) : lanceur -30 % de degats subis et +3 % de vie / s ; ennemis ralentis (x0,6) et ecrases (50 / s, plaques au sol) ; colonne d'or au centre.",
+  "description": "Compétence de la voie martiale, enseignée à la classe Dieu Martial. Le Dieu Martial impose sa loi au monde : pendant 12 s, sur 15 blocs autour de lui, les ennemis sont ralentis et écrasés par le poids du ciel (50 dégâts par seconde, plaqués au sol), tandis que vous subissez 30 % de dégâts en moins et regagnez 3 % de votre vie chaque seconde. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "« Ici, le ciel et la terre m'obéissent. » Compétence de la voie martiale : elle s'apprend dans son manuel, jamais en butin.",
+  "keywords": [
+    "Damage",
+    "Aoe",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": {},
+  "cast": {
+    "animationSet": "Sword",
+    "charging": "CastEnchant",
+    "release": "CastEnrage",
+    "chargeTime": 0.6,
+    "releaseTime": 0.6,
+    "moveSpeed": 0.6,
+    "cameraEffect": null,
+    "sound": null,
+    "releaseSound": "SFX_Longsword_Special_Impact",
+    "handParticles": null,
+    "handParticlesScale": 0.6,
+    "costMoment": "start"
+  },
+  "design": {
+    "radius": "15",
+    "persistentDurationS": 12,
+    "targets": "zone",
+    "effects": "ralenti Unite_Vent, 50/s, poussee vers le bas ; -30 % et soin du lanceur",
+    "balance": {
+      "damage": 4,
+      "range": 0,
+      "duration": 3,
+      "mobility": 0,
+      "control": 4,
+      "defense": 3,
+      "targets": 4,
+      "frequency": 0,
+      "terrain": 0,
+      "difficulty": 0
+    }
+  },
+  "category": "Eldanior_Empire_Luo.Runes",
+  "manual": "Eldanior_Manuel_Luo_DomaineDivin",
+  "$Comment_manual": "Technique apprise par son manuel secret (gen_voie_martiale_objets.py) : pas de parchemin rune_page_*."
+}

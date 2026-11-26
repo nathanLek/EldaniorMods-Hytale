@@ -1,0 +1,20 @@
+{
+  "$Comment": "Renforcement corporel, palier 1 : aura #e8eef5. Rafraichi par RenforcementCorps (gen_voie_martiale.py). Nom : Renforcement corporel.",
+  "ApplicationEffects": {
+    "Particles": [
+      {
+        "SystemId": "Ki_Renforcement_T1",
+        "TargetNodeName": "Chest",
+        "PositionOffset": {
+          "X": 0,
+          "Y": -1,
+          "Z": 0
+        },
+        "Scale": 1.06
+      }
+    ]
+  },
+  "Duration": 2.5,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": false
+}

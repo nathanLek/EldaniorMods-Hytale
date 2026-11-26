@@ -1,0 +1,81 @@
+{
+  "TranslationProperties": {
+    "Name": "Bannière de famille - Goldcrest",
+    "Description": "Bannière aux armes de la famille Goldcrest. Se fixe à un mur et pend sur trois blocs."
+  },
+  "PlayerAnimationsId": "Block",
+  "Categories": [
+    "Eldanior_Familles.Goldcrest",
+    "Furniture.Signs"
+  ],
+  "Icon": "Icons/ItemsGenerated/Eldanior_Banniere_Famille_Goldcrest.png",
+  "IconProperties": {
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Scale": 0.26,
+    "Translation": [
+      0,
+      16.9
+    ]
+  },
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  },
+  "BlockType": {
+    "BlockParticleSetId": "Wood",
+    "CustomModel": "Blocks/Eldanior/Banniere_Famille.blockymodel",
+    "CustomModelAnimation": "Blocks/Decorative_Sets/Human_Ruins/Banner_Swing.blockyanim",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/Eldanior/Banniere_Famille_Goldcrest_Texture.png",
+        "Weight": 1
+      }
+    ],
+    "DrawType": "Model",
+    "Flags": {},
+    "Gathering": {
+      "Soft": {
+        "IsWeaponBreakable": false
+      }
+    },
+    "Material": "Solid",
+    "Opacity": "Transparent",
+    "ParticleColor": "#926018",
+    "Support": {
+      "West": [
+        {
+          "AllowSupportPropagation": false,
+          "FaceType": "Full",
+          "Rotate": true
+        }
+      ],
+      "East": [
+        {
+          "AllowSupportPropagation": false,
+          "FaceType": "Full",
+          "Rotate": true
+        }
+      ]
+    },
+    "VariantRotation": "NESW",
+    "BlockSoundSetId": "Cloth",
+    "PhysicalMaterialId": "Wool",
+    "Looping": true,
+    "HitboxType": "Banner",
+    "TextureComputedColor": "#926018"
+  },
+  "Quality": "Rare",
+  "Tags": {
+    "Type": [
+      "Furniture"
+    ],
+    "Family": [
+      "Eldanior"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Items_Cloth"
+}

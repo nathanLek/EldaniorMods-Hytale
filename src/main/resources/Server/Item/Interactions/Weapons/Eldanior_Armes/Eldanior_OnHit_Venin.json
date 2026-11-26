@@ -1,0 +1,12 @@
+{
+  "$Comment": "Suite d'un coup d'arme empoisonnee : interruption vanilla, puis poison leger (Arme_Venin).",
+  "Type": "Serial",
+  "Interactions": [
+    "DamageEntityParent_Hit_Interrupt_On_Hit",
+    {
+      "Type": "ApplyEffect",
+      "Entity": "Target",
+      "EffectId": "Arme_Venin"
+    }
+  ]
+}

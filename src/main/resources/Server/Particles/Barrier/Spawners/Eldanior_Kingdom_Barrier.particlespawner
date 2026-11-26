@@ -1,0 +1,76 @@
+{
+  "RenderMode": "BlendLinear",
+  "ParticleRotationInfluence": "None",
+  "ParticleLifeSpan": {
+    "Min": 10,
+    "Max": 10
+  },
+  "ParticleRotateWithSpawner": true,
+  "SpawnRate": {
+    "Min": 1,
+    "Max": 1
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Weather/Aurora.png",
+    "ScaleRatioConstraint": "None",
+    "Animation": {
+      "0": {
+        "Opacity": 0,
+        "Color": "#6a1fb0"
+      },
+      "20": {
+        "Opacity": 1
+      },
+      "50": {
+        "Opacity": 1,
+        "Color": "#b45cff"
+      },
+      "80": {
+        "Opacity": 1
+      },
+      "100": {
+        "Opacity": 0,
+        "Color": "#6a1fb0"
+      }
+    },
+    "InitialAnimationFrame": {
+      "Scale": {
+        "X": {
+          "Min": 15,
+          "Max": 15
+        },
+        "Y": {
+          "Min": 15,
+          "Max": 15
+        }
+      },
+      "Opacity": 0.1,
+      "Rotation": {
+        "Min": 80,
+        "Max": 80
+      }
+    },
+    "UVOption": "RandomFlipU",
+    "CameraFarFadeStartDistance": 6,
+    "CameraFarFadeEndDistance": 32
+  },
+  "TrailSpawnerRotationMultiplier": 0,
+  "TrailSpawnerPositionMultiplier": 0,
+  "UVMotion": {
+    "Texture": "Particles/Textures/UVMotion/FlowMap3.png",
+    "Strength": 25,
+    "Scale": 8.5,
+    "StrengthCurveType": "Constant",
+    "SpeedX": 0.01,
+    "SpeedY": 0.03,
+    "AddRandomUVOffset": true
+  },
+  "MaxConcurrentParticles": 2,
+  "Shape": "Sphere",
+  "SpawnBurst": true,
+  "WaveDelay": {
+    "Min": 8.5,
+    "Max": 8.5
+  },
+  "LinearFiltering": true
+}

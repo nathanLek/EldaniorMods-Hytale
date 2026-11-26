@@ -42,27 +42,27 @@ public final class AdventurerPassives {
     private static final Map<String, Long> COOLDOWNS = new ConcurrentHashMap<>();
 
     /** Passifs de l'aventurier : ceux de sa classe. */
-    static List<PassiveSkill> of(GuardManager.Post p) {
+    static List<PassiveSkill.Ranked> of(GuardManager.Post p) {
         ClassModel cls = AdventurerTier.classOf(p);
-        return cls != null ? cls.getSkillsPassiveIds() : List.of();
+        return cls != null ? cls.getClassPassives() : List.of();
     }
 
     private static Stats stats(GuardManager.Post p) {
         return STATS.computeIfAbsent(p.id + ":" + p.level + ":" + p.skinSeed, k -> {
             float power = 1f, toughness = 1f, flatDamage = 0f, flatReduce = 0f, crit = 0f, dodge = 0f, regen = 1f;
-            for (PassiveSkill s : of(p)) {
-                IPassiveCombatSkill l = s.getLogic();
-                if (l == null) continue;
-                power += (l.getFlatStatBonus(StatConfig.INTELLIGENCE) + l.getFlatStatBonus(StatConfig.STRENGTH_DAMAGE) * 2) / 200f;
-                power *= l.getStatMultiplier(StatConfig.INTELLIGENCE) * l.getStatMultiplier(StatConfig.STRENGTH_DAMAGE);
-                toughness += (l.getFlatStatBonus(StatConfig.VITALITY) + l.getFlatStatBonus(StatConfig.ENDURANCE)) / 200f;
-                toughness *= l.getStatMultiplier(StatConfig.VITALITY);
-                flatReduce += l.getFlatStatBonus(StatConfig.ENDURANCE_DEFENSE);
-                crit += l.getFlatStatBonus(StatConfig.LUCK_CRITICAL) + (l.getStatMultiplier(StatConfig.LUCK_CRITICAL) - 1f) * 100f;
-                dodge += l.getFlatStatBonus(StatConfig.DODGE_CHANCE) + (l.getStatMultiplier(StatConfig.DODGE_CHANCE) - 1f) * 100f;
-                regen *= l.getRegenMultiplier(StatConfig.VITALITY);
+            for (PassiveSkill.Ranked pr : of(p)) {
+                IPassiveCombatSkill l = pr.skill().getLogic();
+                int r = pr.rank();
+                power += (l.getFlatStatBonus(StatConfig.INTELLIGENCE, r, false) + l.getFlatStatBonus(StatConfig.STRENGTH_DAMAGE, r, false) * 2) / 200f;
+                power *= l.getStatMultiplier(StatConfig.INTELLIGENCE, r, false) * l.getStatMultiplier(StatConfig.STRENGTH_DAMAGE, r, false);
+                toughness += (l.getFlatStatBonus(StatConfig.VITALITY, r, false) + l.getFlatStatBonus(StatConfig.ENDURANCE, r, false)) / 200f;
+                toughness *= l.getStatMultiplier(StatConfig.VITALITY, r, false);
+                flatReduce += l.getFlatStatBonus(StatConfig.ENDURANCE_DEFENSE, r, false);
+                crit += l.getFlatStatBonus(StatConfig.LUCK_CRITICAL, r, false) + (l.getStatMultiplier(StatConfig.LUCK_CRITICAL, r, false) - 1f) * 100f;
+                dodge += l.getFlatStatBonus(StatConfig.DODGE_CHANCE, r, false) + (l.getStatMultiplier(StatConfig.DODGE_CHANCE, r, false) - 1f) * 100f;
+                regen *= l.getRegenMultiplier(StatConfig.VITALITY, r, false);
             }
-            return new Stats(power, toughness, 0f, Math.min(35f, flatReduce), Math.min(80f, crit), Math.min(50f, dodge), regen);
+            return new Stats(power, toughness, 0f, Math.min(35f, flatReduce), Math.min(80f, crit), Math.min(20f, dodge), regen);
         });
     }
 
@@ -90,10 +90,11 @@ public final class AdventurerPassives {
         return GuardManager.postOf(ref, store);
     }
 
-    private interface Call { boolean run(IPassiveCombatSkill logic); }
+    private interface Call { boolean run(IPassiveCombatSkill logic, int rank); }
 
     /** Lance le code d'un passif ; s'il exige des donnees de joueur (exception), il ne sera plus essaye. */
-    private static void run(GuardManager.Post p, PassiveSkill s, Call call) {
+    private static void run(GuardManager.Post p, PassiveSkill.Ranked pr, Call call) {
+        PassiveSkill s = pr.skill();
         IPassiveCombatSkill logic = s.getLogic();
         if (logic == null || PLAYER_ONLY.contains(s)) return;
         String key = p.id + ":" + s.name();
@@ -101,7 +102,7 @@ public final class AdventurerPassives {
         Long until = COOLDOWNS.get(key);
         if (until != null && until > now) return;
         try {
-            if (call.run(logic) && s.getCooldownSeconds() > 0) COOLDOWNS.put(key, now + (long) (s.getCooldownSeconds() * 1000));
+            if (call.run(logic, pr.rank()) && s.getCooldownSeconds() > 0) COOLDOWNS.put(key, now + (long) (s.getCooldownSeconds() * 1000));
         } catch (Exception e) {
             PLAYER_ONLY.add(s);
         }
@@ -114,7 +115,7 @@ public final class AdventurerPassives {
         Stats st = stats(p);
         damage.setAmount((damage.getAmount() + st.flatDamage()) * st.power() * AdventurerTier.power(p));
         float before = health(attacker, store);
-        for (PassiveSkill s : of(p)) run(p, s, l -> l.onAttack(damage, null, store, attacker, victim, false));
+        for (PassiveSkill.Ranked s : of(p)) run(p, s, (l, r) -> l.onAttack(damage, null, store, attacker, victim, r, false));
         keepHeal(p, before, attacker, store);
         if (st.crit() > 0 && ThreadLocalRandom.current().nextFloat() * 100 < st.crit()) damage.setAmount(damage.getAmount() * 2f);
     }
@@ -124,12 +125,13 @@ public final class AdventurerPassives {
         GuardManager.Post p = adventurer(victim, store);
         if (p == null) return;
         Stats st = stats(p);
-        if (st.dodge() > 0 && ThreadLocalRandom.current().nextFloat() * 100 < st.dodge()) { damage.setCancelled(true); return; }
+        if (st.dodge() > 0 && com.eldanior.system.Leveling.systems.AutoDodge.isDodgeable(damage)              // coups physiques et projectiles seulement
+                && ThreadLocalRandom.current().nextFloat() * 100 < st.dodge()) { damage.setCancelled(true); return; }
         Ref<EntityStore> attacker = damage.getSource() instanceof Damage.EntitySource es ? es.getRef() : null;
-        float amount = damage.getAmount() / (st.toughness() * AdventurerTier.toughness(p)) - st.flatReduce();
+        float amount = damage.getAmount() / (st.toughness() * AdventurerTier.toughness(p)) * (1f - st.flatReduce() / 100f);   // Defense en % (2026-11-25)
         damage.setAmount(Math.max(1f, amount));
         float before = health(victim, store);
-        for (PassiveSkill s : of(p)) run(p, s, l -> l.onDefend(damage, null, store, attacker, victim, false));
+        for (PassiveSkill.Ranked s : of(p)) run(p, s, (l, r) -> l.onDefend(damage, null, store, attacker, victim, r, false));
         keepHeal(p, before, victim, store);
         if (!damage.isCancelled() && damage.getAmount() < 1f) damage.setAmount(1f);
     }

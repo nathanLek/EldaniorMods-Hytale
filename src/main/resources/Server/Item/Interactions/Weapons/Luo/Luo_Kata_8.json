@@ -1,0 +1,273 @@
+{
+  "$Comment": "Kata du Dragon d'Or, 8 coups (gen_luo_katanas.py).",
+  "Type": "Chaining",
+  "ChainingAllowance": 1.6,
+  "ChainId": "Luo_Kata_8",
+  "Next": [
+    {
+      "Type": "Serial",
+      "Interactions": [
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.0,
+          "Spell": "KiEpeeCoup_H"
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.111,
+          "HorizontalSpeedMultiplier": 0.75,
+          "Effects": {
+            "ItemAnimationId": "LuoCoup1",
+            "WorldSoundEventId": "SFX_Sword_T2_Swing",
+            "LocalSoundEventId": "SFX_Sword_T2_Swing_RL_Local"
+          }
+        },
+        {
+          "Type": "Replace",
+          "Var": "Swing_Left_Selector",
+          "DefaultOk": true,
+          "DefaultValue": {
+            "Interactions": [
+              "Weapon_Sword_Primary_Swing_Left_Selector"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Type": "Serial",
+      "Interactions": [
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.0,
+          "Spell": "KiEpeeCoup_G"
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.111,
+          "HorizontalSpeedMultiplier": 0.75,
+          "Effects": {
+            "ItemAnimationId": "LuoCoup2",
+            "WorldSoundEventId": "SFX_Sword_T2_Swing",
+            "LocalSoundEventId": "SFX_Sword_T2_Swing_RL_Local"
+          }
+        },
+        {
+          "Type": "Replace",
+          "Var": "Swing_Left_Selector",
+          "DefaultOk": true,
+          "DefaultValue": {
+            "Interactions": [
+              "Weapon_Sword_Primary_Swing_Left_Selector"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Type": "Serial",
+      "Interactions": [
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.0,
+          "Spell": "KiEpeeCoup_G"
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.111,
+          "HorizontalSpeedMultiplier": 0.75,
+          "Effects": {
+            "ItemAnimationId": "LuoCoup3",
+            "WorldSoundEventId": "SFX_Sword_T2_Swing",
+            "LocalSoundEventId": "SFX_Sword_T2_Swing_RL_Local"
+          }
+        },
+        {
+          "Type": "Replace",
+          "Var": "Swing_Right_Selector",
+          "DefaultOk": true,
+          "DefaultValue": {
+            "Interactions": [
+              "Weapon_Sword_Primary_Swing_Right_Selector"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Type": "Serial",
+      "Interactions": [
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.0,
+          "Spell": "LuoPas"
+        },
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.0,
+          "Spell": "KiEpeeCoup_V"
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.2,
+          "HorizontalSpeedMultiplier": 0.75,
+          "Effects": {
+            "ItemAnimationId": "LuoCoup4",
+            "WorldSoundEventId": "SFX_Sword_T2_Swing",
+            "LocalSoundEventId": "SFX_Sword_T2_Swing_RL_Local"
+          }
+        },
+        {
+          "Type": "Replace",
+          "Var": "Swing_Down_Selector",
+          "DefaultOk": true,
+          "DefaultValue": {
+            "Interactions": [
+              "Weapon_Sword_Primary_Swing_Down_Selector"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Type": "Serial",
+      "Interactions": [
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.0,
+          "Spell": "KiEpeeCoup_H"
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.25,
+          "HorizontalSpeedMultiplier": 0.75,
+          "Effects": {
+            "ItemAnimationId": "SpinRightCharged",
+            "WorldSoundEventId": "SFX_Sword_T2_Swing",
+            "LocalSoundEventId": "SFX_Sword_T2_Swing_RL_Local"
+          }
+        },
+        {
+          "Type": "Replace",
+          "Var": "Swing_Left_Selector",
+          "DefaultOk": true,
+          "DefaultValue": {
+            "Interactions": [
+              "Weapon_Sword_Primary_Swing_Left_Selector"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Type": "Serial",
+      "Interactions": [
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.0,
+          "Spell": "KiEpeeCoup_V"
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.15,
+          "HorizontalSpeedMultiplier": 0.75,
+          "Effects": {
+            "ItemAnimationId": "Stab",
+            "WorldSoundEventId": "SFX_Sword_T2_Swing",
+            "LocalSoundEventId": "SFX_Sword_T2_Swing_RL_Local"
+          }
+        },
+        {
+          "Type": "Replace",
+          "Var": "Swing_Right_Selector",
+          "DefaultOk": true,
+          "DefaultValue": {
+            "Interactions": [
+              "Weapon_Sword_Primary_Swing_Right_Selector"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Type": "Serial",
+      "Interactions": [
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.0,
+          "Spell": "LuoPas"
+        },
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.0,
+          "Spell": "KiEpeeCoup_H"
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.3,
+          "HorizontalSpeedMultiplier": 0.75,
+          "Effects": {
+            "ItemAnimationId": "LuoKaiten",
+            "WorldSoundEventId": "SFX_Sword_T2_Swing",
+            "LocalSoundEventId": "SFX_Sword_T2_Swing_RL_Local"
+          }
+        },
+        {
+          "Type": "Replace",
+          "Var": "Swing_Left_Selector",
+          "DefaultOk": true,
+          "DefaultValue": {
+            "Interactions": [
+              "Weapon_Sword_Primary_Swing_Left_Selector"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Type": "Serial",
+      "Interactions": [
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.0,
+          "Spell": "LuoPas"
+        },
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.0,
+          "Spell": "KiEpeeCoup_G"
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.3,
+          "HorizontalSpeedMultiplier": 0.75,
+          "Effects": {
+            "ItemAnimationId": "SwingLeftSpinJumpCharged",
+            "CameraEffect": "Sword_Stab",
+            "WorldSoundEventId": "SFX_Sword_T2_Swing_Down",
+            "LocalSoundEventId": "SFX_Sword_T2_Swing_Down_Local"
+          }
+        },
+        {
+          "Type": "Replace",
+          "Var": "Swing_Left_Selector",
+          "DefaultOk": true,
+          "DefaultValue": {
+            "Interactions": [
+              "Weapon_Sword_Primary_Swing_Left_Selector"
+            ]
+          }
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.12
+        },
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.0,
+          "Spell": "LuoFinCombo"
+        }
+      ]
+    }
+  ]
+}

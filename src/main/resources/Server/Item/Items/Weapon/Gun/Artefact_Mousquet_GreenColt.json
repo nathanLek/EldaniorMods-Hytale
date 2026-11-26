@@ -1,0 +1,63 @@
+{
+  "Categories": [
+    "Eldanior_System.Artefacts",
+    "Items.Weapons"
+  ],
+  "Icon": "Icons/ItemsGenerated/Artefact_Mousquet_GreenColt.png",
+  "Texture": "Items/Weapons/artefacts/Artefact_Mousquet_GreenColt.png",
+  "PlayerAnimationsId": "Mousquet",
+  "IconProperties": {
+    "Scale": 0.3,
+    "Translation": [
+      -12,
+      -22
+    ],
+    "Rotation": [
+      320,
+      90,
+      0
+    ]
+  },
+  "Quality": "Legendary",
+  "Model": "Items/Weapons/artefacts/Artefact_Mousquet_GreenColt.blockymodel",
+  "Scale": 1,
+  "Tags": {
+    "Type": [
+      "Weapon"
+    ],
+    "Family": [
+      "Gun"
+    ]
+  },
+  "Weapon": {},
+  "TranslationProperties": {
+    "Name": "Green Colt, le Rapide",
+    "Description": "Mousquet légendaire de rapidité, carabine courte laquée de vert et d'or, à ailettes de vitesse et cartouchière sur la crosse. Rechargement deux fois plus rapide, dégâts +10 %. Réservé aux Mousquetaires. Chaque tir demande 1 Poudre à canon et 1 Balle de fer. Force : dégâts (70 à 2 000) et vitesse de la balle ; Agilité : rechargement (50 s, 1 s à 3 000 points) ; Endurance : portée sûre (10 à 500 blocs, 500 au plus), précision au-delà, grossissement de la lunette et entités vues de loin. Une balle qui tue annonce la distance du tir. Clic droit maintenu : viser à la lunette. Clic droit bref : coup de baïonnette (fixée le temps de l'estoc). Rune de Transformation d'Arme (Mousquetaire) : Green Colt devient pendant 5 minutes une paire de Colts de cavalerie (5 Balles Divines par pistolet), qui tirent et rechargent à une vitesse folle, portée 40 blocs ; puis il redevient mousquet (la rune se recharge)."
+  },
+  "$Comment": "Mousquet legendaire de rapidite (2026-11-15) : Mousquet.Arme.GREEN_COLT ; signature = Colts akimbo 5 min (ArmeTransfo). Genere par scripts/artefacts/gen_mousquets.py.",
+  "ItemLevel": 540,
+  "MaxStack": 1,
+  "Interactions": {
+    "Primary": {
+      "$Comment": "BlockedBy sans Secondary : on tire en visant.",
+      "Rules": {
+        "BlockedBy": [
+          "Primary",
+          "Ability1",
+          "Ability2",
+          "Ability3",
+          "Use",
+          "Pick",
+          "SwapFrom",
+          "SwapTo"
+        ]
+      },
+      "Interactions": [
+        "Mousquet_Tir"
+      ]
+    },
+    "Secondary": "Root_Mousquet_Secondaire"
+  },
+  "MaxDurability": 0,
+  "DurabilityLossOnHit": 0
+}

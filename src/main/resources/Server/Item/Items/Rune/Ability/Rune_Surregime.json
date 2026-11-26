@@ -1,0 +1,44 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune du Surrégime",
+    "Description": "Sort unique du temps (Mage, rune de prédilection du Chrono-Seigneur). Votre temps s'emballe pendant 15 s : vous allez 80 % plus vite, chacun de vos coups frappe une seconde fois à 40 % un instant plus tard, et vous regagnez 3 % de mana par seconde. Coût : 600 mana. Recharge : 180 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_Surregime.png",
+  "Quality": "Unique",
+  "ItemLevel": 75,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_Runes.Temps"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_Surregime.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 180,
+    "Cost": 600,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Duration",
+      "Buff"
+    ],
+    "Cast": "Root_Ability_Surregime"
+  }
+}

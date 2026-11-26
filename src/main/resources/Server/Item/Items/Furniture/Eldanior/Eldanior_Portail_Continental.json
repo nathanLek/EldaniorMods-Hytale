@@ -1,0 +1,43 @@
+{
+  "TranslationProperties": {
+    "Name": "Pierre de fondation du Portail Continental",
+    "Description": "Bloc d'admin. Posée dans un Marquisat, elle bâtit la plateforme de 13 x 13, la porte de 7 x 9, les braseros et le Gardien du portail. Posez-la en la regardant de face : la porte s'ouvre vers vous."
+  },
+  "BlockType": {
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks"
+      }
+    },
+    "Textures": [
+      {
+        "Weight": 1,
+        "All": "BlockTextures/Calcite_Brick_Ornate.png"
+      }
+    ],
+    "ParticleColor": "#d4ece7",
+    "TextureComputedColor": "#9AADB3",
+    "Material": "Solid",
+    "DrawType": "Cube",
+    "BlockSoundSetId": "Stone",
+    "BlockParticleSetId": "Stone",
+    "PhysicalMaterialId": "Stone"
+  },
+  "Tags": {
+    "Type": [
+      "Rock"
+    ]
+  },
+  "Icon": "Icons/ItemsGenerated/Rock_Calcite_Brick_Ornate.png",
+  "Categories": [
+    "Eldanior_System.Autres"
+  ],
+  "MaxStack": 1,
+  "Quality": "Legendary",
+  "ItemSoundSetId": "ISS_Blocks_Stone",
+  "PlayerAnimationsId": "Block",
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  }
+}

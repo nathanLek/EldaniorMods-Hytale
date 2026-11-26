@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_Racines (remplace le parchemin rune_page_racines).",
+  "TranslationProperties": {
+    "Name": "Manuel de Terre : Racines",
+    "Description": "Sort rare de terre (Mage, rune de prédilection du Druide). Des racines filent sous la terre vers l'ennemi visé (jusqu'à 25 blocs) et jusqu'à 2 ennemis à moins de 6 blocs de lui, puis jaillissent et les enserrent : 90 dégâts, immobilisés 1,5 s pendant lesquels les épines infligent 15 dégâts toutes les demi-secondes, puis entravés (vitesse -40 %) 1,6 s. Épargne votre groupe, votre guilde et votre famille. Coût : 120 mana. Recharge : 60 s.\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Terre"
+  ],
+  "Quality": "Rare",
+  "ItemLevel": 40,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Terre_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Terre_Racines.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

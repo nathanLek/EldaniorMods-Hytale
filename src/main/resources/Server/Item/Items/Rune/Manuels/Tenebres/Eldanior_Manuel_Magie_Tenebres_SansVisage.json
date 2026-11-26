@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_SansVisage (remplace le parchemin rune_page_sansvisage).",
+  "TranslationProperties": {
+    "Name": "Manuel des Ténèbres : Sans Visage",
+    "Description": "Compétence de l'Observateur. Ouvre la fenêtre Sans Visage : prenez l'apparence d'un joueur, d'un PNJ, d'un animal ou d'un monstre, tirez un visage au hasard, affichez une fausse classe et faites-vous appeler d'un autre nom. Chaque nouveau visage coûte 300 de mana ; le masque tombe à votre mort ou d'un simple clic sur « Reprendre mon visage ». Coût : 0 mana. Recharge : 1 s.\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Tenebres"
+  ],
+  "Quality": "Legendary",
+  "ItemLevel": 90,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Tenebres_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Tenebres_SansVisage.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

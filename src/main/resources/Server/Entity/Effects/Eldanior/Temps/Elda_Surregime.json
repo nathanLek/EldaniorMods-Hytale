@@ -1,0 +1,13 @@
+{
+  "$Comment": "Surregime : temps du lanceur accelere (x1,8), voile dore. Pose une fois 15 s, retire par le code.",
+  "Duration": 15.0,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": false,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Rune_Surregime.png",
+  "ApplicationEffects": {
+    "EntityTopTint": "#fff2c8",
+    "EntityBottomTint": "#d8a040",
+    "ModelVFXId": "Prescience_Voile",
+    "HorizontalSpeedMultiplier": 1.8
+  }
+}

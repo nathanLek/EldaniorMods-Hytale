@@ -1,7 +1,6 @@
 package com.eldanior.system.titles.nobility.family.definitions.duc;
 
 import com.eldanior.system.config.configs.Rarity;
-import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
 import com.eldanior.system.titles.nobility.NobilityRank;
 import com.eldanior.system.titles.nobility.family.NobleFamilyModel;
 
@@ -17,8 +16,7 @@ public class Ironveil extends NobleFamilyModel {
                 + "qui le rendit invincible sur le champ de bataille. Les soldats Ironveil sont reconnus "
                 + "pour leur discipline de fer et leur loyaute absolue. Aucun Ironveil n'a jamais trahi son serment.",
                 Rarity.EPIC,
-                NobilityRank.DUC,
-                PassiveSkill.FAMILY_IRON_WILL
+                NobilityRank.DUC
         );
     }
 }

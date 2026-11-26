@@ -1,0 +1,39 @@
+{
+  "$Comment": "Rouleau de la Voie Martiale du Clan Luo, genere par scripts/familles/gen_voie_martiale_objets.py. Clic droit : sort Java VoieMartialeParchemin, qui ouvre la fenetre de serment (luo.VoieMartialePage).",
+  "TranslationProperties": {
+    "Name": "Rouleau de la Voie Martiale",
+    "Description": "Rouleau scellé du dojo du Clan Luo. Clic droit pour le dérouler : qui prête serment sur la voie martiale perd tout (niveau, classe, compétences, runes, famille, guilde, argent, objets en main, titres, quêtes) sauf 5 % de ses caractéristiques, et recommence Apprenti en Arts Martiaux."
+  },
+  "Categories": [
+    "Eldanior_Empire_Luo.ArtsMartiaux"
+  ],
+  "Quality": "Epic",
+  "ItemLevel": 40,
+  "Model": "Items/Eldanior/Luo/Voie/Rouleau_Voie_Martiale.blockymodel",
+  "Texture": "Items/Eldanior/Luo/Voie/Eldanior_Parchemin_Voie_Martiale_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Parchemin_Voie_Martiale.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.55,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -10
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Luo_Parchemin_Voie"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Items_Paper",
+  "MaxStack": 1,
+  "DropOnDeath": false
+}

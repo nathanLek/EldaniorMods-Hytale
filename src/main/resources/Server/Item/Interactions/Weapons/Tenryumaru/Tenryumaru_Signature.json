@@ -1,0 +1,25 @@
+{
+  "$Comment": "Signature de Tenryumaru, les Dix Serments (energie pleine) : tout le sort est en Java (DixSerments).",
+  "Type": "StatsCondition",
+  "Costs": {
+    "SignatureEnergy": 100
+  },
+  "ValueType": "Percent",
+  "Next": {
+    "Type": "Serial",
+    "Interactions": [
+      {
+        "Type": "RuneSpell",
+        "RunTime": 0.05,
+        "Spell": "DixSerments"
+      },
+      {
+        "Type": "ChangeStat",
+        "StatModifiers": {
+          "SignatureEnergy": -100
+        },
+        "ValueType": "Percent"
+      }
+    ]
+  }
+}

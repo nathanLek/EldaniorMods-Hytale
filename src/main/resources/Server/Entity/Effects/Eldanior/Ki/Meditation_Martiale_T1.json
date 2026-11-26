@@ -1,0 +1,18 @@
+{
+  "$Comment": "Meditation martiale, palier 1 : posture assise, deplacements, attaque et garde bloques ; aura aucune. Rafraichi par MeditationMartiale (gen_voie_martiale.py). Nom : Méditation.",
+  "ApplicationEffects": {
+    "HorizontalSpeedMultiplier": 0,
+    "MovementEffects": {
+      "DisableAll": true
+    },
+    "AbilityEffects": {
+      "Disabled": [
+        "Primary",
+        "Secondary"
+      ]
+    }
+  },
+  "Duration": 2.5,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": false
+}

@@ -1,0 +1,74 @@
+{
+  "$Comment": "Coup de baionnette : la baionnette est fixee (sort MousquetBaionnette : objet echange contre sa variante _Baionnette pendant 0,65 s), estoc dedie (animation Baionnette du jeu Mousquet), selecteur Stab, 4 blocs.",
+  "Type": "Serial",
+  "Interactions": [
+    {
+      "Type": "RuneSpell",
+      "RunTime": 0.0,
+      "Spell": "MousquetBaionnette"
+    },
+    {
+      "Type": "Simple",
+      "RunTime": 0.18,
+      "HorizontalSpeedMultiplier": 0.6,
+      "Effects": {
+        "ItemAnimationId": "Baionnette",
+        "WorldSoundEventId": "SFX_Spear_Lunge",
+        "LocalSoundEventId": "SFX_Spear_Lunge_Local"
+      },
+      "OnItemChangeBehavior": "Ignore"
+    },
+    {
+      "Type": "Selector",
+      "RunTime": 0.1,
+      "Selector": {
+        "Id": "Stab",
+        "TestLineOfSight": true,
+        "ExtendTop": 0.3,
+        "ExtendLeft": 0.3,
+        "ExtendRight": 0.3,
+        "ExtendBottom": 0.3,
+        "StartDistance": 0.1,
+        "EndDistance": 4.0
+      },
+      "HitEntity": {
+        "Interactions": [
+          {
+            "Type": "DamageEntity",
+            "DamageCalculator": {
+              "BaseDamage": {
+                "Physical": 30
+              }
+            },
+            "EntityStatsOnHit": [
+              {
+                "EntityStatId": "SignatureEnergy",
+                "Amount": 3
+              }
+            ],
+            "DamageEffects": {
+              "Knockback": {
+                "Force": 1,
+                "RelativeX": 0,
+                "RelativeZ": -5,
+                "VelocityY": 3
+              },
+              "WorldSoundEventId": "SFX_Spear_Impact",
+              "WorldParticles": [
+                {
+                  "SystemId": "Impact_Blade_01"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "OnItemChangeBehavior": "Ignore"
+    },
+    {
+      "Type": "Simple",
+      "RunTime": 0.32,
+      "OnItemChangeBehavior": "Ignore"
+    }
+  ]
+}

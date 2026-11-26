@@ -1,0 +1,62 @@
+{
+  "TranslationProperties": {
+    "Name": "Faille de rang D",
+    "Description": "Une déchirure vers un donjon d'un autre plan. Marchez dedans pour y entrer avec votre groupe."
+  },
+  "Icon": "Icons/ItemsGenerated/Eldanior_Faille_Scellee_D.png",
+  "MaxStack": 1,
+  "Quality": "Technical",
+  "BlockType": {
+    "DrawType": "Model",
+    "Material": "Empty",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/Miscellaneous/Map.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Items/Projectiles/Tornado_Texture.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "Goblin_Breach_Portal",
+    "Support": {},
+    "BlockParticleSetId": "Stone",
+    "BlockSoundSetId": "Stone",
+    "PhysicalMaterialId": "Stone",
+    "VariantRotation": "NESW",
+    "AmbientSoundEventId": "SFX_Goblin_World_Breach_Portal",
+    "TextureComputedColor": "#736940",
+    "Interactions": {
+      "CollisionEnter": {
+        "Interactions": [
+          {
+            "Type": "Eldanior_EntrerFaille"
+          }
+        ]
+      }
+    },
+    "Particles": [
+      {
+        "SystemId": "Eldanior_Faille_D_Active",
+        "Scale": 1.32,
+        "PositionOffset": {
+          "Y": 2,
+          "X": 1
+        }
+      }
+    ],
+    "Light": {
+      "Color": "#2196F3"
+    },
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Unbreakable"
+      }
+    }
+  },
+  "PlayerAnimationsId": "Block",
+  "Tags": {
+    "Type": [
+      "Portal"
+    ]
+  }
+}

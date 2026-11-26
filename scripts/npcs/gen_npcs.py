@@ -18,7 +18,7 @@ Usage : python3 gen_npcs.py <src/main/resources> <CAE_Test_Combat_Knight.json va
 import copy, json, os, sys
 
 RES, KNIGHT_CAE = sys.argv[1], sys.argv[2]
-QUEST_ROLE = os.path.join(RES, "Server/NPC/Roles/Intelligent/Neutral/Kweebec/Quest_Npc_Secondaire_Duel_N9.json")
+QUEST_ROLE = os.path.join(RES, "Server/NPC/Roles/Intelligent/Neutral/Kweebec/Quest_Npc_Secondaire_Multiple_N1.json")   # 2026-11-14 : Duel_N9 supprime (identique)
 
 BODY = [
     ("Characters/Body_Attachments/Faces/Player_Face_Detached.blockymodel",
@@ -217,24 +217,7 @@ write("Server/NPC/Balancing/Eldanior/CAE_Eldanior_Npc_Chevalier_Errant.json", er
 # ===== Villageois =====
 write("Server/NPC/Attitude/Roles/Eldanior/Eldanior_Villager.json",
       {"Groups": {"Friendly": ["Eldanior_Guards", "Kweebec", "Feran"]}})
-write("Server/NPC/Roles/Eldanior/Npcs/Eldanior_Npc_Villageois.json", intelligent("Eldanior_Npc_Villageois", {
-    "Appearance": "Player",
-    "MaxHealth": 120,
-    "MaxSpeed": 8,
-    "KnockbackScale": 0.8,
-    "Weapons": [],
-    "OffHand": [],
-    "DefaultOffHandSlot": -1,
-    "NighttimeOffhandSlot": -1,
-    "WakingIdleBehaviorComponent": "Component_Instruction_Eldanior_Leash_Walk",
-    "WanderRadius": 10,
-    "LeashDistance": 50,
-    "HardLeashDistance": 80,
-    "UseCombatActionEvaluator": False,
-    "AttitudeGroup": "Eldanior_Villager",
-    "DefaultPlayerAttitude": "Ignore",
-    "CombatFleeIfTooCloseDistance": 6,
-}))
+# Role du villageois : scripts/npcs/gen_roles_civils.py (role interactif qui marche).
 
 # ===== Aventurier recrutable (role interactif des PNJ de quete) =====
 with open(QUEST_ROLE, encoding="utf-8") as f:

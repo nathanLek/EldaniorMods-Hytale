@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_OrbeStatique (remplace le parchemin rune_page_orbe_statique).",
+  "TranslationProperties": {
+    "Name": "Manuel de Foudre : Orbe Statique",
+    "Description": "Sort rare de foudre (Mage, rune de prédilection du Catalyseur Arcane). Vous libérez un orbe statique qui avance lentement droit devant vous pendant 6 s. Toutes les demi-secondes, il foudroie les ennemis à moins de 4 blocs (12 dégâts). À la fin, ou contre un mur, il explose : 90 dégâts de foudre dans un rayon de 4 blocs et étourdissement 0,5 s. Épargne votre groupe, votre guilde et votre famille. Coût : 120 mana. Recharge : 60 s.\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Foudre"
+  ],
+  "Quality": "Rare",
+  "ItemLevel": 40,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Foudre_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Foudre_OrbeStatique.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

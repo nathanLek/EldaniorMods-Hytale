@@ -1,0 +1,69 @@
+{
+  "$Comment": "Etincelles d'or qui jaillissent sous les pieds et retombent (Spark vanilla).",
+  "RenderMode": "BlendAdd",
+  "ParticleRotationInfluence": "BillboardVelocity",
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "MaxConcurrentParticles": 14,
+  "ParticleRotateWithSpawner": false,
+  "SpawnRate": {
+    "Min": 14,
+    "Max": 14
+  },
+  "SpawnBurst": true,
+  "ParticleLifeSpan": {
+    "Min": 0.45,
+    "Max": 0.7
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Basic/Spark.png",
+    "ScaleRatioConstraint": "OneToOne",
+    "UVOption": "None",
+    "SoftParticles": "Disable",
+    "InitialAnimationFrame": {
+      "Opacity": 1,
+      "Color": "#ffe08a",
+      "Scale": {
+        "X": {
+          "Min": 0.12,
+          "Max": 0.2
+        }
+      }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 1,
+        "Color": "#fff2b0"
+      },
+      "100": {
+        "Opacity": 0,
+        "Color": "#d89a2a"
+      }
+    }
+  },
+  "EmitOffset": {
+    "X": {
+      "Max": 0.35
+    },
+    "Y": {
+      "Max": 0.05
+    },
+    "Z": {
+      "Max": 0.35
+    }
+  },
+  "InitialVelocity": {
+    "Speed": {
+      "Min": 2,
+      "Max": 4
+    },
+    "Yaw": {
+      "Min": -180,
+      "Max": 180
+    },
+    "Pitch": {
+      "Min": -80,
+      "Max": -20
+    }
+  }
+}

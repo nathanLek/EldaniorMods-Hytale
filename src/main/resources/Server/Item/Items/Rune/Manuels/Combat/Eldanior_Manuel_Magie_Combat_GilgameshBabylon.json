@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_GilgameshBabylon (remplace le parchemin rune_page_gilgamesh_babylon).",
+  "TranslationProperties": {
+    "Name": "Manuel de Combat : Gilgamesh Babylon",
+    "Description": "Sort divin de lumière (Guerrier, Dragon). Ouvre la Porte de Babylone, le trésor du roi : 30 armes de lumière (épées, katanas, épées ornementées, espadons) sortent à moitié de portails dorés ouverts en éventail dans votre dos, lame pointée vers votre cible. Vous devenez le roi doré, sous un halo d'ange. À chaque attaque (clic gauche), une arme s'élance vers le point visé, déviée vers l'ennemi le plus proche du viseur : 500 dégâts. Elle reste plantée dans sa cible 2 s avant de se dissoudre. Relancez le sort pour déclencher « Enuma Elish » : toutes les armes restantes partent en rafale et explosent en lumière à l'impact (300 dégâts de zone). Épargne votre groupe, votre guilde et votre famille. Coût : 2000 mana. Recharge : 5 s (valeur de test).\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Combat"
+  ],
+  "Quality": "Divin",
+  "ItemLevel": 100,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Combat_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Combat_GilgameshBabylon.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

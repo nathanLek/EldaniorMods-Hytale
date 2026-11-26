@@ -1,0 +1,62 @@
+{
+  "$Comment": "Fiche de conception : technique du Clan Luo (voie martiale), validee le 2026-11-09, type Luo le 2026-11-09 (docs/plan-clan-luo.md). Apprise par son manuel, aucun butin. Devenue technique de clan le 2026-11-10 (luo.LuoClans.TECHNIQUES) : reservee aux membres du clan, toutes classes.",
+  "id": "Rune_UniteCielTerre",
+  "spell": "UniteCielTerre",
+  "javaClass": "UniteCielTerre",
+  "page": "rune_page_unite_ciel_terre",
+  "name": "Rune de l'Unité du Ciel et de la Terre",
+  "type": "Luo",
+  "rarity": "Legendaire",
+  "emblem": "UniteCielTerre",
+  "classes": "clan",
+  "persistent": true,
+  "summary": "Unite du Ciel et de la Terre : 10 s intouchable, le vent tranche chaque ennemi a 25 blocs (90 toutes les 0,6 s) et le ralentit ; coupe horizontale finale 700 a tous.",
+  "description": "Technique du Clan Luo, enseignée à la classe Dieu Martial de la voie martiale. Vous vous fondez dans la nature pendant 10 s : vous êtes intouchable, et le vent tranche chaque ennemi à 25 blocs (90 dégâts toutes les 0,6 s) en le ralentissant. À la fin, une coupe horizontale unique traverse le monde : 700 dégâts à tous les ennemis de la zone. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Il n'y a rien sur ce rouleau. Le Dieu Martial dit que tout y est. Technique du Clan Luo : elle s'apprend dans son manuel, jamais en butin.",
+  "keywords": [
+    "Damage",
+    "Aoe",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": {},
+  "cast": {
+    "animationSet": "Sword",
+    "charging": "SwingLeftSpinJumpCharging",
+    "release": "SwingLeftSpinJumpCharged",
+    "chargeTime": 1.0,
+    "releaseTime": 0.6,
+    "moveSpeed": 0.6,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Longsword_Special_Impact",
+    "handParticles": null,
+    "handParticlesScale": 0.6,
+    "costMoment": "start"
+  },
+  "design": {
+    "radius": "25",
+    "persistentDurationS": 10,
+    "targets": "zone",
+    "effects": "intouchable (onOwnerHurt -> 0), 90 Wind / 0,6 s par ennemi + ralentissement, coupe finale 700",
+    "balance": {
+      "damage": 5,
+      "range": 4,
+      "duration": 4,
+      "mobility": 0,
+      "control": 0,
+      "defense": 4,
+      "targets": 4,
+      "frequency": 0,
+      "terrain": 0,
+      "difficulty": 3
+    }
+  },
+  "category": "Eldanior_Empire_Luo.Runes",
+  "manual": "Eldanior_Manuel_Luo_UniteCielTerre",
+  "$Comment_manual": "Technique apprise par son manuel secret (gen_voie_martiale_objets.py) : pas de parchemin rune_page_*."
+}

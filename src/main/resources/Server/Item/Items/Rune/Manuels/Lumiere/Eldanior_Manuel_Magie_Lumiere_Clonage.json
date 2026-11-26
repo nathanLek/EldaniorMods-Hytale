@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_Clonage (remplace le parchemin rune_page_clonage).",
+  "TranslationProperties": {
+    "Name": "Manuel de Lumière : Clonage",
+    "Description": "Sort épique de lumière (Mage, Dragon, Guerrier, Assassin, Archer). Cinq copies parfaites de vous-même apparaissent pendant 20 s : même apparence, même nom, même arme de corps à corps (ou mains nues), la moitié de votre vie. Impossible de savoir qui est le vrai. Clic droit sur un ennemi : un clone libre fonce sur lui et devient autonome jusqu'à la fin du sort ; il le combat avec les vraies attaques de votre arme, puis s'attaque seul à chaque monstre proche. Cliquez à nouveau pour lancer un autre clone. Les monstres voient vos clones et les attaquent ; un clone vaincu se dissipe. Coût : 300 mana. Recharge : 5 s.\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Lumiere"
+  ],
+  "Quality": "Epic",
+  "ItemLevel": 60,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Lumiere_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Lumiere_Clonage.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

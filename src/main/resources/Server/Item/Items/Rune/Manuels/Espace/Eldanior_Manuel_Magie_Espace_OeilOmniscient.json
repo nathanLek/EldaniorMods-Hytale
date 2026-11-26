@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_OeilOmniscient (remplace le parchemin rune_page_oeil_omniscient).",
+  "TranslationProperties": {
+    "Name": "Manuel de l'Espace : Œil Omniscient",
+    "Description": "Sort unique d'espace (Mage, rune de prédilection du Visionnaire Suprême). Un œil s'ouvre au-dessus de vous pendant 15 s. Un clic droit sur un ennemi visible (jusqu'à 40 blocs) échange instantanément vos places : il subit 150 dégâts et reste étourdi 1,5 s. 4 échanges au plus, une seconde d'écart entre deux. Le clic gauche reste une attaque normale. Coût : 600 mana. Recharge : 180 s.\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Espace"
+  ],
+  "Quality": "Unique",
+  "ItemLevel": 75,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Espace_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Espace_OeilOmniscient.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

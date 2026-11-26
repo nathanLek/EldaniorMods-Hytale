@@ -1,0 +1,165 @@
+{
+  "$Comment": "Affiche de propriete (territory/pancarte) : liee a un bien, F ouvre sa fenetre ; etats Vendre / Louer / VendreLouer / Occupe selon le bien (Pancartes.refreshPoster). Genere par scripts/territoire/gen_pancarte.py.",
+  "TranslationProperties": {
+    "Name": "Affiche de propriété",
+    "Description": "Se colle contre un mur. Liez-la à un bien proche (admins : tout bien ; joueurs : leurs biens). Touche F : informations, achat et location ; le propriétaire y règle le prix, le loyer et les accès."
+  },
+  "Icon": "Icons/ItemsGenerated/Eldanior_Affiche_Propriete.png",
+  "IconProperties": {
+    "Scale": 0.9,
+    "Translation": [
+      0,
+      -4
+    ],
+    "Rotation": [
+      0,
+      180,
+      0
+    ]
+  },
+  "Categories": [
+    "Eldanior_System.Autres"
+  ],
+  "Quality": "Uncommon",
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  },
+  "Recipe": {
+    "Input": [
+      {
+        "ItemId": "Ingredient_Fabric_Scrap_Cotton",
+        "Quantity": 1
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Id": "Builders",
+        "Type": "StructuralCrafting",
+        "Categories": [
+          "Sign"
+        ]
+      }
+    ]
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/Eldanior/Territoire/Affiche_Propriete.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Weight": 1,
+        "Texture": "Blocks/Eldanior/Territoire/Affiche_Propriete.png"
+      }
+    ],
+    "State": {
+      "Definitions": {
+        "Vendre": {
+          "CustomModel": "Blocks/Eldanior/Territoire/Affiche_Propriete.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Weight": 1,
+              "Texture": "Blocks/Eldanior/Territoire/Affiche_Propriete_Vendre.png"
+            }
+          ],
+          "Interactions": {
+            "Use": {
+              "Interactions": [
+                {
+                  "Type": "Simple"
+                }
+              ]
+            }
+          }
+        },
+        "Louer": {
+          "CustomModel": "Blocks/Eldanior/Territoire/Affiche_Propriete.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Weight": 1,
+              "Texture": "Blocks/Eldanior/Territoire/Affiche_Propriete_Louer.png"
+            }
+          ],
+          "Interactions": {
+            "Use": {
+              "Interactions": [
+                {
+                  "Type": "Simple"
+                }
+              ]
+            }
+          }
+        },
+        "Occupe": {
+          "CustomModel": "Blocks/Eldanior/Territoire/Affiche_Propriete.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Weight": 1,
+              "Texture": "Blocks/Eldanior/Territoire/Affiche_Propriete_Occupe.png"
+            }
+          ],
+          "Interactions": {
+            "Use": {
+              "Interactions": [
+                {
+                  "Type": "Simple"
+                }
+              ]
+            }
+          }
+        },
+        "VendreLouer": {
+          "CustomModel": "Blocks/Eldanior/Territoire/Affiche_Propriete.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Weight": 1,
+              "Texture": "Blocks/Eldanior/Territoire/Affiche_Propriete_VendreLouer.png"
+            }
+          ],
+          "Interactions": {
+            "Use": {
+              "Interactions": [
+                {
+                  "Type": "Simple"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "HitboxType": "Sign_Wall",
+    "VariantRotation": "NESW",
+    "Support": {
+      "North": [
+        {
+          "FaceType": "Full"
+        }
+      ]
+    },
+    "Gathering": {
+      "Soft": {
+        "IsWeaponBreakable": false
+      }
+    },
+    "BlockParticleSetId": "Dust",
+    "BlockSoundSetId": "Cloth",
+    "PhysicalMaterialId": "Wool",
+    "ParticleColor": "#e2cea0",
+    "TextureComputedColor": "#c9b07c",
+    "InteractionHint": "server.interactionHints.eldanior_pancarte",
+    "Interactions": {
+      "Use": {
+        "Interactions": [
+          {
+            "Type": "Simple"
+          }
+        ]
+      }
+    }
+  },
+  "PlayerAnimationsId": "Block",
+  "ItemSoundSetId": "ISS_Blocks_Wood",
+  "MaxStack": 16
+}

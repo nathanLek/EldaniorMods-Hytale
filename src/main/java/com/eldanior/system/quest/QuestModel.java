@@ -89,7 +89,7 @@ public class QuestModel {
             case CHASSE -> "Tuer " + targetAmount + " " + formatMobName(targetId);
             case MASSACRE -> "Tuer " + targetAmount + " monstres";
             case EXPLORATION -> "Decouvrir " + targetAmount + " coffres";
-            case COLLECTION -> "Accumuler " + targetAmount + " Or";
+            case COLLECTION -> "Verser " + com.eldanior.system.shop.CoinWallet.format(targetAmount) + " à la banque";   // 2026-11-14
             case DUEL -> "Gagner " + targetAmount + " duels";
             case EXECUTION -> "Eliminer le criminel";
             case MINAGE -> "Apporter " + targetAmount + " " + formatItemName(targetId);

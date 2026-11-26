@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_PrisonDeGlace (remplace le parchemin rune_page_prison_de_glace).",
+  "TranslationProperties": {
+    "Name": "Manuel de Glace : Prison de Glace",
+    "Description": "Sort rare de glace (Mage, rune de prédilection du Glacial Mage). L'ennemi visé (25 blocs) est enfermé dans une prison de blocs de glace et gelé pendant 1,5 s. Puis la prison éclate : 100 dégâts de glace à la cible, ralentie 6 s, et 40 aux ennemis à moins de 3 blocs. Une cible gelée peut être brisée par la Lance de Cristal. Épargne votre groupe, votre guilde et votre famille. Coût : 120 mana. Recharge : 60 s.\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Glace"
+  ],
+  "Quality": "Rare",
+  "ItemLevel": 40,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Glace_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Glace_PrisonDeGlace.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

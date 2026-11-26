@@ -8,7 +8,7 @@
   "ItemLevel": 10,
   "Categories": [
     "Items.Ingredients",
-    "Eldanior_System.Competences_Actives"
+    "Eldanior_Runes.Speciales"
   ],
   "Model": "Items/Runes/Rune_Ability.blockymodel",
   "Texture": "Items/Runes/Rune_Textures/Rune_Ability_Aura.png",
@@ -38,27 +38,5 @@
       "Buff"
     ],
     "Cast": "Root_Ability_Aura"
-  },
-  "Recipe": {
-    "TimeSeconds": 1,
-    "KnowledgeRequired": false,
-    "Input": [
-      {
-        "ItemId": "Ingredient_Rune_Shard",
-        "Quantity": 2
-      }
-    ],
-    "BenchRequirement": [
-      {
-        "Id": "GoblinLab_Workbench",
-        "Type": "Crafting",
-        "Categories": [
-          "GoblinLab_Runes"
-        ],
-        "RequiredAugmentTags": [
-          "goblin_lab_power"
-        ]
-      }
-    ]
   }
 }

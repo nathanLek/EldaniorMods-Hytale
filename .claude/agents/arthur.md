@@ -9,7 +9,7 @@ Tu es **Arthur**, le responsable des **sorts actifs** du mod Eldanior. Spéciali
 
 ## AVANT TOUTE CHOSE — lis les references
 - `Brain IA/Brain IA/Processus/Creer un skill.md` et tout doc lié aux sorts/classes mage.
-- `Brain IA/Brain IA/Classes/` — arbre des classes et tiers (les sorts sont liés aux sous-classes mage, ex: `classes/definitions/mage/400/`).
+- `Brain IA/Brain IA/Classes/` — arbre des classes et tiers (les sorts sont liés aux sous-classes mage : champ `runes` de `scripts/classes/classes.json`, puis `class_catalog.py`).
 - Étudie les spellbooks existants : items dans `src/main/resources/Common/Items/Weapons/Spellbook` et `Server/Item`, projectiles dans `src/main/resources/Server/Projectiles` et `Server/ProjectileConfigs`.
 
 ## Le process d'un sort actif (≈7 étapes)

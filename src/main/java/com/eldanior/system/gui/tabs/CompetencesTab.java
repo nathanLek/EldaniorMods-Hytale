@@ -4,10 +4,7 @@ import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.classes.ClassManager;
 import com.eldanior.system.classes.models.ClassModel;
 import com.eldanior.system.config.Player.PlayerLevelData;
-import com.eldanior.system.titles.nobility.family.FamilyManager;
-import com.eldanior.system.titles.nobility.family.NobleFamilyModel;
-import com.eldanior.system.skills.SkillManager;
-import com.eldanior.system.skills.models.SkillModel;
+import com.eldanior.system.skills.skillsInteraction.Metier;
 import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
 import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.component.ComponentType;
@@ -31,59 +28,69 @@ public class CompetencesTab {
 
     private static class PlayerSkillState {
         int currentPage = 0;
-        boolean viewingActives = false;
+        boolean viewingActives = true;                 // runes actives d'abord (2026-11-12)
         boolean hasCooldownActive = false;
         final Map<Integer, CooldownEntry> activeCooldowns = new HashMap<>();
+        String pendingForget = null;                   // passif en attente de confirmation d'oubli
+        int filter = 0;                                // filtre par theme (0 = tout)
     }
 
-    // Rarity order: DIVINE (highest) -> COMMON (lowest)
-    private static final List<String> RARITY_ORDER = List.of(
-            "DIVIN", "LEGENDAIRE", "FAMILLE", "UNIQUE", "EPIQUE", "RARE", "UNCOMMON", "COMMUN", ""
-    );
+    /** Une ligne de la liste : un passif (avec son rang) ou un metier. */
+    private record Entry(String id, PassiveSkill skill, int rank, Metier metier, boolean learned) {}
 
-    private static List<String> buildSkillList(PlayerLevelData data) {
-        Set<String> seen = new LinkedHashSet<>();
-
+    /** Passifs actifs ou desactives du joueur (classe + appris), puis ses metiers. Tri : rang le plus haut d'abord. */
+    private static List<Entry> buildEntries(PlayerLevelData data) {
+        Map<PassiveSkill, Integer> ranks = new LinkedHashMap<>();
         ClassModel classModel = ClassManager.get(data.getPlayerClassId());
-        if (classModel != null && classModel.getSkillsPassiveIds() != null) {
-            for (PassiveSkill ps : classModel.getSkillsPassiveIds()) {
-                seen.add(ps.name());
-            }
+        if (classModel != null) for (PassiveSkill.Ranked r : classModel.getClassPassives()) ranks.merge(r.skill(), r.rank(), Math::max);
+        for (String id : data.getUnlockedSkills()) {
+            PassiveSkill p = PassiveSkill.fromName(id);
+            if (p != null) ranks.merge(p, data.getLearnedRank(id), Math::max);
         }
-        if (classModel != null && classModel.getActiveSkillIds() != null) {
-            seen.addAll(classModel.getActiveSkillIds());
+        List<Entry> passives = new ArrayList<>();
+        for (Map.Entry<PassiveSkill, Integer> e : ranks.entrySet()) {
+            passives.add(new Entry(e.getKey().name(), e.getKey(), e.getValue(), null, data.getLearnedRank(e.getKey().name()) > 0));
         }
-
-        String familyId = data.getNobleFamilyId();
-        if (familyId != null && !familyId.isEmpty()) {
-            NobleFamilyModel family = FamilyManager.get(familyId);
-            if (family != null && family.getFamilyPassive() != null) {
-                seen.add(family.getFamilyPassive().name());
-            }
+        passives.sort(Comparator.comparingInt((Entry e) -> -e.rank()).thenComparing(e -> e.skill().getTheme().ordinal())
+                .thenComparing(e -> e.skill().getDisplayName()));
+        List<Entry> out = new ArrayList<>(passives);
+        for (Metier m : Metier.values()) {
+            if (data.hasMetier(m)) out.add(new Entry(m.name(), null, 0, m, data.getUnlockedSkills().contains(m.name())));
         }
-
-        List<String> unlocked = data.getUnlockedSkills();
-        if (unlocked != null) {
-            seen.addAll(unlocked);
-        }
-
-        Set<String> enabled = data.getEnabledSkills();
-        if (enabled != null) {
-            seen.addAll(enabled);
-        }
-
-        return new ArrayList<>(seen);
-    }
-
-    private static int rarityIndex(String rarity) {
-        int idx = RARITY_ORDER.indexOf(rarity);
-        return idx >= 0 ? idx : RARITY_ORDER.size();
+        return out;
     }
 
     private static java.util.UUID getPlayerUUID(Ref<EntityStore> ref, Store<EntityStore> store) {
         com.hypixel.hytale.server.core.universe.PlayerRef pRef = store.getComponent(ref, com.hypixel.hytale.server.core.universe.PlayerRef.getComponentType());
         if (pRef == null) return new java.util.UUID(0, 0);
         try { return com.eldanior.system.config.UUIDExtractor.getUUID(pRef); } catch (Exception e) { return new java.util.UUID(0, 0); }
+    }
+
+    /** Filtres par theme (boutons #SkillFilter0..9). */
+    private static final String[] FILTERS = {"Tout", "Attaque", "Magie", "Défense", "Vie", "Endurance", "Agilité", "Chance", "Divin", "Métiers"};
+
+    private static boolean matches(Entry e, int filter) {
+        if (filter <= 0) return true;
+        if (filter == 9) return e.metier() != null;
+        if (e.skill() == null) return false;
+        return switch (filter) {
+            case 1 -> e.skill().getTheme() == PassiveSkill.Theme.ATTAQUE;
+            case 2 -> e.skill().getTheme() == PassiveSkill.Theme.MAGIE;
+            case 3 -> e.skill().getTheme() == PassiveSkill.Theme.DEFENSE;
+            case 4 -> e.skill().getTheme() == PassiveSkill.Theme.VIE;
+            case 5 -> e.skill().getTheme() == PassiveSkill.Theme.ENDURANCE;
+            case 6 -> e.skill().getTheme() == PassiveSkill.Theme.AGILITE;
+            case 7 -> e.skill().getTheme() == PassiveSkill.Theme.CHANCE;
+            case 8 -> e.skill().isDivine();
+            default -> true;
+        };
+    }
+
+    /** Liste affichee : celle du joueur, filtree par theme. */
+    private static List<Entry> visibleEntries(PlayerLevelData data, PlayerSkillState state) {
+        List<Entry> out = new ArrayList<>();
+        for (Entry e : buildEntries(data)) if (matches(e, state.filter)) out.add(e);
+        return out;
     }
 
     public static void populate(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store) {
@@ -95,201 +102,219 @@ public class CompetencesTab {
         state.hasCooldownActive = false;
         state.activeCooldowns.clear();
 
-        List<String> allSkillIds = buildSkillList(data);
+        ui.set("#SkillTabPassive.Background", state.viewingActives ? "#141a24" : "#3d2f14");
+        ui.set("#SkillTabActive.Background", state.viewingActives ? "#3d2f14" : "#141a24");
+        ui.set("#SkillTabPassiveOn.Visible", !state.viewingActives);
+        ui.set("#SkillTabActiveOn.Visible", state.viewingActives);
 
-        // Build SkillInfo for all skills
-        List<SkillEntry> passives = new ArrayList<>();
-        List<SkillEntry> actives = new ArrayList<>();
-
-        for (String skillId : allSkillIds) {
-            SkillInfo info = getSkillInfo(skillId);
-            SkillEntry entry = new SkillEntry(skillId, info);
-            if ("Active".equals(info.type)) {
-                actives.add(entry);
-            } else {
-                passives.add(entry);
-            }
+        // Actives = runes (emplacements et sac, RunesTab) ; Passives = competences passives et metiers (liste ci-dessous)
+        ui.set("#RuneManager.Visible", state.viewingActives);
+        ui.set("#SkillPager.Visible", !state.viewingActives);
+        ui.set("#SkillCardList.Visible", !state.viewingActives);
+        ui.set("#SkillFilters.Visible", !state.viewingActives);
+        ui.set("#SkillSummary.Visible", !state.viewingActives);
+        if (state.viewingActives) {
+            for (int i = 0; i < MAX_SKILL_SLOTS; i++) ui.set("#SkillCard" + i + ".Visible", false);
+            RunesTab.populate(ui, ref, store);
+            return;
         }
 
-        // Sort by rarity (inverse: DIVINE first, COMMON last)
-        Comparator<SkillEntry> byRarity = Comparator.comparingInt(e -> rarityIndex(e.info.rarity));
-        passives.sort(byRarity);
-        actives.sort(byRarity);
+        // Filtres et resume
+        for (int k = 0; k < FILTERS.length; k++) {
+            boolean on = k == state.filter;
+            ui.set("#SkillFilter" + k + ".Background", on ? "#3d2f14" : "#141a24");
+        }
+        List<Entry> all = buildEntries(data);
+        int actives = 0, mastered = 0, metiers = 0;
+        for (Entry e : all) {
+            if (e.metier() != null) { metiers++; continue; }
+            if (data.isSkillEnabled(e.id())) actives++;
+            if (data.isSkillMastered(e.id())) mastered++;
+        }
+        ui.set("#SkillSummary.Text", actives + " passif(s) actif(s)   ·   " + data.countLearnedPassives() + " / " + PlayerLevelData.MAX_LEARNED_PASSIVES
+                + " appris   ·   " + mastered + " maîtrisé(s)   ·   " + metiers + " métier(s)");
 
-        // Select current list
-        List<SkillEntry> currentList = state.viewingActives ? actives : passives;
-        int totalItems = currentList.size();
-        int totalPages = Math.max(1, (int) Math.ceil((double) totalItems / MAX_SKILL_SLOTS));
+        List<Entry> list = visibleEntries(data, state);
+        int totalPages = Math.max(1, (int) Math.ceil((double) list.size() / MAX_SKILL_SLOTS));
         if (state.currentPage >= totalPages) state.currentPage = totalPages - 1;
         if (state.currentPage < 0) state.currentPage = 0;
-
         int startIdx = state.currentPage * MAX_SKILL_SLOTS;
 
-        // Header
-        String sectionName = state.viewingActives ? "ACTIVES" : "PASSIVES";
-        ui.set("#SkillCount.Text", "COMPETENCES " + sectionName + " (" + totalItems + ")");
+        ui.set("#SkillCount.Text", state.filter == 0 ? "PASSIFS ET MÉTIERS (" + all.size() + ")"
+                : FILTERS[state.filter].toUpperCase() + " (" + list.size() + ")");
         ui.set("#SkillPage.Text", "Page " + (state.currentPage + 1) + " / " + totalPages);
-
-        // Tab buttons highlight via background
-        ui.set("#SkillTabPassive.Background", state.viewingActives ? "#1a2a3a" : "#2a4a6a");
-        ui.set("#SkillTabActive.Background", state.viewingActives ? "#2a4a6a" : "#1a2a3a");
 
         for (int i = 0; i < MAX_SKILL_SLOTS; i++) {
             int listIdx = startIdx + i;
-            if (listIdx < currentList.size()) {
-                SkillEntry entry = currentList.get(listIdx);
-                SkillInfo info = entry.info;
-                boolean enabled = data.isSkillEnabled(entry.skillId);
-                String rarityColor = getSkillRarityColor(info.rarity);
+            if (listIdx >= list.size()) { ui.set("#SkillCard" + i + ".Visible", false); continue; }
+            Entry e = list.get(listIdx);
+            ui.set("#SkillCard" + i + ".Visible", true);
 
-                ui.set("#SkillCard" + i + ".Visible", true);
-                ui.set("#SkillName" + i + ".Text", info.name);
-                ui.set("#SkillType" + i + ".Text", info.rarity.isEmpty() ? info.type : info.rarity);
-                ui.set("#SkillDesc" + i + ".Text", info.description);
+            if (e.metier() != null) {
+                ui.set("#SkillName" + i + ".Text", e.metier().getDisplayName());
+                origin(ui, i, e.learned() ? "APPRIS" : "CLASSE");
+                ui.set("#SkillType" + i + ".Text", "MÉTIER  ·  PALIER " + data.getCraftTier(e.id()).name());
+                ui.set("#SkillDesc" + i + ".Text", e.metier().getDescription());
+                ui.set("#SkillNext" + i + ".Visible", true);
+                ui.set("#SkillNext" + i + ".Text", "Progresse en fabriquant ; ne compte pas dans la limite de passifs.");
+                ui.set("#SkillBorder" + i + ".Background", "#b08a4a");
+                ui.set("#SkillType" + i + ".Style.TextColor", "#b08a4a");
+                ui.set("#SkillPips" + i + ".Visible", false);
+                mastery(ui, i, data.getSkillProgression(e.id()), data.isSkillMastered(e.id()));
+                ui.set("#SkillCd" + i + ".Visible", false);
+                ui.set("#SkillActiveBar" + i + ".Visible", true);
+                ui.set("#SkillStateBadge" + i + ".Visible", false);
+                ui.set("#SkillToggle" + i + ".Visible", false);
+                ui.set("#SkillCdTimer" + i + ".Visible", false);
+                ui.set("#SkillToggleWrap" + i + ".Background", "#2a2410");
+                ui.set("#SkillForget" + i + ".Visible", false);
+                continue;
+            }
 
-                // Rarity color on border + type label
-                ui.set("#SkillBorder" + i + ".Background", rarityColor);
-                ui.set("#SkillType" + i + ".Style.TextColor", rarityColor);
+            PassiveSkill skill = e.skill();
+            int rank = e.rank();
+            String color = getSkillRarityColor(PassiveSkill.rankKey(rank));
+            boolean isMastered = data.isSkillMastered(e.id());
+            ui.set("#SkillName" + i + ".Text", skill.getDisplayName());
+            origin(ui, i, e.learned() ? "APPRIS" : "CLASSE");
+            String rankName = skill.getRankName(rank);
+            ui.set("#SkillType" + i + ".Text", skill.isDivine()
+                    ? skill.getTheme().label + "  ·  Divin  ·  un seul pouvoir divin"
+                    : PassiveSkill.rankLabel(rank) + "  ·  rang " + rank + " / " + skill.getMaxRank() + "  ·  " + skill.getTheme().label
+                    + (rankName.equals(skill.getDisplayName()) ? "" : "  ·  " + rankName));
+            ui.set("#SkillDesc" + i + ".Text", skill.getDescription(rank) + (isMastered ? "  (maîtrisé : effet +10 %)" : ""));
+            ui.set("#SkillBorder" + i + ".Background", color);
+            ui.set("#SkillType" + i + ".Style.TextColor", color);
 
-                // --- Colonne stats : Mana / Endurance / Vie / Cooldown / Taux ---
-                long remainingCd = data.getRemainingCooldown(entry.skillId.toUpperCase());
-                float progression = data.getSkillProgression(entry.skillId);
-                boolean mastered = data.isSkillMastered(entry.skillId);
+            // Prochain rang
+            int next = 0;
+            for (int r = rank + 1; r <= skill.getMaxRank() && !skill.isDivine(); r++) if (skill.hasRank(r)) { next = r; break; }
+            ui.set("#SkillNext" + i + ".Visible", next > 0 || (!skill.isDivine() && rank >= skill.getMaxRank()));
+            if (next > 0) ui.set("#SkillNext" + i + ".Text", "Rang suivant (" + PassiveSkill.rankLabel(next) + ") : " + skill.getDescription(next));
+            else if (!skill.isDivine()) ui.set("#SkillNext" + i + ".Text", "Rang le plus haut atteint.");
 
-                // Mana (bleu)
-                ui.set("#SkillMana" + i + ".Visible", info.manaCost > 0);
-                if (info.manaCost > 0) {
-                    ui.set("#SkillManaVal" + i + ".Text", String.valueOf(info.manaCost));
+            // Pastilles de rang : atteint = couleur du rang, a venir = gris, absent de la serie = presque invisible
+            ui.set("#SkillPips" + i + ".Visible", !skill.isDivine());
+            if (!skill.isDivine()) {
+                for (int k = 0; k < 6; k++) {
+                    int r = k + 1;
+                    String c = !skill.hasRank(r) ? "#141a22" : r <= rank ? getSkillRarityColor(PassiveSkill.rankKey(r)) : "#2c3644";
+                    ui.set("#SkillPip" + i + "R" + k + ".Background", c);
                 }
+            }
+            mastery(ui, i, data.getSkillProgression(e.id()), isMastered);
 
-                // Endurance (jaune-vert)
-                ui.set("#SkillEndurance" + i + ".Visible", info.enduranceCost > 0);
-                if (info.enduranceCost > 0) {
-                    ui.set("#SkillEnduranceVal" + i + ".Text", (int)(info.enduranceCost * 100) + "%");
-                }
+            ui.set("#SkillCd" + i + ".Visible", skill.getCooldownSeconds() > 0);
+            if (skill.getCooldownSeconds() > 0) ui.set("#SkillCdVal" + i + ".Text", formatCooldownMax(skill.getCooldownSeconds()));
 
-                // Vie (rouge)
-                ui.set("#SkillLife" + i + ".Visible", info.lifeCost > 0);
-                if (info.lifeCost > 0) {
-                    ui.set("#SkillLifeVal" + i + ".Text", (int)(info.lifeCost * 100) + "%");
-                }
+            // Oublier : seulement un passif appris (un passif de classe reste) ; deuxieme clic = confirmation
+            boolean confirm = e.id().equals(state.pendingForget);
+            ui.set("#SkillForget" + i + ".Visible", e.learned());
+            ui.set("#SkillForget" + i + ".Text", confirm ? "SÛR ?" : "OUBLIER");
 
-                // Cooldown (orange) — badge affiche toujours le MAX
-                ui.set("#SkillCd" + i + ".Visible", info.cooldownMax > 0);
-                if (info.cooldownMax > 0) {
-                    ui.set("#SkillCdVal" + i + ".Text", formatCooldownMax(info.cooldownMax));
-                }
-
-                // Taux / Maitrise (vert)
-                ui.set("#SkillMastery" + i + ".Visible", true);
-                ui.set("#SkillMasteryVal" + i + ".Text", mastered ? "MAX" : String.format("%.2f%%", progression));
-
-                // --- 3 états : ACTIF / INACTIF / EN RECHARGE ---
-                if ("Active".equals(info.type)) {
-                    // Skills actifs : gestion spéciale (give item)
-                    boolean alreadyHas = false;
-                    var skillOpt = SkillManager.getSkillFromId(entry.skillId);
-                    if (skillOpt.isPresent() && skillOpt.get().catalystId() != null) {
-                        com.hypixel.hytale.server.core.entity.entities.Player p =
-                                store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
-                        if (p != null) {
-                            alreadyHas = playerHasItem(p, skillOpt.get().catalystId())
-                                    || personalChestHasItem(ref, store, skillOpt.get().catalystId());
-                        }
-                    }
-                    ui.set("#SkillActiveBar" + i + ".Visible", alreadyHas);
-                    ui.set("#SkillStateBadge" + i + ".Visible", false);
-                    ui.set("#SkillToggle" + i + ".Visible", !alreadyHas);
-                    ui.set("#SkillCdTimer" + i + ".Visible", false);
-                    ui.set("#SkillToggleWrap" + i + ".Background", "#2a3040");
-                } else if (remainingCd > 0) {
-                    // EN RECHARGE
-                    state.hasCooldownActive = true;
-                    state.activeCooldowns.put(i, new CooldownEntry(System.currentTimeMillis() + remainingCd));
-                    ui.set("#SkillActiveBar" + i + ".Visible", false);
-                    ui.set("#SkillStateBadge" + i + ".Visible", true);
-                    ui.set("#SkillStateBadge" + i + ".Text", "RECHARGE");
-                    ui.set("#SkillStateBadge" + i + ".Style.TextColor", "#ef9f27");
-                    ui.set("#SkillStateBadge" + i + ".Background", "#2a2410");
-                    ui.set("#SkillToggleWrap" + i + ".Background", "#2a2410");
-                    ui.set("#SkillToggle" + i + ".Visible", false);
-                    ui.set("#SkillCdTimer" + i + ".Visible", true);
-                    ui.set("#SkillCdTimer" + i + ".Text", formatCooldown(remainingCd));
-                } else if (enabled) {
-                    // ACTIF
-                    ui.set("#SkillActiveBar" + i + ".Visible", true);
-                    ui.set("#SkillStateBadge" + i + ".Visible", true);
-                    ui.set("#SkillStateBadge" + i + ".Text", "ACTIVE");
-                    ui.set("#SkillStateBadge" + i + ".Style.TextColor", "#7ed47e");
-                    ui.set("#SkillStateBadge" + i + ".Background", "#1a3a1a");
-                    ui.set("#SkillToggleWrap" + i + ".Background", "#1a3a1a");
-                    ui.set("#SkillToggle" + i + ".Visible", true);
-                    ui.set("#SkillToggle" + i + ".Text", "ON");
-                    ui.set("#SkillCdTimer" + i + ".Visible", false);
-                } else {
-                    // INACTIF
-                    ui.set("#SkillActiveBar" + i + ".Visible", false);
-                    ui.set("#SkillStateBadge" + i + ".Visible", false);
-                    ui.set("#SkillToggleWrap" + i + ".Background", "#2a3040");
-                    ui.set("#SkillToggle" + i + ".Visible", true);
-                    ui.set("#SkillToggle" + i + ".Text", "OFF");
-                    ui.set("#SkillCdTimer" + i + ".Visible", false);
-                }
+            long remainingCd = data.getRemainingCooldown(e.id());
+            boolean enabled = data.isSkillEnabled(e.id());
+            if (remainingCd > 0) {
+                state.hasCooldownActive = true;
+                state.activeCooldowns.put(i, new CooldownEntry(System.currentTimeMillis() + remainingCd));
+                ui.set("#SkillActiveBar" + i + ".Visible", false);
+                ui.set("#SkillStateBadge" + i + ".Visible", true);
+                ui.set("#SkillStateBadge" + i + ".Text", "RECHARGE");
+                ui.set("#SkillStateBadge" + i + ".Style.TextColor", "#ef9f27");
+                ui.set("#SkillStateBadge" + i + ".Background", "#2a2410");
+                ui.set("#SkillToggleWrap" + i + ".Background", "#2a2410");
+                ui.set("#SkillToggle" + i + ".Visible", false);
+                ui.set("#SkillCdTimer" + i + ".Visible", true);
+                ui.set("#SkillCdTimer" + i + ".Text", formatCooldown(remainingCd));
+            } else if (enabled) {
+                ui.set("#SkillActiveBar" + i + ".Visible", true);
+                ui.set("#SkillStateBadge" + i + ".Visible", true);
+                ui.set("#SkillStateBadge" + i + ".Text", "ACTIF");
+                ui.set("#SkillStateBadge" + i + ".Style.TextColor", "#7ed47e");
+                ui.set("#SkillStateBadge" + i + ".Background", "#1a3a1a");
+                ui.set("#SkillToggleWrap" + i + ".Background", "#16301a");
+                ui.set("#SkillToggle" + i + ".Visible", true);
+                ui.set("#SkillToggle" + i + ".Text", "ON");
+                ui.set("#SkillCdTimer" + i + ".Visible", false);
             } else {
-                ui.set("#SkillCard" + i + ".Visible", false);
+                ui.set("#SkillActiveBar" + i + ".Visible", false);
+                ui.set("#SkillStateBadge" + i + ".Visible", true);
+                ui.set("#SkillStateBadge" + i + ".Text", "DÉSACTIVÉ");
+                ui.set("#SkillStateBadge" + i + ".Style.TextColor", "#8a96a6");
+                ui.set("#SkillStateBadge" + i + ".Background", "#222a36");
+                ui.set("#SkillToggleWrap" + i + ".Background", "#1e2430");
+                ui.set("#SkillToggle" + i + ".Visible", true);
+                ui.set("#SkillToggle" + i + ".Text", "OFF");
+                ui.set("#SkillCdTimer" + i + ".Visible", false);
             }
         }
     }
 
-    public static boolean handleToggle(String slotIndex, Ref<EntityStore> ref, Store<EntityStore> store) {
-        int idx;
-        try { idx = Integer.parseInt(slotIndex); } catch (NumberFormatException e) { return false; }
+    /** Etiquette d'origine : CLASSE (donne par la classe) ou APPRIS (page, parchemin). */
+    private static void origin(UICommandBuilder ui, int i, String text) {
+        ui.set("#SkillOrigin" + i + ".Visible", true);
+        ui.set("#SkillOrigin" + i + ".Text", text);
+        ui.set("#SkillOrigin" + i + ".Background", "CLASSE".equals(text) ? "#2b2440" : "#1f3040");
+        ui.set("#SkillOrigin" + i + ".Style.TextColor", "CLASSE".equals(text) ? "#c3a8f0" : "#9fd0f0");
+    }
 
+    /** Barre de maitrise en 10 segments et pourcentage (MAITRISE dore a 100 %). */
+    private static void mastery(UICommandBuilder ui, int i, float progression, boolean mastered) {
+        int filled = mastered ? 10 : (int) Math.floor(progression / 10f);
+        for (int k = 0; k < 10; k++) {
+            ui.set("#SkillMa" + i + "S" + k + ".Background", k < filled ? (mastered ? "#FFD700" : "#4caf50") : "#222a36");
+        }
+        ui.set("#SkillMasteryVal" + i + ".Text", mastered ? "MAÎTRISÉ" : String.format(java.util.Locale.FRANCE, "%.1f %%", progression));
+        ui.set("#SkillMasteryVal" + i + ".Style.TextColor", mastered ? "#FFD700" : "#7ed47e");
+    }
+
+    /** Choix d'un filtre par theme. */
+    public static void setFilter(java.util.UUID uuid, String index) {
+        PlayerSkillState s = getState(uuid);
+        try { s.filter = Math.max(0, Math.min(FILTERS.length - 1, Integer.parseInt(index))); } catch (NumberFormatException ignored) { }
+        s.currentPage = 0;
+        s.pendingForget = null;
+    }
+
+    private static Entry entryAt(PlayerLevelData data, PlayerSkillState state, String slotIndex) {
+        int idx;
+        try { idx = Integer.parseInt(slotIndex); } catch (NumberFormatException e) { return null; }
+        List<Entry> list = visibleEntries(data, state);
+        int realIdx = state.currentPage * MAX_SKILL_SLOTS + idx;
+        return realIdx >= 0 && realIdx < list.size() ? list.get(realIdx) : null;
+    }
+
+    /** Active ou desactive un passif (les metiers ne se desactivent pas). */
+    public static boolean handleToggle(String slotIndex, Ref<EntityStore> ref, Store<EntityStore> store) {
         ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
         PlayerLevelData data = store.getComponent(ref, type);
-        if (data == null) return false;
-
-        java.util.UUID playerUUID = getPlayerUUID(ref, store);
-        PlayerSkillState state = getState(playerUUID);
-
-        List<String> allSkillIds = buildSkillList(data);
-
-        // Rebuild the same sorted list to find the correct skill
-        List<SkillEntry> passives = new ArrayList<>();
-        List<SkillEntry> actives = new ArrayList<>();
-        for (String skillId : allSkillIds) {
-            SkillInfo info = getSkillInfo(skillId);
-            SkillEntry entry = new SkillEntry(skillId, info);
-            if ("Active".equals(info.type)) {
-                actives.add(entry);
-            } else {
-                passives.add(entry);
-            }
-        }
-        Comparator<SkillEntry> byRarity = Comparator.comparingInt(e -> rarityIndex(e.info.rarity));
-        passives.sort(byRarity);
-        actives.sort(byRarity);
-
-        List<SkillEntry> currentList = state.viewingActives ? actives : passives;
-        int realIdx = state.currentPage * MAX_SKILL_SLOTS + idx;
-        if (realIdx < 0 || realIdx >= currentList.size()) return false;
-
-        String skillId = currentList.get(realIdx).skillId;
-
-        // Check if it's an active skill with catalystId -> give item
-        var opt = SkillManager.getSkillFromId(skillId);
-        if (opt.isPresent() && opt.get().catalystId() != null) {
-            return handleGiveItem(opt.get().catalystId(), ref, store);
-        }
-
-        // Passive toggle
-        if (data.isSkillEnabled(skillId)) {
-            data.disableSkill(skillId);
-        } else {
-            data.enableSkill(skillId);
-        }
-
+        if (data == null || getState(getPlayerUUID(ref, store)).viewingActives) return false;
+        Entry e = entryAt(data, getState(getPlayerUUID(ref, store)), slotIndex);
+        if (e == null || e.skill() == null) return false;
+        if (data.isSkillEnabled(e.id())) data.disableSkill(e.id());
+        else data.enableSkill(e.id());
+        getState(getPlayerUUID(ref, store)).pendingForget = null;
         store.putComponent(ref, type, data);
+        com.eldanior.system.Leveling.utils.StatCalculator.updatePlayerStats(ref, store, data);
+        return true;
+    }
+
+    /** Oublier un passif appris : premier clic = « Sûr ? », second clic = oubli (rang et maitrise perdus). */
+    public static boolean handleForget(String slotIndex, Ref<EntityStore> ref, Store<EntityStore> store) {
+        ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
+        PlayerLevelData data = store.getComponent(ref, type);
+        PlayerSkillState state = getState(getPlayerUUID(ref, store));
+        if (data == null || state.viewingActives) return false;
+        Entry e = entryAt(data, state, slotIndex);
+        if (e == null || e.skill() == null || !e.learned()) return false;
+        if (!e.id().equals(state.pendingForget)) { state.pendingForget = e.id(); return true; }
+        state.pendingForget = null;
+        data.forgetPassive(e.id());
+        store.putComponent(ref, type, data);
+        com.eldanior.system.Leveling.utils.StatCalculator.updatePlayerStats(ref, store, data);
+        com.hypixel.hytale.server.core.universe.PlayerRef pr = store.getComponent(ref, com.hypixel.hytale.server.core.universe.PlayerRef.getComponentType());
+        if (pr != null) pr.sendMessage(com.hypixel.hytale.server.core.Message.raw("Passif oublié : " + e.skill().getDisplayName()
+                + ". (" + data.countLearnedPassives() + " / " + PlayerLevelData.MAX_LEARNED_PASSIVES + " appris)"));
         return true;
     }
 
@@ -321,7 +346,7 @@ public class CompetencesTab {
             } else {
                 // Cooldown termine -- repasser en etat ACTIF
                 ui.set("#SkillStateBadge" + slot + ".Visible", true);
-                ui.set("#SkillStateBadge" + slot + ".Text", "ACTIVE");
+                ui.set("#SkillStateBadge" + slot + ".Text", "ACTIF");
                 ui.set("#SkillStateBadge" + slot + ".Style.TextColor", "#7ed47e");
                 ui.set("#SkillStateBadge" + slot + ".Background", "#1a3a1a");
                 ui.set("#SkillActiveBar" + slot + ".Visible", true);
@@ -352,7 +377,7 @@ public class CompetencesTab {
 
     public static void nextPage(java.util.UUID uuid) { getState(uuid).currentPage++; }
     public static void prevPage(java.util.UUID uuid) { PlayerSkillState s = getState(uuid); if (s.currentPage > 0) s.currentPage--; }
-    public static void switchToPassives(java.util.UUID uuid) { PlayerSkillState s = getState(uuid); s.viewingActives = false; s.currentPage = 0; }
+    public static void switchToPassives(java.util.UUID uuid) { PlayerSkillState s = getState(uuid); s.viewingActives = false; s.currentPage = 0; s.pendingForget = null; }
     public static void switchToActives(java.util.UUID uuid) { PlayerSkillState s = getState(uuid); s.viewingActives = true; s.currentPage = 0; }
 
     /** @deprecated Use nextPage(uuid) */
@@ -377,179 +402,6 @@ public class CompetencesTab {
         };
     }
 
-    private static boolean handleGiveItem(String catalystId, Ref<EntityStore> ref, Store<EntityStore> store) {
-        try {
-            com.hypixel.hytale.server.core.entity.entities.Player player =
-                    store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
-            if (player == null) return false;
-
-            if (playerHasItem(player, catalystId)) {
-                player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("Vous possedez deja cet item !"));
-                return false;
-            }
-
-            if (personalChestHasItem(ref, store, catalystId)) {
-                player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("Cet item est deja dans votre coffre personnel !"));
-                return false;
-            }
-
-            var itemStack = new com.hypixel.hytale.server.core.inventory.ItemStack(catalystId, 1);
-            var result = player.getInventory().getHotbar().addItemStack(itemStack);
-            if (result.succeeded()) {
-                player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("Item obtenu : " + catalystId));
-                return true;
-            } else {
-                player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("Inventaire plein !"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    private static boolean playerHasItem(com.hypixel.hytale.server.core.entity.entities.Player player, String itemId) {
-        try {
-            var inventory = player.getInventory();
-            for (short i = 0; i < 9; i++) {
-                var item = inventory.getHotbar().getItemStack(i);
-                if (item != null && !item.isEmpty() && itemId.equals(item.getItemId())) return true;
-            }
-            for (short i = 0; i < 27; i++) {
-                var item = inventory.getStorage().getItemStack(i);
-                if (item != null && !item.isEmpty() && itemId.equals(item.getItemId())) return true;
-            }
-            for (short i = 0; i < 8; i++) {
-                var item = inventory.getBackpack().getItemStack(i);
-                if (item != null && !item.isEmpty() && itemId.equals(item.getItemId())) return true;
-            }
-        } catch (Exception e) { /* skip */ }
-        return false;
-    }
-
-    private static boolean personalChestHasItem(Ref<EntityStore> ref, Store<EntityStore> store, String itemId) {
-        try {
-            var chestData = store.getComponent(ref, com.eldanior.system.Inventory.components.PlayerPersonalChestData.TYPE);
-            if (chestData == null) return false;
-            for (var item : chestData.getStoredItems()) {
-                if (item != null && !item.isEmpty() && itemId.equals(item.getItemId())) return true;
-            }
-        } catch (Exception e) { /* skip */ }
-        return false;
-    }
-
-    private static SkillInfo getSkillInfo(String skillId) {
-        SkillInfo info = new SkillInfo();
-
-        // Try PassiveSkill enum first
-        try {
-            PassiveSkill passive = PassiveSkill.valueOf(skillId.toUpperCase());
-            info.name = passive.getDisplayName();
-            info.type = "Passive";
-            info.description = passive.getDescription();
-            info.rarity = guessRarity(passive);
-            info.manaCost = passive.getManaCost();
-            info.cooldownMax = passive.getCooldownSeconds();
-            if (passive.getLogic() != null) {
-                info.enduranceCost = passive.getLogic().getEnduranceCostPercent();
-                info.lifeCost = passive.getLogic().getLifeCostPercent();
-            }
-            info.stats = "";
-            return info;
-        } catch (IllegalArgumentException e) { /* argument invalide */ }
-
-        // Try SkillModel (active skills)
-        var opt = SkillManager.getSkillFromId(skillId);
-        if (opt.isPresent()) {
-            SkillModel model = opt.get();
-            info.name = model.displayName();
-            if (model.catalystId() != null) {
-                info.type = "Active";
-                info.rarity = guessRarityFromSkillId(skillId);
-                info.description = "ACTIVE";
-            } else {
-                info.type = "Passive";
-                info.rarity = guessRarityFromSkillId(skillId);
-                info.description = model.requiredClass() != null ? "Classe: " + model.requiredClass() : "";
-            }
-            info.stats = buildModelStats(model);
-            return info;
-        }
-
-        // Fallback
-        info.name = formatId(skillId);
-        info.type = "?";
-        return info;
-    }
-
-    private static final Map<String, String> SKILL_RARITY_MAP = Map.ofEntries(
-            Map.entry("BOULE_DE_FEU", "UNCOMMON"),
-            Map.entry("FLAMME_ARDENTE", "UNCOMMON"),
-            Map.entry("SOUFFLE_EMBRASE", "RARE"),
-            Map.entry("PIEGE_INCENDIAIRE", "RARE"),
-            Map.entry("METEORE", "LEGENDAIRE"),
-            Map.entry("NOVA_DE_FEU", "UNIQUE"),
-            Map.entry("INFERNO", "EPIQUE"),
-            Map.entry("SOUFFLE_DU_DRAGON", "LEGENDAIRE"),
-            Map.entry("APOCALYPSE_IGNEE", "DIVIN"),
-            Map.entry("BATON_MAGIQUE", "COMMUN"),
-            Map.entry("TEMPETE_ELEMENTAIRE", "RARE"),
-            Map.entry("LIEN_ENCHANTEMENT", "RARE"),
-            Map.entry("MAIN_DU_TREPAS", "RARE")
-    );
-
-    private static String guessRarityFromSkillId(String skillId) {
-        return SKILL_RARITY_MAP.getOrDefault(skillId.toUpperCase(), "COMMUN");
-    }
-
-    private static String guessRarity(PassiveSkill passive) {
-        // Aura de Dignité : rareté selon le niveau
-        String name = passive.name();
-        if (name.equals("DIGNITY_AURA_1")) return "RARE";
-        if (name.equals("DIGNITY_AURA_2")) return "EPIQUE";
-        if (name.equals("DIGNITY_AURA_3")) return "UNIQUE";
-        if (name.equals("DIGNITY_AURA_4")) return "LEGENDAIRE";
-        if (name.equals("DIGNITY_AURA_5")) return "DIVIN";
-
-        try {
-            if (passive.getLogic() != null) {
-                String className = passive.getLogic().getClass().getPackageName();
-                if (className.contains("Divin")) return "DIVIN";
-                if (className.contains("Legendaire")) return "LEGENDAIRE";
-                if (className.contains("Epique")) return "EPIQUE";
-                if (className.contains("Unique")) return "UNIQUE";
-                if (className.contains("Rare")) return "RARE";
-                if (className.contains("Uncommon")) return "UNCOMMON";
-                if (className.contains("Common")) return "COMMUN";
-                if (className.contains("Family")) return "FAMILLE";
-                if (className.contains("Craft")) return "COMMUN";
-            }
-        } catch (Exception e) { EldaniorLogger.error("CompetencesTab", e); }
-        return "";
-    }
-
-    private static String buildModelStats(SkillModel model) {
-        List<String> parts = new ArrayList<>();
-        if (model.manaCost() > 0) parts.add("Mana: " + model.manaCost());
-        if (model.cooldown() > 0) parts.add("CD: " + model.cooldown() + "s");
-        if (model.damage() > 0) parts.add("Dmg: " + model.damage());
-        if (model.range() > 0) parts.add("Range: " + model.range());
-        if (model.duration() > 0) parts.add("Duree: " + model.duration() + "s");
-        return parts.isEmpty() ? "" : String.join(" | ", parts);
-    }
-
-    private static String formatId(String id) {
-        String[] parts = id.replace("_", " ").split(" ");
-        StringBuilder sb = new StringBuilder();
-        for (String part : parts) {
-            if (!part.isEmpty()) {
-                if (sb.length() > 0) sb.append(" ");
-                sb.append(Character.toUpperCase(part.charAt(0)));
-                if (part.length() > 1) sb.append(part.substring(1));
-            }
-        }
-        return sb.toString();
-    }
-
     private static String formatCooldown(long remainingMs) {
         long totalSeconds = remainingMs / 1000;
         long minutes = totalSeconds / 60;
@@ -568,25 +420,4 @@ public class CompetencesTab {
         return sec + "s";
     }
 
-    private static class SkillInfo {
-        String name = "?";
-        String type = "?";
-        String rarity = "";
-        String description = "";
-        String stats = "";
-        int manaCost = 0;
-        float enduranceCost = 0f;
-        float lifeCost = 0f;
-        float cooldownMax = 0f;
-    }
-
-    private static class SkillEntry {
-        final String skillId;
-        final SkillInfo info;
-
-        SkillEntry(String skillId, SkillInfo info) {
-            this.skillId = skillId;
-            this.info = info;
-        }
-    }
 }

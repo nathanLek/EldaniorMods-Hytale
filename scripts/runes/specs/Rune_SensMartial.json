@@ -1,0 +1,61 @@
+{
+  "$Comment": "Fiche de conception : competence de la voie martiale (classe Maître Martial), validee le 2026-11-10 (docs/plan-clan-luo.md, B). Apprise par son manuel, aucun butin.",
+  "id": "Rune_SensMartial",
+  "spell": "SensMartial",
+  "javaClass": "SensMartial",
+  "page": "rune_page_sensmartial",
+  "name": "Rune du Sens martial",
+  "type": "Luo",
+  "rarity": "Rare",
+  "emblem": "SensMartial",
+  "classes": "maitre_martial, grand_maitre_martial, saint_martial, maitre_supreme, dieu_martial",
+  "persistent": true,
+  "summary": "Bascule (mana/s 2-4) : ennemis marques dans 20-36 blocs, marque visible du seul lanceur ; Grand Maitre : forme selon la puissance (fleche, triple chevron) ; Saint : les presences cachees (invisibles) sont revelees a tous, avant elles ne sont pas marquees ; +10 % d'esquive des coups dans le dos (degats /2).",
+  "description": "Compétence de la voie martiale, enseignée à la classe Maître Martial. Un sixième sens : les ennemis traqués sont enveloppés d'une silhouette rouge et d'un anneau que vous seul voyez. Maître : la cible que vous visez, ou la plus proche ; Grand Maître : 2 cibles ; Saint : toutes les présences, et les ennemis invisibles sont révélés. Portée de 30 blocs (150 au Dieu Martial), durée de 12 s (30 s au Dieu Martial). Les coups reçus dans le dos sont réduits de moitié.",
+  "pageDescription": "« Ferme les yeux. Le monde respire ; entends qui retient son souffle. » Compétence de la voie martiale : elle s'apprend dans son manuel, jamais en butin.",
+  "keywords": [
+    "Buff",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": 0,
+    "cooldown": 1,
+    "reason": "rune a bascule de la voie martiale (comme le Ki de l'Epee) : un clic l'active, un second clic la coupe ; le mana est preleve chaque seconde dans le code"
+  },
+  "loot": {},
+  "cast": {
+    "animationSet": "Sword",
+    "charging": "CastEnchant",
+    "release": "CastEnchant",
+    "chargeTime": 0.1,
+    "releaseTime": 0.3,
+    "moveSpeed": 0.6,
+    "cameraEffect": null,
+    "sound": null,
+    "releaseSound": "SFX_Ability_Wind_Strike_Imbue",
+    "handParticles": null,
+    "handParticlesScale": 0.6,
+    "costMoment": "start"
+  },
+  "design": {
+    "radius": "0",
+    "persistentDurationS": 0,
+    "targets": "zone",
+    "effects": "marques du seul lanceur ; puissance palier 5+ ; revele les invisibles palier 6+",
+    "balance": {
+      "damage": 0,
+      "range": 3,
+      "duration": 3,
+      "mobility": 0,
+      "control": 0,
+      "defense": 0,
+      "targets": 0,
+      "frequency": 0,
+      "terrain": 0,
+      "difficulty": 0
+    }
+  },
+  "category": "Eldanior_Empire_Luo.Runes",
+  "manual": "Eldanior_Manuel_Luo_SensMartial",
+  "$Comment_manual": "Technique apprise par son manuel secret (gen_voie_martiale_objets.py) : pas de parchemin rune_page_*."
+}

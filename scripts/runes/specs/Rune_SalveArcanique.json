@@ -1,0 +1,67 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_SalveArcanique",
+  "spell": "SalveArcanique",
+  "javaClass": "SalveArcanique",
+  "page": "rune_page_salve_arcanique",
+  "name": "Rune de la Salve Arcanique",
+  "type": "Lumiere",
+  "rarity": "Rare",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "SalveArcanique",
+  "summary": "5 orbes de lumiere a tete chercheuse, repartis sur les ennemis proches du regard : 45 degats chacun.",
+  "description": "Sort rare de lumière (Mage, rune de prédilection de l'Archimage). Cinq orbes de lumière jaillissent en éventail puis fondent chacun sur un ennemi (jusqu'à 25 blocs devant vous), en se répartissant entre les cibles : 45 dégâts par orbe. Un orbe sans cible se dissipe au bout de 3 s. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin constellé de cinq points dorés qui changent de place. Enseigne la Salve Arcanique : des traits qui ne manquent jamais. Classes : tous les Mages (rune de prédilection de l'Archimage). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Projectile"
+  ],
+  "cast": {
+    "animationSet": "Spellbook",
+    "charging": "CastHurlCharging",
+    "release": "CastHurlCharged",
+    "chargeTime": 0.4,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Portal_Neutral_Open",
+    "handParticles": "Bifrost_Divine",
+    "handParticlesScale": 0.2,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.4,
+    "range": 25,
+    "radius": "0",
+    "targets": "5 orbes repartis",
+    "persistentFx": "orbe = Bifrost_Divine (0,35) reemis toutes les 50 ms",
+    "impactFx": "Bifrost_Divine (1,0) + Apollo_Heal_Pulse a l'impact",
+    "sounds": "SFX_Portal_Neutral_Open au lancement, SFX_Portal_Void a chaque impact",
+    "effects": "5 x 45 Elemental ; orbes 18 b/s, virage 6 rad/s, 3 s max",
+    "terrain": "aucun",
+    "persistentDurationS": 3,
+    "interruptions": "aucune",
+    "restrictions": "mage",
+    "edgeCases": "cible morte : l'orbe en reprend une autre ; aucune cible : vol droit puis dissipation ; mur : dissipation",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 0,
+      "mobility": 0,
+      "control": 0,
+      "defense": 0,
+      "targets": 2,
+      "frequency": 2,
+      "terrain": 0,
+      "difficulty": 0
+    }
+  },
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null
+}

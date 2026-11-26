@@ -1,0 +1,4096 @@
+{
+  "DisplayNameKey": "Forgeron — Apprenti",
+  "RefreshInterval": {
+    "Days": 1
+  },
+  "RestockHour": 6,
+  "TradeSlots": [
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Tool_Repair_Kit_Crude",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Gold_Coins",
+            "Quantity": 8
+          }
+        ],
+        "Stock": 10
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Tool_Repair_Kit_Iron",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Silver_Coins",
+            "Quantity": 4
+          }
+        ],
+        "Stock": 6
+      }
+    },
+    {
+      "Type": "Pool",
+      "SlotCount": 16,
+      "Trades": [
+        {
+          "Output": {
+            "ItemId": "Armor_Bronze_Chest",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Bronze_Hands",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Bronze_Head",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Bronze_Legs",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Cloth_Cotton_Chest",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Cloth_Cotton_Hands",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Cloth_Cotton_Head",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Cloth_Cotton_Legs",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Cloth_Linen_Chest",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 14
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Cloth_Linen_Hands",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 14
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Cloth_Linen_Head",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 14
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Cloth_Linen_Legs",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 14
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Cloth_Silk_Chest",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 4
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Cloth_Silk_Hands",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 4
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Cloth_Silk_Head",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 4
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Cloth_Silk_Legs",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 4
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Cloth_Wool_Chest",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Cloth_Wool_Hands",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Cloth_Wool_Head",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Cloth_Wool_Legs",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Copper_Chest",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Copper_Hands",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Copper_Head",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Copper_Legs",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Iron_Chest",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Iron_Hands",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Iron_Head",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Iron_Legs",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Kweebec_Chest",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Kweebec_Head",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Leather_Heavy_Chest",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 4
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Leather_Heavy_Hands",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 4
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Leather_Heavy_Head",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 4
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Leather_Heavy_Legs",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 4
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Leather_Light_Chest",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 14
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Leather_Light_Hands",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 14
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Leather_Light_Head",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 14
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Leather_Light_Legs",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 14
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Leather_Medium_Chest",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Leather_Medium_Hands",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Leather_Medium_Head",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Leather_Medium_Legs",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Leather_Soft_Chest",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Leather_Soft_Hands",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Leather_Soft_Head",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Leather_Soft_Legs",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Prisma_Chest",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 11
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Prisma_Hands",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 11
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Prisma_Head",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 11
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Prisma_Legs",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 11
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Steel_Chest",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Steel_Hands",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Steel_Head",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Steel_Legs",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Trork_Chest",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Trork_Hands",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Trork_Head",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Trork_Legs",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Wood_Chest",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Wood_Hands",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Wood_Head",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Wood_Legs",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Wool_Chest",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Wool_Hands",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Wool_Head",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Wool_Legs",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Eldanior_Weapon_Sword_Bronze",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 14
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Eldanior_Weapon_Sword_Courte",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Eldanior_Weapon_Sword_Entrainement",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Eldanior_Weapon_Sword_Fer",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Eldanior_Weapon_Sword_Fer_Usee",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 10
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Eldanior_Weapon_Sword_Lame_Garde",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Eldanior_Weapon_Sword_Mercenaire",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Eldanior_Weapon_Sword_Sabre_Soldat",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Ingredient_Bar_Bronze",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Silver_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            4,
+            12
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Ingredient_Bar_Copper",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Silver_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            4,
+            12
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Ingredient_Bar_Iron",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Silver_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            4,
+            12
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Ingredient_Bar_Prisma",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Silver_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            4,
+            12
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Arrow_Clearshot",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 7
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Arrow_Crude",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 7
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Arrow_Deadeye",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 4
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Arrow_Iron",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Arrow_Trueshot",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 11
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Axe_Copper",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Axe_Crude",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Axe_Iron",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Axe_Iron_Rusty",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 14
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Axe_Stone_Trork",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Axe_Tribal",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 14
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Bangstick",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 9
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Battleaxe_Copper",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Battleaxe_Crude",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Battleaxe_Iron",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Battleaxe_Scarab",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Battleaxe_Scythe_Void",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Battleaxe_Steel_Rusty",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 14
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Battleaxe_Stone_Trork",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Battleaxe_Tribal",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 14
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Battleaxe_Wood_Fence",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Blowgun_Tribal",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Claws_Tribal",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Club_Copper",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Club_Crude",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Club_Iron",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Club_Iron_Rusty",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 14
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Club_Scrap",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 14
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Club_Scrap_Washboard",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 14
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Club_Steel_Flail_Rusty",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 14
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Club_Stone_Trork",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Club_Tribal",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Club_Zombie_Arm",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Club_Zombie_Burnt_Arm",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Club_Zombie_Burnt_Leg",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Club_Zombie_Frost_Arm",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Club_Zombie_Frost_Leg",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Club_Zombie_Leg",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Club_Zombie_Sand_Arm",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Club_Zombie_Sand_Leg",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Crossbow_Iron",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Daggers_Bronze",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Daggers_Bronze_Ancient",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Daggers_Copper",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Daggers_Crude",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 4
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Daggers_Iron",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Daggers_Stone_Trork",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Daggers_Void_Crystal",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Dart_Tribal",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 14
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Deployable_Healing_Totem",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Deployable_Slowness_Totem",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Deployable_Turret",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Kunai",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Longsword_Copper",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Longsword_Crude",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Longsword_Iron",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Longsword_Katana",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Longsword_Praetorian",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Longsword_Ruined_Giant",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Longsword_Scarab",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Longsword_Spectral",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Longsword_Stone_Trork",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Longsword_Tribal",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Longsword_Void",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Mace_Copper",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Mace_Crude",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 6
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Mace_Iron",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Mace_Prisma",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 6
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Mace_Scrap",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 14
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Mace_Stone_Trork",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Shield_Copper",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Shield_Iron",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Shield_Onyxium",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 6
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Shield_Orbis_Incandescent",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Shield_Orbis_Knight",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Shield_Praetorian",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Shield_Ruined_Giant",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Shield_Rusty",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 14
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Shield_Scrap",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 14
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Shield_Scrap_Spiked",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 14
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Shield_Wood",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Shortbow_Bomb",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Shortbow_Bronze",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Shortbow_Combat",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Shortbow_Copper",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Shortbow_Crude",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 7
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Shortbow_Flame",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Shortbow_Frost",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Shortbow_Iron",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Shortbow_Iron_Rusty",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 14
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Shortbow_Pull",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Shortbow_Vampire",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Spear_Bronze",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Spear_Copper",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Spear_Crude",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Spear_Double_Incandescent",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Spear_Fishbone",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Spear_Iron",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Spear_Leaf",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 14
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Spear_Scrap",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 14
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Spear_Stone_Trork",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Spear_Tribal",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Spellbook_Demon",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Spellbook_Fire",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Spellbook_Frost",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Spellbook_Grimoire_Brown",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Spellbook_Grimoire_Purple",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Staff_Bo_Bamboo",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Staff_Bo_Wood",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Staff_Bone",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Staff_Bronze",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Staff_Cane",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Staff_Copper",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Staff_Crystal_Fire_Trork",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Staff_Crystal_Purple",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Staff_Crystal_Red",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Staff_Doomed",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Staff_Frost",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Staff_Iron",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Staff_Onion",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Staff_Onyxium",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 6
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Staff_Scrap_Lightbulb",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Staff_Voidcrystal",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Staff_Wizard",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Staff_Wood",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Staff_Wood_Kweebec",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Staff_Wood_Rotten",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Sword_Bronze",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Sword_Bronze_Ancient",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Sword_Copper",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Sword_Crude",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Sword_Cutlass",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Sword_Iron",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Sword_Nexus",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Sword_Runic",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Sword_Scrap",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 14
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Sword_Silversteel",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 6
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Sword_Steel",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Sword_Steel_Incandescent",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Sword_Steel_Rusty",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 14
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Sword_Stone_Trork",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 30
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Sword_Wood",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Wand_Root",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Wand_Stoneskin",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Wand_Tribal",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Wand_Wood",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Wand_Wood_Rotten",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 40
+        }
+      ]
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Copper_Coins",
+          "Quantity": 15
+        },
+        "Input": [
+          {
+            "ItemId": "Ore_Copper",
+            "Quantity": 5
+          }
+        ],
+        "Stock": 999
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Copper_Coins",
+          "Quantity": 35
+        },
+        "Input": [
+          {
+            "ItemId": "Ore_Iron",
+            "Quantity": 5
+          }
+        ],
+        "Stock": 999
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Copper_Coins",
+          "Quantity": 60
+        },
+        "Input": [
+          {
+            "ItemId": "Ore_Silver",
+            "Quantity": 3
+          }
+        ],
+        "Stock": 999
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Silver_Coins",
+          "Quantity": 15
+        },
+        "Input": [
+          {
+            "ItemId": "Ore_Gold",
+            "Quantity": 3
+          }
+        ],
+        "Stock": 999
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Silver_Coins",
+          "Quantity": 40
+        },
+        "Input": [
+          {
+            "ItemId": "Ore_Cobalt",
+            "Quantity": 3
+          }
+        ],
+        "Stock": 999
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Silver_Coins",
+          "Quantity": 80
+        },
+        "Input": [
+          {
+            "ItemId": "Ore_Thorium",
+            "Quantity": 2
+          }
+        ],
+        "Stock": 999
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Gold_Coins",
+          "Quantity": 2
+        },
+        "Input": [
+          {
+            "ItemId": "Ore_Mithril",
+            "Quantity": 1
+          }
+        ],
+        "Stock": 999
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Gold_Coins",
+          "Quantity": 8
+        },
+        "Input": [
+          {
+            "ItemId": "Ore_Onyxium",
+            "Quantity": 1
+          }
+        ],
+        "Stock": 999
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Diamond_Coins",
+          "Quantity": 3
+        },
+        "Input": [
+          {
+            "ItemId": "Ore_Adamantite",
+            "Quantity": 1
+          }
+        ],
+        "Stock": 999
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Copper_Coins",
+          "Quantity": 20
+        },
+        "Input": [
+          {
+            "ItemId": "Ingredient_Bar_Copper",
+            "Quantity": 3
+          }
+        ],
+        "Stock": 999
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Copper_Coins",
+          "Quantity": 50
+        },
+        "Input": [
+          {
+            "ItemId": "Ingredient_Bar_Iron",
+            "Quantity": 3
+          }
+        ],
+        "Stock": 999
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Silver_Coins",
+          "Quantity": 12
+        },
+        "Input": [
+          {
+            "ItemId": "Ingredient_Bar_Bronze",
+            "Quantity": 3
+          }
+        ],
+        "Stock": 999
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Silver_Coins",
+          "Quantity": 35
+        },
+        "Input": [
+          {
+            "ItemId": "Ingredient_Bar_Cobalt",
+            "Quantity": 2
+          }
+        ],
+        "Stock": 999
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Elda_Gold_Coins",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Ingredient_Bar_Thorium",
+            "Quantity": 1
+          }
+        ],
+        "Stock": 999
+      }
+    }
+  ]
+}

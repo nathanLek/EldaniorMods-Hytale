@@ -1,0 +1,869 @@
+$C = "../Common.ui";
+
+// Banque (guards/BankPage), generee par scripts/npcs/gen_bank_ui.py : voir ce script.
+Group {
+  LayoutMode: Middle;
+  Background: #05080d(0.55);
+  Group {
+    Anchor: (Width: 780);
+    LayoutMode: Top;
+    Padding: (Full: 3);
+    Background: #16212f;
+    Group #BankGold {
+      LayoutMode: Top;
+      Padding: (Full: 3);
+      Background: #c9a24a;
+      Group {
+        LayoutMode: Top;
+        Padding: (Full: 2);
+        Background: #16212f;
+        Group {
+          LayoutMode: Top;
+          Background: #0b141d(0.96);
+          Padding: (Left: 22, Right: 22, Top: 14, Bottom: 12);
+          // ===== En-tete =====
+          Group {
+            Anchor: (Height: 72);
+            LayoutMode: Left;
+            Group { Anchor: (Width: 72, Height: 72); Background: (TexturePath: "ShopEmblem.png"); }
+            Group {
+              FlexWeight: 1;
+              LayoutMode: Top;
+              Padding: (Left: 16, Top: 12);
+              Label #BankTitle { Style: (FontSize: 22, RenderBold: true, RenderUppercase: true, TextColor: #d1dae6); }
+              Label #BankSub { Anchor: (Top: 4); Style: (FontSize: 13, RenderBold: true, TextColor: #c9b37a, Wrap: true); }
+            }
+          }
+
+          // ===== Soldes =====
+          Group {
+            Anchor: (Top: 12, Height: 64);
+            LayoutMode: Left;
+            Group {
+              FlexWeight: 1;
+              Anchor: (Height: 64);
+              LayoutMode: Left;
+              Background: #101b28;
+              Group { Anchor: (Width: 4); Background: #6f8faf; }
+              Group { Anchor: (Width: 60); LayoutMode: Middle; ItemIcon #BankPurseIcon { Anchor: (Width: 44, Height: 44); } }
+              Group {
+                FlexWeight: 1;
+                LayoutMode: Top;
+                Padding: (Top: 10);
+                Label {
+                  Text: "Bourse · pièces portées";
+                  Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #6f8296);
+                }
+                Label #BankPurse {
+                  Anchor: (Top: 2);
+                  Style: (FontSize: 20, RenderBold: true, TextColor: #f0c868);
+                }
+              }
+            }
+            Label {
+              Anchor: (Width: 40);
+              Text: "›";
+              Style: (FontSize: 22, RenderBold: true, TextColor: #c99436, HorizontalAlignment: Center, VerticalAlignment: Center);
+            }
+            Group {
+              FlexWeight: 1;
+              Anchor: (Height: 64);
+              LayoutMode: Left;
+              Background: #101b28;
+              Group { Anchor: (Width: 4); Background: #d4af37; }
+              Group { Anchor: (Width: 60); LayoutMode: Middle; ItemIcon #BankAccountIcon { Anchor: (Width: 44, Height: 44); } }
+              Group {
+                FlexWeight: 1;
+                LayoutMode: Top;
+                Padding: (Top: 10);
+                Label {
+                  Text: "Compte · à l'abri à la banque";
+                  Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #6f8296);
+                }
+                Label #BankAccount {
+                  Anchor: (Top: 2);
+                  Style: (FontSize: 20, RenderBold: true, TextColor: #f0c868);
+                }
+              }
+            }
+          }
+
+          // ===== Onglets =====
+          Group {
+            Anchor: (Top: 14, Height: 35);
+            LayoutMode: Left;
+            Button #BankTab0 {
+              FlexWeight: 1;
+              Anchor: (Right: 3);
+              LayoutMode: Top;
+              Style: (
+                Default: (Background: #132130),
+                Hovered: (Background: #1d3044),
+                Pressed: (Background: #24405a),
+                Sounds: $C.@ButtonSounds
+              );
+              Label #BankTabText0 {
+                Anchor: (Height: 32);
+                Text: "Compte";
+                Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #6f8296, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+              Group #BankTabLine0 { Anchor: (Height: 3); Background: #d4af37; Visible: false; }
+            }
+            Button #BankTab1 {
+              FlexWeight: 1;
+              Anchor: (Right: 3);
+              LayoutMode: Top;
+              Style: (
+                Default: (Background: #132130),
+                Hovered: (Background: #1d3044),
+                Pressed: (Background: #24405a),
+                Sounds: $C.@ButtonSounds
+              );
+              Label #BankTabText1 {
+                Anchor: (Height: 32);
+                Text: "Change";
+                Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #6f8296, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+              Group #BankTabLine1 { Anchor: (Height: 3); Background: #d4af37; Visible: false; }
+            }
+            Button #BankTab2 {
+              FlexWeight: 1;
+              Anchor: (Right: 0);
+              LayoutMode: Top;
+              Style: (
+                Default: (Background: #132130),
+                Hovered: (Background: #1d3044),
+                Pressed: (Background: #24405a),
+                Sounds: $C.@ButtonSounds
+              );
+              Label #BankTabText2 {
+                Anchor: (Height: 32);
+                Text: "Prêts";
+                Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #6f8296, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+              Group #BankTabLine2 { Anchor: (Height: 3); Background: #d4af37; Visible: false; }
+            }
+          }
+          Group { Anchor: (Height: 1); Background: #c99436(0.5); }
+
+          // ===== Panneau Compte =====
+          Group #BankPanel0 {
+            Anchor: (Top: 12, Height: 268);
+            LayoutMode: Top;
+            Label {
+              Text: "Montant";
+              Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #6f8296);
+            }
+            Group {
+              Anchor: (Top: 4, Height: 34);
+              LayoutMode: Left;
+              $C.@NumberField #BankAmount {
+                FlexWeight: 1;
+                Anchor: (Height: 32);
+                Format: (MaxDecimalPlaces: 0, Step: 1);
+              }
+              Group { Anchor: (Width: 8); }
+              $C.@DropdownBox #BankUnit {
+                Anchor: (Width: 220, Height: 32);
+                Style: @DefaultDropdownBoxStyle;
+              }
+            }
+            Group {
+              Anchor: (Top: 10, Height: 44);
+              LayoutMode: Left;
+              Button #BankDeposit {
+                FlexWeight: 1; Anchor: (Right: 3, Height: 44);
+                LayoutMode: Middle;
+                Style: (
+                  Default: (Background: #1f4a32),
+                  Hovered: (Background: #2b6544),
+                  Pressed: (Background: #2b6544),
+                  Sounds: $C.@ButtonSounds
+                );
+                Label #BankDepositText {
+                  Text: "↓ Déposer au compte";
+                  Style: (FontSize: 14, RenderBold: true, RenderUppercase: true, TextColor: #c8f0d2, HorizontalAlignment: Center, VerticalAlignment: Center);
+                }
+              }
+              Button #BankWithdraw {
+                FlexWeight: 1; Anchor: (Left: 3, Height: 44);
+                LayoutMode: Middle;
+                Style: (
+                  Default: (Background: #5a4318),
+                  Hovered: (Background: #78591f),
+                  Pressed: (Background: #78591f),
+                  Sounds: $C.@ButtonSounds
+                );
+                Label #BankWithdrawText {
+                  Text: "↑ Retirer en pièces";
+                  Style: (FontSize: 14, RenderBold: true, RenderUppercase: true, TextColor: #ffe7a8, HorizontalAlignment: Center, VerticalAlignment: Center);
+                }
+              }
+            }
+            Label {
+              Anchor: (Top: 14);
+              Text: "Dépôts rapides";
+              Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #6f8296);
+            }
+            Group {
+              Anchor: (Top: 4, Height: 30);
+              LayoutMode: Left;
+              Button #BankQuick0 {
+                FlexWeight: 1; Anchor: (Right: 3, Height: 30);
+                LayoutMode: Middle;
+                Style: (
+                  Default: (Background: #1b2a3b),
+                  Hovered: (Background: #26394f),
+                  Pressed: (Background: #26394f),
+                  Sounds: $C.@ButtonSounds
+                );
+                Label #BankQuick0Text {
+                  Text: "";
+                  Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #d1dae6, HorizontalAlignment: Center, VerticalAlignment: Center);
+                }
+              }
+              Button #BankQuick1 {
+                FlexWeight: 1; Anchor: (Right: 3, Height: 30);
+                LayoutMode: Middle;
+                Style: (
+                  Default: (Background: #1b2a3b),
+                  Hovered: (Background: #26394f),
+                  Pressed: (Background: #26394f),
+                  Sounds: $C.@ButtonSounds
+                );
+                Label #BankQuick1Text {
+                  Text: "";
+                  Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #d1dae6, HorizontalAlignment: Center, VerticalAlignment: Center);
+                }
+              }
+              Button #BankQuick2 {
+                FlexWeight: 1; Anchor: (Right: 3, Height: 30);
+                LayoutMode: Middle;
+                Style: (
+                  Default: (Background: #1b2a3b),
+                  Hovered: (Background: #26394f),
+                  Pressed: (Background: #26394f),
+                  Sounds: $C.@ButtonSounds
+                );
+                Label #BankQuick2Text {
+                  Text: "";
+                  Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #d1dae6, HorizontalAlignment: Center, VerticalAlignment: Center);
+                }
+              }
+              Button #BankQuick3 {
+                FlexWeight: 1; Anchor: (Left: 3, Height: 30);
+                LayoutMode: Middle;
+                Style: (
+                  Default: (Background: #1b2a3b),
+                  Hovered: (Background: #26394f),
+                  Pressed: (Background: #26394f),
+                  Sounds: $C.@ButtonSounds
+                );
+                Label #BankQuick3Text {
+                  Text: "";
+                  Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #d1dae6, HorizontalAlignment: Center, VerticalAlignment: Center);
+                }
+              }
+            }
+            Group {
+              Anchor: (Top: 10, Height: 34);
+              LayoutMode: Left;
+              Button #BankDepositAll {
+                FlexWeight: 1; Anchor: (Right: 3, Height: 34);
+                LayoutMode: Middle;
+                Style: (
+                  Default: (Background: #1b2a3b),
+                  Hovered: (Background: #26394f),
+                  Pressed: (Background: #26394f),
+                  Sounds: $C.@ButtonSounds
+                );
+                Label #BankDepositAllText {
+                  Text: "Tout déposer";
+                  Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #9fd3a8, HorizontalAlignment: Center, VerticalAlignment: Center);
+                }
+              }
+              Button #BankWithdrawAll {
+                FlexWeight: 1; Anchor: (Left: 3, Height: 34);
+                LayoutMode: Middle;
+                Style: (
+                  Default: (Background: #1b2a3b),
+                  Hovered: (Background: #26394f),
+                  Pressed: (Background: #26394f),
+                  Sounds: $C.@ButtonSounds
+                );
+                Label #BankWithdrawAllText {
+                  Text: "Tout retirer";
+                  Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #e3c27a, HorizontalAlignment: Center, VerticalAlignment: Center);
+                }
+              }
+            }
+            Label {
+              Anchor: (Top: 12);
+              Text: "Le compte est l'or de votre menu : il paie recrutements, primes et frais de famille, et ne se perd pas à la mort.";
+              Style: (FontSize: 11, TextColor: #6f8296, Wrap: true, HorizontalAlignment: Center);
+            }
+          }
+
+          // ===== Panneau Change =====
+          Group #BankPanel1 {
+            Anchor: (Top: 12, Height: 268);
+            LayoutMode: Top;
+            Visible: false;
+            Group {
+              Anchor: (Height: 118);
+              LayoutMode: Left;
+                Group {
+                  FlexWeight: 1;
+                  Anchor: (Right: 6, Height: 118);
+                  LayoutMode: Top;
+                  Background: #101b28;
+                  Padding: (Left: 10, Right: 10, Top: 8, Bottom: 8);
+                  Group {
+                    Anchor: (Height: 44);
+                    LayoutMode: Left;
+                    ItemIcon #BankCoinIcon0 { Anchor: (Width: 42, Height: 42); }
+                    Group {
+                      FlexWeight: 1;
+                      LayoutMode: Top;
+                      Padding: (Left: 8, Top: 2);
+                      Label #BankCoinName0 { Style: (FontSize: 14, RenderBold: true, TextColor: #f0c868); }
+                      Label #BankCoinRate0 { Style: (FontSize: 10, TextColor: #6f8296); }
+                    }
+                    Label #BankCoinCount0 {
+                      Anchor: (Width: 52);
+                      Style: (FontSize: 18, RenderBold: true, TextColor: #d1dae6, HorizontalAlignment: End, VerticalAlignment: Center);
+                    }
+                  }
+                  Group { Anchor: (Height: 8); }
+                  Group {
+                    Anchor: (Height: 30);
+                    LayoutMode: Left;
+                    Button #BankUp0 {
+                FlexWeight: 1; Anchor: (Height: 30, Right: 3);
+                LayoutMode: Middle;
+                Style: (
+                  Default: (Background: #1b2a3b),
+                  Hovered: (Background: #26394f),
+                  Pressed: (Background: #26394f),
+                  Sounds: $C.@ButtonSounds
+                );
+                Label #BankUp0Text {
+                  Text: "↑ Regrouper";
+                  Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #9fd3a8, HorizontalAlignment: Center, VerticalAlignment: Center);
+                }
+              }
+                    Button #BankDown0 {
+                FlexWeight: 1; Anchor: (Height: 30, Left: 3);
+                LayoutMode: Middle;
+                Style: (
+                  Default: (Background: #1b2a3b),
+                  Hovered: (Background: #26394f),
+                  Pressed: (Background: #26394f),
+                  Sounds: $C.@ButtonSounds
+                );
+                Label #BankDown0Text {
+                  Text: "↓ Casser";
+                  Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #e3c27a, HorizontalAlignment: Center, VerticalAlignment: Center);
+                }
+              }
+                  }
+                }
+                Group {
+                  FlexWeight: 1;
+                  Anchor: (Right: 6, Height: 118);
+                  LayoutMode: Top;
+                  Background: #101b28;
+                  Padding: (Left: 10, Right: 10, Top: 8, Bottom: 8);
+                  Group {
+                    Anchor: (Height: 44);
+                    LayoutMode: Left;
+                    ItemIcon #BankCoinIcon1 { Anchor: (Width: 42, Height: 42); }
+                    Group {
+                      FlexWeight: 1;
+                      LayoutMode: Top;
+                      Padding: (Left: 8, Top: 2);
+                      Label #BankCoinName1 { Style: (FontSize: 14, RenderBold: true, TextColor: #f0c868); }
+                      Label #BankCoinRate1 { Style: (FontSize: 10, TextColor: #6f8296); }
+                    }
+                    Label #BankCoinCount1 {
+                      Anchor: (Width: 52);
+                      Style: (FontSize: 18, RenderBold: true, TextColor: #d1dae6, HorizontalAlignment: End, VerticalAlignment: Center);
+                    }
+                  }
+                  Group { Anchor: (Height: 8); }
+                  Group {
+                    Anchor: (Height: 30);
+                    LayoutMode: Left;
+                    Button #BankUp1 {
+                FlexWeight: 1; Anchor: (Height: 30, Right: 3);
+                LayoutMode: Middle;
+                Style: (
+                  Default: (Background: #1b2a3b),
+                  Hovered: (Background: #26394f),
+                  Pressed: (Background: #26394f),
+                  Sounds: $C.@ButtonSounds
+                );
+                Label #BankUp1Text {
+                  Text: "↑ Regrouper";
+                  Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #9fd3a8, HorizontalAlignment: Center, VerticalAlignment: Center);
+                }
+              }
+                    Button #BankDown1 {
+                FlexWeight: 1; Anchor: (Height: 30, Left: 3);
+                LayoutMode: Middle;
+                Style: (
+                  Default: (Background: #1b2a3b),
+                  Hovered: (Background: #26394f),
+                  Pressed: (Background: #26394f),
+                  Sounds: $C.@ButtonSounds
+                );
+                Label #BankDown1Text {
+                  Text: "↓ Casser";
+                  Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #e3c27a, HorizontalAlignment: Center, VerticalAlignment: Center);
+                }
+              }
+                  }
+                }
+                Group {
+                  FlexWeight: 1;
+                  Anchor: (Right: 6, Height: 118);
+                  LayoutMode: Top;
+                  Background: #101b28;
+                  Padding: (Left: 10, Right: 10, Top: 8, Bottom: 8);
+                  Group {
+                    Anchor: (Height: 44);
+                    LayoutMode: Left;
+                    ItemIcon #BankCoinIcon2 { Anchor: (Width: 42, Height: 42); }
+                    Group {
+                      FlexWeight: 1;
+                      LayoutMode: Top;
+                      Padding: (Left: 8, Top: 2);
+                      Label #BankCoinName2 { Style: (FontSize: 14, RenderBold: true, TextColor: #f0c868); }
+                      Label #BankCoinRate2 { Style: (FontSize: 10, TextColor: #6f8296); }
+                    }
+                    Label #BankCoinCount2 {
+                      Anchor: (Width: 52);
+                      Style: (FontSize: 18, RenderBold: true, TextColor: #d1dae6, HorizontalAlignment: End, VerticalAlignment: Center);
+                    }
+                  }
+                  Group { Anchor: (Height: 8); }
+                  Group {
+                    Anchor: (Height: 30);
+                    LayoutMode: Left;
+                    Button #BankUp2 {
+                FlexWeight: 1; Anchor: (Height: 30, Right: 3);
+                LayoutMode: Middle;
+                Style: (
+                  Default: (Background: #1b2a3b),
+                  Hovered: (Background: #26394f),
+                  Pressed: (Background: #26394f),
+                  Sounds: $C.@ButtonSounds
+                );
+                Label #BankUp2Text {
+                  Text: "↑ Regrouper";
+                  Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #9fd3a8, HorizontalAlignment: Center, VerticalAlignment: Center);
+                }
+              }
+                    Button #BankDown2 {
+                FlexWeight: 1; Anchor: (Height: 30, Left: 3);
+                LayoutMode: Middle;
+                Style: (
+                  Default: (Background: #1b2a3b),
+                  Hovered: (Background: #26394f),
+                  Pressed: (Background: #26394f),
+                  Sounds: $C.@ButtonSounds
+                );
+                Label #BankDown2Text {
+                  Text: "↓ Casser";
+                  Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #e3c27a, HorizontalAlignment: Center, VerticalAlignment: Center);
+                }
+              }
+                  }
+                }
+                Group {
+                  FlexWeight: 1;
+                  Anchor: (Right: 0, Height: 118);
+                  LayoutMode: Top;
+                  Background: #101b28;
+                  Padding: (Left: 10, Right: 10, Top: 8, Bottom: 8);
+                  Group {
+                    Anchor: (Height: 44);
+                    LayoutMode: Left;
+                    ItemIcon #BankCoinIcon3 { Anchor: (Width: 42, Height: 42); }
+                    Group {
+                      FlexWeight: 1;
+                      LayoutMode: Top;
+                      Padding: (Left: 8, Top: 2);
+                      Label #BankCoinName3 { Style: (FontSize: 14, RenderBold: true, TextColor: #f0c868); }
+                      Label #BankCoinRate3 { Style: (FontSize: 10, TextColor: #6f8296); }
+                    }
+                    Label #BankCoinCount3 {
+                      Anchor: (Width: 52);
+                      Style: (FontSize: 18, RenderBold: true, TextColor: #d1dae6, HorizontalAlignment: End, VerticalAlignment: Center);
+                    }
+                  }
+                  Group { Anchor: (Height: 8); }
+                  Group {
+                    Anchor: (Height: 30);
+                    LayoutMode: Left;
+                    Button #BankUp3 {
+                FlexWeight: 1; Anchor: (Height: 30, Right: 3);
+                LayoutMode: Middle;
+                Style: (
+                  Default: (Background: #1b2a3b),
+                  Hovered: (Background: #26394f),
+                  Pressed: (Background: #26394f),
+                  Sounds: $C.@ButtonSounds
+                );
+                Label #BankUp3Text {
+                  Text: "↑ Regrouper";
+                  Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #9fd3a8, HorizontalAlignment: Center, VerticalAlignment: Center);
+                }
+              }
+                    Button #BankDown3 {
+                FlexWeight: 1; Anchor: (Height: 30, Left: 3);
+                LayoutMode: Middle;
+                Style: (
+                  Default: (Background: #1b2a3b),
+                  Hovered: (Background: #26394f),
+                  Pressed: (Background: #26394f),
+                  Sounds: $C.@ButtonSounds
+                );
+                Label #BankDown3Text {
+                  Text: "↓ Casser";
+                  Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #e3c27a, HorizontalAlignment: Center, VerticalAlignment: Center);
+                }
+              }
+                  }
+                }
+            }
+            Group {
+              Anchor: (Top: 6, Height: 118);
+              LayoutMode: Left;
+                Group {
+                  FlexWeight: 1;
+                  Anchor: (Right: 6, Height: 118);
+                  LayoutMode: Top;
+                  Background: #101b28;
+                  Padding: (Left: 10, Right: 10, Top: 8, Bottom: 8);
+                  Group {
+                    Anchor: (Height: 44);
+                    LayoutMode: Left;
+                    ItemIcon #BankCoinIcon4 { Anchor: (Width: 42, Height: 42); }
+                    Group {
+                      FlexWeight: 1;
+                      LayoutMode: Top;
+                      Padding: (Left: 8, Top: 2);
+                      Label #BankCoinName4 { Style: (FontSize: 14, RenderBold: true, TextColor: #f0c868); }
+                      Label #BankCoinRate4 { Style: (FontSize: 10, TextColor: #6f8296); }
+                    }
+                    Label #BankCoinCount4 {
+                      Anchor: (Width: 52);
+                      Style: (FontSize: 18, RenderBold: true, TextColor: #d1dae6, HorizontalAlignment: End, VerticalAlignment: Center);
+                    }
+                  }
+                  Group { Anchor: (Height: 8); }
+                  Group {
+                    Anchor: (Height: 30);
+                    LayoutMode: Left;
+                    Button #BankUp4 {
+                FlexWeight: 1; Anchor: (Height: 30, Right: 3);
+                LayoutMode: Middle;
+                Style: (
+                  Default: (Background: #1b2a3b),
+                  Hovered: (Background: #26394f),
+                  Pressed: (Background: #26394f),
+                  Sounds: $C.@ButtonSounds
+                );
+                Label #BankUp4Text {
+                  Text: "↑ Regrouper";
+                  Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #9fd3a8, HorizontalAlignment: Center, VerticalAlignment: Center);
+                }
+              }
+                    Button #BankDown4 {
+                FlexWeight: 1; Anchor: (Height: 30, Left: 3);
+                LayoutMode: Middle;
+                Style: (
+                  Default: (Background: #1b2a3b),
+                  Hovered: (Background: #26394f),
+                  Pressed: (Background: #26394f),
+                  Sounds: $C.@ButtonSounds
+                );
+                Label #BankDown4Text {
+                  Text: "↓ Casser";
+                  Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #e3c27a, HorizontalAlignment: Center, VerticalAlignment: Center);
+                }
+              }
+                  }
+                }
+                Group {
+                  FlexWeight: 1;
+                  Anchor: (Right: 6, Height: 118);
+                  LayoutMode: Top;
+                  Background: #101b28;
+                  Padding: (Left: 10, Right: 10, Top: 8, Bottom: 8);
+                  Group {
+                    Anchor: (Height: 44);
+                    LayoutMode: Left;
+                    ItemIcon #BankCoinIcon5 { Anchor: (Width: 42, Height: 42); }
+                    Group {
+                      FlexWeight: 1;
+                      LayoutMode: Top;
+                      Padding: (Left: 8, Top: 2);
+                      Label #BankCoinName5 { Style: (FontSize: 14, RenderBold: true, TextColor: #f0c868); }
+                      Label #BankCoinRate5 { Style: (FontSize: 10, TextColor: #6f8296); }
+                    }
+                    Label #BankCoinCount5 {
+                      Anchor: (Width: 52);
+                      Style: (FontSize: 18, RenderBold: true, TextColor: #d1dae6, HorizontalAlignment: End, VerticalAlignment: Center);
+                    }
+                  }
+                  Group { Anchor: (Height: 8); }
+                  Group {
+                    Anchor: (Height: 30);
+                    LayoutMode: Left;
+                    Button #BankUp5 {
+                FlexWeight: 1; Anchor: (Height: 30, Right: 3);
+                LayoutMode: Middle;
+                Style: (
+                  Default: (Background: #1b2a3b),
+                  Hovered: (Background: #26394f),
+                  Pressed: (Background: #26394f),
+                  Sounds: $C.@ButtonSounds
+                );
+                Label #BankUp5Text {
+                  Text: "↑ Regrouper";
+                  Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #9fd3a8, HorizontalAlignment: Center, VerticalAlignment: Center);
+                }
+              }
+                    Button #BankDown5 {
+                FlexWeight: 1; Anchor: (Height: 30, Left: 3);
+                LayoutMode: Middle;
+                Style: (
+                  Default: (Background: #1b2a3b),
+                  Hovered: (Background: #26394f),
+                  Pressed: (Background: #26394f),
+                  Sounds: $C.@ButtonSounds
+                );
+                Label #BankDown5Text {
+                  Text: "↓ Casser";
+                  Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #e3c27a, HorizontalAlignment: Center, VerticalAlignment: Center);
+                }
+              }
+                  }
+                }
+                Group {
+                  FlexWeight: 1;
+                  Anchor: (Right: 0, Height: 118);
+                  LayoutMode: Top;
+                  Background: #101b28;
+                  Padding: (Left: 10, Right: 10, Top: 8, Bottom: 8);
+                  Group {
+                    Anchor: (Height: 44);
+                    LayoutMode: Left;
+                    ItemIcon #BankCoinIcon6 { Anchor: (Width: 42, Height: 42); }
+                    Group {
+                      FlexWeight: 1;
+                      LayoutMode: Top;
+                      Padding: (Left: 8, Top: 2);
+                      Label #BankCoinName6 { Style: (FontSize: 14, RenderBold: true, TextColor: #f0c868); }
+                      Label #BankCoinRate6 { Style: (FontSize: 10, TextColor: #6f8296); }
+                    }
+                    Label #BankCoinCount6 {
+                      Anchor: (Width: 52);
+                      Style: (FontSize: 18, RenderBold: true, TextColor: #d1dae6, HorizontalAlignment: End, VerticalAlignment: Center);
+                    }
+                  }
+                  Group { Anchor: (Height: 8); }
+                  Group {
+                    Anchor: (Height: 30);
+                    LayoutMode: Left;
+                    Button #BankUp6 {
+                FlexWeight: 1; Anchor: (Height: 30, Right: 3);
+                LayoutMode: Middle;
+                Style: (
+                  Default: (Background: #1b2a3b),
+                  Hovered: (Background: #26394f),
+                  Pressed: (Background: #26394f),
+                  Sounds: $C.@ButtonSounds
+                );
+                Label #BankUp6Text {
+                  Text: "↑ Regrouper";
+                  Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #9fd3a8, HorizontalAlignment: Center, VerticalAlignment: Center);
+                }
+              }
+                    Button #BankDown6 {
+                FlexWeight: 1; Anchor: (Height: 30, Left: 3);
+                LayoutMode: Middle;
+                Style: (
+                  Default: (Background: #1b2a3b),
+                  Hovered: (Background: #26394f),
+                  Pressed: (Background: #26394f),
+                  Sounds: $C.@ButtonSounds
+                );
+                Label #BankDown6Text {
+                  Text: "↓ Casser";
+                  Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #e3c27a, HorizontalAlignment: Center, VerticalAlignment: Center);
+                }
+              }
+                  }
+                }
+            }
+            Group {
+              Anchor: (Top: 8, Height: 34);
+              LayoutMode: Center;
+              Button #BankTidy {
+                Anchor: (Height: 34, Width: 420);
+                LayoutMode: Middle;
+                Style: (
+                  Default: (Background: #1b2a3b),
+                  Hovered: (Background: #26394f),
+                  Pressed: (Background: #26394f),
+                  Sounds: $C.@ButtonSounds
+                );
+                Label #BankTidyText {
+                  Text: "Tout regrouper : le moins de pièces possible";
+                  Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #d1dae6, HorizontalAlignment: Center, VerticalAlignment: Center);
+                }
+              }
+            }
+          }
+
+          // ===== Panneau Prets (BankLoans, 2026-11-12) =====
+          Group #BankPanel2 {
+            Anchor: (Top: 12, Height: 268);
+            LayoutMode: Top;
+            Visible: false;
+            Group {
+              Anchor: (Height: 54);
+              LayoutMode: Left;
+              Group {
+                FlexWeight: 1;
+                Anchor: (Right: 4, Height: 54);
+                LayoutMode: Left;
+                Background: #101b28;
+                Group { Anchor: (Width: 4); Background: #d4af37; }
+                Group {
+                  FlexWeight: 1;
+                  LayoutMode: Top;
+                  Padding: (Left: 10, Top: 6);
+                  Label { Text: "Vous pouvez emprunter"; Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #6f8296); }
+                  Label #BankLoanMax { Style: (FontSize: 17, RenderBold: true, TextColor: #f0c868); }
+                  Label #BankLoanMaxSub { Style: (FontSize: 10, TextColor: #6f8296); }
+                }
+              }
+              Group {
+                FlexWeight: 1;
+                Anchor: (Left: 4, Height: 54);
+                LayoutMode: Left;
+                Background: #101b28;
+                Group { Anchor: (Width: 4); Background: #e0796b; }
+                Group {
+                  FlexWeight: 1;
+                  LayoutMode: Top;
+                  Padding: (Left: 10, Top: 6);
+                  Label { Text: "Dette envers la banque"; Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #6f8296); }
+                  Label #BankLoanDue { Style: (FontSize: 17, RenderBold: true, TextColor: #f0c868); }
+                  Label #BankLoanTime { Style: (FontSize: 10, TextColor: #6f8296); }
+                }
+              }
+            }
+            Label {
+              Anchor: (Top: 8);
+              Text: "Montant";
+              Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #6f8296);
+            }
+            Group {
+              Anchor: (Top: 4, Height: 32);
+              LayoutMode: Left;
+              $C.@NumberField #BankLoanAmount {
+                FlexWeight: 1;
+                Anchor: (Height: 30);
+                Format: (MaxDecimalPlaces: 0, Step: 1);
+              }
+              Group { Anchor: (Width: 8); }
+              $C.@DropdownBox #BankLoanUnit {
+                Anchor: (Width: 220, Height: 30);
+                Style: @DefaultDropdownBoxStyle;
+              }
+            }
+            Group {
+              Anchor: (Top: 8, Height: 38);
+              LayoutMode: Left;
+              Button #BankBorrow {
+                FlexWeight: 1; Anchor: (Right: 3, Height: 38);
+                LayoutMode: Middle;
+                Style: (
+                  Default: (Background: #5a4318),
+                  Hovered: (Background: #78591f),
+                  Pressed: (Background: #78591f),
+                  Sounds: $C.@ButtonSounds
+                );
+                Label #BankBorrowText {
+                  Text: "Emprunter";
+                  Style: (FontSize: 13, RenderBold: true, RenderUppercase: true, TextColor: #ffe7a8, HorizontalAlignment: Center, VerticalAlignment: Center);
+                }
+              }
+              Button #BankRepay {
+                FlexWeight: 1; Anchor: (Left: 3, Height: 38);
+                LayoutMode: Middle;
+                Style: (
+                  Default: (Background: #1f4a32),
+                  Hovered: (Background: #2b6544),
+                  Pressed: (Background: #2b6544),
+                  Sounds: $C.@ButtonSounds
+                );
+                Label #BankRepayText {
+                  Text: "Rembourser";
+                  Style: (FontSize: 13, RenderBold: true, RenderUppercase: true, TextColor: #c8f0d2, HorizontalAlignment: Center, VerticalAlignment: Center);
+                }
+              }
+              Button #BankRepayAll {
+                FlexWeight: 1; Anchor: (Left: 3, Height: 38);
+                LayoutMode: Middle;
+                Style: (
+                  Default: (Background: #1b2a3b),
+                  Hovered: (Background: #26394f),
+                  Pressed: (Background: #26394f),
+                  Sounds: $C.@ButtonSounds
+                );
+                Label #BankRepayAllText {
+                  Text: "Tout rembourser";
+                  Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #9fd3a8, HorizontalAlignment: Center, VerticalAlignment: Center);
+                }
+              }
+            }
+            Group {
+              Anchor: (Top: 8, Height: 86);
+              LayoutMode: Left;
+              Background: #2a1414;
+              Group { Anchor: (Width: 4); Background: #e0796b; }
+              Label #BankLoanRules {
+                FlexWeight: 1;
+                Padding: (Left: 10, Right: 10, Top: 6);
+                Style: (FontSize: 11, TextColor: #f1c3ba, Wrap: true);
+              }
+            }
+          }
+
+          // ===== Message, fermer =====
+          Group {
+            Anchor: (Top: 10, Height: 30);
+            LayoutMode: Left;
+            Background: #101b28;
+            Group #BankMsgBar { Anchor: (Width: 4); Background: #8fd18f; }
+            Label #BankMsg {
+              FlexWeight: 1;
+              Style: (FontSize: 13, RenderBold: true, TextColor: #8fd18f, HorizontalAlignment: Center, VerticalAlignment: Center);
+            }
+          }
+          Group {
+            Anchor: (Top: 10, Height: 40);
+            LayoutMode: Center;
+            $C.@SecondaryTextButton #BankClose { @Anchor = Anchor(MinWidth: 220); Text: "Fermer"; }
+          }
+        }
+      }
+    }
+  }
+}

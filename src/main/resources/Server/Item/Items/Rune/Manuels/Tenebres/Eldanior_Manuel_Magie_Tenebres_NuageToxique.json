@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_NuageToxique (remplace le parchemin rune_page_nuage_toxique).",
+  "TranslationProperties": {
+    "Name": "Manuel des Ténèbres : Nuage Toxique",
+    "Description": "Sort épique de ténèbres (Mage, rune de prédilection du Grand Alchimiste). Vous libérez un nuage de poison au point visé (rayon 6, jusqu'à 20 blocs) qui dure 10 s et dérive lentement vers votre curseur. Les ennemis qui le respirent subissent 14 dégâts de poison toutes les demi-secondes. Épargne votre groupe, votre guilde et votre famille. Coût : 300 mana. Recharge : 120 s.\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Tenebres"
+  ],
+  "Quality": "Epic",
+  "ItemLevel": 60,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Tenebres_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Tenebres_NuageToxique.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

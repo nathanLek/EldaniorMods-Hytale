@@ -57,33 +57,49 @@ public final class SpellFx {
     /** Rayon d'envoi des particules (ParticleUtil seul se limite a 75 blocs). */
     static final double VIEW_RADIUS = 200.0;
 
-    /** Affiche une particule pour tous les joueurs proches. Retourne le nombre de joueurs servis. */
-    static int fx(String id, Vector3d pos, float scale, Store<EntityStore> store, ComponentAccessor<EntityStore> accessor) {
-        try {
-            List<Ref<EntityStore>> viewers = new ArrayList<>();
-            for (Ref<EntityStore> ref : TargetUtil.getAllEntitiesInSphere(pos, VIEW_RADIUS, store)) {
-                if (ref != null && ref.isValid() && store.getComponent(ref, Player.getComponentType()) != null) viewers.add(ref);
-            }
-            if (viewers.isEmpty()) return 0;
-            ParticleUtil.spawnParticleEffect(id, pos.x, pos.y, pos.z, 0f, 0f, 0f, scale, null, null, viewers, accessor, 0f);
-            return viewers.size();
-        } catch (Exception e) {
-            EldaniorLogger.error("SpellFx: particule " + id, e);
-            return 0;
+    /**
+     * Joueurs du monde a moins de radius blocs de pos. Parcourt la liste des joueurs du monde (quelques entrees) au lieu
+     * d'une requete spatiale sur toutes les entites : les sorts emettent des dizaines de particules par tick, et une
+     * sphere de 200 blocs remplie de PNJ a chaque particule provoquait des freezes.
+     */
+    static List<Ref<EntityStore>> playersNear(Vector3d pos, double radius, Store<EntityStore> store) {
+        List<Ref<EntityStore>> out = new ArrayList<>();
+        World world = world(store);
+        if (world == null || pos == null) return out;
+        double r2 = radius * radius;
+        for (PlayerRef pr : world.getPlayerRefs()) {
+            Ref<EntityStore> ref = pr != null ? pr.getReference() : null;
+            if (ref == null || !ref.isValid() || ref.getStore() != store) continue;
+            TransformComponent t = store.getComponent(ref, TransformComponent.getComponentType());
+            if (t != null && t.getPosition().distanceSquared(pos) <= r2) out.add(ref);
         }
+        return out;
+    }
+
+    /** Affiche une particule pour tous les joueurs proches. Retourne le nombre de joueurs servis. */
+    public static int fx(String id, Vector3d pos, float scale, Store<EntityStore> store, ComponentAccessor<EntityStore> accessor) {
+        List<Ref<EntityStore>> viewers = playersNear(pos, VIEW_RADIUS, store);
+        return emit(id, pos, 0f, 0f, scale, viewers, accessor) ? viewers.size() : 0;
     }
 
     /** Particule orientee (lacet / tangage en degres), pour tous les joueurs proches. */
     static void fx(String id, Vector3d pos, float yaw, float pitch, float scale, Store<EntityStore> store, ComponentAccessor<EntityStore> accessor) {
+        emit(id, pos, yaw, pitch, scale, playersNear(pos, VIEW_RADIUS, store), accessor);
+    }
+
+    /** Particule vue par un seul joueur (marques du Sens martial). */
+    static void fxFor(String id, Vector3d pos, float scale, Ref<EntityStore> viewer, ComponentAccessor<EntityStore> accessor) {
+        if (viewer != null && viewer.isValid()) emit(id, pos, 0f, 0f, scale, List.of(viewer), accessor);
+    }
+
+    private static boolean emit(String id, Vector3d pos, float yaw, float pitch, float scale, List<Ref<EntityStore>> viewers, ComponentAccessor<EntityStore> accessor) {
+        if (viewers.isEmpty()) return false;
         try {
-            List<Ref<EntityStore>> viewers = new ArrayList<>();
-            for (Ref<EntityStore> ref : TargetUtil.getAllEntitiesInSphere(pos, VIEW_RADIUS, store)) {
-                if (ref != null && ref.isValid() && store.getComponent(ref, Player.getComponentType()) != null) viewers.add(ref);
-            }
-            if (viewers.isEmpty()) return;
             ParticleUtil.spawnParticleEffect(id, pos.x, pos.y, pos.z, yaw, pitch, 0f, scale, null, null, viewers, accessor, 0f);
+            return true;
         } catch (Exception e) {
             EldaniorLogger.error("SpellFx: particule " + id, e);
+            return false;
         }
     }
 
@@ -101,12 +117,11 @@ public final class SpellFx {
      * Son non positionne (2D) joue a chaque joueur dans le rayon. Pour les sons stereo (ex. tonnerre vanilla),
      * refuses en son positionne.
      */
-    static void sound2dNear(String id, Vector3d pos, double radius, Store<EntityStore> store) {
+    public static void sound2dNear(String id, Vector3d pos, double radius, Store<EntityStore> store) {
         int index = SoundEvent.getAssetMap().getIndex(id);
         if (index < 0) return;
         try {
-            for (Ref<EntityStore> ref : TargetUtil.getAllEntitiesInSphere(pos, radius, store)) {
-                if (ref == null || !ref.isValid()) continue;
+            for (Ref<EntityStore> ref : playersNear(pos, radius, store)) {
                 PlayerRef player = store.getComponent(ref, PlayerRef.getComponentType());
                 if (player != null) SoundUtil.playSoundEvent2dToPlayer(player, index, SoundCategory.SFX);
             }
@@ -118,12 +133,61 @@ public final class SpellFx {
     /** Arc electrique entre deux points : un eclat de particules tous les ~1.2 blocs, legerement decale (comme Taranis). */
     static void arc(String fxId, Vector3d a, Vector3d b, float scale, Store<EntityStore> store, ComponentAccessor<EntityStore> accessor) {
         int steps = (int) Math.min(16, Math.max(2, a.distance(b) / 1.2));
+        List<Ref<EntityStore>> viewers = playersNear(new Vector3d(a).lerp(b, 0.5), VIEW_RADIUS + a.distance(b) / 2, store);   // une seule recherche par arc
+        if (viewers.isEmpty()) return;
         java.util.concurrent.ThreadLocalRandom rng = java.util.concurrent.ThreadLocalRandom.current();
         for (int i = 0; i <= steps; i++) {
             Vector3d p = new Vector3d(a).lerp(b, i / (double) steps);
             if (i > 0 && i < steps) p.add(rng.nextDouble(-0.3, 0.3), rng.nextDouble(-0.3, 0.3), rng.nextDouble(-0.3, 0.3));
-            fx(fxId, p, scale, store, accessor);
+            emit(fxId, p, 0f, 0f, scale, viewers, accessor);
         }
+    }
+
+    /**
+     * Faisceau (asset Server/Entity/Beams) tendu de from vers to, porte par une entite non sauvegardee qui disparait seule
+     * apres lifeMs. Le deplacer chaque tick avec beam(...) (les faisceaux attaches a une entite disparaissent : voir NyxVeil).
+     */
+    static Ref<EntityStore> spawnBeam(String beamId, Vector3d from, Vector3d to, float scale, long lifeMs, Store<EntityStore> store, CommandBuffer<EntityStore> cb) {
+        return spawnBeam(beamId, from, to, scale, scale, lifeMs, store, cb);
+    }
+
+    /** Faisceau effile : largeur fromScale au depart, toScale a l'arrivee (aiguille, lance qui s'affine en pointe). */
+    static Ref<EntityStore> spawnBeam(String beamId, Vector3d from, Vector3d to, float fromScale, float toScale, long lifeMs,
+                                      Store<EntityStore> store, CommandBuffer<EntityStore> cb) {
+        int beam = com.hypixel.hytale.builtin.beam.asset.Beam.getAssetMap().getIndex(beamId);
+        if (beam < 0) { EldaniorLogger.error("SpellFx: faisceau introuvable " + beamId); return null; }
+        try {
+            var h = store.getRegistry().newHolder();
+            h.addComponent(com.hypixel.hytale.server.core.modules.entity.tracker.NetworkId.getComponentType(),
+                    new com.hypixel.hytale.server.core.modules.entity.tracker.NetworkId(store.getExternalData().takeNextNetworkId()));
+            h.addComponent(TransformComponent.getComponentType(), new TransformComponent(new Vector3d(from), new Rotation3f()));
+            h.addComponent(com.hypixel.hytale.builtin.beam.BeamComponent.getComponentType(), new com.hypixel.hytale.builtin.beam.BeamComponent(
+                    com.hypixel.hytale.builtin.beam.AttachedBeam.toPosition(beam, fromScale, toScale, null, new Vector3d(to))));
+            h.ensureComponent(com.hypixel.hytale.server.core.entity.UUIDComponent.getComponentType());
+            h.ensureComponent(store.getRegistry().getNonSerializedComponentType());
+            h.addComponent(com.hypixel.hytale.server.core.modules.entity.DespawnComponent.getComponentType(),
+                    com.hypixel.hytale.server.core.modules.entity.DespawnComponent.despawnInSeconds(
+                            store.getResource(com.hypixel.hytale.server.core.modules.time.TimeResource.getResourceType()), lifeMs / 1000f));
+            return cb.addEntity(h, com.hypixel.hytale.component.AddReason.SPAWN);
+        } catch (Exception e) {
+            EldaniorLogger.error("SpellFx: faisceau " + beamId, e);
+            return null;
+        }
+    }
+
+    /** Replace un faisceau cree par spawnBeam : depart en from, arrivee en to. */
+    static void beam(Ref<EntityStore> ref, String beamId, Vector3d from, Vector3d to, float scale, Store<EntityStore> store) {
+        beam(ref, beamId, from, to, scale, scale, store);
+    }
+
+    /** Replace un faisceau effile cree par spawnBeam (largeurs au depart et a l'arrivee). */
+    static void beam(Ref<EntityStore> ref, String beamId, Vector3d from, Vector3d to, float fromScale, float toScale, Store<EntityStore> store) {
+        if (ref == null || !ref.isValid()) return;
+        hold(ref, from, null, store);
+        var bc = store.getComponent(ref, com.hypixel.hytale.builtin.beam.BeamComponent.getComponentType());
+        int beam = com.hypixel.hytale.builtin.beam.asset.Beam.getAssetMap().getIndex(beamId);
+        if (bc != null && beam >= 0)
+            bc.set(List.of(com.hypixel.hytale.builtin.beam.AttachedBeam.toPosition(beam, fromScale, toScale, null, new Vector3d(to))));
     }
 
     /** Etourdissement bref : effet de paralysie (joueurs) et verrou de position (monstres, que l'effet ne fige pas). */
@@ -143,8 +207,7 @@ public final class SpellFx {
         try {
             var effect = com.hypixel.hytale.server.core.asset.type.camera.CameraEffect.getAssetMap().getAsset(cameraEffectId);
             if (effect == null) return;
-            for (Ref<EntityStore> ref : TargetUtil.getAllEntitiesInSphere(pos, radius, store)) {
-                if (ref == null || !ref.isValid()) continue;
+            for (Ref<EntityStore> ref : playersNear(pos, radius, store)) {
                 PlayerRef player = store.getComponent(ref, PlayerRef.getComponentType());
                 Vector3d p = position(ref, store);
                 if (player == null || p == null) continue;
@@ -160,6 +223,7 @@ public final class SpellFx {
     static boolean isEnemy(Ref<EntityStore> caster, Ref<EntityStore> target, Store<EntityStore> store) {
         if (target == null || !target.isValid() || target.equals(caster)) return false;
         if (AdventurerMagic.isAdventurer(caster, store)) return AdventurerMagic.isFoe(caster, target, store);   // rune lancee par un aventurier
+        if (MartialNpcs.isMartialCaster(caster)) return AdventurerMagic.isFoe(caster, target, store);         // PNJ martial (garde...)
         boolean isPlayer = store.getComponent(target, Player.getComponentType()) != null;
         boolean isNpc = store.getComponent(target, NPCEntity.getComponentType()) != null;
         if (!isPlayer && !isNpc) return false;
@@ -358,6 +422,17 @@ public final class SpellFx {
 
     // ===================== OUTILS COMMUNS DES SORTS DIVINS =====================
 
+    /** Soin d'un montant fixe de points de vie (borne au maximum par le moteur). */
+    static void heal(Ref<EntityStore> ref, float amount, ComponentAccessor<EntityStore> store) {
+        if (ref == null || !ref.isValid() || amount <= 0) return;
+        try {
+            var map = store.getComponent(ref, com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap.getComponentType());
+            if (map != null) map.addStatValue(com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes.getHealth(), amount);
+        } catch (Exception e) {
+            EldaniorLogger.error("SpellFx: soin", e);
+        }
+    }
+
     /** Ajoute a une statistique (vie, mana, endurance...) un pourcentage de son maximum. */
     static void restore(Ref<EntityStore> ref, int statIndex, float percentOfMax, ComponentAccessor<EntityStore> store) {
         try {
@@ -397,6 +472,31 @@ public final class SpellFx {
                     .spawnProjectile(caster, cb, config, new Vector3d(pos), new Vector3d(dir));
         } catch (Exception e) {
             EldaniorLogger.error("SpellFx: " + configId, e);
+            return null;
+        }
+    }
+
+    /**
+     * Entite reduite a un modele (comme le mannequin du presentoir) : ni physique ni collisions de projectile, donc jamais
+     * « touchee » ni supprimee par le moteur. Deplacee par hold ; non sauvegardee. Null si le modele est introuvable.
+     */
+    static Ref<EntityStore> spawnStatic(String modelAssetId, float scale, Vector3d pos, Rotation3f rot, Store<EntityStore> store,
+                                        CommandBuffer<EntityStore> cb) {
+        var asset = com.hypixel.hytale.server.core.asset.type.model.config.ModelAsset.getAssetMap().getAsset(modelAssetId);
+        if (asset == null) return null;
+        try {
+            var h = store.getRegistry().newHolder();
+            h.addComponent(com.hypixel.hytale.server.core.modules.entity.tracker.NetworkId.getComponentType(),
+                    new com.hypixel.hytale.server.core.modules.entity.tracker.NetworkId(store.getExternalData().takeNextNetworkId()));
+            h.addComponent(TransformComponent.getComponentType(), new TransformComponent(new Vector3d(pos), rot != null ? rot : new Rotation3f()));
+            h.addComponent(com.hypixel.hytale.server.core.modules.entity.component.ModelComponent.getComponentType(),
+                    new com.hypixel.hytale.server.core.modules.entity.component.ModelComponent(
+                            com.hypixel.hytale.server.core.asset.type.model.config.Model.createScaledModel(asset, scale)));
+            h.ensureComponent(com.hypixel.hytale.server.core.entity.UUIDComponent.getComponentType());
+            h.ensureComponent(store.getRegistry().getNonSerializedComponentType());
+            return cb.addEntity(h, com.hypixel.hytale.component.AddReason.SPAWN);
+        } catch (Exception e) {
+            EldaniorLogger.error("SpellFx: modele " + modelAssetId, e);
             return null;
         }
     }
@@ -503,6 +603,19 @@ public final class SpellFx {
             EldaniorLogger.error("SpellFx: lecture des interactions", e);
         }
         return ids;
+    }
+
+    /** Annule les chaines d'interaction en cours de ce type (attaque, garde...) : le geste s'interrompt cote serveur et client. */
+    static void cancelChains(Ref<EntityStore> ref, Store<EntityStore> store, com.hypixel.hytale.protocol.InteractionType type) {
+        try {
+            var manager = store.getComponent(ref, com.hypixel.hytale.server.core.modules.interaction.InteractionModule.get().getInteractionManagerComponent());
+            if (manager == null) return;
+            java.util.List<com.hypixel.hytale.server.core.entity.InteractionChain> list = new java.util.ArrayList<>();
+            for (var chain : manager.getChains().values()) if (chain != null && chain.getType() == type) list.add(chain);
+            for (var chain : list) manager.cancelChains(chain);
+        } catch (Exception e) {
+            EldaniorLogger.error("SpellFx: annulation des interactions", e);
+        }
     }
 
     // Immunite aux degats de chute (sorts qui projettent le lanceur), lue par FallDamageSystem

@@ -1,0 +1,69 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_PluieCometes",
+  "spell": "PluieCometes",
+  "javaClass": "PluieCometes",
+  "page": "rune_page_pluie_cometes",
+  "name": "Rune de la Pluie de Comètes",
+  "type": "Feu",
+  "rarity": "Epic",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Cometes",
+  "summary": "10 s au point vise (rayon 8) : une comete toutes les 0,6 s (16), de preference sur un ennemi : 70 + brulure a 2,5 blocs.",
+  "description": "Sort épique de feu (Mage, rune de prédilection du Créateur Cosmique). Pendant 10 s, une pluie de comètes s'abat sur le point visé (rayon 8, jusqu'à 25 blocs) : une comète toutes les 0,6 s, seize en tout, qui visent de préférence vos ennemis. Chaque impact inflige 70 dégâts de feu et enflamme à moins de 2,5 blocs. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin constellé de minuscules trous brûlés, comme une carte du ciel. Enseigne la Pluie de Comètes : le Créateur jette les étoiles. Classes : tous les Mages (rune de prédilection du Créateur Cosmique). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.6,
+    "releaseTime": 0.5,
+    "moveSpeed": 0.4,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Gobliterator_Rocket_Barrage_Pre",
+    "handParticles": "Impact_Fire",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.6,
+    "range": 25,
+    "radius": "8 (zone) / 2,5 (impact)",
+    "targets": "ennemis de la zone",
+    "executionFx": "comete : modele Muspelheim_Meteor reduit (x1,5), en biais depuis 18 blocs de haut en 0,7 s",
+    "impactFx": "Impact_Fire + Explosion_Small a chaque impact",
+    "sounds": "SFX_Gobliterator_Rocket_Barrage_Projectile a la chute, SFX_Gobliterator_Rocket_Barrage_Explosion a l'impact",
+    "effects": "16 cometes (1 / 0,6 s) : point = un ennemi de la zone au hasard (sinon point au hasard) ; 70 Fire + Elda_Brulure r 2,5",
+    "terrain": "aucun",
+    "persistentDurationS": 10,
+    "interruptions": "lanceur mort ou deconnecte : fin, cometes retirees",
+    "restrictions": "mage",
+    "edgeCases": "cible qui bouge : la comete tombe ou elle etait au moment du choix",
+    "limitations": "distincte du Meteore (Epic, un seul impact massif + cratere) : nombreuses petites frappes reparties, sans terrain",
+    "balance": {
+      "damage": 3,
+      "range": 2,
+      "duration": 2,
+      "mobility": 0,
+      "control": 0,
+      "defense": 0,
+      "targets": 3,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    }
+  }
+}

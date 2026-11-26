@@ -1,0 +1,67 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_RayonArcanique",
+  "spell": "RayonArcanique",
+  "javaClass": "RayonArcanique",
+  "page": "rune_page_rayon_arcanique",
+  "name": "Rune du Rayon Arcanique",
+  "type": "Lumiere",
+  "rarity": "Unique",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "RayonArcanique",
+  "summary": "rayon canalise 5 s qui suit le regard (30 blocs, arrete par les murs) : 30 degats / 0,25 s, lanceur ralenti.",
+  "description": "Sort unique de lumière (Mage, rune de prédilection du Magus Suprême). Vous canalisez pendant 5 s un rayon d'énergie pure qui suit votre regard, jusqu'à 30 blocs (les murs l'arrêtent). Chaque ennemi qu'il traverse subit 30 dégâts tous les quarts de seconde. Vous vous déplacez deux fois moins vite pendant la canalisation. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin traversé de part en part d'une ligne de lumière bleue. Enseigne le Rayon Arcanique : balayez le champ de bataille. Classes : tous les Mages (rune de prédilection du Magus Suprême). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Duration"
+  ],
+  "cast": {
+    "animationSet": "Spellbook",
+    "charging": "CastPushCharging",
+    "release": "CastPushCharged",
+    "chargeTime": 0.5,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Portal_Neutral_Open",
+    "handParticles": "Astral_Esprit",
+    "handParticlesScale": 0.25,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.5,
+    "range": 30,
+    "radius": "largeur 1,2",
+    "targets": "ennemis traverses",
+    "persistentFx": "faisceau Basic (Charged_Blue) replace a chaque tick, Astral_Esprit tous les 2 blocs toutes les 200 ms, Bifrost_Divine au bout",
+    "impactFx": "Bifrost_Divine sur les ennemis touches",
+    "sounds": "SFX_Portal_Neutral_Open au debut, SFX_Portal_Neutral toutes les 1,5 s",
+    "effects": "30 Elemental / 0,25 s par ennemi traverse (600 max sur 5 s) ; Elda_Canalisation (vitesse x0,5) sur le lanceur",
+    "terrain": "aucun",
+    "persistentDurationS": 5,
+    "interruptions": "aucune",
+    "restrictions": "mage",
+    "edgeCases": "mur : le rayon s'arrete ; chunk non charge : le rayon s'arrete",
+    "balance": {
+      "damage": 3,
+      "range": 3,
+      "duration": 1,
+      "mobility": 0,
+      "control": 0,
+      "defense": 0,
+      "targets": 2,
+      "frequency": 2,
+      "terrain": 0,
+      "difficulty": 2
+    }
+  },
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null
+}

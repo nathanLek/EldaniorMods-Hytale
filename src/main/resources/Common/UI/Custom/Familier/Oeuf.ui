@@ -1,0 +1,310 @@
+$C = "../Common.ui";
+
+// Fenetre de gestion d'un familier (familiers/FamilierPage), generee par scripts/familiers/gen_familiers.py.
+Group {
+  LayoutMode: Middle;
+  Background: #05080d(0.6);
+
+  Group {
+    Anchor: (Width: 820);
+    LayoutMode: Top;
+    Padding: (Full: 2);
+    Background: #0c141e;
+    Group {
+      LayoutMode: Top;
+      Padding: (Full: 2);
+      Background: #3f6f94;
+      Group {
+        LayoutMode: Top;
+        Background: #0b141d(0.97);
+        Padding: (Left: 24, Right: 24, Top: 18, Bottom: 16);
+
+        Group {
+          Anchor: (Height: 116);
+          LayoutMode: Left;
+          Group {
+            Anchor: (Width: 116, Height: 116);
+            Padding: (Full: 3);
+            Background: #3f6f94;
+            Group {
+              Background: #0f1b28;
+              ItemIcon #FamPortrait { Anchor: (Left: 7, Top: 7, Width: 96, Height: 96); }
+            }
+          }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Left: 18, Top: 4);
+            Label #FamName {
+              Style: (FontSize: 24, RenderBold: true, RenderUppercase: true, TextColor: #eef6ff);
+            }
+            Group {
+              Anchor: (Top: 2, Height: 22);
+              LayoutMode: Left;
+              Label #FamRarity {
+                Anchor: (Width: 130);
+                Style: (FontSize: 14, RenderBold: true, RenderUppercase: true, TextColor: #c8c8c8, VerticalAlignment: Center);
+              }
+              Label #FamSpecies {
+                FlexWeight: 1;
+                Style: (FontSize: 14, TextColor: #b8c6d4, VerticalAlignment: Center);
+              }
+            }
+            Label #FamElement {
+              Anchor: (Top: 2);
+              Style: (FontSize: 14, RenderBold: true, TextColor: #9fdcff);
+            }
+            Label #FamState {
+              Anchor: (Top: 6);
+              Style: (FontSize: 14, TextColor: #f0c868);
+            }
+          }
+        }
+
+        Group { Anchor: (Top: 12, Height: 2); Background: #3f6f94; }
+
+        Group {
+          Anchor: (Top: 8);
+          LayoutMode: Top;
+          Group {
+            Anchor: (Top: 6, Height: 20);
+            LayoutMode: Left;
+            Label {
+              Anchor: (Width: 120);
+              Text: "Vie";
+              Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #7f93a8, VerticalAlignment: Center);
+            }
+            Group {
+              FlexWeight: 1;
+              Padding: (Top: 4, Bottom: 4);
+              Group {
+                Background: #1b2938;
+                ProgressBar #FamHpBar {
+                  BarTexturePath: "FamBarVie.png";
+                  Value: 0.0;
+                }
+              }
+            }
+            Label #FamHpText {
+              Anchor: (Width: 250);
+              Style: (FontSize: 13, TextColor: #d6e2ee, HorizontalAlignment: End, VerticalAlignment: Center);
+            }
+          }
+          Group {
+            Anchor: (Top: 6, Height: 20);
+            LayoutMode: Left;
+            Label {
+              Anchor: (Width: 120);
+              Text: "Expérience";
+              Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #7f93a8, VerticalAlignment: Center);
+            }
+            Group {
+              FlexWeight: 1;
+              Padding: (Top: 4, Bottom: 4);
+              Group {
+                Background: #1b2938;
+                ProgressBar #FamXpBar {
+                  BarTexturePath: "FamBarXp.png";
+                  Value: 0.0;
+                }
+              }
+            }
+            Label #FamXpText {
+              Anchor: (Width: 250);
+              Style: (FontSize: 13, TextColor: #d6e2ee, HorizontalAlignment: End, VerticalAlignment: Center);
+            }
+          }
+          Group {
+            Anchor: (Top: 6, Height: 20);
+            LayoutMode: Left;
+            Label {
+              Anchor: (Width: 120);
+              Text: "Croissance";
+              Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #7f93a8, VerticalAlignment: Center);
+            }
+            Group {
+              FlexWeight: 1;
+              Padding: (Top: 4, Bottom: 4);
+              Group {
+                Background: #1b2938;
+                ProgressBar #FamAgeBar {
+                  BarTexturePath: "FamBarAge.png";
+                  Value: 0.0;
+                }
+              }
+            }
+            Label #FamAgeText {
+              Anchor: (Width: 250);
+              Style: (FontSize: 13, TextColor: #d6e2ee, HorizontalAlignment: End, VerticalAlignment: Center);
+            }
+          }
+        }
+
+        Group {
+          Anchor: (Top: 12);
+          LayoutMode: Left;
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Background: #122030;
+            Padding: (Left: 14, Right: 14, Top: 6, Bottom: 10);
+              Group {
+                Anchor: (Top: 4);
+                LayoutMode: Top;
+                Label {
+                  Text: "Âge";
+                  Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #6f8398);
+                }
+                Label #FamVal0 {
+                  Style: (FontSize: 14, TextColor: #d6e2ee, Wrap: true);
+                }
+              }
+              Group {
+                Anchor: (Top: 4);
+                LayoutMode: Top;
+                Label {
+                  Text: "Puissance";
+                  Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #6f8398);
+                }
+                Label #FamVal1 {
+                  Style: (FontSize: 14, TextColor: #d6e2ee, Wrap: true);
+                }
+              }
+          }
+          Group { Anchor: (Width: 10); }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Background: #122030;
+            Padding: (Left: 14, Right: 14, Top: 6, Bottom: 10);
+              Group {
+                Anchor: (Top: 4);
+                LayoutMode: Top;
+                Label {
+                  Text: "Monture";
+                  Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #6f8398);
+                }
+                Label #FamVal2 {
+                  Style: (FontSize: 14, TextColor: #d6e2ee, Wrap: true);
+                }
+              }
+              Group {
+                Anchor: (Top: 4);
+                LayoutMode: Top;
+                Label {
+                  Text: "Nourriture";
+                  Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #6f8398);
+                }
+                Label #FamVal3 {
+                  Style: (FontSize: 14, TextColor: #d6e2ee, Wrap: true);
+                }
+              }
+          }
+        }
+
+        Group {
+          Anchor: (Top: 10);
+          LayoutMode: Top;
+          Background: #122030;
+          Padding: (Left: 14, Right: 14, Top: 8, Bottom: 10);
+          Group {
+            LayoutMode: Left;
+            Label {
+              Anchor: (Width: 170);
+              Text: "Compétence";
+              Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #7f93a8);
+            }
+            Label #FamSkill {
+              FlexWeight: 1;
+              Style: (FontSize: 15, RenderBold: true, TextColor: #e8c8a0, Wrap: true);
+            }
+          }
+          Label #FamSkillDesc {
+            Anchor: (Top: 2);
+            Style: (FontSize: 13, TextColor: #a9b8c8, Wrap: true);
+          }
+          Group {
+            Anchor: (Top: 6);
+            LayoutMode: Left;
+            Label {
+              Anchor: (Width: 170);
+              Text: "Prochaine évolution";
+              Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #7f93a8);
+            }
+            Label #FamNext {
+              FlexWeight: 1;
+              Style: (FontSize: 14, TextColor: #d6e2ee, Wrap: true);
+            }
+          }
+        }
+
+        Group #FamEvolve {
+          Anchor: (Top: 10);
+          LayoutMode: Left;
+          Visible: false;
+          Background: #2a2312(0.95);
+          Padding: (Left: 14, Right: 10, Top: 8, Bottom: 8);
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Label {
+              Text: "Prêt à évoluer";
+              Style: (FontSize: 14, RenderBold: true, RenderUppercase: true, TextColor: #f2c45e);
+            }
+            Label #FamEvolveText {
+              Anchor: (Top: 2);
+              Style: (FontSize: 13, TextColor: #d8c8a0, Wrap: true);
+            }
+          }
+          $C.@TextButton #FamEvolveBtn { Text: "Faire évoluer"; Anchor: (Width: 210, Height: 44); }
+        }
+
+        Label #FamMsg {
+          Anchor: (Top: 8);
+          Style: (FontSize: 13, TextColor: #c9b37a, Wrap: true, HorizontalAlignment: Center);
+        }
+
+        Group {
+          Anchor: (Top: 8, Height: 44);
+          LayoutMode: Left;
+          $C.@TextButton #FamFollow { Text: "Me suivre"; FlexWeight: 1; }
+          Group { Anchor: (Width: 8); }
+          $C.@TextButton #FamFeed { Text: "Nourrir"; FlexWeight: 1; }
+          Group { Anchor: (Width: 8); }
+          $C.@SecondaryTextButton #FamRelease { Text: "Relâcher"; FlexWeight: 1; }
+          Group { Anchor: (Width: 8); }
+          $C.@SecondaryTextButton #FamClose { Text: "Fermer"; FlexWeight: 1; }
+        }
+
+        Group #FamAdmin {
+          Anchor: (Top: 12);
+          LayoutMode: Top;
+          Visible: false;
+          Background: #1a1414(0.9);
+          Padding: (Left: 12, Right: 12, Top: 8, Bottom: 10);
+          Label {
+            Text: "Administration (tests)";
+            Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #e88a6a);
+          }
+          Group {
+            Anchor: (Top: 6, Height: 40);
+            LayoutMode: Left;
+            $C.@SecondaryTextButton #FamAdmHatch { Text: "Éclore"; FlexWeight: 1; }
+            $C.@SecondaryTextButton #FamAdmAge { Text: "Âge suivant"; FlexWeight: 1; }
+            $C.@SecondaryTextButton #FamAdmElem { Text: "Élément suivant"; FlexWeight: 1; }
+            $C.@SecondaryTextButton #FamAdmSkill { Text: "Autre compétence"; FlexWeight: 1; }
+            $C.@SecondaryTextButton #FamAdmHeal { Text: "Soigner"; FlexWeight: 1; }
+          }
+          Group {
+            Anchor: (Top: 4, Height: 40);
+            LayoutMode: Left;
+            $C.@SecondaryTextButton #FamAdmLvlDown { Text: "-10 niveaux"; FlexWeight: 1; }
+            $C.@SecondaryTextButton #FamAdmLvlUp { Text: "+10 niveaux"; FlexWeight: 1; }
+            $C.@SecondaryTextButton #FamAdmLvlMax { Text: "Niveau max"; FlexWeight: 1; }
+            $C.@SecondaryTextButton #FamAdmMalus { Text: "Retirer malus"; FlexWeight: 1; }
+          }
+        }
+      }
+    }
+  }
+}

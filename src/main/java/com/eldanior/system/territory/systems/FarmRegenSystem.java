@@ -125,6 +125,8 @@ public class FarmRegenSystem extends EntityEventSystem<EntityStore, BreakBlockEv
             }
         } else if (type == ParcelType.FOREST) {
             handleForestRegen(target, parcel, world);
+        } else if (parcel.isRegen() && type != ParcelType.DUNGEON) {                  // zone de borne avec regeneration
+            handleSimpleRegen(target, worldName, parcel, world);
         } else if (type == ParcelType.DUNGEON) {
             // Le donjon se regenere automatiquement, mais on prend le snapshot au premier break
             ensureDungeonSnapshot(parcel, world);

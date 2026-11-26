@@ -1,0 +1,31 @@
+{
+  "$Comment": "Posture iai, lame au fourreau : relache avant la fin = degaine simple, charge pleine = Flash Celeste.",
+  "Type": "Charging",
+  "Rules": {
+    "InterruptedBy": [
+      "Secondary"
+    ]
+  },
+  "DisplayProgress": true,
+  "HorizontalSpeedMultiplier": 0.45,
+  "Effects": {
+    "ItemAnimationId": "IaiCharging",
+    "LocalSoundEventId": "SFX_Sword_T2_Lunge_Charge_Local",
+    "Particles": [
+      {
+        "SystemId": "Sword_Charging",
+        "TargetNodeName": "Saya-Handle",
+        "PositionOffset": {
+          "X": 0.4
+        },
+        "RotationOffset": {
+          "Roll": 90
+        }
+      }
+    ]
+  },
+  "Next": {
+    "0": "Tenryumaru_Degainer",
+    "0.75": "Tenryumaru_Flash_Fourreau"
+  }
+}

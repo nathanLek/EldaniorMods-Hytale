@@ -1,0 +1,64 @@
+{
+  "GridGenerator": {
+    "Scale": 0.0008,
+    "Jitter": 0.9,
+    "Randomizer": {
+      "Generators": [
+        {
+          "NoiseType": "OLD_SIMPLEX",
+          "Octaves": 3,
+          "Persistence": 0.5,
+          "Scale": 0.008,
+          "Amplitude": 100
+        }
+      ]
+    }
+  },
+  "MaskMapping": {
+    "#0a2a5a": [
+      "Eldanior_Ocean"
+    ],
+    "#1d4f8c": [
+      "Eldanior_Ocean_Cote"
+    ],
+    "#e8d8a0": [
+      "Eldanior_Cote"
+    ],
+    "#c8d0d0": [
+      "Eldanior_Cote_Froide"
+    ],
+    "#7ec850": [
+      "Eldanior_Plaines"
+    ],
+    "#b8b060": [
+      "Eldanior_Collines"
+    ],
+    "#d08040": [
+      "Eldanior_Automne"
+    ],
+    "#205a2a": [
+      "Eldanior_Foret"
+    ],
+    "#3f7f6a": [
+      "Eldanior_Nord"
+    ],
+    "#90b890": [
+      "Eldanior_Nord_Plaines"
+    ],
+    "#8a7a6a": [
+      "Eldanior_Montagnes"
+    ],
+    "#6a6a7a": [
+      "Eldanior_Montagnes_Nord"
+    ],
+    "#f0f0f0": [
+      "Eldanior_Montagnes_Neige"
+    ],
+    "#4a6a4a": [
+      "Eldanior_Montagnes_Foret"
+    ],
+    "#60c0a0": [
+      "Eldanior_Luo"
+    ]
+  }
+}

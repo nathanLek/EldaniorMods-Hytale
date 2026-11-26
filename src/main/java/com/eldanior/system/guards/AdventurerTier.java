@@ -77,7 +77,8 @@ public enum AdventurerTier {
             for (ClassModel c : stage)
                 for (String id : c.getNextClassId()) {
                     ClassModel n = byId.get(id);
-                    if (n != null && n.getType() == type && !next.contains(n)) next.add(n);
+                    if (n != null && n.getType() == type && !next.contains(n)
+                            && !com.eldanior.system.classes.definitions.luo.VoieMartiale.isMartial(id)) next.add(n);   // voie du Clan Luo
                 }
             if (next.isEmpty()) break;
             stage = next;

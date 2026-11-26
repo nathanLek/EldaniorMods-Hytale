@@ -1,0 +1,47 @@
+{
+  "$Comment": "Pointille entre deux balises de route reliees (guards/NpcRouteBlocks).",
+  "RenderMode": "BlendAdd",
+  "ParticleRotationInfluence": "Billboard",
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "MaxConcurrentParticles": 1,
+  "SpawnRate": {
+    "Min": 1,
+    "Max": 1
+  },
+  "SpawnBurst": true,
+  "TotalParticles": {
+    "Min": 1,
+    "Max": 1
+  },
+  "ParticleLifeSpan": {
+    "Min": 1.05,
+    "Max": 1.05
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Basic/Spark.png",
+    "ScaleRatioConstraint": "OneToOne",
+    "UVOption": "None",
+    "SoftParticles": "Disable",
+    "InitialAnimationFrame": {
+      "Opacity": 0.9,
+      "Color": "#8fd8ff",
+      "Scale": {
+        "X": {
+          "Min": 0.22,
+          "Max": 0.22
+        }
+      }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0.9,
+        "Color": "#8fd8ff"
+      },
+      "100": {
+        "Opacity": 0.2,
+        "Color": "#3f8cff"
+      }
+    }
+  }
+}

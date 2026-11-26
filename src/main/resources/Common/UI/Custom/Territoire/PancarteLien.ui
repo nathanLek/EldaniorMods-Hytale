@@ -1,0 +1,125 @@
+$C = "../Common.ui";
+
+// Lien d'une pancarte de propriete a sa zone, genere par scripts/territoire/gen_pancarte.py.
+Group {
+  LayoutMode: Middle;
+  Background: #05080d(0.55);
+
+  Group {
+    Anchor: (Height: 693);
+    LayoutMode: Center;
+
+    Group #PlCard {
+      Anchor: (Width: 439);
+      LayoutMode: Top;
+
+      Group {
+        Anchor: (Height: 252);
+        LayoutMode: Top;
+        Background: (TexturePath: "../Npc/RecruitFrameTop.png");
+
+        Group {
+          Anchor: (Height: 0);
+          Background: (TexturePath: "PancarteEmblem.png", Anchor: (Width: 96, Height: 96, Top: -34));
+        }
+
+        Group { Anchor: (Height: 124); }
+
+        Label #PlTitle {
+          Style: (FontSize: 22, RenderBold: true, RenderUppercase: true, TextColor: #d1dae6, Wrap: true, HorizontalAlignment: Center);
+        }
+
+        Label #PlSubtitle {
+          Anchor: (Top: 10);
+          Style: (FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center);
+        }
+
+        Label #PlFoot {
+          Anchor: (Top: 6);
+          Style: (FontSize: 13, RenderBold: true, TextColor: #878e9c, HorizontalAlignment: Center);
+        }
+
+      }
+
+      Group {
+        Anchor: (Height: 240);
+        LayoutMode: Left;
+
+        Group { Anchor: (Width: 3); Background: #16212f; }
+        Group { Anchor: (Width: 7); Background: #e8b34f; }
+        Group { Anchor: (Width: 2); Background: #16212f; }
+
+        Group {
+          FlexWeight: 1;
+          LayoutMode: Top;
+          Background: #0b141d(0.92);
+          Padding: (Horizontal: 20, Top: 6);
+
+          Group { Anchor: (Height: 2); Background: #c99436; }
+
+        Label #PlState {
+          Anchor: (Top: 12);
+          Style: (FontSize: 13, RenderBold: true, TextColor: #c9b37a, Wrap: true, HorizontalAlignment: Center);
+        }
+
+        Group {
+          Anchor: (Top: 16, Height: 16);
+          LayoutMode: Left;
+          Group { FlexWeight: 1; LayoutMode: Top; Padding: (Top: 8); Group { Anchor: (Height: 1); Background: #c99436(0.55); } }
+          Label {
+            Anchor: (Width: 190);
+            Text: "Bien à présenter";
+            Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #e8b34f, HorizontalAlignment: Center);
+          }
+          Group { FlexWeight: 1; LayoutMode: Top; Padding: (Top: 8); Group { Anchor: (Height: 1); Background: #c99436(0.55); } }
+        }
+
+        Group {
+          Anchor: (Top: 10, Height: 30);
+          LayoutMode: Center;
+          $C.@DropdownBox #PlZone {
+            Anchor: (Width: 360, Height: 28);
+            Style: @DefaultDropdownBoxStyle;
+          }
+        }
+
+        Label {
+          Anchor: (Top: 10);
+          Text: "Biens à moins de 48 blocs de la pancarte, les plus proches d'abord.";
+          Style: (FontSize: 11, TextColor: #6f8296, HorizontalAlignment: Center, Wrap: true);
+        }
+
+        }
+
+        Group { Anchor: (Width: 2); Background: #16212f; }
+        Group { Anchor: (Width: 7); Background: #e8b34f; }
+        Group { Anchor: (Width: 3); Background: #16212f; }
+      }
+
+      Group {
+        Anchor: (Height: 201);
+        LayoutMode: Top;
+        Background: (TexturePath: "../Npc/RecruitFrameBottom.png");
+
+
+        Group {
+          Anchor: (Top: 16, Height: 44);
+          LayoutMode: Center;
+          
+          $C.@TextButton #PlBtnLink {
+            @Text = "Lier la pancarte";
+            @Anchor = Anchor(MinWidth: 246);
+          }
+        }
+
+        Label {
+          Anchor: (Top: 10);
+          Text: "Echap : plus tard";
+          Style: (FontSize: 12, TextColor: #5a6a7a, HorizontalAlignment: Center);
+        }
+
+      }
+    }
+
+  }
+}

@@ -1,0 +1,168 @@
+{
+  "Parent": "Template_Weapon_Sword",
+  "TranslationProperties": {
+    "Name": "Tenryūmaru, Lame du Premier Serment",
+    "Description": "Relique du Clan Luo : le katana de Luo Tenryū, fondateur du clan, forgé d'un croc de son père le Dieu-Dragon d'Or. Seul le Patriarche des Luo peut la manier, et elle lui revient toujours. Tenue au fourreau dans la main gauche ; au premier coup, la main droite dégaine et tranche d'un seul geste, et la lame reste au clair tant que l'on frappe. Chaque coup d'épée projette une lame d'or. Clic droit : bref, rengainer ; maintenu, garde. Maintenir l'attaque, Flash Céleste : posture iai, puis le Patriarche fond sur chaque ennemi alentour comme un éclair d'or, le tranche au passage, revient et rengaine ; au claquement de la garde, chaque ennemi touché reçoit dix slashs célestes à la fois (recharge 8 s). Signature, les Dix Serments : dix reflets du Patriarche encerclent la zone visée et y exécutent chacun le Flash Céleste."
+  },
+  "Quality": "Legendary",
+  "ItemLevel": 550,
+  "Model": "Items/Weapons/artefacts/Artefact_Sword_Tenryumaru_Main_Vide.blockymodel",
+  "Texture": "Items/Weapons/artefacts/Artefact_Sword_Tenryumaru.png",
+  "Icon": "Icons/ItemsGenerated/Artefact_Sword_Tenryumaru.png",
+  "IconProperties": {
+    "Scale": 0.33,
+    "Rotation": [
+      45,
+      90,
+      0
+    ],
+    "Translation": [
+      -33,
+      -38
+    ]
+  },
+  "MaxStack": 1,
+  "Variant": false,
+  "InteractionVars": {
+    "Swing_Left_Damage": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Primary_Swing_Left_Damage",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Physical": 40
+            }
+          },
+          "DamageEffects": {
+            "WorldSoundEventId": "SFX_Sword_T2_Impact",
+            "LocalSoundEventId": "SFX_Sword_T2_Impact"
+          },
+          "EntityStatsOnHit": [
+            {
+              "EntityStatId": "SignatureEnergy",
+              "Amount": 3
+            }
+          ]
+        }
+      ]
+    },
+    "Swing_Right_Damage": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Primary_Swing_Right_Damage",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Physical": 45
+            }
+          },
+          "DamageEffects": {
+            "WorldSoundEventId": "SFX_Sword_T2_Impact",
+            "LocalSoundEventId": "SFX_Sword_T2_Impact"
+          },
+          "EntityStatsOnHit": [
+            {
+              "EntityStatId": "SignatureEnergy",
+              "Amount": 3
+            }
+          ]
+        }
+      ]
+    },
+    "Swing_Down_Damage": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Primary_Swing_Down_Damage",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Physical": 70
+            }
+          },
+          "DamageEffects": {
+            "WorldSoundEventId": "SFX_Sword_T2_Impact",
+            "LocalSoundEventId": "SFX_Sword_T2_Impact"
+          },
+          "EntityStatsOnHit": [
+            {
+              "EntityStatId": "SignatureEnergy",
+              "Amount": 5
+            }
+          ]
+        }
+      ]
+    },
+    "Thrust": {
+      "Interactions": [
+        "Tenryumaru_Iai_Degainee"
+      ]
+    },
+    "Swing_Left_Selector": {
+      "Interactions": [
+        {
+          "Type": "Serial",
+          "Interactions": [
+            {
+              "Type": "RuneSpell",
+              "RunTime": 0.0,
+              "Spell": "TenryuCoupGauche"
+            },
+            "Weapon_Sword_Primary_Swing_Left_Selector"
+          ]
+        }
+      ]
+    },
+    "Swing_Right_Selector": {
+      "Interactions": [
+        {
+          "Type": "Serial",
+          "Interactions": [
+            {
+              "Type": "RuneSpell",
+              "RunTime": 0.0,
+              "Spell": "TenryuCoupDroit"
+            },
+            "Weapon_Sword_Primary_Swing_Right_Selector"
+          ]
+        }
+      ]
+    },
+    "Swing_Down_Selector": {
+      "Interactions": [
+        {
+          "Type": "Serial",
+          "Interactions": [
+            {
+              "Type": "RuneSpell",
+              "RunTime": 0.0,
+              "Spell": "TenryuCoupVertical"
+            },
+            "Weapon_Sword_Primary_Swing_Down_Selector"
+          ]
+        }
+      ]
+    },
+    "Guard_Wield": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Secondary_Guard_Wield",
+          "StaminaCost": {
+            "Value": 10,
+            "CostType": "Damage"
+          }
+        }
+      ]
+    }
+  },
+  "MaxDurability": 0,
+  "DurabilityLossOnHit": 0,
+  "$Comment": "Tenryumaru au fourreau (main gauche). Au premier coup, Java (TenryumaruDegaine) la remplace par Artefact_Sword_Tenryumaru_Degainee ; apres un temps sans attaquer, TenryumaruSystem la rengaine. Genere par scripts/artefacts/gen_tenryumaru.py.",
+  "PlayerAnimationsId": "Tenryumaru_Fourreau",
+  "Categories": [
+    "Eldanior_Empire_Luo.Luo",
+    "Items.Weapons"
+  ],
+  "Interactions": {
+    "Primary": "Root_Tenryumaru_Fourreau_Primary",
+    "Secondary": "Root_Weapon_Sword_Secondary_Guard",
+    "Ability1": "Root_Tenryumaru_Signature"
+  }
+}

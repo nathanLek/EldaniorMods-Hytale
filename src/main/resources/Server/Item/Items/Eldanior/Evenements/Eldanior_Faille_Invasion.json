@@ -1,0 +1,37 @@
+{
+  "TranslationProperties": {
+    "Name": "Faille d'invasion",
+    "Description": "Bloc technique : faille ouverte au sol pendant une invasion, d'où sortent les monstres."
+  },
+  "Icon": "Icons/ItemsGenerated/Portal_Device.png",
+  "Categories": [
+    "Eldanior_System.Autres"
+  ],
+  "MaxStack": 1,
+  "Quality": "Technical",
+  "BlockType": {
+    "Material": "Empty",
+    "DrawType": "Empty",
+    "Opacity": "Transparent",
+    "Support": {
+      "Down": [
+        {
+          "Support": "Ignored"
+        }
+      ]
+    },
+    "AmbientSoundEventId": "SFX_Goblin_World_Breach_Portal",
+    "Particles": [
+      {
+        "SystemId": "GoblinBreach_Portal_Active",
+        "Scale": 1.1,
+        "PositionOffset": {
+          "Y": 1.0
+        }
+      }
+    ],
+    "Light": {
+      "Color": "#cb2"
+    }
+  }
+}

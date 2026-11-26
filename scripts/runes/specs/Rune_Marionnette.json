@@ -1,0 +1,62 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_Marionnette",
+  "spell": "Marionnette",
+  "javaClass": "Marionnette",
+  "page": "rune_page_marionnette",
+  "name": "Rune de la Marionnette",
+  "type": "Tenebres",
+  "rarity": "Epic",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Marionnette",
+  "summary": "prend le controle du monstre vise 10 s : il ignore le lanceur et attaque les autres monstres.",
+  "description": "Sort épique de ténèbres (Mage, rune de prédilection de l'Envoûteur Maître). Des fils d'ombre s'accrochent au monstre visé (20 blocs) : pendant 10 s, il vous ignore, ne peut plus vous blesser et attaque les monstres à moins de 15 blocs de lui, qui le prennent pour cible à leur tour.",
+  "pageDescription": "Un parchemin dont les lettres pendent au bout de fils. Enseigne la Marionnette : faites danser un monstre contre ses semblables. Classes : tous les Mages (rune de prédilection de l'Envoûteur Maître). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Spellbook",
+    "charging": "CastHurlCharging",
+    "release": "CastHurlCharged",
+    "chargeTime": 0.5,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Crawler_Void_Alerted",
+    "handParticles": "Nyx_Void",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.5,
+    "range": 20,
+    "targets": "un monstre (PNJ hostile aux joueurs)",
+    "executionFx": "fil Nyx_Chain (echelle 0.3) de la main du lanceur au monstre, replace chaque tick",
+    "persistentFx": "Elda_Marionnette (teinte violette)",
+    "effects": "attitude Ignore envers le lanceur et ses allies ; hostile + LockedTarget vers le monstre le plus proche, reciproque ; ses coups sur le lanceur annules (onOwnerHurt)",
+    "terrain": "aucun",
+    "persistentDurationS": 10,
+    "restrictions": "mage",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 2,
+      "mobility": 0,
+      "control": 3,
+      "defense": 2,
+      "targets": 1,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    }
+  }
+}

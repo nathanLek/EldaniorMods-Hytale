@@ -1,0 +1,57 @@
+{
+  "$Comment": "Rune de l'Incarnation de l'Âme : incantation puis sort Java 'IncarnationAme' (RuneSpell). Genere par rune_tool.py, cout : start.",
+  "Type": "StatsCondition",
+  "UseAbilityCost": true,
+  "Failed": "Ability_Cast_Fail",
+  "Next": {
+    "Type": "Parallel",
+    "Interactions": [
+      {
+        "Interactions": [
+          {
+            "Type": "Simple",
+            "RunTime": 0.5,
+            "HorizontalSpeedMultiplier": 0.6,
+            "Effects": {
+              "ItemPlayerAnimationsId": "Sword",
+              "ItemAnimationId": "CastEnchant",
+              "WaitForAnimationToFinish": false
+            }
+          },
+          {
+            "Type": "RuneSpell",
+            "RunTime": 0.05,
+            "Spell": "IncarnationAme"
+          },
+          {
+            "Type": "Simple",
+            "RunTime": 0.5,
+            "HorizontalSpeedMultiplier": 0.8,
+            "Effects": {
+              "ItemPlayerAnimationsId": "Sword",
+              "ItemAnimationId": "CastEnrage",
+              "ClearAnimationOnFinish": true,
+              "WorldSoundEventId": "SFX_Portal_Neutral_Open"
+            }
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "TriggerCooldown",
+            "UseAbilityCooldown": true
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "ChangeStat",
+            "UseAbilityCost": true
+          }
+        ]
+      }
+    ]
+  }
+}

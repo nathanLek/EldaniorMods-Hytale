@@ -1,0 +1,44 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de l'Esprit de la Forêt",
+    "Description": "Sort épique de terre (Mage, rune de prédilection du Gardien de la Nature). Un esprit de la forêt (800 PV) sort de terre devant vous pendant 25 s. Il frappe l'ennemi le plus proche de ses bras-branches et, toutes les 3 s, fait jaillir des racines sous les 2 ennemis les plus proches de vous (12 blocs) : 80 dégâts et immobilisés 1 s. Sans ennemi, il vous suit. Épargne votre groupe, votre guilde et votre famille. Coût : 300 mana. Recharge : 120 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_EspritForet.png",
+  "Quality": "Epic",
+  "ItemLevel": 60,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_Runes.Terre"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_EspritForet.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 120,
+    "Cost": 300,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Earth",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_EspritForet"
+  }
+}

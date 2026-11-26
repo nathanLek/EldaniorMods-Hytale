@@ -46,10 +46,27 @@ public class BoardInteractEvent extends EntityEventSystem<EntityStore, UseBlockE
         ParcelData parcel = town != null ? town : ParcelManager.getParcelAt(world.getName(), at.x(), at.y(), at.z());
         String place = parcel != null ? parcel.getName() : null;
         BoardScreen screen = switch (type) {
-            case PRIME -> new BountyBoardScreen(pr, place, world.getName(), pos);
-            case GUILDE, MAITRE -> new GuildBoardScreen(pr, place);                     // MAITRE : jamais un bloc
+            case PRIME -> {                                                               // 2026-11-13 : primes et contrats en cartes
+                com.eldanior.system.quest.chapitres.QuestChaptersPage.openBountyBoard(ref, store, place, world.getName(), pos,
+                        pr.hasPermission(com.eldanior.system.config.EldaniorLogger.ADMIN_PERMISSION));
+                yield null;
+            }
+            case GUILDE -> {                                                              // 2026-11-19 : quetes et missions de guilde en cartes
+                com.eldanior.system.quest.chapitres.QuestChaptersPage.openGuildBoard(ref, store, place,
+                        pr.hasPermission(com.eldanior.system.config.EldaniorLogger.ADMIN_PERMISSION));
+                yield null;
+            }
+            case MAITRE, INTENDANT, IMMOBILIER -> null;                                   // jamais un bloc
+            case QUETES -> {                                                              // 2026-11-13 : quetes en chapitres + primes
+                com.eldanior.system.quest.chapitres.QuestChaptersPage.open(ref, store, com.eldanior.system.quest.chapitres.ChapterQuests.TABLEAU,
+                        "Tableau des quêtes" + (place != null ? " · " + place : ""), BoardQuests.key(world.getName(), at.x(), at.y(), at.z()),
+                        pr.hasPermission(com.eldanior.system.config.EldaniorLogger.ADMIN_PERMISSION));
+                yield null;
+            }
+            case CLASSEMENT -> new RankingBoardScreen(pr, place);
+            case DUEL -> new DuelBoardScreen(pr, place);
         };
-        player.getPageManager().openCustomPage(ref, store, screen);
+        if (screen != null) player.getPageManager().openCustomPage(ref, store, screen);
     }
 
     @Override

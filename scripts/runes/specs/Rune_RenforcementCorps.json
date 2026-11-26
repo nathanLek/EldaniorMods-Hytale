@@ -1,0 +1,61 @@
+{
+  "$Comment": "Fiche de conception : competence de la voie martiale (classe Disciple Martial), validee le 2026-11-10 (docs/plan-clan-luo.md, B). Apprise par son manuel, aucun butin.",
+  "id": "Rune_RenforcementCorps",
+  "spell": "RenforcementCorps",
+  "javaClass": "RenforcementCorps",
+  "page": "rune_page_renforcementcorps",
+  "name": "Rune du Renforcement corporel",
+  "type": "Luo",
+  "rarity": "Uncommon",
+  "emblem": "RenforcementCorps",
+  "classes": "disciple_martial, expert_martial, maitre_martial, grand_maitre_martial, saint_martial, maitre_supreme, dieu_martial",
+  "persistent": true,
+  "summary": "Bascule (mana/s 2-6) : -10 a -30 % de degats subis selon le palier ; bouclier de Ki des le Grand Maitre (absorbe un coup toutes les 8 s).",
+  "description": "Compétence de la voie martiale, enseignée à la classe Disciple Martial. Vous libérez votre force dans une onde de Ki ; votre corps se couvre d'une aura de la couleur de votre classe. Clic : activé, second clic : coupé (mana prélevé chaque seconde). Dégâts subis réduits de 10 % (Disciple) à 30 % (Dieu Martial) ; dès le Grand Maître, un bouclier de Ki absorbe entièrement un coup toutes les 8 s ; au Maître Suprême, le sol se fend autour de vous quand votre force se libère.",
+  "pageDescription": "« La peau devient cuir, le cuir devient acier, l'acier devient Ki. » Compétence de la voie martiale : elle s'apprend dans son manuel, jamais en butin.",
+  "keywords": [
+    "Buff",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": 0,
+    "cooldown": 1,
+    "reason": "rune a bascule de la voie martiale (comme le Ki de l'Epee) : un clic l'active, un second clic la coupe ; le mana est preleve chaque seconde dans le code"
+  },
+  "loot": {},
+  "cast": {
+    "animationSet": "Sword",
+    "charging": "SwingLeftCharging",
+    "release": "CastEnrage",
+    "chargeTime": 0.1,
+    "releaseTime": 0.3,
+    "moveSpeed": 0.6,
+    "cameraEffect": null,
+    "sound": null,
+    "releaseSound": "SFX_Ability_Wind_Strike_Imbue",
+    "handParticles": null,
+    "handParticlesScale": 0.6,
+    "costMoment": "start"
+  },
+  "design": {
+    "radius": "0",
+    "persistentDurationS": 0,
+    "targets": "self",
+    "effects": "reduction 10/12/15/18/22/25/30 % (paliers 2-8) ; bouclier de Ki au palier 5+",
+    "balance": {
+      "damage": 0,
+      "range": 0,
+      "duration": 3,
+      "mobility": 0,
+      "control": 0,
+      "defense": 3,
+      "targets": 0,
+      "frequency": 0,
+      "terrain": 0,
+      "difficulty": 0
+    }
+  },
+  "category": "Eldanior_Empire_Luo.Runes",
+  "manual": "Eldanior_Manuel_Luo_RenforcementCorps",
+  "$Comment_manual": "Technique apprise par son manuel secret (gen_voie_martiale_objets.py) : pas de parchemin rune_page_*."
+}

@@ -1,0 +1,38 @@
+{
+  "$Comment": "Epee de Ki de la voie martiale (gen_voie_martiale.py, epees_ki) : katana de lumiere recolore en Ki.",
+  "Model": "Items/Projectiles/Projectile.blockymodel",
+  "Texture": "Items/Projectiles/Projectile_default.png",
+  "DefaultAttachments": [
+    {
+      "Model": "Items/Weapons/Longsword/Katana.blockymodel",
+      "Texture": "Items/Projectiles/Ki/Ki_Epee.png"
+    }
+  ],
+  "AnimationSets": {
+    "FlyIdle": {
+      "Animations": [
+        {
+          "Animation": "Items/Animations/Fly/Fly_Vertical.blockyanim"
+        }
+      ]
+    }
+  },
+  "MinScale": 1.4,
+  "MaxScale": 1.4,
+  "HitBox": {
+    "Max": {
+      "X": 0.5,
+      "Y": 0.1,
+      "Z": 0.1
+    },
+    "Min": {
+      "X": -0.5,
+      "Y": -0.1,
+      "Z": -0.1
+    }
+  },
+  "Light": {
+    "Color": "#bfe8ff",
+    "Radius": 5
+  }
+}

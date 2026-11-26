@@ -1,0 +1,48 @@
+{
+  "$Comment": "Clic, lame au fourreau : nukitsuke. La main droite atteint la poignee (0,05 s), l'objet devient alors l'objet degaine (Java TenryumaruDegaine : la lame apparait dans la main, sur la poignee, et le fourreau passe a vide), puis la lame sort et tranche vers la droite. Degats : variable Swing_Right_Damage.",
+  "Type": "Serial",
+  "Interactions": [
+    {
+      "Type": "Simple",
+      "RunTime": 0.05,
+      "HorizontalSpeedMultiplier": 0.75,
+      "Effects": {
+        "ItemAnimationId": "Degainer",
+        "WorldSoundEventId": "SFX_Sword_T2_Swing",
+        "LocalSoundEventId": "SFX_Sword_T2_Swing_RL_Local"
+      }
+    },
+    {
+      "Type": "RuneSpell",
+      "RunTime": 0.0,
+      "Spell": "TenryumaruDegaine"
+    },
+    {
+      "Type": "RuneSpell",
+      "RunTime": 0.0,
+      "Spell": "LuoDegaineMouvement",
+      "OnItemChangeBehavior": "Ignore"
+    },
+    {
+      "Type": "Simple",
+      "RunTime": 0.1,
+      "OnItemChangeBehavior": "Ignore"
+    },
+    {
+      "Type": "Replace",
+      "Var": "Swing_Right_Selector",
+      "DefaultOk": true,
+      "DefaultValue": {
+        "Interactions": [
+          "Weapon_Sword_Primary_Swing_Right_Selector"
+        ]
+      },
+      "OnItemChangeBehavior": "Ignore"
+    },
+    {
+      "Type": "Simple",
+      "RunTime": 0.12,
+      "OnItemChangeBehavior": "Ignore"
+    }
+  ]
+}

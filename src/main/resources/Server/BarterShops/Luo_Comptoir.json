@@ -1,0 +1,129 @@
+{
+  "DisplayNameKey": "Comptoir de la Porte du Dragon",
+  "RefreshInterval": {
+    "Days": 1
+  },
+  "RestockHour": 6,
+  "TradeSlots": [
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Ingredient_Bolt_Silk",
+          "Quantity": 2
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Silver_Coins",
+            "Quantity": 13
+          }
+        ],
+        "Stock": 10
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Ingredient_Fabric_Scrap_Silk",
+          "Quantity": 5
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Gold_Coins",
+            "Quantity": 3
+          }
+        ],
+        "Stock": 20
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Luo_The_Vert",
+          "Quantity": 4
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Gold_Coins",
+            "Quantity": 6
+          }
+        ],
+        "Stock": 20
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Plant_Crop_Rice_Item",
+          "Quantity": 10
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Gold_Coins",
+            "Quantity": 6
+          }
+        ],
+        "Stock": 30
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Plant_Seeds_Rice",
+          "Quantity": 5
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Gold_Coins",
+            "Quantity": 8
+          }
+        ],
+        "Stock": 10
+      }
+    },
+    {
+      "Type": "Pool",
+      "SlotCount": 1,
+      "Trades": [
+        {
+          "Output": {
+            "ItemId": "Luo_The_Jasmin",
+            "Quantity": 2
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            2,
+            4
+          ],
+          "Weight": 60
+        },
+        {
+          "Output": {
+            "ItemId": "Ingredient_Bolt_Silk",
+            "Quantity": 4
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            2,
+            3
+          ],
+          "Weight": 40
+        }
+      ]
+    }
+  ]
+}

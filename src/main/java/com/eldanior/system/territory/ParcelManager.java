@@ -1,6 +1,8 @@
 package com.eldanior.system.territory;
 
 import com.eldanior.system.config.PersistenceUtils;
+import com.eldanior.system.titles.nobility.family.FamilyManager;
+import com.eldanior.system.titles.nobility.family.NobleFamilyModel;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -20,10 +22,27 @@ public class ParcelManager {
 
     public static long getVersion() { return version; }
 
+    public static Path getDataDir() { return dataDir; }
+
     public static void init(Path pluginDataDir) {
         dataDir = pluginDataDir;
         load();
         assignDefaultOwners();
+        // 2026-11-19 : logements achetes ou loues avant la regle de l'auberge -> leurs chambres sans maitre passent au bailleur
+        boolean rooms = false;
+        for (ParcelData h : getByType(ParcelType.HOUSING)) {
+            UUID landlord = h.isRented() && h.getRenterUUID() != null ? h.getRenterUUID() : h.getOwnerUUID();
+            if (landlord == null) continue;
+            boolean orphan = false;
+            for (String id : getChildrenOf(h.getId())) { ParcelData r = get(id); if (r != null && r.getType() == ParcelType.ROOM && r.getOwnerUUID() == null) orphan = true; }
+            if (!orphan) continue;
+            String name = landlord.equals(h.getOwnerUUID()) ? h.getOwnerName() : "";
+            var online = com.hypixel.hytale.server.core.universe.Universe.get() != null ? com.hypixel.hytale.server.core.universe.Universe.get().getPlayer(landlord) : null;
+            if (online != null) name = online.getUsername();
+            syncRooms(h, landlord, name);
+            rooms = true;
+        }
+        if (rooms) save();
         System.out.println("[Eldanior] ParcelManager: " + parcels.size() + " parcelles chargees.");
     }
 
@@ -93,28 +112,28 @@ public class ParcelManager {
      * Prix pour choisir une famille (achat du territoire associe).
      */
     public static long getFamilyTerritoryPrice(String familyId) {
-        for (ParcelData p : parcels.values()) {
-            if (familyId.equalsIgnoreCase(p.getFamilyId())) {
-                return switch (p.getType()) {
-                    case GRAND_TERRITORY -> 100_000_000L;
-                    case TERRITORY -> 30_000_000L;
-                    default -> 0L;
-                };
-            }
-        }
-        return 0L;
+        ParcelData p = getFamilyParcel(familyId);
+        if (p == null) return 0L;
+        return switch (p.getType()) {
+            case GRAND_TERRITORY -> 100_000_000L;
+            case TERRITORY -> 30_000_000L;
+            default -> 0L;
+        };
     }
 
     /**
      * Trouve la parcelle associee a une famille.
      */
     public static ParcelData getFamilyParcel(String familyId) {
+        // 2026-11-13 : la plus grande zone de la maison (Royaume, puis Grand Territoire, Territoire, Ville) ; avant, la premiere
+        // trouvee, parfois une ville (Luo : Ryutekou au lieu du Marquisat), d'ou un prix nul
+        ParcelData best = null;
+        if (familyId == null) return null;
         for (ParcelData p : parcels.values()) {
-            if (familyId.equalsIgnoreCase(p.getFamilyId())) {
-                return p;
-            }
+            if (!familyId.equalsIgnoreCase(p.getFamilyId())) continue;
+            if (best == null || p.getType().ordinal() < best.getType().ordinal()) best = p;
         }
-        return null;
+        return best;
     }
 
     /**
@@ -408,7 +427,13 @@ public class ParcelManager {
         parcel.setRenterUUID(null);
         parcel.setRentEndTime(0);
         parcel.addMember(buyerUUID, ParcelRole.OWNER);
+        parcel.setEvictionAt(0);
+        parcel.setOwnerGuests("");
         save();
+        // Remise en etat (2026-11-17) : photo de la zone a l'achat, rendue si le proprietaire quitte le bien
+        ZoneSnapshots.discard(parcel, ZoneSnapshots.RENT);
+        ZoneSnapshots.capture(parcel, ZoneSnapshots.BUY);
+        syncRooms(parcel, buyerUUID, buyerName);                         // auberge : les chambres passent a l'acheteur
 
         // Check titres de propriete
         checkOwnershipTitles(buyerUUID, parcel);
@@ -430,8 +455,21 @@ public class ParcelManager {
         parcel.setPurchaseType("RENTED");
         parcel.setRentEndTime(System.currentTimeMillis() + 7L * 24 * 60 * 60 * 1000); // +7 jours
         parcel.setForRent(false);
+        // Les invites du proprietaire n'entrent plus pendant la location (2026-11-17) : mis de cote, rendus au depart
+        UUID owner = parcel.getOwnerUUID();
+        ParcelData stash = new ParcelData("_stash");
+        stash.getMembers().clear();
+        for (var e : new ArrayList<>(parcel.getMembers().entrySet())) {
+            if (e.getKey() == null || e.getKey().equals(owner)) continue;
+            stash.addMember(e.getKey(), e.getValue());
+            parcel.getMembers().remove(e.getKey());
+        }
+        parcel.setOwnerGuests(stash.serializeMembers());
+        parcel.setEvictionAt(0);
         parcel.addMember(renterUUID, ParcelRole.OWNER); // Le locataire gere la parcelle
+        syncRooms(parcel, renterUUID, renterName);                       // auberge louee : le locataire loue les chambres
         save();
+        ZoneSnapshots.capture(parcel, ZoneSnapshots.RENT);           // remise en etat au depart du locataire
         return true;
     }
 
@@ -439,13 +477,23 @@ public class ParcelManager {
         ParcelData parcel = get(parcelId);
         if (parcel == null || !parcel.isRented()) return;
 
-        UUID renterUUID = parcel.getRenterUUID();
-        if (renterUUID != null) parcel.removeMember(renterUUID);
+        // Le locataire et ses invites partent ; les invites du proprietaire reviennent
+        UUID owner = parcel.getOwnerUUID();
+        parcel.getMembers().keySet().removeIf(u -> u == null || !u.equals(owner));
+        if (!parcel.getOwnerGuests().isEmpty()) {
+            ParcelData stash = new ParcelData("_stash");
+            stash.deserializeMembers(parcel.getOwnerGuests());
+            stash.getMembers().forEach(parcel::addMember);
+            parcel.setOwnerGuests("");
+        }
         parcel.setRenterUUID(null);
         parcel.setRentEndTime(0);
-        parcel.setPurchaseType("");
+        parcel.setEvictionAt(0);
+        parcel.setPurchaseType(owner != null ? "BOUGHT" : "");
         parcel.setForRent(parcel.getRentPrice() > 0); // Remet en location
+        syncRooms(parcel, owner, owner != null ? parcel.getOwnerName() : null);   // les chambres reviennent au proprietaire
         save();
+        ZoneSnapshots.restore(parcel, ZoneSnapshots.RENT);           // blocs du locataire retires, coffres ajoutes vides
     }
 
     public static void assignCityAsOwnerPublic(ParcelData parcel) { assignCityAsOwner(parcel); }
@@ -494,18 +542,58 @@ public class ParcelManager {
     public static void evict(String parcelId) {
         ParcelData parcel = get(parcelId);
         if (parcel == null) return;
+        restoreAll(parcel);
         parcel.clearOwnership();
+        parcel.setEvictionAt(0);
+        parcel.setOwnerGuests("");
         parcel.setForRent(true); // Remet en location
+        syncRooms(parcel, null, null);
         save();
     }
 
     public static void releaseParcel(String parcelId) {
         ParcelData parcel = get(parcelId);
         if (parcel == null) return;
+        restoreAll(parcel);
         parcel.clearOwnership();
+        parcel.setEvictionAt(0);
+        parcel.setOwnerGuests("");
         parcel.setForSale(parcel.getPrice() > 0);
         parcel.setForRent(parcel.getRentPrice() > 0);
+        syncRooms(parcel, null, null);
         save();
+    }
+
+    /**
+     * Chambres d'un logement (2026-11-19, regle rappelee par l'utilisateur : « comme un joueur qui achete une auberge et loue
+     * des chambres ») : celui qui ACHETE ou LOUE le logement devient le proprietaire (bailleur) de toutes ses chambres. Il en
+     * fixe les loyers par leur affiche et en touche le net ; la taxe part a la ville comme pour tout bien (une chambre remonte
+     * a sa ville par son logement). Un locataire de chambre en place garde son bail : seul le bailleur change.
+     * landlord null : les chambres n'ont plus de maitre (leurs loyers vont alors au tresor de la ville, ProprietesTab.payOwnerOrCity).
+     */
+    public static void syncRooms(ParcelData housing, UUID landlord, String landlordName) {
+        if (housing == null || housing.getType() != ParcelType.HOUSING) return;
+        for (String id : getChildrenOf(housing.getId())) {
+            ParcelData room = get(id);
+            if (room == null || room.getType() != ParcelType.ROOM) continue;
+            UUID old = room.getOwnerUUID();
+            if (old != null && !old.equals(room.getRenterUUID())) room.getMembers().remove(old);
+            room.setOwnerUUID(landlord);
+            room.setOwnerName(landlord != null && landlordName != null ? landlordName : "");
+            if (landlord != null) room.addMember(landlord, ParcelRole.OWNER);
+            if (!room.isRented()) room.setPurchaseType(landlord != null ? "BOUGHT" : "");
+            room.setForSale(false);                                          // une chambre se loue, elle ne se vend pas a part
+        }
+    }
+
+    /** Bien rendu a personne : la photo de l'achat (la plus ancienne) si elle existe, sinon celle de la location. */
+    private static void restoreAll(ParcelData parcel) {
+        if (ZoneSnapshots.has(parcel, ZoneSnapshots.BUY)) {
+            ZoneSnapshots.discard(parcel, ZoneSnapshots.RENT);
+            ZoneSnapshots.restore(parcel, ZoneSnapshots.BUY);
+        } else {
+            ZoneSnapshots.restore(parcel, ZoneSnapshots.RENT);
+        }
     }
 
     public static List<ParcelData> getAvailable() {
@@ -621,6 +709,11 @@ public class ParcelManager {
 
     // ==================== HIERARCHY VALIDATION ====================
 
+    /** true si une zone de type parent peut contenir une zone de type child (regle de createParcel). */
+    public static boolean canContain(ParcelType parent, ParcelType child) {
+        return VALID_CHILDREN.getOrDefault(parent, java.util.Set.of()).contains(child);
+    }
+
     public static boolean isValidParent(String parentId, ParcelType childType) {
         if (parentId == null) return childType == ParcelType.KINGDOM;
         ParcelData parent = get(parentId);
@@ -646,6 +739,7 @@ public class ParcelManager {
         try {
             Properties props = new Properties();
             props.setProperty("_version", "1");
+            if (clanDuchiesDropped) props.setProperty("_clanDuchiesDropped", "true");
             for (ParcelData p : parcels.values()) {
                 String prefix = p.getId() + ".";
                 props.setProperty(prefix + "name", p.getName() != null ? p.getName() : "");
@@ -675,11 +769,22 @@ public class ParcelManager {
                 props.setProperty(prefix + "pvpEnabled", String.valueOf(p.isPvpEnabled()));
                 props.setProperty(prefix + "lastTaxCollection", String.valueOf(p.getLastTaxCollection()));
                 props.setProperty(prefix + "lastTaxAmount", String.valueOf(p.getLastTaxAmount()));
+                props.setProperty(prefix + "tradeTax", p.getTradeTaxWeekStart() + "|" + p.getTradeTaxWeek() + "|" + p.getTradeTaxTotal());
+                props.setProperty(prefix + "imperialTax", p.getLastImperialTax() + "|" + p.getLastImperialAmount());
                 props.setProperty(prefix + "lastTreasuryTransfer", String.valueOf(p.getLastTreasuryTransfer()));
                 props.setProperty(prefix + "members", p.serializeMembers());
                 props.setProperty(prefix + "permissions", p.serializePermissions());
                 props.setProperty(prefix + "dungeonRank", p.getDungeonRank());
                 props.setProperty(prefix + "regenDelaySec", String.valueOf(p.getRegenDelaySec()));
+                if (p.isCylinder()) props.setProperty(prefix + "cylinder", "true");
+                if (p.isRegen()) props.setProperty(prefix + "regen", "true");
+                if (!p.getBorne().isEmpty()) props.setProperty(prefix + "borne", p.getBorne());
+                if (!p.getAnnounce().isEmpty()) props.setProperty(prefix + "announce", p.getAnnounce());
+                if (p.isReserved()) props.setProperty(prefix + "reserved", "true");
+                if (p.hasLaws()) props.setProperty(prefix + "laws", p.serializeLaws());
+                if (!p.getPancartes().isEmpty()) props.setProperty(prefix + "pancartes", p.getPancartes());
+                if (p.getEvictionAt() > 0) props.setProperty(prefix + "evictionAt", String.valueOf(p.getEvictionAt()));
+                if (!p.getOwnerGuests().isEmpty()) props.setProperty(prefix + "ownerGuests", p.getOwnerGuests());
                 props.setProperty(prefix + "firstDiscovererName", p.getFirstDiscovererName() != null ? p.getFirstDiscovererName() : "");
                 props.setProperty(prefix + "firstDiscovererUUID", p.getFirstDiscovererUUID() != null ? p.getFirstDiscovererUUID() : "");
             }
@@ -750,16 +855,34 @@ public class ParcelManager {
                 p.setRentPrice(Long.parseLong(props.getProperty(prefix + "rentPrice", "0")));
                 p.setRentEndTime(Long.parseLong(props.getProperty(prefix + "rentEndTime", "0")));
                 p.setPurchaseType(props.getProperty(prefix + "purchaseType", ""));
-                p.setFamilyId(props.getProperty(prefix + "familyId", ""));
+                String storedFamily = props.getProperty(prefix + "familyId", "");
+                String familyId = FamilyManager.migrateId(storedFamily);
+                p.setFamilyId(familyId);
+                if (!familyId.equals(storedFamily)) renameFamilyParcel(p, storedFamily, familyId);
                 p.setGuildId(props.getProperty(prefix + "guildId", ""));
                 p.setPvpEnabled(Boolean.parseBoolean(props.getProperty(prefix + "pvpEnabled", "false")));
                 p.setLastTaxCollection(Long.parseLong(props.getProperty(prefix + "lastTaxCollection", "0")));
                 p.setLastTaxAmount(Long.parseLong(props.getProperty(prefix + "lastTaxAmount", "0")));
+                try {
+                    String[] tt = props.getProperty(prefix + "tradeTax", "0|0|0").split("\\|");
+                    p.setTradeTax(Long.parseLong(tt[0]), Long.parseLong(tt[1]), Long.parseLong(tt[2]));
+                    String[] it = props.getProperty(prefix + "imperialTax", "0|0").split("\\|");
+                    p.setImperialTax(Long.parseLong(it[0]), Long.parseLong(it[1]));
+                } catch (Exception ignored) { }
                 p.setLastTreasuryTransfer(Long.parseLong(props.getProperty(prefix + "lastTreasuryTransfer", "0")));
                 p.deserializeMembers(props.getProperty(prefix + "members", ""));
                 p.deserializePermissions(props.getProperty(prefix + "permissions", ""));
                 p.setDungeonRank(props.getProperty(prefix + "dungeonRank", "E"));
                 p.setRegenDelaySec(Integer.parseInt(props.getProperty(prefix + "regenDelaySec", "300")));
+                p.setCylinder(Boolean.parseBoolean(props.getProperty(prefix + "cylinder", "false")));
+                p.setRegen(Boolean.parseBoolean(props.getProperty(prefix + "regen", "false")));
+                p.setBorne(props.getProperty(prefix + "borne", ""));
+                p.setAnnounce(props.getProperty(prefix + "announce", ""));
+                p.setReserved("true".equals(props.getProperty(prefix + "reserved", "false")));
+                p.deserializeLaws(props.getProperty(prefix + "laws", ""));
+                p.setPancartes(props.getProperty(prefix + "pancartes", ""));
+                try { p.setEvictionAt(Long.parseLong(props.getProperty(prefix + "evictionAt", "0"))); } catch (NumberFormatException ignored) {}
+                p.setOwnerGuests(props.getProperty(prefix + "ownerGuests", ""));
                 p.setFirstDiscoverer(
                         props.getProperty(prefix + "firstDiscovererName", ""),
                         props.getProperty(prefix + "firstDiscovererUUID", ""));
@@ -783,13 +906,48 @@ public class ParcelManager {
 
                 parcels.put(id, p);
             }
+            clanDuchiesDropped = Boolean.parseBoolean(props.getProperty("_clanDuchiesDropped", "false"));
+            if (!clanDuchiesDropped) {                                  // migration unique (avant : a chaque chargement)
+                dropClanDuchies();
+                clanDuchiesDropped = true;
+                save();
+            }
         } catch (Exception e) {
             System.err.println("[ParcelManager] Erreur chargement: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
+    /** Migration des anciens duches des clans faite (parcels.properties, cle _clanDuchiesDropped). */
+    private static boolean clanDuchiesDropped;
+
+    /**
+     * Nighthollow et Swiftquiver sont devenus les clans Kage et Hanazakura (2026-11-10) : des familles sans territoire. Leurs
+     * duches du marquisat Luo sont supprimes, leurs villes et parcelles remontent au marquisat (Empire Luo).
+     * Retour du 2026-11-11 : cette suppression tournait a CHAQUE chargement et effacait les territoires des clans poses depuis
+     * avec une borne. Elle ne tourne plus qu'une fois (marqueur _clanDuchiesDropped), et jamais sur une zone tenue par une borne.
+     */
+    private static void dropClanDuchies() {
+        for (ParcelData p : new java.util.ArrayList<>(parcels.values())) {
+            String f = p.getFamilyId();
+            if (p.getType() != ParcelType.TERRITORY || !("kage".equals(f) || "hanazakura".equals(f))) continue;
+            if (!p.getBorne().isEmpty()) continue;                     // territoire pose avec une borne : on le garde
+            System.out.println("[ParcelManager] Duche du clan " + f + " supprime : " + p.getName() + " (" + p.getId() + ")");
+            deleteParcel(p.getId());
+        }
+    }
+
     public static void saveAll() { save(); }
+
+    /** Parcelle d'une famille renommee : son nom (Marquisat_Luminara) et son proprietaire affiche (Famille Luminara) suivent. */
+    private static void renameFamilyParcel(ParcelData p, String oldId, String newId) {
+        NobleFamilyModel family = FamilyManager.get(newId);
+        if (family == null || oldId.isEmpty()) return;
+        String oldName = Character.toUpperCase(oldId.charAt(0)) + oldId.substring(1);
+        p.setName(p.getName().replace(oldName, family.getDisplayName()));
+        p.setOwnerName(p.getOwnerName().replace(oldName, family.getDisplayName()));
+        System.out.println("[ParcelManager] Parcelle " + p.getId() + " : famille " + oldId + " -> " + newId);
+    }
 
     private static void checkOwnershipTitles(UUID ownerUUID, ParcelData parcel) {
         try {

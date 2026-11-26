@@ -1,0 +1,44 @@
+{
+  "TranslationProperties": {
+    "Name": "Poche dimensionnelle",
+    "Description": "Un sac cousu de fil d'étoile qui ouvre sur une poche hors du monde : 4 rangées de rangement. Ce que vous y rangez n'est jamais perdu, même à la mort. Clic droit : l'équiper dans sa case du menu Système (en bas à droite de votre personnage), d'où elle s'ouvre."
+  },
+  "Categories": [
+    "Eldanior_System.Autres",
+    "Items.Armors"
+  ],
+  "Icon": "Icons/ItemsGenerated/Eldanior_Poche_Dimensionnelle.png",
+  "Quality": "Epic",
+  "ItemLevel": 1,
+  "Model": "Items/Back/BackpackBig.blockymodel",
+  "Texture": "Items/Eldanior/Poche/Poche_Dimensionnelle_Texture.png",
+  "PlayerAnimationsId": "Block",
+  "IconProperties": {
+    "Scale": 0.455,
+    "Translation": [
+      1.19,
+      2.39
+    ],
+    "Rotation": [
+      0,
+      177.73,
+      0
+    ]
+  },
+  "Tags": {
+    "Family": [
+      "Leather"
+    ],
+    "Type": [
+      "Utility"
+    ]
+  },
+  "Interactions": {
+    "Primary": "Root_Eldanior_OuvrirPoche",
+    "Secondary": "Root_Eldanior_OuvrirPoche",
+    "Use": "Root_Eldanior_OuvrirPoche"
+  },
+  "MaxStack": 1,
+  "$Comment": "Poche dimensionnelle, generee par scripts/poche/gen_poche.py (poche : poche.PocheDimensionnelle).",
+  "DropOnDeath": false
+}

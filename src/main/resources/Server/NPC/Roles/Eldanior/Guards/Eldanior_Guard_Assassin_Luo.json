@@ -1,0 +1,75 @@
+{
+  "Type": "Variant",
+  "Reference": "Template_Intelligent",
+  "Modify": {
+    "Appearance": "Player",
+    "DropList": "Empty",
+    "WakingPeriod": [
+      0,
+      24
+    ],
+    "BedBlockSet": "",
+    "Patrol": false,
+    "FollowPatrolPath": false,
+    "ViewRange": 24,
+    "ViewSector": 240,
+    "HearingRange": 14,
+    "AlertedRange": 48,
+    "AlertedTime": [
+      0.3,
+      0.6
+    ],
+    "LeashMinPlayerDistance": 4,
+    "LeashTimer": [
+      2,
+      3
+    ],
+    "SearchTimeRange": [
+      4,
+      6
+    ],
+    "BreathesInWater": true,
+    "NameTranslationKey": {
+      "Compute": "NameTranslationKey"
+    },
+    "MaxHealth": 450,
+    "MaxSpeed": 14,
+    "RunThreshold": 0.3,
+    "KnockbackScale": 0.4,
+    "Weapons": [
+      "Eldanior_Weapon_Sword_Katana_Tsukikage_Degainee",
+      "Eldanior_Weapon_Sword_Katana_Tsukikage"
+    ],
+    "OffHand": [
+      "Eldanior_Weapon_Sword_Katana_Tsukikage_Fourreau_Vide"
+    ],
+    "DefaultOffHandSlot": 0,
+    "NighttimeOffhandSlot": 0,
+    "WakingIdleBehaviorComponent": "Component_Instruction_Eldanior_Leash_Return",
+    "WanderRadius": 2,
+    "LeashDistance": 30,
+    "HardLeashDistance": 60,
+    "AbsoluteDetectionRange": 4,
+    "InvestigateRange": 40,
+    "ChanceToBeAlertedWhenReceivingCallForHelp": 100,
+    "CombatMessageTargetGroups": [
+      "Eldanior_Guards"
+    ],
+    "UseCombatActionEvaluator": true,
+    "BlockAbility": "",
+    "AttitudeGroup": "Eldanior_Guard",
+    "DefaultPlayerAttitude": "Ignore",
+    "DisableDamageGroups": [
+      "Self",
+      "Eldanior_Guards"
+    ],
+    "_CombatConfig": "CAE_Eldanior_Guard_Royal_Luo"
+  },
+  "Parameters": {
+    "NameTranslationKey": {
+      "Value": "server.npcRoles.Eldanior_Guard_Assassin.name",
+      "Description": "Translation key for NPC name display"
+    }
+  },
+  "$Comment": "Variante du territoire Luo de Eldanior_Guard_Assassin (scripts/guards/gen_postes_luo.py) : katana du clan, sans bouclier."
+}

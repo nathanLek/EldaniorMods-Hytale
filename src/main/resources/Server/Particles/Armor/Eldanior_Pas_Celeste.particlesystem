@@ -1,0 +1,20 @@
+{
+  "$Comment": "Pas dans les airs de la Tenue Ancestrale du Dieu-Dragon d'Or : a chaque saut en plein vol, un anneau d'or s'ouvre sous les pieds et des etincelles d'or tombent. Joue par le client (ItemArmor.MovementSettings.ExtraJumpParticleSystem).",
+  "Spawners": [
+    {
+      "SpawnerId": "Eldanior_Pas_Celeste_Anneau",
+      "PositionOffset": {
+        "Y": 0.05
+      }
+    },
+    {
+      "SpawnerId": "Eldanior_Pas_Celeste_Etincelles",
+      "PositionOffset": {
+        "Y": 0.1
+      }
+    }
+  ],
+  "IsImportant": true,
+  "CullDistance": 96,
+  "LifeSpan": 0.1
+}

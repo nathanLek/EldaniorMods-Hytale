@@ -27,9 +27,9 @@ public class GuildDisbandCommand extends AbstractAsyncCommand {
 
     public GuildDisbandCommand() {
         super("guilddisband", "Dissoudre votre guilde (Chef uniquement)");
+        requireNoPermission();                                   // commande joueur : ouverte a tous
     }
 
-    protected boolean canGeneratePermission() { return false; }
 
     @Nonnull
     @Override

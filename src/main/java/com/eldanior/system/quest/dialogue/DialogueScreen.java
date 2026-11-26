@@ -234,6 +234,14 @@ public class DialogueScreen extends InteractiveCustomUIPage<DialogueScreen.Dialo
                 return;
             }
 
+            // Une seule quete en cours a la fois, sauf la principale (rappel de l'utilisateur, 2026-11-13)
+            String refused = QuestManager.refusal(playerUUID, quest.getId());
+            if (refused != null) {
+                PlayerRef pr = store.getComponent(ref, PlayerRef.getComponentType());
+                if (pr != null) pr.sendMessage(com.hypixel.hytale.server.core.Message.raw(refused).color("#e8c060"));
+                close();
+                return;
+            }
             // Accepter et activer la quete
             QuestManager.acceptQuest(playerUUID, quest.getId());
             QuestManager.activateQuest(playerUUID, quest.getId());

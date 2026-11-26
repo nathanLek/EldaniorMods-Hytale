@@ -1,5 +1,11 @@
 # Processus : Creer une Competence Passive
 
+> [!warning] Obsolète depuis le 2026-11-25
+> Refonte des passifs : 59 passifs (45 séries à rangs Commun → Légendaire, 7 Anges, 7 Péchés), générés depuis
+> `scripts/passifs/conception.py` (`gen_passifs.py`). `SkillEffectConfig` est supprimé : les passifs ne jouent plus
+> aucun effet visuel. Pour créer un passif : ajouter une `Serie` dans `scripts/passifs/conception.py` (et une mécanique dans `PassiveEffects.java` si besoin), puis `python3 scripts/passifs/gen_passifs.py`. Les étapes ci-dessous décrivent l'ancien système.
+
+
 #processus #skill #creation #guide
 
 ## 6 etapes pour creer un nouveau skill

@@ -1,0 +1,133 @@
+{
+  "Animations": {
+    "Inclinaison": {
+      "ThirdPerson": "Characters/Animations/Luo/Inclinaison.blockyanim",
+      "FirstPerson": "Characters/Animations/Luo/Inclinaison.blockyanim",
+      "Speed": 1.0,
+      "Looping": false,
+      "BlendingDuration": 0.25
+    },
+    "InclinaisonProfonde": {
+      "ThirdPerson": "Characters/Animations/Luo/InclinaisonProfonde.blockyanim",
+      "FirstPerson": "Characters/Animations/Luo/InclinaisonProfonde.blockyanim",
+      "Speed": 1.0,
+      "Looping": false,
+      "BlendingDuration": 0.25
+    },
+    "Priere": {
+      "ThirdPerson": "Characters/Animations/Luo/Priere.blockyanim",
+      "FirstPerson": "Characters/Animations/Luo/Priere.blockyanim",
+      "Speed": 1.0,
+      "Looping": false,
+      "BlendingDuration": 0.25
+    },
+    "Meditation": {
+      "ThirdPerson": "Characters/Animations/Luo/Meditation.blockyanim",
+      "FirstPerson": "Characters/Animations/Luo/Meditation.blockyanim",
+      "Speed": 1.0,
+      "Looping": true,
+      "BlendingDuration": 0.5
+    },
+    "MeditationEveil": {
+      "ThirdPerson": "Characters/Animations/Luo/MeditationEveil.blockyanim",
+      "FirstPerson": "Characters/Animations/Luo/MeditationEveil.blockyanim",
+      "Speed": 1.0,
+      "Looping": true,
+      "BlendingDuration": 0.5
+    },
+    "Renforcement": {
+      "ThirdPerson": "Characters/Animations/Luo/Renforcement.blockyanim",
+      "FirstPerson": "Characters/Animations/Luo/Renforcement.blockyanim",
+      "Speed": 1.0,
+      "Looping": false,
+      "BlendingDuration": 0.25
+    },
+    "Salut": {
+      "ThirdPerson": "Characters/Animations/Emote/Salute_Chest.blockyanim",
+      "FirstPerson": "Characters/Animations/Emote/Salute_Chest.blockyanim",
+      "Speed": 1.0,
+      "Looping": false,
+      "BlendingDuration": 0.2
+    },
+    "Appel": {
+      "ThirdPerson": "Characters/Animations/Emote/Wave_Signal.blockyanim",
+      "FirstPerson": "Characters/Animations/Emote/Wave_Signal.blockyanim",
+      "Speed": 1.0,
+      "Looping": false,
+      "BlendingDuration": 0.2
+    },
+    "Kata1": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Sword/Attacks/Swing_Left/Swing_Left.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Sword/Attacks/Swing_Left/Swing_Left.blockyanim",
+      "Speed": 1.0,
+      "Looping": false,
+      "BlendingDuration": 0.2
+    },
+    "Kata2": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Sword/Attacks/Swing_Right/Swing_Right.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Sword/Attacks/Swing_Right/Swing_Right.blockyanim",
+      "Speed": 1.0,
+      "Looping": false,
+      "BlendingDuration": 0.2
+    },
+    "Kata3": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Sword/Attacks/Swing_Down/Swing_Down.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Sword/Attacks/Swing_Down/Swing_Down.blockyanim",
+      "Speed": 1.0,
+      "Looping": false,
+      "BlendingDuration": 0.2
+    },
+    "Kata4": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Sword/Attacks/Swing_Down_Strong/Swing_Down_Strong.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Sword/Attacks/Swing_Down_Strong/Swing_Down_Strong.blockyanim",
+      "Speed": 1.0,
+      "Looping": false,
+      "BlendingDuration": 0.2
+    },
+    "Forger": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Club/Attacks/Swing_Down/Swing_Down.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Club/Attacks/Swing_Down/Swing_Down.blockyanim",
+      "Speed": 1.0,
+      "Looping": false,
+      "BlendingDuration": 0.2
+    },
+    "Forger2": {
+      "ThirdPerson": "Characters/Animations/Items/Main_Handed/Pickaxe/Attacks/Mine/Mine.blockyanim",
+      "FirstPerson": "Characters/Animations/Items/Main_Handed/Pickaxe/Attacks/Mine/Mine.blockyanim",
+      "Speed": 1.0,
+      "Looping": false,
+      "BlendingDuration": 0.2
+    },
+    "Assis": {
+      "ThirdPerson": "Characters/Animations/Flavor/Sit.blockyanim",
+      "FirstPerson": "Characters/Animations/Flavor/Sit.blockyanim",
+      "Speed": 1.0,
+      "Looping": true,
+      "BlendingDuration": 0.2
+    }
+  },
+  "Camera": {
+    "Pitch": {
+      "TargetNodes": [
+        "Head"
+      ]
+    },
+    "Yaw": {
+      "TargetNodes": [
+        "Belly"
+      ]
+    }
+  },
+  "WiggleWeights": {
+    "Pitch": 2.5,
+    "PitchDeceleration": 0.1,
+    "Roll": 0.1,
+    "RollDeceleration": 0.1,
+    "X": 2.5,
+    "XDeceleration": 0.1,
+    "Y": 0.1,
+    "YDeceleration": 0.1,
+    "Z": 0.1,
+    "ZDeceleration": 0.1
+  }
+}

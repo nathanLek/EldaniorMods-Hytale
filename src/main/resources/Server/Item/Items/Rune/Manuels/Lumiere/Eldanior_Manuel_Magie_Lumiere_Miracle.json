@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_Miracle (remplace le parchemin rune_page_miracle).",
+  "TranslationProperties": {
+    "Name": "Manuel de Lumière : Miracle",
+    "Description": "Sort rare de lumière (Mage, rune de prédilection du Thaumaturge). Un miracle soigne l'allié visé (ou vous-même) de 40 % de ses PV max. Ce qui dépasse ses PV max n'est pas perdu : il explose en lumière sacrée autour de lui (rayon 4), jusqu'à 180 dégâts si l'allié était déjà en pleine santé, le double sur les morts-vivants. Épargne votre groupe, votre guilde et votre famille. Coût : 120 mana. Recharge : 60 s.\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Lumiere"
+  ],
+  "Quality": "Rare",
+  "ItemLevel": 40,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Lumiere_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Lumiere_Miracle.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

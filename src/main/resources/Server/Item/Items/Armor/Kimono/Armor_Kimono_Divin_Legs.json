@@ -1,0 +1,126 @@
+{
+  "TranslationProperties": {
+    "Name": "Hakama du Dieu-Dragon d'Or",
+    "Description": "Tenue Ancestrale du Dieu-Dragon d'Or. Les anciens disaient qu'une éclipse est un dragon qui dévore le soleil : ce soleil noir est celui qu'avala le Dieu-Dragon d'Or. Pas dans les airs : un saut de plus en plein vol. Tenue complète : sauts illimités et +15 % de vitesse."
+  },
+  "Quality": "Divin",
+  "ItemLevel": 800,
+  "PlayerAnimationsId": "Block",
+  "ItemSoundSetId": "ISS_Armor_Cloth",
+  "Categories": [
+    "Eldanior_Empire_Luo.Luo",
+    "Items.Armors"
+  ],
+  "Icon": "Icons/ItemsGenerated/Armor_Kimono_Divin_Legs.png",
+  "IconProperties": {
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Scale": 0.34,
+    "Translation": [
+      0,
+      0
+    ]
+  },
+  "Model": "Items/Armors/Kimono/Divin/Legs.blockymodel",
+  "Texture": "Items/Armors/Kimono/Divin/Legs_Texture.png",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    }
+  },
+  "Armor": {
+    "ArmorSlot": "Legs",
+    "BaseDamageResistance": 0,
+    "CosmeticsToHide": [
+      "Pants",
+      "Shoes",
+      "Overpants"
+    ],
+    "StatModifiers": {
+      "Health": [
+        {
+          "Amount": 170,
+          "CalculationType": "Additive"
+        }
+      ],
+      "Mana": [
+        {
+          "Amount": 130,
+          "CalculationType": "Additive"
+        }
+      ],
+      "Stamina": [
+        {
+          "Amount": 60,
+          "CalculationType": "Additive"
+        }
+      ]
+    },
+    "DamageResistance": {
+      "Physical": [
+        {
+          "Amount": 0.2,
+          "CalculationType": "Percent"
+        }
+      ],
+      "Projectile": [
+        {
+          "Amount": 0.24,
+          "CalculationType": "Percent"
+        }
+      ],
+      "Fire": [
+        {
+          "Amount": 0.1,
+          "CalculationType": "Percent"
+        }
+      ],
+      "Fall": [
+        {
+          "Amount": 0.5,
+          "CalculationType": "Percent"
+        }
+      ]
+    },
+    "KnockbackResistances": {
+      "Physical": 0.5,
+      "Projectile": 0.5
+    },
+    "InteractionModifiers": {
+      "Dodge": {
+        "Stamina": {
+          "Amount": 0.5,
+          "CalculationType": "Multiplicative"
+        }
+      }
+    },
+    "MovementSettings": {
+      "ExtraJumpCount": 1,
+      "ExtraJumpParticleSystem": "Eldanior_Pas_Celeste"
+    }
+  },
+  "Tags": {
+    "Type": [
+      "Armor"
+    ],
+    "Family": [
+      "Cloth_Kimono"
+    ]
+  },
+  "MaxDurability": 2000,
+  "DurabilityLossOnHit": 0.25
+}

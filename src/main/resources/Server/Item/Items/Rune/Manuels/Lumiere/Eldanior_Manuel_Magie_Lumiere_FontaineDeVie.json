@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_FontaineDeVie (remplace le parchemin rune_page_fontaine_de_vie).",
+  "TranslationProperties": {
+    "Name": "Manuel de Lumière : Fontaine de Vie",
+    "Description": "Sort rare de lumière (Mage, rune de prédilection du Grand Guérisseur). Une fontaine de vie jaillit à l'endroit visé (20 blocs) pendant 6 s. À son apparition, elle purifie les alliés à moins de 5 blocs de tous leurs malus ; ensuite elle leur rend 5 % de leurs points de vie chaque seconde (30 % au total). Coût : 120 mana. Recharge : 60 s.\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Lumiere"
+  ],
+  "Quality": "Rare",
+  "ItemLevel": 40,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Lumiere_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Lumiere_FontaineDeVie.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

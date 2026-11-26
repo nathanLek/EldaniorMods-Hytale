@@ -72,6 +72,16 @@ public class PersistenceManager {
         }
     }
 
+    /** Ordres de chevalerie et hierarchies (titres conferes) : sauvegarde immediate apres un geste chez l'intendant (2026-11-18). */
+    public static synchronized void saveOrdersAndTitles() {
+        try {
+            saveKnightOrders();
+            saveHierarchies();
+        } catch (Exception e) {
+            EldaniorLogger.error("[Persistence] ordres et titres", e);
+        }
+    }
+
     private static void saveGuilds() throws IOException {
         Properties props = new Properties();
         props.setProperty("_version", "1");
@@ -115,6 +125,16 @@ public class PersistenceManager {
             FamilyManager.FamilyRuntimeData runtime = FamilyManager.getRuntimeData(family.getId());
             props.setProperty(family.getId() + ".treasury", String.valueOf(runtime.getTreasury()));
             props.setProperty(family.getId() + ".contribution", String.valueOf(runtime.getContribution()));
+            Set<UUID> elders = FamilyManager.getElders(family.getId());
+            if (!elders.isEmpty()) {
+                props.setProperty(family.getId() + ".elders", elders.stream().map(UUID::toString).collect(java.util.stream.Collectors.joining(",")));
+            }
+            Map<UUID, String> merchants = FamilyManager.getMerchants(family.getId());
+            if (!merchants.isEmpty()) {
+                props.setProperty(family.getId() + ".merchants", merchants.entrySet().stream()
+                        .map(e -> e.getKey() + ":" + e.getValue().replace(",", "").replace(":", ""))
+                        .collect(java.util.stream.Collectors.joining(",")));
+            }
         }
         // Sauvegarder les familles prises
         StringBuilder taken = new StringBuilder();
@@ -159,6 +179,26 @@ public class PersistenceManager {
                 members.append(uuid.toString());
             }
             props.setProperty(prefix + ".members", members.toString());
+            // Rangs et noms des membres (hierarchie a sept rangs, 2026-11-18)
+            StringBuilder ranks = new StringBuilder();
+            for (var r : order.getRanks().entrySet()) {
+                if (ranks.length() > 0) ranks.append(",");
+                ranks.append(r.getKey()).append(":").append(r.getValue().name());
+            }
+            props.setProperty(prefix + ".ranks", ranks.toString());
+            StringBuilder names = new StringBuilder();
+            for (var n : order.getNames().entrySet()) {
+                if (names.length() > 0) names.append(",");
+                names.append(n.getKey()).append(":").append(n.getValue().replace(",", " ").replace(":", " "));
+            }
+            props.setProperty(prefix + ".names", names.toString());
+            props.setProperty(prefix + ".recruiting", String.valueOf(order.isRecruiting()));
+            StringBuilder cands = new StringBuilder();
+            for (var c : order.getCandidates().entrySet()) {
+                if (cands.length() > 0) cands.append(",");
+                cands.append(c.getKey()).append(":").append(c.getValue().replace(",", " ").replace(":", " "));
+            }
+            props.setProperty(prefix + ".candidates", cands.toString());
             count++;
         }
         props.setProperty("_count", String.valueOf(count));
@@ -299,14 +339,25 @@ public class PersistenceManager {
             }
         }
 
-        for (String familyId : familyIds) {
+        for (String storedId : familyIds) {
+            String familyId = FamilyManager.migrateId(storedId); // luminara -> luo
             if (FamilyManager.get(familyId) == null) continue; // Famille inconnue
 
-            long treasury = Long.parseLong(props.getProperty(familyId + ".treasury", "0"));
-            long contribution = Long.parseLong(props.getProperty(familyId + ".contribution", "0"));
+            long treasury = Long.parseLong(props.getProperty(storedId + ".treasury", "0"));
+            long contribution = Long.parseLong(props.getProperty(storedId + ".contribution", "0"));
 
             // Injecter directement dans le runtime
             FamilyManager.setRuntimeData(familyId, treasury, contribution);
+            for (String e : props.getProperty(storedId + ".elders", "").split(",")) {
+                try { if (!e.isBlank()) FamilyManager.restoreElder(familyId, UUID.fromString(e.trim())); }
+                catch (IllegalArgumentException ignored) { /* uuid illisible */ }
+            }
+            for (String e : props.getProperty(storedId + ".merchants", "").split(",")) {
+                int colon = e.indexOf(':');
+                if (colon <= 0) continue;
+                try { FamilyManager.addMerchant(familyId, UUID.fromString(e.substring(0, colon).trim()), e.substring(colon + 1).trim()); }
+                catch (IllegalArgumentException ignored) { /* uuid illisible */ }
+            }
             System.out.println("[Persistence] Famille restauree: " + familyId + " treasury=" + treasury + " contrib=" + contribution);
         }
 
@@ -314,7 +365,7 @@ public class PersistenceManager {
         String takenStr = props.getProperty("_takenFamilies", "");
         if (!takenStr.isEmpty()) {
             for (String familyId : takenStr.split(",")) {
-                familyId = familyId.trim();
+                familyId = FamilyManager.migrateId(familyId.trim());
                 if (!familyId.isEmpty() && FamilyManager.get(familyId) != null) {
                     FamilyManager.claimFamily(familyId);
                 }
@@ -369,7 +420,7 @@ public class PersistenceManager {
         for (String orderId : orderIds) {
             String name = props.getProperty(orderId + ".name");
             String motto = props.getProperty(orderId + ".motto", "");
-            String familyId = props.getProperty(orderId + ".familyId");
+            String familyId = FamilyManager.migrateId(props.getProperty(orderId + ".familyId"));
             String capitaineUUIDStr = props.getProperty(orderId + ".capitaineUUID");
             String capitaineName = props.getProperty(orderId + ".capitaineName", "?");
 
@@ -386,12 +437,6 @@ public class PersistenceManager {
             int kills = Integer.parseInt(props.getProperty(orderId + ".totalKills", "0"));
             for (int k = 0; k < kills; k++) order.addKill();
 
-            // Restore lieutenant
-            String ltUUIDStr = props.getProperty(orderId + ".lieutenantUUID");
-            if (ltUUIDStr != null && !ltUUIDStr.isEmpty()) {
-                String ltName = props.getProperty(orderId + ".lieutenantName", "");
-                order.setLieutenant(UUID.fromString(ltUUIDStr), ltName);
-            }
 
             // Restore territory
             String territory = props.getProperty(orderId + ".territoryId");
@@ -408,6 +453,29 @@ public class PersistenceManager {
                         }
                     } catch (Exception e) { EldaniorLogger.error("PersistenceManager", e); }
                 }
+            }
+
+            for (String pair : props.getProperty(orderId + ".names", "").split(",")) {
+                int c = pair.indexOf(':');
+                if (c > 0) try { order.rememberName(UUID.fromString(pair.substring(0, c)), pair.substring(c + 1)); } catch (Exception ignored) { }
+            }
+            // Ancien Lieutenant (sauvegardes sans rangs) : Vice-Maitre, apres les membres
+            String ltUUIDStr = props.getProperty(orderId + ".lieutenantUUID");
+            if (ltUUIDStr != null && !ltUUIDStr.isEmpty() && !props.containsKey(orderId + ".ranks")) {
+                try { order.setLieutenant(UUID.fromString(ltUUIDStr), props.getProperty(orderId + ".lieutenantName", "")); } catch (Exception ignored) { }
+            }
+            order.setRecruiting(!"false".equals(props.getProperty(orderId + ".recruiting", "true")));
+            for (String pair : props.getProperty(orderId + ".candidates", "").split(",")) {
+                int c = pair.indexOf(':');
+                if (c > 0) try { order.addCandidate(UUID.fromString(pair.substring(0, c)), pair.substring(c + 1)); } catch (Exception ignored) { }
+            }
+            for (String pair : props.getProperty(orderId + ".ranks", "").split(",")) {
+                int c = pair.indexOf(':');
+                if (c <= 0) continue;
+                try {
+                    var r = com.eldanior.system.titles.nobility.family.KnightOrderRole.fromString(pair.substring(c + 1));
+                    if (r != null) order.setRank(UUID.fromString(pair.substring(0, c)), r);
+                } catch (Exception ignored) { }
             }
 
             System.out.println("[Persistence] Ordre restaure: " + name + " (famille=" + familyId + ", cap=" + capitaineName + ", membres=" + order.getMemberCount() + ", kills=" + kills + ")");

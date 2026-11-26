@@ -1,0 +1,113 @@
+{
+  "TranslationProperties": {
+    "Name": "Porte de Boss - Rang C-B",
+    "Description": "Double porte de 4 blocs sur 4. S'ouvre avec une Clé de Boss de rang C-B, consommée à l'ouverture : tout le groupe passe."
+  },
+  "PlayerAnimationsId": "Block",
+  "Categories": [
+    "Eldanior_System.Dungeons",
+    "Furniture.Doors"
+  ],
+  "Icon": "Icons/ItemsGenerated/Eldanior_Porte_Boss_CB.png",
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  },
+  "IconProperties": {
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Scale": 0.45,
+    "Translation": [
+      -6.51,
+      -61.71
+    ]
+  },
+  "Recipe": {
+    "Input": [
+      {
+        "ResourceTypeId": "Wood_Trunk",
+        "Quantity": 2
+      },
+      {
+        "ItemId": "Ingredient_Bar_Iron",
+        "Quantity": 2
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Id": "Furniture_Bench",
+        "Type": "Crafting",
+        "Categories": [
+          "Furniture_Misc"
+        ]
+      }
+    ]
+  },
+  "BlockType": {
+    "BlockParticleSetId": "Wood",
+    "CustomModel": "Blocks/Eldanior/Porte_Boss_CB.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/Decorative_Sets/Temple_Emerald/Door_Large_Texture.png"
+      }
+    ],
+    "DrawType": "Model",
+    "HitboxType": "Eldanior_Porte_Boss",
+    "Material": "Solid",
+    "State": {
+      "Definitions": {
+        "CloseDoorIn": {
+          "InteractionSoundEventId": "SFX_Door_Temple_Light_Close",
+          "CustomModelAnimation": "Blocks/Animations/Door/Door_Close_In.blockyanim"
+        },
+        "CloseDoorOut": {
+          "InteractionSoundEventId": "SFX_Door_Temple_Light_Close",
+          "CustomModelAnimation": "Blocks/Animations/Door/Door_Close_Out.blockyanim"
+        },
+        "DoorBlocked": {},
+        "OpenDoorIn": {
+          "SoundOcclusionOpacity": 0.0,
+          "HitboxType": "Eldanior_Porte_Boss_Open_In",
+          "InteractionHitboxType": "Eldanior_Porte_Boss_Open_In_Interaction",
+          "InteractionSoundEventId": "SFX_Door_Temple_Light_Open",
+          "CustomModelAnimation": "Blocks/Animations/Door/Door_Open_In.blockyanim",
+          "InteractionHint": "server.interactionHints.closeDoor"
+        },
+        "OpenDoorOut": {
+          "SoundOcclusionOpacity": 0.0,
+          "HitboxType": "Eldanior_Porte_Boss_Open_Out",
+          "InteractionHitboxType": "Eldanior_Porte_Boss_Open_Out_Interaction",
+          "InteractionSoundEventId": "SFX_Door_Temple_Light_Open",
+          "CustomModelAnimation": "Blocks/Animations/Door/Door_Open_Out.blockyanim",
+          "InteractionHint": "server.interactionHints.closeDoor"
+        }
+      }
+    },
+    "VariantRotation": "NESW",
+    "ParticleColor": "#694b29",
+    "BlockSoundSetId": "Stone",
+    "PhysicalMaterialId": "Stone",
+    "SoundOcclusionOpacity": 2.0,
+    "InteractionHint": "server.interactionHints.openDoor",
+    "IsDoor": true,
+    "Interactions": {
+      "Use": "Door"
+    },
+    "TextureComputedColor": "#664C30",
+    "Opacity": "Transparent"
+  },
+  "Scale": 0.5,
+  "Tags": {
+    "Type": [
+      "Furniture"
+    ],
+    "Family": [
+      "Temple"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Blocks_Wood",
+  "Quality": "Rare"
+}

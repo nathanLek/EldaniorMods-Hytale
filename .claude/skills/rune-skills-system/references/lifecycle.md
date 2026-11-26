@@ -34,3 +34,5 @@
 - Plusieurs lancements simultanés du même sort : chaque lancement a sa propre `Instance` (pas d'état statique partagé).
 - Interruption volontaire (re-clic, changement d'arme) : prévoir un champ `cancelled` lu dans `tick` si la fiche le demande.
 - Clics souris pendant un sort (contrôle) : enregistrer un `PlayerMouseButtonEvent` (voir `NyxVeil.onMouseButton`).
+- **Téléporter puis étourdir un monstre** : `SpellFx.teleport` n'est appliqué qu'à la fin du tick, alors que `stun`/`lockInPlace`
+  capture la position **actuelle** : le monstre serait figé à son ancienne place. Étourdir au tick suivant (`OeilOmniscient`).

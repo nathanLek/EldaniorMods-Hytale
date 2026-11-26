@@ -1,0 +1,481 @@
+{
+  "DisplayNameKey": "Armurerie du Clan Luo — Apprenti",
+  "RefreshInterval": {
+    "Days": 1
+  },
+  "RestockHour": 6,
+  "TradeSlots": [
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Eldanior_Weapon_Sword_Katana_Bokken",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Gold_Coins",
+            "Quantity": 2
+          }
+        ],
+        "Stock": 6
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Eldanior_Weapon_Sword_Katana_Fer",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Diamond_Coins",
+            "Quantity": 2
+          }
+        ],
+        "Stock": 4
+      }
+    },
+    {
+      "Type": "Pool",
+      "SlotCount": 1,
+      "Trades": [
+        {
+          "Output": {
+            "ItemId": "Eldanior_Weapon_Sword_Katana_Aonami",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 13
+            }
+          ],
+          "Stock": [
+            1,
+            2
+          ],
+          "Weight": 60
+        },
+        {
+          "Output": {
+            "ItemId": "Eldanior_Weapon_Sword_Katana_Fer",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            2,
+            3
+          ],
+          "Weight": 40
+        }
+      ]
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Weapon_Longsword_Katana",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Diamond_Coins",
+            "Quantity": 3
+          }
+        ],
+        "Stock": 3
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Weapon_Sword_Iron",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Diamond_Coins",
+            "Quantity": 2
+          }
+        ],
+        "Stock": 4
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Weapon_Shield_Iron",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Diamond_Coins",
+            "Quantity": 2
+          }
+        ],
+        "Stock": 3
+      }
+    },
+    {
+      "Type": "Pool",
+      "SlotCount": 8,
+      "Trades": [
+        {
+          "Output": {
+            "ItemId": "Weapon_Sword_Copper",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Sword_Bronze",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Daggers_Iron",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Daggers_Copper",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Shortbow_Iron",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Shortbow_Copper",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Spear_Iron",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Spear_Copper",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Axe_Iron",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Axe_Copper",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Longsword_Iron",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Shield_Copper",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Club_Copper",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 8
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Battleaxe_Iron",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 20
+        }
+      ]
+    },
+    {
+      "Type": "Pool",
+      "SlotCount": 4,
+      "Trades": [
+        {
+          "Output": {
+            "ItemId": "Tool_Pickaxe_Iron",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 15
+        },
+        {
+          "Output": {
+            "ItemId": "Tool_Hatchet_Iron",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 15
+        },
+        {
+          "Output": {
+            "ItemId": "Tool_Shovel_Iron",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 15
+        },
+        {
+          "Output": {
+            "ItemId": "Tool_Hammer_Iron",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 15
+        },
+        {
+          "Output": {
+            "ItemId": "Tool_Pickaxe_Copper",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 10
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 15
+        },
+        {
+          "Output": {
+            "ItemId": "Tool_Hatchet_Copper",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 9
+            }
+          ],
+          "Stock": [
+            1,
+            3
+          ],
+          "Weight": 15
+        }
+      ]
+    }
+  ]
+}

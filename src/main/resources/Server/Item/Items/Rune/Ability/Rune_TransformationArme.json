@@ -1,0 +1,45 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de Transformation d'Arme",
+    "Description": "Rune de Combat légendaire, réservée aux Mousquetaires. En tenant un mousquet légendaire, l'arme change de forme pendant 5 minutes : Black Bess devient un SARS militaire (chargeurs de 5 Balles de sniper divines, 2 000 blocs), Green Colt une paire de Colts de cavalerie (5 + 5 Balles Divines, 40 blocs, cadence folle), Blue Tiger un canon de char à main (Obus Divin, 5 s, 100 blocs, dégâts ×5). Puis l'arme redevient le mousquet. Sans mousquet légendaire en main, la rune ne part pas et ne coûte rien. Coût : 200 mana. Recharge : 600 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_TransformationArme.png",
+  "Quality": "Legendary",
+  "ItemLevel": 90,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_Runes.Combat"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_TransformationArme.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 600,
+    "Cost": 200,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Physical",
+      "Melee",
+      "Buff",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_TransformationArme"
+  }
+}

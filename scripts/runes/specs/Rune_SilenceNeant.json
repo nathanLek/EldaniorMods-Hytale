@@ -1,0 +1,68 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_SilenceNeant",
+  "spell": "SilenceNeant",
+  "javaClass": "SilenceNeant",
+  "page": "rune_page_silence_neant",
+  "name": "Rune du Silence du Néant",
+  "type": "Tenebres",
+  "rarity": "Unique",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Silence",
+  "summary": "domaine de silence r 10, 10 s : les ennemis dedans ne peuvent plus attaquer ni lancer de rune, 25 / s ; vous y etes invisible.",
+  "description": "Sort unique de ténèbres (Mage, rune de prédilection du Néant Mystique). Le néant étouffe tout sur 10 blocs autour de vous pendant 10 s. Les monstres qui s'y trouvent n'attaquent plus personne, les joueurs ennemis n'y peuvent plus lancer de rune (le sort se dissipe), et tous subissent 25 dégâts par seconde. Tant que vous restez dans le silence, vous êtes invisible. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin vierge : même le froissement du papier ne fait aucun bruit. Enseigne le Silence du Néant : là où règne le vide, nul ne parle, nul ne frappe. Classes : tous les Mages (rune de prédilection du Néant Mystique). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.5,
+    "releaseTime": 0.5,
+    "moveSpeed": 0.4,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Portal_Void",
+    "handParticles": "Nyx_Mist",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.5,
+    "range": 0,
+    "radius": "10",
+    "targets": "ennemis du domaine ; lanceur",
+    "persistentFx": "Nyx_Mist au sol (centre + anneau de 6) reemis / 3 s, Nyx_Void sur les ennemis touches / s",
+    "sounds": "SFX_Portal_Void a l'ouverture et a la fin",
+    "effects": "monstres : attitude IGNORE forcee envers tous les joueurs a 14 blocs + LockedTarget efface / 0,5 s ; joueurs ennemis : Elda_Silence + RuneSpellRuntime.silence (runes dissipees) ; 12,5 Elemental / 0,5 s ; lanceur : invisibilite totale (InvisibilityManager) tant qu'il est a moins de 10 blocs du centre",
+    "terrain": "aucun",
+    "persistentDurationS": 10,
+    "interruptions": "lanceur mort ou deconnecte : fin, invisibilite retiree",
+    "restrictions": "mage",
+    "edgeCases": "lanceur hors du domaine : visible, y revenir le rend invisible ; aventuriers PNJ : silencies par l'attitude",
+    "limitations": "une rune lancee sous silence consomme son mana et sa recharge (cote client) puis se dissipe ; les sorts JSON vanilla (spellbooks) ne sont pas bloques",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 2,
+      "mobility": 0,
+      "control": 3,
+      "defense": 3,
+      "targets": 3,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    }
+  }
+}

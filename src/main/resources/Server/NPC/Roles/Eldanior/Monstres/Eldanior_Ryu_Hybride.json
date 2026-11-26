@@ -1,0 +1,56 @@
+{
+  "$Comment": "Kokuō-Ryū, forme hybride (gen_ryu_hybride.py) : Loup-garou du jeu (memes coups) aux cornes, a la queue et aux ecailles du Dragon Céleste ; vie x5, degats x2.",
+  "Type": "Variant",
+  "Reference": "Template_Predator",
+  "Modify": {
+    "Appearance": "Eldanior_Ryu_Hybride",
+    "WanderRadius": 8,
+    "ViewRange": 32,
+    "HearingRange": 24,
+    "DropList": "Drop_Hunt",
+    "MaxSpeed": 11,
+    "Attack": "Root_NPC_Attack_Melee",
+    "AlwaysSleepAtNight": false,
+    "MaxHealth": 1500,
+    "IsMemory": false,
+    "_InteractionVars": {
+      "Melee_Start": {
+        "Interactions": [
+          {
+            "Parent": "NPC_Attack_Melee_Simple",
+            "$Comment": "Sets animations and delay before hit",
+            "Effects": {
+              "ItemPlayerAnimationsId": "Outlander_Brute_Default",
+              "ItemAnimationId": "Grab"
+            },
+            "RunTime": 0.333
+          }
+        ]
+      },
+      "Melee_Damage": {
+        "Interactions": [
+          {
+            "Parent": "NPC_Attack_Melee_Damage",
+            "$Comment": "Sets damage and onhit effects",
+            "DamageCalculator": {
+              "Type": "Absolute",
+              "BaseDamage": {
+                "Physical": 140
+              },
+              "RandomPercentageModifier": 0.1
+            }
+          }
+        ]
+      }
+    },
+    "NameTranslationKey": {
+      "Compute": "NameTranslationKey"
+    }
+  },
+  "Parameters": {
+    "NameTranslationKey": {
+      "Value": "server.npcRoles.Eldanior_Ryu_Hybride.name",
+      "Description": "Translation key for NPC name display"
+    }
+  }
+}

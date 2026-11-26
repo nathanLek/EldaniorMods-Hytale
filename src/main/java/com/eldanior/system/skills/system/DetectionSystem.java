@@ -177,12 +177,11 @@ public class DetectionSystem extends EntityTickingSystem<EntityStore> {
                         boolean hasSixthSense = false;
                         for (PassiveSkill skill : pData.getActivePassives()) {
                             String sName = skill.name();
-                            if ("EAGLE_EYE".equals(sName) || "SURVIVAL_INSTINCT".equals(sName)
-                                    || "SIXTH_SENSE".equals(sName)
-                                    || "TRACKER".equals(sName) || "UNIVERSAL_DETECTION".equals(sName)) {
+                            // Instinct de Survie (2026-11-24) : radar + presences invisibles (ancien Sixieme Sens)
+                            if ("SURVIVAL_INSTINCT".equals(sName)) {
                                 pData.addSkillProc(sName);
+                                hasSixthSense = true;
                             }
-                            if ("SIXTH_SENSE".equals(sName)) hasSixthSense = true;
                         }
 
                         // SixthSense : détecter les joueurs invisibles à portée
@@ -197,14 +196,14 @@ public class DetectionSystem extends EntityTickingSystem<EntityStore> {
                                         InvisibilityManager.InvisType invisType = InvisibilityManager.getInvisType(targetUUID);
                                         if (invisType == InvisibilityManager.InvisType.PARTIAL) {
                                             NotificationHelper.sendNotification(pRef,
-                                                    "<color:#aa44ff>Sixieme Sens : presence furtive detectee !</color>",
+                                                    "<color:#aa44ff>Instinct de Survie : présence furtive détectée !</color>",
                                                     NotificationStyle.Warning);
-                                            pData.addSkillProc("SIXTH_SENSE");
+                                            pData.addSkillProc("SURVIVAL_INSTINCT");
                                         } else if (invisType == InvisibilityManager.InvisType.TOTAL) {
                                             NotificationHelper.sendNotification(pRef,
-                                                    "<color:#ff4444>Sixieme Sens : presence invisible detectee !</color>",
+                                                    "<color:#ff4444>Instinct de Survie : présence invisible détectée !</color>",
                                                     NotificationStyle.Warning);
-                                            pData.addSkillProc("SIXTH_SENSE");
+                                            pData.addSkillProc("SURVIVAL_INSTINCT");
                                         }
                                     }
                                 }

@@ -1,0 +1,41 @@
+{
+  "$Comment": "Volutes de fumee grise opaques qui gonflent et montent lentement : cachent le lanceur.",
+  "RenderMode": "BlendLinear",
+  "EmitOffset": {
+    "X": { "Min": -4.0, "Max": 4.0 },
+    "Y": { "Min": 0, "Max": 2.2 },
+    "Z": { "Min": -4.0, "Max": 4.0 }
+  },
+  "ParticleRotationInfluence": "Billboard",
+  "LinearFiltering": true,
+  "LightInfluence": 0.7,
+  "ParticleRotateWithSpawner": false,
+  "MaxConcurrentParticles": 90,
+  "ParticleLifeSpan": { "Min": 3.2, "Max": 4.4 },
+  "SpawnRate": { "Min": 55, "Max": 65 },
+  "InitialVelocity": {
+    "Speed": { "Min": 0.15, "Max": 0.5 },
+    "Yaw": { "Min": 0, "Max": 360 },
+    "Pitch": { "Min": 5, "Max": 35 }
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Smoke/Smoke_Dense.png",
+    "FrameSize": { "Width": 64, "Height": 64 },
+    "ScaleRatioConstraint": "OneToOne",
+    "UVOption": "RandomFlipU",
+    "InitialAnimationFrame": {
+      "Scale": {
+        "X": { "Min": 2.6, "Max": 3.6 },
+        "Y": { "Min": 2.6, "Max": 3.6 }
+      },
+      "Opacity": 0.0,
+      "Color": "#4a4a50"
+    },
+    "Animation": {
+      "0": { "Opacity": 0.0 },
+      "12": { "Opacity": 0.85 },
+      "70": { "Opacity": 0.8, "Color": "#3a3a40" },
+      "100": { "Opacity": 0.0, "Scale": { "X": { "Min": 4.4, "Max": 4.8 }, "Y": { "Min": 4.4, "Max": 4.8 } } }
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_Hallucination (remplace le parchemin rune_page_hallucination).",
+  "TranslationProperties": {
+    "Name": "Manuel des Ténèbres : Hallucination",
+    "Description": "Sort épique de ténèbres (Mage, rune de prédilection du Tisseur d'Illusions). Une brume hallucinogène recouvre la zone visée (20 blocs, rayon 10) pendant 8 s. Les monstres qui y sont pris se voient les uns les autres comme des ennemis et s'entre-attaquent ; un monstre seul est saisi de terreur. Ils perdent aussi 8 points de vie par seconde. Épargne votre groupe, votre guilde et votre famille. Coût : 300 mana. Recharge : 120 s.\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Tenebres"
+  ],
+  "Quality": "Epic",
+  "ItemLevel": 60,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Tenebres_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Tenebres_Hallucination.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

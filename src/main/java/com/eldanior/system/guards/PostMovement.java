@@ -29,6 +29,7 @@ import java.util.Random;
  *   - Villageois : se promene dans {@link #VILLAGE_RADIUS} blocs ; va voir un autre PNJ (ils se regardent, comme s'ils
  *     discutaient) ou un bloc utile (etabli, coffre, culture...) qu'il regarde un moment, ou fait quelques pas.
  * Points praticables : sol plein, deux blocs d'air, ciel libre (pas dans ni sur les batiments).
+ * Balises de route (NpcRouteBlocks) : s'il y en a au moins 2 dans le rayon d'action, le PNJ suit la route a la place.
  */
 final class PostMovement {
 
@@ -43,7 +44,7 @@ final class PostMovement {
     private static final Random RNG = new Random();
 
     static boolean moves(GuardType t) {
-        return t == GuardType.PATROUILLEUR || roams(t) || t == GuardType.VILLAGEOIS;
+        return t.patrols() || roams(t) || t.strolls();
     }
 
     /** Errance autour du poste : chevalier errant, chasseur de prime, criminel. */
@@ -55,12 +56,19 @@ final class PostMovement {
         return t == GuardType.CRIMINEL ? Criminals.ROAM_RADIUS : ROAM_RADIUS;
     }
 
+    /** Rayon d'action autour du poste : ronde, errance ou promenade (balises de route prises en compte dans ce rayon). */
+    static double actionRadius(GuardType t) {
+        if (t.patrols()) return PATROL_RADIUS;
+        if (roams(t)) return roamRadius(t);
+        return VILLAGE_RADIUS;
+    }
+
     /** A l'apparition (ou au rechargement) : premier point. */
     static void start(GuardManager.Post p, NPCEntity npc, World world) {
         p.round = null;
         p.target = null;
         p.pauseUntil = 0;
-        if (p.type == GuardType.PATROUILLEUR) startRound(p, npc, world);
+        if (p.type.patrols()) startRound(p, npc, world);
     }
 
     /** Chaque seconde (thread du monde). */
@@ -68,8 +76,9 @@ final class PostMovement {
         StateSupport st = StateSupport.get(ref, store);
         String state = st != null ? st.getStateName() : null;
         long now = System.currentTimeMillis();
-        if (state == null || !state.startsWith("Idle")) { p.progressAt = now; return; }        // combat, retour au poste...
-        if (p.type == GuardType.PATROUILLEUR) { tickRound(p, npc, at, world, now); return; }
+        if (state == null || !state.startsWith("Idle")) { p.progressAt = now; NpcRouteBlocks.hold(p, now); return; }   // combat, retour au poste...
+        if (NpcRouteBlocks.follow(p, npc, at, now)) return;                                   // balises de route dans son rayon
+        if (p.type.patrols()) { tickRound(p, npc, at, world, now); return; }
         if (p.pauseUntil > now) { npc.setLeashPoint(new Vector3d(at)); return; }              // il regarde / discute
         if (p.target == null) { pickNext(p, ref, at, world, store, now); if (p.target != null) npc.setLeashPoint(new Vector3d(p.target)); return; }
         double d = Math.hypot(p.target.x - at.x, p.target.z - at.z);
@@ -93,7 +102,7 @@ final class PostMovement {
         if (other == null || !other.isValid()) return;
         NpcFacing.lookAt(other, new Vector3d(at).add(0, 1.6, 0), until);
         GuardManager.Post op = GuardManager.postOf(other, store);
-        if (op != null && op.type == GuardType.VILLAGEOIS) op.pauseUntil = Math.max(op.pauseUntil, until);
+        if (op != null && op.type.strolls()) op.pauseUntil = Math.max(op.pauseUntil, until);
     }
 
     private static void pickNext(GuardManager.Post p, Ref<EntityStore> ref, Vector3d at, World world, Store<EntityStore> store, long now) {
@@ -229,7 +238,7 @@ final class PostMovement {
     }
 
     /** Case praticable a cote du bloc (cote du villageois en priorite ; ici le ciel peut etre couvert : etal, auvent). */
-    private static Vector3d standBeside(World world, int bx, int by, int bz, Vector3d from) {
+    static Vector3d standBeside(World world, int bx, int by, int bz, Vector3d from) {
         int[][] sides = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
         Vector3d best = null;
         double bestD = Double.MAX_VALUE;

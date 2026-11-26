@@ -1,0 +1,66 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_Rempart",
+  "spell": "Rempart",
+  "javaClass": "Rempart",
+  "page": "rune_page_rempart",
+  "name": "Rune du Rempart",
+  "type": "Terre",
+  "rarity": "Epic",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Rempart",
+  "summary": "muraille circulaire de 3 blocs (rayon 5) autour du lanceur 10 s ; les ennemis a l'interieur sont repousses dehors.",
+  "description": "Sort épique de terre (Mage, rune de prédilection du Thaumaturge Royal). Une muraille de pierre circulaire de 3 blocs de haut s'élève autour de vous (rayon 5) pendant 10 s : elle arrête les ennemis et leurs projectiles. Les ennemis pris à l'intérieur sont d'abord repoussés au-dehors (30 dégâts). Elle disparaît d'elle-même (jamais en ville ni sur une parcelle). Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin carré comme une pierre de taille. Enseigne le Rempart : une forteresse en un instant. Classes : tous les Mages (rune de prédilection du Thaumaturge Royal). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Duration"
+  ],
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.5,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Golem_Earth_Wake",
+    "handParticles": "Gaia_Dust_Burst",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.5,
+    "range": 0,
+    "radius": "5 (anneau)",
+    "targets": "ennemis a l'interieur",
+    "persistentFx": "Gaia_Dust_Burst le long de l'anneau a chaque couche",
+    "impactFx": "Gaia_Dust_Burst + Block_Break_Dust a la disparition",
+    "sounds": "SFX_Golem_Earth_Wake a la montee, SFX_Golem_Earth_Slam_Impact a la disparition",
+    "effects": "ennemis a < 5,5 blocs : 30 Physical + poussee 14 vers l'exterieur ; anneau de Rock_Stone_Brick 3 couches (1 / 200 ms), cases vides seulement",
+    "terrain": "anneau rayon 5, 3 de haut (~100 blocs), restaure apres 10 s",
+    "persistentDurationS": 10,
+    "interruptions": "aucune",
+    "restrictions": "mage",
+    "edgeCases": "zone protegee : pas de mur a cet endroit ; relief : chaque colonne part du sol local",
+    "balance": {
+      "damage": 1,
+      "range": 1,
+      "duration": 2,
+      "mobility": 0,
+      "control": 2,
+      "defense": 3,
+      "targets": 2,
+      "frequency": 1,
+      "terrain": 2,
+      "difficulty": 0
+    }
+  },
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null
+}

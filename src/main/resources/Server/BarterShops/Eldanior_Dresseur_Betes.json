@@ -1,0 +1,201 @@
+{
+  "DisplayNameKey": "Dresseur de bêtes",
+  "RefreshInterval": {
+    "Days": 7
+  },
+  "RestockHour": 6,
+  "TradeSlots": [
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Eldanior_Oeuf_Renard",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Gold_Coins",
+            "Quantity": 25
+          }
+        ],
+        "Stock": 3
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Eldanior_Oeuf_Chat",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Gold_Coins",
+            "Quantity": 25
+          }
+        ],
+        "Stock": 3
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Eldanior_Oeuf_Chien",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Gold_Coins",
+            "Quantity": 25
+          }
+        ],
+        "Stock": 3
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Eldanior_Oeuf_Corbeau",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Gold_Coins",
+            "Quantity": 25
+          }
+        ],
+        "Stock": 3
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Eldanior_Oeuf_Loup",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Diamond_Coins",
+            "Quantity": 10
+          }
+        ],
+        "Stock": 3
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Eldanior_Oeuf_Cheval",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Diamond_Coins",
+            "Quantity": 10
+          }
+        ],
+        "Stock": 3
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Eldanior_Oeuf_Faucon",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Diamond_Coins",
+            "Quantity": 10
+          }
+        ],
+        "Stock": 3
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Food_Pie_Meat",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Gold_Coins",
+            "Quantity": 2
+          }
+        ],
+        "Stock": 32
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Food_Kebab_Meat",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Gold_Coins",
+            "Quantity": 1
+          }
+        ],
+        "Stock": 32
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Food_Wildmeat_Raw",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Silver_Coins",
+            "Quantity": 3
+          }
+        ],
+        "Stock": 32
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Food_Beef_Raw",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Silver_Coins",
+            "Quantity": 3
+          }
+        ],
+        "Stock": 32
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Food_Fish_Raw",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Silver_Coins",
+            "Quantity": 2
+          }
+        ],
+        "Stock": 32
+      }
+    }
+  ]
+}

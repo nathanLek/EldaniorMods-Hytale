@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_Telekinesie (remplace le parchemin rune_page_telekinesie).",
+  "TranslationProperties": {
+    "Name": "Manuel Spatial : Télékinésie",
+    "Description": "Sort épique de télékinésie (Mage, Assassin, Dragon). Pendant 20 s, une main spectrale obéit à votre volonté : un clic la fait descendre sur tout ce que contient une sphère de 5 blocs de diamètre là où vous visez (blocs, créatures, joueurs) ; elle se referme sur la prise, qui s'élève et suit votre curseur. Clic gauche : la main prend son élan et écrase la prise au sol (120 dégâts aux ennemis tenus) ; l'impact creuse le sol, le fissure, projette des éclats de terre et souffle les ennemis proches (40 dégâts). Clic droit : la main s'arme et projette la prise loin vers le point visé (80 dégâts) ; les blocs lancés percutent les ennemis (50 dégâts) et se reposent là où ils atterrissent. Le terrain est restauré après 3 minutes. Coût : 300 mana. Recharge : 5 s (valeur de test).\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Spatial"
+  ],
+  "Quality": "Epic",
+  "ItemLevel": 60,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Spatial_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Spatial_Telekinesie.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

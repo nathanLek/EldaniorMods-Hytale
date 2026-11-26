@@ -1,0 +1,612 @@
+$C = "../Common.ui";
+
+// Pancarte de propriete (bloc Eldanior_Pancarte_Propriete), generee par scripts/territoire/gen_pancarte.py : voir ce script.
+// Carte du bien (#PcCard) a gauche ; carte de gestion (#PgCard) a droite, seulement pour le proprietaire et les admins.
+Group {
+  LayoutMode: Middle;
+  Background: #05080d(0.55);
+
+  Group {
+    Anchor: (Height: 921);
+    LayoutMode: Center;
+
+    Group #PcCard {
+      Anchor: (Width: 439);
+      LayoutMode: Top;
+
+      Group {
+        Anchor: (Height: 252);
+        LayoutMode: Top;
+        Background: (TexturePath: "../Npc/RecruitFrameTop.png");
+
+        Group {
+          Anchor: (Height: 0);
+          Background: (TexturePath: "PancarteEmblem.png", Anchor: (Width: 96, Height: 96, Top: -34));
+        }
+
+        Group { Anchor: (Height: 124); }
+
+        Label #PcName {
+          Style: (FontSize: 22, RenderBold: true, RenderUppercase: true, TextColor: #d1dae6, Wrap: true, HorizontalAlignment: Center);
+        }
+
+        Label #PcType {
+          Anchor: (Top: 10);
+          Style: (FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center);
+        }
+
+        Label #PcStatus {
+          Anchor: (Top: 6);
+          Style: (FontSize: 13, RenderBold: true, TextColor: #878e9c, HorizontalAlignment: Center);
+        }
+
+      }
+
+      Group {
+        Anchor: (Height: 468);
+        LayoutMode: Left;
+
+        Group { Anchor: (Width: 3); Background: #16212f; }
+        Group { Anchor: (Width: 7); Background: #e8b34f; }
+        Group { Anchor: (Width: 2); Background: #16212f; }
+
+        Group {
+          FlexWeight: 1;
+          LayoutMode: Top;
+          Background: #0b141d(0.92);
+          Padding: (Horizontal: 20, Top: 6);
+
+          Group { Anchor: (Height: 2); Background: #c99436; }
+
+        Label #PcQuote {
+          Anchor: (Top: 10);
+          Style: (FontSize: 13, RenderBold: true, TextColor: #c9b37a, Wrap: true, HorizontalAlignment: Center);
+        }
+
+        Group {
+          Anchor: (Top: 10, Height: 36);
+          LayoutMode: Left;
+
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Background: #132130;
+            Padding: (Top: 4);
+            Label #PcSurface {
+              Style: (FontSize: 15, RenderBold: true, TextColor: #f0c868, HorizontalAlignment: Center);
+            }
+            Label {
+              Text: "Surface";
+              Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #6f8296, HorizontalAlignment: Center);
+            }
+          }
+
+          Group { Anchor: (Width: 6); }
+
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Background: #132130;
+            Padding: (Top: 4);
+            Label #PcPrice {
+              Style: (FontSize: 15, RenderBold: true, TextColor: #f0c868, HorizontalAlignment: Center);
+            }
+            Label {
+              Text: "Prix";
+              Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #6f8296, HorizontalAlignment: Center);
+            }
+          }
+
+          Group { Anchor: (Width: 6); }
+
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Background: #132130;
+            Padding: (Top: 4);
+            Label #PcRent {
+              Style: (FontSize: 15, RenderBold: true, TextColor: #f0c868, HorizontalAlignment: Center);
+            }
+            Label {
+              Text: "Loyer (7 j)";
+              Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #6f8296, HorizontalAlignment: Center);
+            }
+          }
+
+        }
+
+        Group {
+          Anchor: (Top: 12, Height: 16);
+          LayoutMode: Left;
+          Group { FlexWeight: 1; LayoutMode: Top; Padding: (Top: 8); Group { Anchor: (Height: 1); Background: #c99436(0.55); } }
+          Label {
+            Anchor: (Width: 190);
+            Text: "Le bien";
+            Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #e8b34f, HorizontalAlignment: Center);
+          }
+          Group { FlexWeight: 1; LayoutMode: Top; Padding: (Top: 8); Group { Anchor: (Height: 1); Background: #c99436(0.55); } }
+        }
+
+        Group {
+          Anchor: (Top: 4, Height: 24);
+          LayoutMode: Left;
+          Background: #101c28;
+          Group { Anchor: (Width: 3); Background: #e8b34f; }
+          Label {
+            Anchor: (Left: 8, Width: 120);
+            Text: "Propriétaire";
+            Style: (FontSize: 12, RenderBold: true, TextColor: #f0d58c, VerticalAlignment: Center);
+          }
+          Label #PcOwner {
+            FlexWeight: 1;
+            Anchor: (Right: 8);
+            Style: (FontSize: 12, TextColor: #a9b8c8, VerticalAlignment: Center, HorizontalAlignment: End);
+          }
+        }
+
+        Group {
+          Anchor: (Top: 4, Height: 24);
+          LayoutMode: Left;
+          Background: #101c28;
+          Group { Anchor: (Width: 3); Background: #e8b34f; }
+          Label {
+            Anchor: (Left: 8, Width: 120);
+            Text: "Locataire";
+            Style: (FontSize: 12, RenderBold: true, TextColor: #f0d58c, VerticalAlignment: Center);
+          }
+          Label #PcRenter {
+            FlexWeight: 1;
+            Anchor: (Right: 8);
+            Style: (FontSize: 12, TextColor: #a9b8c8, VerticalAlignment: Center, HorizontalAlignment: End);
+          }
+        }
+
+        Group {
+          Anchor: (Top: 4, Height: 24);
+          LayoutMode: Left;
+          Background: #101c28;
+          Group { Anchor: (Width: 3); Background: #e8b34f; }
+          Label {
+            Anchor: (Left: 8, Width: 120);
+            Text: "Bail";
+            Style: (FontSize: 12, RenderBold: true, TextColor: #f0d58c, VerticalAlignment: Center);
+          }
+          Label #PcLease {
+            FlexWeight: 1;
+            Anchor: (Right: 8);
+            Style: (FontSize: 12, TextColor: #a9b8c8, VerticalAlignment: Center, HorizontalAlignment: End);
+          }
+        }
+
+        Group {
+          Anchor: (Top: 4, Height: 24);
+          LayoutMode: Left;
+          Background: #101c28;
+          Group { Anchor: (Width: 3); Background: #e8b34f; }
+          Label {
+            Anchor: (Left: 8, Width: 120);
+            Text: "Situé dans";
+            Style: (FontSize: 12, RenderBold: true, TextColor: #f0d58c, VerticalAlignment: Center);
+          }
+          Label #PcParent {
+            FlexWeight: 1;
+            Anchor: (Right: 8);
+            Style: (FontSize: 12, TextColor: #a9b8c8, VerticalAlignment: Center, HorizontalAlignment: End);
+          }
+        }
+
+        Group {
+          Anchor: (Top: 4, Height: 24);
+          LayoutMode: Left;
+          Background: #101c28;
+          Group { Anchor: (Width: 3); Background: #e8b34f; }
+          Label {
+            Anchor: (Left: 8, Width: 120);
+            Text: "Accès";
+            Style: (FontSize: 12, RenderBold: true, TextColor: #f0d58c, VerticalAlignment: Center);
+          }
+          Label #PcAccess {
+            FlexWeight: 1;
+            Anchor: (Right: 8);
+            Style: (FontSize: 12, TextColor: #a9b8c8, VerticalAlignment: Center, HorizontalAlignment: End);
+          }
+        }
+
+        Group {
+          Anchor: (Top: 4, Height: 24);
+          LayoutMode: Left;
+          Background: #101c28;
+          Group { Anchor: (Width: 3); Background: #e8b34f; }
+          Label {
+            Anchor: (Left: 8, Width: 120);
+            Text: "Coffres";
+            Style: (FontSize: 12, RenderBold: true, TextColor: #f0d58c, VerticalAlignment: Center);
+          }
+          Label #PcChests {
+            FlexWeight: 1;
+            Anchor: (Right: 8);
+            Style: (FontSize: 12, TextColor: #a9b8c8, VerticalAlignment: Center, HorizontalAlignment: End);
+          }
+        }
+
+        Label #PcNote {
+          Anchor: (Top: 8);
+          Style: (FontSize: 12, TextColor: #6f8296, HorizontalAlignment: Center, Wrap: true);
+        }
+
+        Group { FlexWeight: 1; }
+
+        Group {
+          Anchor: (Height: 56, Bottom: 8);
+          LayoutMode: Center;
+
+          Group {
+            Anchor: (Width: 64, Height: 54);
+            Background: #8a6420;
+            Padding: (Full: 2);
+
+            Group {
+              Background: #1d2837;
+              LayoutMode: Middle;
+
+              Label #PcSlotValue {
+                Style: (FontSize: 13, RenderBold: true, TextColor: #E8A93B, HorizontalAlignment: Center);
+              }
+
+              Label {
+                Text: "OR";
+                Style: (FontSize: 10, RenderBold: true, TextColor: #878e9c, HorizontalAlignment: Center);
+              }
+            }
+          }
+
+          Group { Anchor: (Width: 14); }
+
+          Group {
+            Anchor: (Width: 140);
+            LayoutMode: Middle;
+
+            Label {
+              Text: "Votre bourse";
+              Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #6f8296);
+            }
+
+            Label #PcPurse {
+              Style: (FontSize: 15, RenderBold: true, TextColor: #cc3361);
+            }
+          }
+        }
+
+        }
+
+        Group { Anchor: (Width: 2); Background: #16212f; }
+        Group { Anchor: (Width: 7); Background: #e8b34f; }
+        Group { Anchor: (Width: 3); Background: #16212f; }
+      }
+
+      Group {
+        Anchor: (Height: 201);
+        LayoutMode: Top;
+        Background: (TexturePath: "../Npc/RecruitFrameBottom.png");
+
+        Label #PcCost {
+          Anchor: (Top: 8);
+          Style: (FontSize: 13, RenderBold: true, TextColor: #878e9c, HorizontalAlignment: Center);
+        }
+
+        Group #PcRowDeal {
+          Anchor: (Top: 10, Height: 44);
+          LayoutMode: Center;
+          
+          $C.@TextButton #PcBtnBuy {
+            @Text = "Acheter";
+            @Anchor = Anchor(MinWidth: 172);
+          }
+          Group { Anchor: (Width: 10); }
+          $C.@TextButton #PcBtnRent {
+            @Text = "Louer";
+            @Anchor = Anchor(MinWidth: 172);
+          }
+        }
+
+
+        Group #PcRowLease {
+          Anchor: (Top: 10, Height: 44);
+          LayoutMode: Center;
+          
+          $C.@TextButton #PcBtnRenew {
+            @Text = "Prolonger (+7 j)";
+            @Anchor = Anchor(MinWidth: 172);
+          }
+          Group { Anchor: (Width: 10); }
+          $C.@SecondaryTextButton #PcBtnQuit {
+            @Text = "Quitter";
+            @Anchor = Anchor(MinWidth: 140);
+          }
+        }
+
+        Label {
+          Anchor: (Top: 10);
+          Text: "Echap : partir";
+          Style: (FontSize: 12, TextColor: #5a6a7a, HorizontalAlignment: Center);
+        }
+
+      }
+    }
+
+    Group #PgGap { Anchor: (Width: 24); Visible: false; }
+
+    Group #PgCard {
+      Anchor: (Width: 439);
+      LayoutMode: Top;
+
+      Group {
+        Anchor: (Height: 252);
+        LayoutMode: Top;
+        Background: (TexturePath: "../Npc/RecruitFrameTop.png");
+
+        Group {
+          Anchor: (Height: 0);
+          Background: (TexturePath: "PancarteEmblem.png", Anchor: (Width: 96, Height: 96, Top: -34));
+        }
+
+        Group { Anchor: (Height: 124); }
+
+        Label #PgTitle {
+          Style: (FontSize: 22, RenderBold: true, RenderUppercase: true, TextColor: #d1dae6, Wrap: true, HorizontalAlignment: Center);
+        }
+
+        Label #PgSubtitle {
+          Anchor: (Top: 10);
+          Style: (FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center);
+        }
+
+        Label #PgTreasury {
+          Anchor: (Top: 6);
+          Style: (FontSize: 13, RenderBold: true, TextColor: #878e9c, HorizontalAlignment: Center);
+        }
+
+      }
+
+      Group {
+        Anchor: (Height: 468);
+        LayoutMode: Left;
+
+        Group { Anchor: (Width: 3); Background: #16212f; }
+        Group { Anchor: (Width: 7); Background: #e8b34f; }
+        Group { Anchor: (Width: 2); Background: #16212f; }
+
+        Group {
+          FlexWeight: 1;
+          LayoutMode: Top;
+          Background: #0b141d(0.92);
+          Padding: (Horizontal: 20, Top: 6);
+
+          Group { Anchor: (Height: 2); Background: #c99436; }
+
+
+        Group #PgSecSale {
+          Anchor: (Top: 10, Height: 16);
+          LayoutMode: Left;
+          Group { FlexWeight: 1; LayoutMode: Top; Padding: (Top: 8); Group { Anchor: (Height: 1); Background: #c99436(0.55); } }
+          Label {
+            Anchor: (Width: 190);
+            Text: "Vente et location";
+            Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #e8b34f, HorizontalAlignment: Center);
+          }
+          Group { FlexWeight: 1; LayoutMode: Top; Padding: (Top: 8); Group { Anchor: (Height: 1); Background: #c99436(0.55); } }
+        }
+
+        Group #PgRowMode {
+          Anchor: (Top: 6, Height: 30);
+          LayoutMode: Left;
+          Label {
+            FlexWeight: 1;
+            Text: "Proposer le bien";
+            Style: (FontSize: 13, RenderBold: true, TextColor: #c9b37a, VerticalAlignment: Center);
+          }
+          $C.@DropdownBox #PgMode {
+            Anchor: (Width: 170, Height: 26);
+            Style: @DefaultDropdownBoxStyle;
+          }
+        }
+
+        Group #PgRowPrice {
+          Anchor: (Top: 6, Height: 30);
+          LayoutMode: Left;
+          Label {
+            FlexWeight: 1;
+            Text: "Prix de vente";
+            Style: (FontSize: 13, RenderBold: true, TextColor: #c9b37a, VerticalAlignment: Center);
+          }
+          $C.@NumberField #PgPrice {
+            Anchor: (Width: 170, Height: 26);
+            Format: (MaxDecimalPlaces: 0, Step: 100);
+          }
+        }
+
+        Group #PgRowRent {
+          Anchor: (Top: 6, Height: 30);
+          LayoutMode: Left;
+          Label {
+            FlexWeight: 1;
+            Text: "Loyer (7 jours)";
+            Style: (FontSize: 13, RenderBold: true, TextColor: #c9b37a, VerticalAlignment: Center);
+          }
+          $C.@NumberField #PgRent {
+            Anchor: (Width: 170, Height: 26);
+            Format: (MaxDecimalPlaces: 0, Step: 100);
+          }
+        }
+
+        Group #PgRowProtect {
+          Anchor: (Top: 6, Height: 30);
+          LayoutMode: Left;
+          Label {
+            FlexWeight: 1;
+            Text: "Protection des blocs";
+            Style: (FontSize: 13, RenderBold: true, TextColor: #c9b37a, VerticalAlignment: Center);
+          }
+          $C.@DropdownBox #PgProtect {
+            Anchor: (Width: 170, Height: 26);
+            Style: @DefaultDropdownBoxStyle;
+          }
+        }
+
+
+        Group #PgSecAccess {
+          Anchor: (Top: 12, Height: 16);
+          LayoutMode: Left;
+          Group { FlexWeight: 1; LayoutMode: Top; Padding: (Top: 8); Group { Anchor: (Height: 1); Background: #c99436(0.55); } }
+          Label {
+            Anchor: (Width: 190);
+            Text: "Accès";
+            Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #e8b34f, HorizontalAlignment: Center);
+          }
+          Group { FlexWeight: 1; LayoutMode: Top; Padding: (Top: 8); Group { Anchor: (Height: 1); Background: #c99436(0.55); } }
+        }
+
+        Label #PgAccessLocked {
+          Anchor: (Top: 6);
+          Visible: false;
+          Style: (FontSize: 12, TextColor: #6f8296, HorizontalAlignment: Center, Wrap: true);
+        }
+        Label #PgNoMember {
+          Anchor: (Top: 6);
+          Visible: false;
+          Text: "Personne d'autre n'a accès à ce bien.";
+          Style: (FontSize: 12, TextColor: #6f8296, HorizontalAlignment: Center);
+        }
+
+        Group #PgMem0 {
+          Anchor: (Top: 4, Height: 32);
+          LayoutMode: Left;
+          Background: #101c28;
+          Visible: false;
+          Group { Anchor: (Width: 3); Background: #e8b34f; }
+          Label #PgMemName0 {
+            FlexWeight: 1;
+            Anchor: (Left: 8);
+            Style: (FontSize: 12, RenderBold: true, TextColor: #e6edf5, VerticalAlignment: Center);
+          }
+          $C.@SmallSecondaryTextButton #PgMemKick0 {
+            @Text = "Retirer";
+          }
+        }
+
+        Group #PgMem1 {
+          Anchor: (Top: 4, Height: 32);
+          LayoutMode: Left;
+          Background: #101c28;
+          Visible: false;
+          Group { Anchor: (Width: 3); Background: #e8b34f; }
+          Label #PgMemName1 {
+            FlexWeight: 1;
+            Anchor: (Left: 8);
+            Style: (FontSize: 12, RenderBold: true, TextColor: #e6edf5, VerticalAlignment: Center);
+          }
+          $C.@SmallSecondaryTextButton #PgMemKick1 {
+            @Text = "Retirer";
+          }
+        }
+
+        Group #PgMem2 {
+          Anchor: (Top: 4, Height: 32);
+          LayoutMode: Left;
+          Background: #101c28;
+          Visible: false;
+          Group { Anchor: (Width: 3); Background: #e8b34f; }
+          Label #PgMemName2 {
+            FlexWeight: 1;
+            Anchor: (Left: 8);
+            Style: (FontSize: 12, RenderBold: true, TextColor: #e6edf5, VerticalAlignment: Center);
+          }
+          $C.@SmallSecondaryTextButton #PgMemKick2 {
+            @Text = "Retirer";
+          }
+        }
+
+        Group #PgMem3 {
+          Anchor: (Top: 4, Height: 32);
+          LayoutMode: Left;
+          Background: #101c28;
+          Visible: false;
+          Group { Anchor: (Width: 3); Background: #e8b34f; }
+          Label #PgMemName3 {
+            FlexWeight: 1;
+            Anchor: (Left: 8);
+            Style: (FontSize: 12, RenderBold: true, TextColor: #e6edf5, VerticalAlignment: Center);
+          }
+          $C.@SmallSecondaryTextButton #PgMemKick3 {
+            @Text = "Retirer";
+          }
+        }
+
+        Group #PgRowInvite {
+          Anchor: (Top: 6, Height: 32);
+          LayoutMode: Left;
+          $C.@TextField #PgInvite {
+            FlexWeight: 1;
+            Anchor: (Height: 28);
+            PlaceholderText: "Nom d'un joueur connecté";
+          }
+          Group { Anchor: (Width: 6); }
+          $C.@SmallSecondaryTextButton #PgBtnInvite {
+            @Text = "Inviter";
+          }
+        }
+
+        Group { FlexWeight: 1; }
+
+        Group {
+          Anchor: (Height: 34, Bottom: 8);
+          LayoutMode: Left;
+          Label #PgRenter {
+            FlexWeight: 1;
+            Style: (FontSize: 12, RenderBold: true, TextColor: #a9b8c8, VerticalAlignment: Center, Wrap: true);
+          }
+          $C.@SmallSecondaryTextButton #PgBtnEvict {
+            @Text = "Expulser";
+          }
+        }
+
+        }
+
+        Group { Anchor: (Width: 2); Background: #16212f; }
+        Group { Anchor: (Width: 7); Background: #e8b34f; }
+        Group { Anchor: (Width: 3); Background: #16212f; }
+      }
+
+      Group {
+        Anchor: (Height: 201);
+        LayoutMode: Top;
+        Background: (TexturePath: "../Npc/RecruitFrameBottom.png");
+
+        Label #PgHint {
+          Anchor: (Top: 8);
+          Style: (FontSize: 13, RenderBold: true, TextColor: #878e9c, HorizontalAlignment: Center);
+        }
+
+        Group #PgRowSave {
+          Anchor: (Top: 10, Height: 44);
+          LayoutMode: Center;
+          
+          $C.@TextButton #PgBtnSave {
+            @Text = "Enregistrer";
+            @Anchor = Anchor(MinWidth: 246);
+          }
+        }
+
+        Group #PgRowUnlink {
+          Anchor: (Top: 6, Height: 32);
+          LayoutMode: Center;
+          $C.@SmallSecondaryTextButton #PgBtnUnlink {
+            @Text = "Délier la pancarte";
+          }
+        }
+
+      }
+    }
+
+  }
+}

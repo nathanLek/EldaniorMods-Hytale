@@ -1,0 +1,53 @@
+{
+  "TranslationProperties": {
+    "Name": "Bloc Noir Transparent",
+    "Description": "Verre noir : laisse passer le regard en assombrissant ce qu'il y a derrière."
+  },
+  "Quality": "Common",
+  "Categories": [
+    "Eldanior_System.Autres",
+    "Blocks.Deco"
+  ],
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Cube",
+    "Opacity": "Transparent",
+    "VariantRotation": "None",
+    "Flags": {},
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Rocks"
+      }
+    },
+    "BlockParticleSetId": "Glass",
+    "BlockSoundSetId": "Glass",
+    "PhysicalMaterialId": "Glass",
+    "Textures": [
+      {
+        "All": "BlockTextures/Eldanior_Bloc_Noir_Transparent.png"
+      }
+    ],
+    "RequiresAlphaBlending": true,
+    "ParticleColor": "#101014",
+    "TextureComputedColor": "#101014"
+  },
+  "PlayerAnimationsId": "Block",
+  "Tags": {
+    "Type": [
+      "Editor"
+    ]
+  },
+  "Icon": "Icons/ItemsGenerated/Eldanior_Bloc_Noir_Transparent.png",
+  "IconProperties": {
+    "Scale": 0.58823,
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Translation": [
+      0,
+      -13.5
+    ]
+  }
+}

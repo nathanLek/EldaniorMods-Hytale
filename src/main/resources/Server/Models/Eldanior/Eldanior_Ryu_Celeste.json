@@ -1,0 +1,350 @@
+{
+  "$Comment": "Boss Mondial « Kokuō-Ryū, le Dragon Céleste Impérial » (scripts/monstres/gen_ryu_celeste.py) : Ryū noir et or construit de zéro, volant ; taille x6, couronnes, niveau et nom posés par WorldBosses.",
+  "Model": "NPC/Eldanior/RyuCeleste/Model.blockymodel",
+  "Texture": "NPC/Eldanior/RyuCeleste/Texture.png",
+  "EyeHeight": 1.2,
+  "HitBox": {
+    "Max": {
+      "X": 1.5,
+      "Y": 1.7,
+      "Z": 1.5
+    },
+    "Min": {
+      "X": -1.5,
+      "Y": 0,
+      "Z": -1.5
+    }
+  },
+  "Camera": {
+    "Pitch": {
+      "AngleRange": {
+        "Max": 45,
+        "Min": -45
+      },
+      "TargetNodes": [
+        "Head"
+      ]
+    },
+    "Yaw": {
+      "TargetNodes": [
+        "Head"
+      ]
+    }
+  },
+  "AnimationSets": {
+    "FlyIdle": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/RyuCeleste/Animations/Hover.blockyanim",
+          "BlendingDuration": 0.6
+        }
+      ]
+    },
+    "Fly": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/RyuCeleste/Animations/Fly.blockyanim",
+          "BlendingDuration": 0.6
+        }
+      ]
+    },
+    "FlyFast": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/RyuCeleste/Animations/FlyFast.blockyanim",
+          "BlendingDuration": 0.6
+        }
+      ]
+    },
+    "FlyBackward": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/RyuCeleste/Animations/Hover.blockyanim",
+          "BlendingDuration": 0.8,
+          "Speed": 0.8
+        }
+      ]
+    },
+    "DeathFly": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/RyuCeleste/Animations/DeathFly.blockyanim",
+          "BlendingDuration": 0.6
+        }
+      ]
+    },
+    "DeathFlyImpact": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/RyuCeleste/Animations/DeathFlyImpact.blockyanim",
+          "BlendingDuration": 0.1,
+          "Looping": false
+        }
+      ]
+    },
+    "Alerted": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/RyuCeleste/Animations/Alerted.blockyanim",
+          "BlendingDuration": 0.4,
+          "Looping": false,
+          "SoundEventId": "SFX_Eldanior_Ryu_Roar"
+        }
+      ]
+    },
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/RyuCeleste/Animations/Idle.blockyanim",
+          "BlendingDuration": 0.8
+        }
+      ]
+    },
+    "Sleep": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/RyuCeleste/Animations/Idle.blockyanim",
+          "BlendingDuration": 0.8,
+          "Speed": 0.5
+        }
+      ]
+    },
+    "Laydown": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/RyuCeleste/Animations/Idle.blockyanim",
+          "BlendingDuration": 0.8,
+          "Speed": 0.5
+        }
+      ]
+    },
+    "Wake": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/RyuCeleste/Animations/Alerted.blockyanim",
+          "BlendingDuration": 0.4,
+          "Looping": false,
+          "SoundEventId": "SFX_Eldanior_Ryu_Roar"
+        }
+      ]
+    },
+    "Walk": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/RyuCeleste/Animations/Fly.blockyanim",
+          "BlendingDuration": 0.8
+        }
+      ]
+    },
+    "WalkBackward": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/RyuCeleste/Animations/Hover.blockyanim",
+          "BlendingDuration": 0.8
+        }
+      ]
+    },
+    "Run": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/RyuCeleste/Animations/FlyFast.blockyanim",
+          "BlendingDuration": 0.7
+        }
+      ]
+    },
+    "Jump": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/RyuCeleste/Animations/FlyClimb.blockyanim",
+          "BlendingDuration": 0.6
+        }
+      ]
+    },
+    "JumpWalk": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/RyuCeleste/Animations/FlyClimb.blockyanim",
+          "BlendingDuration": 0.6
+        }
+      ]
+    },
+    "JumpRun": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/RyuCeleste/Animations/FlyClimb.blockyanim",
+          "BlendingDuration": 0.6
+        }
+      ]
+    },
+    "Fall": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/RyuCeleste/Animations/FlyDive.blockyanim",
+          "BlendingDuration": 0.6
+        }
+      ]
+    },
+    "SwimIdle": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/RyuCeleste/Animations/Hover.blockyanim",
+          "BlendingDuration": 0.8
+        }
+      ]
+    },
+    "Swim": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/RyuCeleste/Animations/Fly.blockyanim",
+          "BlendingDuration": 0.8
+        }
+      ]
+    },
+    "SwimFast": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/RyuCeleste/Animations/FlyFast.blockyanim",
+          "BlendingDuration": 0.7
+        }
+      ]
+    },
+    "Death": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/RyuCeleste/Animations/DeathFlyImpact.blockyanim",
+          "BlendingDuration": 0.3,
+          "Looping": false
+        }
+      ]
+    },
+    "Hover": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/RyuCeleste/Animations/Hover.blockyanim",
+          "BlendingDuration": 0.6
+        }
+      ]
+    },
+    "FlyClimb": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/RyuCeleste/Animations/FlyClimb.blockyanim",
+          "BlendingDuration": 0.8
+        }
+      ]
+    },
+    "FlyDive": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/RyuCeleste/Animations/FlyDive.blockyanim",
+          "BlendingDuration": 0.8
+        }
+      ]
+    },
+    "FlyTurnLeft": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/RyuCeleste/Animations/FlyTurnLeft.blockyanim",
+          "BlendingDuration": 0.8
+        }
+      ]
+    },
+    "FlyTurnRight": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/RyuCeleste/Animations/FlyTurnRight.blockyanim",
+          "BlendingDuration": 0.8
+        }
+      ]
+    },
+    "FlyLand": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/RyuCeleste/Animations/FlyLand.blockyanim",
+          "BlendingDuration": 1.0
+        }
+      ]
+    },
+    "FlyRoll": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/RyuCeleste/Animations/FlyRoll.blockyanim",
+          "BlendingDuration": 0.4,
+          "Looping": false
+        }
+      ]
+    },
+    "Roar": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/RyuCeleste/Animations/Alerted.blockyanim",
+          "BlendingDuration": 0.4,
+          "Looping": false,
+          "SoundEventId": "SFX_Eldanior_Ryu_Roar"
+        }
+      ]
+    },
+    "Blink": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/RyuCeleste/Animations/Blink.blockyanim",
+          "BlendingDuration": 0.05,
+          "Looping": false
+        }
+      ]
+    },
+    "Flinch": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/RyuCeleste/Animations/Flinch.blockyanim",
+          "BlendingDuration": 0.08,
+          "Looping": false
+        }
+      ]
+    }
+  },
+  "Trails": [
+    {
+      "TrailId": "Ryu_Celeste_Trail",
+      "TargetNodeName": "Tail_Tuft_3_c",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Yaw": 0,
+        "Pitch": 0,
+        "Roll": 0
+      }
+    },
+    {
+      "TrailId": "Ryu_Celeste_Trail_Fin",
+      "TargetNodeName": "L-Whisker6_Rod",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Yaw": 0,
+        "Pitch": 0,
+        "Roll": 0
+      }
+    },
+    {
+      "TrailId": "Ryu_Celeste_Trail_Fin",
+      "TargetNodeName": "R-Whisker6_Rod",
+      "PositionOffset": {
+        "X": 0,
+        "Y": 0,
+        "Z": 0
+      },
+      "RotationOffset": {
+        "Yaw": 0,
+        "Pitch": 0,
+        "Roll": 0
+      }
+    }
+  ]
+}

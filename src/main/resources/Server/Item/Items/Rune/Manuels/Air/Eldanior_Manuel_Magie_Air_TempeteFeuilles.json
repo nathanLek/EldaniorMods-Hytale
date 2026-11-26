@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_TempeteFeuilles (remplace le parchemin rune_page_tempete_feuilles).",
+  "TranslationProperties": {
+    "Name": "Manuel d'Air : Tempête de Feuilles",
+    "Description": "Sort épique d'air (Mage, rune de prédilection du Druide Primordial). Une tornade de feuilles tranchantes se lève au point visé (jusqu'à 20 blocs) et suit votre viseur pendant 8 s. Elle aspire les ennemis à moins de 3,5 blocs, les fait tournoyer et les entaille (16 dégâts toutes les demi-secondes), puis les éjecte à la fin (60 dégâts). Épargne votre groupe, votre guilde et votre famille. Coût : 300 mana. Recharge : 120 s.\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Air"
+  ],
+  "Quality": "Epic",
+  "ItemLevel": 60,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Air_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Air_TempeteFeuilles.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

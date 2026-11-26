@@ -22,7 +22,7 @@ import java.util.UUID;
  *
  * Ce systeme ne garde que :
  *  - le plancher de dignite de la classe Dragon (min 1000),
- *  - le nettoyage des anciens skills DIGNITY_AURA_* presents dans les sauvegardes
+ *  (les anciens passifs DIGNITY_AURA_* sont retires des sauvegardes par PlayerLevelData.migratePassives, 2026-11-24)
  *    (pour eviter tout doublon avec la rune).
  */
 public class DignityAuraSystem extends EntityTickingSystem<EntityStore> {
@@ -30,10 +30,6 @@ public class DignityAuraSystem extends EntityTickingSystem<EntityStore> {
     private float updateTimer = 0;
     private boolean shouldUpdate = false;
 
-    private static final String[] LEGACY_AURA_IDS = {
-            "DIGNITY_AURA", "DIGNITY_AURA_1", "DIGNITY_AURA_2",
-            "DIGNITY_AURA_3", "DIGNITY_AURA_4", "DIGNITY_AURA_5"
-    };
 
     @Override
     public void tick(float dt, int index, @Nonnull ArchetypeChunk<EntityStore> chunk,
@@ -62,13 +58,6 @@ public class DignityAuraSystem extends EntityTickingSystem<EntityStore> {
             selfData.setDignity(1000);
         }
 
-        // Nettoyage anti-doublon : retirer les anciens skills d'aura passive
-        for (String legacyId : LEGACY_AURA_IDS) {
-            if (selfData.getUnlockedSkills().contains(legacyId) || selfData.isSkillEnabled(legacyId)) {
-                selfData.removeSkill(legacyId);
-                selfData.getDisabledSkills().remove(legacyId);
-            }
-        }
     }
 
     /** Conserve pour compatibilite (appele a la deconnexion). */

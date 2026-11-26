@@ -1,0 +1,23 @@
+{
+  "$Comment": "Sort d'arme divine, deplace par le code (ArmesDivines). HitBox elargie (LOD serveur). Genere par gen_divines.py.",
+  "Model": "Items/Projectiles/Ra_Soleil.blockymodel",
+  "Texture": "Items/Projectiles/Ra_Soleil.png",
+  "MinScale": 1.0,
+  "MaxScale": 1.0,
+  "HitBox": {
+    "Max": {
+      "X": 1.2,
+      "Y": 1.2,
+      "Z": 1.2
+    },
+    "Min": {
+      "X": -1.2,
+      "Y": -1.2,
+      "Z": -1.2
+    }
+  },
+  "Light": {
+    "Color": "#ffd060",
+    "Radius": 8
+  }
+}

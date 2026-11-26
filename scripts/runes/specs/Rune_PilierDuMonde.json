@@ -1,0 +1,70 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_PilierDuMonde",
+  "spell": "PilierDuMonde",
+  "javaClass": "PilierDuMonde",
+  "page": "rune_page_pilier_du_monde",
+  "name": "Rune du Pilier du Monde",
+  "type": "Terre",
+  "rarity": "Unique",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "PilierMonde",
+  "summary": "colonne de 18 blocs (rayon 2) au point vise : 250 et projection a sa sortie, puis 3 ondes sismiques (r 20) : 120 + etourdi 1 s ; effondrement 150.",
+  "description": "Sort unique de terre (Mage, rune de prédilection du Pilier des Mondes). Un pilier colossal de 18 blocs de haut jaillit au point visé (jusqu'à 25 blocs) : les ennemis à son emplacement sont projetés en l'air et subissent 250 dégâts. Le pilier libère ensuite 3 ondes sismiques, une toutes les 3 s, qui parcourent le sol jusqu'à 20 blocs : 120 dégâts et étourdissement 1 s à chaque ennemi au sol. Au bout de 12 s, il s'effondre (150 dégâts autour de sa base). Le terrain est restauré (jamais en ville ni sur une parcelle). Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin lourd comme une stèle, gravé d'une colonne qui porte le ciel. Enseigne le Pilier du Monde : la terre se dresse et le sol tremble. Classes : tous les Mages (rune de prédilection du Pilier des Mondes). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.7,
+    "releaseTime": 0.5,
+    "moveSpeed": 0.4,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Golem_Earth_Wake",
+    "handParticles": "Gaia_Dust_Burst",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.7,
+    "range": 25,
+    "radius": "2 (pilier) / 20 (ondes)",
+    "targets": "ennemis au sol",
+    "executionFx": "pilier qui monte couche par couche (80 ms), Gaia_Dust_Burst a la base",
+    "persistentFx": "ondes : anneau de Gaia_Dust_Burst (24 points) qui s'elargit a 15 b/s",
+    "impactFx": "Block_Break_Dust le long du pilier a l'effondrement, secousses Impact_Strong",
+    "sounds": "SFX_Golem_Earth_Wake a la sortie, SFX_Golem_Earth_Stomp_Impact a chaque onde, SFX_Golem_Earth_Slam_Impact a l'effondrement",
+    "effects": "sortie : 250 Bludgeoning + projection 12 b/s vers le haut (r 2,5) ; 3 ondes (0, 3, 6 s apres la sortie) : 120 Earth + Gaia_Etourdi 1 s (|dy| < 3, une fois par onde) ; effondrement : 150 Bludgeoning r 5",
+    "terrain": "pilier Rock_Basalt rayon 2 (13 colonnes) x 18, anneaux Rock_Marble_Brick_Ornate tous les 6 blocs (~230 blocs), restaure a 12 s",
+    "persistentDurationS": 12,
+    "interruptions": "lanceur mort ou deconnecte : effondrement sans degats",
+    "restrictions": "mage",
+    "edgeCases": "plafond : le pilier s'arrete sous le premier bloc solide ; cases occupees, protegees ou en fluide : sautees",
+    "limitations": "",
+    "balance": {
+      "damage": 3,
+      "range": 3,
+      "duration": 2,
+      "mobility": 0,
+      "control": 2,
+      "defense": 1,
+      "targets": 3,
+      "frequency": 1,
+      "terrain": 2,
+      "difficulty": 1
+    }
+  }
+}

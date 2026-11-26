@@ -1,0 +1,21 @@
+{
+  "$Comment": "Mjöllnir, Marteau de Thor : clic = enchainement ; maintien (0.7 s) = sort Java MjollnirLancer. Genere par gen_divines.py.",
+  "Type": "Charging",
+  "Effects": {
+    "ItemAnimationId": "SwingDownCharging",
+    "ClearAnimationOnFinish": true
+  },
+  "AllowIndefiniteHold": true,
+  "Next": {
+    "0": {
+      "Type": "Chaining",
+      "ChainingAllowance": 2.1,
+      "Next": [
+        "Weapon_Mace_Primary_Swing_Left",
+        "Weapon_Mace_Primary_Swing_Right",
+        "Weapon_Mace_Primary_Swing_Up_Left"
+      ]
+    },
+    "0.7": "Divin_Mjollnir_Hold"
+  }
+}

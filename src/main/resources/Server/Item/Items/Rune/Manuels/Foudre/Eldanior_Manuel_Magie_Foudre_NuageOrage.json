@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_NuageOrage (remplace le parchemin rune_page_nuage_orage).",
+  "TranslationProperties": {
+    "Name": "Manuel de Foudre : Nuage d'Orage",
+    "Description": "Sort épique de foudre (Mage, rune de prédilection du Grand Archimage). Un nuage d'orage se forme au-dessus du point visé (jusqu'à 20 blocs) pendant 10 s. Toutes les demi-secondes, un éclair frappe un ennemi au hasard sous le nuage (rayon 7) : 70 dégâts et 0,5 s d'étourdissement à 1,5 bloc autour. Sans ennemi, la foudre tombe au hasard dans la zone. Épargne votre groupe, votre guilde et votre famille. Coût : 300 mana. Recharge : 120 s.\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Foudre"
+  ],
+  "Quality": "Epic",
+  "ItemLevel": 60,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Foudre_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Foudre_NuageOrage.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

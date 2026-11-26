@@ -8,7 +8,7 @@ import com.eldanior.system.titles.TitleManager;
 import com.eldanior.system.titles.models.TitleBonus;
 import com.eldanior.system.titles.models.TitleModel;
 import com.eldanior.system.titles.nobility.family.FamilyManager;
-import com.eldanior.system.titles.nobility.family.NobleFamilyModel;
+import com.eldanior.system.titles.nobility.family.FamilyRole;
 import com.eldanior.system.config.EldaniorLogger;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
@@ -32,6 +32,10 @@ public class PlayerLevelData implements Component<EntityStore> {
     // Identité
     private String playerClass = "Novice";
     private String classId = "novice";
+    // Accueil (2026-11-25, accueil.WelcomePage) : fenetre d'accueil passee. Par defaut true : une fiche enregistree avant
+    // l'accueil n'a pas la cle, ces joueurs ne revoient pas la fenetre ; PlayerLoginSystem met false sur une fiche neuve,
+    // le bouton admin « Premiere connexion » aussi.
+    private boolean onboardingDone = true;
     private String currentTitle = "";
     private List<String> unlockedTitles = new ArrayList<>();
     private String guildRank = "F";
@@ -40,7 +44,7 @@ public class PlayerLevelData implements Component<EntityStore> {
     // Noblesse
     private String nobilityRank = "ROTURIER";
     private String nobleFamilyId = "";
-    private String status = "";  // PATRIARCH, VICE, MEMBER, ou vide
+    private String status = "";  // FamilyRole : PATRIARCH, ELDER (Doyen), VICE (Seigneur), NOBLE, MEMBER, ou vide
     private int dignity = 0;
 
     // Eglise
@@ -96,20 +100,32 @@ public class PlayerLevelData implements Component<EntityStore> {
     private Set<String> enabledSkills = new HashSet<>();
     private Set<String> disabledSkills = new HashSet<>();
     private String divineSkill = ""; // Le skill divin unique équipé (PECHE_xxx ou ANGE_xxx)
+    /** Rang appris de chaque passif de serie (1 Commun .. 6 Legendaire), refonte du 2026-11-24. */
+    private Map<String, Integer> skillRanks = new HashMap<>();
+    /** Sauvegarde d'avant la refonte convertie (ancien FURY_STRIKE -> INSTINCTIVE_STRIKE rang 3) ; non sauvegarde. */
+    private transient boolean passivesMigrated = false;
+    /** Cache des passifs actifs (recalcule quand les passifs, la classe, le statut PK ou le rang d'Eglise changent). */
+    private transient List<ActivePassive> activeCache = null;
+    private transient List<PassiveSkill> activeSkillsCache = null;
+    private transient String activeCacheKey = null;
     private transient Map<String, Long> cooldowns = new HashMap<>();
     private transient TitleBonus cachedTitleBonus = null;
     /** Bonus physique de la Rune d'Aura active (ex: 0.15 = +15%), 0 si inactive. Non sauvegarde, gere par RuneAuraSystem. */
     private transient float auraPhysicalBonus = 0f;
+    /** Multiplicateur des caracteristiques (2 = x2 pendant la rune Arkies Domini de l'Observateur), 1 sinon. Non sauvegarde. */
+    private transient float statMultiplier = 1f;
 
     // Kill tracking par type de mob (ex: "goblin_scrapper" -> 150)
     private Map<String, Integer> mobKills = new HashMap<>();
 
-    // Skill progression : nombre de procs par skill (ex: "PHANTOM_STRIKE" -> 4523)
+    // Maitrise : nombre de declenchements par passif (ex: "INSTINCTIVE_STRIKE" -> 4523) ; aussi progression des metiers
     private Map<String, Integer> skillProcs = new HashMap<>();
 
     // Evolution de classe : choix sauvegardés + rerolls
     private String savedEvolutionChoices = ""; // IDs séparés par des virgules (ex: "templier,paladin,berserker")
     private int evolutionRerolls = 0; // Nombre de relances utilisées (max 2 pour les joueurs normaux)
+    /** Pitie du tirage d'evolution (2026-11-26) : tirages d'affilee sans classe Unique ou mieux. Garde a la remise a zero. */
+    private int evolutionPity = 0;
 
     public PlayerLevelData() {
         this.unlockedTitles.add("novice");
@@ -218,11 +234,12 @@ public class PlayerLevelData implements Component<EntityStore> {
             .append(new KeyedCodec<>("AttributePoints", Codec.INTEGER), (data, v) -> data.attributePoints = v, data -> data.attributePoints).add()
             .append(new KeyedCodec<>("PlayerClass", Codec.STRING), (data, v) -> data.playerClass = v, data -> data.playerClass).add()
             .append(new KeyedCodec<>("ClassId", Codec.STRING), (data, v) -> data.classId = v, data -> data.classId).add()
+            .append(new KeyedCodec<>("OnboardingDone", Codec.BOOLEAN), (data, v) -> data.onboardingDone = (v == null || v), data -> data.onboardingDone).add()
             .append(new KeyedCodec<>("CurrentTitle", Codec.STRING), (data, v) -> data.currentTitle = v, data -> data.currentTitle).add()
             .append(new KeyedCodec<>("GuildRank", Codec.STRING), (data, v) -> data.guildRank = v, data -> data.guildRank).add()
             .append(new KeyedCodec<>("ActiveSkillId", Codec.STRING), (data, v) -> data.activeSkillId = (v != null ? v : ""), data -> (data.activeSkillId != null ? data.activeSkillId : "")).add()
             .append(new KeyedCodec<>("NobilityRank", Codec.STRING), (data, v) -> data.nobilityRank = v, data -> data.nobilityRank).add()
-            .append(new KeyedCodec<>("NobleFamilyId", Codec.STRING), (data, v) -> data.nobleFamilyId = v, data -> data.nobleFamilyId).add()
+            .append(new KeyedCodec<>("NobleFamilyId", Codec.STRING), (data, v) -> data.nobleFamilyId = FamilyManager.migrateId(v), data -> data.nobleFamilyId).add()
             .append(new KeyedCodec<>("Status", Codec.STRING), (data, v) -> data.status = v, data -> data.status).add()
             .append(new KeyedCodec<>("Dignity", Codec.INTEGER), (data, v) -> data.dignity = v, data -> data.dignity).add()
             .append(new KeyedCodec<>("ChurchRank", Codec.STRING), (data, v) -> data.churchRank = v, data -> data.churchRank).add()
@@ -269,6 +286,24 @@ public class PlayerLevelData implements Component<EntityStore> {
                 }
             }, (data) -> String.join(",", data.disabledSkills)).add()
             .append(new KeyedCodec<>("DivineSkill", Codec.STRING), (data, v) -> data.divineSkill = (v != null ? v : ""), data -> (data.divineSkill != null ? data.divineSkill : "")).add()
+            .append(new KeyedCodec<>("SkillRanks", Codec.STRING), (data, value) -> {
+                data.skillRanks = new HashMap<>();
+                if (value != null && !value.isEmpty()) {
+                    for (String entry : value.split(",")) {
+                        String[] parts = entry.split(":");
+                        if (parts.length == 2) {
+                            try { data.skillRanks.put(parts[0], Integer.parseInt(parts[1])); } catch (NumberFormatException e) { /* ignore */ }
+                        }
+                    }
+                }
+            }, (data) -> {
+                StringBuilder sb = new StringBuilder();
+                for (Map.Entry<String, Integer> e : data.skillRanks.entrySet()) {
+                    if (sb.length() > 0) sb.append(",");
+                    sb.append(e.getKey()).append(":").append(e.getValue());
+                }
+                return sb.toString();
+            }).add()
             .append(new KeyedCodec<>("UnlockedTitles", Codec.STRING), (data, value) -> {
                 data.unlockedTitles = new ArrayList<>();
                 if (value != null && !value.isEmpty()) {
@@ -325,6 +360,7 @@ public class PlayerLevelData implements Component<EntityStore> {
             .append(new KeyedCodec<>("DuelBestStreak", Codec.INTEGER), (data, v) -> data.duelBestStreak = v, data -> data.duelBestStreak).add()
             .append(new KeyedCodec<>("SavedEvolutionChoices", Codec.STRING), (data, v) -> data.savedEvolutionChoices = (v != null ? v : ""), data -> (data.savedEvolutionChoices != null ? data.savedEvolutionChoices : "")).add()
             .append(new KeyedCodec<>("EvolutionRerolls", Codec.INTEGER), (data, v) -> data.evolutionRerolls = (v != null ? v : 0), data -> data.evolutionRerolls).add()
+            .append(new KeyedCodec<>("EvolutionPity", Codec.INTEGER), (data, v) -> data.evolutionPity = (v != null ? v : 0), data -> data.evolutionPity).add()
             .append(new KeyedCodec<>("DuelHistory", Codec.STRING), (data, v) -> { data.duelHistoryData = (v != null ? v : ""); data.deserializeDuelHistory(); }, data -> data.serializeDuelHistory()).add()
             .build();
 
@@ -338,6 +374,7 @@ public class PlayerLevelData implements Component<EntityStore> {
         copy.attributePoints = this.attributePoints;
         copy.playerClass = this.playerClass;
         copy.classId = this.classId;
+        copy.onboardingDone = this.onboardingDone;
         copy.currentTitle = this.currentTitle;
         copy.guildRank = this.guildRank;
         copy.activeSkillId = this.activeSkillId;
@@ -378,11 +415,14 @@ public class PlayerLevelData implements Component<EntityStore> {
         copy.hauntingThrustStacks = this.hauntingThrustStacks;
         copy.lastDamageTakenTime = this.lastDamageTakenTime;
         copy.auraPhysicalBonus = this.auraPhysicalBonus;
+        copy.statMultiplier = this.statMultiplier;
 
 
         copy.enabledSkills = new HashSet<>(this.enabledSkills);
         copy.disabledSkills = new HashSet<>(this.disabledSkills);
         copy.divineSkill = this.divineSkill;
+        copy.skillRanks = new HashMap<>(this.skillRanks);
+        copy.passivesMigrated = this.passivesMigrated;
         if (this.unlockedTitles != null) {
             copy.unlockedTitles = new ArrayList<>(this.unlockedTitles);
         }
@@ -395,54 +435,169 @@ public class PlayerLevelData implements Component<EntityStore> {
         copy.skillProcs = new HashMap<>(this.skillProcs);
         copy.savedEvolutionChoices = this.savedEvolutionChoices;
         copy.evolutionRerolls = this.evolutionRerolls;
+        copy.evolutionPity = this.evolutionPity;
         copy.cachedTitleBonus = null;
 
         return copy;
     }
 
     // ================= SKILLS METHODS =================
+    // Refonte des passifs (2026-11-24) : un passif = une serie a rangs (PassiveSkill), le rang appris est dans skillRanks.
+    // Les metiers (CRAFT_..., ARTISANAT) restent dans unlockedSkills mais ne sont pas des passifs (Metier).
 
-    public List<String> getUnlockedSkills() { return unlockedSkills; }
-    public Set<String> getEnabledSkills() { return enabledSkills; }
-    public Set<String> getDisabledSkills() { return disabledSkills; }
+    /** Passifs qu'un joueur peut apprendre (hors passifs de classe et metiers). */
+    public static final int MAX_LEARNED_PASSIVES = 50;
+
+    /** Un passif actif et son rang (le plus haut entre celui de la classe et celui appris). */
+    public record ActivePassive(PassiveSkill skill, int rank) {}
+
+    public enum LearnResult { NEW, UPGRADED, ALREADY, LIMIT }
+
+    public List<String> getUnlockedSkills() { migratePassives(); return unlockedSkills; }
+    public Set<String> getEnabledSkills() { migratePassives(); return enabledSkills; }
+    public Set<String> getDisabledSkills() { migratePassives(); return disabledSkills; }
+    /** Rang appris de chaque passif de serie (copie en lecture). */
+    public Map<String, Integer> getSkillRanks() { migratePassives(); return Collections.unmodifiableMap(skillRanks); }
+
+    /**
+     * Convertit une sauvegarde d'avant la refonte : anciens identifiants -> serie et rang, passifs supprimes retires,
+     * progression de maitrise reportee sur la serie. Sans effet sur une sauvegarde deja convertie.
+     */
+    private void migratePassives() {
+        if (passivesMigrated) return;
+        passivesMigrated = true;
+        List<String> kept = new ArrayList<>();
+        for (String raw : unlockedSkills) {
+            if (raw == null || raw.isBlank()) continue;
+            String id = raw.trim().toUpperCase();
+            var target = com.eldanior.system.skills.skillsInteraction.PassiveMigration.of(id);
+            if (com.eldanior.system.skills.skillsInteraction.PassiveMigration.isRemoved(id)) continue;
+            if (target != null) {
+                if (target.skillId().equals(id)) skillRanks.putIfAbsent(id, target.rank());   // ancien id = id de la serie
+                else skillRanks.merge(target.skillId(), target.rank(), Math::max);
+                id = target.skillId();
+            }
+            if (!kept.contains(id)) kept.add(id);
+        }
+        unlockedSkills = kept;
+        enabledSkills = migrateSet(enabledSkills);
+        disabledSkills = migrateSet(disabledSkills);
+        Map<String, Integer> procs = new HashMap<>();
+        for (Map.Entry<String, Integer> e : skillProcs.entrySet()) {
+            var target = com.eldanior.system.skills.skillsInteraction.PassiveMigration.of(e.getKey());
+            if (com.eldanior.system.skills.skillsInteraction.PassiveMigration.isRemoved(e.getKey())) continue;
+            procs.merge(target != null ? target.skillId() : e.getKey(), e.getValue(), Math::max);
+        }
+        skillProcs = procs;
+        activeCache = null;
+    }
+
+    private static Set<String> migrateSet(Set<String> ids) {
+        Set<String> out = new HashSet<>();
+        for (String raw : ids) {
+            if (raw == null || raw.isBlank()) continue;
+            String id = raw.trim().toUpperCase();
+            if (com.eldanior.system.skills.skillsInteraction.PassiveMigration.isRemoved(id)) continue;
+            var target = com.eldanior.system.skills.skillsInteraction.PassiveMigration.of(id);
+            out.add(target != null ? target.skillId() : id);
+        }
+        return out;
+    }
+
+    private void invalidatePassives() { activeCache = null; activeSkillsCache = null; }
 
     public boolean isSkillEnabled(String skillId) {
-        // Si explicitement désactivé → non
-        if (disabledSkills.contains(skillId)) return false;
-        // Si dans enabledSkills → oui
-        if (enabledSkills.contains(skillId)) return true;
-        // Skills de classe sont actives par défaut (pas dans enabledSkills)
+        migratePassives();
+        String id = skillId.toUpperCase();
+        if (disabledSkills.contains(id)) return false;
+        if (enabledSkills.contains(id) || unlockedSkills.contains(id)) return true;
         ClassModel model = ClassManager.get(this.classId);
-        if (model != null && model.getSkillsPassiveIds() != null) {
-            for (PassiveSkill ps : model.getSkillsPassiveIds()) {
-                if (ps.name().equals(skillId)) return true;
-            }
-        }
-        // Skill familial actif par défaut
-        if (this.nobleFamilyId != null && !this.nobleFamilyId.isEmpty()) {
-            NobleFamilyModel family = FamilyManager.get(this.nobleFamilyId);
-            if (family != null && family.getFamilyPassive() != null
-                    && family.getFamilyPassive().name().equals(skillId)) return true;
-        }
-        return false;
+        PassiveSkill p = PassiveSkill.fromName(id);
+        return model != null && p != null && model.passiveRank(p) > 0;
     }
 
     public void enableSkill(String skillId) {
-        enabledSkills.add(skillId);
-        disabledSkills.remove(skillId);
+        migratePassives();
+        enabledSkills.add(skillId.toUpperCase());
+        disabledSkills.remove(skillId.toUpperCase());
+        invalidatePassives();
     }
 
     public void disableSkill(String skillId) {
-        enabledSkills.remove(skillId);
-        disabledSkills.add(skillId);
+        migratePassives();
+        enabledSkills.remove(skillId.toUpperCase());
+        disabledSkills.add(skillId.toUpperCase());
+        invalidatePassives();
     }
+
+    /** Apprend un identifiant (metier, competence) sans rang. Pour un passif de serie, utiliser learnPassive. */
     public void learnSkill(String skillId) {
+        migratePassives();
+        PassiveSkill p = PassiveSkill.fromName(skillId);
+        if (p != null && !p.isDivine()) { learnPassive(p, p.getMinRank()); return; }
         if (!unlockedSkills.contains(skillId)) unlockedSkills.add(skillId);
+        invalidatePassives();
     }
+
+    /** Passifs appris (series, Anges et Peches), sans les metiers ni les passifs de classe. */
+    public int countLearnedPassives() {
+        migratePassives();
+        int n = 0;
+        for (String id : unlockedSkills) if (PassiveSkill.fromName(id) != null) n++;
+        return n;
+    }
+
+    /** Rang appris d'un passif (0 s'il n'est pas appris). */
+    public int getLearnedRank(String skillId) {
+        migratePassives();
+        String id = skillId.toUpperCase();
+        if (!unlockedSkills.contains(id)) return 0;
+        PassiveSkill p = PassiveSkill.fromName(id);
+        if (p != null && p.isDivine()) return PassiveSkill.DIVINE_RANK;
+        return skillRanks.getOrDefault(id, p != null ? p.getMinRank() : 1);
+    }
+
+    /** Apprend un passif de serie ou le fait monter au rang donne ; refuse au-dela de MAX_LEARNED_PASSIVES. */
+    public LearnResult learnPassive(PassiveSkill skill, int rank) {
+        migratePassives();
+        String id = skill.name();
+        int r = skill.isDivine() ? PassiveSkill.DIVINE_RANK : skill.clamp(rank);
+        ClassModel model = ClassManager.get(this.classId);
+        if (!skill.isDivine() && model != null && model.passiveRank(skill) >= r
+                && skillRanks.getOrDefault(id, 0) < r) return LearnResult.ALREADY;   // la classe le donne deja a ce rang ou plus haut
+        if (unlockedSkills.contains(id)) {
+            if (skill.isDivine() || skillRanks.getOrDefault(id, skill.getMinRank()) >= r) return LearnResult.ALREADY;
+            skillRanks.put(id, r);
+            invalidatePassives();
+            return LearnResult.UPGRADED;
+        }
+        if (countLearnedPassives() >= MAX_LEARNED_PASSIVES) return LearnResult.LIMIT;
+        unlockedSkills.add(id);
+        if (!skill.isDivine()) skillRanks.put(id, r);
+        invalidatePassives();
+        return LearnResult.NEW;
+    }
+
+    /** Oublie un passif appris (la maitrise est perdue). Un passif de classe reste au rang de la classe. */
+    public boolean forgetPassive(String skillId) {
+        migratePassives();
+        String id = skillId.toUpperCase();
+        if (!unlockedSkills.remove(id)) return false;
+        skillRanks.remove(id);
+        enabledSkills.remove(id);
+        skillProcs.remove(id);
+        if (id.equals(divineSkill)) divineSkill = "";
+        invalidatePassives();
+        return true;
+    }
+
     public void forgetAllSkills() {
+        migratePassives();
         unlockedSkills.clear();
         enabledSkills.clear();
         disabledSkills.clear();
+        skillRanks.clear();
+        invalidatePassives();
     }
     public String getActiveSkillId() { return activeSkillId; }
     public void setActiveSkillId(String id) { this.activeSkillId = id; }
@@ -450,61 +605,70 @@ public class PlayerLevelData implements Component<EntityStore> {
     public void setDivineSkill(String skill) { this.divineSkill = (skill != null ? skill : ""); }
     public boolean hasDivineSkill() { return divineSkill != null && !divineSkill.isEmpty(); }
 
-    // === NOUVEAU GETTER DYNAMIQUE DES PASSIFS ===
-    // Retourne uniquement les passifs qui ne sont PAS désactivés manuellement.
-    // Une compétence est considérée active si elle n'a pas été explicitement désactivée
-    // (c.à.d. si elle n'est pas dans disabledSkills).
-    public List<PassiveSkill> getActivePassives() {
-        List<PassiveSkill> activePassives = new ArrayList<>();
-
-        // 1. Récupération des passifs "Innés" de la classe
+    /** Le joueur connait-il ce metier (appris ou donne par sa classe) ? ARTISANAT ouvre tous les etablis. */
+    public boolean hasMetier(com.eldanior.system.skills.skillsInteraction.Metier metier) {
+        migratePassives();
+        if (unlockedSkills.contains(metier.name())) return true;
         ClassModel model = ClassManager.get(this.classId);
-        if (model != null && model.getSkillsPassiveIds() != null) {
-            for (PassiveSkill ps : model.getSkillsPassiveIds()) {
-                // Les skills de classe sont actives par défaut, sauf si désactivées manuellement
-                if (!disabledSkills.contains(ps.name())) {
-                    activePassives.add(ps);
-                }
-            }
-        }
-
-        // 2. Récupération des passifs "Appris" via les parchemins
-        for (String skillId : this.unlockedSkills) {
-            PassiveSkill learnedPassive = PassiveSkill.fromName(skillId.toUpperCase());
-            if (learnedPassive != null && !activePassives.contains(learnedPassive) && !disabledSkills.contains(skillId.toUpperCase())) {
-                // Filtrage des skills divins
-                if (learnedPassive.isPeche()) {
-                    // Péchés : PK only
-                    if (!isPK()) continue;
-                } else if (learnedPassive.isAnge()) {
-                    // Anges : Église RELIGIEUX+ only
-                    ChurchRank rank = ChurchRank.fromString(this.churchRank);
-                    if (rank == null || rank.ordinal() < ChurchRank.RELIGIEUX.ordinal()) continue;
-                }
-                activePassives.add(learnedPassive);
-            }
-        }
-
-        // 3. Récupération du passif familial (noblesse)
-        if (this.nobleFamilyId != null && !this.nobleFamilyId.isEmpty()) {
-            NobleFamilyModel family = FamilyManager.get(this.nobleFamilyId);
-            if (family != null && family.getFamilyPassive() != null) {
-                PassiveSkill familySkill = family.getFamilyPassive();
-                if (!activePassives.contains(familySkill) && !disabledSkills.contains(familySkill.name())) {
-                    activePassives.add(familySkill);
-                }
-            }
-        }
-
-        return activePassives;
+        return model != null && model.getMetierIds().contains(metier.name());
     }
 
-    public void removeSkill(String skillId) {
-        // On la retire des compétences débloquées
-        unlockedSkills.remove(skillId);
+    /** Rang actif d'un passif (le plus haut entre la classe et l'apprentissage), 0 s'il n'est pas actif. */
+    public int getPassiveRank(PassiveSkill skill) {
+        for (ActivePassive a : getActivePassiveEntries()) if (a.skill() == skill) return a.rank();
+        return 0;
+    }
 
-        // Par sécurité, on la retire aussi des compétences actives/équipées !
+    /** Passifs actifs du joueur et leur rang : ceux de sa classe et ceux appris, sauf ceux qu'il a desactives. */
+    public List<ActivePassive> getActivePassiveEntries() {
+        migratePassives();
+        String key = classId + "|" + isPK() + "|" + churchRank;
+        List<ActivePassive> cached = activeCache;
+        if (cached != null && key.equals(activeCacheKey)) return cached;
+
+        Map<PassiveSkill, Integer> ranks = new LinkedHashMap<>();
+        ClassModel model = ClassManager.get(this.classId);
+        if (model != null) {
+            for (PassiveSkill.Ranked r : model.getClassPassives()) ranks.merge(r.skill(), r.rank(), Math::max);
+        }
+        for (String id : unlockedSkills) {
+            PassiveSkill p = PassiveSkill.fromName(id);
+            if (p == null) continue;
+            if (p.isPeche() && !isPK()) continue;                                      // Peches : PK seulement
+            if (p.isAnge()) {                                                          // Anges : Religieux de l'Eglise et plus
+                ChurchRank rank = ChurchRank.fromString(this.churchRank);
+                if (rank == null || rank.ordinal() < ChurchRank.RELIGIEUX.ordinal()) continue;
+            }
+            int r = p.isDivine() ? PassiveSkill.DIVINE_RANK : skillRanks.getOrDefault(id, p.getMinRank());
+            ranks.merge(p, r, Math::max);
+        }
+        List<ActivePassive> out = new ArrayList<>();
+        List<PassiveSkill> skills = new ArrayList<>();
+        for (Map.Entry<PassiveSkill, Integer> e : ranks.entrySet()) {
+            if (disabledSkills.contains(e.getKey().name())) continue;
+            out.add(new ActivePassive(e.getKey(), e.getValue()));
+            skills.add(e.getKey());
+        }
+        activeCache = Collections.unmodifiableList(out);
+        activeSkillsCache = Collections.unmodifiableList(skills);
+        activeCacheKey = key;
+        return activeCache;
+    }
+
+    /** Passifs actifs (sans le rang) : pour tester la presence d'un passif. */
+    public List<PassiveSkill> getActivePassives() {
+        getActivePassiveEntries();
+        return activeSkillsCache;
+    }
+
+    public boolean hasActivePassive(PassiveSkill skill) { return getActivePassives().contains(skill); }
+
+    public void removeSkill(String skillId) {
+        migratePassives();
+        unlockedSkills.remove(skillId);
         enabledSkills.remove(skillId);
+        skillRanks.remove(skillId);
+        invalidatePassives();
     }
 
     // ================= GETTERS (Identité & Base) =================
@@ -654,12 +818,18 @@ public class PlayerLevelData implements Component<EntityStore> {
     public int getLuck() { return luck; }
 
     // ================= GETTERS (TOTAUX AVEC BONUS DE CLASSE + TITRE) =================
-    public int getTotalStrength() { return strength + getClassBonusStr() + getTitleBonusStr(); }
-    public int getTotalEndurance() { return endurance + getClassBonusEnd() + getTitleBonusEnd(); }
-    public int getTotalAgility() { return agility + getClassBonusAgl() + getTitleBonusAgl(); }
-    public int getTotalVitality() { return vitality + getClassBonusVit() + getTitleBonusVit(); }
-    public int getTotalIntelligence() { return intelligence + getClassBonusInt() + getTitleBonusInt(); }
-    public int getTotalLuck() { return luck + getClassBonusLck() + getTitleBonusLck(); }
+    // statMultiplier : x2 pendant la rune Arkies Domini (2026-11-17), 1 sinon
+    public int getTotalStrength() { return boosted(strength + getClassBonusStr() + getTitleBonusStr()); }
+    public int getTotalEndurance() { return boosted(endurance + getClassBonusEnd() + getTitleBonusEnd()); }
+    public int getTotalAgility() { return boosted(agility + getClassBonusAgl() + getTitleBonusAgl()); }
+    public int getTotalVitality() { return boosted(vitality + getClassBonusVit() + getTitleBonusVit()); }
+    public int getTotalIntelligence() { return boosted(intelligence + getClassBonusInt() + getTitleBonusInt()); }
+    public int getTotalLuck() { return boosted(luck + getClassBonusLck() + getTitleBonusLck()); }
+
+    /** Applique le multiplicateur temporaire des caracteristiques. */
+    public int boosted(int points) { return statMultiplier == 1f ? points : Math.round(points * statMultiplier); }
+    public float getStatMultiplier() { return statMultiplier; }
+    public void setStatMultiplier(float m) { this.statMultiplier = m > 0 ? m : 1f; }
 
     public int getMaxMana() { return getTotalIntelligence() * 10; }
     public int getMaxHealth() { return getTotalVitality() * 10; }
@@ -735,6 +905,10 @@ public class PlayerLevelData implements Component<EntityStore> {
     public void setPlayerClass(String playerClass) { this.playerClass = playerClass; }
     public void setPlayerClassId(String classId) { this.classId = classId; }
 
+    /** false : la fenetre d'accueil (accueil.WelcomePage) s'ouvre a la connexion. */
+    public boolean isOnboardingDone() { return onboardingDone; }
+    public void setOnboardingDone(boolean done) { this.onboardingDone = done; }
+
     // --- Evolution de classe : sauvegarde des choix ---
     public List<String> getSavedEvolutionChoices() {
         if (savedEvolutionChoices == null || savedEvolutionChoices.isEmpty()) return new ArrayList<>();
@@ -747,6 +921,8 @@ public class PlayerLevelData implements Component<EntityStore> {
     public int getEvolutionRerolls() { return evolutionRerolls; }
     public void setEvolutionRerolls(int rerolls) { this.evolutionRerolls = rerolls; }
     public void useReroll() { this.evolutionRerolls++; }
+    public int getEvolutionPity() { return evolutionPity; }
+    public void setEvolutionPity(int pity) { this.evolutionPity = Math.max(0, pity); }
 
     public void setCurrentTitle(String title) { this.currentTitle = title; }
     public void setGuildRank(String guildRank) { this.guildRank = guildRank; }
@@ -759,7 +935,15 @@ public class PlayerLevelData implements Component<EntityStore> {
 
     public boolean isPatriarch() { return "PATRIARCH".equals(status); }
     public boolean isVicePatriarch() { return "VICE".equals(status); }
-    public boolean canInviteToFamily() { return isPatriarch() || isVicePatriarch(); }
+    public boolean isElder() { return "ELDER".equals(status); }
+    /** Rang dans la famille, null sans famille. */
+    public FamilyRole getFamilyRole() {
+        return FamilyRole.of(status);
+    }
+    public boolean canInviteToFamily() {
+        var role = getFamilyRole();
+        return role != null && role.canInvite();
+    }
 
     // Ces setters ne modifient que les points de base (ex: lors d'un Level Up)
     public void setStrength(int strength) { this.strength = strength; }

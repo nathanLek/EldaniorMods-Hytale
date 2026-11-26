@@ -1,0 +1,20 @@
+{
+  "Interactions": [
+    {
+      "Type": "Chaining",
+      "ChainId": "Roi_Mort_Slashes",
+      "ChainingAllowance": 15,
+      "Next": [
+        "Roi_Mort_Scythe_Spin_Swing_Left",
+        "Roi_Mort_Scythe_Spin_Swing_Right",
+        "Roi_Mort_Scythe_Spin_Swing_Left_Heavy",
+        "Roi_Mort_Scythe_Spin_Swing_Right_Heavy"
+      ]
+    }
+  ],
+  "Tags": {
+    "Attack": [
+      "Melee"
+    ]
+  }
+}

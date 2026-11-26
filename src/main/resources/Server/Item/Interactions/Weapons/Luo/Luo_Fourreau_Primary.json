@@ -1,0 +1,23 @@
+{
+  "$Comment": "Katana Luo au fourreau : clic = degaine-coupe (Tenryumaru_Degainer), maintien = posture iai.",
+  "Type": "Charging",
+  "Rules": {
+    "InterruptedBy": [
+      "Secondary"
+    ]
+  },
+  "DisplayProgress": false,
+  "Next": {
+    "0": "Tenryumaru_Degainer",
+    "0.174": {
+      "Type": "Replace",
+      "Var": "Thrust_Fourreau",
+      "DefaultOk": true,
+      "DefaultValue": {
+        "Interactions": [
+          "Luo_Iai_Fourreau"
+        ]
+      }
+    }
+  }
+}

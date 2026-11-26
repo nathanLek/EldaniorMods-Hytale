@@ -36,7 +36,7 @@ public class MovementTrackingSystem extends EntityTickingSystem<EntityStore> {
     private static final double BLOCKS_PER_PROC = 10.0;
 
     private static final String[] JUMP_SKILLS = { "ELDANIOR_SUPPLENESS" };
-    private static final String[] SPRINT_SKILLS = { "WIND_STEP", "ATHLETICISM" };
+    private static final String[] SPRINT_SKILLS = { "WIND_STEP" };
     private static final String[] NIGHT_SKILLS = { "NIGHT_VISION" };
     private static final String[] STAT_SYNC_SKILLS = { "TIRELESS_BREATH", "AWAKENED_MIND" };
     private static final String[] MANA_REGEN_SKILLS = { "MANA_FONT" };

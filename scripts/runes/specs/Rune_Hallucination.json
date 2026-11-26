@@ -1,0 +1,64 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_Hallucination",
+  "spell": "Hallucination",
+  "javaClass": "Hallucination",
+  "page": "rune_page_hallucination",
+  "name": "Rune de l'Hallucination",
+  "type": "Tenebres",
+  "rarity": "Epic",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Hallucination",
+  "summary": "brume d'hallucination 8 s au point vise : les monstres pris dedans s'entre-attaquent.",
+  "description": "Sort épique de ténèbres (Mage, rune de prédilection du Tisseur d'Illusions). Une brume hallucinogène recouvre la zone visée (20 blocs, rayon 10) pendant 8 s. Les monstres qui y sont pris se voient les uns les autres comme des ennemis et s'entre-attaquent ; un monstre seul est saisi de terreur. Ils perdent aussi 8 points de vie par seconde. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin dont les illustrations bougent quand on ne les regarde pas. Enseigne l'Hallucination : retournez vos ennemis les uns contre les autres. Classes : tous les Mages (rune de prédilection du Tisseur d'Illusions). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Aoe",
+    "Duration",
+    "Damage"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.6,
+    "releaseTime": 0.5,
+    "moveSpeed": 0.4,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Crawler_Void_Alerted",
+    "handParticles": "Nyx_Void",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.6,
+    "range": 20,
+    "radius": "10 blocs",
+    "targets": "monstres dans la brume",
+    "persistentFx": "Nyx_Mist en grille toutes les 3 s ; Elda_Hallucination sur les monstres",
+    "effects": "chaque seconde : monstres apparies au hasard, attitude hostile reciproque + LockedTarget (NpcAttitudes) ; seul : Elda_Terreur ; 8 Poison / s",
+    "terrain": "aucun",
+    "persistentDurationS": 8,
+    "restrictions": "mage",
+    "balance": {
+      "damage": 1,
+      "range": 3,
+      "duration": 2,
+      "mobility": 0,
+      "control": 3,
+      "defense": 1,
+      "targets": 3,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    }
+  }
+}

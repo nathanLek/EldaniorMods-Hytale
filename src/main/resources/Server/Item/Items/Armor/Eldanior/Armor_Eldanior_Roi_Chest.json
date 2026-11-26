@@ -1,0 +1,91 @@
+{
+  "TranslationProperties": {
+    "Name": "Harnois du Roi d'Eldanior",
+    "Description": "Armure du Roi d'Eldanior. Un harnois d'acier blanc aux rinceaux d'or sur émail pourpre, le collier de l'ordre royal et son joyau aux armes du royaume, une pèlerine d'hermine et le grand manteau de velours pourpre semé de couronnes."
+  },
+  "Quality": "Unique",
+  "ItemLevel": 600,
+  "PlayerAnimationsId": "Block",
+  "ItemSoundSetId": "ISS_Armor_Heavy",
+  "Categories": [
+    "Eldanior_Familles.Eldanior",
+    "Items.Armors"
+  ],
+  "Icon": "Icons/ItemsGenerated/Armor_Eldanior_Roi_Chest.png",
+  "IconProperties": {
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Scale": 0.3,
+    "Translation": [
+      0,
+      0
+    ]
+  },
+  "Model": "Items/Armors/Eldanior/Roi/Chest.blockymodel",
+  "Texture": "Items/Armors/Eldanior/Roi/Chest_Texture.png",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    }
+  },
+  "Armor": {
+    "ArmorSlot": "Chest",
+    "BaseDamageResistance": 0,
+    "CosmeticsToHide": [
+      "Overtop",
+      "Cape"
+    ],
+    "StatModifiers": {
+      "Health": [
+        {
+          "Amount": 62,
+          "CalculationType": "Additive"
+        }
+      ],
+      "Mana": [
+        {
+          "Amount": 22,
+          "CalculationType": "Additive"
+        }
+      ]
+    },
+    "DamageResistance": {
+      "Physical": [
+        {
+          "Amount": 0.23,
+          "CalculationType": "Percent"
+        }
+      ],
+      "Projectile": [
+        {
+          "Amount": 0.23,
+          "CalculationType": "Percent"
+        }
+      ]
+    }
+  },
+  "Tags": {
+    "Type": [
+      "Armor"
+    ],
+    "Family": [
+      "Plate_Eldanior"
+    ]
+  },
+  "MaxDurability": 600,
+  "DurabilityLossOnHit": 0.5
+}

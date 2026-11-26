@@ -84,15 +84,16 @@ public class RecruitScreen extends InteractiveCustomUIPage<RecruitScreen.Recruit
     }
 
     /** Competences passives de sa classe : nom et effet (un ordinaire n'en a pas). */
-    private static void passives(UICommandBuilder ui, List<PassiveSkill> list) {
+    private static void passives(UICommandBuilder ui, List<PassiveSkill.Ranked> list) {
         ui.set("#RecruitNoPassive.Visible", list.isEmpty());
         if (list.isEmpty()) ui.set("#RecruitNoPassive.Text", "Aucune : seuls les exceptionnels et les héros ont une classe.");
         for (int i = 0; i < PASSIVE_ROWS; i++) {
             boolean shown = i < list.size();
             ui.set("#RecruitPassive" + i + ".Visible", shown);
             if (!shown) continue;
-            ui.set("#RecruitPassiveName" + i + ".Text", list.get(i).getDisplayName());
-            ui.set("#RecruitPassiveDesc" + i + ".Text", list.get(i).getDescription());
+            PassiveSkill.Ranked pr = list.get(i);
+            ui.set("#RecruitPassiveName" + i + ".Text", pr.skill().getDisplayName() + " · " + PassiveSkill.rankLabel(pr.rank()));
+            ui.set("#RecruitPassiveDesc" + i + ".Text", pr.skill().getDescription(pr.rank()));
         }
     }
 
@@ -119,7 +120,7 @@ public class RecruitScreen extends InteractiveCustomUIPage<RecruitScreen.Recruit
         return "×" + String.format(java.util.Locale.FRANCE, "%.1f", value).replace(",0", "");
     }
 
-    /** Couleurs de rarete de l'ecran des classes (ClassSelectionScreen). */
+    /** Couleurs de rarete de l'ecran des classes (ClassInfo). */
     private static String rarityColor(Rarity rarity) {
         return switch (rarity) {
             case COMMON -> "#E0E0E0";

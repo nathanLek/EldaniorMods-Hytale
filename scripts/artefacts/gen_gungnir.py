@@ -14,6 +14,8 @@ import json, math, os, random, sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "rune_aura_icons"))
 import png  # noqa: E402
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from coplanar import fix_coplanar  # noqa: E402
 
 OUT, SRC = sys.argv[1], sys.argv[2]
 
@@ -135,6 +137,7 @@ def gungnir():
     origin_item = node("Origin_Item", (0, -64 - (tip - 98), 0), children=[handle])
     origin_proj = node("Origin_Projectile", (0, tip, 0), shape=empty(piece=True), children=[origin_item])
     root = node("R-Attachment", (0, 42, 0), shape=empty(piece=True), children=[origin_proj])
+    fix_coplanar(handle, "Gungnir")                                    # pas de faces coplanaires (scintillement)
     json.dump({"nodes": [root], "lod": "auto"}, open(os.path.join(MODEL_DIR, "Artefact_Gungnir.blockymodel"), "w"), indent=2)
     print("modele : %d pieces, %.2f blocs de long" % (len(BOXES), (tip + SHAFT_LEN / 2 - SHAFT_OFFSET + 8) / 64))
 

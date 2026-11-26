@@ -1,0 +1,23 @@
+{
+  "$Comment": "Armes de foudre (Epee des Tempetes...) : arc electrique, paralysie tres breve (visuels du Hazard_Electric_Stun vanilla).",
+  "Duration": 0.35,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": true,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#ffeb00",
+    "EntityTopTint": "#9ad7ff",
+    "Particles": [
+      {
+        "SystemId": "Hazard_Electric_Stun",
+        "TargetEntityPart": "Entity",
+        "TargetNodeName": "Chest",
+        "Scale": 0.7
+      }
+    ],
+    "ModelVFXId": "Hazard_Electric_Stun",
+    "MovementEffects": {
+      "DisableAll": true
+    }
+  },
+  "StatusEffectIcon": "UI/StatusEffects/Burn.png"
+}

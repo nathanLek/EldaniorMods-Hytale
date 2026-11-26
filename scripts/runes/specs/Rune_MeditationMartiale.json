@@ -1,0 +1,61 @@
+{
+  "$Comment": "Fiche de conception : technique du Clan Luo (voie martiale), validee le 2026-11-09, type Luo le 2026-11-09 (docs/plan-clan-luo.md). Apprise par son manuel, aucun butin.",
+  "id": "Rune_MeditationMartiale",
+  "spell": "MeditationMartiale",
+  "javaClass": "MeditationMartiale",
+  "page": "rune_page_meditation_martiale",
+  "name": "Rune de la Méditation martiale",
+  "type": "Luo",
+  "rarity": "Rare",
+  "emblem": "MeditationMartiale",
+  "classes": "apprenti_arts_martiaux, disciple_martial, expert_martial, maitre_martial, grand_maitre_martial, saint_martial, maitre_supreme, dieu_martial",
+  "persistent": true,
+  "summary": "Meditation martiale (bascule) : posture assise immobile, regeneration de vie, mana, endurance et XP selon le palier ; coupee par un coup recu ou un second clic.",
+  "description": "Technique du Clan Luo, à bascule (voie martiale) : vous vous asseyez en tailleur et méditez, immobile et vulnérable. Toutes les 10 s, vous regagnez de 2 à 12 points de vie, de mana et d'endurance, et toutes les 15 s de 1 à 5 points d'expérience, selon votre classe. Ré-utilisez la rune pour vous relever ; un coup reçu brise la méditation. Ne coûte pas de mana.",
+  "pageDescription": "Rouleau du dojo Luo : « Assieds-toi. Respire. Le Ki revient à celui qui l'attend. » Technique du Clan Luo : elle s'apprend dans son manuel, jamais en butin.",
+  "keywords": [
+    "Buff",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": 0,
+    "cooldown": 1,
+    "reason": "rune a bascule de la voie martiale (comme la Rune d'Aura) : un clic l'active, un second clic la coupe ; le Ki consomme son mana chaque seconde dans le code, la Meditation est gratuite"
+  },
+  "loot": {},
+  "cast": {
+    "animationSet": "Item",
+    "charging": "Interact",
+    "release": "Interact",
+    "chargeTime": 0.1,
+    "releaseTime": 0.2,
+    "moveSpeed": 0.2,
+    "cameraEffect": null,
+    "sound": null,
+    "releaseSound": "SFX_Deployable_Totem_Heal_Spawn",
+    "handParticles": null,
+    "handParticlesScale": 0.6,
+    "costMoment": "start"
+  },
+  "design": {
+    "triggers": "clic de la rune (active / coupe)",
+    "targets": "soi",
+    "effects": "effet Meditation_Martiale (immobile, particules), animation Luo_Gestes/Meditation en boucle ; +PV/+mana/+endurance toutes les 10 s, +XP toutes les 15 s ; coupe le Ki",
+    "interruptions": "coup recu (onOwnerHurt), second clic, mort, deconnexion",
+    "balance": {
+      "damage": 0,
+      "range": 0,
+      "duration": 3,
+      "mobility": 0,
+      "control": 0,
+      "defense": 2,
+      "targets": 0,
+      "frequency": 0,
+      "terrain": 0,
+      "difficulty": -1
+    }
+  },
+  "category": "Eldanior_Empire_Luo.Runes",
+  "manual": "Eldanior_Manuel_Luo_MeditationMartiale",
+  "$Comment_manual": "Technique apprise par son manuel secret (gen_voie_martiale_objets.py) : pas de parchemin rune_page_*."
+}

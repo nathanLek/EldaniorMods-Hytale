@@ -1,0 +1,41 @@
+{
+  "$Comment": "Tranche-Montagne (Ryukiri) : lame d'energie verticale deplacee par le code. HitBox elargie (LOD serveur). Genere par scripts/artefacts/gen_ryukiri.py.",
+  "Model": "Items/Projectiles/Ryukiri_Lame.blockymodel",
+  "Texture": "Items/Projectiles/Ryukiri_Lame.png",
+  "MinScale": 1.0,
+  "MaxScale": 1.0,
+  "HitBox": {
+    "Max": {
+      "X": 1.2,
+      "Y": 1.2,
+      "Z": 0.6
+    },
+    "Min": {
+      "X": -1.2,
+      "Y": -1.2,
+      "Z": -0.6
+    }
+  },
+  "Trails": [
+    {
+      "TrailId": "Ryukiri_Lame_Trail",
+      "TargetNodeName": "Lame",
+      "PositionOffset": {
+        "X": 1.0,
+        "Z": 0.5
+      }
+    },
+    {
+      "TrailId": "Ryukiri_Lame_Trail",
+      "TargetNodeName": "Lame",
+      "PositionOffset": {
+        "X": -1.0,
+        "Z": 0.5
+      }
+    }
+  ],
+  "Light": {
+    "Color": "#ff5a2a",
+    "Radius": 8
+  }
+}

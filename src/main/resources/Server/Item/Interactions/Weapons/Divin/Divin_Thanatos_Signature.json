@@ -1,0 +1,40 @@
+{
+  "$Comment": "Signature de Faux de Thanatos (energie de signature pleine) : sort Java MoissonDesAmes (ArmesDivines). Genere par gen_divines.py.",
+  "Type": "StatsCondition",
+  "Costs": {
+    "SignatureEnergy": 100
+  },
+  "ValueType": "Percent",
+  "Next": {
+    "Type": "Serial",
+    "Interactions": [
+      {
+        "Type": "Simple",
+        "RunTime": 0.45,
+        "Effects": {
+          "ItemAnimationId": "WhirlwindCharging"
+        }
+      },
+      {
+        "Type": "Simple",
+        "RunTime": 0.3,
+        "Effects": {
+          "ItemAnimationId": "WhirlwindChargedSpin",
+          "ClearAnimationOnFinish": true
+        }
+      },
+      {
+        "Type": "RuneSpell",
+        "RunTime": 0.05,
+        "Spell": "MoissonDesAmes"
+      },
+      {
+        "Type": "ChangeStat",
+        "StatModifiers": {
+          "SignatureEnergy": -100
+        },
+        "ValueType": "Percent"
+      }
+    ]
+  }
+}

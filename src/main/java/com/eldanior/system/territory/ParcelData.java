@@ -47,9 +47,24 @@ public class ParcelData {
     private String firstDiscovererUUID = "";
     // Mine/Farm: delai de regeneration des blocs (en secondes)
     private int regenDelaySec = 300; // 5 min par defaut
+    // Borne de territoire (2026-11-10, territory.borne) : forme de la zone, regeneration des blocs casses, bloc qui la fait exister
+    private boolean cylinder = false;   // true : cylindre inscrit dans les limites (centre, rayon = demi-largeur est-ouest)
+    private boolean regen = false;      // blocs casses remis apres regenDelaySec (FarmRegenSystem), hors fermes et mines
+    private String borne = "";          // bloc de la borne ("monde|x|y|z"), "" : zone creee par commande
+    private String announce = "";       // annonce a l'entree : "" = regle habituelle, "on" = toujours, "off" = jamais (borne)
+    // Pancartes de propriete (2026-11-12, territory.pancarte) : blocs "monde|x|y|z" lies a cette zone, separes par ';'
+    private String pancartes = "";
+    /** Preavis d'expulsion donne par le proprietaire (2026-11-17) : fin de la location a cette date (ms), 0 = aucun. */
+    private long evictionAt = 0;
+    /** Invites du proprietaire mis de cote pendant une location (serializeMembers), rendus au depart du locataire. */
+    private String ownerGuests = "";
     private long lastTaxCollection = 0;
     private long lastTaxAmount = 0;
     private long lastTreasuryTransfer = 0;
+    /** Taxe du commerce percue (2026-11-18, intendant) : debut de la semaine en cours, montant de la semaine, total. */
+    private long tradeTaxWeekStart = 0, tradeTaxWeek = 0, tradeTaxTotal = 0;
+    /** Taxe Imperiale (2026-11-18) : derniere levee par le Clan Luo sur ce domaine d'un clan vassal, et son montant. */
+    private long lastImperialTax = 0, lastImperialAmount = 0;
 
     public ParcelData(String id, String name, ParcelType type, UUID ownerUUID, String ownerName,
                       String world, int x1, int y1, int z1, int x2, int y2, int z2) {
@@ -67,7 +82,9 @@ public class ParcelData {
         this.maxZ = Math.max(z1, z2);
 
         // Permissions par defaut
-        this.members.put(ownerUUID, ParcelRole.OWNER);
+        // 2026-11-13 : une zone creee sans proprietaire (admin, zone de la ville) inscrivait un membre nul, et la fenetre de
+        // l'affiche plantait dessus (« UUID.equals ... getKey() is null »)
+        if (ownerUUID != null) this.members.put(ownerUUID, ParcelRole.OWNER);
         initDefaultPermissions();
     }
 
@@ -92,11 +109,86 @@ public class ParcelData {
     // ==================== POSITION CHECK ====================
 
     public boolean contains(int x, int y, int z) {
-        return x >= minX && x <= maxX && y >= minY && y <= maxY && z >= minZ && z <= maxZ;
+        if (!(x >= minX && x <= maxX && y >= minY && y <= maxY && z >= minZ && z <= maxZ)) return false;
+        return !cylinder || inCircle(x + 0.5, z + 0.5);
     }
 
     public boolean contains(double x, double y, double z) {
-        return x >= minX && x <= maxX + 1 && y >= minY && y <= maxY + 1 && z >= minZ && z <= maxZ + 1;
+        if (!(x >= minX && x <= maxX + 1 && y >= minY && y <= maxY + 1 && z >= minZ && z <= maxZ + 1)) return false;
+        return !cylinder || inCircle(x, z);
+    }
+
+    /** Zone cylindrique : point (x, z) dans le cercle inscrit (centre des limites, rayon = demi-largeur est-ouest). */
+    private boolean inCircle(double x, double z) {
+        double cx = (minX + maxX + 1) / 2.0, cz = (minZ + maxZ + 1) / 2.0, r = (maxX - minX + 1) / 2.0;
+        double dx = x - cx, dz = z - cz;
+        return dx * dx + dz * dz <= r * r;
+    }
+
+    public boolean isCylinder() { return cylinder; }
+    public void setCylinder(boolean cylinder) { this.cylinder = cylinder; }
+    public boolean isRegen() { return regen; }
+    public void setRegen(boolean regen) { this.regen = regen; }
+    public String getBorne() { return borne != null ? borne : ""; }
+    public String getAnnounce() { return announce != null ? announce : ""; }
+    /** Ville d'une maison retiree du marche des terres par son Patriarche (2026-11-18) ; sinon, sans maitre, elle est a vendre. */
+    /**
+     * Lois du domaine (2026-11-18, territory/laws/DomainLaws) : cle -> valeur, vide = loi absente. Cles : curfew ("22-6"),
+     * fine (amende en cuivres), border ("" ouvertes, "toll" droit d'entree, "closed" fermees), toll (droit d'entree), arms ("1" :
+     * armes rengainees), banned ("uuid|nom,..."), paid ("uuid|fin,..." : droits d'entree payes), tp ("1" : teleporteur actif),
+     * tpPrice (prix du voyage), tpAt ("monde|x|y|z" : bloc du Teleporteur Continental).
+     */
+    private final Map<String, String> laws = new java.util.concurrent.ConcurrentHashMap<>();
+    public String law(String key) { return laws.getOrDefault(key, ""); }
+    public void setLaw(String key, String value) { if (value == null || value.isEmpty()) laws.remove(key); else laws.put(key, value); }
+    public long lawLong(String key, long def) { try { return Long.parseLong(law(key)); } catch (NumberFormatException e) { return def; } }
+    public boolean hasLaws() { return !laws.isEmpty(); }
+    public String serializeLaws() {
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<String, String> e : new java.util.TreeMap<>(laws).entrySet()) {
+            if (sb.length() > 0) sb.append(';');
+            sb.append(e.getKey()).append('=').append(java.net.URLEncoder.encode(e.getValue(), java.nio.charset.StandardCharsets.UTF_8));
+        }
+        return sb.toString();
+    }
+    public void deserializeLaws(String s) {
+        laws.clear();
+        if (s == null || s.isEmpty()) return;
+        for (String part : s.split(";")) {
+            int eq = part.indexOf('=');
+            if (eq <= 0) continue;
+            try { laws.put(part.substring(0, eq), java.net.URLDecoder.decode(part.substring(eq + 1), java.nio.charset.StandardCharsets.UTF_8)); }
+            catch (Exception ignored) { }
+        }
+    }
+
+    private boolean reserved = false;
+    public boolean isReserved() { return reserved; }
+    public void setReserved(boolean reserved) { this.reserved = reserved; }
+    public void setAnnounce(String announce) { this.announce = announce != null ? announce : ""; }
+    public void setBorne(String borne) { this.borne = borne != null ? borne : ""; }
+    public String getPancartes() { return pancartes != null ? pancartes : ""; }
+    public long getEvictionAt() { return evictionAt; }
+    public void setEvictionAt(long evictionAt) { this.evictionAt = Math.max(0, evictionAt); }
+    public String getOwnerGuests() { return ownerGuests != null ? ownerGuests : ""; }
+    public void setOwnerGuests(String ownerGuests) { this.ownerGuests = ownerGuests != null ? ownerGuests : ""; }
+    public void setPancartes(String pancartes) { this.pancartes = pancartes != null ? pancartes : ""; }
+    public boolean hasPancarte(String key) {
+        for (String k : getPancartes().split(";")) if (k.equals(key)) return true;
+        return false;
+    }
+    public void addPancarte(String key) {
+        if (key == null || key.isEmpty() || hasPancarte(key)) return;
+        pancartes = getPancartes().isEmpty() ? key : getPancartes() + ";" + key;
+    }
+    public void removePancarte(String key) {
+        StringBuilder b = new StringBuilder();
+        for (String k : getPancartes().split(";")) {
+            if (k.isEmpty() || k.equals(key)) continue;
+            if (b.length() > 0) b.append(';');
+            b.append(k);
+        }
+        pancartes = b.toString();
     }
 
     // ==================== PERMISSIONS ====================
@@ -165,11 +257,12 @@ public class ParcelData {
     // ==================== MEMBRES ====================
 
     public void addMember(UUID uuid, ParcelRole role) {
+        if (uuid == null || role == null) return;
         members.put(uuid, role);
     }
 
     public void removeMember(UUID uuid) {
-        if (!uuid.equals(ownerUUID)) members.remove(uuid);
+        if (uuid != null && !uuid.equals(ownerUUID)) members.remove(uuid);
     }
 
     public ParcelRole getRole(UUID uuid) {
@@ -181,7 +274,7 @@ public class ParcelData {
     }
 
     public boolean isOwner(UUID uuid) {
-        return uuid.equals(ownerUUID);
+        return uuid != null && uuid.equals(ownerUUID);
     }
 
     // ==================== SERIALIZATION ====================
@@ -189,6 +282,7 @@ public class ParcelData {
     public String serializeMembers() {
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<UUID, ParcelRole> e : members.entrySet()) {
+            if (e.getKey() == null || e.getValue() == null) continue;
             if (!sb.isEmpty()) sb.append(";");
             sb.append(e.getKey()).append(":").append(e.getValue().name());
         }
@@ -200,7 +294,7 @@ public class ParcelData {
         if (data == null || data.isEmpty()) return;
         for (String entry : data.split(";")) {
             String[] parts = entry.split(":");
-            if (parts.length == 2) {
+            if (parts.length == 2 && !"null".equals(parts[0])) {          // ancienne entree nulle (avant le 2026-11-13) : ignoree
                 try {
                     members.put(UUID.fromString(parts[0]), ParcelRole.valueOf(parts[1]));
                 } catch (Exception e) { EldaniorLogger.error("ParcelData", e); }
@@ -298,6 +392,24 @@ public class ParcelData {
     public long getLastTaxCollection() { return lastTaxCollection; }
     public void setLastTaxCollection(long t) { this.lastTaxCollection = t; }
     public long getLastTaxAmount() { return lastTaxAmount; }
+
+    public long getTradeTaxWeekStart() { return tradeTaxWeekStart; }
+    public long getTradeTaxTotal() { return tradeTaxTotal; }
+    /** Taxe du commerce de la semaine en cours (remise a zero apres 7 jours). */
+    public long getTradeTaxWeek() {
+        return System.currentTimeMillis() - tradeTaxWeekStart > 7L * 24 * 3600 * 1000 ? 0 : tradeTaxWeek;
+    }
+    public void setTradeTax(long weekStart, long week, long total) { tradeTaxWeekStart = weekStart; tradeTaxWeek = week; tradeTaxTotal = total; }
+    public void addTradeTax(long amount) {
+        long now = System.currentTimeMillis();
+        if (now - tradeTaxWeekStart > 7L * 24 * 3600 * 1000) { tradeTaxWeekStart = now; tradeTaxWeek = 0; }
+        tradeTaxWeek += amount;
+        tradeTaxTotal += amount;
+    }
+    public long getLastImperialTax() { return lastImperialTax; }
+    public long getLastImperialAmount() { return lastImperialAmount; }
+    public void setImperialTax(long at, long amount) { lastImperialTax = at; lastImperialAmount = amount; }
+    public boolean canLevyImperialTax() { return System.currentTimeMillis() - lastImperialTax >= 7L * 24 * 3600 * 1000; }
     public void setLastTaxAmount(long a) { this.lastTaxAmount = a; }
     public long getLastTreasuryTransfer() { return lastTreasuryTransfer; }
     public void setLastTreasuryTransfer(long t) { this.lastTreasuryTransfer = t; }

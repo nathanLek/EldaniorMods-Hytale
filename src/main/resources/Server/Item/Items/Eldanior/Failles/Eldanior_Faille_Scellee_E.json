@@ -1,0 +1,48 @@
+{
+  "TranslationProperties": {
+    "Name": "Faille scellée (rang E)",
+    "Description": "Posez-la hors d'une ville : une faille de rang E s'ouvre à cet endroit. Votre groupe y entre (1 entrée par joueur). Fermez-la avant qu'elle ne déborde !"
+  },
+  "Icon": "Icons/ItemsGenerated/Eldanior_Faille_Scellee_E.png",
+  "Categories": [
+    "Eldanior_System.Dungeons"
+  ],
+  "BlockType": {
+    "DrawType": "Model",
+    "Material": "Solid",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/Miscellaneous/Portal_Shard.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/Miscellaneous/Portal_Shard_Texture.png",
+        "Weight": 1
+      }
+    ],
+    "TextureComputedColor": "#4CAF50",
+    "Light": {
+      "Color": "#4CAF50"
+    }
+  },
+  "PlayerAnimationsId": "Item",
+  "Tags": {
+    "Type": [
+      "Portal"
+    ]
+  },
+  "Quality": "Uncommon",
+  "MaxStack": 4,
+  "ItemLevel": 60,
+  "IconProperties": {
+    "Scale": 0.8,
+    "Rotation": [
+      22.5,
+      137,
+      22.5
+    ],
+    "Translation": [
+      -9,
+      -15
+    ]
+  },
+  "ItemSoundSetId": "ISS_Items_Gems"
+}

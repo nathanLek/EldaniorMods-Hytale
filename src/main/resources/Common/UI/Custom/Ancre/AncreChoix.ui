@@ -1,0 +1,75 @@
+$C = "../Common.ui";
+
+// Porte des Mondes : choix de l'ancre de destination (AnchorChoicePage). Une ligne par ancre du monde courant (8 au plus),
+// la plus recemment utilisee en premier. Fermer la fenetre = derniere destination.
+$C.@PageOverlay {
+  LayoutMode: Middle;
+
+  $C.@DecoratedContainer {
+    Anchor: (Width: 500);
+
+    #Title {
+      $C.@Title {
+        @Text = "Porte des Mondes";
+      }
+    }
+
+    #Content {
+      Padding: (Vertical: 24, Horizontal: 45);
+
+      Label {
+        Text: "Choisissez votre destination";
+        Style: (RenderBold: true, RenderUppercase: true, TextColor: #94a7bb);
+      }
+
+      Group #AncreRow0 {
+        Anchor: (Top: 10);
+        LayoutMode: Center;
+        $C.@SecondaryTextButton #AncrePick0 { Text: ""; FlexWeight: 1; }
+      }
+      Group #AncreRow1 {
+        Anchor: (Top: 6);
+        LayoutMode: Center;
+        $C.@SecondaryTextButton #AncrePick1 { Text: ""; FlexWeight: 1; }
+      }
+      Group #AncreRow2 {
+        Anchor: (Top: 6);
+        LayoutMode: Center;
+        $C.@SecondaryTextButton #AncrePick2 { Text: ""; FlexWeight: 1; }
+      }
+      Group #AncreRow3 {
+        Anchor: (Top: 6);
+        LayoutMode: Center;
+        $C.@SecondaryTextButton #AncrePick3 { Text: ""; FlexWeight: 1; }
+      }
+      Group #AncreRow4 {
+        Anchor: (Top: 6);
+        LayoutMode: Center;
+        $C.@SecondaryTextButton #AncrePick4 { Text: ""; FlexWeight: 1; }
+      }
+      Group #AncreRow5 {
+        Anchor: (Top: 6);
+        LayoutMode: Center;
+        $C.@SecondaryTextButton #AncrePick5 { Text: ""; FlexWeight: 1; }
+      }
+      Group #AncreRow6 {
+        Anchor: (Top: 6);
+        LayoutMode: Center;
+        $C.@SecondaryTextButton #AncrePick6 { Text: ""; FlexWeight: 1; }
+      }
+      Group #AncreRow7 {
+        Anchor: (Top: 6);
+        LayoutMode: Center;
+        $C.@SecondaryTextButton #AncrePick7 { Text: ""; FlexWeight: 1; }
+      }
+
+      Label {
+        Anchor: (Top: 12);
+        Text: "Echap : la porte mène à la dernière destination";
+        Style: (FontSize: 12, TextColor: #5a6a7a, HorizontalAlignment: Center);
+      }
+    }
+  }
+}
+
+$C.@BackButton {}

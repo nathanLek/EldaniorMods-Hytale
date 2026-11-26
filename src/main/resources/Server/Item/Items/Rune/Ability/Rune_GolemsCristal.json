@@ -1,0 +1,45 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune des Golems de Cristal",
+    "Description": "Sort épique de terre (Mage, rune de prédilection du Démiurge). Trois golems de cristal (250 PV chacun) sortent de terre autour de vous pendant 15 s : un de feu, un de givre, un de foudre. Ils combattent les ennemis proches, et toutes les 1,5 s chacun inflige 25 dégâts de son élément à sa cible (brûlure, givre ou étourdissement bref). Quand un golem tombe ou que le sort prend fin, il éclate : 120 dégâts de son élément à moins de 3 blocs. Sans ennemi, ils vous suivent. Épargne votre groupe, votre guilde et votre famille. Coût : 300 mana. Recharge : 120 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_GolemsCristal.png",
+  "Quality": "Epic",
+  "ItemLevel": 60,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_Runes.Terre"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_GolemsCristal.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 120,
+    "Cost": 300,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Earth",
+      "Damage",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_GolemsCristal"
+  }
+}

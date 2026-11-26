@@ -1,0 +1,140 @@
+{
+  "$Comment": "Ours brun jeune : familier lie a un joueur (FamilierManager : niveau, PV, degats, laisse, monture). Genere par scripts/familiers/gen_familiers.py.",
+  "Type": "Variant",
+  "Reference": "Template_Eldanior_Familier",
+  "Modify": {
+    "Appearance": "Eldanior_Familier_Ours_Jeune",
+    "DropList": "Empty",
+    "WakingPeriod": [
+      0,
+      24
+    ],
+    "BedBlockSet": "",
+    "Patrol": false,
+    "FollowPatrolPath": false,
+    "ViewRange": 18,
+    "ViewSector": 300,
+    "HearingRange": 14,
+    "AlertedRange": 30,
+    "AlertedTime": [
+      0.2,
+      0.4
+    ],
+    "LeashMinPlayerDistance": 3,
+    "LeashTimer": [
+      1,
+      2
+    ],
+    "SearchTimeRange": [
+      3,
+      5
+    ],
+    "BreathesInWater": true,
+    "NameTranslationKey": {
+      "Compute": "NameTranslationKey"
+    },
+    "MaxHealth": 100,
+    "MaxSpeed": 7,
+    "RunThreshold": 0.3,
+    "KnockbackScale": 0.3,
+    "Weapons": [],
+    "OffHand": [],
+    "DefaultOffHandSlot": -1,
+    "NighttimeOffhandSlot": -1,
+    "WakingIdleBehaviorComponent": "Component_Instruction_Eldanior_Leash_Follow",
+    "WanderRadius": 1,
+    "LeashDistance": 40,
+    "HardLeashDistance": 80,
+    "UseCombatActionEvaluator": false,
+    "Attack": "Root_NPC_Bear_Grizzly_Attack",
+    "AttackDistance": 2.72,
+    "DesiredAttackDistanceRange": [
+      1.5,
+      2.04
+    ],
+    "AttackPauseRange": [
+      0.9,
+      1.3
+    ],
+    "CombatAttackPreDelay": [
+      0.1,
+      0.25
+    ],
+    "BlockAbility": "",
+    "BlockProbability": 0,
+    "AttitudeGroup": "Eldanior_Guard",
+    "DefaultPlayerAttitude": "Ignore",
+    "DisableDamageGroups": [
+      "Self",
+      "Eldanior_Guards"
+    ],
+    "IsMemory": false,
+    "IsMountable": false,
+    "MountAnchorY": 0.0,
+    "_InteractionVars": {
+      "Swipe_Left_Damage": {
+        "Interactions": [
+          {
+            "Parent": "Bear_Grizzly_Swipe_Left_Damage",
+            "DamageCalculator": {
+              "Type": "Absolute",
+              "BaseDamage": {
+                "Physical": 34
+              },
+              "RandomPercentageModifier": 0.1
+            },
+            "DamageEffects": {
+              "Knockback": {
+                "Force": 0.5
+              }
+            }
+          }
+        ]
+      },
+      "Swipe_Right_Damage": {
+        "Interactions": [
+          {
+            "Parent": "Bear_Grizzly_Swipe_Right_Damage",
+            "DamageCalculator": {
+              "Type": "Absolute",
+              "BaseDamage": {
+                "Physical": 36
+              },
+              "RandomPercentageModifier": 0.1
+            },
+            "DamageEffects": {
+              "Knockback": {
+                "Force": 0.5
+              }
+            }
+          }
+        ]
+      },
+      "Stomp_Damage": {
+        "Interactions": [
+          {
+            "Parent": "Bear_Grizzly_Stomp_Damage",
+            "DamageCalculator": {
+              "Type": "Absolute",
+              "BaseDamage": {
+                "Physical": 38
+              },
+              "RandomPercentageModifier": 0.1
+            },
+            "DamageEffects": {
+              "Knockback": {
+                "Force": 5
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "Parameters": {
+    "NameTranslationKey": {
+      "Value": "server.npcRoles.Eldanior_Familier_Ours.name",
+      "Description": "Translation key for NPC name display"
+    }
+  }
+}

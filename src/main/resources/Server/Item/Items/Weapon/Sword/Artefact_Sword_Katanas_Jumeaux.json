@@ -1,0 +1,163 @@
+{
+  "$Comment": "Doubles katanas : epee (Template_Weapon_Sword) rendue dans les deux mains, modele du katana vanilla, animations Katanas_Jumeaux (Sword + bras gauche en miroir). Texture, icone et ce fichier : scripts/artefacts/gen_katanas_jumeaux.py.",
+  "Parent": "Template_Weapon_Sword",
+  "TranslationProperties": {
+    "Name": "Amaterasu et Tsukuyomi, Lames Jumelles",
+    "Description": "Artefact légendaire. Deux katanas jumeaux, l'un forgé dans la lumière du soleil, l'autre dans celle de la lune. Les deux lames frappent tour à tour : Amaterasu, à droite, embrase la cible (6 dégâts de feu par seconde pendant 3 s) ; Tsukuyomi, à gauche, la ralentit (−40 % de vitesse pendant 2,5 s). Le coup plongeant frappe des deux lames à la fois et réunit le soleil et la lune. Maintenir, Croix Jumelle : les deux lames tranchent en croix et projettent une croix de lames d'énergie qui traverse les ennemis à distance (90 dégâts, embrasement et givre). Signature, Éclipse des Jumeaux : une croix géante file droit devant, transperce tout sur son passage puis explose en feu et en glace. Guerriers, Assassins et Dragons."
+  },
+  "Quality": "Legendary",
+  "ItemLevel": 580,
+  "Model": "Items/Weapons/Longsword/Katana.blockymodel",
+  "PlayerAnimationsId": "Katanas_Jumeaux",
+  "Texture": "Items/Weapons/artefacts/Artefact_Sword_Katanas_Jumeaux.png",
+  "Icon": "Icons/ItemsGenerated/Artefact_Sword_Katanas_Jumeaux.png",
+  "IconProperties": {
+    "Scale": 0.3,
+    "Rotation": [
+      45,
+      90,
+      0
+    ],
+    "Translation": [
+      -30,
+      -30
+    ]
+  },
+  "Categories": [
+    "Eldanior_System.Artefacts",
+    "Items.Weapons"
+  ],
+  "MaxStack": 1,
+  "Variant": false,
+  "Interactions": {
+    "Primary": "Root_Weapon_Sword_Primary",
+    "Secondary": "Root_Weapon_Sword_Secondary_Guard",
+    "Ability1": "Root_Katanas_Jumeaux_Signature"
+  },
+  "Weapon": {
+    "EntityStatsToClear": [
+      "SignatureEnergy"
+    ],
+    "StatModifiers": {
+      "SignatureEnergy": [
+        {
+          "Amount": 20,
+          "CalculationType": "Additive"
+        }
+      ]
+    },
+    "RenderDualWielded": true
+  },
+  "InteractionVars": {
+    "Swing_Left_Damage": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Primary_Swing_Left_Damage",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Physical": 38
+            }
+          },
+          "DamageEffects": {
+            "WorldSoundEventId": "SFX_Sword_T2_Impact",
+            "LocalSoundEventId": "SFX_Sword_T2_Impact"
+          },
+          "Next": "Eldanior_OnHit_Embrasement"
+        }
+      ]
+    },
+    "Swing_Right_Damage": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Primary_Swing_Right_Damage",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Physical": 38
+            }
+          },
+          "DamageEffects": {
+            "WorldSoundEventId": "SFX_Sword_T2_Impact",
+            "LocalSoundEventId": "SFX_Sword_T2_Impact"
+          },
+          "Next": "Eldanior_OnHit_Givre"
+        }
+      ]
+    },
+    "Swing_Down_Damage": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Primary_Swing_Down_Damage",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Physical": 68
+            }
+          },
+          "DamageEffects": {
+            "WorldSoundEventId": "SFX_Sword_T2_Impact",
+            "LocalSoundEventId": "SFX_Sword_T2_Impact"
+          },
+          "Next": "Eldanior_OnHit_Soleil_Lune"
+        }
+      ]
+    },
+    "Guard_Wield": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Secondary_Guard_Wield",
+          "StaminaCost": {
+            "Value": 8.0,
+            "CostType": "Damage"
+          }
+        }
+      ]
+    },
+    "Thrust_Force": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Primary_Thrust_Force",
+          "Force": 9
+        }
+      ]
+    },
+    "Thrust_Selector": {
+      "Interactions": [
+        "Katanas_Jumeaux_Croix"
+      ]
+    }
+  },
+  "MaxDurability": 0,
+  "DurabilityLossOnHit": 0,
+  "Trails": [
+    {
+      "TrailId": "Excalibur_Trail",
+      "TargetNodeName": "Handle",
+      "TargetEntityPart": "PrimaryItem",
+      "PositionOffset": {
+        "X": 1.0,
+        "Y": 0
+      }
+    }
+  ],
+  "Recipe": {
+    "TimeSeconds": 20,
+    "Input": [
+      {
+        "ItemId": "Ingredient_Bar_Divin",
+        "Quantity": 12
+      },
+      {
+        "ItemId": "Ingredient_Bar_Adamantite",
+        "Quantity": 20
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "Forge_Divine",
+        "Categories": [
+          "Forge_Epees"
+        ]
+      }
+    ]
+  }
+}

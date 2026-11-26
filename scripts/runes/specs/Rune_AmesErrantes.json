@@ -1,0 +1,65 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_AmesErrantes",
+  "spell": "AmesErrantes",
+  "javaClass": "AmesErrantes",
+  "page": "rune_page_ames_errantes",
+  "name": "Rune des Âmes Errantes",
+  "type": "Tenebres",
+  "rarity": "Rare",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "AmesErrantes",
+  "summary": "quatre ames tournent autour du lanceur 12 s et foncent sur tout ennemi qui s'approche, en le vidant de sa vie.",
+  "description": "Sort rare de ténèbres (Mage, rune de prédilection de l'Invocateur d'Âmes). Quatre âmes errantes tournent autour de vous pendant 12 s. Dès qu'un ennemi vous frappe (jusqu'à 15 blocs) ou s'approche à moins de 6 blocs, une âme fond sur lui (une par seconde, l'agresseur en priorité) : 50 dégâts, et vous récupérez 3 % de vos points de vie.",
+  "pageDescription": "Un parchemin où l'on croit entendre des murmures. Enseigne les Âmes Errantes : des esprits gardiens qui punissent quiconque vous approche. Classes : tous les Mages (rune de prédilection de l'Invocateur d'Âmes). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.4,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.6,
+    "cameraEffect": null,
+    "sound": null,
+    "releaseSound": "SFX_Crawler_Void_Alerted",
+    "handParticles": "Nyx_Void",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.4,
+    "range": 6,
+    "radius": "garde 6 blocs",
+    "targets": "ennemis qui approchent",
+    "persistentFx": "4 ames en orbite (Nyx_Drain_Burst toutes les 150 ms)",
+    "impactFx": "Nyx_Void a l'impact",
+    "effects": "ame lancee a 18 b/s : 50 Elemental + 3 % PV au lanceur ; 1 lancer / s",
+    "terrain": "aucun",
+    "persistentDurationS": 12,
+    "restrictions": "mage",
+    "limitations": "riposte via RuneSpell.Instance.onOwnerHurt (coups recus par le lanceur) ; duree 12 s (garde)",
+    "balance": {
+      "damage": 2,
+      "range": 1,
+      "duration": 3,
+      "mobility": 0,
+      "control": 0,
+      "defense": 2,
+      "targets": 2,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 0
+    }
+  }
+}

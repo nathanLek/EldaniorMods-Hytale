@@ -1,0 +1,21 @@
+{
+  "$Comment": "Incarnation de l'Ame : double spirituel translucide (ModelVFX Ame_Spectrale), rafraichi par IncarnationAme (gen_voie_martiale.py). Nom : Âme.",
+  "ApplicationEffects": {
+    "Particles": [
+      {
+        "SystemId": "Ki_Hwakyung",
+        "TargetNodeName": "Chest",
+        "PositionOffset": {
+          "X": 0,
+          "Y": -1,
+          "Z": 0
+        },
+        "Scale": 1.2
+      }
+    ],
+    "ModelVFXId": "Ame_Spectrale"
+  },
+  "Duration": 2.5,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": false
+}

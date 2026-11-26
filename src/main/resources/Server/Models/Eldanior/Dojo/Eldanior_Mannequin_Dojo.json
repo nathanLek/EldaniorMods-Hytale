@@ -1,0 +1,36 @@
+{
+  "Model": "NPC/Eldanior/Dojo/Mannequin_Dojo.blockymodel",
+  "Texture": "NPC/Eldanior/Dojo/Mannequin_Dojo_Texture.png",
+  "EyeHeight": 1.6,
+  "HitBox": {
+    "Min": {
+      "X": -0.42,
+      "Y": 0,
+      "Z": -0.42
+    },
+    "Max": {
+      "X": 0.42,
+      "Y": 1.95,
+      "Z": 0.42
+    }
+  },
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/Dojo/Mannequin_Dojo_Idle.blockyanim",
+          "Looping": true
+        }
+      ]
+    },
+    "Hurt": {
+      "Animations": [
+        {
+          "Animation": "NPC/Eldanior/Dojo/Mannequin_Dojo_Hurt.blockyanim",
+          "Looping": false,
+          "BlendingDuration": 0.05
+        }
+      ]
+    }
+  }
+}

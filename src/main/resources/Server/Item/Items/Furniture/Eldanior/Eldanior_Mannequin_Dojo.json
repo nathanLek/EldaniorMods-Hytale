@@ -1,0 +1,84 @@
+{
+  "TranslationProperties": {
+    "Name": "Mannequin d'entraînement",
+    "Description": "Makiwara du Dojo, sur son socle de granit. Frappez-le pour éprouver vos attaques : il affiche les dégâts reçus et chaque coup remplit l'énergie de signature. Les disciples d'un dojo proche viennent s'y exercer."
+  },
+  "Icon": "Icons/ItemsGenerated/Eldanior_Mannequin_Dojo.png",
+  "Categories": [
+    "Eldanior_Empire_Luo.ArtsMartiaux",
+    "Furniture.Furniture"
+  ],
+  "Recipe": {
+    "TimeSeconds": 4,
+    "Input": [
+      {
+        "ResourceTypeId": "Wood_Trunk",
+        "Quantity": 2
+      },
+      {
+        "ItemId": "Ingredient_Fibre",
+        "Quantity": 6
+      },
+      {
+        "ResourceTypeId": "Rock",
+        "Quantity": 4
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Categories": [
+          "Furniture_Misc"
+        ],
+        "Id": "Furniture_Bench"
+      }
+    ]
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/Eldanior/Mannequin_Dojo_Socle.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/Eldanior/Mannequin_Dojo_Socle_Texture.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "Eldanior_Mannequin_Dojo",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Benches"
+      }
+    },
+    "BlockParticleSetId": "Stone",
+    "ParticleColor": "#807e7a",
+    "BlockSoundSetId": "Stone",
+    "PhysicalMaterialId": "Stone",
+    "TextureComputedColor": "#807E7A",
+    "Support": {
+      "Down": [
+        {
+          "FaceType": "Full"
+        }
+      ]
+    }
+  },
+  "PlayerAnimationsId": "Block",
+  "IconProperties": {
+    "Scale": 0.3,
+    "Translation": [
+      0,
+      -26
+    ],
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ]
+  },
+  "MaxStack": 4,
+  "ItemLevel": 10,
+  "ItemSoundSetId": "ISS_Blocks_Wood",
+  "Quality": "Uncommon"
+}

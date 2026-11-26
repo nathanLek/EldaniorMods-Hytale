@@ -1,0 +1,211 @@
+{
+  "DisplayNameKey": "Tailleur du Clan Luo — Grand Marchand",
+  "RefreshInterval": {
+    "Days": 3
+  },
+  "RestockHour": 6,
+  "TradeSlots": [
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Armor_Kimono_Seigneur_Head",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Zenith_Coins",
+            "Quantity": 8
+          }
+        ],
+        "Stock": 1
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Armor_Kimono_Seigneur_Chest",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Zenith_Coins",
+            "Quantity": 13
+          }
+        ],
+        "Stock": 1
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Armor_Kimono_Seigneur_Hands",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Zenith_Coins",
+            "Quantity": 8
+          }
+        ],
+        "Stock": 1
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Armor_Kimono_Seigneur_Legs",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Zenith_Coins",
+            "Quantity": 8
+          }
+        ],
+        "Stock": 1
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Armor_Kimono_Negociant_Head",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Zenith_Coins",
+            "Quantity": 2
+          }
+        ],
+        "Stock": 1
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Armor_Kimono_Negociant_Chest",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Zenith_Coins",
+            "Quantity": 3
+          }
+        ],
+        "Stock": 1
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Armor_Kimono_Negociant_Hands",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Zenith_Coins",
+            "Quantity": 2
+          }
+        ],
+        "Stock": 1
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Armor_Kimono_Negociant_Legs",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Zenith_Coins",
+            "Quantity": 2
+          }
+        ],
+        "Stock": 1
+      }
+    },
+    {
+      "Type": "Pool",
+      "SlotCount": 2,
+      "Trades": [
+        {
+          "Output": {
+            "ItemId": "Armor_Cloth_Silk_Head",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 4
+            }
+          ],
+          "Stock": [
+            1,
+            1
+          ],
+          "Weight": 10
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Cloth_Silk_Chest",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 4
+            }
+          ],
+          "Stock": [
+            1,
+            1
+          ],
+          "Weight": 10
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Cloth_Silk_Hands",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 4
+            }
+          ],
+          "Stock": [
+            1,
+            1
+          ],
+          "Weight": 10
+        },
+        {
+          "Output": {
+            "ItemId": "Armor_Cloth_Silk_Legs",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 4
+            }
+          ],
+          "Stock": [
+            1,
+            1
+          ],
+          "Weight": 10
+        }
+      ]
+    }
+  ]
+}

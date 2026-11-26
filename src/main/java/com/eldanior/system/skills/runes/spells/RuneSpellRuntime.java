@@ -49,12 +49,25 @@ public final class RuneSpellRuntime {
 
     public static RuneSpell get(String id) { return id == null ? null : spells.get(id); }
 
+    /** Joueurs reduits au silence (Silence du Neant) : leurs runes se dissipent jusqu'a l'echeance. */
+    private static final Map<UUID, Long> silencedUntil = new ConcurrentHashMap<>();
+
+    /** Interdit les runes du joueur jusqu'a until (ms) ; prolonge seulement. */
+    static void silence(UUID uuid, long until) {
+        if (uuid != null) silencedUntil.merge(uuid, until, Math::max);
+    }
+
     /** Appele par l'interaction JSON : le sort part au prochain tick du lanceur. */
     static void queue(Ref<EntityStore> caster, String spellId) {
         RuneSpell spell = get(spellId);
         if (spell == null) { EldaniorLogger.warn("[RuneSpell] Sort inconnu : " + spellId + " (enregistre-le dans RuneSpells)"); return; }
         UUID uuid = SpellFx.uuid(caster, caster.getStore());
         if (uuid == null) return;
+        Long silenced = silencedUntil.get(uuid);
+        if (silenced != null) {
+            if (System.currentTimeMillis() < silenced) return;                    // la rune se dissipe dans le silence
+            silencedUntil.remove(uuid, silenced);
+        }
         pending.computeIfAbsent(uuid, k -> new ConcurrentLinkedQueue<>()).add(spell);
     }
 
@@ -110,7 +123,9 @@ public final class RuneSpellRuntime {
      * reduction de degats) doivent l'ignorer, sinon la copie trahit le lanceur et perd ses PV calcules par le sort.
      */
     public static boolean isSummonRole(String npcTypeId) {
-        return npcTypeId != null && (npcTypeId.startsWith("Eldanior_Clone_") || npcTypeId.startsWith("Eldanior_Summon_") || npcTypeId.equals("Eldanior_Doppel"));
+        return npcTypeId != null && (npcTypeId.startsWith("Eldanior_Clone_") || npcTypeId.startsWith("Eldanior_Summon_") || npcTypeId.equals("Eldanior_Doppel")
+                || npcTypeId.startsWith("Eldanior_Familier_")                       // familiers : PV, niveau et nom geres par FamilierManager
+                || npcTypeId.equals(com.eldanior.system.dojo.Mannequins.ID));       // mannequin du dojo : vie, plaque geres par Mannequins
     }
 
     static boolean isDying(Ref<EntityStore> summon) { return summon != null && dying.contains(summon); }
@@ -144,6 +159,79 @@ public final class RuneSpellRuntime {
         return false;
     }
 
+    /**
+     * Appele par DivineDamageSystem pour chaque coup recu par une entite : si c'est un lanceur avec des sorts actifs, ses
+     * instances peuvent reduire ou annuler le coup (onOwnerHurt) puis empecher un coup mortel (preventOwnerDeath).
+     * Renvoie le montant a appliquer (0 = coup annule).
+     */
+    public static float onOwnerHurt(Ref<EntityStore> target, Ref<EntityStore> attacker, float amount, String causeId,
+                                    Store<EntityStore> store, CommandBuffer<EntityStore> cb) {
+        if (active.isEmpty() || target == null || !target.isValid()) return amount;
+        UUID uuid = SpellFx.uuid(target, store);
+        List<RuneSpell.Instance> list = uuid == null ? null : active.get(uuid);
+        Ward ward = wards.get(target);
+        if ((list == null || list.isEmpty()) && ward == null) return amount;
+        if (list != null) for (RuneSpell.Instance instance : list) {
+            try { amount = instance.onOwnerHurt(attacker, amount, causeId); } catch (Exception ex) { EldaniorLogger.error("[RuneSpell] coup recu", ex); }
+            if (amount <= 0) return 0;
+        }
+        if (ward != null) {
+            try { amount = ward.onHurt(target, attacker, amount); } catch (Exception ex) { EldaniorLogger.error("[RuneSpell] protection", ex); }
+            if (amount <= 0) return 0;
+        }
+        try {
+            var stats = store.getComponent(target, com.hypixel.hytale.server.core.modules.entitystats.EntityStatsModule.get().getEntityStatMapComponentType());
+            var hp = stats != null ? stats.get(com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes.getHealth()) : null;
+            if (hp == null || amount < hp.get()) return amount;
+        } catch (Exception e) {
+            EldaniorLogger.error("[RuneSpell] vie du lanceur", e);
+            return amount;
+        }
+        if (list != null) for (RuneSpell.Instance instance : list) {
+            try { if (instance.preventOwnerDeath(target, store, cb)) return 0; } catch (Exception ex) { EldaniorLogger.error("[RuneSpell] coup mortel", ex); }
+        }
+        if (ward != null) {
+            try { if (ward.preventDeath(target, store, cb)) return 0; } catch (Exception ex) { EldaniorLogger.error("[RuneSpell] protection mortelle", ex); }
+        }
+        return amount;
+    }
+
+    /**
+     * Protection posee par le sort d'un autre joueur sur une entite (allie beni) : memes crochets que onOwnerHurt et
+     * preventOwnerDeath, mais pour une cible qui n'est pas le lanceur. Exemple : Resurrection.
+     */
+    interface Ward {
+        default float onHurt(Ref<EntityStore> target, Ref<EntityStore> attacker, float amount) { return amount; }
+        default boolean preventDeath(Ref<EntityStore> target, Store<EntityStore> store, CommandBuffer<EntityStore> cb) { return false; }
+    }
+
+    private static final Map<Ref<EntityStore>, Ward> wards = new ConcurrentHashMap<>();
+
+    /** Pose (ou remplace) la protection d'une entite. */
+    static void ward(Ref<EntityStore> target, Ward ward) { if (target != null && ward != null) wards.put(target, ward); }
+
+    /** Retire la protection seulement si c'est encore celle-ci (un autre lanceur a pu la remplacer). */
+    static void unward(Ref<EntityStore> target, Ward ward) { if (target != null) wards.remove(target, ward); }
+
+    /** Vulnerabilites posees par les sorts (Revelation) : multiplicateur des degats subis et echeance. */
+    private record Exposure(float multiplier, long until) {}
+    private static final Map<Ref<EntityStore>, Exposure> exposures = new ConcurrentHashMap<>();
+
+    /** La cible subit ses degats multiplies jusqu'a until (garde le plus fort multiplicateur en cours). */
+    static void expose(Ref<EntityStore> target, float multiplier, long until) {
+        if (target == null) return;
+        exposures.merge(target, new Exposure(multiplier, until), (a, b) -> a.until() > System.currentTimeMillis() && a.multiplier() >= b.multiplier() ? new Exposure(a.multiplier(), Math.max(a.until(), b.until())) : b);
+    }
+
+    /** Appele par DivineDamageSystem : multiplicateur des degats subis par la cible (1 sans vulnerabilite). */
+    public static float damageTakenMultiplier(Ref<EntityStore> target) {
+        if (exposures.isEmpty() || target == null) return 1f;
+        Exposure e = exposures.get(target);
+        if (e == null) return 1f;
+        if (System.currentTimeMillis() > e.until()) { exposures.remove(target, e); return 1f; }
+        return e.multiplier();
+    }
+
     /** Appele par DivineDamageSystem pour chaque coup inflige par une entite (montant brut). */
     public static void onDamageDealt(Ref<EntityStore> attacker, Ref<EntityStore> target, float amount) {
         if (active.isEmpty() || attacker == null || !attacker.isValid()) return;
@@ -160,6 +248,14 @@ public final class RuneSpellRuntime {
         }
     }
 
+    /** Instance active de ce type pour ce joueur (sorts a bascule : Ki de l'Epee, Meditation martiale), sinon null. */
+    static <T extends RuneSpell.Instance> T find(UUID uuid, Class<T> type) {
+        List<RuneSpell.Instance> list = uuid == null ? null : active.get(uuid);
+        if (list == null) return null;
+        for (RuneSpell.Instance instance : list) if (type.isInstance(instance)) return type.cast(instance);
+        return null;
+    }
+
     /** Tick du lanceur (DivineSpellsSystem). */
     static void tick(UUID uuid, Ref<EntityStore> caster, Store<EntityStore> store, CommandBuffer<EntityStore> cb) {
         for (int n = orphans.size(); n > 0; n--) {
@@ -173,6 +269,7 @@ public final class RuneSpellRuntime {
             for (RuneSpell spell; (spell = queue.poll()) != null; ) {
                 try {
                     RuneSpell.Instance instance = spell.start(caster, store, cb);
+                    com.eldanior.system.skills.runes.RuneStats.onCast(uuid, spell.id());   // statistiques admin
                     if (instance != null) active.computeIfAbsent(uuid, k -> new CopyOnWriteArrayList<>()).add(instance);
                 } catch (Exception e) {
                     EldaniorLogger.error("[RuneSpell] " + spell.id() + " : lancement", e);

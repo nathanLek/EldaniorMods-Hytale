@@ -6,7 +6,7 @@ import com.eldanior.system.Leveling.utils.NotificationHelper;
 import com.eldanior.system.config.CraftingConfig;
 import com.eldanior.system.config.EldaniorLogger;
 import com.eldanior.system.config.Player.PlayerLevelData;
-import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
+import com.eldanior.system.skills.skillsInteraction.Metier;
 import com.hypixel.hytale.builtin.crafting.component.CraftingManager;
 import com.hypixel.hytale.component.*;
 import com.hypixel.hytale.component.query.Query;
@@ -54,8 +54,8 @@ public class CraftingProgressionSystem extends EntityEventSystem<EntityStore, Cr
             String benchId = benchReqs[0].id != null ? benchReqs[0].id.toLowerCase() : "";
             EldaniorLogger.info("[CraftProg] Bench ID: '" + benchId + "'");
 
-            PassiveSkill matchedSkill = null;
-            for (Map.Entry<String, PassiveSkill> entry : CraftingConfig.BENCH_SKILLS.entrySet()) {
+            Metier matchedSkill = null;
+            for (Map.Entry<String, Metier> entry : CraftingConfig.BENCH_SKILLS.entrySet()) {
                 if (benchId.contains(entry.getKey())) {
                     matchedSkill = entry.getValue();
                     break;
@@ -77,18 +77,7 @@ public class CraftingProgressionSystem extends EntityEventSystem<EntityStore, Cr
             if (data == null) return;
 
             // Vérifier que le joueur a ce skill actif
-            boolean hasSkill = false;
-            if (data.getActivePassives() != null) {
-                for (PassiveSkill skill : data.getActivePassives()) {
-                    if (skill == matchedSkill) {
-                        hasSkill = true;
-                        break;
-                    }
-                }
-            }
-            if (!hasSkill) {
-                hasSkill = data.isSkillEnabled(matchedSkill.name());
-            }
+            boolean hasSkill = data.hasMetier(matchedSkill);
             if (!hasSkill) return;
 
             // Ajouter les procs

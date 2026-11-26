@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_MarqueInfernale (remplace le parchemin rune_page_marque_infernale).",
+  "TranslationProperties": {
+    "Name": "Manuel de Feu : Marque Infernale",
+    "Description": "Sort rare de feu (Mage, rune de prédilection du Infernal Mage). Vous marquez l'ennemi visé (25 blocs) d'un sceau infernal pendant 6 s (30 dégâts de feu). S'il meurt, il explose : 120 dégâts de feu dans un rayon de 5 blocs, ennemis embrasés, et le plus proche est marqué à son tour (jusqu'à 3 rebonds). S'il survit, le sceau détone sur lui à la fin. Épargne votre groupe, votre guilde et votre famille. Coût : 120 mana. Recharge : 60 s.\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Feu"
+  ],
+  "Quality": "Rare",
+  "ItemLevel": 40,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Feu_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Feu_MarqueInfernale.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

@@ -1,0 +1,71 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Les champs du haut sont lus par rune_tool.py ; 'design' documente la competence.",
+  "id": "Rune_VoileDeFumee",
+  "spell": "VoileDeFumee",
+  "javaClass": "VoileDeFumee",
+  "page": "rune_page_voile_de_fumee",
+  "name": "Rune du Voile de Fumée",
+  "type": "Tenebres",
+  "rarity": "Common",
+  "emblem": "VoileFumee",
+  "classes": "assassin, dragon",
+  "persistent": true,
+  "summary": "bombe fumigene : le lanceur devient invisible 3 s, les monstres proches perdent sa trace et son premier coup fait +50 %.",
+  "description": "Sort commun des ténèbres (Assassin, Dragon). Vous lâchez une bombe fumigène à vos pieds : invisible pendant 3 s, les monstres à moins de 8 blocs perdent votre trace, et votre premier coup porté dans ce délai inflige 50 % de dégâts en plus. Frapper vous révèle.",
+  "pageDescription": "Un parchemin qui sent la poudre et la cendre. Enseigne le Voile de Fumée : disparaître dans un nuage pour frapper par surprise. Classes : Assassin, Dragon. Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Buff",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Daggers",
+    "charging": "Guard",
+    "release": "DashBackward",
+    "chargeTime": 0.15,
+    "releaseTime": 0.35,
+    "moveSpeed": 0.8,
+    "cameraEffect": null,
+    "sound": null,
+    "releaseSound": "SFX_Bomb_Fuse",
+    "handParticles": null,
+    "handParticlesScale": 0.6,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.15,
+    "animationTimeS": 0.5,
+    "range": 0,
+    "radius": "8 (monstres qui perdent la trace)",
+    "targets": "soi + monstres proches",
+    "characterAnimation": "Daggers / Guard puis DashBackward (bond en arriere)",
+    "castFx": "",
+    "executionFx": "Divine_Smoke_Short + Smoke_Black au point de lancer, reemis chaque seconde",
+    "impactFx": "Impact_Critical sur la cible du coup bonus",
+    "sounds": "SFX_Bomb_Fuse",
+    "effects": "InvisibilityManager TOTAL 3 s (Elda_InvisTotal) ; NpcAttitudes IGNORE envers le lanceur + LockedTarget efface, rafraichis toutes les 0,5 s ; coup bonus +50 % (markEcho)",
+    "terrain": "aucun",
+    "persistentDurationS": 3,
+    "interruptions": "premier coup porte : bonus puis fin du voile",
+    "restrictions": "assassin, dragon",
+    "balance": {
+      "damage": 1,
+      "range": 1,
+      "duration": 1,
+      "mobility": 0,
+      "control": 2,
+      "defense": 2,
+      "targets": 1,
+      "frequency": 2,
+      "terrain": 0,
+      "difficulty": 1
+    },
+    "edgeCases": "deconnexion : invisibilite retiree (InvisibilityManager.handleDisconnect) ; PvP : les joueurs ne sont pas affectes par l'attitude",
+    "limitations": "l'invisibilite du mod est une teinte : la perte de trace vient de l'attitude IGNORE forcee"
+  }
+}

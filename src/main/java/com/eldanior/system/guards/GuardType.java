@@ -19,7 +19,8 @@ public enum GuardType {
     CHEVALIER_ERRANT("Eldanior_Npc_Chevalier_Errant", "Chevalier errant", "errant", Kind.ROAMER, true,
             "Armor_Steel_Chest", "Armor_Steel_Hands", "Armor_Steel_Legs"),
     /** Se promene dans sa ville, va voir les autres PNJ et les blocs. */
-    VILLAGEOIS("Eldanior_Npc_Villageois", "Villageois", "villageois", Kind.VILLAGER, true),
+    /** Habitant (le peuple ; ancien villageois et pelerin reunis) : se promene, va voir les autres PNJ, prie parfois. */
+    VILLAGEOIS("Eldanior_Npc_Villageois", "Habitant", "habitant", Kind.VILLAGER, true),
     /** Recrutable contre de l'or : suit le joueur, revient a son poste a sa mort ou a la fin du contrat. */
     AVENTURIER("Eldanior_Npc_Aventurier", "Aventurier", "aventurier", Kind.ADVENTURER, true),
     /** Erre comme le chevalier errant et traque les joueurs PK (BountyHunter). Role selon son type : guerrier, archer, assassin. */
@@ -29,8 +30,25 @@ public enum GuardType {
      * combattent. Sa prime (selon son niveau) va a celui qui l'abat. Role selon son type : guerrier, archer, assassin.
      */
     CRIMINEL("Eldanior_Criminel", "Criminel", "criminel", Kind.CRIMINAL, true),
-    /** PNJ de service, fixe : fonder une guilde, l'ameliorer (touche d'interaction : GuildMasterSystem -> GuildMasterScreen). */
-    MAITRE_GUILDE("Eldanior_Npc_Maitre_Guilde", "Maître de guilde", "maitre_guilde", Kind.SERVICE, true);
+    /** PNJ de service, fixe : fonder une guilde, l'ameliorer (touche d'interaction : NpcInteractSystem -> NpcServices -> GuildMasterScreen). */
+    MAITRE_GUILDE("Eldanior_Npc_Maitre_Guilde", "Maître de guilde", "maitre_guilde", Kind.SERVICE, true),
+    /** Garde aux dagues, reste a son poste (deplacement propre a venir). Cuir de corbeau ; kimono de l'Ombre chez les Luo. */
+    ASSASSIN("Eldanior_Guard_Assassin", "Assassin", "assassin", Kind.GUARD, true,
+            "Armor_Leather_Raven_Head", "Armor_Leather_Raven_Chest", "Armor_Leather_Raven_Hands", "Armor_Leather_Raven_Legs"),
+    /** Disciple : epee de bois (bokken chez les Luo), enchaine des kata a son poste et se bat. */
+    DISCIPLE("Eldanior_Guard_Disciple", "Disciple", "disciple", Kind.GUARD, true),
+    /** Marchand du Clan Luo : une boutique et un rang (LuoMerchants), boutique ouverte selon le client ; tenue du Grand Negociant. */
+    MARCHAND("Eldanior_Npc_Marchand_Luo", "Marchand Luo", "marchand", Kind.SERVICE, true,
+            "Armor_Kimono_Negociant_Head", "Armor_Kimono_Negociant_Chest", "Armor_Kimono_Negociant_Hands", "Armor_Kimono_Negociant_Legs"),
+    /** Commercant : un metier (NpcTrades : banquier, intendant, marchand de meubles, alchimiste, forgeron...), boutique et tenue du metier. */
+    COMMERCANT("Eldanior_Npc_Commercant", "Commerçant", "commercant", Kind.SERVICE, true),
+    /** Marchand ambulant : vend un peu de tout, tire du monde entier (LuoMerchants.wanderer) ; ouvert a tous. */
+    AMBULANT("Eldanior_Npc_Marchand_Ambulant", "Marchand ambulant", "ambulant", Kind.SERVICE, true,
+            "Armor_Cloth_Wool_Head", "Armor_Cloth_Wool_Chest", "Armor_Cloth_Wool_Hands", "Armor_Cloth_Wool_Legs"),
+    /** Forgeron legendaire (LegendarySmiths : Humain du Clan Luo, Nain, Elfe) : seul a forger le fer divin ; pose par un admin. */
+    LEGENDAIRE("Eldanior_Npc_Forgeron_Legendaire", "Forgeron légendaire", "legendaire", Kind.SERVICE, true),
+    /** Sensei (2026-11-10) : un par famille, tenue noble ; techniques de la famille, duel d'entrainement (Sensei). */
+    SENSEI("Eldanior_Npc_Sensei", "Sensei", "sensei", Kind.SERVICE, true);
 
     public enum Kind { GUARD, ROAMER, VILLAGER, ADVENTURER, HUNTER, CRIMINAL, SERVICE }
 
@@ -58,12 +76,18 @@ public enum GuardType {
     public boolean hasRandomSkin() { return randomSkin; }
     /** Armure posee par le code (les variantes de gabarit n'acceptent pas de champ Armor). */
     public List<String> getArmor() { return armor; }
+    /** Ronde en cercle autour du poste : patrouilleur. */
+    public boolean patrols() { return this == PATROUILLEUR; }
+    /** Promenade de villageois autour du poste : villageois, pelerin. */
+    public boolean strolls() { return this == VILLAGEOIS; }
+
     /** Garde : alerte au PvP, appel a l'aide entre gardes. */
     public boolean isGuard() { return kind == Kind.GUARD; }
 
     /** Rang d'apres l'argument de commande (ville, royal, ..., villageois), null si inconnu. */
     public static GuardType fromArg(String s) {
         if (s == null) return null;
+        if (s.equalsIgnoreCase("villageois") || s.equalsIgnoreCase("pelerin") || s.equalsIgnoreCase("peuple")) return VILLAGEOIS;
         for (GuardType t : values()) if (t.arg.equalsIgnoreCase(s) || t.name().equalsIgnoreCase(s)) return t;
         return null;
     }
@@ -71,7 +95,12 @@ public enum GuardType {
     /** Type d'apres l'identifiant de role du PNJ (tous les roles d'aventurier / de chasseur comptent), null sinon. */
     public static GuardType fromRole(String roleId) {
         if (roleId == null || !roleId.startsWith("Eldanior_")) return null;
+        if (roleId.endsWith(LuoNpcs.LUO_SUFFIX)) {                    // variante du territoire Luo (pas le marchand Eldanior_Npc_Marchand_Luo)
+            String base = roleId.substring(0, roleId.length() - LuoNpcs.LUO_SUFFIX.length());
+            if (LuoNpcs.LUO_ROLES.contains(base)) roleId = base;
+        }
         if (roleId.startsWith("Eldanior_Npc_Aventurier")) return AVENTURIER;
+        if (roleId.equals("Eldanior_Npc_Pelerin")) return VILLAGEOIS;                   // ancien pelerin : un habitant
         if (roleId.startsWith(CHASSEUR_PRIME.roleId)) return CHASSEUR_PRIME;
         if (roleId.startsWith(CRIMINEL.roleId)) return CRIMINEL;
         for (GuardType t : values()) if (t.roleId.equals(roleId)) return t;

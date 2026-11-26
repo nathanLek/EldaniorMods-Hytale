@@ -1,0 +1,46 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune des Sables Mouvants",
+    "Description": "Sort rare de terre (Mage, rune de prédilection de l'Alchimiste). Le sol du point visé (rayon 4, jusqu'à 20 blocs) se change en sables mouvants pendant 6 s. Les ennemis qui s'y trouvent avancent à peine (vitesse -70 %), subissent 10 dégâts toutes les demi-secondes, et ceux qui y restent 2 s sont englués sur place 1 s. Le sol redevient normal ensuite (jamais en ville ni sur une parcelle). Épargne votre groupe, votre guilde et votre famille. Coût : 120 mana. Recharge : 60 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_SablesMouvants.png",
+  "Quality": "Rare",
+  "ItemLevel": 40,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_Runes.Terre"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_SablesMouvants.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 60,
+    "Cost": 120,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Earth",
+      "Damage",
+      "Aoe",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_SablesMouvants"
+  }
+}

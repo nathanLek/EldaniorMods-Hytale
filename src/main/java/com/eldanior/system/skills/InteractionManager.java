@@ -1,7 +1,6 @@
 package com.eldanior.system.skills;
 
 import com.eldanior.system.classes.gui.OpenClassSelectionInteraction;
-import com.eldanior.system.skills.interaction.ConsumableItemMoneyInteraction;
 import com.eldanior.system.skills.interaction.ConsumableItemSkillInteraction;
 import com.eldanior.system.skills.interaction.ConsumableItemStatsInteraction;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
@@ -15,11 +14,17 @@ public class InteractionManager {
                 .register("ConsumableItemSkillInteraction",
                         ConsumableItemSkillInteraction.class, ConsumableItemSkillInteraction.CODEC);
         plugin.getCodecRegistry(Interaction.CODEC)
-                .register("ConsumableItemMoneyInteraction",
-                        ConsumableItemMoneyInteraction.class, ConsumableItemMoneyInteraction.CODEC);
-        plugin.getCodecRegistry(Interaction.CODEC)
                 .register("ConsumableItemStatsInteraction",
                         ConsumableItemStatsInteraction.class, ConsumableItemStatsInteraction.CODEC);
+        plugin.getCodecRegistry(Interaction.CODEC)                                                  // indices lus en main (2026-11-14)
+                .register("Eldanior_LireIndice", com.eldanior.system.histoires.LireIndiceInteraction.class,
+                        com.eldanior.system.histoires.LireIndiceInteraction.CODEC);
+        plugin.getCodecRegistry(Interaction.CODEC)                                                  // poche dimensionnelle (2026-11-16)
+                .register("Eldanior_OuvrirPoche", com.eldanior.system.poche.OuvrirPocheInteraction.class,
+                        com.eldanior.system.poche.OuvrirPocheInteraction.CODEC);
+        plugin.getCodecRegistry(Interaction.CODEC)                                                  // livres lus en main (2026-11-14)
+                .register("Eldanior_LireLivre", com.eldanior.system.histoires.LireLivreInteraction.class,
+                        com.eldanior.system.histoires.LireLivreInteraction.CODEC);
         // TA NOUVELLE INTERACTION BENCH CLASS
         plugin.getCodecRegistry(Interaction.CODEC)
                 .register("MuspelheimWrath",
@@ -37,6 +42,18 @@ public class InteractionManager {
                 .register("ChaosAbyss", com.eldanior.system.skills.runes.spells.ChaosAbyssInteraction.class, com.eldanior.system.skills.runes.spells.ChaosAbyssInteraction.CODEC);
         plugin.getCodecRegistry(Interaction.CODEC)
                 .register("RuneSpell", com.eldanior.system.skills.runes.spells.RuneSpellInteraction.class, com.eldanior.system.skills.runes.spells.RuneSpellInteraction.CODEC);
+        plugin.getCodecRegistry(Interaction.CODEC)                                                  // detente du mousquet (2026-11-15)
+                .register("Eldanior_MousquetTir", com.eldanior.system.skills.runes.spells.MousquetTirInteraction.class,
+                        com.eldanior.system.skills.runes.spells.MousquetTirInteraction.CODEC);
+        plugin.getCodecRegistry(Interaction.CODEC)                                                  // garde de la Rune de Transformation d'Arme
+                .register("Eldanior_ArmeLegendaireTenue", com.eldanior.system.skills.runes.spells.ArmeLegendaireTenueInteraction.class,
+                        com.eldanior.system.skills.runes.spells.ArmeLegendaireTenueInteraction.CODEC);
+        plugin.getCodecRegistry(Interaction.CODEC)                                                  // lunette des armes a feu (2026-11-15)
+                .register("Eldanior_SeuilEndurance", com.eldanior.system.skills.runes.spells.SeuilEnduranceInteraction.class,
+                        com.eldanior.system.skills.runes.spells.SeuilEnduranceInteraction.CODEC);
+        plugin.getCodecRegistry(Interaction.CODEC)                                                  // entrer dans une faille (2026-11-23)
+                .register("Eldanior_EntrerFaille", com.eldanior.system.failles.EntrerFailleInteraction.class,
+                        com.eldanior.system.failles.EntrerFailleInteraction.CODEC);
         com.eldanior.system.skills.runes.spells.RuneSpells.registerAll(); // sorts de rune du moteur commun
         plugin.getCodecRegistry(Interaction.CODEC)
                 .register("BifrostBridge", com.eldanior.system.skills.runes.spells.BifrostBridgeInteraction.class, com.eldanior.system.skills.runes.spells.BifrostBridgeInteraction.CODEC);

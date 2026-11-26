@@ -1,0 +1,67 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_ProjectionAstrale",
+  "spell": "ProjectionAstrale",
+  "javaClass": "ProjectionAstrale",
+  "page": "rune_page_projection_astrale",
+  "name": "Rune de Projection Astrale",
+  "type": "Espace",
+  "rarity": "Rare",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Projection",
+  "summary": "esprit astral guide par le regard 6 s, puis teleportation sur lui et onde a l'arrivee.",
+  "description": "Sort rare d'espace (Mage, rune de prédilection du Mystique). Votre esprit quitte votre corps et file là où vous regardez (10 blocs/s, 30 blocs au plus, arrêté par les murs) pendant 6 s. Cliquez pour le rejoindre aussitôt ; sinon vous êtes téléporté sur lui à la fin. À l'arrivée, une onde astrale inflige 120 dégâts dans un rayon de 3 blocs et repousse. Aucun dégât de chute. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin si léger qu'il flotte au-dessus de la main. Enseigne la Projection Astrale : envoyez votre esprit en éclaireur, puis rejoignez-le. Classes : tous les Mages (rune de prédilection du Mystique). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Duration"
+  ],
+  "cast": {
+    "animationSet": "Spellbook",
+    "charging": "CastPushCharging",
+    "release": "CastPushCharged",
+    "chargeTime": 0.4,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Portal_Neutral_Open",
+    "handParticles": "Astral_Esprit",
+    "handParticlesScale": 0.25,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.4,
+    "range": 30,
+    "radius": "3 (onde d'arrivee)",
+    "targets": "soi ; ennemis a l'arrivee",
+    "persistentFx": "Astral_Esprit a la position de l'esprit toutes les 100 ms",
+    "impactFx": "Bifrost_Divine + Astral_Esprit a l'arrivee",
+    "sounds": "SFX_Portal_Neutral_Open au depart, SFX_Portal_Neutral + SFX_Portal_Void a l'arrivee",
+    "effects": "teleportation (clic ou fin), 120 Elemental + recul rayon 3, protection de chute 3 s",
+    "terrain": "aucun",
+    "persistentDurationS": 6,
+    "interruptions": "clic gauche/droit = rejoindre l'esprit tout de suite",
+    "restrictions": "mage",
+    "edgeCases": "esprit contre un mur : il s'arrete ; la teleportation vise toujours une case libre (2 blocs d'air), sinon la derniere position libre ; chunk non charge : l'esprit s'arrete",
+    "balance": {
+      "damage": 1,
+      "range": 2,
+      "duration": 1,
+      "mobility": 3,
+      "control": 1,
+      "defense": 1,
+      "targets": 1,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    }
+  },
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null
+}

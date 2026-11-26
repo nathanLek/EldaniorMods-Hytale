@@ -1,0 +1,70 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_NaineBlanche",
+  "spell": "NaineBlanche",
+  "javaClass": "NaineBlanche",
+  "page": "rune_page_naine_blanche",
+  "name": "Rune de la Naine Blanche",
+  "type": "Lumiere",
+  "rarity": "Unique",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "NaineBlanche",
+  "summary": "etoile naine 12 s a 4 blocs au-dessus du point vise : attire les ennemis (r 10), 40 / s de lumiere (x2 morts-vivants), allies +2 % PV / s ; effondrement final 250 (r 8).",
+  "description": "Sort unique de lumière (Mage, rune de prédilection du Créateur Cosmique). Une naine blanche s'allume à 4 blocs au-dessus du point visé (jusqu'à 25 blocs) pendant 12 s. Sa masse attire lentement les ennemis à moins de 10 blocs et sa lumière les brûle (40 dégâts par seconde, double contre les morts-vivants) ; vos alliés à portée regagnent 2 % de leurs PV par seconde. Quand elle s'effondre, un éclair aveuglant frappe tous les ennemis à moins de 8 blocs (250 dégâts). Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin si blanc qu'il faut plisser les yeux pour le lire. Enseigne la Naine Blanche : une étoile tenue au creux de la main. Classes : tous les Mages (rune de prédilection du Créateur Cosmique). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe",
+    "Duration",
+    "Heal"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.6,
+    "releaseTime": 0.5,
+    "moveSpeed": 0.4,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Divine_Respawn",
+    "handParticles": "Bifrost_Divine",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.6,
+    "range": 25,
+    "radius": "10 (attraction, lumiere, soin) / 8 (effondrement)",
+    "targets": "ennemis et allies proches de l'etoile",
+    "persistentFx": "modele Apollo_Sun (reduit x0,5) qui tourne, Bifrost_Divine (x2,5) / 0,3 s au coeur",
+    "impactFx": "Chaos_Flash + Bifrost_Pillar a l'effondrement",
+    "sounds": "SFX_Divine_Respawn a l'allumage, SFX_Portal_Void a l'effondrement",
+    "effects": "/ 0,25 s : attraction horizontale 2,5 b/s vers l'etoile (ennemis a 10 blocs) ; / 0,5 s : 20 Elemental (x2 morts-vivants) ; allies +1 % PV / 0,5 s ; fin : 250 Elemental r 8",
+    "terrain": "aucun",
+    "persistentDurationS": 12,
+    "interruptions": "lanceur mort ou deconnecte : fin sans effondrement",
+    "restrictions": "mage",
+    "edgeCases": "invocations exclues ; l'etoile reste fixe",
+    "limitations": "",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 2,
+      "mobility": 0,
+      "control": 2,
+      "defense": 2,
+      "targets": 3,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 0
+    }
+  }
+}

@@ -26,6 +26,7 @@ public class DivineSpellsSystem extends EntityTickingSystem<EntityStore> {
         TaranisSanctuary.tick(uuid, caster, store, commandBuffer);
         BahamutAdvent.tick(uuid, caster, store, commandBuffer);
         DragonAvatar.tick(uuid, caster, store, commandBuffer);
+        ColossePierre.restoreIfStuck(uuid, caster, store, commandBuffer);
         ChronosHourglass.tick(uuid, caster, store, commandBuffer);
         ChaosAbyss.tick(uuid, caster, store, commandBuffer);
         BifrostBridge.tick(uuid, caster, store, commandBuffer);

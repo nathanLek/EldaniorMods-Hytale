@@ -1,0 +1,23 @@
+{
+  "$Comment": "Ruyi Jingu Bang, Bâton du Roi Singe : clic = enchainement ; maintien (0.6 s) = sort Java RuyiExtension. Genere par gen_divines.py.",
+  "Type": "Charging",
+  "Effects": {
+    "ItemAnimationId": "ThrowCharging",
+    "ClearAnimationOnFinish": true
+  },
+  "AllowIndefiniteHold": true,
+  "Next": {
+    "0": {
+      "Type": "Chaining",
+      "ChainingAllowance": 1.3,
+      "Next": [
+        "Spear_Swing_Left",
+        "Spear_Swing_Right",
+        "Spear_Spin_Swing_Left",
+        "Spear_Spin_Swing_Right",
+        "Spear_Spin_Swing_Left_Heavy"
+      ]
+    },
+    "0.6": "Divin_Ruyi_Hold"
+  }
+}

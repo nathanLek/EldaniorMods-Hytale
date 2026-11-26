@@ -1,11 +1,13 @@
 $C = "../Common.ui";
 
-// Fenetre des tableaux (prime, guilde) et du maitre de guilde, deux fois plus large que la fenetre de recrutement
+// Fenetre des tableaux (prime, guilde, quetes, classements, duels) et du maitre de guilde, deux fois plus large que la fenetre de recrutement
 // (Npc/Recruit.ui) : arches larges a pans coupes et emblemes propres (BoardFrame*.png, BoardEmblem*.png :
 // scripts/boards/gen_boards.py). Arche du haut : embleme, titre, lieu, note. Corps a bords dores : replique, 4 tuiles de
 // chiffres, onglets (souligne dore sur l'actif), puis deux panneaux : a gauche la liste (7 lignes par page : rang, nom, detail,
 // valeur, oeil pour ouvrir la fiche), a droite la fiche de la ligne choisie (ou l'aide de l'onglet) avec montant, cout, boutons et message de
-// retour (et, pour le maitre de guilde, nom et tag d'une guilde a fonder) ; bourse du joueur. Arche du bas : note, bouton d'action.
+// retour (et, pour le maitre de guilde, nom et tag d'une guilde a fonder ; pour l'intendant, nom et devise d'un ordre), troisieme bouton
+// optionnel (#BoardSideAlt) ; bourse du joueur (ou tresorerie de la famille). 4 onglets au plus (l'intendant en a 4).
+// Icones d'objets optionnelles : une par ligne (#BoardRowIcon<i>) et une grande dans la fiche (#BoardSideIcon). Arche du bas : note, bouton d'action.
 Group {
   LayoutMode: Middle;
   Background: #05080d(0.55);
@@ -29,6 +31,30 @@ Group {
         Anchor: (Height: 0);
         Visible: false;
         Background: (TexturePath: "BoardEmblemGuilde.png", Anchor: (Width: 96, Height: 96, Top: -40));
+      }
+
+      Group #BoardEmblemQuetes {
+        Anchor: (Height: 0);
+        Visible: false;
+        Background: (TexturePath: "BoardEmblemQuetes.png", Anchor: (Width: 96, Height: 96, Top: -40));
+      }
+
+      Group #BoardEmblemClassement {
+        Anchor: (Height: 0);
+        Visible: false;
+        Background: (TexturePath: "BoardEmblemClassement.png", Anchor: (Width: 96, Height: 96, Top: -40));
+      }
+
+      Group #BoardEmblemDuel {
+        Anchor: (Height: 0);
+        Visible: false;
+        Background: (TexturePath: "BoardEmblemDuel.png", Anchor: (Width: 96, Height: 96, Top: -40));
+      }
+
+      Group #BoardEmblemIntendant {
+        Anchor: (Height: 0);
+        Visible: false;
+        Background: (TexturePath: "BoardEmblemIntendant.png", Anchor: (Width: 96, Height: 96, Top: -40));
       }
 
       Group { Anchor: (Height: 70); }
@@ -194,6 +220,55 @@ Group {
             Visible: false;
           }
         }
+        Group #BoardTabBox3 {
+          FlexWeight: 1;
+          LayoutMode: Top;
+          Padding: (Left: 6);
+          Visible: false;
+
+          $C.@SmallSecondaryTextButton #BoardTab3 {
+            @Text = "";
+          }
+
+          Group #BoardTabLine3 {
+            Anchor: (Height: 2);
+            Background: #e8b34f;
+            Visible: false;
+          }
+        }
+        Group #BoardTabBox4 {
+          FlexWeight: 1;
+          LayoutMode: Top;
+          Padding: (Left: 6);
+          Visible: false;
+
+          $C.@SmallSecondaryTextButton #BoardTab4 {
+            @Text = "";
+          }
+
+          Group #BoardTabLine4 {
+            Anchor: (Height: 2);
+            Background: #e8b34f;
+            Visible: false;
+          }
+        }
+
+        Group #BoardTabBox5 {
+          FlexWeight: 1;
+          LayoutMode: Top;
+          Padding: (Left: 6);
+          Visible: false;
+
+          $C.@SmallSecondaryTextButton #BoardTab5 {
+            @Text = "";
+          }
+
+          Group #BoardTabLine5 {
+            Anchor: (Height: 2);
+            Background: #e8b34f;
+            Visible: false;
+          }
+        }
         }
 
         // ---- Deux panneaux : liste | fiche ----
@@ -252,6 +327,14 @@ Group {
                 Style: (FontSize: 15, RenderBold: true, TextColor: #6f8296, HorizontalAlignment: Center, VerticalAlignment: Center);
               }
 
+              Group #BoardRowIconBox0 {
+                Anchor: (Width: 34);
+                LayoutMode: Middle;
+                Visible: false;
+
+                ItemIcon #BoardRowIcon0 { Anchor: (Width: 28, Height: 28); }
+              }
+
               Group {
                 FlexWeight: 1;
                 LayoutMode: Top;
@@ -302,6 +385,14 @@ Group {
               Label #BoardRowRank1 {
                 Anchor: (Width: 30);
                 Style: (FontSize: 15, RenderBold: true, TextColor: #6f8296, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+
+              Group #BoardRowIconBox1 {
+                Anchor: (Width: 34);
+                LayoutMode: Middle;
+                Visible: false;
+
+                ItemIcon #BoardRowIcon1 { Anchor: (Width: 28, Height: 28); }
               }
 
               Group {
@@ -356,6 +447,14 @@ Group {
                 Style: (FontSize: 15, RenderBold: true, TextColor: #6f8296, HorizontalAlignment: Center, VerticalAlignment: Center);
               }
 
+              Group #BoardRowIconBox2 {
+                Anchor: (Width: 34);
+                LayoutMode: Middle;
+                Visible: false;
+
+                ItemIcon #BoardRowIcon2 { Anchor: (Width: 28, Height: 28); }
+              }
+
               Group {
                 FlexWeight: 1;
                 LayoutMode: Top;
@@ -406,6 +505,14 @@ Group {
               Label #BoardRowRank3 {
                 Anchor: (Width: 30);
                 Style: (FontSize: 15, RenderBold: true, TextColor: #6f8296, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+
+              Group #BoardRowIconBox3 {
+                Anchor: (Width: 34);
+                LayoutMode: Middle;
+                Visible: false;
+
+                ItemIcon #BoardRowIcon3 { Anchor: (Width: 28, Height: 28); }
               }
 
               Group {
@@ -460,6 +567,14 @@ Group {
                 Style: (FontSize: 15, RenderBold: true, TextColor: #6f8296, HorizontalAlignment: Center, VerticalAlignment: Center);
               }
 
+              Group #BoardRowIconBox4 {
+                Anchor: (Width: 34);
+                LayoutMode: Middle;
+                Visible: false;
+
+                ItemIcon #BoardRowIcon4 { Anchor: (Width: 28, Height: 28); }
+              }
+
               Group {
                 FlexWeight: 1;
                 LayoutMode: Top;
@@ -512,6 +627,14 @@ Group {
                 Style: (FontSize: 15, RenderBold: true, TextColor: #6f8296, HorizontalAlignment: Center, VerticalAlignment: Center);
               }
 
+              Group #BoardRowIconBox5 {
+                Anchor: (Width: 34);
+                LayoutMode: Middle;
+                Visible: false;
+
+                ItemIcon #BoardRowIcon5 { Anchor: (Width: 28, Height: 28); }
+              }
+
               Group {
                 FlexWeight: 1;
                 LayoutMode: Top;
@@ -562,6 +685,14 @@ Group {
               Label #BoardRowRank6 {
                 Anchor: (Width: 30);
                 Style: (FontSize: 15, RenderBold: true, TextColor: #6f8296, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+
+              Group #BoardRowIconBox6 {
+                Anchor: (Width: 34);
+                LayoutMode: Middle;
+                Visible: false;
+
+                ItemIcon #BoardRowIcon6 { Anchor: (Width: 28, Height: 28); }
               }
 
               Group {
@@ -650,6 +781,20 @@ Group {
                 Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #6f8296, Wrap: true);
               }
 
+              Group #BoardSideIconBox {
+                Anchor: (Top: 8, Height: 76);
+                LayoutMode: Center;
+                Visible: false;
+
+                Group {
+                  Anchor: (Width: 76, Height: 76);
+                  LayoutMode: Middle;
+                  Background: #0b141d;
+
+                  ItemIcon #BoardSideIcon { Anchor: (Width: 64, Height: 64); }
+                }
+              }
+
               Group { Anchor: (Top: 8, Height: 1); Background: #c99436(0.55); }
 
               Label #BoardSideText {
@@ -662,7 +807,7 @@ Group {
                 LayoutMode: Top;
                 Visible: false;
 
-                Label {
+                Label #BoardInputNameLabel {
                   Text: "Nom de la guilde";
                   Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #6f8296);
                 }
@@ -672,7 +817,7 @@ Group {
                   PlaceholderText: "3 à 24 caractères";
                 }
 
-                Label {
+                Label #BoardInputTagLabel {
                   Anchor: (Top: 8);
                   Text: "Tag";
                   Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #6f8296);
@@ -725,6 +870,17 @@ Group {
                   }
                 }
 
+                Group #BoardSideAltBox {
+                  Anchor: (Width: 96);
+                  LayoutMode: Top;
+                  Padding: (Left: 8);
+                  Visible: false;
+
+                  $C.@SmallTertiaryTextButton #BoardSideAlt {
+                    @Text = "";
+                  }
+                }
+
                 Group #BoardSideCancelBox {
                   Anchor: (Width: 100);
                   LayoutMode: Top;
@@ -749,7 +905,7 @@ Group {
             Anchor: (Width: 220);
             LayoutMode: Middle;
 
-            Label {
+            Label #BoardMoneyLabel {
               Text: "Votre bourse";
               Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #6f8296, HorizontalAlignment: Center);
             }

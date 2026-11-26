@@ -1,0 +1,15 @@
+{
+  "$Comment": "Detente : le serveur verifie l'arme tenue et ses munitions (Mousquet.pullTrigger : mousquets, SARS, canon), la balle part au tick suivant. Sinon cliquetis a vide.",
+  "Type": "Eldanior_MousquetTir",
+  "Next": {
+    "Type": "Simple",
+    "RunTime": 0.5,
+    "Effects": {
+      "ItemAnimationId": "ShootFlintlock",
+      "CameraEffect": "Handgun_Shoot",
+      "WorldSoundEventId": "SFX_Blunderbuss_Fire",
+      "LocalSoundEventId": "SFX_Blunderbuss_Fire_Local"
+    }
+  },
+  "Failed": "Gun_Shoot_Fail"
+}

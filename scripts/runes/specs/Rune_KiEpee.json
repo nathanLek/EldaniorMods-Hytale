@@ -1,0 +1,61 @@
+{
+  "$Comment": "Fiche de conception : technique du Clan Luo (voie martiale), validee le 2026-11-09, type Luo le 2026-11-09 (docs/plan-clan-luo.md). Apprise par son manuel, aucun butin.",
+  "id": "Rune_KiEpee",
+  "spell": "KiEpee",
+  "javaClass": "KiEpee",
+  "page": "rune_page_ki_epee",
+  "name": "Rune du Ki de l'Épée",
+  "type": "Luo",
+  "rarity": "Rare",
+  "emblem": "KiEpee",
+  "classes": "apprenti_arts_martiaux, disciple_martial, expert_martial, maitre_martial, grand_maitre_martial, saint_martial, maitre_supreme, dieu_martial",
+  "persistent": true,
+  "summary": "Ki de l'Epee (bascule) : tant qu'il est actif, le Ki renforce les armes a lame, effets qui evoluent avec le palier de la voie martiale ; consomme du mana chaque seconde.",
+  "description": "Technique du Clan Luo, à bascule (voie martiale) : utilisez la rune pour éveiller votre Ki, ré-utilisez-la pour l'apaiser. Il se coupe aussi quand votre mana est épuisé. Tant qu'il est actif, vos armes à lame (épée, katana, dague) frappent plus fort et vos techniques de Ki grandissent avec votre classe : lame imprégnée, lames de Ki projetées, Ki solidifié, fleur de Ki, et au sommet un Ki devenu invisible qui tranche même à mains nues. Coût : 3 à 8 mana par seconde selon le palier.",
+  "pageDescription": "Rouleau du dojo Luo : « Le Ki suit la lame comme l'ombre suit le corps. » Technique du Clan Luo : elle s'apprend dans son manuel, jamais en butin.",
+  "keywords": [
+    "Buff",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": 0,
+    "cooldown": 1,
+    "reason": "rune a bascule de la voie martiale (comme la Rune d'Aura) : un clic l'active, un second clic la coupe ; le Ki consomme son mana chaque seconde dans le code, la Meditation est gratuite"
+  },
+  "loot": {},
+  "cast": {
+    "animationSet": "Sword",
+    "charging": "SwingLeftCharging",
+    "release": "CastEnrage",
+    "chargeTime": 0.1,
+    "releaseTime": 0.3,
+    "moveSpeed": 0.6,
+    "cameraEffect": null,
+    "sound": null,
+    "releaseSound": "SFX_Ability_Wind_Strike_Imbue",
+    "handParticles": null,
+    "handParticlesScale": 0.6,
+    "costMoment": "start"
+  },
+  "design": {
+    "triggers": "clic de la rune (active / coupe)",
+    "targets": "soi",
+    "effects": "effet visuel Ki_Visual_<palier> (aura + vitesse) ; bonus de degats des armes a lame (CombatStatsSystem), lames de Ki (Tenryumaru.kiBlade), reduction de degats subis (onOwnerHurt)",
+    "balance": {
+      "damage": 2,
+      "range": 0,
+      "duration": 3,
+      "mobility": 0,
+      "control": 0,
+      "defense": 0,
+      "targets": 0,
+      "frequency": 3,
+      "terrain": 0,
+      "difficulty": 1
+    },
+    "edgeCases": "mana epuise -> coupe ; mort / deconnexion -> abort ; changement de classe : palier relu chaque seconde"
+  },
+  "category": "Eldanior_Empire_Luo.Runes",
+  "manual": "Eldanior_Manuel_Luo_KiEpee",
+  "$Comment_manual": "Technique apprise par son manuel secret (gen_voie_martiale_objets.py) : pas de parchemin rune_page_*."
+}

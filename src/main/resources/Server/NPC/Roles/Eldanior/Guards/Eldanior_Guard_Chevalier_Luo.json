@@ -1,0 +1,74 @@
+{
+  "Type": "Variant",
+  "Reference": "Template_Intelligent",
+  "Modify": {
+    "Appearance": "Player",
+    "DropList": "Empty",
+    "MaxHealth": 1000,
+    "MaxSpeed": 12,
+    "KnockbackScale": 0.1,
+    "Weapons": [
+      "Eldanior_Weapon_Sword_Katana_Aonami_Degainee",
+      "Eldanior_Weapon_Sword_Katana_Aonami"
+    ],
+    "OffHand": [
+      "Eldanior_Weapon_Sword_Katana_Aonami_Fourreau_Vide"
+    ],
+    "DefaultOffHandSlot": 0,
+    "NighttimeOffhandSlot": 0,
+    "WakingPeriod": [
+      0,
+      24
+    ],
+    "BedBlockSet": "",
+    "WakingIdleBehaviorComponent": "Component_Instruction_Eldanior_Leash_Return",
+    "WanderRadius": 2,
+    "Patrol": false,
+    "FollowPatrolPath": false,
+    "ViewRange": 20,
+    "ViewSector": 240,
+    "HearingRange": 12,
+    "AbsoluteDetectionRange": 4,
+    "AlertedRange": 48,
+    "AlertedTime": [
+      0.3,
+      0.6
+    ],
+    "LeashDistance": 24,
+    "LeashMinPlayerDistance": 4,
+    "LeashTimer": [
+      2,
+      3
+    ],
+    "HardLeashDistance": 48,
+    "ChanceToBeAlertedWhenReceivingCallForHelp": 100,
+    "CombatMessageTargetGroups": [
+      "Eldanior_Guards"
+    ],
+    "InvestigateRange": 48,
+    "SearchTimeRange": [
+      4,
+      6
+    ],
+    "UseCombatActionEvaluator": true,
+    "_CombatConfig": "CAE_Eldanior_Guard_Chevalier_Luo",
+    "AttitudeGroup": "Eldanior_Guard",
+    "DefaultPlayerAttitude": "Ignore",
+    "DisableDamageGroups": [
+      "Self",
+      "Eldanior_Guards"
+    ],
+    "BreathesInWater": true,
+    "NameTranslationKey": {
+      "Compute": "NameTranslationKey"
+    },
+    "BlockAbility": ""
+  },
+  "Parameters": {
+    "NameTranslationKey": {
+      "Value": "server.npcRoles.Eldanior_Guard_Chevalier.name",
+      "Description": "Translation key for NPC name display"
+    }
+  },
+  "$Comment": "Variante du territoire Luo de Eldanior_Guard_Chevalier (scripts/guards/gen_postes_luo.py) : katana du clan, sans bouclier."
+}

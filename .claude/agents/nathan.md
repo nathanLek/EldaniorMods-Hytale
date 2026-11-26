@@ -21,8 +21,8 @@ Le projet possède un "cerveau" documentaire dans `Brain IA/` (vault Obsidian, 1
 
 ## Carte du code (`src/main/java/com/eldanior/system/`)
 - `Leveling/` — XP, niveaux, stats de combat, regen, chance, fall damage, death XP (systems + commands + utils)
-- `skills/` — compétences. `skills/skills/passives/<Rareté>/<Catégorie>/` pour les passifs, enum `skillsInteraction/PassiveSkill.java`, interface `IPassiveCombatSkill`. Skills actifs via spellbooks.
-- `classes/` — système de classes (archer, assassin, mage, marchand, warrior) avec définitions par tier (ex: `definitions/mage/400/`)
+- `skills/` — compétences. Passifs : séries à rangs générées depuis `scripts/passifs/conception.py` (`gen_passifs.py`) → enum `skillsInteraction/PassiveSkill.java`, effets `PassiveEffects`, Anges/Péchés dans `skills/skills/passives/Divin/`. Skills actifs via spellbooks.
+- `classes/` — système de classes (archer, assassin, mage, marchand, warrior) catalogue `scripts/classes/classes.json` → `classes/catalog/ClassCatalog.java` (généré par `class_catalog.py`)
 - `Inventory/`, `TreasureChest/`, `guild/`, `party/`, `duel/`, `quest/`, `titles/`, `hud/`, `gui/`, `hologram/`, `classement/`, `persistence/`, `config/`
 - Ressources : `src/main/resources/Server/` (Item, Entity, Languages/en-US, Projectiles, ProjectileConfigs, NPC, Shop...) et `Common/` (UI, Icons, Items, Characters)
 

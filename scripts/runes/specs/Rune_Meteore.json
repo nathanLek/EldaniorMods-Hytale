@@ -1,0 +1,67 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_Meteore",
+  "spell": "Meteore",
+  "javaClass": "Meteore",
+  "page": "rune_page_meteore",
+  "name": "Rune du Météore",
+  "type": "Feu",
+  "rarity": "Epic",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Meteore",
+  "summary": "cercle d'alerte 1,2 s puis meteore au point vise : 400 au centre, 250 a 5 blocs, brulure, cratere restaure.",
+  "description": "Sort épique de feu (Mage, rune de prédilection du Magus). Un cercle rougeoie au point visé (jusqu'à 25 blocs) pendant 1,2 s, puis un météore s'y écrase : 400 dégâts dans un rayon de 2 blocs, 250 jusqu'à 5 blocs, projection et brûlure. Il laisse un cratère de roche en fusion et de terre brûlée, qui se referme au bout d'une minute (jamais en ville ni sur une parcelle). Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin roussi, troué en son centre comme par une braise tombée du ciel. Enseigne le Météore : appelez une étoile sur vos ennemis. Classes : tous les Mages (rune de prédilection du Magus). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe"
+  ],
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.6,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Staff_Flame_Fireball_Launch",
+    "handParticles": "Fire_Charge_Charging_Constant",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.6,
+    "range": 25,
+    "radius": "2 (plein) / 5 (souffle)",
+    "targets": "ennemis de la zone",
+    "persistentFx": "Muspelheim_Impact_Zone au sol (0,1 s, reemis) pendant 1,2 s ; meteore Muspelheim_Meteor ramene a l'echelle 5 (setModelScale) qui tombe de 30 blocs en biais",
+    "impactFx": "Explosion_Big, Gobliterator_Furnace_Blast, Impact_Fire, secousse",
+    "sounds": "SFX_Gobliterator_Rocket_Barrage_Projectile a la chute, SFX_Gobliterator_Rocket_Barrage_Explosion a l'impact",
+    "effects": "400 Fire rayon 2, 250 rayon 5, projection, Elda_Brulure",
+    "terrain": "cratere rayon 2,5 (blocs retires, Rock_Volcanic_Cracked_Lava au fond), Soil_Dirt_Burnt jusqu'a 4 blocs ; restaure apres 60 s",
+    "persistentDurationS": 2,
+    "interruptions": "aucune",
+    "restrictions": "mage",
+    "edgeCases": "zone protegee, blocs conserves, fluides : intouches ; point dans le vide : 25 blocs devant ramene au sol",
+    "balance": {
+      "damage": 3,
+      "range": 2,
+      "duration": 0,
+      "mobility": 0,
+      "control": 1,
+      "defense": 0,
+      "targets": 2,
+      "frequency": 1,
+      "terrain": 2,
+      "difficulty": 1
+    }
+  },
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null
+}

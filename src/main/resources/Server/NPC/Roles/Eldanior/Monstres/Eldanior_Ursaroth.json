@@ -1,0 +1,100 @@
+{
+  "$Comment": "Boss Mondial « Ursaroth, l'Ours des Braises Noires » (gen_ours_braises.py) : Ours du Vide du jeu, fourrure noire, flammes rouges ; taille x3, couronnes, niveau et nom poses par WorldBosses.",
+  "Type": "Variant",
+  "Reference": "Template_Bear_Voidtaken_Boss",
+  "Modify": {
+    "Appearance": "Eldanior_Ursaroth",
+    "_CombatConfig": "CAE_Eldanior_Ursaroth",
+    "MaxHealth": 3000,
+    "MaxSpeed": 6,
+    "ViewRange": 64,
+    "ViewSector": 360,
+    "HearingRange": 64,
+    "AbsoluteDetectionRange": 48,
+    "AlertedRange": 64,
+    "WanderRadius": 8,
+    "LeashDistance": 160,
+    "HardLeashDistance": 200,
+    "LeashMinPlayerDistance": 7,
+    "LeashTimer": [
+      3,
+      4
+    ],
+    "DropList": "Drop_Hunt",
+    "DisableDamageGroups": [
+      "Self",
+      "Bear_Voidtaken_Family"
+    ],
+    "AttitudeGroup": "PredatorsBig",
+    "ChaseRelativeSpeed": 1,
+    "IsMemory": false,
+    "_InteractionVars": {
+      "Swipe_Left_Damage": {
+        "Interactions": [
+          {
+            "Parent": "Bear_Grizzly_Swipe_Left_Damage",
+            "DamageCalculator": {
+              "Type": "Absolute",
+              "BaseDamage": {
+                "Physical": 138
+              },
+              "RandomPercentageModifier": 0.1
+            },
+            "DamageEffects": {
+              "Knockback": {
+                "Force": 0.5
+              }
+            }
+          }
+        ]
+      },
+      "Swipe_Right_Damage": {
+        "Interactions": [
+          {
+            "Parent": "Bear_Grizzly_Swipe_Right_Damage",
+            "DamageCalculator": {
+              "Type": "Absolute",
+              "BaseDamage": {
+                "Physical": 144
+              },
+              "RandomPercentageModifier": 0.1
+            },
+            "DamageEffects": {
+              "Knockback": {
+                "Force": 0.5
+              }
+            }
+          }
+        ]
+      },
+      "Stomp_Damage": {
+        "Interactions": [
+          {
+            "Parent": "Bear_Grizzly_Stomp_Damage",
+            "DamageCalculator": {
+              "Type": "Absolute",
+              "BaseDamage": {
+                "Physical": 228
+              },
+              "RandomPercentageModifier": 0.1
+            },
+            "DamageEffects": {
+              "Knockback": {
+                "Force": 10
+              }
+            }
+          }
+        ]
+      }
+    },
+    "NameTranslationKey": {
+      "Compute": "NameTranslationKey"
+    }
+  },
+  "Parameters": {
+    "NameTranslationKey": {
+      "Value": "server.npcRoles.Bear_Voidtaken.name",
+      "Description": "Translation key for NPC name display"
+    }
+  }
+}

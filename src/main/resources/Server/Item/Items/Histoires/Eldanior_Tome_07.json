@@ -1,0 +1,56 @@
+{
+  "Parent": "Template_Lore_Note",
+  "Quality": "Rare",
+  "Categories": [
+    "Eldanior_System.Histoires"
+  ],
+  "Icon": "Icons/ItemsGenerated/Recipe_Book_Magic_Void.png",
+  "IconProperties": {
+    "Scale": 0.695,
+    "Translation": [
+      0.7,
+      -4.1
+    ],
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ]
+  },
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Root_Eldanior_Livre"
+  },
+  "BlockType": {
+    "CustomModel": "Blocks/Dungeons/Book.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/Dungeons/Book_Purple.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "Book",
+    "ParticleColor": "#6b3f8f",
+    "TextureComputedColor": "#5a3577",
+    "Interactions": {
+      "Use": {
+        "Interactions": [
+          {
+            "Type": "Simple"
+          }
+        ]
+      },
+      "Secondary": {
+        "Interactions": [
+          {
+            "Type": "Simple"
+          }
+        ]
+      }
+    }
+  },
+  "TranslationProperties": {
+    "Name": "server.items.Eldanior_Tome_07.name",
+    "Description": "server.items.Eldanior_Tome_07.description"
+  }
+}

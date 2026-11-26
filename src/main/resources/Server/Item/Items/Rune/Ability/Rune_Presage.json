@@ -1,0 +1,44 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune du Présage",
+    "Description": "Sort épique de temps (Mage, rune de prédilection du Prophète). Vous lisez l'avenir proche des ennemis à moins de 15 blocs, trois fois en 9 s. À chaque lecture, un sceau doré apparaît là où chacun d'eux (6 au plus) se trouvera dans 1,5 s ; à l'échéance, le sceau frappe tout ce qui s'y tient : 120 dégâts et figé 1 s. Un ennemi qui change de trajectoire peut y échapper. Épargne votre groupe, votre guilde et votre famille. Coût : 300 mana. Recharge : 120 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_Presage.png",
+  "Quality": "Epic",
+  "ItemLevel": 60,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_Runes.Temps"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_Presage.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 120,
+    "Cost": 300,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Duration",
+      "Damage"
+    ],
+    "Cast": "Root_Ability_Presage"
+  }
+}

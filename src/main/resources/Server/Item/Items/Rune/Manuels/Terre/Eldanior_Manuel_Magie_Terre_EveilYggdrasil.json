@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_EveilYggdrasil (remplace le parchemin rune_page_eveil_yggdrasil).",
+  "TranslationProperties": {
+    "Name": "Manuel de Terre : Éveil d'Yggdrasil",
+    "Description": "Sort divin de nature (Mage, Marchand, Dragon). Une graine tombe sur la zone visée et la nature reprend tout le sol sur 35 blocs, quel que soit le bloc. Au centre se dresse le frêne-monde Yggdrasil (100 blocs : pied à contreforts, racines qui serpentent, tronc cannelé, grandes branches ramifiées, feuillage parsemé d'or, lianes) au-dessus d'un sanctuaire de marbre. Sous le tronc, une salle voûtée tapissée de bois et de racines abrite la fontaine de vie : on y descend par trois galeries qui suivent les grandes racines depuis le jardin. Tant que l'arbre existe (3 minutes) : dans le jardin, vos alliés reçoivent sa bénédiction (vie, endurance et mana rendues chaque seconde, -20 % de dégâts subis), et dans la salle de la fontaine ils sont en plus purifiés et soignés davantage ; l'anneau du milieu cache des pièges végétaux (des racines jaillissent du sol et immobilisent 3 s, 120 dégâts et poison), des ronces qui ralentissent et une vague de poison toutes les 6 s (80 dégâts + poison) ; l'anneau extérieur devient une forêt noyée dans une brume toxique au ras du sol qui empoisonne les ennemis. Juste avant de disparaître, l'arbre libère une onde qui projette tous les ennemis (800 dégâts). Le terrain est ensuite entièrement restauré. Épargne votre groupe, votre guilde et votre famille. Coût : 2000 mana. Recharge : 5 s (valeur de test).\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Terre"
+  ],
+  "Quality": "Divin",
+  "ItemLevel": 100,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Terre_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Terre_EveilYggdrasil.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

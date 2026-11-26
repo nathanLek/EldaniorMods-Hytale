@@ -2,6 +2,7 @@ package com.eldanior.system.skills.runes;
 
 import com.eldanior.system.classes.ClassManager;
 import com.eldanior.system.classes.models.ClassModel;
+import com.eldanior.system.config.EldaniorLogger;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.config.UUIDExtractor;
 import com.hypixel.hytale.component.ComponentType;
@@ -66,8 +67,8 @@ public final class RuneManager {
             Map.entry("Rune_PuitsGravitationnel", "mage, assassin, dragon"),
             Map.entry("Rune_AutoriteGravitationnelle", "mage, assassin, dragon"),
             Map.entry("Rune_Telekinesie", "mage, assassin, dragon"),
-            Map.entry("Rune_Clonage", "dragon, warrior, assassin, archer"),
-            Map.entry("Rune_Doppelganger", "dragon, warrior, assassin, archer"),
+            Map.entry("Rune_Clonage", "mage, dragon, warrior, assassin, archer"),
+            Map.entry("Rune_Doppelganger", "mage, dragon, warrior, assassin, archer"),
             Map.entry("Rune_OndeRepulsion", "mage"),
             Map.entry("Rune_Flammeche", "mage"),
             Map.entry("Rune_MurDeFlammes", "mage"),
@@ -95,7 +96,110 @@ public final class RuneManager {
             Map.entry("Rune_EspritFollet", "mage"),
             Map.entry("Rune_GolemDePierre", "mage"),
             Map.entry("Rune_SentinelleDeGivre", "mage"),
-            Map.entry("Rune_MeuteSpectrale", "mage")
+            Map.entry("Rune_MeuteSpectrale", "mage"),
+            Map.entry("Rune_MarqueFuneste", "mage"),
+            Map.entry("Rune_PuitsDAmes", "mage"),
+            Map.entry("Rune_ReleveDesMorts", "mage"),
+            Map.entry("Rune_AmesErrantes", "mage"),
+            Map.entry("Rune_Phylactere", "mage"),
+            Map.entry("Rune_DomaineDeLaMort", "mage"),
+            Map.entry("Rune_FormeSpectrale", "mage"),
+            Map.entry("Rune_ArmeeDesTombes", "mage"),
+            Map.entry("Rune_MiroirTrompeur", "mage"),
+            Map.entry("Rune_GalerieDesGlaces", "mage"),
+            Map.entry("Rune_Hallucination", "mage"),
+            Map.entry("Rune_ChainesNoires", "mage"),
+            Map.entry("Rune_PacteDeSang", "mage"),
+            Map.entry("Rune_Marionnette", "mage"),
+            Map.entry("Rune_Ruee", "warrior, dragon"),
+            Map.entry("Rune_VoileDeFumee", "assassin, dragon"),
+            Map.entry("Rune_PluieDeFleches", "archer, dragon"),
+            Map.entry("Rune_LancerDePieces", "merchant, dragon"),
+            Map.entry("Rune_ProjectionAstrale", "mage"),
+            Map.entry("Rune_CeintureAsteroides", "mage"),
+            Map.entry("Rune_Prescience", "mage"),
+            Map.entry("Rune_RayonCeleste", "mage"),
+            Map.entry("Rune_Distorsion", "mage"),
+            Map.entry("Rune_RetourEnArriere", "mage"),
+            Map.entry("Rune_OeilOmniscient", "mage"),
+            Map.entry("Rune_Sentence", "mage"),
+            Map.entry("Rune_BulleTemporelle", "mage"),
+            Map.entry("Rune_ArretDuTemps", "mage"),
+            Map.entry("Rune_Surregime", "mage"),
+            Map.entry("Rune_EchosDuPasse", "mage"),
+            Map.entry("Rune_Meteore", "mage"),
+            Map.entry("Rune_RayonArcanique", "mage"),
+            Map.entry("Rune_AvatarOrage", "mage"),
+            Map.entry("Rune_Eternite", "mage"),
+            Map.entry("Rune_SalveArcanique", "mage"),
+            Map.entry("Rune_NuageOrage", "mage"),
+            Map.entry("Rune_Reflexion", "mage"),
+            Map.entry("Rune_Decret", "mage"),
+            Map.entry("Rune_Meditation", "mage"),
+            Map.entry("Rune_SanctuaireMineur", "mage"),
+            Map.entry("Rune_SavoirAccelere", "mage"),
+            Map.entry("Rune_Enseignement", "mage"),
+            Map.entry("Rune_Miracle", "mage"),
+            Map.entry("Rune_PilierAscendant", "mage"),
+            Map.entry("Rune_Inversion", "mage"),
+            Map.entry("Rune_Rempart", "mage"),
+            Map.entry("Rune_SablesMouvants", "mage"),
+            Map.entry("Rune_NuageToxique", "mage"),
+            Map.entry("Rune_PierrePhilosophale", "mage"),
+            Map.entry("Rune_Petrification", "mage"),
+            Map.entry("Rune_Racines", "mage"),
+            Map.entry("Rune_Bosquet", "mage"),
+            Map.entry("Rune_EspritForet", "mage"),
+            Map.entry("Rune_TempeteFeuilles", "mage"),
+            Map.entry("Rune_LentilleGravitationnelle", "mage"),
+            Map.entry("Rune_CouronneAutorite", "mage"),
+            Map.entry("Rune_LoiArcanique", "mage"),
+            Map.entry("Rune_PilierDuMonde", "mage"),
+            Map.entry("Rune_Bannissement", "mage"),
+            Map.entry("Rune_Effacement", "mage"),
+            Map.entry("Rune_FissureVide", "mage"),
+            Map.entry("Rune_SilenceNeant", "mage"),
+            Map.entry("Rune_EruptionPrimordiale", "mage"),
+            Map.entry("Rune_SculpteurDeGlace", "mage"),
+            Map.entry("Rune_OndeOriginelle", "mage"),
+            Map.entry("Rune_Resurrection", "mage"),
+            Map.entry("Rune_GolemsCristal", "mage"),
+            Map.entry("Rune_Faconnage", "mage"),
+            Map.entry("Rune_ColossePierre", "mage"),
+            Map.entry("Rune_MatiereVive", "mage"),
+            Map.entry("Rune_Reecriture", "mage"),
+            Map.entry("Rune_MareeGravitationnelle", "mage"),
+            Map.entry("Rune_PluieCometes", "mage"),
+            Map.entry("Rune_NaineBlanche", "mage"),
+            Map.entry("Rune_Supernova", "mage"),
+            Map.entry("Rune_PlanArchitecte", "mage"),
+            Map.entry("Rune_Labyrinthe", "mage"),
+            Map.entry("Rune_PorteMondes", "mage"),
+            Map.entry("Rune_Presage", "mage"),
+            Map.entry("Rune_Revelation", "mage"),
+            Map.entry("Rune_Prophetie", "mage"),
+            Map.entry("Rune_KiEpee", "apprenti_arts_martiaux, disciple_martial, expert_martial, maitre_martial, grand_maitre_martial, saint_martial, maitre_supreme, dieu_martial"),
+            Map.entry("Rune_MeditationMartiale", "apprenti_arts_martiaux, disciple_martial, expert_martial, maitre_martial, grand_maitre_martial, saint_martial, maitre_supreme, dieu_martial"),
+            Map.entry("Rune_PaumeKi", "clan"),
+            Map.entry("Rune_FrappeMeridiens", "clan"),
+            Map.entry("Rune_GardeFleuve", "clan"),
+            Map.entry("Rune_CroissantKi", "clan"),
+            Map.entry("Rune_DomaineEpee", "clan"),
+            Map.entry("Rune_FleurPrunier", "clan"),
+            Map.entry("Rune_TransformationHwakyung", "clan"),
+            Map.entry("Rune_UniteCielTerre", "clan"),
+            Map.entry("Rune_RenforcementCorps", "disciple_martial, expert_martial, maitre_martial, grand_maitre_martial, saint_martial, maitre_supreme, dieu_martial"),
+            Map.entry("Rune_PasLeger", "expert_martial, maitre_martial, grand_maitre_martial, saint_martial, maitre_supreme, dieu_martial"),
+            Map.entry("Rune_SensMartial", "maitre_martial, grand_maitre_martial, saint_martial, maitre_supreme, dieu_martial"),
+            Map.entry("Rune_ProjectionEpeeAura", "grand_maitre_martial, saint_martial, maitre_supreme, dieu_martial"),
+            Map.entry("Rune_VolEpeeKi", "saint_martial, maitre_supreme, dieu_martial"),
+            Map.entry("Rune_IncarnationAme", "maitre_supreme, dieu_martial"),
+            Map.entry("Rune_DomaineDivin", "dieu_martial"),
+            Map.entry("Rune_ExecutionCeleste", "clan"),
+            Map.entry("Rune_TransformationArme", "mousquetaire"),
+            Map.entry("Rune_ArkiesDomini", "observateur"),
+            Map.entry("Rune_SansVisage", "observateur"),
+            Map.entry("Rune_SentenceSilencieuse", "observateur")
     );
 
     /** Parchemin -> rune enseignee. */
@@ -155,7 +259,92 @@ public final class RuneManager {
             Map.entry("rune_page_esprit_follet", "Rune_EspritFollet"),
             Map.entry("rune_page_golem_de_pierre", "Rune_GolemDePierre"),
             Map.entry("rune_page_sentinelle_de_givre", "Rune_SentinelleDeGivre"),
-            Map.entry("rune_page_meute_spectrale", "Rune_MeuteSpectrale")
+            Map.entry("rune_page_meute_spectrale", "Rune_MeuteSpectrale"),
+            Map.entry("rune_page_marque_funeste", "Rune_MarqueFuneste"),
+            Map.entry("rune_page_puits_d_ames", "Rune_PuitsDAmes"),
+            Map.entry("rune_page_releve_des_morts", "Rune_ReleveDesMorts"),
+            Map.entry("rune_page_ames_errantes", "Rune_AmesErrantes"),
+            Map.entry("rune_page_phylactere", "Rune_Phylactere"),
+            Map.entry("rune_page_domaine_de_la_mort", "Rune_DomaineDeLaMort"),
+            Map.entry("rune_page_forme_spectrale", "Rune_FormeSpectrale"),
+            Map.entry("rune_page_armee_des_tombes", "Rune_ArmeeDesTombes"),
+            Map.entry("rune_page_miroir_trompeur", "Rune_MiroirTrompeur"),
+            Map.entry("rune_page_galerie_des_glaces", "Rune_GalerieDesGlaces"),
+            Map.entry("rune_page_hallucination", "Rune_Hallucination"),
+            Map.entry("rune_page_chaines_noires", "Rune_ChainesNoires"),
+            Map.entry("rune_page_pacte_de_sang", "Rune_PacteDeSang"),
+            Map.entry("rune_page_marionnette", "Rune_Marionnette"),
+            Map.entry("rune_page_ruee", "Rune_Ruee"),
+            Map.entry("rune_page_voile_de_fumee", "Rune_VoileDeFumee"),
+            Map.entry("rune_page_pluie_de_fleches", "Rune_PluieDeFleches"),
+            Map.entry("rune_page_lancer_de_pieces", "Rune_LancerDePieces"),
+            Map.entry("rune_page_projection_astrale", "Rune_ProjectionAstrale"),
+            Map.entry("rune_page_ceinture_asteroides", "Rune_CeintureAsteroides"),
+            Map.entry("rune_page_prescience", "Rune_Prescience"),
+            Map.entry("rune_page_rayon_celeste", "Rune_RayonCeleste"),
+            Map.entry("rune_page_distorsion", "Rune_Distorsion"),
+            Map.entry("rune_page_retour_en_arriere", "Rune_RetourEnArriere"),
+            Map.entry("rune_page_oeil_omniscient", "Rune_OeilOmniscient"),
+            Map.entry("rune_page_sentence", "Rune_Sentence"),
+            Map.entry("rune_page_bulle_temporelle", "Rune_BulleTemporelle"),
+            Map.entry("rune_page_arret_du_temps", "Rune_ArretDuTemps"),
+            Map.entry("rune_page_surregime", "Rune_Surregime"),
+            Map.entry("rune_page_echos_du_passe", "Rune_EchosDuPasse"),
+            Map.entry("rune_page_meteore", "Rune_Meteore"),
+            Map.entry("rune_page_rayon_arcanique", "Rune_RayonArcanique"),
+            Map.entry("rune_page_avatar_orage", "Rune_AvatarOrage"),
+            Map.entry("rune_page_eternite", "Rune_Eternite"),
+            Map.entry("rune_page_salve_arcanique", "Rune_SalveArcanique"),
+            Map.entry("rune_page_nuage_orage", "Rune_NuageOrage"),
+            Map.entry("rune_page_reflexion", "Rune_Reflexion"),
+            Map.entry("rune_page_decret", "Rune_Decret"),
+            Map.entry("rune_page_meditation", "Rune_Meditation"),
+            Map.entry("rune_page_sanctuaire_mineur", "Rune_SanctuaireMineur"),
+            Map.entry("rune_page_savoir_accelere", "Rune_SavoirAccelere"),
+            Map.entry("rune_page_enseignement", "Rune_Enseignement"),
+            Map.entry("rune_page_miracle", "Rune_Miracle"),
+            Map.entry("rune_page_pilier_ascendant", "Rune_PilierAscendant"),
+            Map.entry("rune_page_inversion", "Rune_Inversion"),
+            Map.entry("rune_page_rempart", "Rune_Rempart"),
+            Map.entry("rune_page_sables_mouvants", "Rune_SablesMouvants"),
+            Map.entry("rune_page_nuage_toxique", "Rune_NuageToxique"),
+            Map.entry("rune_page_pierre_philosophale", "Rune_PierrePhilosophale"),
+            Map.entry("rune_page_petrification", "Rune_Petrification"),
+            Map.entry("rune_page_racines", "Rune_Racines"),
+            Map.entry("rune_page_bosquet", "Rune_Bosquet"),
+            Map.entry("rune_page_esprit_foret", "Rune_EspritForet"),
+            Map.entry("rune_page_tempete_feuilles", "Rune_TempeteFeuilles"),
+            Map.entry("rune_page_lentille_gravitationnelle", "Rune_LentilleGravitationnelle"),
+            Map.entry("rune_page_couronne_autorite", "Rune_CouronneAutorite"),
+            Map.entry("rune_page_loi_arcanique", "Rune_LoiArcanique"),
+            Map.entry("rune_page_pilier_du_monde", "Rune_PilierDuMonde"),
+            Map.entry("rune_page_bannissement", "Rune_Bannissement"),
+            Map.entry("rune_page_effacement", "Rune_Effacement"),
+            Map.entry("rune_page_fissure_vide", "Rune_FissureVide"),
+            Map.entry("rune_page_silence_neant", "Rune_SilenceNeant"),
+            Map.entry("rune_page_eruption_primordiale", "Rune_EruptionPrimordiale"),
+            Map.entry("rune_page_sculpteur_de_glace", "Rune_SculpteurDeGlace"),
+            Map.entry("rune_page_onde_originelle", "Rune_OndeOriginelle"),
+            Map.entry("rune_page_resurrection", "Rune_Resurrection"),
+            Map.entry("rune_page_golems_cristal", "Rune_GolemsCristal"),
+            Map.entry("rune_page_faconnage", "Rune_Faconnage"),
+            Map.entry("rune_page_colosse_pierre", "Rune_ColossePierre"),
+            Map.entry("rune_page_matiere_vive", "Rune_MatiereVive"),
+            Map.entry("rune_page_reecriture", "Rune_Reecriture"),
+            Map.entry("rune_page_maree_gravitationnelle", "Rune_MareeGravitationnelle"),
+            Map.entry("rune_page_pluie_cometes", "Rune_PluieCometes"),
+            Map.entry("rune_page_naine_blanche", "Rune_NaineBlanche"),
+            Map.entry("rune_page_supernova", "Rune_Supernova"),
+            Map.entry("rune_page_plan_architecte", "Rune_PlanArchitecte"),
+            Map.entry("rune_page_labyrinthe", "Rune_Labyrinthe"),
+            Map.entry("rune_page_porte_mondes", "Rune_PorteMondes"),
+            Map.entry("rune_page_presage", "Rune_Presage"),
+            Map.entry("rune_page_revelation", "Rune_Revelation"),
+            Map.entry("rune_page_prophetie", "Rune_Prophetie"),
+            Map.entry("rune_page_transformation_arme", "Rune_TransformationArme"),
+            Map.entry("rune_page_arkiesdomini", "Rune_ArkiesDomini"),
+            Map.entry("rune_page_sansvisage", "Rune_SansVisage"),
+            Map.entry("rune_page_sentencesilencieuse", "Rune_SentenceSilencieuse")
     );
 
     /** Joueurs dont on sait deja qu'ils possedent la Rune d'Aura (evite de rescanner l'inventaire). */
@@ -181,16 +370,33 @@ public final class RuneManager {
         String playerClass = data.getPlayerClassId().toLowerCase();
         ClassModel classModel = ClassManager.get(data.getPlayerClassId());
         String parentClass = classModel != null ? classModel.getType().name().toLowerCase() : "";
+        // 2026-11-24 (demande de l'utilisateur) : un artiste martial (famille Guerrier) apprend aussi les runes d'assassin ;
+        // l'inverse est refuse (les techniques de la voie ne citent que les 8 classes martiales).
+        boolean martial = com.eldanior.system.classes.definitions.luo.VoieMartiale.isMartial(playerClass);
         // Comparaison par jeton (pas de sous-chaine) : "mage" ne doit pas valider "infernal_mage"
         for (String token : requiredClass.toLowerCase().split(",")) {
             String t = token.trim();
             if (t.equals(playerClass) || (!parentClass.isEmpty() && t.equals(parentClass))) return true;
+            if (martial && (t.equals("assassin") || t.equals("warrior"))) return true;
         }
         return false;
     }
 
+    /** Une rune declaree par la classe du joueur lui est toujours permise (meme hors de RUNE_CLASSES). */
     public static boolean canUseRune(String runeId, PlayerLevelData data) {
-        return isClassAllowed(getRequiredClass(runeId), data);
+        // 2026-11-24 (demande de l'utilisateur) : les artistes martiaux n'ont pas l'Aura de Dignite, ils y resistent
+        if (AURA_RUNE_ID.equals(runeId) && com.eldanior.system.classes.definitions.luo.VoieMartiale.tier(data) > 0) return false;
+        if (com.eldanior.system.classes.observateur.ObservateurManager.isObservateur(data)) return true;   // Observateur : toutes les runes
+        var technique = com.eldanior.system.luo.LuoClans.technique(runeId);                  // technique d'un clan Luo
+        if (technique != null) return com.eldanior.system.luo.LuoClans.knowsClan(technique, data);
+        return classRunes(data).contains(runeId) || isClassAllowed(getRequiredClass(runeId), data);
+    }
+
+    /** Runes de la classe du joueur (ClassModel.getRuneIds, declarees dans les definitions de classe). */
+    public static List<String> classRunes(PlayerLevelData data) {
+        String classId = data != null ? data.getPlayerClassId() : null;
+        ClassModel model = classId != null && !classId.isEmpty() ? ClassManager.get(classId) : null;
+        return model != null ? model.getRuneIds() : List.of();
     }
 
     // ===================== INVENTAIRE =====================
@@ -212,6 +418,36 @@ public final class RuneManager {
                     .countItemStacks(stack -> runeId.equals(stack.getItemId())) > 0) {
                 return true;
             }
+        }
+        return false;
+    }
+
+    /** Runes possedees (sac, emplacements, barre, inventaire), sans doublon : statistiques admin. */
+    public static Set<String> ownedRunes(Ref<EntityStore> ref, Store<EntityStore> store) {
+        Set<String> out = new java.util.LinkedHashSet<>();
+        for (var type : runeSections()) {
+            InventoryComponent section = store.getComponent(ref, type);
+            if (section != null) section.getInventory().forEach((slot, stack) -> { if (isRune(stack)) out.add(stack.getItemId()); });
+        }
+        return out;
+    }
+
+    /** Runes equipees dans les emplacements de competence. */
+    public static List<String> equippedRunes(Ref<EntityStore> ref, Store<EntityStore> store) {
+        List<String> out = new ArrayList<>();
+        InventoryComponent.AbilitySlots slots = store.getComponent(ref, InventoryComponent.AbilitySlots.getComponentType());
+        if (slots != null) slots.getInventory().forEach((slot, stack) -> { if (isRune(stack)) out.add(stack.getItemId()); });
+        return out;
+    }
+
+    /** Le joueur possede-t-il une rune de cette categorie (ex. "Eldanior_Runes.Espace") ? */
+    public static boolean ownsRuneInCategory(Ref<EntityStore> ref, Store<EntityStore> store, String category) {
+        for (var type : runeSections()) {
+            InventoryComponent section = store.getComponent(ref, type);
+            if (section != null && section.getInventory().countItemStacks(stack -> {
+                String[] cats = isRune(stack) ? stack.getItem().getCategories() : null;
+                return cats != null && java.util.Arrays.asList(cats).contains(category);
+            }) > 0) return true;
         }
         return false;
     }
@@ -286,7 +522,7 @@ public final class RuneManager {
     public static int wipeAllRunes(Ref<EntityStore> ref, Store<EntityStore> store) {
         int removed = removeRunes(ref, store, stack -> true);
         UUID uuid = getUuid(ref, store);
-        if (uuid != null) auraRuneChecked.remove(uuid);
+        if (uuid != null) { auraRuneChecked.remove(uuid); classRunesGiven.remove(uuid); }
         return removed;
     }
 
@@ -320,6 +556,47 @@ public final class RuneManager {
         return moved;
     }
 
+    // ===================== RUNES DE CLASSE =====================
+
+    /** Joueur -> classe dont les runes ont deja ete donnees (evite de rescanner l'inventaire chaque seconde). */
+    private static final Map<UUID, String> classRunesGiven = new ConcurrentHashMap<>();
+
+    /**
+     * Donne au joueur (sac de runes) les runes de sa classe qu'il ne possede nulle part : a la connexion, et a chaque
+     * changement de classe (evolution, /es setclass, admin). Retourne les runes donnees. Sac plein : on reessaiera.
+     * Techniques de la voie martiale du Clan Luo : le manuel secret a lire (LuoManuels) au lieu de la rune.
+     * 2026-11-24 (demande de l'utilisateur, « le seul moyen d'avoir des runes c'est via les manuels ») : TOUTES les runes de
+     * classe sont remises en manuel (MagicManuals) ; une rune sans manuel n'est pas donnee (journal).
+     */
+    public static List<String> grantClassRunes(Ref<EntityStore> ref, Store<EntityStore> store, PlayerLevelData data) {
+        UUID uuid = getUuid(ref, store);
+        String classId = data != null ? data.getPlayerClassId() : null;
+        if (uuid == null || classId == null || classId.equals(classRunesGiven.get(uuid))) return List.of();
+        List<String> given = new ArrayList<>();
+        boolean complete = true;
+        for (String runeId : classRunes(data)) {
+            if (ownsRune(ref, store, runeId)) continue;
+            String book = com.eldanior.system.skills.runes.spells.MagicManuals.anyBookFor(runeId);   // manuel a lire
+            // 2026-11-13 (demande de l'utilisateur) : les manuels de palier (Disciple et au-dela) ne sont plus donnes aux
+            // promotions ; ils se gagnent dans les Epreuves du Dojo (quetes du Sensei, quest.chapitres). Ki et Meditation
+            // (palier 1) restent remis au serment.
+            if (book != null && com.eldanior.system.classes.definitions.luo.VoieMartiale.runeTier(runeId) >= 2) continue;
+            try {
+                if (book != null) {
+                    if (com.eldanior.system.skills.runes.spells.LuoManuels.hasBook(ref, store, book)) continue;
+                    if (com.eldanior.system.skills.runes.spells.LuoManuels.giveBook(ref, store, book)) given.add(book);
+                    else complete = false;                                                  // inventaire plein
+                } else {
+                    EldaniorLogger.warn("[Runes] rune de classe sans manuel, non donnee : " + runeId);
+                }
+            } catch (Exception e) {
+                EldaniorLogger.error("[Runes] rune de classe introuvable : " + runeId, e);
+            }
+        }
+        if (complete) classRunesGiven.put(uuid, classId);
+        return given;
+    }
+
     // ===================== RUNE D'AURA =====================
 
     /** Donne la Rune d'Aura (sac de runes) si le joueur ne la possede nulle part. Retourne true si donnee. */
@@ -327,11 +604,13 @@ public final class RuneManager {
         UUID uuid = getUuid(ref, store);
         if (uuid == null || auraRuneChecked.contains(uuid)) return false;
 
-        if (ownsRune(ref, store, AURA_RUNE_ID)) {
+        String book = com.eldanior.system.skills.runes.spells.MagicManuals.bookFor(AURA_RUNE_ID);   // 2026-11-24 : le manuel
+        if (ownsRune(ref, store, AURA_RUNE_ID) || book == null
+                || com.eldanior.system.skills.runes.spells.LuoManuels.hasBook(ref, store, book)) {
             auraRuneChecked.add(uuid);
             return false;
         }
-        if (giveRune(ref, store, AURA_RUNE_ID)) {
+        if (com.eldanior.system.skills.runes.spells.LuoManuels.giveBook(ref, store, book)) {
             auraRuneChecked.add(uuid);
             return true;
         }
@@ -340,6 +619,7 @@ public final class RuneManager {
 
     public static void handleDisconnect(UUID uuid) {
         auraRuneChecked.remove(uuid);
+        classRunesGiven.remove(uuid);
     }
 
     private static UUID getUuid(Ref<EntityStore> ref, Store<EntityStore> store) {

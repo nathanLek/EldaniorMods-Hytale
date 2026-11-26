@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_PorteNiflheim (remplace le parchemin rune_page_porte_niflheim).",
+  "TranslationProperties": {
+    "Name": "Manuel de Glace : Porte de Niflheim",
+    "Description": "Sort divin de glace (Mage, Dragon). Une immense porte divine de glace apparaît dans les airs au-dessus de vous et s'ouvre sur le monde des glaces : une onde de givre en jaillit et gèle tout sur 35 blocs. Sols, murs et arbres sont pris dans la neige et la glace, des pics et stalagmites jaillissent du sol et la brume glacée de Niflheim recouvre la zone. Chaque ennemi atteint est emprisonné dans des piques de glace pendant 20 s ; un ennemi emprisonné subit 50 % de dégâts en plus, et le frapper fait exploser sa prison (400 dégâts de glace et éclats). Pendant la première minute, des stalactites tombent du ciel sur les ennemis (150 dégâts). Tant que le givre est présent, les ennemis dans la zone subissent l'engelure : 2 dégâts de glace par seconde, vitesse et endurance réduites de 50 %. Au bout de 3 minutes, la glace éclate et le terrain est restauré. Épargne votre groupe, votre guilde et votre famille. Coût : 2000 mana. Recharge : 5 s (valeur de test).\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Glace"
+  ],
+  "Quality": "Divin",
+  "ItemLevel": 100,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Glace_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Glace_PorteNiflheim.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

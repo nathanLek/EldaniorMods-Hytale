@@ -1,0 +1,18 @@
+{
+  "$Comment": "Hallucination : visuel des monstres pris dans la brume (le combat entre eux est force par le code).",
+  "Duration": 8,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#1a0026",
+    "EntityTopTint": "#b04dff",
+    "ScreenEffect": "ScreenEffects/Poison.png",
+    "Particles": [
+      {
+        "SystemId": "Void_Spectre_Head"
+      }
+    ]
+  },
+  "OverlapBehavior": "Overwrite",
+  "Infinite": false,
+  "Debuff": true,
+  "StatusEffectIcon": "UI/StatusEffects/Poison.png"
+}

@@ -1,0 +1,35 @@
+{
+  "$Comment": "Ki de l'Epee, palier 4 (couleur #3fe6ff) : lueur de Ki sur la lame. Pose et rafraichi chaque seconde par KiEpee (gen_voie_martiale.py). Nom : Ki de l'Épée.",
+  "ApplicationEffects": {
+    "Particles": [
+      {
+        "SystemId": "Ki_Lame_Aura_T4",
+        "TargetEntityPart": "PrimaryItem",
+        "TargetNodeName": "Handle",
+        "PositionOffset": {
+          "X": 0.55,
+          "Y": 0,
+          "Z": 0
+        },
+        "Scale": 1.28
+      }
+    ],
+    "FirstPersonParticles": [
+      {
+        "SystemId": "Ki_Lame_Aura_T4",
+        "TargetEntityPart": "PrimaryItem",
+        "TargetNodeName": "Handle",
+        "PositionOffset": {
+          "X": 0.55,
+          "Y": 0,
+          "Z": 0
+        },
+        "Scale": 1.28
+      }
+    ],
+    "HorizontalSpeedMultiplier": 1.05
+  },
+  "Duration": 2.5,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": false
+}

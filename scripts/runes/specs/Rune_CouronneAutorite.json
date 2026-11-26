@@ -1,0 +1,70 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_CouronneAutorite",
+  "spell": "CouronneAutorite",
+  "javaClass": "CouronneAutorite",
+  "page": "rune_page_couronne_autorite",
+  "name": "Rune de la Couronne d'Autorité",
+  "type": "Spatial",
+  "rarity": "Unique",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Couronne",
+  "summary": "15 s : couronne au-dessus du lanceur, nul ennemi ni projectile n'entre a 6 blocs (repousses, 40 / s) ; 3 clics = decret r 12 : 150 + ejection.",
+  "description": "Sort unique spatial (Mage, rune de prédilection de l'Archonte Suprême). Une couronne d'autorité flotte au-dessus de votre tête pendant 15 s : aucun ennemi ne peut s'approcher à moins de 6 blocs (il est repoussé et subit 40 dégâts, une fois par seconde au plus) et les projectiles qui entrent dans ce cercle sont anéantis. Trois fois pendant ce temps, un clic prononce un décret : tous les ennemis à moins de 12 blocs subissent 150 dégâts et sont éjectés. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin scellé de cire dorée, frappé d'une couronne. Enseigne la Couronne d'Autorité : nul n'approche sans y être invité. Classes : tous les Mages (rune de prédilection de l'Archonte Suprême). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe",
+    "Duration",
+    "Buff"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Sword",
+    "charging": "CastEnrage",
+    "release": "CastEnrage",
+    "chargeTime": 0.5,
+    "releaseTime": 0.5,
+    "moveSpeed": 0.4,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Portal_Neutral_Open",
+    "handParticles": "Bifrost_Divine",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.5,
+    "range": 0,
+    "radius": "6 (aura) / 12 (decret)",
+    "targets": "ennemis autour du lanceur",
+    "persistentFx": "modele Apollo_Laurel (couronne doree) qui suit la tete ; Bifrost_Divine au point de contact des ennemis repousses",
+    "impactFx": "anneau de Bifrost_Divine (r 12) au decret, secousse",
+    "sounds": "SFX_Portal_Neutral_Open a l'incantation, SFX_Portal_Neutral au decret",
+    "effects": "aura r 6 : poussee radiale 10 b/s + 3 vers le haut, 40 Crush / s max par ennemi ; projectiles entrant dans r 6 : detruits ; clic (3 charges, 1 s d'intervalle) : 150 Crush + ejection 16 b/s r 12",
+    "terrain": "aucun",
+    "persistentDurationS": 15,
+    "interruptions": "lanceur mort : fin",
+    "restrictions": "mage",
+    "edgeCases": "clics trop rapides : 1 s minimum entre deux decrets ; projectiles du lanceur (qui s'eloignent) : ignores",
+    "limitations": "duree ramenee a 15 s (plafond Unique) au lieu des 20 s de la liste",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 2,
+      "mobility": 0,
+      "control": 2,
+      "defense": 3,
+      "targets": 3,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    }
+  }
+}

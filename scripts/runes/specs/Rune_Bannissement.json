@@ -1,0 +1,68 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_Bannissement",
+  "spell": "Bannissement",
+  "javaClass": "Bannissement",
+  "page": "rune_page_bannissement",
+  "name": "Rune du Bannissement",
+  "type": "Espace",
+  "rarity": "Unique",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Bannissement",
+  "summary": "l'ennemi vise et 4 voisins (8 blocs) disparaissent 6 s dans le vide, puis retombent de 8 blocs au-dessus de leur place : 250.",
+  "description": "Sort unique d'espace (Mage, rune de prédilection du Mage du Vide). L'ennemi visé (jusqu'à 25 blocs) et jusqu'à 4 ennemis à moins de 8 blocs de lui sont arrachés au monde pendant 6 s : ils disparaissent, ne peuvent plus agir ni être atteints. Puis le vide les recrache à 8 blocs au-dessus de l'endroit qu'ils occupaient : ils retombent et subissent 250 dégâts. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin dont le centre est un trou net, comme découpé dans la nuit. Enseigne le Bannissement : ce que le vide prend, il le rend… de haut. Classes : tous les Mages (rune de prédilection du Mage du Vide). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Spellbook",
+    "charging": "CastHurlCharging",
+    "release": "CastHurlCharged",
+    "chargeTime": 0.6,
+    "releaseTime": 0.5,
+    "moveSpeed": 0.4,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Portal_Void",
+    "handParticles": "Nyx_Void",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.6,
+    "range": 25,
+    "radius": "8 (voisins)",
+    "targets": "5 ennemis",
+    "executionFx": "Nyx_Void + Chaos_Flash au depart de chaque banni",
+    "impactFx": "Nyx_Void au retour, Gaia_Dust_Burst a l'atterrissage",
+    "sounds": "SFX_Portal_Void au depart et au retour",
+    "effects": "banni : teleporte 60 blocs au-dessus de sa place (meme colonne, chunk charge), Elda_Banni (dissolution du modele, mouvement coupe), lockInPlace 6 s (joueurs : replaces / 0,25 s) ; retour : 8 blocs au-dessus de la place d'origine, 250 Elemental",
+    "terrain": "aucun",
+    "persistentDurationS": 6,
+    "interruptions": "lanceur mort : retour immediat (sans degats) ; deconnexion : le gel expire, les bannis retombent seuls",
+    "restrictions": "mage",
+    "edgeCases": "aucune cible visee : l'ennemi le plus proche devant ; banni mort ou disparu : ignore ; invocations exclues",
+    "limitations": "pas de vraie dimension de poche : le banni est place hors de vue au-dessus du combat et rendu invisible",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 2,
+      "mobility": 0,
+      "control": 3,
+      "defense": 2,
+      "targets": 3,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    }
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_SavoirAccelere",
+  "spell": "SavoirAccelere",
+  "javaClass": "SavoirAccelere",
+  "page": "rune_page_savoir_accelere",
+  "name": "Rune du Savoir Accéléré",
+  "type": "Temps",
+  "rarity": "Epic",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "SavoirAccelere",
+  "summary": "10 s d'esprit accelere : mana +5 %/s et degats elementaires (sorts) +20 %.",
+  "description": "Sort épique du temps (Mage, rune de prédilection de l'Érudit Arcane). Votre esprit pense plus vite que le temps pendant 10 s : vous regagnez 5 % de votre mana par seconde et vos dégâts élémentaires (sorts) sont augmentés de 20 %.",
+  "pageDescription": "Un parchemin dont les pages se tournent toutes seules, de plus en plus vite. Enseigne le Savoir Accéléré : lancez plus, plus fort. Classes : tous les Mages (rune de prédilection de l'Érudit Arcane). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Buff",
+    "Duration"
+  ],
+  "cast": {
+    "animationSet": "Spellbook",
+    "charging": "CastPushCharging",
+    "release": "CastPushCharged",
+    "chargeTime": 0.4,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Arcane_Workbench_Craft",
+    "handParticles": "Chronos_Gold",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.4,
+    "range": 0,
+    "radius": "0",
+    "targets": "soi",
+    "persistentFx": "effet Elda_SavoirAccelere (teinte or-bleu, OutgoingDamage Elemental +20 %) pose une fois 10 s ; Chronos_Gold en orbite / 0,5 s",
+    "impactFx": "Chronos_Burst a l'incantation",
+    "sounds": "SFX_Arcane_Workbench_Craft",
+    "effects": "mana +5 %/s (50 % sur 10 s) ; +20 % degats Elemental (OutgoingDamage)",
+    "terrain": "aucun",
+    "persistentDurationS": 10,
+    "interruptions": "aucune",
+    "restrictions": "mage",
+    "limitations": "la feuille de route prevoyait recharges -50 % : recharges predites par le client (voir Surregime) ; remplace par mana +5 %/s et +20 % degats de sorts",
+    "balance": {
+      "damage": 2,
+      "range": 0,
+      "duration": 2,
+      "mobility": 0,
+      "control": 0,
+      "defense": 0,
+      "targets": 1,
+      "frequency": 3,
+      "terrain": 0,
+      "difficulty": 0
+    }
+  },
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null
+}

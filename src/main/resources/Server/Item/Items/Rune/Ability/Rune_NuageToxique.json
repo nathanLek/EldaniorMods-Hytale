@@ -1,0 +1,46 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune du Nuage Toxique",
+    "Description": "Sort épique de ténèbres (Mage, rune de prédilection du Grand Alchimiste). Vous libérez un nuage de poison au point visé (rayon 6, jusqu'à 20 blocs) qui dure 10 s et dérive lentement vers votre curseur. Les ennemis qui le respirent subissent 14 dégâts de poison toutes les demi-secondes. Épargne votre groupe, votre guilde et votre famille. Coût : 300 mana. Recharge : 120 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_NuageToxique.png",
+  "Quality": "Epic",
+  "ItemLevel": 60,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_Runes.Tenebres"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_NuageToxique.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 120,
+    "Cost": 300,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Damage",
+      "Aoe",
+      "Duration",
+      "Poison"
+    ],
+    "Cast": "Root_Ability_NuageToxique"
+  }
+}

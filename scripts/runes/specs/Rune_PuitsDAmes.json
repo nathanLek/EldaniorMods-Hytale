@@ -1,0 +1,65 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_PuitsDAmes",
+  "spell": "PuitsDAmes",
+  "javaClass": "PuitsDAmes",
+  "page": "rune_page_puits_d_ames",
+  "name": "Rune du Puits d'Âmes",
+  "type": "Tenebres",
+  "rarity": "Rare",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "PuitsAmes",
+  "summary": "puits de tenebres 6 s au point vise : draine la vie des ennemis et la rend au lanceur.",
+  "description": "Sort rare de ténèbres (Mage, rune de prédilection du Nécromancien Noir). Un puits d'âmes s'ouvre à l'endroit visé (20 blocs, rayon 5) pendant 6 s. Les ennemis dedans perdent 10 points de vie toutes les demi-secondes, et la moitié de ce qui est drainé vous revient en soin. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin dont l'encre semble couler vers le centre. Enseigne le Puits d'Âmes : une fosse qui aspire la vie de vos ennemis pour vous la rendre. Classes : tous les Mages (rune de prédilection du Nécromancien Noir). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.5,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Bear_Voidtaken_Tentacle",
+    "handParticles": "Nyx_Void",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.5,
+    "range": 20,
+    "radius": "5 blocs",
+    "targets": "ennemis dans le puits",
+    "persistentFx": "Nyx_Mist en grille toutes les 3 s, Nyx_Void au centre",
+    "impactFx": "arc Nyx_Drain_Burst cible -> lanceur",
+    "effects": "10 Poison / 0.5 s ; soin du lanceur = 50 % des degats (EntityStatMap)",
+    "terrain": "aucun",
+    "persistentDurationS": 6,
+    "restrictions": "mage",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 2,
+      "mobility": 0,
+      "control": 0,
+      "defense": 2,
+      "targets": 2,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    }
+  }
+}

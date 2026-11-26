@@ -42,8 +42,21 @@ public class PlayerNameplateSystem extends EntityTickingSystem<EntityStore> {
         PlayerLevelData data = store.getComponent(playerRef, type);
         if (data == null) return;
 
+        // filet de securite du x2 de la rune Arkies Domini : une fiche reecrite apres l'arret de la rune le garderait
+        if (data.getStatMultiplier() != 1f
+                && !com.eldanior.system.skills.runes.spells.ArkiesDomini.isActive(player.getPlayerRef().getUuid())) {
+            data.setStatMultiplier(1f);
+            final PlayerLevelData statData = data;
+            commandBuffer.run(s -> com.eldanior.system.Leveling.utils.StatCalculator.updatePlayerStats(playerRef, s, statData));
+        }
+
         String playerName = player.getPlayerRef().getUsername();
-        String nameplate = NobilityManager.buildNameplate(playerName, data);
+        // Observateur (2026-11-16) : son nom d'emprunt remplace tout (rang, famille, [PK]) pour ne rien trahir
+        String alias = com.eldanior.system.classes.observateur.ObservateurManager.alias(player.getPlayerRef().getUuid(), data);
+        String nameplate = alias != null ? alias : NobilityManager.buildNameplate(playerName, data);
+        // Sans Visage (2026-11-17) : sous l'apparence d'une creature et sans nom d'emprunt, aucun nom ne flotte au-dessus de lui
+        String masked = com.eldanior.system.skills.runes.spells.SansVisage.nameplate(player.getPlayerRef().getUuid());
+        if (masked != null) nameplate = masked;
 
         commandBuffer.putComponent(playerRef, Nameplate.getComponentType(), new Nameplate(nameplate));
     }

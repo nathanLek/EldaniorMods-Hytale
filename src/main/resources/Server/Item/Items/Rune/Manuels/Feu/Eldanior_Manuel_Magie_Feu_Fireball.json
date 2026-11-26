@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_Fireball (remplace le parchemin rune_page_fireball).",
+  "TranslationProperties": {
+    "Name": "Manuel de Feu : Boule de Feu",
+    "Description": "Sort rare de feu (Mage, toutes les sous-classes ; Dragon). Vous lancez une grosse sphère de flammes qui file droit devant à 20 blocs par seconde (portée 35 blocs). Elle explose au premier contact, ennemi, mur ou sol, ou au bout de sa course : 180 dégâts de feu au cœur de l'explosion (2 blocs), 110 jusqu'à 4 blocs, projection et brûlure (4 dégâts par seconde pendant 5 s). Le terrain n'est pas touché. Épargne votre groupe, votre guilde et votre famille. Coût : 120 mana. Recharge : 60 s.\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Feu"
+  ],
+  "Quality": "Rare",
+  "ItemLevel": 40,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Feu_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Feu_Fireball.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

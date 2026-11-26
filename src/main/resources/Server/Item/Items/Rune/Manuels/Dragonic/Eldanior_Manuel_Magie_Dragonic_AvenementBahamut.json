@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_AvenementBahamut (remplace le parchemin rune_page_avenement_bahamut).",
+  "TranslationProperties": {
+    "Name": "Manuel Draconique : Avènement de Bahamut",
+    "Description": "Sort divin ultime de la classe Dragon. Votre rugissement fait trembler la terre : les ennemis proches sont terrifiés (ralentis et incapables d'attaquer pendant 3 s). Des ailes de dragon vous poussent et Bahamut, le roi des dragons, surgit derrière vous sous forme spectrale dorée. Il fait trois passages en piqué au-dessus de la zone visée en crachant le feu (600 dégâts et brûlure), laissant des traînées de flammes au sol, puis se pose au centre et déclenche le Mégaflare : une explosion colossale (2500 dégâts sur 16 blocs) qui projette tout. Épargne votre groupe, votre guilde et votre famille. Coût : 2000 mana. Recharge : 5 s (valeur de test).\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Dragonic"
+  ],
+  "Quality": "Divin",
+  "ItemLevel": 100,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Dragonic_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Dragonic_AvenementBahamut.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

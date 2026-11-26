@@ -1,0 +1,69 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_Revelation",
+  "spell": "Revelation",
+  "javaClass": "Revelation",
+  "page": "rune_page_revelation",
+  "name": "Rune de la Révélation",
+  "type": "Lumiere",
+  "rarity": "Unique",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Revelation",
+  "summary": "onde de verite r 20 : 100 (x2 morts-vivants), invisibles devoiles, monstres eblouis 2 s ; les ennemis reveles subissent +30 % de degats de toutes sources 12 s.",
+  "description": "Sort unique de lumière (Mage, rune de prédilection du Prophète). Une onde de vérité part de vous sur 20 blocs : elle inflige 100 dégâts aux ennemis (double contre les morts-vivants), dévoile ceux qui sont invisibles et éblouit les monstres 2 s (ils perdent leur cible). Les ennemis révélés brillent pendant 12 s et subissent 30 % de dégâts en plus de toutes les sources, vous et vos alliés compris. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin qui ne se lit qu'à la lumière, et qui éclaire tout ce qu'on lui présente. Enseigne la Révélation : rien ne se cache devant la vérité. Classes : tous les Mages (rune de prédilection du Prophète). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.6,
+    "releaseTime": 0.5,
+    "moveSpeed": 0.4,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Divine_Respawn",
+    "handParticles": "Bifrost_Divine",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.6,
+    "range": 0,
+    "radius": "20",
+    "targets": "ennemis autour du lanceur",
+    "executionFx": "Bifrost_Pillar sur le lanceur, onde : anneaux de Bifrost_Divine (r 5, 10, 15, 20)",
+    "persistentFx": "Elda_Revele (teinte doree, Aura_Sphere) 12 s",
+    "sounds": "SFX_Divine_Respawn a l'onde",
+    "effects": "100 Elemental (x2 morts-vivants) ; joueurs ennemis invisibles : InvisibilityManager.removeInvisibility ; monstres : attitude IGNORE envers les joueurs proches + LockedTarget efface 2 s ; tous : Elda_Revele + RuneSpellRuntime.expose(x1,3, 12 s)",
+    "terrain": "aucun",
+    "persistentDurationS": 12,
+    "interruptions": "aucune (la vulnerabilite est posee a l'onde)",
+    "restrictions": "mage",
+    "edgeCases": "invocations exclues ; plusieurs Revelations : la plus forte compte, la duree se prolonge",
+    "limitations": "vulnerabilite generique RuneSpellRuntime.expose (crochet DivineDamageSystem) ; l'eblouissement des joueurs ennemis n'est pas gere (seulement les monstres)",
+    "balance": {
+      "damage": 2,
+      "range": 3,
+      "duration": 2,
+      "mobility": 0,
+      "control": 2,
+      "defense": 1,
+      "targets": 3,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 0
+    }
+  }
+}

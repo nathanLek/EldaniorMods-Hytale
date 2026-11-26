@@ -1,0 +1,87 @@
+{
+  "RenderMode": "BlendAdd",
+  "ParticleRotationInfluence": "Billboard",
+  "LinearFiltering": true,
+  "LightInfluence": 0,
+  "ParticleRotateWithSpawner": false,
+  "MaxConcurrentParticles": 14,
+  "ParticleLifeSpan": {
+    "Min": 1.2,
+    "Max": 1.8
+  },
+  "SpawnBurst": true,
+  "Particle": {
+    "Texture": "Particles/Textures/Rnd/SmokeRound.png",
+    "ScaleRatioConstraint": "OneToOne",
+    "UVOption": "None",
+    "SoftParticles": "Disable",
+    "InitialAnimationFrame": {
+      "Opacity": 0.3,
+      "Color": "#3fe6ff",
+      "Scale": {
+        "X": {
+          "Min": 1.5,
+          "Max": 2.2
+        }
+      }
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0.3,
+        "Color": "#3fe6ff",
+        "Scale": {
+          "X": {
+            "Min": 1.5,
+            "Max": 2.2
+          }
+        }
+      },
+      "100": {
+        "Opacity": 0.0,
+        "Color": "#0fa0dc",
+        "Scale": {
+          "X": {
+            "Min": 3.5,
+            "Max": 4.5
+          }
+        }
+      }
+    }
+  },
+  "SpawnRate": {
+    "Min": 14,
+    "Max": 14
+  },
+  "TotalParticles": {
+    "Min": 14,
+    "Max": 14
+  },
+  "InitialVelocity": {
+    "Speed": {
+      "Min": 1.5,
+      "Max": 4.0
+    },
+    "Yaw": {
+      "Min": -180,
+      "Max": 180
+    },
+    "Pitch": {
+      "Min": -90,
+      "Max": 90
+    }
+  },
+  "EmitOffset": {
+    "X": {
+      "Min": -1.0,
+      "Max": 1.0
+    },
+    "Y": {
+      "Min": -1.0,
+      "Max": 1.0
+    },
+    "Z": {
+      "Min": -1.0,
+      "Max": 1.0
+    }
+  }
+}

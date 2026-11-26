@@ -1,0 +1,28 @@
+{
+  "$Comment": "Petrification (Regard de Meduse, Egide) : la cible est changee en pierre, immobile et sans attaque. Duree donnee par le code.",
+  "Duration": 4.0,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": true,
+  "ApplicationEffects": {
+    "EntityTopTint": "#b8b4ac",
+    "EntityBottomTint": "#4a4640",
+    "Particles": [
+      {
+        "SystemId": "Divine_Smoke_Short",
+        "TargetEntityPart": "Entity"
+      }
+    ],
+    "MovementEffects": {
+      "DisableAll": true
+    },
+    "KnockbackMultiplier": 0,
+    "AbilityEffects": {
+      "Disabled": [
+        "Primary",
+        "Secondary",
+        "Ability1",
+        "Ability3"
+      ]
+    }
+  }
+}

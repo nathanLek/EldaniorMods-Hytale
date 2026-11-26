@@ -1,0 +1,381 @@
+{
+  "Categories": [
+    "Eldanior_System.Artefacts",
+    "Items.Weapons"
+  ],
+  "Icon": "Icons/ItemsGenerated/Artefact_Staff_Ouas_Ra.png",
+  "Quality": "Divin",
+  "ItemLevel": 800,
+  "Model": "Items/Weapons/artefacts/Artefact_Staff_Ouas_Ra.blockymodel",
+  "Texture": "Items/Weapons/artefacts/Artefact_Staff_Ouas_Ra.png",
+  "IconProperties": {
+    "Scale": 0.28,
+    "Translation": [
+      -26.31,
+      -23.91
+    ],
+    "Rotation": [
+      45,
+      90,
+      0
+    ]
+  },
+  "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
+  "Animation": "Items/Weapons/Stick/Fire_Stick/SpinningFire4.blockyanim",
+  "PlayerAnimationsId": "Staff",
+  "Reticle": "DefaultMelee",
+  "RenderDeployablePreview": true,
+  "Light": {
+    "Radius": 0,
+    "Color": "#ba9"
+  },
+  "Interactions": {
+    "Primary": "Root_Weapon_Stick_Fire_Primary_Entry",
+    "Secondary": "Root_Weapon_Stick_Fire_Secondary_Entry",
+    "Ability1": "Root_Divin_Ra_Signature"
+  },
+  "InteractionVars": {
+    "Fireball_Impact_0": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Stick_Fire_Impact_Base",
+          "Config": {
+            "EntityDamage": 50.0,
+            "EntityDamageRadius": 2,
+            "EntityDamageFalloff": 0
+          }
+        }
+      ]
+    },
+    "Fireball_Impact_1": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Stick_Fire_Impact_Base",
+          "Config": {
+            "EntityDamage": 100.0,
+            "EntityDamageRadius": 3,
+            "EntityDamageFalloff": 0
+          }
+        }
+      ]
+    },
+    "Fireball_Impact_2": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Stick_Fire_Impact_Base",
+          "Config": {
+            "EntityDamage": 150.0,
+            "EntityDamageRadius": 4,
+            "EntityDamageFalloff": 0
+          },
+          "Effects": {
+            "Particles": [
+              {
+                "SystemId": "Explosion_Medium",
+                "TargetEntityPart": "Entity",
+                "Scale": 1,
+                "PositionOffset": {
+                  "Y": -0.5
+                }
+              }
+            ]
+          },
+          "EntityStatsOnHit": [
+            {
+              "EntityStatId": "SignatureEnergy",
+              "Amount": 1
+            }
+          ]
+        }
+      ]
+    },
+    "Fireball_Impact_3": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Stick_Fire_Impact_Base",
+          "Config": {
+            "EntityDamage": 200.0,
+            "EntityDamageRadius": 5,
+            "EntityDamageFalloff": 0
+          },
+          "Effects": {
+            "Particles": [
+              {
+                "SystemId": "Explosion_Big",
+                "TargetEntityPart": "Entity",
+                "Scale": 1,
+                "PositionOffset": {
+                  "Y": -0.5
+                }
+              }
+            ]
+          },
+          "EntityStatsOnHit": [
+            {
+              "EntityStatId": "SignatureEnergy",
+              "Amount": 1
+            }
+          ]
+        }
+      ]
+    },
+    "Flamethrower_Damage": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Stick_Fire_Secondary_Damage",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Fire": 60.0
+            }
+          },
+          "DamageEffects": {
+            "Knockback": {
+              "Direction": {
+                "X": 0,
+                "Y": 2.0,
+                "Z": -3.0
+              },
+              "Force": 8.0,
+              "VelocityType": "Add"
+            },
+            "WorldParticles": [
+              {
+                "SystemId": "Impact_Sword_Charged"
+              }
+            ]
+          },
+          "EntityStatsOnHit": [
+            {
+              "EntityStatId": "SignatureEnergy",
+              "Amount": 1
+            }
+          ]
+        }
+      ]
+    },
+    "Fire_Trap_Config": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Stick_Fire_Spawn_Trap",
+          "MaxPlacementDistance": 20,
+          "Config": {
+            "LiveDuration": 5,
+            "Model": "Deployable_Fire_Trap",
+            "ModelPreview": "Deployable_Fire_Trap_Preview",
+            "StartRadius": 1,
+            "EndRadius": 5,
+            "Height": 2,
+            "RadiusChangeTime": 4,
+            "DamageInterval": 1,
+            "DamageAmount": 0,
+            "DamageCause": "Fire",
+            "ApplyEffects": [
+              "Flame_Staff_Burn"
+            ],
+            "DeploySoundEventId": "SFX_Staff_Flame_Trap_Deploy",
+            "DespawnSoundEventId": "SFX_Staff_Flame_Trap_Despawn",
+            "AmbientSoundEventId": "SFX_Staff_Flame_Trap_Loop"
+          }
+        }
+      ]
+    }
+  },
+  "Weapon": {
+    "EntityStatsToClear": [
+      "MagicCharges",
+      "SignatureEnergy"
+    ],
+    "StatModifiers": {
+      "MagicCharges": [
+        {
+          "Amount": 4,
+          "CalculationType": "Additive"
+        }
+      ],
+      "SignatureEnergy": [
+        {
+          "Amount": 10,
+          "CalculationType": "Additive"
+        }
+      ]
+    }
+  },
+  "ItemAppearanceConditions": {
+    "MagicCharges": [
+      {
+        "Condition": [
+          4,
+          4
+        ],
+        "Particles": [
+          {
+            "TargetNodeName": "Attachment_Spin1",
+            "SystemId": "Torch_Fire",
+            "Scale": 0.2
+          },
+          {
+            "TargetNodeName": "Attachment_Spin2",
+            "SystemId": "Torch_Fire",
+            "Scale": 0.2
+          },
+          {
+            "TargetNodeName": "Attachment_Spin3",
+            "SystemId": "Torch_Fire",
+            "Scale": 0.2
+          },
+          {
+            "TargetNodeName": "Attachment_Spin4",
+            "SystemId": "Torch_Fire",
+            "Scale": 0.2
+          }
+        ]
+      },
+      {
+        "Condition": [
+          3,
+          3
+        ],
+        "Particles": [
+          {
+            "TargetNodeName": "Attachment_Spin1",
+            "SystemId": "Torch_Fire",
+            "Scale": 0.2
+          },
+          {
+            "TargetNodeName": "Attachment_Spin2",
+            "SystemId": "Torch_Fire",
+            "Scale": 0.2
+          },
+          {
+            "TargetNodeName": "Attachment_Spin3",
+            "SystemId": "Torch_Fire",
+            "Scale": 0.2
+          }
+        ]
+      },
+      {
+        "Condition": [
+          2,
+          2
+        ],
+        "Particles": [
+          {
+            "TargetNodeName": "Attachment_Spin1",
+            "SystemId": "Torch_Fire",
+            "Scale": 0.2
+          },
+          {
+            "TargetNodeName": "Attachment_Spin2",
+            "SystemId": "Torch_Fire",
+            "Scale": 0.2
+          }
+        ]
+      },
+      {
+        "Condition": [
+          1,
+          1
+        ],
+        "Particles": [
+          {
+            "TargetNodeName": "Attachment_Spin1",
+            "SystemId": "Torch_Fire",
+            "Scale": 0.2
+          }
+        ]
+      }
+    ],
+    "SignatureEnergy": [
+      {
+        "Condition": [
+          100,
+          100
+        ],
+        "ConditionValueType": "Percent",
+        "Particles": [
+          {
+            "SystemId": "Sword_Signature_Ready",
+            "TargetNodeName": "Handle",
+            "PositionOffset": {
+              "X": 0.8
+            },
+            "TargetEntityPart": "PrimaryItem"
+          },
+          {
+            "SystemId": "Sword_Signature_Status",
+            "TargetNodeName": "Handle",
+            "PositionOffset": {
+              "X": 0.6
+            },
+            "TargetEntityPart": "PrimaryItem",
+            "Scale": 1.3
+          }
+        ],
+        "FirstPersonParticles": [
+          {
+            "SystemId": "Sword_Signature_Ready",
+            "TargetNodeName": "Handle",
+            "PositionOffset": {
+              "X": 0.6
+            },
+            "TargetEntityPart": "PrimaryItem"
+          }
+        ],
+        "ModelVFXId": "Sword_Signature_Status"
+      }
+    ]
+  },
+  "Tags": {
+    "Type": [
+      "Weapon"
+    ],
+    "Family": [
+      "Magic"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Wood",
+  "MaxDurability": 0,
+  "DurabilityLossOnHit": 0,
+  "TranslationProperties": {
+    "Name": "Ouas de Râ, Sceptre du Soleil",
+    "Description": "Artefact divin. Le sceptre du dieu soleil. Ses coups embrasent et infligent +25 % de dégâts aux morts-vivants. Signature, Œil de Râ : un soleil s'allume au-dessus du porteur et frappe de ses rayons les ennemis proches pendant 5 secondes."
+  },
+  "MaxStack": 1,
+  "Variant": false,
+  "Trails": [
+    {
+      "TrailId": "Divin_Ra_Trail",
+      "TargetNodeName": "Handle",
+      "TargetEntityPart": "PrimaryItem",
+      "PositionOffset": {
+        "X": 0.8,
+        "Y": 0
+      },
+      "RotationOffset": {
+        "Roll": 90
+      }
+    }
+  ],
+  "Recipe": {
+    "TimeSeconds": 30,
+    "Input": [
+      {
+        "ItemId": "Ingredient_Bar_Divin",
+        "Quantity": 24
+      },
+      {
+        "ItemId": "Ingredient_Bar_Adamantite",
+        "Quantity": 40
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "Forge_Divine",
+        "Categories": [
+          "Forge_Batons"
+        ]
+      }
+    ]
+  }
+}

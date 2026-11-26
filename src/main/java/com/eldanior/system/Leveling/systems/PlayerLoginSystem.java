@@ -69,6 +69,7 @@ public class PlayerLoginSystem extends EntityTickingSystem<EntityStore> {
         if (data == null) {
             data = new PlayerLevelData();
             data.setMoney(1000); // Or de depart pour les nouveaux joueurs
+            data.setOnboardingDone(false); // fenetre d'accueil a la premiere connexion (accueil.Welcome, 2026-11-25)
             commandBuffer.putComponent(playerRef, type, data);
             LOGGER.atInfo().log("[PlayerLogin] Nouveau joueur initialisé : " + uuid + " (+1000 Or)");
         }
@@ -144,19 +145,96 @@ public class PlayerLoginSystem extends EntityTickingSystem<EntityStore> {
             }
         }
 
-        // Nettoyer les doublons de catalyst de competence active
+        // Maison royale (2026-11-13) : le Roi est Patriarche d'Eldanior ; un ancien Roi redevient Noble de la maison
+        final PlayerLevelData royalData = data;
         commandBuffer.run(deferredStore -> {
-            try {
-                com.hypixel.hytale.server.core.entity.entities.Player loginPlayer =
-                        deferredStore.getComponent(playerRef, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
-                if (loginPlayer != null) {
-                    for (var skill : com.eldanior.system.skills.SkillManager.getAllSkills()) {
-                        if (skill.catalystId() == null) continue;
-                        removeDuplicateCatalyst(loginPlayer, skill.catalystId());
-                    }
-                }
-            } catch (Exception e) { /* skip */ }
+            if (com.eldanior.system.titles.nobility.family.RoyalHouse.sync(playerRef, deferredStore, royalData))
+                deferredStore.putComponent(playerRef, type, royalData);
         });
+
+        // Accueil (2026-11-25) : nouveau joueur, ou remis en premiere connexion par un admin et deconnecte avant la fin
+        if (!data.isOnboardingDone())
+            com.eldanior.system.accueil.Welcome.scheduleOnLogin(playerRef, store.getExternalData().getWorld());
+
+        // Observateur execute pendant son absence : personnage efface (niveau 1, tout perdu, point d'apparition)
+        if (com.eldanior.system.classes.observateur.ObservateurManager.consumeExecution(uuid)) {
+            // 3 s apres : les autres etapes de la connexion ecrivent encore la fiche du joueur dans ce tick
+            com.hypixel.hytale.server.core.universe.world.World execWorld = store.getExternalData().getWorld();
+            com.eldanior.system.config.EldaniorLogger.SCHEDULER.schedule(() -> execWorld.execute(() -> {
+                try {
+                    if (playerRef.isValid())
+                        com.eldanior.system.classes.observateur.ObservateurManager.execute(pRef, playerRef, playerRef.getStore(), "souverain");
+                } catch (Exception e) {
+                    com.eldanior.system.config.EldaniorLogger.error("[Observateur] execution a la connexion", e);
+                }
+            }), 3, java.util.concurrent.TimeUnit.SECONDS);
+        }
+
+        // Observateur (2026-11-16) : revocation prononcee pendant l'absence, place liberee si la classe a change
+        String observateurMsg = com.eldanior.system.classes.observateur.ObservateurManager.onLogin(uuid, data);
+        if (observateurMsg != null) {
+            final PlayerLevelData observateurData = data;
+            commandBuffer.run(deferredStore -> {
+                deferredStore.putComponent(playerRef, type, observateurData);
+                StatCalculator.updatePlayerStats(playerRef, deferredStore, observateurData);
+            });
+            pRef.sendMessage(com.hypixel.hytale.server.core.Message.raw(observateurMsg));
+        }
+
+        // Rang change par l'intendant pendant l'absence (2026-11-18) : applique maintenant
+        String effectiveStatus = data.getStatus();
+        String pendFam = data.getNobleFamilyId();
+        if (pendFam != null && !pendFam.isEmpty() && !data.isPatriarch()) {
+            var pending = com.eldanior.system.titles.nobility.family.FamilyRegistry.consumeRole(
+                    com.eldanior.system.titles.nobility.family.FamilyManager.migrateId(pendFam), uuid);
+            if (pending != null) {
+                effectiveStatus = pending.code();
+                final PlayerLevelData promoted = data;
+                final String code = pending.code();
+                commandBuffer.run(deferredStore -> {
+                    promoted.setStatus(code);
+                    deferredStore.putComponent(playerRef, type, promoted);
+                });
+                pRef.sendMessage(com.hypixel.hytale.server.core.Message.raw("Pendant votre absence, votre rang dans la maison a changé : "
+                        + pending.label() + "."));
+            }
+        }
+
+        // Registre des Doyens : il suit le rang enregistre sur le joueur (un admin a pu le changer pendant son absence)
+        String elderFam = data.getNobleFamilyId();
+        com.eldanior.system.titles.nobility.family.FamilyManager.removeElderEverywhere(uuid);
+        if (com.eldanior.system.titles.nobility.family.FamilyRole.of(effectiveStatus) == com.eldanior.system.titles.nobility.family.FamilyRole.ELDER
+                && !data.isPatriarch() && elderFam != null && !elderFam.isEmpty()
+                && com.eldanior.system.titles.nobility.family.FamilyManager.isFamilyTaken(elderFam)) {
+            com.eldanior.system.titles.nobility.family.FamilyManager.restoreElder(elderFam, uuid);
+        }
+
+        // Registre de la maison (intendant, 2026-11-11) : presence notee ; exclusion prononcee pendant l'absence appliquee
+        String regFam = data.getNobleFamilyId();
+        if (regFam != null && !regFam.isEmpty()) {
+            String fam = com.eldanior.system.titles.nobility.family.FamilyManager.migrateId(regFam);
+            if (com.eldanior.system.titles.nobility.family.FamilyRegistry.consumeKick(fam, uuid)) {
+                final PlayerLevelData kicked = data;
+                commandBuffer.run(deferredStore -> {
+                    kicked.setNobleFamilyId("");
+                    kicked.setStatus("");
+                    deferredStore.putComponent(playerRef, type, kicked);
+                });
+                pRef.sendMessage(com.hypixel.hytale.server.core.Message.raw("Pendant votre absence, le Patriarche vous a exclu de la famille."));
+            } else {
+                com.eldanior.system.titles.nobility.family.FamilyRegistry.touch(fam, uuid, pRef.getUsername(), effectiveStatus,
+                        data.getLevel(), data.getPlayerClassId());
+                try {                                                                            // rappels de l'intendant (2026-11-18)
+                    var role = data.isPatriarch() ? com.eldanior.system.titles.nobility.family.FamilyRole.PATRIARCH
+                            : com.eldanior.system.titles.nobility.family.FamilyRole.of(effectiveStatus);
+                    String note = com.eldanior.system.guards.IntendantPage.reminder(fam, role);
+                    if (note != null) pRef.sendMessage(com.hypixel.hytale.server.core.Message.raw(note));
+                } catch (Exception e) {
+                    com.eldanior.system.config.EldaniorLogger.error("[Intendant] rappel", e);
+                }
+            }
+        }
+
 
         // Collecter les gains du shop en attente
         long pendingGold = com.eldanior.system.shop.ShopManager.collectPendingEarnings(uuid);
@@ -200,6 +278,14 @@ public class PlayerLoginSystem extends EntityTickingSystem<EntityStore> {
         }
         // Restaurer depuis le fichier shutdown (ecrase les donnees ECS potentiellement obsoletes)
         com.eldanior.system.quest.QuestManager.loadPlayerFromFile(uuid);
+        // Roi elu pendant son absence : la quete principale quitte ses quetes en cours (2026-11-13)
+        if (com.eldanior.system.quest.chapitres.ChapterQuests.purgeMain(uuid) > 0) {
+            final PlayerLevelData mainData = data;
+            commandBuffer.run(deferredStore -> {
+                mainData.setQuestData(com.eldanior.system.quest.QuestManager.serializePlayerQuests(uuid));
+                deferredStore.putComponent(playerRef, type, mainData);
+            });
+        }
         com.eldanior.system.quest.QuestManager.checkDailyReset();
 
         // Charger les scores dans le classement persistant
@@ -208,7 +294,11 @@ public class PlayerLoginSystem extends EntityTickingSystem<EntityStore> {
         ClassementManager.updatePvPKills(playerName, data.getPlayerKills());
         ClassementManager.updateDuelWins(playerName, data.getDuelWins());
 
+        // Poche dimensionnelle et sac a dos niveau 1 a l'arrivee (2026-11-16)
+        commandBuffer.run(deferredStore -> com.eldanior.system.poche.PocheDimensionnelle.onLogin(playerRef, deferredStore));
+
         initializedPlayers.add(uuid);
+        com.eldanior.system.skills.runes.spells.ArmeTransfo.watch(playerRef);   // armes a feu transformees : fin pendant l'absence
 
         // Primes placees sur lui pendant son absence (tableau de prime)
         long pendingBounty = com.eldanior.system.boards.BountyBoard.collectPending(uuid);
@@ -239,6 +329,7 @@ public class PlayerLoginSystem extends EntityTickingSystem<EntityStore> {
                 com.eldanior.system.Leveling.utils.NotificationHelper.sendNotification(
                         pRefWelcome, "<color:gold>" + welcomeMsg + "</color>",
                         com.hypixel.hytale.protocol.packets.interface_.NotificationStyle.Success);
+                com.eldanior.system.guards.BankLoans.remind(pRefWelcome);           // pret en cours : somme et delai
             }
         } catch (Exception e) { /* skip */ }
     }

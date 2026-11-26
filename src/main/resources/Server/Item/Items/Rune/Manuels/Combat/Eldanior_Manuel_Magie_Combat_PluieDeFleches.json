@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_PluieDeFleches (remplace le parchemin rune_page_pluie_de_fleches).",
+  "TranslationProperties": {
+    "Name": "Manuel de Combat : Pluie de Flèches",
+    "Description": "Sort commun de combat (Archer, Dragon). Maintenez la touche pour bander l'arc (0,6 s), relâchez pour tirer une volée vers le ciel : 10 flèches retombent en une seconde sur la zone visée (rayon 4, jusqu'à 20 blocs). Chaque flèche inflige 18 dégâts (3 flèches au plus par ennemi). Épargne votre groupe, votre guilde et votre famille. Coût : 25 mana. Recharge : 15 s.\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Combat"
+  ],
+  "Quality": "Common",
+  "ItemLevel": 10,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Combat_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Combat_PluieDeFleches.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

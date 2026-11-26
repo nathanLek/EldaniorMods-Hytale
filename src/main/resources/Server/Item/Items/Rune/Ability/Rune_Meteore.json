@@ -1,0 +1,45 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune du Météore",
+    "Description": "Sort épique de feu (Mage, rune de prédilection du Magus). Un cercle rougeoie au point visé (jusqu'à 25 blocs) pendant 1,2 s, puis un météore s'y écrase : 400 dégâts dans un rayon de 2 blocs, 250 jusqu'à 5 blocs, projection et brûlure. Il laisse un cratère de roche en fusion et de terre brûlée, qui se referme au bout d'une minute (jamais en ville ni sur une parcelle). Épargne votre groupe, votre guilde et votre famille. Coût : 300 mana. Recharge : 120 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_Meteore.png",
+  "Quality": "Epic",
+  "ItemLevel": 60,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_Runes.Feu"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_Meteore.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 120,
+    "Cost": 300,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Fire",
+      "Damage",
+      "Aoe"
+    ],
+    "Cast": "Root_Ability_Meteore"
+  }
+}

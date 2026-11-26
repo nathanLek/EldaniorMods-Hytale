@@ -1,0 +1,60 @@
+{
+  "Categories": [],
+  "Icon": "Icons/ItemsGenerated/Artefact_Mousquet_BlackBess.png",
+  "Texture": "Items/Weapons/artefacts/Artefact_Mousquet_BlackBess_Baionnette.png",
+  "PlayerAnimationsId": "Mousquet",
+  "IconProperties": {
+    "Scale": 0.3,
+    "Translation": [
+      -12,
+      -22
+    ],
+    "Rotation": [
+      320,
+      90,
+      0
+    ]
+  },
+  "Quality": "Legendary",
+  "Model": "Items/Weapons/artefacts/Artefact_Mousquet_BlackBess_Baionnette.blockymodel",
+  "Scale": 1,
+  "Tags": {
+    "Type": [
+      "Weapon"
+    ],
+    "Family": [
+      "Gun"
+    ]
+  },
+  "Weapon": {},
+  "TranslationProperties": {
+    "Name": "Black Bess, l'Arcane Sniper",
+    "Description": "Mousquet légendaire de précision, noir d'ébène, au long canon gravé de runes d'arcane et coiffé d'une lunette aux lentilles violettes. Portée et précision ×1,5, lunette plus puissante, dégâts +15 %. Réservé aux Mousquetaires. Chaque tir demande 1 Poudre à canon et 1 Balle de fer. Force : dégâts (70 à 2 000) et vitesse de la balle ; Agilité : rechargement (50 s, 1 s à 3 000 points) ; Endurance : portée sûre (10 à 500 blocs, 500 au plus), précision au-delà, grossissement de la lunette et entités vues de loin. Une balle qui tue annonce la distance du tir. Clic droit maintenu : viser à la lunette. Clic droit bref : coup de baïonnette (fixée le temps de l'estoc). Rune de Transformation d'Arme (Mousquetaire) : Black Bess devient pendant 5 minutes un SARS militaire, fusil de précision à chargeur de 5 Balles de sniper divines, portée 2 000 blocs ; puis elle redevient mousquet (la rune se recharge)."
+  },
+  "$Comment": "Mousquet legendaire de precision (2026-11-15) : Mousquet.Arme.BLACK_BESS ; signature = SARS 5 min (ArmeTransfo). Variante a baionnette fixee (echangee le temps d'un estoc, ArmeTransfo). Genere par scripts/artefacts/gen_mousquets.py.",
+  "ItemLevel": 560,
+  "MaxStack": 1,
+  "Interactions": {
+    "Primary": {
+      "$Comment": "BlockedBy sans Secondary : on tire en visant.",
+      "Rules": {
+        "BlockedBy": [
+          "Primary",
+          "Ability1",
+          "Ability2",
+          "Ability3",
+          "Use",
+          "Pick",
+          "SwapFrom",
+          "SwapTo"
+        ]
+      },
+      "Interactions": [
+        "Mousquet_Tir"
+      ]
+    },
+    "Secondary": "Root_Mousquet_Secondaire"
+  },
+  "MaxDurability": 0,
+  "DurabilityLossOnHit": 0
+}

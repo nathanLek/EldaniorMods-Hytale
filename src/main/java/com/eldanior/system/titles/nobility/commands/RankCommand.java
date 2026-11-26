@@ -106,6 +106,8 @@ public class RankCommand extends AbstractAsyncCommand {
                             if (oldCopy != null) {
                                 oldCopy.setNobilityRank(NobilityRank.MARQUIS.name());
                                 oldCopy.setDignity(NobilityRank.MARQUIS.getBaseDignity());
+                                if (oldCopy.isPatriarch() && "eldanior".equals(com.eldanior.system.titles.nobility.family.FamilyManager.migrateId(oldCopy.getNobleFamilyId())))
+                                    oldCopy.setStatus(com.eldanior.system.titles.nobility.family.FamilyRole.NOBLE.code());   // reste Noble d'Eldanior
                                 oldStore.putComponent(oldRef, type, oldCopy);
                                 oldKingRef.sendMessage(Message.raw("Vous avez ete retrogade au rang de Marquis."));
                             }
@@ -121,9 +123,9 @@ public class RankCommand extends AbstractAsyncCommand {
 
             copy.setNobilityRank(NobilityRank.ROI.name());
             copy.setDignity(NobilityRank.ROI.getBaseDignity());
-            store.putComponent(ref, type, copy);
-
             NobilityManager.setKing(targetUUID, targetName);
+            com.eldanior.system.titles.nobility.family.RoyalHouse.sync(ref, store, copy);                // Patriarche d'Eldanior (2026-11-13)
+            store.putComponent(ref, type, copy);
 
             sender.getPlayerRef().sendMessage(Message.raw("" + targetName + " est maintenant " + NobilityRank.ROI.getFormattedName() + " !"));
             targetPlayer.sendMessage(Message.raw("Vous etes desormais le " + NobilityRank.ROI.getFormattedName() + " !"));
@@ -271,12 +273,7 @@ public class RankCommand extends AbstractAsyncCommand {
 
             String status = data.getStatus();
             if (status != null && !status.isEmpty()) {
-                String statusDisplay = switch (status) {
-                    case "PATRIARCH" -> "Patriarche";
-                    case "VICE" -> "Vice-Patriarche";
-                    case "MEMBER" -> "Membre";
-                    default -> "" + status;
-                };
+                String statusDisplay = com.eldanior.system.titles.nobility.family.FamilyRole.labelOf(status);
                 sender.getPlayerRef().sendMessage(Message.raw("Status : " + statusDisplay));
             }
 
@@ -286,7 +283,6 @@ public class RankCommand extends AbstractAsyncCommand {
                 if (family != null) {
                     sender.getPlayerRef().sendMessage(Message.raw("Famille : " + family.getFormattedName()));
                     sender.getPlayerRef().sendMessage(Message.raw("Devise : " + family.getMotto()));
-                    sender.getPlayerRef().sendMessage(Message.raw("Competence : " + family.getFamilyPassive().getDisplayName()));
                 }
             }
 

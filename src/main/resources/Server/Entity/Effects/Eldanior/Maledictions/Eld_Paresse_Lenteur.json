@@ -1,0 +1,13 @@
+{
+  "$Comment": "Peche de Paresse (passif divin, 2026-11-24) : un joueur qui frappe le porteur est ralenti 3 s. Aucun visuel (les passifs n'en jouent plus).",
+  "ApplicationEffects": {
+    "HorizontalSpeedMultiplier": 0.7,
+    "MovementEffects": {
+      "DisableSprint": true
+    }
+  },
+  "Duration": 3,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": true,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Potion_Signature.png"
+}

@@ -1,0 +1,44 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de la Réflexion",
+    "Description": "Sort épique de lumière (Mage, rune de prédilection de l'Archimage Suprême). Un dôme miroitant de 5 blocs vous suit pendant 8 s. Les projectiles ennemis qui y entrent sont détruits et leur énergie est renvoyée en trait de lumière sur le tireur (80 dégâts). Les coups que vous subissez au corps à corps renvoient 30 % de leurs dégâts à l'attaquant. Coût : 300 mana. Recharge : 120 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_Reflexion.png",
+  "Quality": "Epic",
+  "ItemLevel": 60,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_Runes.Lumiere"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_Reflexion.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 120,
+    "Cost": 300,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Buff",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_Reflexion"
+  }
+}

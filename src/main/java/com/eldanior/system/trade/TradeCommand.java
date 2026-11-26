@@ -24,10 +24,10 @@ public class TradeCommand extends AbstractAsyncCommand {
 
     public TradeCommand() {
         super("trade", "Echange (accept/decline/cancel)");
+        requireNoPermission();                                   // commande joueur : ouverte a tous
         this.actionArg = this.withRequiredArg("action", "accept|decline|cancel", ArgTypes.STRING);
     }
 
-    protected boolean canGeneratePermission() { return false; }
 
     @Nonnull
     @Override

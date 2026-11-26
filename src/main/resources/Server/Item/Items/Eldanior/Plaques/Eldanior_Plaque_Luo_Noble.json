@@ -1,0 +1,39 @@
+{
+  "$Comment": "Plaque d'identification du Clan Luo, generee par scripts/familles/gen_plaques_luo.py. Remise et reprise par LuoPlaqueSystem.",
+  "TranslationProperties": {
+    "Name": "Plaque d'identification — Noble",
+    "Description": "Plaque de laque noire et d'argent des Nobles du clan. Plaque personnelle : remise et reprise selon le rang, elle disparaît entre d'autres mains. La porter sur soi permet d'entrer sur le territoire Luo sans être attaqué."
+  },
+  "Categories": [
+    "Eldanior_Empire_Luo.Luo"
+  ],
+  "ItemLevel": 100,
+  "Quality": "Rare",
+  "Model": "Items/Eldanior/Plaques/Plaque_Luo.blockymodel",
+  "Texture": "Items/Eldanior/Plaques/Eldanior_Plaque_Luo_Noble_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Plaque_Luo_Noble.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.55,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -12
+    ]
+  },
+  "Tags": {
+    "Type": [
+      "Ingredient"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Items_Ingots",
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Light": {
+    "Color": "#cdd"
+  }
+}

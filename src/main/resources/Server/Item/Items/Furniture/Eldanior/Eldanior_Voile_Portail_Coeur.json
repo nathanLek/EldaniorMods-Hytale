@@ -1,0 +1,43 @@
+{
+  "TranslationProperties": {
+    "Name": "Cœur du Portail Continental",
+    "Description": "Bloc technique : il remplit la porte quand un voyageur a payé son passage, puis disparaît."
+  },
+  "Icon": "Icons/ItemsGenerated/Teleporter.png",
+  "Categories": [
+    "Eldanior_System.Autres"
+  ],
+  "MaxStack": 1,
+  "Quality": "Technical",
+  "BlockType": {
+    "Material": "Empty",
+    "DrawType": "Cube",
+    "Opacity": "Transparent",
+    "RequiresAlphaBlending": true,
+    "VariantRotation": "NESW",
+    "Textures": [
+      {
+        "All": "BlockTextures/Eldanior_Voile_Portail.png"
+      }
+    ],
+    "ParticleColor": "#4ee4ff",
+    "TextureComputedColor": "#3f8fd8",
+    "Support": {
+      "Down": [
+        {
+          "Support": "Ignored"
+        }
+      ]
+    },
+    "Particles": [
+      {
+        "SystemId": "Eldanior_Portail_Continental",
+        "PositionOffset": {
+          "Y": 3.5
+        },
+        "Scale": 2.6
+      }
+    ],
+    "AmbientSoundEventId": "SFX_Portal_Neutral"
+  }
+}

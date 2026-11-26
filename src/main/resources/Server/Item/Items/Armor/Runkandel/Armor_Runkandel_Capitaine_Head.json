@@ -1,0 +1,99 @@
+{
+  "TranslationProperties": {
+    "Name": "Bourguignotte de Capitaine",
+    "Description": "Harnois de Capitaine Runkandel. Une bourguignotte gravée d'or au panache écarlate, que les soldats suivent au cœur des flammes."
+  },
+  "Quality": "Epic",
+  "ItemLevel": 250,
+  "PlayerAnimationsId": "Block",
+  "ItemSoundSetId": "ISS_Armor_Heavy",
+  "Categories": [
+    "Eldanior_Familles.Runkandel",
+    "Items.Armors"
+  ],
+  "Icon": "Icons/ItemsGenerated/Armor_Runkandel_Capitaine_Head.png",
+  "IconProperties": {
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Scale": 0.34,
+    "Translation": [
+      0,
+      0
+    ]
+  },
+  "Model": "Items/Armors/Runkandel/Capitaine/Head.blockymodel",
+  "Texture": "Items/Armors/Runkandel/Capitaine/Head_Texture.png",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    }
+  },
+  "Armor": {
+    "ArmorSlot": "Head",
+    "BaseDamageResistance": 0,
+    "CosmeticsToHide": [
+      "EarAccessory",
+      "Ear",
+      "Haircut",
+      "HeadAccessory"
+    ],
+    "StatModifiers": {
+      "Health": [
+        {
+          "Amount": 15,
+          "CalculationType": "Additive"
+        }
+      ],
+      "Mana": [
+        {
+          "Amount": 5,
+          "CalculationType": "Additive"
+        }
+      ]
+    },
+    "DamageResistance": {
+      "Physical": [
+        {
+          "Amount": 0.084,
+          "CalculationType": "Percent"
+        }
+      ],
+      "Projectile": [
+        {
+          "Amount": 0.084,
+          "CalculationType": "Percent"
+        }
+      ],
+      "Fire": [
+        {
+          "Amount": 0.042,
+          "CalculationType": "Percent"
+        }
+      ]
+    }
+  },
+  "Tags": {
+    "Type": [
+      "Armor"
+    ],
+    "Family": [
+      "Plate_Runkandel"
+    ]
+  },
+  "MaxDurability": 260,
+  "DurabilityLossOnHit": 0.5
+}

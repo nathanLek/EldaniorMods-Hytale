@@ -1,705 +1,324 @@
 package com.eldanior.system.skills.skillsInteraction;
 
-import com.eldanior.system.skills.skills.passives.Common.Agilité.*;
-import com.eldanior.system.skills.skills.passives.Common.Attack.*;
-import com.eldanior.system.skills.skills.passives.Common.Defense.*;
-import com.eldanior.system.skills.skills.passives.Common.Detection.*;
-import com.eldanior.system.skills.skills.passives.Common.Endurance.*;
-import com.eldanior.system.skills.skills.passives.Common.Magique.*;
-import com.eldanior.system.skills.skills.passives.Common.Chance.*;
-import com.eldanior.system.skills.skills.passives.Common.Resistance.*;
-import com.eldanior.system.skills.skills.passives.Common.Vie.*;
-import com.eldanior.system.skills.skills.passives.Common.Regeneration.ActiveBreathing;
-import com.eldanior.system.skills.skills.passives.Common.Regeneration.CellularRegeneration;
-import com.eldanior.system.skills.skills.passives.Common.Regeneration.ManaFont;
-import com.eldanior.system.skills.skills.passives.Common.Regeneration.NaturalRecovery;
-import com.eldanior.system.skills.skills.passives.Common.Regeneration.SpiritualSiphon;
-import com.eldanior.system.skills.skills.passives.Divin.Attack.*;
-import com.eldanior.system.skills.skills.passives.Divin.Defense.*;
-import com.eldanior.system.skills.skills.passives.Divin.Agilite.*;
-import com.eldanior.system.skills.skills.passives.Divin.Detection.*;
-import com.eldanior.system.skills.skills.passives.Divin.Endurance.*;
-import com.eldanior.system.skills.skills.passives.Divin.Magique.*;
-import com.eldanior.system.skills.skills.passives.Divin.Chance.*;
-import com.eldanior.system.skills.skills.passives.Divin.Regeneration.*;
-import com.eldanior.system.skills.skills.passives.Divin.Resistance.*;
-import com.eldanior.system.skills.skills.passives.Divin.Vie.*;
-import com.eldanior.system.skills.skills.passives.Divin.Maitrise.*;
-import com.eldanior.system.skills.skills.passives.Epique.Attack.*;
-import com.eldanior.system.skills.skills.passives.Epique.Defense.*;
-import com.eldanior.system.skills.skills.passives.Epique.Agilité.*;
-import com.eldanior.system.skills.skills.passives.Epique.Detection.*;
-import com.eldanior.system.skills.skills.passives.Epique.Endurance.*;
-import com.eldanior.system.skills.skills.passives.Epique.Magique.*;
-import com.eldanior.system.skills.skills.passives.Epique.Chance.*;
-import com.eldanior.system.skills.skills.passives.Epique.Regeneration.*;
-import com.eldanior.system.skills.skills.passives.Epique.Resistance.*;
-import com.eldanior.system.skills.skills.passives.Epique.Vie.*;
-import com.eldanior.system.skills.skills.passives.Epique.Maitrise.*;
-import com.eldanior.system.skills.skills.passives.Legendaire.Attack.*;
-import com.eldanior.system.skills.skills.passives.Legendaire.Defense.*;
-import com.eldanior.system.skills.skills.passives.Legendaire.Agilite.*;
-import com.eldanior.system.skills.skills.passives.Legendaire.Detection.*;
-import com.eldanior.system.skills.skills.passives.Legendaire.Endurance.*;
-import com.eldanior.system.skills.skills.passives.Legendaire.Magique.*;
-import com.eldanior.system.skills.skills.passives.Legendaire.Chance.*;
-import com.eldanior.system.skills.skills.passives.Legendaire.Regeneration.*;
-import com.eldanior.system.skills.skills.passives.Legendaire.Resistance.*;
-import com.eldanior.system.skills.skills.passives.Legendaire.Vie.*;
-import com.eldanior.system.skills.skills.passives.Legendaire.Maitrise.*;
-import com.eldanior.system.skills.skills.passives.Rare.Attack.*;
-import com.eldanior.system.skills.skills.passives.Rare.Agilité.*;
-import com.eldanior.system.skills.skills.passives.Rare.Detection.*;
-import com.eldanior.system.skills.skills.passives.Rare.Endurance.*;
-import com.eldanior.system.skills.skills.passives.Rare.Magique.*;
-import com.eldanior.system.skills.skills.passives.Rare.Chance.*;
-import com.eldanior.system.skills.skills.passives.Rare.Regeneration.*;
-import com.eldanior.system.skills.skills.passives.Rare.Resistance.*;
-import com.eldanior.system.skills.skills.passives.Rare.Vie.*;
-import com.eldanior.system.skills.skills.passives.Rare.Defense.*;
-import com.eldanior.system.skills.skills.passives.Rare.Maitrise.*;
-import com.eldanior.system.skills.skills.passives.Uncommon.Attack.*;
-import com.eldanior.system.skills.skills.passives.Uncommon.Defense.*;
-import com.eldanior.system.skills.skills.passives.Uncommon.Agilité.*;
-import com.eldanior.system.skills.skills.passives.Uncommon.Detection.*;
-import com.eldanior.system.skills.skills.passives.Uncommon.Endurance.*;
-import com.eldanior.system.skills.skills.passives.Uncommon.Magique.*;
-import com.eldanior.system.skills.skills.passives.Uncommon.Chance.*;
-import com.eldanior.system.skills.skills.passives.Uncommon.Regeneration.*;
-import com.eldanior.system.skills.skills.passives.Uncommon.Resistance.*;
-import com.eldanior.system.skills.skills.passives.Uncommon.Vie.*;
-import com.eldanior.system.skills.skills.passives.Uncommon.Maitrise.*;
-import com.eldanior.system.skills.skills.passives.Unique.Attack.*;
-import com.eldanior.system.skills.skills.passives.Unique.Defense.*;
-import com.eldanior.system.skills.skills.passives.Unique.Agilité.*;
-import com.eldanior.system.skills.skills.passives.Unique.Detection.*;
-import com.eldanior.system.skills.skills.passives.Unique.Endurance.*;
-import com.eldanior.system.skills.skills.passives.Unique.Magique.*;
-import com.eldanior.system.skills.skills.passives.Unique.Chance.*;
-import com.eldanior.system.skills.skills.passives.Unique.Regeneration.*;
-import com.eldanior.system.skills.skills.passives.Unique.Resistance.*;
-import com.eldanior.system.skills.skills.passives.Unique.Vie.*;
-import com.eldanior.system.skills.skills.passives.Unique.Maitrise.*;
-import com.eldanior.system.skills.skills.passives.Family.*;
-import com.eldanior.system.skills.skills.passives.Divin.Peche.*;
 import com.eldanior.system.skills.skills.passives.Divin.Ange.*;
+import com.eldanior.system.skills.skills.passives.Divin.Peche.*;
 
-import java.util.Map;
-import java.util.Set;
-import java.util.HashMap;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
+/**
+ * Competences passives (refonte du 2026-11-24) : chaque passif est une SERIE a rangs, du rang 1 (Commun) au rang 6
+ * (Legendaire). Une page de rang superieur fait monter le passif. Les 7 Anges et 7 Peches sont des passifs uniques (Divin).
+ *
+ * FICHIER GENERE par scripts/passifs/gen_passifs.py depuis scripts/passifs/conception.py : modifier la conception, pas ce
+ * fichier. Les valeurs de chaque rang sont dans les tableaux passes a PassiveEffects (index 0 = rang 1).
+ * Les stats sont designees par leur nom : StatConfig ne doit pas etre charge au demarrage (ses IDs de stats seraient faux).
+ */
 public enum PassiveSkill {
 
-    // --- GUERRIER ---
-    SWORD_MASTERY("SWORD_MASTERY", "Maîtrise de l'Épée", "Augmente les dégâts infligés avec une épée de 15%.", new SwordMastery()),
-    ATHLETICISM("ATHLETICISM", "Athlétisme", "+5% vitesse de sprint.", new Athleticism()),
-    MANAWELL("MANAWELL", "Puit de Mana", "Augmente du mana à vie de 10%.", new ManaWell()),
-    DETECTIONOFVITALPOINTS("DETECTIONOFVITALPOINTS", "Detection De Point Vital", "+15% fixes ajoutés à ta stat critique", 12, new DetectionOfVitalPoints()),
-
-    // --- DÉTECTION (pas de coût mana) ---
-    UNIVERSAL_DETECTION("UNIVERSAL_DETECTION", "Detection Universel", "+400% Conscience des menaces.", new UniversalDetection()),
-    EAGLE_EYE("EAGLE_EYE", "Œil de Rapace", "+15% Distance de détection.", new EagleEye()),
-    SURVIVAL_INSTINCT("SURVIVAL_INSTINCT", "Instinct de Survie", "+10% Conscience des menaces.", new SurvivalInstinct()),
-    NIGHT_VISION("NIGHT_VISION", "Vision Nocturne", "+20% Visibilité en basse lumière.", new NightVision()),
-    SIXTH_SENSE("SIXTH_SENSE", "Sixième Sens", "+5% Détection de l'invisibilité.", new SixthSense()),
-    TRACKER("TRACKER", "Pisteur", "Marque la cible attaquée pendant 15s. Coût: 15 mana. CD: 5min.", 15, 300f, new Tracker()),
-
-    // --- ATTACK (coût mana selon la puissance) ---
-    KODA_JUDGMENT("KODA_JUDGMENT", "Jugement de Koda", "12% de chance d'exécution au premier coup (Endurance >= 90%). Coût: 25 mana.", 25, new KodaJudgment()),
-    MAUVAIS_PRESAGE("MAUVAIS_PRESAGE", "Mauvais Présage", "10% de chance d'infliger 20% des PV actuels de la cible en dégâts bonus. Coût: 18 mana.", 18, new MauvaisPresage()),
-
-    INSTINCTIVE_STRIKE("INSTINCTIVE_STRIKE", "Frappe Instinctive", "5% de chances d'infliger 10% de dégâts bonus.", new InstinctiveStrike()),
-    PREDATORY_STRIKE("PREDATORY_STRIKE", "Frappe de Prédateur", "10% de chances d'infliger 15% de dégâts bonus et de voler de la vie. Coût: 5 mana.", 5, new PredatoryStrike()),
-    FURY_STRIKE("FURY_STRIKE", "Frappe de Fureur", "12% de chances d'infliger +25% dégâts (30% sur ennemis faibles). Coût: 8 mana.", 8, new FuryStrike()),
-    SEISMIC_STRIKE("SEISMIC_STRIKE", "Frappe Sismique", "15% de chances d'infliger +35% dégâts et de créer une onde de choc. Coût: 12 mana.", 12, new SeismicStrike()),
-    PHANTOM_STRIKE("PHANTOM_STRIKE", "Frappe Fantôme", "18% de chances d'infliger +50% de dégâts dévastateurs.", 18, 180f, new PhantomStrike()),
-    ANNIHILATOR_STRIKE("ANNIHILATOR_STRIKE", "Frappe de l'Annihilateur", "22% de chances d'infliger +75% de dégâts. Chance de Double Impact. Coût: 25 mana.", 25, new AnnihilatorStrike()),
-    JUDGMENT_OF_GENESIS("JUDGMENT_OF_GENESIS", "Décret de la Genèse", "30% de chances de +150% dégâts. Annihile instantanément les faibles. Coût: 40 mana.", 40, new JudgmentOfGenesis()),
-
-    // --- ENDURANCE (pas de coût mana) ---
-    TIRELESS_BREATH("TIRELESS_BREATH", "Souffle Inépuisable", "+10 Endurance maximale.", new TirelessBreath()),
-    THICK_SKIN("THICK_SKIN", "Peau Épaisse", "+5 à la Défense d'Endurance.", new ThickSkin()),
-    SOLID_STANCE("SOLID_STANCE", "Posture Solide", "-10% dégâts si Endurance >= 80%. Coût: 20% endurance. CD: 30s.", 0, 30f, new SolidStance()),
-    COMBAT_VIGOR("COMBAT_VIGOR", "Vigueur Combative", "20% de chance de restaurer 5 d'Endurance en attaquant.", new CombatVigor()),
-    SECOND_WIND("SECOND_WIND", "Second Souffle", "15% de chance de restaurer 25 d'Endurance en subissant un coup (si Endurance < 20%).", new SecondWind()),
-
-    // --- MAGIQUE (coût mana pour les offensifs) ---
-    AWAKENED_MIND("AWAKENED_MIND", "Esprit Éveillé", "+15 Intelligence.", new AwakenedMind()),
-    ARCANE_STRIKE("ARCANE_STRIKE", "Frappe Arcanique", "20% de chance d'infliger 8 dégâts arcaniques supplémentaires. Coût: 10 mana.", 10, new ArcaneStrike()),
-    MANA_BARRIER("MANA_BARRIER", "Barrière de Mana", "-10% dégâts si Mana >= 50%. Consomme 10% du mana.", 50, new ManaBarrier()),
-    OVERFLOWING_POWER("OVERFLOWING_POWER", "Puissance Débordante", "Vos attaques infligent +15% de dégâts si votre Mana est à 100%.", new OverflowingPower()),
-    MYSTIC_VEIL("MYSTIC_VEIL", "Voile Mystique", "5% de chance de -25% dégâts reçus. Consomme 20 mana.", 20, new MysticVeil()),
-    VOL("VOL", "Vol", "Capacité de vol (1 mana/s).", new Fly()),
-
-    // --- REGENERATION (pas de coût mana) ---
-    CELLULAR_REGENERATION("CELLULAR_REGENERATION", "Régénération Cellulaire", "15% de chance de restaurer 5% de vos PV Max en subissant une attaque.", new CellularRegeneration()),
-    ACTIVE_BREATHING("ACTIVE_BREATHING", "Respiration Active", "20% de chance de restaurer 8 points d'Endurance par attaque.", new ActiveBreathing()),
-    SPIRITUAL_SIPHON("SPIRITUAL_SIPHON", "Siphon Spirituel", "20% de chance de restaurer 5 points de Mana par attaque.", new SpiritualSiphon()),
-    MANA_FONT("MANA_FONT", "Source de Mana", "Multiplie la régénération naturelle de Mana par 20%.", new ManaFont()),
-    NATURAL_RECOVERY("NATURAL_RECOVERY", "Rétablissement Naturel", "Restaure 1% des PV max si pas touché depuis 5 secondes.", new NaturalRecovery()),
-    MANA_HEART("MANA_HEART", "Coeur de Mana", "Multiplie la régénération naturelle de Mana par 10.5.", new ManaHeart()),
-
-    // --- AGILITÉ (pas de coût mana) ---
-    WIND_STEP("WIND_STEP", "Pas de Vent", "+3% Vitesse de déplacement.", new WindStep()),
-    LIGHT_REFLEXES("LIGHT_REFLEXES", "Réflexes Éclairs", "+4% Vitesse d'attaque.", new LightReflexes()),
-    ELDANIOR_SUPPLENESS("ELDANIOR_SUPPLENESS", "Souplesse d'Eldanior", "+10% Hauteur de saut.", new com.eldanior.system.skills.skills.passives.Common.Agilitе́.EldaniorSuppleness()),
-    KEEN_SENSES("KEEN_SENSES", "Sens Aiguisés", "+2% Chance de Critique.", new KeenSenses()),
-
-    TONOSQUIVE("TONOSQUIVE", "Tono'squive", "Augmente vos chances d'esquive de 30%.", new Tonosquive()),
-
-    // --- CHANCE ---
-    LUCKY_STRIKE("LUCKY_STRIKE", "Frappe Chanceuse", "+3% de chance de critique.", new LuckyStrike()),
-    TREASURE_HUNTER("TREASURE_HUNTER", "Chasseur de Trésors", "+5% de chance de loot.", new TreasureHunter()),
-    GOOD_OMEN("GOOD_OMEN", "Bon Présage", "+15% de chance d'event rare.", new GoodOmen()),
-    MIRACLE_DODGE("MIRACLE_DODGE", "Esquive Miraculeuse", "3% de chance d'esquiver n'importe quelle attaque.", new MiracleDodge()),
-    FORTUNE_COINS("FORTUNE_COINS", "Fortune Dorée", "+10% de coins droppés par les mobs.", new FortuneCoins()),
-
-    ARTISANAT("ARTISANAT", "Artisanat de base", "Permet d'utiliser les établis et les forges.", new Artisanat()),
-
-    // --- COMMON ATTACK (gratuit, coût 0) ---
-    DEEP_SLASH("DEEP_SLASH", "Entaille Profonde", "Ajoute +1 points de dégâts physiques à chaque attaque.", new DeepSlash()),
-    DUELIST_SWIFTNESS("DUELIST_SWIFTNESS", "Vivacité du Duelliste", "Augmente la vitesse d'attaque de 5%.", new DuelistSwiftness()),
-    PRESSURE_POINT("PRESSURE_POINT", "Point de Pression", "Le premier coup sur une cible en pleine santé inflige 15% de dégâts bonus.", new PressurePoint()),
-    HAUNTING_THRUST("HAUNTING_THRUST", "Estocade Obsédante", "Chaque coup consécutif sur la même cible augmente vos dégâts de 3% (Max 15%).", new HauntingThrust()),
-    OPPORTUNIST_STRIKE("OPPORTUNIST_STRIKE", "Frappe Opportuniste", "Inflige +12% de dégâts si vous avez été touché durant les 2 dernières secondes.", new OpportunistStrike()),
-
-    // --- DEFENSE (pas de coût mana) ---
-    DYNA_AEGIS("DYNA_AEGIS", "Égide de Dyna", "Rend invincible 5s si la vie tombe à 50% (Cooldown: 2m).", new DynaAegis()),
-
-    STONE_SKIN("STONE_SKIN", "Peau de Pierre", "Réduit les dégâts physiques reçus de 5%.", new StoneSkin()),
-    BRONZE_SKIN("BRONZE_SKIN", "Peau de Bronze", "Réduit les dégâts physiques reçus de 8%.", new BronzeSkin()),
-    IRON_SKIN("IRON_SKIN", "Peau de Fer", "Réduit les dégâts physiques reçus de 10%.", new IronSkin()),
-    STEEL_SKIN("STEEL_SKIN", "Peau d'Acier", "Réduit les dégâts physiques reçus de 15%.", new SteelSkin()),
-    OBSIDIAN_SKIN("OBSIDIAN_SKIN", "Peau d'Obsidienne", "Réduit les dégâts physiques reçus de 25%.", new ObsidianSkin()),
-    DIAMOND_SKIN("DIAMOND_SKIN", "Peau de Diamant", "Réduit les dégâts physiques reçus de 35%.", new DiamondSkin()),
-    DIVINE_AEGIS("DIVINE_AEGIS", "Égide Divine", "Réduit les dégâts physiques reçus de 50%.", new DivineAegis()),
-
-    IRON_RESOLVE("IRON_RESOLVE","Résolution de Fer", "Réduit tous les dégâts subis de 3.", new IronResolve()),
-    MINOR_PARRY("MINOR_PARRY","Parade Mineure", "15% de chance de bloquer 15% des dégâts.", new MinorParry()),
-    HUNTER_GUARD("HUNTER_GUARD","Garde de Chasseur", "Réduit les dégâts infligés par les monstres de 10%.", new HunterGuard()),
-    STURDY_BODY("STURDY_BODY","Corps Robuste", "Augmente l'Endurance de 15 points.", new SturdyBody()),
-
-    // --- RÉSISTANCE (pas de coût mana) ---
-    TENACITY("TENACITY", "Ténacité", "Sous 30% de vie, -8% dégâts reçus. Maîtrise : seuil 35%, -9%.", new Tenacity()),
-    ADAPTIVE_SHIELD("ADAPTIVE_SHIELD", "Bouclier Adaptatif", "7% de chance de réduire un coup de 15%. Maîtrise : -16.5%.", new AdaptiveShield()),
-    PAIN_TOLERANCE("PAIN_TOLERANCE", "Tolérance à la Douleur", "-2 dégâts fixes sur chaque coup. Maîtrise : -2.5.", new PainTolerance()),
-    HARDENING("HARDENING", "Endurcissement", "-4% de dégâts reçus permanent. Maîtrise : -4.5%.", new Hardening()),
-    STEEL_NERVES("STEEL_NERVES", "Nerfs d'Acier", "Coups >15 dégâts : -10%. Maîtrise : seuil 13, -11%.", new SteelNerves()),
-
-    // --- VIE (pas de coût mana) ---
-    ROBUST_CONSTITUTION("ROBUST_CONSTITUTION", "Constitution Robuste", "+5 à la Vitalité.", new RobustConstitution()),
-    LIFE_FORCE("LIFE_FORCE", "Force Vitale", "+5% de vie maximale.", new LifeForce()),
-    VITAL_BLOOD("VITAL_BLOOD", "Sang Vital", "+3 Vitalité et +10% régénération de vie.", new VitalBlood()),
-    HEART_OF_OAK("HEART_OF_OAK", "Coeur de Chêne", "+4 Vitalité et +2 Défense d'Endurance.", new HeartOfOak()),
-    PERSEVERANCE("PERSEVERANCE", "Persévérance", "Sous 25% de vie, chaque coup reçu restaure 2% de vie max.", new Perseverance()),
-
-    // ===================== UNCOMMON =====================
-
-    // --- UNCOMMON ATTACK ---
-    SHARP_BLADE("SHARP_BLADE", "Lame Aiguisée", "+2 dégâts physiques par attaque.", new SharpBlade()),
-    COMBATANT_SWIFTNESS("COMBATANT_SWIFTNESS", "Vivacité du Combattant", "+15% vitesse d'attaque.", new CombatantSwiftness()),
-    VITAL_PRESSURE("VITAL_PRESSURE", "Pression Vitale", "Premier coup sur cible pleine vie : +25% dégâts.", new VitalPressure()),
-    RELENTLESS_HUNT("RELENTLESS_HUNT", "Traque Implacable", "+5% par coup consécutif, max 25%.", new RelentlessHunt()),
-
-    // --- UNCOMMON DEFENSE ---
-    STEEL_RESOLVE("STEEL_RESOLVE", "Résolution d'Acier", "Réduit tous les dégâts subis de 5.", new SteelResolve()),
-    EXPERT_PARRY("EXPERT_PARRY", "Parade Experte", "20% de chance de bloquer 20% des dégâts.", new ExpertParry()),
-    BEAST_GUARD("BEAST_GUARD", "Garde Bestiale", "Réduit les dégâts des monstres de 15%.", new BeastGuard()),
-    IRON_BODY("IRON_BODY", "Corps de Fer", "+25 Défense d'Endurance.", new IronBody()),
-
-    // --- UNCOMMON AGILITÉ ---
-    GALE_STEP("GALE_STEP", "Pas de Bourrasque", "+5% vitesse de déplacement.", new GaleStep()),
-    THUNDER_REFLEXES("THUNDER_REFLEXES", "Réflexes Foudroyants", "+7% vitesse d'attaque.", new ThunderReflexes()),
-    CATLIKE_POISE("CATLIKE_POISE", "Souplesse Féline", "+18% hauteur de saut.", new CatlikePoise()),
-    RAZOR_SENSES("RAZOR_SENSES", "Sens Acérés", "+4% chance critique.", new RazorSenses()),
-    MARATHON_RUNNER("MARATHON_RUNNER", "Coureur de Marathon", "+8% vitesse + +10 Endurance max.", new MarathonRunner()),
-
-    // --- UNCOMMON DETECTION ---
-    HAWK_EYE("HAWK_EYE", "Oeil de Faucon", "+25% distance de détection.", new HawkEye()),
-    DANGER_SENSE("DANGER_SENSE", "Sens du Danger", "+80% conscience des menaces.", new DangerSense()),
-    DARK_VISION("DARK_VISION", "Vision des Ténèbres", "+40% visibilité basse lumière.", new DarkVision()),
-    PSYCHIC_AWARENESS("PSYCHIC_AWARENESS", "Perception Psychique", "+10% détection invisibilité.", new PsychicAwareness()),
-    MASTER_TRACKER("MASTER_TRACKER", "Pisteur Expert", "+50% visibilité des traces.", new MasterTracker()),
-
-    // --- UNCOMMON ENDURANCE ---
-    LUNGS_OF_STEEL("LUNGS_OF_STEEL", "Poumons d'Acier", "+20 Endurance maximale.", new LungsOfSteel()),
-    ARMORED_SKIN("ARMORED_SKIN", "Peau Blindée", "+10 Défense d'Endurance.", new ArmoredSkin()),
-    UNMOVABLE_MOUNTAIN("UNMOVABLE_MOUNTAIN", "Montagne Inébranlable", "-15% dégâts si Endurance >= 70%.", new UnmovableMountain()),
-    BATTLE_FRENZY("BATTLE_FRENZY", "Frénésie de Combat", "30% chance +8 Endurance en attaquant.", new BattleFrenzy()),
-    SURVIVOR_SPIRIT("SURVIVOR_SPIRIT", "Esprit du Survivant", "20% chance +40 Endurance si < 25%.", new SurvivorSpirit()),
-
-    // --- UNCOMMON MAGIQUE ---
-    EXPANDED_MIND("EXPANDED_MIND", "Esprit Élargi", "+25 Intelligence.", new ExpandedMind()),
-    SPELLBLADE("SPELLBLADE", "Lame Ensorcelée", "25% chance +12 dégâts arcaniques. Coût: 14 mana.", 14, new Spellblade()),
-    ARCANE_SHIELD("ARCANE_SHIELD", "Bouclier Arcanique", "-15% dégâts si Mana >= 40%.", new ArcaneShield()),
-    UNLEASHED_MAGIC("UNLEASHED_MAGIC", "Magie Déchaînée", "+25% dégâts si Mana >= 80%.", new UnleashedMagic()),
-    ASTRAL_CLOAK("ASTRAL_CLOAK", "Cape Astrale", "20% chance de -35% dégâts.", new AstralCloak()),
-
-    // --- UNCOMMON CHANCE ---
-    CRITICAL_LUCK("CRITICAL_LUCK", "Chance Critique", "+5% chance critique.", new CriticalLuck()),
-    RELIC_HUNTER("RELIC_HUNTER", "Chasseur de Reliques", "+10% chance de loot.", new RelicHunter()),
-    FATED_OMEN("FATED_OMEN", "Présage du Destin", "+25% chance d'event rare.", new FatedOmen()),
-    PHANTOM_DODGE("PHANTOM_DODGE", "Esquive Fantôme", "5% chance d'esquive totale.", new PhantomDodge()),
-    GOLDEN_TOUCH("GOLDEN_TOUCH", "Toucher d'Or", "+20% coins des mobs.", new GoldenTouch()),
-
-    // --- UNCOMMON REGENERATION ---
-    TROLL_BLOOD("TROLL_BLOOD", "Sang de Troll", "20% chance +8% vie max quand touché.", new TrollBlood()),
-    IRON_LUNGS("IRON_LUNGS", "Poumons de Fer", "30% chance +12 Endurance par attaque.", new IronLungs()),
-    SOUL_STEALER("SOUL_STEALER", "Voleur d'Âmes", "25% chance +8 Mana par attaque.", new SoulStealer()),
-    MANA_STREAM("MANA_STREAM", "Flux de Mana", "x2.0 régénération naturelle de Mana.", new ManaStream()),
-    VITAL_RECOVERY("VITAL_RECOVERY", "Rétablissement Vital", "x2.0 régénération naturelle de vie.", new VitalRecovery()),
-
-    // --- UNCOMMON RÉSISTANCE ---
-    UNYIELDING("UNYIELDING", "Inflexible", "Sous 35% vie, -12% dégâts reçus.", new Unyielding()),
-    REACTIVE_BULWARK("REACTIVE_BULWARK", "Rempart Réactif", "15% chance de -30% dégâts.", new ReactiveBulwark()),
-    BATTLE_SCARS("BATTLE_SCARS", "Cicatrices de Guerre", "-4 dégâts fixes par coup.", new BattleScars()),
-    FORTIFICATION("FORTIFICATION", "Fortification", "-7% dégâts reçus permanent.", new Fortification()),
-    IRON_WILL("IRON_WILL", "Volonté de Fer", "Coups >12 dégâts réduits de 15%.", new IronWill()),
-
-    // --- UNCOMMON VIE ---
-    STEEL_CONSTITUTION("STEEL_CONSTITUTION", "Constitution d'Acier", "+10 Vitalité.", new SteelConstitution()),
-    OVERFLOWING_LIFE("OVERFLOWING_LIFE", "Vie Débordante", "+10% vie maximale.", new OverflowingLife()),
-    ENRICHED_BLOOD("ENRICHED_BLOOD", "Sang Enrichi", "+6 Vitalité + +20% regen vie.", new EnrichedBlood()),
-    HEART_OF_IRON("HEART_OF_IRON", "Coeur de Fer", "+8 Vitalité + +4 Défense Endurance.", new HeartOfIron()),
-    UNDYING("UNDYING", "Immortel", "Sous 30% vie, +4% vie max par coup reçu.", new Undying()),
-
-    // --- UNCOMMON MAÎTRISE ---
-    AXE_MASTERY("AXE_MASTERY", "Maîtrise de la Hache", "+10% dégâts avec une hache.", new AxeMastery()),
-    BOW_MASTERY("BOW_MASTERY", "Maîtrise de l'Arc", "+10% dégâts avec un arc.", new BowMastery()),
-    SPEAR_MASTERY("SPEAR_MASTERY", "Maîtrise de la Lance", "+10% dégâts avec une lance.", new SpearMastery()),
-    DAGGER_MASTERY("DAGGER_MASTERY", "Maîtrise de la Dague", "+10% dégâts avec une dague.", new DaggerMastery()),
-    MINOR_SWORD_MASTERY("MINOR_SWORD_MASTERY", "Initiation à l'Épée", "+8% dégâts avec une épée.", new MinorSwordMastery()),
-
-    // ===================== RARE =====================
-
-    // --- RARE ATTACK ---
-    CRIMSON_BLADE("CRIMSON_BLADE", "Lame Pourpre", "+4 dégâts physiques par attaque.", new CrimsonBlade()),
-    WARRIOR_SWIFTNESS("WARRIOR_SWIFTNESS", "Vivacité du Guerrier", "+20% vitesse d'attaque.", new WarriorSwiftness()),
-    CRUSHING_PRESSURE("CRUSHING_PRESSURE", "Pression Écrasante", "+35% dégâts sur cible pleine vie.", new CrushingPressure()),
-    BLOOD_HUNT("BLOOD_HUNT", "Traque Sanguinaire", "+7% par coup consécutif, max 35%.", new BloodHunt()),
-
-    // --- RARE DEFENSE ---
-    TITAN_RESOLVE("TITAN_RESOLVE", "Résolution de Titan", "-8 dégâts fixes par coup.", new TitanResolve()),
-    MASTER_PARRY("MASTER_PARRY", "Parade de Maître", "25% chance bloquer 25% dégâts.", new MasterParry()),
-    MONSTER_SLAYER_GUARD("MONSTER_SLAYER_GUARD", "Garde du Tueur", "-20% dégâts des monstres.", new MonsterSlayerGuard()),
-    STEEL_BODY("STEEL_BODY", "Corps d'Acier", "+35 Défense Endurance.", new SteelBody()),
-
-    // --- RARE AGILITÉ ---
-    STORM_STEP("STORM_STEP", "Pas de Tempête", "+8% vitesse déplacement.", new StormStep()),
-    LIGHTNING_REFLEXES("LIGHTNING_REFLEXES", "Réflexes de Foudre", "+10% vitesse d'attaque.", new LightningReflexes()),
-    ACROBATIC_POISE("ACROBATIC_POISE", "Souplesse Acrobatique", "+25% hauteur saut.", new AcrobaticPoise()),
-    DEADLY_PRECISION("DEADLY_PRECISION", "Précision Mortelle", "+6% chance critique.", new DeadlyPrecision()),
-
-    // --- RARE DETECTION ---
-    EAGLE_VISION("EAGLE_VISION", "Vision d'Aigle", "+35% distance détection.", new EagleVision()),
-    COMBAT_INTUITION("COMBAT_INTUITION", "Intuition de Combat", "+120% conscience menaces.", new CombatIntuition()),
-    ABYSSAL_VISION("ABYSSAL_VISION", "Vision Abyssale", "+60% visibilité basse lumière.", new AbyssalVision()),
-    MIND_READER("MIND_READER", "Lecture Mentale", "+15% détection invisibilité.", new MindReader()),
-
-    // --- RARE ENDURANCE ---
-    DRAGON_LUNGS("DRAGON_LUNGS", "Poumons de Dragon", "+30 Endurance max.", new DragonLungs()),
-    FORTIFIED_SKIN("FORTIFIED_SKIN", "Peau Fortifiée", "+15 Défense Endurance.", new FortifiedSkin()),
-    LIVING_FORTRESS("LIVING_FORTRESS", "Forteresse Vivante", "-20% dégâts si Endurance >= 60%.", new LivingFortress()),
-    WAR_FRENZY("WAR_FRENZY", "Frénésie Guerrière", "40% chance +12 Endurance en attaquant.", new WarFrenzy()),
-
-    // --- RARE MAGIQUE ---
-    BRILLIANT_MIND("BRILLIANT_MIND", "Esprit Brillant", "+35 Intelligence.", new BrilliantMind()),
-    ARCANE_DEVASTATION("ARCANE_DEVASTATION", "Dévastation Arcanique", "30% chance +16 dégâts arcaniques. Coût: 18 mana.", 18, new ArcaneDevastation()),
-    MANA_FORTRESS("MANA_FORTRESS", "Forteresse de Mana", "-20% dégâts si Mana >= 30%.", new ManaFortress()),
-    PURE_MAGIC("PURE_MAGIC", "Magie Pure", "+35% dégâts si Mana >= 60%.", new PureMagic()),
-
-    // --- RARE CHANCE ---
-    DESTINY_STRIKE("DESTINY_STRIKE", "Frappe du Destin", "+8% critique.", new DestinyStrike()),
-    ARTIFACT_HUNTER("ARTIFACT_HUNTER", "Chasseur d'Artefacts", "+15% loot.", new ArtifactHunter()),
-    PROPHECY_OMEN("PROPHECY_OMEN", "Présage Prophétique", "+35% event rare.", new ProphecyOmen()),
-    SHADOW_DODGE("SHADOW_DODGE", "Esquive de l'Ombre", "8% esquive totale.", new ShadowDodge()),
-
-    // --- RARE REGENERATION ---
-    HYDRA_BLOOD("HYDRA_BLOOD", "Sang d'Hydre", "25% chance +12% vie max quand touché.", new HydraBlood()),
-    ADAMANTINE_LUNGS("ADAMANTINE_LUNGS", "Poumons d'Adamantine", "35% chance +16 Endurance par attaque.", new AdamantineLungs()),
-    SPIRIT_DRAIN("SPIRIT_DRAIN", "Drain Spirituel", "30% chance +12 Mana par attaque.", new SpiritDrain()),
-    MANA_RIVER("MANA_RIVER", "Rivière de Mana", "x3.0 regen Mana naturelle.", new ManaRiver()),
-
-    // --- RARE RÉSISTANCE ---
-    UNBREAKABLE("UNBREAKABLE", "Incassable", "Sous 40% vie, -16% dégâts.", new Unbreakable()),
-    ADAMANTINE_BULWARK("ADAMANTINE_BULWARK", "Rempart d'Adamantine", "20% chance -40% dégâts.", new AdamantineBulwark()),
-    WAR_VETERAN("WAR_VETERAN", "Vétéran de Guerre", "-6 dégâts fixes par coup.", new WarVeteran()),
-    IRON_FORTIFICATION("IRON_FORTIFICATION", "Fortification de Fer", "-10% dégâts permanent.", new IronFortification()),
-
-    // --- RARE VIE ---
-    TITAN_CONSTITUTION("TITAN_CONSTITUTION", "Constitution de Titan", "+15 Vitalité.", new TitanConstitution()),
-    BURSTING_LIFE("BURSTING_LIFE", "Vie Explosive", "+15% vie max.", new BurstingLife()),
-    ANCIENT_BLOOD("ANCIENT_BLOOD", "Sang Ancestral", "+9 Vitalité + regen vie +30%.", new AncientBlood()),
-    HEART_OF_STEEL("HEART_OF_STEEL", "Coeur d'Acier", "+12 Vitalité + +6 Défense Endurance.", new HeartOfSteel()),
-
-    // --- RARE MAÎTRISE ---
-    GREAT_AXE_MASTERY("GREAT_AXE_MASTERY", "Maîtrise de la Grande Hache", "+15% dégâts hache.", new GreatAxeMastery()),
-    MARKSMAN_MASTERY("MARKSMAN_MASTERY", "Maîtrise du Tir", "+15% dégâts arc.", new MarksmanMastery()),
-    HALBERD_MASTERY("HALBERD_MASTERY", "Maîtrise de la Hallebarde", "+15% dégâts lance.", new HalberdMastery()),
-    SHADOW_BLADE_MASTERY("SHADOW_BLADE_MASTERY", "Maîtrise de la Lame d'Ombre", "+15% dégâts dague.", new ShadowBladeMastery()),
-
-    // ===================== ÉPIQUE =====================
-
-    // --- ÉPIQUE ATTACK ---
-    VOID_BLADE("VOID_BLADE", "Lame du Néant", "+6 dégâts physiques par attaque.", new VoidBlade()),
-    BERSERKER_SWIFTNESS("BERSERKER_SWIFTNESS", "Vivacité du Berserker", "+25% vitesse d'attaque.", new BerserkerSwiftness()),
-    ANNIHILATING_PRESSURE("ANNIHILATING_PRESSURE", "Pression Annihilante", "+45% dégâts sur cible pleine vie.", new AnnihilatingPressure()),
-    DEATH_HUNT("DEATH_HUNT", "Traque Mortelle", "+9% par coup consécutif, max 45%.", new DeathHunt()),
-
-    // --- ÉPIQUE DEFENSE ---
-    GOD_RESOLVE("GOD_RESOLVE", "Résolution Divine", "-12 dégâts fixes par coup.", new GodResolve()),
-    PERFECT_PARRY("PERFECT_PARRY", "Parade Parfaite", "30% chance bloquer 30% dégâts.", new PerfectParry()),
-    DRAGON_SLAYER_GUARD("DRAGON_SLAYER_GUARD", "Garde du Tueur de Dragon", "-25% dégâts des monstres.", new DragonSlayerGuard()),
-    DIAMOND_BODY("DIAMOND_BODY", "Corps de Diamant", "+50 Défense Endurance.", new DiamondBody()),
-
-    // --- ÉPIQUE AGILITÉ ---
-    VOID_STEP("VOID_STEP", "Pas du Néant", "+12% vitesse déplacement.", new VoidStep()),
-    DIVINE_REFLEXES("DIVINE_REFLEXES", "Réflexes Divins", "+14% vitesse d'attaque.", new DivineReflexes()),
-    GRAVITY_DEFIANCE("GRAVITY_DEFIANCE", "Défi à la Gravité", "+35% hauteur saut.", new GravityDefiance()),
-    FATAL_PRECISION("FATAL_PRECISION", "Précision Fatale", "+9% chance critique.", new FatalPrecision()),
-
-    // --- ÉPIQUE DETECTION ---
-    OMNISCIENT_VISION("OMNISCIENT_VISION", "Vision Omnisciente", "+50% distance détection.", new OmniscientVision()),
-    WAR_PROPHECY("WAR_PROPHECY", "Prophétie de Guerre", "+180% conscience menaces.", new WarProphecy()),
-    VOID_SIGHT("VOID_SIGHT", "Vue du Néant", "+80% visibilité basse lumière.", new VoidSight()),
-    SOUL_READER("SOUL_READER", "Lecture d'Âme", "+20% détection invisibilité.", new SoulReader()),
-
-    // --- ÉPIQUE ENDURANCE ---
-    TITAN_LUNGS("TITAN_LUNGS", "Poumons de Titan", "+40 Endurance max.", new TitanLungs()),
-    ADAMANTINE_SKIN("ADAMANTINE_SKIN", "Peau d'Adamantine", "+20 Défense Endurance.", new AdamantineSkin()),
-    ETERNAL_FORTRESS("ETERNAL_FORTRESS", "Forteresse Éternelle", "-25% dégâts si Endurance >= 50%.", new EternalFortress()),
-    BLOOD_FRENZY("BLOOD_FRENZY", "Frénésie Sanguinaire", "50% chance +16 Endurance en attaquant.", new BloodFrenzy()),
-
-    // --- ÉPIQUE MAGIQUE ---
-    GENIUS_MIND("GENIUS_MIND", "Esprit de Génie", "+50 Intelligence.", new GeniusMind()),
-    ARCANE_ANNIHILATION("ARCANE_ANNIHILATION", "Annihilation Arcanique", "35% chance +22 dégâts arcaniques. Coût: 22 mana.", 22, new ArcaneAnnihilation()),
-    MANA_CITADEL("MANA_CITADEL", "Citadelle de Mana", "-25% dégâts si Mana >= 20%.", new ManaCitadel()),
-    ARCANE_SUPREMACY("ARCANE_SUPREMACY", "Suprématie Arcanique", "+45% dégâts si Mana >= 50%.", new ArcaneSupremacy()),
-
-    // --- ÉPIQUE CHANCE ---
-    DIVINE_STRIKE("DIVINE_STRIKE", "Frappe Divine", "+12% critique.", new DivineStrike()),
-    LEGEND_HUNTER("LEGEND_HUNTER", "Chasseur de Légendes", "+20% loot.", new LegendHunter()),
-    COSMIC_OMEN("COSMIC_OMEN", "Présage Cosmique", "+50% event rare.", new CosmicOmen()),
-    DIMENSIONAL_DODGE("DIMENSIONAL_DODGE", "Esquive Dimensionnelle", "12% esquive totale.", new DimensionalDodge()),
-
-    // --- ÉPIQUE REGENERATION ---
-    PHOENIX_BLOOD("PHOENIX_BLOOD", "Sang de Phénix", "30% chance +16% vie max quand touché.", new PhoenixBlood()),
-    MYTHRIL_LUNGS("MYTHRIL_LUNGS", "Poumons de Mythril", "40% chance +20 Endurance par attaque.", new MythrilLungs()),
-    ARCANE_VAMPIRISM("ARCANE_VAMPIRISM", "Vampirisme Arcanique", "35% chance +16 Mana par attaque.", new ArcaneVampirism()),
-    MANA_OCEAN("MANA_OCEAN", "Océan de Mana", "x4.0 regen Mana naturelle.", new ManaOcean()),
-
-    // --- ÉPIQUE RÉSISTANCE ---
-    INVINCIBLE("INVINCIBLE", "Invincible", "Sous 45% vie, -20% dégâts.", new Invincible()),
-    DIVINE_BULWARK("DIVINE_BULWARK", "Rempart Divin", "25% chance -50% dégâts.", new DivineBulwark()),
-    WAR_LEGEND("WAR_LEGEND", "Légende de Guerre", "-8 dégâts fixes par coup.", new WarLegend()),
-    MYTHRIL_FORTIFICATION("MYTHRIL_FORTIFICATION", "Fortification de Mythril", "-13% dégâts permanent.", new MythrilFortification()),
-
-    // --- ÉPIQUE VIE ---
-    GOD_CONSTITUTION("GOD_CONSTITUTION", "Constitution Divine", "+20 Vitalité.", new GodConstitution()),
-    ETERNAL_LIFE("ETERNAL_LIFE", "Vie Éternelle", "+20% vie max.", new EternalLife()),
-    DRAGON_BLOOD("DRAGON_BLOOD", "Sang de Dragon", "+12 Vitalité + regen vie +40%.", new DragonBlood()),
-    HEART_OF_DIAMOND("HEART_OF_DIAMOND", "Coeur de Diamant", "+16 Vitalité + +8 Défense Endurance.", new HeartOfDiamond()),
-
-    // --- ÉPIQUE MAÎTRISE ---
-    WAR_AXE_MASTERY("WAR_AXE_MASTERY", "Maîtrise de la Hache de Guerre", "+20% dégâts hache.", new WarAxeMastery()),
-    SNIPER_MASTERY("SNIPER_MASTERY", "Maîtrise du Sniper", "+20% dégâts arc.", new SniperMastery()),
-    DRAGON_SPEAR_MASTERY("DRAGON_SPEAR_MASTERY", "Maîtrise de la Lance Dragon", "+20% dégâts lance.", new DragonSpearMastery()),
-    ASSASSIN_BLADE_MASTERY("ASSASSIN_BLADE_MASTERY", "Maîtrise de la Lame d'Assassin", "+20% dégâts dague.", new AssassinBladeMastery()),
-
-    // ===================== UNIQUE =====================
-
-    // --- UNIQUE ATTACK ---
-    ABYSS_BLADE("ABYSS_BLADE", "Lame de l'Abîme", "+9 dégâts physiques par attaque.", new AbyssBlade()),
-    DEMIGOD_SWIFTNESS("DEMIGOD_SWIFTNESS", "Vivacité du Demi-Dieu", "+30% vitesse d'attaque.", new DemigodSwiftness()),
-    SOUL_CRUSHING_PRESSURE("SOUL_CRUSHING_PRESSURE", "Pression Brise-Âme", "+55% dégâts sur cible pleine vie.", new SoulCrushingPressure()),
-
-    // --- UNIQUE DEFENSE ---
-    IMMORTAL_RESOLVE("IMMORTAL_RESOLVE", "Résolution Immortelle", "-16 dégâts fixes par coup.", new ImmortalResolve()),
-    DIVINE_PARRY("DIVINE_PARRY", "Parade Divine", "35% chance bloquer 35% dégâts.", new DivineParry()),
-    COSMIC_BODY("COSMIC_BODY", "Corps Cosmique", "+70 Défense Endurance.", new CosmicBody()),
-
-    // --- UNIQUE AGILITÉ ---
-    DIMENSIONAL_STEP("DIMENSIONAL_STEP", "Pas Dimensionnel", "+16% vitesse déplacement.", new DimensionalStep()),
-    COSMIC_REFLEXES("COSMIC_REFLEXES", "Réflexes Cosmiques", "+18% vitesse d'attaque.", new CosmicReflexes()),
-    ABSOLUTE_PRECISION("ABSOLUTE_PRECISION", "Précision Absolue", "+12% chance critique.", new AbsolutePrecision()),
-
-    // --- UNIQUE DETECTION ---
-    ALL_SEEING_EYE("ALL_SEEING_EYE", "Oeil Omniscient", "+70% distance détection.", new AllSeeingEye()),
-    FATE_VISION("FATE_VISION", "Vision du Destin", "+250% conscience menaces.", new FateVision()),
-    TRUE_SIGHT("TRUE_SIGHT", "Vision Véritable", "+25% détection invisibilité.", new TrueSight()),
-
-    // --- UNIQUE ENDURANCE ---
-    COSMIC_LUNGS("COSMIC_LUNGS", "Poumons Cosmiques", "+55 Endurance max.", new CosmicLungs()),
-    DIVINE_FORTRESS("DIVINE_FORTRESS", "Forteresse Divine", "-30% dégâts si Endurance >= 40%.", new DivineFortress()),
-    RAGE_FRENZY("RAGE_FRENZY", "Frénésie Enragée", "60% chance +20 Endurance en attaquant.", new RageFrenzy()),
-
-    // --- UNIQUE MAGIQUE ---
-    COSMIC_MIND("COSMIC_MIND", "Esprit Cosmique", "+70 Intelligence.", new CosmicMind()),
-    ARCANE_OBLIVION("ARCANE_OBLIVION", "Oubli Arcanique", "40% chance +30 dégâts arcaniques. Coût: 28 mana.", 28, new ArcaneOblivion()),
-    ABSOLUTE_SUPREMACY("ABSOLUTE_SUPREMACY", "Suprématie Absolue", "+55% dégâts si Mana >= 40%.", new AbsoluteSupremacy()),
-
-    // --- UNIQUE CHANCE ---
-    COSMIC_STRIKE("COSMIC_STRIKE", "Frappe Cosmique", "+16% critique.", new CosmicStrike()),
-    MYTH_HUNTER("MYTH_HUNTER", "Chasseur de Mythes", "+25% loot.", new MythHunter()),
-    REALITY_DODGE("REALITY_DODGE", "Esquive de la Réalité", "16% esquive totale.", new RealityDodge()),
-
-    // --- UNIQUE REGENERATION ---
-    ETERNAL_BLOOD("ETERNAL_BLOOD", "Sang Éternel", "35% chance +20% vie max quand touché.", new EternalBlood()),
-    COSMIC_VAMPIRISM("COSMIC_VAMPIRISM", "Vampirisme Cosmique", "40% chance +22 Mana par attaque.", new CosmicVampirism()),
-    MANA_INFINITY("MANA_INFINITY", "Mana Infini", "x6.0 regen Mana naturelle.", new ManaInfinity()),
-
-    // --- UNIQUE RÉSISTANCE ---
-    IMMORTAL_ABSOLUTE("IMMORTAL_ABSOLUTE", "Immortel Absolu", "Sous 50% vie, -25% dégâts.", new Immortal()),
-    COSMIC_BULWARK("COSMIC_BULWARK", "Rempart Cosmique", "30% chance -60% dégâts.", new CosmicBulwark()),
-    ETERNAL_FORTIFICATION("ETERNAL_FORTIFICATION", "Fortification Éternelle", "-16% dégâts permanent.", new EternalFortification()),
-
-    // --- UNIQUE VIE ---
-    COSMIC_CONSTITUTION("COSMIC_CONSTITUTION", "Constitution Cosmique", "+25 Vitalité.", new CosmicConstitution()),
-    INFINITE_LIFE("INFINITE_LIFE", "Vie Infinie", "+25% vie max.", new InfiniteLife()),
-    HEART_OF_ETERNITY("HEART_OF_ETERNITY", "Coeur d'Éternité", "+20 Vitalité + +10 Défense Endurance.", new HeartOfEternity()),
-
-    // --- UNIQUE MAÎTRISE ---
-    LEGENDARY_AXE_MASTERY("LEGENDARY_AXE_MASTERY", "Maîtrise Légendaire de la Hache", "+25% dégâts hache.", new LegendaryAxeMastery()),
-    LEGENDARY_SNIPER_MASTERY("LEGENDARY_SNIPER_MASTERY", "Maîtrise Légendaire du Tir", "+25% dégâts arc.", new LegendarySniperMastery()),
-    LEGENDARY_DAGGER_MASTERY("LEGENDARY_DAGGER_MASTERY", "Maîtrise Légendaire de la Dague", "+25% dégâts dague.", new LegendaryDaggerMastery()),
-
-    // ===================== LÉGENDAIRE =====================
-
-    // --- LÉGENDAIRE ATTACK ---
-    GENESIS_EDGE("GENESIS_EDGE", "Tranchant de la Genèse", "+12 dégâts physiques par attaque.", new GenesisEdge()),
-    GOD_SLAYER_SWIFTNESS("GOD_SLAYER_SWIFTNESS", "Vivacité du Tueur de Dieux", "+35% vitesse d'attaque.", new GodSlayerSwiftness()),
-
-    // --- LÉGENDAIRE DEFENSE ---
-    ETERNITY_RESOLVE("ETERNITY_RESOLVE", "Résolution Éternelle", "-20 dégâts fixes par coup.", new EternityResolve()),
-    CELESTIAL_PARRY("CELESTIAL_PARRY", "Parade Céleste", "40% chance bloquer 40% dégâts.", new CelestialParry()),
-
-    // --- LÉGENDAIRE AGILITÉ ---
-    CELESTIAL_STEP("CELESTIAL_STEP", "Pas Céleste", "+20% vitesse déplacement.", new CelestialStep()),
-    OMNISCIENT_PRECISION("OMNISCIENT_PRECISION", "Précision Omnisciente", "+15% chance critique.", new OmniscientPrecision()),
-
-    // --- LÉGENDAIRE DETECTION ---
-    GENESIS_VISION("GENESIS_VISION", "Vision de la Genèse", "+90% distance détection.", new GenesisVision()),
-    OMNI_SIGHT("OMNI_SIGHT", "Vision Totale", "+30% détection invisibilité.", new OmniSight()),
-
-    // --- LÉGENDAIRE ENDURANCE ---
-    CELESTIAL_LUNGS("CELESTIAL_LUNGS", "Poumons Célestes", "+70 Endurance max.", new CelestialLungs()),
-    CELESTIAL_FORTRESS("CELESTIAL_FORTRESS", "Forteresse Céleste", "-35% dégâts si Endurance >= 30%.", new CelestialFortress()),
-
-    // --- LÉGENDAIRE MAGIQUE ---
-    INFINITE_MIND("INFINITE_MIND", "Esprit Infini", "+90 Intelligence.", new InfiniteMind()),
-    ARCANE_GENESIS("ARCANE_GENESIS", "Genèse Arcanique", "45% chance +40 dégâts arcaniques. Coût: 35 mana.", 35, new ArcaneGenesis()),
-
-    // --- LÉGENDAIRE CHANCE ---
-    GENESIS_STRIKE("GENESIS_STRIKE", "Frappe de la Genèse", "+20% critique.", new GenesisStrike()),
-    TIME_DODGE("TIME_DODGE", "Esquive Temporelle", "20% esquive totale.", new TimeDodge()),
-
-    // --- LÉGENDAIRE REGENERATION ---
-    GENESIS_BLOOD("GENESIS_BLOOD", "Sang de la Genèse", "40% chance +25% vie max quand touché.", new GenesisBlood()),
-    INFINITE_VAMPIRISM("INFINITE_VAMPIRISM", "Vampirisme Infini", "45% chance +30 Mana par attaque.", new InfiniteVampirism()),
-
-    // --- LÉGENDAIRE RÉSISTANCE ---
-    CELESTIAL_IMMORTALITY("CELESTIAL_IMMORTALITY", "Immortalité Céleste", "Sous 55% vie, -30% dégâts.", new CelestialImmortality()),
-    GENESIS_BULWARK("GENESIS_BULWARK", "Rempart de la Genèse", "35% chance -70% dégâts.", new GenesisBulwark()),
-
-    // --- LÉGENDAIRE VIE ---
-    CELESTIAL_CONSTITUTION("CELESTIAL_CONSTITUTION", "Constitution Céleste", "+30 Vitalité.", new CelestialConstitution()),
-    HEART_OF_GENESIS("HEART_OF_GENESIS", "Coeur de la Genèse", "+25 Vitalité + +12 Défense Endurance.", new HeartOfGenesis()),
-
-    // --- LÉGENDAIRE MAÎTRISE ---
-    DIVIN_AXE_MASTERY("DIVIN_AXE_MASTERY", "Maîtrise Divine de la Hache", "+30% dégâts hache.", new DivinAxeMastery()),
-    DIVIN_DAGGER_MASTERY("DIVIN_DAGGER_MASTERY", "Maîtrise Divine de la Dague", "+30% dégâts dague.", new DivinDaggerMastery()),
-
-    // ===================== DIVIN =====================
-
-    // --- DIVIN ATTACK ---
-    CREATOR_EDGE("CREATOR_EDGE", "Tranchant du Créateur", "+16 dégâts physiques par attaque.", new CreatorEdge()),
-    CREATOR_SWIFTNESS("CREATOR_SWIFTNESS", "Vivacité du Créateur", "+40% vitesse d'attaque.", new CreatorSwiftness()),
-
-    // --- DIVIN DEFENSE ---
-    ABSOLUTE_RESOLVE("ABSOLUTE_RESOLVE", "Résolution Absolue", "-25 dégâts fixes par coup.", new AbsoluteResolve()),
-    CREATOR_PARRY("CREATOR_PARRY", "Parade du Créateur", "45% chance bloquer 45% dégâts.", new CreatorParry()),
-
-    // --- DIVIN AGILITÉ ---
-    CREATOR_STEP("CREATOR_STEP", "Pas du Créateur", "+25% vitesse déplacement.", new CreatorStep()),
-    CREATOR_PRECISION("CREATOR_PRECISION", "Précision du Créateur", "+18% chance critique.", new CreatorPrecision()),
-
-    // --- DIVIN DETECTION ---
-    CREATOR_VISION("CREATOR_VISION", "Vision du Créateur", "+120% distance détection.", new CreatorVision()),
-    ABSOLUTE_SIGHT("ABSOLUTE_SIGHT", "Vue Absolue", "+40% détection invisibilité.", new AbsoluteSight()),
-
-    // --- DIVIN ENDURANCE ---
-    CREATOR_LUNGS("CREATOR_LUNGS", "Poumons du Créateur", "+90 Endurance max.", new CreatorLungs()),
-    CREATOR_FORTRESS("CREATOR_FORTRESS", "Forteresse du Créateur", "-40% dégâts si Endurance >= 20%.", new CreatorFortress()),
-
-    // --- DIVIN MAGIQUE ---
-    CREATOR_MIND("CREATOR_MIND", "Esprit du Créateur", "+120 Intelligence.", new CreatorMind()),
-    ARCANE_CREATION("ARCANE_CREATION", "Création Arcanique", "50% chance +50 dégâts arcaniques. Coût: 40 mana.", 40, new ArcaneCreation()),
-
-    // --- DIVIN CHANCE ---
-    CREATOR_STRIKE("CREATOR_STRIKE", "Frappe du Créateur", "+25% critique.", new CreatorStrike()),
-    FATE_DODGE("FATE_DODGE", "Esquive du Destin", "25% esquive totale.", new FateDodge()),
-
-    // --- DIVIN REGENERATION ---
-    CREATOR_BLOOD("CREATOR_BLOOD", "Sang du Créateur", "45% chance +30% vie max quand touché.", new CreatorBlood()),
-    CREATOR_VAMPIRISM("CREATOR_VAMPIRISM", "Vampirisme du Créateur", "50% chance +40 Mana par attaque.", new CreatorVampirism()),
-
-    // --- DIVIN RÉSISTANCE ---
-    TRUE_IMMORTALITY("TRUE_IMMORTALITY", "Immortalité Véritable", "Sous 60% vie, -35% dégâts.", new TrueImmortality()),
-    CREATOR_BULWARK("CREATOR_BULWARK", "Rempart du Créateur", "40% chance -80% dégâts.", new CreatorBulwark()),
-
-    // --- DIVIN VIE ---
-    CREATOR_CONSTITUTION("CREATOR_CONSTITUTION", "Constitution du Créateur", "+40 Vitalité.", new CreatorConstitution()),
-    HEART_OF_CREATION("HEART_OF_CREATION", "Coeur de la Création", "+30 Vitalité + +15 Défense Endurance.", new HeartOfCreation()),
-
-    // --- DIVIN MAÎTRISE ---
-    CREATOR_AXE_MASTERY("CREATOR_AXE_MASTERY", "Maîtrise Absolue de la Hache", "+35% dégâts hache.", new CreatorAxeMastery()),
-    CREATOR_DAGGER_MASTERY("CREATOR_DAGGER_MASTERY", "Maîtrise Absolue de la Dague", "+35% dégâts dague.", new CreatorDaggerMastery()),
-
-    // ===================== FAMILLE NOBLE =====================
-    FAMILY_ROYAL_AUTHORITY("FAMILY_ROYAL_AUTHORITY", "Autorite Royale", "Bonus de degats evolutif (Famille Eldanior).", new RoyalAuthority()),
-    FAMILY_PHOENIX_BLOOD("FAMILY_PHOENIX_BLOOD", "Sang du Phenix", "Bonus de PV max evolutif (Famille Ashford).", new PhoenixBloodFamily()),
-    FAMILY_DRAGON_FURY("FAMILY_DRAGON_FURY", "Fureur Draconique", "Bonus de degats evolutif (Famille Drakenhart).", new DragonFury()),
-    FAMILY_DIVINE_LIGHT("FAMILY_DIVINE_LIGHT", "Lumiere Divine", "Bonus de mana evolutif (Famille Luminara).", new DivineLight()),
-    FAMILY_GOLDEN_FORTUNE("FAMILY_GOLDEN_FORTUNE", "Fortune Doree", "Bonus d'argent evolutif (Famille Valmontis).", new GoldenFortune()),
-    FAMILY_FROST_RESILIENCE("FAMILY_FROST_RESILIENCE", "Resilience du Givre", "Reduction de degats evolutive (Famille Frostguard).", new FrostResilience()),
-    FAMILY_IRON_WILL("FAMILY_IRON_WILL", "Volonte de Fer", "Bonus d'XP evolutif (Famille Ironveil).", new IronWillFamily()),
-    FAMILY_SHADOW_STRIKE("FAMILY_SHADOW_STRIKE", "Frappe de l'Ombre", "Bonus de degats critiques evolutif (Famille Shadowmere).", new ShadowStrike()),
-    FAMILY_STORM_VIGOR("FAMILY_STORM_VIGOR", "Vigueur de la Tempete", "Bonus de dignite evolutif (Famille Stormcrest).", new StormVigor()),
-
-    // ===================== COMPETENCES DE CRAFT =====================
-    CRAFT_CUISINE("CRAFT_CUISINE", "Cuisine", "Permet d'utiliser le Bench Cooking.", new com.eldanior.system.skills.skills.passives.Craft.CraftCuisine()),
-    CRAFT_FONDERIE("CRAFT_FONDERIE", "Fonderie", "Permet d'utiliser le Bench Furnace.", new com.eldanior.system.skills.skills.passives.Craft.CraftFonderie()),
-    CRAFT_ARMURERIE("CRAFT_ARMURERIE", "Armurerie", "Permet d'utiliser le Bench Armour.", new com.eldanior.system.skills.skills.passives.Craft.CraftArmurerie()),
-    CRAFT_FORGE_ARMES("CRAFT_FORGE_ARMES", "Forge d'Armes", "Permet d'utiliser le Bench Weapon.", new com.eldanior.system.skills.skills.passives.Craft.CraftForgeArmes()),
-    CRAFT_TANNERIE("CRAFT_TANNERIE", "Tannerie", "Permet d'utiliser le Bench Tannery.", new com.eldanior.system.skills.skills.passives.Craft.CraftTannerie()),
-    CRAFT_ALCHIMIE("CRAFT_ALCHIMIE", "Alchimie", "Permet d'utiliser le Bench Alchemy.", new com.eldanior.system.skills.skills.passives.Craft.CraftAlchimie()),
-    CRAFT_SCIERIE("CRAFT_SCIERIE", "Scierie", "Permet d'utiliser le Bench Lumbermill.", new com.eldanior.system.skills.skills.passives.Craft.CraftScierie()),
-    CRAFT_AGRICULTURE("CRAFT_AGRICULTURE", "Agriculture", "Permet d'utiliser le Bench Farming.", new com.eldanior.system.skills.skills.passives.Craft.CraftAgriculture()),
-    CRAFT_RECYCLAGE("CRAFT_RECYCLAGE", "Recyclage", "Permet d'utiliser le Bench Salvage.", new com.eldanior.system.skills.skills.passives.Craft.CraftRecyclage()),
-    CRAFT_ARTISAN_BASE("CRAFT_ARTISAN_BASE", "Artisanat de Base", "Permet d'utiliser le Workbench.", new com.eldanior.system.skills.skills.passives.Craft.CraftArtisanBase()),
-
-    // ===================== AURA DE DIGNITE (5 niveaux) =====================
-    DIGNITY_AURA_1("DIGNITY_AURA_1", "Aura Mineure", "Une faible aura emane de vous, ralentissant legerement les ennemis proches.", new com.eldanior.system.skills.skills.passives.Dignity.DignityAuraPassive()),
-    DIGNITY_AURA_2("DIGNITY_AURA_2", "Aura de Dignite", "Votre aura s'intensifie, ralentissant les ennemis dans un rayon accru.", new com.eldanior.system.skills.skills.passives.Dignity.DignityAuraPassive()),
-    DIGNITY_AURA_3("DIGNITY_AURA_3", "Aura Imposante", "Votre presence impose le respect. Les ennemis proches sont fortement ralentis.", new com.eldanior.system.skills.skills.passives.Dignity.DignityAuraPassive()),
-    DIGNITY_AURA_4("DIGNITY_AURA_4", "Aura Absolue", "Une aura ecrasante vous entoure. Peu osent s'approcher de vous.", new com.eldanior.system.skills.skills.passives.Dignity.DignityAuraPassive()),
-    DIGNITY_AURA_5("DIGNITY_AURA_5", "Aura Draconique", "La puissance d'un dragon coule en vous. Votre aura terrorise tous ceux qui vous entourent.", new com.eldanior.system.skills.skills.passives.Dignity.DignityAuraPassive()),
-
-    // ===================== SKILLS DIVINS — 7 PÉCHÉS CAPITAUX (PK only, PVP/Duel only) =====================
-    PECHE_ORGUEIL("PECHE_ORGUEIL", "Orgueil", "+10% puissance de combat par item équipé.", new Orgueil()),
-    PECHE_COLERE("PECHE_COLERE", "Colère", "+200% force, agilité et endurance si HP > 80%.", new Colere()),
-    PECHE_AVARICE("PECHE_AVARICE", "Avarice", "5% de chance de voler 1 item de la hotbar du joueur tué. CD: 2 jours.", 0, 172800f, new Avarice()),
-    PECHE_ENVIE("PECHE_ENVIE", "Envie", "Plus vous perdez de HP, plus vos dégâts augmentent. 50% HP = +100%.", new Envie()),
-    PECHE_LUXURE("PECHE_LUXURE", "Luxure", "5% de chance de voler 10% de l'or du joueur tué. CD: 2 jours.", 0, 172800f, new Luxure()),
-    PECHE_GOURMANDISE("PECHE_GOURMANDISE", "Gourmandise", "5% de chance de copier 1 compétence du joueur tué. CD: 2 jours.", 0, 172800f, new Gourmandise()),
-    PECHE_PARESSE("PECHE_PARESSE", "Paresse", "Aura de ralentissement dans un rayon de 15 blocs.", new Paresse()),
-
-    // ===================== SKILLS DIVINS — 7 ANGES (Église RELIGIEUX+) =====================
-    ANGE_HUMILITE("ANGE_HUMILITE", "Humilité (Michaël)", "Moins d'armure = plus de dégâts et santé. 0 armure = +200%.", new Humilite()),
-    ANGE_PATIENCE("ANGE_PATIENCE", "Patience (Raphaël)", "+20% HP et force aux alliés du groupe dans un rayon de 15 blocs.", new Patience()),
-    ANGE_TEMPERANCE("ANGE_TEMPERANCE", "Tempérance (Uriel)", "Combat à mains nues = +200% HP et dégâts.", new Temperance()),
-    ANGE_CHARITE("ANGE_CHARITE", "Charité (Gabriel)", "+150% HP. Soigne les alliés blessés avec sa propre vie.", new Charite()),
-    ANGE_BIENVEILLANCE("ANGE_BIENVEILLANCE", "Bienveillance (Chamuel)", "10% de l'argent ramassé redistribué aux alliés du groupe.", new Bienveillance()),
-    ANGE_CHASTETE("ANGE_CHASTETE", "Chasteté (Azraël)", "+150% dégâts contre les mobs.", new Chastete()),
-    ANGE_DILIGENCE("ANGE_DILIGENCE", "Diligence (Métatron)", "+20% XP, progression skills x5, +100% agilité.", new Diligence());
-
-    private final String id;
+    INSTINCTIVE_STRIKE(Theme.ATTAQUE, "Frappe Instinctive", 1, 6,
+            new String[]{null, "Frappe Instinctive", "Frappe de Prédateur", "Frappe de Fureur", "Frappe Sismique", "Frappe Fantôme", "Frappe de l'Annihilateur"},
+            new String[]{null, "10 % de chance d'infliger +10 % de dégâts.", "15 % de chance d'infliger +15 % de dégâts.", "20 % de chance d'infliger +25 % de dégâts.", "20 % de chance d'infliger +35 % de dégâts.", "25 % de chance d'infliger +50 % de dégâts.", "35 % de chance d'infliger +75 % de dégâts ; 40 % de chance de doubler l'impact."},
+            PassiveEffects.chanceDegats(new float[]{10f, 15f, 20f, 20f, 25f, 35f}, new float[]{10f, 15f, 25f, 35f, 50f, 75f}, 0.4f)),
+    DEEP_SLASH(Theme.ATTAQUE, "Entaille Profonde", 1, 6,
+            new String[]{null, "Entaille Profonde", "Lame Aiguisée", "Lame Pourpre", "Lame du Néant", "Lame de l'Abîme", "Tranchant de la Genèse"},
+            new String[]{null, "+1 dégâts à chaque coup.", "+2 dégâts à chaque coup.", "+4 dégâts à chaque coup.", "+6 dégâts à chaque coup.", "+9 dégâts à chaque coup.", "+12 dégâts à chaque coup."},
+            PassiveEffects.degatsFixes(new float[]{1f, 2f, 4f, 6f, 9f, 12f})),
+    PRESSURE_POINT(Theme.ATTAQUE, "Point de Pression", 1, 5,
+            new String[]{null, "Point de Pression", "Pression Vitale", "Pression Écrasante", "Pression Annihilante", "Pression Brise-Âme", null},
+            new String[]{null, "+15 % de dégâts contre une cible à plus de 90 % de vie.", "+25 % de dégâts contre une cible à plus de 90 % de vie.", "+35 % de dégâts contre une cible à plus de 90 % de vie.", "+45 % de dégâts contre une cible à plus de 90 % de vie.", "+55 % de dégâts contre une cible à plus de 90 % de vie.", null},
+            PassiveEffects.ciblePleineVie(new float[]{15f, 25f, 35f, 45f, 55f, 55f})),
+    HAUNTING_THRUST(Theme.ATTAQUE, "Traque", 1, 4,
+            new String[]{null, "Estocade Obsédante", "Traque Implacable", "Traque Sanguinaire", "Traque Mortelle", null, null},
+            new String[]{null, "Chaque coup de suite sur la même cible : +3 % de dégâts (jusqu'à 5 fois).", "Chaque coup de suite sur la même cible : +5 % de dégâts (jusqu'à 5 fois).", "Chaque coup de suite sur la même cible : +7 % de dégâts (jusqu'à 5 fois).", "Chaque coup de suite sur la même cible : +9 % de dégâts (jusqu'à 5 fois).", null, null},
+            PassiveEffects.coupsEnchaines(new float[]{3f, 5f, 7f, 9f, 9f, 9f})),
+    OPPORTUNIST_STRIKE(Theme.ATTAQUE, "Frappe Opportuniste", 1, 1,
+            new String[]{null, "Frappe Opportuniste", null, null, null, null, null},
+            new String[]{null, "+12 % de dégâts pendant 2 s après avoir été touché.", null, null, null, null, null},
+            PassiveEffects.riposte(new float[]{12f, 12f, 12f, 12f, 12f, 12f})),
+    AXE_MASTERY(Theme.ATTAQUE, "Maîtrise de la Hache", 2, 6,
+            new String[]{null, null, "Maîtrise de la Hache", "Maîtrise de la Grande Hache", "Maîtrise de la Hache de Guerre", "Maîtrise Légendaire de la Hache", "Maîtrise Divine de la Hache"},
+            new String[]{null, null, "+10 % de dégâts avec une hache.", "+15 % de dégâts avec une hache.", "+20 % de dégâts avec une hache.", "+25 % de dégâts avec une hache.", "+30 % de dégâts avec une hache."},
+            PassiveEffects.arme(new String[]{"axe"}, new String[]{"pickaxe"}, new float[]{10f, 10f, 15f, 20f, 25f, 30f})),
+    BOW_MASTERY(Theme.ATTAQUE, "Maîtrise de l'Arc", 2, 5,
+            new String[]{null, null, "Maîtrise de l'Arc", "Maîtrise du Tir", "Maîtrise du Sniper", "Maîtrise Légendaire du Tir", null},
+            new String[]{null, null, "+10 % de dégâts avec un arc.", "+15 % de dégâts avec un arc.", "+20 % de dégâts avec un arc.", "+25 % de dégâts avec un arc.", null},
+            PassiveEffects.arme(new String[]{"bow"}, new String[]{}, new float[]{10f, 10f, 15f, 20f, 25f, 25f})),
+    SPEAR_MASTERY(Theme.ATTAQUE, "Maîtrise de la Lance", 2, 4,
+            new String[]{null, null, "Maîtrise de la Lance", "Maîtrise de la Hallebarde", "Maîtrise de la Lance Dragon", null, null},
+            new String[]{null, null, "+10 % de dégâts avec une lance.", "+15 % de dégâts avec une lance.", "+20 % de dégâts avec une lance.", null, null},
+            PassiveEffects.arme(new String[]{"spear", "halberd", "lance"}, new String[]{}, new float[]{10f, 10f, 15f, 20f, 20f, 20f})),
+    DAGGER_MASTERY(Theme.ATTAQUE, "Maîtrise de la Dague", 2, 6,
+            new String[]{null, null, "Maîtrise de la Dague", "Maîtrise de la Lame d'Ombre", "Maîtrise de la Lame d'Assassin", "Maîtrise Légendaire de la Dague", "Maîtrise Divine de la Dague"},
+            new String[]{null, null, "+10 % de dégâts avec une dague.", "+15 % de dégâts avec une dague.", "+20 % de dégâts avec une dague.", "+25 % de dégâts avec une dague.", "+30 % de dégâts avec une dague."},
+            PassiveEffects.arme(new String[]{"dagger", "kodachi"}, new String[]{}, new float[]{10f, 10f, 15f, 20f, 25f, 30f})),
+    SWORD_MASTERY(Theme.ATTAQUE, "Maîtrise de l'Épée", 2, 4,
+            new String[]{null, null, "Initiation à l'Épée", null, "Maîtrise de l'Épée", null, null},
+            new String[]{null, null, "+8 % de dégâts avec une épée.", null, "+15 % de dégâts avec une épée.", null, null},
+            PassiveEffects.arme(new String[]{"sword", "katana", "sabre", "saber"}, new String[]{}, new float[]{8f, 8f, 11f, 15f, 20f, 25f})),
+    ARCANE_STRIKE(Theme.MAGIE, "Frappe Arcanique", 1, 6,
+            new String[]{null, "Frappe Arcanique", "Lame Ensorcelée", "Dévastation Arcanique", "Annihilation Arcanique", "Oubli Arcanique", "Genèse Arcanique"},
+            new String[]{null, "30 % de chance d'infliger 8 dégâts arcaniques en plus.", "40 % de chance d'infliger 12 dégâts arcaniques en plus.", "45 % de chance d'infliger 16 dégâts arcaniques en plus.", "50 % de chance d'infliger 22 dégâts arcaniques en plus.", "60 % de chance d'infliger 30 dégâts arcaniques en plus.", "70 % de chance d'infliger 40 dégâts arcaniques en plus."},
+            PassiveEffects.chanceDegatsFixes(new float[]{30f, 40f, 45f, 50f, 60f, 70f}, new float[]{8f, 12f, 16f, 22f, 30f, 40f})),
+    OVERFLOWING_POWER(Theme.MAGIE, "Puissance Débordante", 1, 5,
+            new String[]{null, "Puissance Débordante", "Magie Déchaînée", "Magie Pure", "Suprématie Arcanique", "Suprématie Absolue", null},
+            new String[]{null, "+15 % de dégâts quand ton mana dépasse 85 %.", "+25 % de dégâts quand ton mana dépasse 80 %.", "+35 % de dégâts quand ton mana dépasse 60 %.", "+45 % de dégâts quand ton mana dépasse 50 %.", "+55 % de dégâts quand ton mana dépasse 40 %.", null},
+            PassiveEffects.manaHaut(new float[]{85f, 80f, 60f, 50f, 40f, 40f}, new float[]{15f, 25f, 35f, 45f, 55f, 55f})),
+    AWAKENED_MIND(Theme.MAGIE, "Esprit Éveillé", 1, 6,
+            new String[]{null, "Esprit Éveillé", "Esprit Élargi", "Esprit Brillant", "Esprit de Génie", "Esprit Cosmique", "Esprit Infini"},
+            new String[]{null, "+15 Intelligence.", "+25 Intelligence.", "+35 Intelligence.", "+50 Intelligence.", "+70 Intelligence.", "+90 Intelligence."},
+            PassiveEffects.stats(PassiveEffects.Declencheur.AUCUN, PassiveEffects.bonus("INTELLIGENCE", PassiveEffects.Mode.FLAT, new float[]{15f, 25f, 35f, 50f, 70f, 90f}))),
+    MANA_FONT(Theme.MAGIE, "Source de Mana", 1, 5,
+            new String[]{null, "Source de Mana", "Flux de Mana", "Rivière de Mana", "Océan de Mana", "Mana Infini", null},
+            new String[]{null, "+20 % de régénération de mana.", "Régénération de mana ×2.", "Régénération de mana ×3.", "Régénération de mana ×4.", "Régénération de mana ×6.", null},
+            PassiveEffects.stats(PassiveEffects.Declencheur.AUCUN, PassiveEffects.bonus("INTELLIGENCE", PassiveEffects.Mode.REGEN, new float[]{1.2f, 2f, 3f, 4f, 6f, 6f}))),
+    SPIRITUAL_SIPHON(Theme.MAGIE, "Siphon Spirituel", 1, 6,
+            new String[]{null, "Siphon Spirituel", "Voleur d'Âmes", "Drain Spirituel", "Vampirisme Arcanique", "Vampirisme Cosmique", "Vampirisme Infini"},
+            new String[]{null, "30 % de chance de rendre 5 de mana à chaque coup donné.", "40 % de chance de rendre 8 de mana à chaque coup donné.", "45 % de chance de rendre 12 de mana à chaque coup donné.", "50 % de chance de rendre 16 de mana à chaque coup donné.", "60 % de chance de rendre 22 de mana à chaque coup donné.", "70 % de chance de rendre 30 de mana à chaque coup donné."},
+            PassiveEffects.manaAuCoup(new float[]{30f, 40f, 45f, 50f, 60f, 70f}, new float[]{5f, 8f, 12f, 16f, 22f, 30f})),
+    MANA_BARRIER(Theme.MAGIE, "Barrière de Mana", 1, 4,
+            new String[]{null, "Barrière de Mana", "Bouclier Arcanique", "Forteresse de Mana", "Citadelle de Mana", null, null},
+            new String[]{null, "Mana au-dessus de 50 % : -10 % de dégâts reçus.", "Mana au-dessus de 40 % : -15 % de dégâts reçus.", "Mana au-dessus de 30 % : -20 % de dégâts reçus.", "Mana au-dessus de 20 % : -25 % de dégâts reçus.", null, null},
+            PassiveEffects.manaBouclier(new float[]{50f, 40f, 30f, 20f, 20f, 20f}, new float[]{10f, 15f, 20f, 25f, 25f, 25f})),
+    MYSTIC_VEIL(Theme.MAGIE, "Voile Mystique", 1, 2,
+            new String[]{null, "Voile Mystique", "Cape Astrale", null, null, null, null},
+            new String[]{null, "10 % de chance de réduire un coup reçu de 25 %.", "30 % de chance de réduire un coup reçu de 35 %.", null, null, null, null},
+            PassiveEffects.chanceReduction(new float[]{10f, 30f, 30f, 30f, 30f, 30f}, new float[]{25f, 35f, 35f, 35f, 35f, 35f})),
+    VOL(Theme.MAGIE, "Vol", 6, 6,
+            new String[]{null, null, null, null, null, null, "Vol"},
+            new String[]{null, null, null, null, null, null, "Permet de voler en consommant 20 points de mana par seconde."},
+            PassiveEffects.AUCUN),
+    IRON_RESOLVE(Theme.DEFENSE, "Résolution de Fer", 1, 6,
+            new String[]{null, "Résolution de Fer", "Résolution d'Acier", "Résolution de Titan", "Résolution Divine", "Résolution Immortelle", "Résolution Éternelle"},
+            new String[]{null, "-3 dégâts sur chaque coup reçu.", "-5 dégâts sur chaque coup reçu.", "-8 dégâts sur chaque coup reçu.", "-12 dégâts sur chaque coup reçu.", "-16 dégâts sur chaque coup reçu.", "-20 dégâts sur chaque coup reçu."},
+            PassiveEffects.reductionFixe(new float[]{3f, 5f, 8f, 12f, 16f, 20f})),
+    MINOR_PARRY(Theme.DEFENSE, "Parade", 1, 6,
+            new String[]{null, "Parade Mineure", "Parade Experte", "Parade de Maître", "Parade Parfaite", "Parade Divine", "Parade Céleste"},
+            new String[]{null, "20 % de chance de réduire un coup reçu de 15 %.", "30 % de chance de réduire un coup reçu de 20 %.", "40 % de chance de réduire un coup reçu de 25 %.", "45 % de chance de réduire un coup reçu de 30 %.", "50 % de chance de réduire un coup reçu de 35 %.", "60 % de chance de réduire un coup reçu de 40 %."},
+            PassiveEffects.chanceReduction(new float[]{20f, 30f, 40f, 45f, 50f, 60f}, new float[]{15f, 20f, 25f, 30f, 35f, 40f})),
+    ADAPTIVE_SHIELD(Theme.DEFENSE, "Rempart", 1, 6,
+            new String[]{null, "Bouclier Adaptatif", "Rempart Réactif", "Rempart d'Adamantine", "Rempart Divin", "Rempart Cosmique", "Rempart de la Genèse"},
+            new String[]{null, "10 % de chance de réduire un coup reçu de 15 %.", "20 % de chance de réduire un coup reçu de 30 %.", "30 % de chance de réduire un coup reçu de 40 %.", "40 % de chance de réduire un coup reçu de 50 %.", "45 % de chance de réduire un coup reçu de 60 %.", "50 % de chance de réduire un coup reçu de 70 %."},
+            PassiveEffects.chanceReduction(new float[]{10f, 20f, 30f, 40f, 45f, 50f}, new float[]{15f, 30f, 40f, 50f, 60f, 70f})),
+    HUNTER_GUARD(Theme.DEFENSE, "Garde du Chasseur", 1, 4,
+            new String[]{null, "Garde de Chasseur", "Garde Bestiale", "Garde du Tueur", "Garde du Tueur de Dragon", null, null},
+            new String[]{null, "-10 % de dégâts reçus des monstres.", "-15 % de dégâts reçus des monstres.", "-20 % de dégâts reçus des monstres.", "-25 % de dégâts reçus des monstres.", null, null},
+            PassiveEffects.contreMonstres(new float[]{10f, 15f, 20f, 25f, 25f, 25f})),
+    STURDY_BODY(Theme.DEFENSE, "Corps Robuste", 1, 5,
+            new String[]{null, "Corps Robuste", "Corps de Fer", "Corps d'Acier", "Corps de Diamant", "Corps Cosmique", null},
+            new String[]{null, "+3 % de dégâts reçus en moins.", "+5 % de dégâts reçus en moins.", "+8 % de dégâts reçus en moins.", "+11 % de dégâts reçus en moins.", "+15 % de dégâts reçus en moins.", null},
+            PassiveEffects.stats(PassiveEffects.Declencheur.TOUCHE, PassiveEffects.bonus("ENDURANCE_DEFENSE", PassiveEffects.Mode.FLAT, new float[]{3f, 5f, 8f, 11f, 15f, 15f}))),
+    STONE_SKIN(Theme.DEFENSE, "Peau de Pierre", 1, 6,
+            new String[]{null, "Peau de Pierre", "Peau de Bronze", "Peau de Fer", "Peau d'Acier", "Peau d'Obsidienne", "Peau de Diamant"},
+            new String[]{null, "-5 % de dégâts reçus.", "-8 % de dégâts reçus.", "-10 % de dégâts reçus.", "-15 % de dégâts reçus.", "-25 % de dégâts reçus.", "-35 % de dégâts reçus."},
+            PassiveEffects.reduction(new float[]{5f, 8f, 10f, 15f, 25f, 35f})),
+    TENACITY(Theme.DEFENSE, "Ténacité", 1, 6,
+            new String[]{null, "Ténacité", "Inflexible", "Incassable", "Invincible", "Immortel Absolu", "Immortalité Céleste"},
+            new String[]{null, "Sous 30 % de vie : -8 % de dégâts reçus.", "Sous 35 % de vie : -12 % de dégâts reçus.", "Sous 40 % de vie : -16 % de dégâts reçus.", "Sous 45 % de vie : -20 % de dégâts reçus.", "Sous 50 % de vie : -25 % de dégâts reçus.", "Sous 55 % de vie : -30 % de dégâts reçus."},
+            PassiveEffects.vieBasse(new float[]{30f, 35f, 40f, 45f, 50f, 55f}, new float[]{8f, 12f, 16f, 20f, 25f, 30f})),
+    SOLID_STANCE(Theme.DEFENSE, "Posture Solide", 1, 6,
+            new String[]{null, "Posture Solide", "Montagne Inébranlable", "Forteresse Vivante", "Forteresse Éternelle", "Forteresse Divine", "Forteresse Céleste"},
+            new String[]{null, "Endurance au-dessus de 80 % : -10 % de dégâts reçus.", "Endurance au-dessus de 70 % : -15 % de dégâts reçus.", "Endurance au-dessus de 60 % : -20 % de dégâts reçus.", "Endurance au-dessus de 50 % : -25 % de dégâts reçus.", "Endurance au-dessus de 40 % : -30 % de dégâts reçus.", "Endurance au-dessus de 30 % : -35 % de dégâts reçus."},
+            PassiveEffects.enduranceHaute(new float[]{80f, 70f, 60f, 50f, 40f, 30f}, new float[]{10f, 15f, 20f, 25f, 30f, 35f})),
+    STEEL_NERVES(Theme.DEFENSE, "Nerfs d'Acier", 1, 2,
+            new String[]{null, "Nerfs d'Acier", "Volonté de Fer", null, null, null, null},
+            new String[]{null, "Les coups de plus de 15 dégâts sont réduits de 10 %.", "Les coups de plus de 12 dégâts sont réduits de 15 %.", null, null, null, null},
+            PassiveEffects.grosCoups(new float[]{15f, 12f, 12f, 12f, 12f, 12f}, new float[]{10f, 15f, 15f, 15f, 15f, 15f})),
+    MIRACLE_DODGE(Theme.DEFENSE, "Esquive", 1, 6,
+            new String[]{null, "Esquive Miraculeuse", "Esquive Fantôme", "Esquive de l'Ombre", "Esquive Dimensionnelle", "Esquive de la Réalité", "Esquive Temporelle"},
+            new String[]{null, "+2 % de chance d'esquive automatique (plafond 30 %).", "+3 % de chance d'esquive automatique (plafond 30 %).", "+5 % de chance d'esquive automatique (plafond 30 %).", "+7 % de chance d'esquive automatique (plafond 30 %).", "+9 % de chance d'esquive automatique (plafond 30 %).", "+12 % de chance d'esquive automatique (plafond 30 %)."},
+            PassiveEffects.esquive(new float[]{2f, 3f, 5f, 7f, 9f, 12f})),
+    ROBUST_CONSTITUTION(Theme.VIE, "Constitution", 1, 6,
+            new String[]{null, "Constitution Robuste", "Constitution d'Acier", "Constitution de Titan", "Constitution Divine", "Constitution Cosmique", "Constitution Céleste"},
+            new String[]{null, "+5 Vitalité.", "+10 Vitalité.", "+15 Vitalité.", "+20 Vitalité.", "+25 Vitalité.", "+30 Vitalité."},
+            PassiveEffects.stats(PassiveEffects.Declencheur.TOUCHE, PassiveEffects.bonus("VITALITY", PassiveEffects.Mode.FLAT, new float[]{5f, 10f, 15f, 20f, 25f, 30f}))),
+    LIFE_FORCE(Theme.VIE, "Force Vitale", 1, 5,
+            new String[]{null, "Force Vitale", "Vie Débordante", "Vie Explosive", "Vie Éternelle", "Vie Infinie", null},
+            new String[]{null, "+5 % de vie max.", "+10 % de vie max.", "+15 % de vie max.", "+20 % de vie max.", "+25 % de vie max.", null},
+            PassiveEffects.stats(PassiveEffects.Declencheur.TOUCHE, PassiveEffects.bonus("VITALITY", PassiveEffects.Mode.MULT, new float[]{5f, 10f, 15f, 20f, 25f, 25f}))),
+    VITAL_BLOOD(Theme.VIE, "Sang Vital", 1, 4,
+            new String[]{null, "Sang Vital", "Sang Enrichi", "Sang Ancestral", "Sang de Dragon", null, null},
+            new String[]{null, "+3 Vitalité, +10 % de régénération de vie.", "+6 Vitalité, +20 % de régénération de vie.", "+9 Vitalité, +30 % de régénération de vie.", "+12 Vitalité, +40 % de régénération de vie.", null, null},
+            PassiveEffects.stats(PassiveEffects.Declencheur.TOUCHE, PassiveEffects.bonus("VITALITY", PassiveEffects.Mode.FLAT, new float[]{3f, 6f, 9f, 12f, 12f, 12f}), PassiveEffects.bonus("VITALITY", PassiveEffects.Mode.REGEN, new float[]{1.1f, 1.2f, 1.3f, 1.4f, 1.4f, 1.4f}))),
+    HEART_OF_OAK(Theme.VIE, "Cœur de Chêne", 1, 6,
+            new String[]{null, "Coeur de Chêne", "Coeur de Fer", "Coeur d'Acier", "Coeur de Diamant", "Coeur d'Éternité", "Coeur de la Genèse"},
+            new String[]{null, "+4 Vitalité, +1 % de dégâts reçus en moins.", "+8 Vitalité, +2 % de dégâts reçus en moins.", "+12 Vitalité, +3 % de dégâts reçus en moins.", "+16 Vitalité, +4 % de dégâts reçus en moins.", "+20 Vitalité, +5 % de dégâts reçus en moins.", "+25 Vitalité, +6 % de dégâts reçus en moins."},
+            PassiveEffects.stats(PassiveEffects.Declencheur.TOUCHE, PassiveEffects.bonus("VITALITY", PassiveEffects.Mode.FLAT, new float[]{4f, 8f, 12f, 16f, 20f, 25f}), PassiveEffects.bonus("ENDURANCE_DEFENSE", PassiveEffects.Mode.FLAT, new float[]{1f, 2f, 3f, 4f, 5f, 6f}))),
+    CELLULAR_REGENERATION(Theme.VIE, "Régénération Cellulaire", 1, 6,
+            new String[]{null, "Régénération Cellulaire", "Sang de Troll", "Sang d'Hydre", "Sang de Phénix", "Sang Éternel", "Sang de la Genèse"},
+            new String[]{null, "20 % de chance de rendre 5 % de ta vie max quand tu es touché.", "30 % de chance de rendre 8 % de ta vie max quand tu es touché.", "40 % de chance de rendre 12 % de ta vie max quand tu es touché.", "45 % de chance de rendre 16 % de ta vie max quand tu es touché.", "50 % de chance de rendre 20 % de ta vie max quand tu es touché.", "60 % de chance de rendre 25 % de ta vie max quand tu es touché."},
+            PassiveEffects.soinTouche(new float[]{20f, 30f, 40f, 45f, 50f, 60f}, new float[]{5f, 8f, 12f, 16f, 20f, 25f})),
+    PERSEVERANCE(Theme.VIE, "Persévérance", 1, 2,
+            new String[]{null, "Persévérance", "Immortel", null, null, null, null},
+            new String[]{null, "Sous 25 % de vie : chaque coup reçu rend 2 % de ta vie max.", "Sous 30 % de vie : chaque coup reçu rend 4 % de ta vie max.", null, null, null, null},
+            PassiveEffects.soinVieBasse(new float[]{25f, 30f, 30f, 30f, 30f, 30f}, new float[]{2f, 4f, 4f, 4f, 4f, 4f})),
+    NATURAL_RECOVERY(Theme.VIE, "Rétablissement Naturel", 1, 2,
+            new String[]{null, "Rétablissement Naturel", "Rétablissement Vital", null, null, null, null},
+            new String[]{null, "+20 % de régénération de vie.", "Régénération de vie ×2.", null, null, null, null},
+            PassiveEffects.stats(PassiveEffects.Declencheur.AUCUN, PassiveEffects.bonus("VITALITY", PassiveEffects.Mode.REGEN, new float[]{1.2f, 2f, 2f, 2f, 2f, 2f}))),
+    TIRELESS_BREATH(Theme.ENDURANCE, "Souffle Inépuisable", 1, 6,
+            new String[]{null, "Souffle Inépuisable", "Poumons d'Acier", "Poumons de Dragon", "Poumons de Titan", "Poumons Cosmiques", "Poumons Célestes"},
+            new String[]{null, "+10 Endurance max.", "+20 Endurance max.", "+30 Endurance max.", "+40 Endurance max.", "+55 Endurance max.", "+70 Endurance max."},
+            PassiveEffects.stats(PassiveEffects.Declencheur.AUCUN, PassiveEffects.bonus("ENDURANCE", PassiveEffects.Mode.FLAT, new float[]{10f, 20f, 30f, 40f, 55f, 70f}))),
+    COMBAT_VIGOR(Theme.ENDURANCE, "Vigueur Combative", 1, 5,
+            new String[]{null, "Vigueur Combative", "Frénésie de Combat", "Frénésie Guerrière", "Frénésie Sanguinaire", "Frénésie Enragée", null},
+            new String[]{null, "30 % de chance de rendre 5 d'endurance à chaque coup donné.", "45 % de chance de rendre 8 d'endurance à chaque coup donné.", "60 % de chance de rendre 12 d'endurance à chaque coup donné.", "70 % de chance de rendre 16 d'endurance à chaque coup donné.", "70 % de chance de rendre 20 d'endurance à chaque coup donné.", null},
+            PassiveEffects.enduranceAuCoup(new float[]{30f, 45f, 60f, 70f, 70f, 70f}, new float[]{5f, 8f, 12f, 16f, 20f, 20f})),
+    SECOND_WIND(Theme.ENDURANCE, "Second Souffle", 1, 2,
+            new String[]{null, "Second Souffle", "Esprit du Survivant", null, null, null, null},
+            new String[]{null, "Endurance sous 20 % : 20 % de chance de rendre 25 d'endurance quand tu es touché.", "Endurance sous 25 % : 30 % de chance de rendre 40 d'endurance quand tu es touché.", null, null, null, null},
+            PassiveEffects.secondSouffle(new float[]{20f, 25f, 25f, 25f, 25f, 25f}, new float[]{20f, 30f, 30f, 30f, 30f, 30f}, new float[]{25f, 40f, 40f, 40f, 40f, 40f})),
+    WIND_STEP(Theme.AGILITE, "Pas de Vent", 1, 6,
+            new String[]{null, "Pas de Vent", "Pas de Bourrasque", "Pas de Tempête", "Pas du Néant", "Pas Dimensionnel", "Pas Céleste"},
+            new String[]{null, "+3 % de vitesse de déplacement.", "+5 % de vitesse de déplacement.", "+8 % de vitesse de déplacement.", "+12 % de vitesse de déplacement.", "+16 % de vitesse de déplacement.", "+20 % de vitesse de déplacement."},
+            PassiveEffects.stats(PassiveEffects.Declencheur.AUCUN, PassiveEffects.bonus("AGILITY_SPEED", PassiveEffects.Mode.MULT, new float[]{3f, 5f, 8f, 12f, 16f, 20f}))),
+    ELDANIOR_SUPPLENESS(Theme.AGILITE, "Souplesse", 1, 4,
+            new String[]{null, "Souplesse d'Eldanior", "Souplesse Féline", "Souplesse Acrobatique", "Défi à la Gravité", null, null},
+            new String[]{null, "+10 % de hauteur de saut.", "+18 % de hauteur de saut.", "+25 % de hauteur de saut.", "+35 % de hauteur de saut.", null, null},
+            PassiveEffects.stats(PassiveEffects.Declencheur.AUCUN, PassiveEffects.bonus("AGILITY_JUMP", PassiveEffects.Mode.MULT, new float[]{10f, 18f, 25f, 35f, 35f, 35f}))),
+    SURVIVAL_INSTINCT(Theme.AGILITE, "Instinct de Survie", 1, 5,
+            new String[]{null, "Instinct de Survie", "Sens du Danger", "Intuition de Combat", "Prophétie de Guerre", "Vision du Destin", null},
+            new String[]{null, "Signale les présences proches (portée ×1,5), joueurs invisibles compris.", "Signale les présences proches (portée ×1,8), joueurs invisibles compris.", "Signale les présences proches (portée ×2,2), joueurs invisibles compris.", "Signale les présences proches (portée ×2,8), joueurs invisibles compris.", "Signale les présences proches (portée ×3,5), joueurs invisibles compris.", null},
+            PassiveEffects.radar(new float[]{1.5f, 1.8f, 2.2f, 2.8f, 3.5f, 3.5f})),
+    NIGHT_VISION(Theme.AGILITE, "Vision Nocturne", 1, 1,
+            new String[]{null, "Vision Nocturne", null, null, null, null, null},
+            new String[]{null, "Tu vois clair la nuit.", null, null, null, null, null},
+            PassiveEffects.AUCUN),
+    LUCKY_STRIKE(Theme.CHANCE, "Frappe Chanceuse", 1, 6,
+            new String[]{null, "Frappe Chanceuse", "Chance Critique", "Frappe du Destin", "Frappe Divine", "Frappe Cosmique", "Frappe de la Genèse"},
+            new String[]{null, "+3 % de chance de critique.", "+5 % de chance de critique.", "+8 % de chance de critique.", "+12 % de chance de critique.", "+16 % de chance de critique.", "+20 % de chance de critique."},
+            PassiveEffects.stats(PassiveEffects.Declencheur.CRITIQUE, PassiveEffects.bonus("LUCK_CRITICAL", PassiveEffects.Mode.FLAT, new float[]{3f, 5f, 8f, 12f, 16f, 20f}))),
+    TREASURE_HUNTER(Theme.CHANCE, "Chasseur de Trésors", 1, 5,
+            new String[]{null, "Chasseur de Trésors", "Chasseur de Reliques", "Chasseur d'Artefacts", "Chasseur de Légendes", "Chasseur de Mythes", null},
+            new String[]{null, "+5 % de chance de butin.", "+10 % de chance de butin.", "+15 % de chance de butin.", "+20 % de chance de butin.", "+25 % de chance de butin.", null},
+            PassiveEffects.stats(PassiveEffects.Declencheur.AUCUN, PassiveEffects.bonus("LUCK_LOOT", PassiveEffects.Mode.FLAT, new float[]{5f, 10f, 15f, 20f, 25f, 25f}))),
+    GOOD_OMEN(Theme.CHANCE, "Bon Présage", 1, 4,
+            new String[]{null, "Bon Présage", "Présage du Destin", "Présage Prophétique", "Présage Cosmique", null, null},
+            new String[]{null, "+15 % de chance d'événement rare.", "+25 % de chance d'événement rare.", "+35 % de chance d'événement rare.", "+50 % de chance d'événement rare.", null, null},
+            PassiveEffects.stats(PassiveEffects.Declencheur.AUCUN, PassiveEffects.bonus("LUCK_EVENT", PassiveEffects.Mode.FLAT, new float[]{15f, 25f, 35f, 50f, 50f, 50f}))),
+    PECHE_ORGUEIL(Theme.PECHE, "Orgueil", 7, 7, null, new String[]{null, null, null, null, null, null, null, "+5 % de dégâts et -3 % de dégâts reçus par pièce d'armure portée (armure complète : +20 % et -12 %)."},
+            new Orgueil()),
+    PECHE_COLERE(Theme.PECHE, "Colère", 7, 7, null, new String[]{null, null, null, null, null, null, null, "Au-dessus de 70 % de vie : +40 % de dégâts. Chaque coup reçu d'un joueur ajoute une charge de rage (+5 % de dégâts, 6 charges, 10 s)."},
+            new Colere()),
+    PECHE_AVARICE(Theme.PECHE, "Avarice", 7, 7, null, new String[]{null, null, null, null, null, null, null, "+15 % de chance de butin. En tuant un joueur : 25 % de chance de lui voler un objet de sa barre d'action (recharge : 1 jour)."},
+            new Avarice(), 86400f),
+    PECHE_ENVIE(Theme.PECHE, "Envie", 7, 7, null, new String[]{null, null, null, null, null, null, null, "+1 % de dégâts par % de vie perdue (jusqu'à +80 %). Contre un joueur de plus haut niveau : +25 % de dégâts en plus."},
+            new Envie()),
+    PECHE_LUXURE(Theme.PECHE, "Luxure", 7, 7, null, new String[]{null, null, null, null, null, null, null, "+10 % de vitesse de déplacement. En tuant un joueur : tu lui voles 10 % de son or (recharge : 12 h)."},
+            new Luxure(), 43200f),
+    PECHE_GOURMANDISE(Theme.PECHE, "Gourmandise", 7, 7, null, new String[]{null, null, null, null, null, null, null, "Chaque joueur tué te rend 20 % de ta vie max. 25 % de chance de copier l'un de ses passifs à son rang (recharge : 1 jour)."},
+            new Gourmandise()),
+    PECHE_PARESSE(Theme.PECHE, "Paresse", 7, 7, null, new String[]{null, null, null, null, null, null, null, "-15 % de dégâts reçus des joueurs, et les joueurs qui te frappent sont ralentis."},
+            new Paresse()),
+    ANGE_HUMILITE(Theme.ANGE, "Humilité (Michaël)", 7, 7, null, new String[]{null, null, null, null, null, null, null, "+15 % de dégâts et -10 % de dégâts reçus par pièce d'armure en moins (sans armure : +60 % et -40 %)."},
+            new Humilite()),
+    ANGE_PATIENCE(Theme.ANGE, "Patience (Raphaël)", 7, 7, null, new String[]{null, null, null, null, null, null, null, "+5 % de dégâts et -5 % de dégâts reçus par membre de ton groupe à moins de 15 blocs (4 au plus)."},
+            new Patience()),
+    ANGE_TEMPERANCE(Theme.ANGE, "Tempérance (Uriel)", 7, 7, null, new String[]{null, null, null, null, null, null, null, "La main vide : +200 % de dégâts et dégâts reçus divisés par deux."},
+            new Temperance()),
+    ANGE_CHARITE(Theme.ANGE, "Charité (Gabriel)", 7, 7, null, new String[]{null, null, null, null, null, null, null, "Dégâts reçus divisés par 2,5. Quand tu es touché, les membres blessés de ton groupe à moins de 15 blocs récupèrent 3 % de leur vie max."},
+            new Charite()),
+    ANGE_BIENVEILLANCE(Theme.ANGE, "Bienveillance (Chamuel)", 7, 7, null, new String[]{null, null, null, null, null, null, null, "+10 % d'XP. Ton groupe reçoit 30 % de l'XP de tes victimes au lieu de 10 %."},
+            PassiveEffects.AUCUN),
+    ANGE_CHASTETE(Theme.ANGE, "Chasteté (Azraël)", 7, 7, null, new String[]{null, null, null, null, null, null, null, "Contre les monstres : +150 % de dégâts et -25 % de dégâts reçus."},
+            new Chastete()),
+    ANGE_DILIGENCE(Theme.ANGE, "Diligence (Métatron)", 7, 7, null, new String[]{null, null, null, null, null, null, null, "+20 % d'XP, maîtrise des passifs cinq fois plus rapide, +100 % de vitesse de déplacement."},
+            new Diligence());
+
+    /** Theme d'un passif (tri et filtre de l'interface). */
+    public enum Theme {
+        ATTAQUE("Attaque"), MAGIE("Magie"), DEFENSE("Défense"), VIE("Vie"), ENDURANCE("Endurance"), AGILITE("Agilité"),
+        CHANCE("Chance"), PECHE("Péché capital"), ANGE("Ange");
+        public final String label;
+        Theme(String label) { this.label = label; }
+    }
+
+    /** Un passif a un rang donne (passifs de classe, passifs d'un joueur). */
+    public record Ranked(PassiveSkill skill, int rank) {}
+
+    /** Rang maximal d'un joueur pour un passif de serie (Legendaire). */
+    public static final int MAX_RANK = 6;
+    /** Rang affiche des Anges et Peches. */
+    public static final int DIVINE_RANK = 7;
+
+    private static final String[] RANK_LABELS = {"", "Commun", "Inhabituel", "Rare", "Épique", "Unique", "Légendaire", "Divin"};
+    private static final String[] RANK_KEYS = {"", "COMMUN", "UNCOMMON", "RARE", "EPIQUE", "UNIQUE", "LEGENDAIRE", "DIVIN"};
+
+    private final Theme theme;
     private final String displayName;
-    private final String description;
-    private final int manaCost;
-    private final float cooldownSeconds; // Cooldown en secondes après un proc (0 = pas de cooldown)
-
-    // LA MAGIE EST ICI : Chaque Enum contient la logique de son propre combat
+    private final int minRank, maxRank;
+    private final String[] rankNames;
+    private final String[] descriptions;
     private final IPassiveCombatSkill logic;
+    private final float cooldownSeconds;
 
-    PassiveSkill(String id, String displayName, String description, IPassiveCombatSkill logic) {
-        this(id, displayName, description, 0, 0f, logic);
+    PassiveSkill(Theme theme, String displayName, int minRank, int maxRank, String[] rankNames, String[] descriptions,
+                 IPassiveCombatSkill logic) {
+        this(theme, displayName, minRank, maxRank, rankNames, descriptions, logic, 0f);
     }
 
-    PassiveSkill(String id, String displayName, String description, int manaCost, IPassiveCombatSkill logic) {
-        this(id, displayName, description, manaCost, 0f, logic);
-    }
-
-    PassiveSkill(String id, String displayName, String description, int manaCost, float cooldownSeconds, IPassiveCombatSkill logic) {
-        this.id = id;
+    PassiveSkill(Theme theme, String displayName, int minRank, int maxRank, String[] rankNames, String[] descriptions,
+                 IPassiveCombatSkill logic, float cooldownSeconds) {
+        this.theme = theme;
         this.displayName = displayName;
-        this.description = description;
-        this.manaCost = manaCost;
-        this.cooldownSeconds = cooldownSeconds;
+        this.minRank = minRank;
+        this.maxRank = maxRank;
+        this.rankNames = rankNames;
+        this.descriptions = descriptions;
         this.logic = logic;
+        this.cooldownSeconds = cooldownSeconds;
     }
 
-    public String getId() {
-        return id;
+    public Ranked r(int rank) { return new Ranked(this, clamp(rank)); }
+
+    public String getId() { return name(); }
+    public Theme getTheme() { return theme; }
+    public String getDisplayName() { return displayName; }
+    public int getMinRank() { return minRank; }
+    public int getMaxRank() { return maxRank; }
+    public IPassiveCombatSkill getLogic() { return logic; }
+    /** Recharge apres un declenchement (seulement certains Peches). */
+    public float getCooldownSeconds() { return cooldownSeconds; }
+
+    /** Rang ramene entre le premier et le dernier rang de la serie. */
+    public int clamp(int rank) { return Math.max(minRank, Math.min(maxRank, rank)); }
+
+    /** Nom du rang (ancien nom du passif de ce rang : Frappe de Fureur...) ; le nom de la serie s'il n'en a pas. */
+    public String getRankName(int rank) {
+        int r = clamp(rank);
+        return rankNames != null && rankNames[r] != null ? rankNames[r] : displayName;
     }
 
-    public String getDisplayName() {
-        return displayName;
+    /** Effet au rang donne (le plus proche si ce rang n'existe pas). */
+    public String getDescription(int rank) {
+        int r = clamp(rank);
+        for (int i = r; i >= 1; i--) if (descriptions[i] != null) return descriptions[i];
+        for (int i = r; i < descriptions.length; i++) if (descriptions[i] != null) return descriptions[i];
+        return "";
     }
 
-    public String getDescription() {
-        return description;
-    }
+    public boolean hasRank(int rank) { return rank >= 1 && rank < descriptions.length && descriptions[rank] != null; }
 
-    public int getManaCost() {
-        return manaCost;
-    }
+    public static String rankLabel(int rank) { return rank >= 0 && rank < RANK_LABELS.length ? RANK_LABELS[rank] : ""; }
+    /** Cle de rarete de l'interface (COMMUN, UNCOMMON...). */
+    public static String rankKey(int rank) { return rank >= 0 && rank < RANK_KEYS.length ? RANK_KEYS[rank] : ""; }
 
-    public float getCooldownSeconds() {
-        return cooldownSeconds;
-    }
+    public boolean isDivine() { return theme == Theme.PECHE || theme == Theme.ANGE; }
+    public boolean isPeche() { return theme == Theme.PECHE; }
+    public boolean isAnge() { return theme == Theme.ANGE; }
 
-    public IPassiveCombatSkill getLogic() {
-        return logic;
-    }
-
-    // Lookup map pour éviter valueOf() + try/catch (coûteux en exceptions)
     private static final Map<String, PassiveSkill> LOOKUP;
     static {
         Map<String, PassiveSkill> map = new HashMap<>();
-        for (PassiveSkill ps : values()) {
-            map.put(ps.name(), ps);
-        }
+        for (PassiveSkill ps : values()) map.put(ps.name(), ps);
         LOOKUP = Collections.unmodifiableMap(map);
     }
 
-    /**
-     * Retourne le PassiveSkill correspondant au nom, ou null si inconnu.
-     * Alternative performante à valueOf() qui évite la création de stack traces.
-     */
-    public static PassiveSkill fromName(String name) {
-        return LOOKUP.get(name);
-    }
+    /** Le passif de cet identifiant, ou null (sans exception). */
+    public static PassiveSkill fromName(String name) { return name == null ? null : LOOKUP.get(name.toUpperCase()); }
 
-    // --- Skills Divins : péchés et anges ---
-    private static final Set<String> DIVINE_SKILL_IDS;
-    private static final Set<String> PECHE_SKILL_IDS;
-    private static final Set<String> ANGE_SKILL_IDS;
-
-    static {
-        Set<String> divine = new java.util.HashSet<>();
-        Set<String> peches = new java.util.HashSet<>();
-        Set<String> anges = new java.util.HashSet<>();
-        for (PassiveSkill ps : values()) {
-            if (ps.name().startsWith("PECHE_")) {
-                peches.add(ps.name());
-                divine.add(ps.name());
-            } else if (ps.name().startsWith("ANGE_")) {
-                anges.add(ps.name());
-                divine.add(ps.name());
-            }
-        }
-        DIVINE_SKILL_IDS = Collections.unmodifiableSet(divine);
-        PECHE_SKILL_IDS = Collections.unmodifiableSet(peches);
-        ANGE_SKILL_IDS = Collections.unmodifiableSet(anges);
-    }
-
-    public static boolean isDivineSkill(String skillId) { return DIVINE_SKILL_IDS.contains(skillId); }
-    public static boolean isPecheSkill(String skillId) { return PECHE_SKILL_IDS.contains(skillId); }
-    public static boolean isAngeSkill(String skillId) { return ANGE_SKILL_IDS.contains(skillId); }
-    public boolean isDivine() { return DIVINE_SKILL_IDS.contains(this.name()); }
-    public boolean isPeche() { return PECHE_SKILL_IDS.contains(this.name()); }
-    public boolean isAnge() { return ANGE_SKILL_IDS.contains(this.name()); }
+    public static boolean isDivineSkill(String id) { PassiveSkill p = fromName(id); return p != null && p.isDivine(); }
+    public static boolean isPecheSkill(String id) { PassiveSkill p = fromName(id); return p != null && p.isPeche(); }
+    public static boolean isAngeSkill(String id) { PassiveSkill p = fromName(id); return p != null && p.isAnge(); }
 }
-

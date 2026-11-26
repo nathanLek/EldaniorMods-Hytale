@@ -1,0 +1,133 @@
+{
+  "Parent": "Template_Weapon_Sword",
+  "TranslationProperties": {
+    "Name": "Bokken du Dojo Luo",
+    "Description": "Le sabre de bois des disciples du dojo Luo, rangé dans un fourreau de bois clair : on y apprend le dégainé avant de toucher une lame. Sabre d'entraînement : il ne peut tuer ni joueur ni PNJ (il laisse toujours 1 PV). Son combo s'allonge avec votre classe de la voie martiale (2 coups hors de la voie, puis 3 à 8). Katana du Clan Luo, réservé à ses membres : tenu au fourreau dans la main gauche, dégainé au premier coup, il reste au clair tant que l'on frappe. Clic droit : bref, rengainer ; maintenu, garde. Maintenir l'attaque (ou garde levée puis clic gauche) : Percée, un estoc qui grandit avec votre classe (ruée, aiguille de Ki, mille aiguilles, fleurs de prunier, puis le canon de Ki du Maître Suprême et, pour le Dieu Martial, cinq lances de Ki qui naissent derrière vous et partent une à une). Elle coûte de l'endurance et du mana, d'autant plus que la classe est haute. Compétence (énergie de signature pleine) : rafale de tout le combo en un éclair (une lame de Ki par mouvement dès le Saint Martial, Ki de l'Épée déployé). Chaque coup coûte 5 % d'endurance, la rafale la moitié."
+  },
+  "Quality": "Common",
+  "ItemLevel": 3,
+  "Texture": "Items/Weapons/artefacts/Eldanior_Weapon_Sword_Katana_Bokken.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Weapon_Sword_Katana_Bokken.png",
+  "IconProperties": {
+    "Scale": 0.33,
+    "Rotation": [
+      45,
+      90,
+      0
+    ],
+    "Translation": [
+      -33,
+      -38
+    ]
+  },
+  "MaxStack": 1,
+  "Variant": false,
+  "InteractionVars": {
+    "Swing_Left_Damage": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Primary_Swing_Left_Damage",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Physical": 6
+            }
+          },
+          "DamageEffects": {
+            "WorldSoundEventId": "SFX_Sword_T2_Impact",
+            "LocalSoundEventId": "SFX_Sword_T2_Impact"
+          },
+          "EntityStatsOnHit": [
+            {
+              "EntityStatId": "SignatureEnergy",
+              "Amount": 2
+            }
+          ]
+        }
+      ]
+    },
+    "Swing_Right_Damage": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Primary_Swing_Right_Damage",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Physical": 6
+            }
+          },
+          "DamageEffects": {
+            "WorldSoundEventId": "SFX_Sword_T2_Impact",
+            "LocalSoundEventId": "SFX_Sword_T2_Impact"
+          },
+          "EntityStatsOnHit": [
+            {
+              "EntityStatId": "SignatureEnergy",
+              "Amount": 2
+            }
+          ]
+        }
+      ]
+    },
+    "Swing_Down_Damage": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Primary_Swing_Down_Damage",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Physical": 11
+            }
+          },
+          "DamageEffects": {
+            "WorldSoundEventId": "SFX_Sword_T2_Impact",
+            "LocalSoundEventId": "SFX_Sword_T2_Impact"
+          },
+          "EntityStatsOnHit": [
+            {
+              "EntityStatId": "SignatureEnergy",
+              "Amount": 4
+            }
+          ]
+        }
+      ]
+    },
+    "Guard_Wield": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Secondary_Guard_Wield",
+          "StaminaCost": {
+            "Value": 10,
+            "CostType": "Damage"
+          }
+        }
+      ]
+    },
+    "Thrust": {
+      "Interactions": [
+        "Luo_Bokken_Percee"
+      ]
+    },
+    "Luo_Combo": {
+      "Interactions": [
+        "Luo_Combo_Bokken"
+      ]
+    },
+    "Thrust_Fourreau": {
+      "Interactions": [
+        "Luo_Bokken_Percee_Fourreau"
+      ]
+    },
+    "Guard_Bash": {
+      "Interactions": [
+        "Luo_Percee"
+      ]
+    }
+  },
+  "MaxDurability": 150,
+  "$Comment": "Katana du Clan Luo au clair : objet de passage, hors menu creatif. Genere par scripts/artefacts/gen_luo_katanas.py.",
+  "Model": "Items/Weapons/artefacts/Eldanior_Weapon_Sword_Katana_Bokken.blockymodel",
+  "PlayerAnimationsId": "Tenryumaru_Degainee",
+  "Interactions": {
+    "Primary": "Root_Luo_Primary",
+    "Secondary": "Root_Tenryumaru_Secondary_Degainee",
+    "Ability1": "Root_Luo_Bokken_Rafale"
+  }
+}

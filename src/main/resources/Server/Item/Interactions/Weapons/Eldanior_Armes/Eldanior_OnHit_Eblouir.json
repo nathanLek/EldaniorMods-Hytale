@@ -1,0 +1,32 @@
+{
+  "$Comment": "Suite du dernier coup de Shirasagi : interruption vanilla, puis eblouissement (Apollo_Aveugle). Genere par gen_luo_katanas.py.",
+  "Type": "Serial",
+  "Interactions": [
+    "DamageEntityParent_Hit_Interrupt_On_Hit",
+    {
+      "Type": "EffectCondition",
+      "Entity": "Target",
+      "EntityEffectIds": [
+        "Immune"
+      ],
+      "Match": "None",
+      "Next": {
+        "Type": "Serial",
+        "Interactions": [
+          {
+            "Type": "ChangeStat",
+            "Entity": "Target",
+            "StatModifiers": {
+              "Immunity": 20
+            }
+          },
+          {
+            "Type": "ApplyEffect",
+            "Entity": "Target",
+            "EffectId": "Apollo_Aveugle"
+          }
+        ]
+      }
+    }
+  ]
+}

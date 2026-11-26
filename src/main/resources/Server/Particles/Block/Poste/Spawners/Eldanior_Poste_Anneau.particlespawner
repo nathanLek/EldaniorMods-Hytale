@@ -1,0 +1,78 @@
+{
+  "$Comment": "Poste de PNJ : anneau blanc dore a plat au sol, qui s'ouvre et pulse (vu des seuls admins tenant le bloc).",
+  "RenderMode": "BlendAdd",
+  "ParticleRotationInfluence": "None",
+  "LinearFiltering": true,
+  "LightInfluence": 0.0,
+  "ParticleLifeSpan": {
+    "Min": 1.15,
+    "Max": 1.15
+  },
+  "ParticleRotateWithSpawner": false,
+  "SpawnRate": {
+    "Min": 1,
+    "Max": 1
+  },
+  "TotalParticles": {
+    "Min": 1,
+    "Max": 1
+  },
+  "SpawnBurst": true,
+  "MaxConcurrentParticles": 1,
+  "Particle": {
+    "Texture": "Particles/Textures/Circles/Explosion_Shockwave.png",
+    "ScaleRatioConstraint": "OneToOne",
+    "UVOption": "None",
+    "SoftParticles": "Disable",
+    "InitialAnimationFrame": {
+      "Opacity": 0.9,
+      "Color": "#ffffff",
+      "Scale": {
+        "X": {
+          "Min": 0.45,
+          "Max": 0.45
+        },
+        "Y": {
+          "Min": 0,
+          "Max": 0
+        }
+      },
+      "Rotation": {
+        "X": {
+          "Min": 90,
+          "Max": 90
+        },
+        "Z": {
+          "Min": 0,
+          "Max": 360
+        }
+      }
+    },
+    "Animation": {
+      "0": {
+        "Scale": {
+          "X": {
+            "Min": 0.45,
+            "Max": 0.45
+          },
+          "Y": {
+            "Min": 1,
+            "Max": 1
+          }
+        },
+        "Opacity": 0.9,
+        "Color": "#ffffff"
+      },
+      "100": {
+        "Scale": {
+          "X": {
+            "Min": 0.8,
+            "Max": 0.8
+          }
+        },
+        "Opacity": 0,
+        "Color": "#ffe9a8"
+      }
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "$Comment": "Manuel du Clan Luo : maintenir le clic droit = lecture (livre ouvert, pages qui tournent) ; 2,5 s = technique apprise (LuoManuelApprendre). Relache avant : le livre se referme.",
+  "Type": "Charging",
+  "DisplayProgress": true,
+  "HorizontalSpeedMultiplier": 0.3,
+  "Effects": {
+    "ItemAnimationId": "Lecture",
+    "LocalSoundEventId": "SFX_Drag_Weapons_Books"
+  },
+  "Next": {
+    "0": {
+      "Type": "Simple",
+      "RunTime": 0.15,
+      "Effects": {
+        "ClearAnimationOnFinish": true
+      }
+    },
+    "2.5": {
+      "Type": "Serial",
+      "Interactions": [
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.05,
+          "Spell": "LuoManuelApprendre"
+        },
+        {
+          "Type": "Simple",
+          "RunTime": 0.15,
+          "Effects": {
+            "ClearAnimationOnFinish": true
+          }
+        }
+      ]
+    }
+  }
+}

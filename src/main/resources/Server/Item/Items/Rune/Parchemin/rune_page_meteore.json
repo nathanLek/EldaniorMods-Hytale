@@ -1,0 +1,34 @@
+{
+  "Id": "rune_page_meteore",
+  "TranslationProperties": {
+    "Name": "Parchemin de Rune : Météore",
+    "Description": "Un parchemin roussi, troué en son centre comme par une braise tombée du ciel. Enseigne le Météore : appelez une étoile sur vos ennemis. Classes : tous les Mages (rune de prédilection du Magus). Utilisez-le pour ajouter la rune à votre sac de runes. (Ancien parchemin : la rune s'apprend désormais dans un manuel.)"
+  },
+  "Icon": "Icons/ItemsGenerated/Recipe_Page.png",
+  "Quality": "Epic",
+  "Tags": {
+    "Type": [
+      "Item",
+      "Consumable"
+    ]
+  },
+  "MaxStack": 1,
+  "PlayerAnimationsId": "Item",
+  "Model": "Items/Consumables/Recipes/Recipe.blockymodel",
+  "Texture": "Items/Consumables/Recipes/Recipe_Texture.png",
+  "IconProperties": {
+    "Scale": 0.76,
+    "Rotation": [
+      135,
+      135,
+      0
+    ],
+    "Translation": [
+      -1,
+      5
+    ]
+  },
+  "Interactions": {
+    "Use": "Root_ConsumableItemSkillInteraction"
+  }
+}

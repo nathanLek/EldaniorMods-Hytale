@@ -1,0 +1,34 @@
+{
+  "Id": "rune_page_hallucination",
+  "TranslationProperties": {
+    "Name": "Parchemin de Rune : Hallucination",
+    "Description": "Un parchemin dont les illustrations bougent quand on ne les regarde pas. Enseigne l'Hallucination : retournez vos ennemis les uns contre les autres. Classes : tous les Mages (rune de prédilection du Tisseur d'Illusions). Utilisez-le pour ajouter la rune à votre sac de runes. (Ancien parchemin : la rune s'apprend désormais dans un manuel.)"
+  },
+  "Icon": "Icons/ItemsGenerated/Recipe_Page.png",
+  "Quality": "Epic",
+  "Tags": {
+    "Type": [
+      "Item",
+      "Consumable"
+    ]
+  },
+  "MaxStack": 1,
+  "PlayerAnimationsId": "Item",
+  "Model": "Items/Consumables/Recipes/Recipe.blockymodel",
+  "Texture": "Items/Consumables/Recipes/Recipe_Texture.png",
+  "IconProperties": {
+    "Scale": 0.76,
+    "Rotation": [
+      135,
+      135,
+      0
+    ],
+    "Translation": [
+      -1,
+      5
+    ]
+  },
+  "Interactions": {
+    "Use": "Root_ConsumableItemSkillInteraction"
+  }
+}

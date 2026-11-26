@@ -1,0 +1,46 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune du Rayon Céleste",
+    "Description": "Sort épique de lumière (Mage, rune de prédilection du Devin Cosmique). Un pilier de lumière tombe du ciel sur le point visé et suit votre curseur (7 blocs/s, jusqu'à 30 blocs) pendant 6 s. Les ennemis pris dedans (rayon 2,5) subissent 14 dégâts tous les quarts de seconde, le double pour les morts-vivants ; les alliés y regagnent 1 % de leurs PV par demi-seconde. Épargne votre groupe, votre guilde et votre famille. Coût : 300 mana. Recharge : 120 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_RayonCeleste.png",
+  "Quality": "Epic",
+  "ItemLevel": 60,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_Runes.Lumiere"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_RayonCeleste.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 120,
+    "Cost": 300,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Buff",
+      "Damage",
+      "Aoe",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_RayonCeleste"
+  }
+}

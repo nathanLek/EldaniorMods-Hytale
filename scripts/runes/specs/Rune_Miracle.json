@@ -1,0 +1,65 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_Miracle",
+  "spell": "Miracle",
+  "javaClass": "Miracle",
+  "page": "rune_page_miracle",
+  "name": "Rune du Miracle",
+  "type": "Lumiere",
+  "rarity": "Rare",
+  "classes": "mage",
+  "persistent": false,
+  "emblem": "Miracle",
+  "summary": "soin de 40 % sur l'allie vise (ou soi) ; la part qui deborde des PV max explose en lumiere sacree (jusqu'a 180, x2 morts-vivants).",
+  "description": "Sort rare de lumière (Mage, rune de prédilection du Thaumaturge). Un miracle soigne l'allié visé (ou vous-même) de 40 % de ses PV max. Ce qui dépasse ses PV max n'est pas perdu : il explose en lumière sacrée autour de lui (rayon 4), jusqu'à 180 dégâts si l'allié était déjà en pleine santé, le double sur les morts-vivants. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin qui brille faiblement dans le noir. Enseigne le Miracle : un soin si grand qu'il déborde en colère sacrée. Classes : tous les Mages (rune de prédilection du Thaumaturge). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Buff",
+    "Damage"
+  ],
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.4,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Deployable_Totem_Heal_Spawn",
+    "handParticles": "Bifrost_Divine",
+    "handParticlesScale": 0.2,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.4,
+    "range": 20,
+    "radius": "4 (explosion)",
+    "targets": "allie vise ou soi ; ennemis autour",
+    "impactFx": "Apollo_Heal_Pulse sur l'allie, Bifrost_Divine (2,5) + Chaos_Flash a l'explosion",
+    "sounds": "SFX_Deployable_Totem_Heal_Spawn, SFX_Portal_Void a l'explosion",
+    "effects": "soin 40 % PV max ; debordement d (fraction) -> 180 x d / 0,4 Elemental rayon 4 (x2 morts-vivants), si >= 20",
+    "terrain": "aucun",
+    "interruptions": "aucune",
+    "restrictions": "mage",
+    "edgeCases": "aucun allie vise : soi ; explosion sous 20 degats : ignoree",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 0,
+      "mobility": 0,
+      "control": 0,
+      "defense": 2,
+      "targets": 2,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    }
+  },
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null
+}

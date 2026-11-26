@@ -1,0 +1,92 @@
+{
+  "TranslationProperties": {
+    "Name": "Présentoir de famille - Setsuka",
+    "Description": "Estrade d'honneur de 3 blocs sur 3 aux armes de la famille Setsuka. Se pose par son centre. Interagir avec un objet en main pour l'exposer, la main vide pour le reprendre."
+  },
+  "Icon": "Icons/ItemsGenerated/Eldanior_Presentoir_Famille_Setsuka.png",
+  "Categories": [
+    "Eldanior_Empire_Luo.Setsuka",
+    "Furniture.Furniture"
+  ],
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/Eldanior/Presentoir_Famille.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/Eldanior/Presentoir_Famille_Setsuka_Texture.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "Eldanior_Presentoir_Famille",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Benches"
+      }
+    },
+    "BlockParticleSetId": "Stone",
+    "ParticleColor": "#222e5c",
+    "BlockSoundSetId": "Stone",
+    "PhysicalMaterialId": "Stone",
+    "TextureComputedColor": "#DCD8D0",
+    "Support": {
+      "Down": [
+        {
+          "FaceType": "Full"
+        }
+      ]
+    },
+    "Light": {
+      "Color": "#58a"
+    },
+    "Particles": [
+      {
+        "SystemId": "Block_Gem_Sparks",
+        "Color": "#7fd8ff",
+        "TargetNodeName": "Gemme"
+      },
+      {
+        "SystemId": "Block_Gem_Sparks",
+        "Color": "#7fd8ff",
+        "TargetNodeName": "Gemme_0"
+      },
+      {
+        "SystemId": "Block_Gem_Sparks",
+        "Color": "#7fd8ff",
+        "TargetNodeName": "Gemme_1"
+      }
+    ],
+    "Interactions": {
+      "Use": {
+        "Interactions": [
+          {
+            "Type": "Simple"
+          }
+        ]
+      }
+    },
+    "VariantRotation": "NESW"
+  },
+  "PlayerAnimationsId": "Block",
+  "IconProperties": {
+    "Scale": 0.2,
+    "Translation": [
+      0,
+      -20
+    ],
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ]
+  },
+  "MaxStack": 1,
+  "ItemLevel": 300,
+  "ItemSoundSetId": "ISS_Blocks_Wood",
+  "Quality": "Epic"
+}

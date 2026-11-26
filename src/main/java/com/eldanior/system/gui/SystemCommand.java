@@ -16,9 +16,9 @@ public class SystemCommand extends AbstractAsyncCommand {
 
     public SystemCommand() {
         super("system", "Ouvre l'interface principale Eldanior");
+        requireNoPermission();                                   // commande joueur : ouverte a tous
     }
 
-    protected boolean canGeneratePermission() { return false; }
 
     @Nonnull
     @Override

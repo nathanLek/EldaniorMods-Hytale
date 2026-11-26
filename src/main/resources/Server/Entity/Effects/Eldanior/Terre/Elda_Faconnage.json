@@ -1,0 +1,15 @@
+{
+  "$Comment": "Faconnage (Rune_Faconnage) : allies dans le domaine, -25 % de degats physiques et de projectiles. Renouvele par le code avant expiration.",
+  "Duration": 2,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#6b5a3e"
+  },
+  "DamageResistance": {
+    "Physical": [{"Amount": 0.25, "CalculationType": "Percent"}],
+    "Projectile": [{"Amount": 0.25, "CalculationType": "Percent"}]
+  },
+  "OverlapBehavior": "Overwrite",
+  "Infinite": false,
+  "Debuff": false,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Rune_Faconnage.png"
+}

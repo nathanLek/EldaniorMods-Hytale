@@ -1,0 +1,4238 @@
+{
+ "nodes": [
+  {
+   "id": "1",
+   "name": "Belly",
+   "position": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+   },
+   "orientation": {
+    "x": 0,
+    "y": 0,
+    "z": 0,
+    "w": 1
+   },
+   "shape": {
+    "type": "none",
+    "offset": {
+     "x": 0,
+     "y": 0,
+     "z": 0
+    },
+    "stretch": {
+     "x": 1,
+     "y": 1,
+     "z": 1
+    },
+    "settings": {
+     "isPiece": true
+    },
+    "textureLayout": {},
+    "unwrapMode": "custom",
+    "visible": true,
+    "doubleSided": false,
+    "shadingMode": "flat"
+   },
+   "children": [
+    {
+     "id": "2",
+     "name": "R-Lame",
+     "position": {
+      "x": -23.028,
+      "y": 3.53,
+      "z": -12.0
+     },
+     "orientation": {
+      "x": 0.990268,
+      "y": -0.139173,
+      "z": -0.0,
+      "w": 0.0
+     },
+     "shape": {
+      "type": "none",
+      "offset": {
+       "x": 0,
+       "y": 0,
+       "z": 0
+      },
+      "stretch": {
+       "x": 1,
+       "y": 1,
+       "z": 1
+      },
+      "settings": {
+       "isPiece": false
+      },
+      "textureLayout": {},
+      "unwrapMode": "custom",
+      "visible": true,
+      "doubleSided": false,
+      "shadingMode": "flat"
+     },
+     "children": [
+      {
+       "id": "3",
+       "name": "R-Tsuka",
+       "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+       },
+       "orientation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+       },
+       "shape": {
+        "type": "box",
+        "offset": {
+         "x": 0,
+         "y": 0,
+         "z": 0
+        },
+        "stretch": {
+         "x": 0.25,
+         "y": 0.25,
+         "z": 0.25
+        },
+        "settings": {
+         "size": {
+          "x": 64,
+          "y": 18,
+          "z": 15
+         }
+        },
+        "textureLayout": {
+         "left": {
+          "offset": {
+           "x": 463,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "right": {
+          "offset": {
+           "x": 463,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "front": {
+          "offset": {
+           "x": 0,
+           "y": 58
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "back": {
+          "offset": {
+           "x": 65,
+           "y": 58
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "top": {
+          "offset": {
+           "x": 130,
+           "y": 58
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "bottom": {
+          "offset": {
+           "x": 195,
+           "y": 58
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "flat"
+       },
+       "children": [
+        {
+         "id": "4",
+         "name": "R-Fuchi",
+         "position": {
+          "x": 8.6,
+          "y": 0,
+          "z": 0
+         },
+         "orientation": {
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "w": 1
+         },
+         "shape": {
+          "type": "box",
+          "offset": {
+           "x": 0,
+           "y": 0,
+           "z": 0
+          },
+          "stretch": {
+           "x": 0.25,
+           "y": 0.25,
+           "z": 0.25
+          },
+          "settings": {
+           "size": {
+            "x": 5,
+            "y": 20,
+            "z": 17
+           }
+          },
+          "textureLayout": {
+           "left": {
+            "offset": {
+             "x": 260,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "right": {
+            "offset": {
+             "x": 260,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "front": {
+            "offset": {
+             "x": 278,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "back": {
+            "offset": {
+             "x": 284,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "top": {
+            "offset": {
+             "x": 290,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "bottom": {
+            "offset": {
+             "x": 296,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           }
+          },
+          "unwrapMode": "custom",
+          "visible": true,
+          "doubleSided": false,
+          "shadingMode": "flat"
+         },
+         "children": []
+        },
+        {
+         "id": "5",
+         "name": "R-Seppa_A",
+         "position": {
+          "x": 9.5,
+          "y": 0,
+          "z": 0
+         },
+         "orientation": {
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "w": 1
+         },
+         "shape": {
+          "type": "box",
+          "offset": {
+           "x": 0,
+           "y": 0,
+           "z": 0
+          },
+          "stretch": {
+           "x": 0.25,
+           "y": 0.25,
+           "z": 0.25
+          },
+          "settings": {
+           "size": {
+            "x": 2,
+            "y": 26,
+            "z": 20
+           }
+          },
+          "textureLayout": {
+           "left": {
+            "offset": {
+             "x": 302,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "right": {
+            "offset": {
+             "x": 302,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "front": {
+            "offset": {
+             "x": 323,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "back": {
+            "offset": {
+             "x": 326,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "top": {
+            "offset": {
+             "x": 329,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "bottom": {
+            "offset": {
+             "x": 332,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           }
+          },
+          "unwrapMode": "custom",
+          "visible": true,
+          "doubleSided": false,
+          "shadingMode": "flat"
+         },
+         "children": []
+        },
+        {
+         "id": "6",
+         "name": "R-Tsuba",
+         "position": {
+          "x": 10.25,
+          "y": 0,
+          "z": 0
+         },
+         "orientation": {
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "w": 1
+         },
+         "shape": {
+          "type": "box",
+          "offset": {
+           "x": 0,
+           "y": 0,
+           "z": 0
+          },
+          "stretch": {
+           "x": 0.25,
+           "y": 0.25,
+           "z": 0.25
+          },
+          "settings": {
+           "size": {
+            "x": 4,
+            "y": 40,
+            "z": 40
+           }
+          },
+          "textureLayout": {
+           "left": {
+            "offset": {
+             "x": 335,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "right": {
+            "offset": {
+             "x": 335,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "front": {
+            "offset": {
+             "x": 376,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "back": {
+            "offset": {
+             "x": 381,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "top": {
+            "offset": {
+             "x": 386,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "bottom": {
+            "offset": {
+             "x": 391,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           }
+          },
+          "unwrapMode": "custom",
+          "visible": true,
+          "doubleSided": false,
+          "shadingMode": "flat"
+         },
+         "children": []
+        },
+        {
+         "id": "7",
+         "name": "R-Seppa_B",
+         "position": {
+          "x": 11.0,
+          "y": 0,
+          "z": 0
+         },
+         "orientation": {
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "w": 1
+         },
+         "shape": {
+          "type": "box",
+          "offset": {
+           "x": 0,
+           "y": 0,
+           "z": 0
+          },
+          "stretch": {
+           "x": 0.25,
+           "y": 0.25,
+           "z": 0.25
+          },
+          "settings": {
+           "size": {
+            "x": 2,
+            "y": 25,
+            "z": 18
+           }
+          },
+          "textureLayout": {
+           "left": {
+            "offset": {
+             "x": 396,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "right": {
+            "offset": {
+             "x": 396,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "front": {
+            "offset": {
+             "x": 415,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "back": {
+            "offset": {
+             "x": 418,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "top": {
+            "offset": {
+             "x": 421,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "bottom": {
+            "offset": {
+             "x": 424,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           }
+          },
+          "unwrapMode": "custom",
+          "visible": true,
+          "doubleSided": false,
+          "shadingMode": "flat"
+         },
+         "children": []
+        },
+        {
+         "id": "8",
+         "name": "R-Kashira",
+         "position": {
+          "x": -8.85,
+          "y": 0,
+          "z": 0
+         },
+         "orientation": {
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "w": 1
+         },
+         "shape": {
+          "type": "box",
+          "offset": {
+           "x": 0,
+           "y": 0,
+           "z": 0
+          },
+          "stretch": {
+           "x": 0.25,
+           "y": 0.25,
+           "z": 0.25
+          },
+          "settings": {
+           "size": {
+            "x": 7,
+            "y": 20,
+            "z": 17
+           }
+          },
+          "textureLayout": {
+           "left": {
+            "offset": {
+             "x": 427,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "right": {
+            "offset": {
+             "x": 427,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "front": {
+            "offset": {
+             "x": 445,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "back": {
+            "offset": {
+             "x": 453,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "top": {
+            "offset": {
+             "x": 461,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "bottom": {
+            "offset": {
+             "x": 469,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           }
+          },
+          "unwrapMode": "custom",
+          "visible": true,
+          "doubleSided": false,
+          "shadingMode": "flat"
+         },
+         "children": []
+        },
+        {
+         "id": "9",
+         "name": "R-Kashira_Oeil",
+         "position": {
+          "x": -9.85,
+          "y": 0,
+          "z": 0
+         },
+         "orientation": {
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "w": 1
+         },
+         "shape": {
+          "type": "box",
+          "offset": {
+           "x": 0,
+           "y": 0,
+           "z": 0
+          },
+          "stretch": {
+           "x": 0.25,
+           "y": 0.25,
+           "z": 0.25
+          },
+          "settings": {
+           "size": {
+            "x": 2,
+            "y": 10,
+            "z": 10
+           }
+          },
+          "textureLayout": {
+           "left": {
+            "offset": {
+             "x": 477,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "right": {
+            "offset": {
+             "x": 477,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "front": {
+            "offset": {
+             "x": 488,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "back": {
+            "offset": {
+             "x": 491,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "top": {
+            "offset": {
+             "x": 494,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "bottom": {
+            "offset": {
+             "x": 497,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           }
+          },
+          "unwrapMode": "custom",
+          "visible": true,
+          "doubleSided": false,
+          "shadingMode": "fullbright"
+         },
+         "children": []
+        }
+       ]
+      },
+      {
+       "id": "10",
+       "name": "R-Saya_0",
+       "position": {
+        "x": 11.25,
+        "y": 0,
+        "z": 0
+       },
+       "orientation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 1.0
+       },
+       "shape": {
+        "type": "none",
+        "offset": {
+         "x": 0,
+         "y": 0,
+         "z": 0
+        },
+        "stretch": {
+         "x": 1,
+         "y": 1,
+         "z": 1
+        },
+        "settings": {
+         "isPiece": false
+        },
+        "textureLayout": {},
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "flat"
+       },
+       "children": [
+        {
+         "id": "11",
+         "name": "R-Saya_0_Box",
+         "position": {
+          "x": 7.5,
+          "y": 0,
+          "z": 0
+         },
+         "orientation": {
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "w": 1
+         },
+         "shape": {
+          "type": "box",
+          "offset": {
+           "x": 0,
+           "y": 0,
+           "z": 0
+          },
+          "stretch": {
+           "x": 0.25,
+           "y": 0.25,
+           "z": 0.25
+          },
+          "settings": {
+           "size": {
+            "x": 60,
+            "y": 27,
+            "z": 13
+           }
+          },
+          "textureLayout": {
+           "left": {
+            "offset": {
+             "x": 0,
+             "y": 0
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "right": {
+            "offset": {
+             "x": 0,
+             "y": 0
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "front": {
+            "offset": {
+             "x": 14,
+             "y": 0
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "back": {
+            "offset": {
+             "x": 75,
+             "y": 0
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "top": {
+            "offset": {
+             "x": 136,
+             "y": 0
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "bottom": {
+            "offset": {
+             "x": 197,
+             "y": 0
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           }
+          },
+          "unwrapMode": "custom",
+          "visible": true,
+          "doubleSided": false,
+          "shadingMode": "flat"
+         },
+         "children": []
+        },
+        {
+         "id": "12",
+         "name": "R-Saya_1",
+         "position": {
+          "x": 15.0,
+          "y": 0,
+          "z": 0
+         },
+         "orientation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.021815,
+          "w": 0.999762
+         },
+         "shape": {
+          "type": "none",
+          "offset": {
+           "x": 0,
+           "y": 0,
+           "z": 0
+          },
+          "stretch": {
+           "x": 1,
+           "y": 1,
+           "z": 1
+          },
+          "settings": {
+           "isPiece": false
+          },
+          "textureLayout": {},
+          "unwrapMode": "custom",
+          "visible": true,
+          "doubleSided": false,
+          "shadingMode": "flat"
+         },
+         "children": [
+          {
+           "id": "13",
+           "name": "R-Saya_1_Box",
+           "position": {
+            "x": 6.5,
+            "y": 0,
+            "z": 0
+           },
+           "orientation": {
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "w": 1
+           },
+           "shape": {
+            "type": "box",
+            "offset": {
+             "x": 0,
+             "y": 0,
+             "z": 0
+            },
+            "stretch": {
+             "x": 0.25,
+             "y": 0.25,
+             "z": 0.25
+            },
+            "settings": {
+             "size": {
+              "x": 52,
+              "y": 26,
+              "z": 12
+             }
+            },
+            "textureLayout": {
+             "left": {
+              "offset": {
+               "x": 258,
+               "y": 0
+              },
+              "mirror": {
+               "x": false,
+               "y": false
+              },
+              "angle": 0
+             },
+             "right": {
+              "offset": {
+               "x": 258,
+               "y": 0
+              },
+              "mirror": {
+               "x": false,
+               "y": false
+              },
+              "angle": 0
+             },
+             "front": {
+              "offset": {
+               "x": 271,
+               "y": 0
+              },
+              "mirror": {
+               "x": false,
+               "y": false
+              },
+              "angle": 0
+             },
+             "back": {
+              "offset": {
+               "x": 324,
+               "y": 0
+              },
+              "mirror": {
+               "x": false,
+               "y": false
+              },
+              "angle": 0
+             },
+             "top": {
+              "offset": {
+               "x": 377,
+               "y": 0
+              },
+              "mirror": {
+               "x": false,
+               "y": false
+              },
+              "angle": 0
+             },
+             "bottom": {
+              "offset": {
+               "x": 430,
+               "y": 0
+              },
+              "mirror": {
+               "x": false,
+               "y": false
+              },
+              "angle": 0
+             }
+            },
+            "unwrapMode": "custom",
+            "visible": true,
+            "doubleSided": false,
+            "shadingMode": "flat"
+           },
+           "children": []
+          },
+          {
+           "id": "14",
+           "name": "R-Saya_2",
+           "position": {
+            "x": 13.0,
+            "y": 0,
+            "z": 0
+           },
+           "orientation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.021815,
+            "w": 0.999762
+           },
+           "shape": {
+            "type": "none",
+            "offset": {
+             "x": 0,
+             "y": 0,
+             "z": 0
+            },
+            "stretch": {
+             "x": 1,
+             "y": 1,
+             "z": 1
+            },
+            "settings": {
+             "isPiece": false
+            },
+            "textureLayout": {},
+            "unwrapMode": "custom",
+            "visible": true,
+            "doubleSided": false,
+            "shadingMode": "flat"
+           },
+           "children": [
+            {
+             "id": "15",
+             "name": "R-Saya_2_Box",
+             "position": {
+              "x": 7.25,
+              "y": 0,
+              "z": 0
+             },
+             "orientation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+             },
+             "shape": {
+              "type": "box",
+              "offset": {
+               "x": 0,
+               "y": 0,
+               "z": 0
+              },
+              "stretch": {
+               "x": 0.25,
+               "y": 0.25,
+               "z": 0.25
+              },
+              "settings": {
+               "size": {
+                "x": 58,
+                "y": 25,
+                "z": 11
+               }
+              },
+              "textureLayout": {
+               "left": {
+                "offset": {
+                 "x": 483,
+                 "y": 0
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               },
+               "right": {
+                "offset": {
+                 "x": 483,
+                 "y": 0
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               },
+               "front": {
+                "offset": {
+                 "x": 0,
+                 "y": 28
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               },
+               "back": {
+                "offset": {
+                 "x": 59,
+                 "y": 28
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               },
+               "top": {
+                "offset": {
+                 "x": 118,
+                 "y": 28
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               },
+               "bottom": {
+                "offset": {
+                 "x": 177,
+                 "y": 28
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               }
+              },
+              "unwrapMode": "custom",
+              "visible": true,
+              "doubleSided": false,
+              "shadingMode": "flat"
+             },
+             "children": []
+            },
+            {
+             "id": "16",
+             "name": "R-Kojiri",
+             "position": {
+              "x": 15.5,
+              "y": 0,
+              "z": 0
+             },
+             "orientation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+             },
+             "shape": {
+              "type": "box",
+              "offset": {
+               "x": 0,
+               "y": 0,
+               "z": 0
+              },
+              "stretch": {
+               "x": 0.25,
+               "y": 0.25,
+               "z": 0.25
+              },
+              "settings": {
+               "size": {
+                "x": 8,
+                "y": 27,
+                "z": 14
+               }
+              },
+              "textureLayout": {
+               "left": {
+                "offset": {
+                 "x": 236,
+                 "y": 28
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               },
+               "right": {
+                "offset": {
+                 "x": 236,
+                 "y": 28
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               },
+               "front": {
+                "offset": {
+                 "x": 251,
+                 "y": 28
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               },
+               "back": {
+                "offset": {
+                 "x": 260,
+                 "y": 28
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               },
+               "top": {
+                "offset": {
+                 "x": 269,
+                 "y": 28
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               },
+               "bottom": {
+                "offset": {
+                 "x": 278,
+                 "y": 28
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               }
+              },
+              "unwrapMode": "custom",
+              "visible": true,
+              "doubleSided": false,
+              "shadingMode": "flat"
+             },
+             "children": []
+            },
+            {
+             "id": "17",
+             "name": "R-Kojiri_Bout",
+             "position": {
+              "x": 16.75,
+              "y": 0,
+              "z": 0
+             },
+             "orientation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+             },
+             "shape": {
+              "type": "box",
+              "offset": {
+               "x": 0,
+               "y": 0,
+               "z": 0
+              },
+              "stretch": {
+               "x": 0.25,
+               "y": 0.25,
+               "z": 0.25
+              },
+              "settings": {
+               "size": {
+                "x": 2,
+                "y": 20,
+                "z": 10
+               }
+              },
+              "textureLayout": {
+               "left": {
+                "offset": {
+                 "x": 287,
+                 "y": 28
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               },
+               "right": {
+                "offset": {
+                 "x": 287,
+                 "y": 28
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               },
+               "front": {
+                "offset": {
+                 "x": 298,
+                 "y": 28
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               },
+               "back": {
+                "offset": {
+                 "x": 301,
+                 "y": 28
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               },
+               "top": {
+                "offset": {
+                 "x": 304,
+                 "y": 28
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               },
+               "bottom": {
+                "offset": {
+                 "x": 307,
+                 "y": 28
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               }
+              },
+              "unwrapMode": "custom",
+              "visible": true,
+              "doubleSided": false,
+              "shadingMode": "flat"
+             },
+             "children": []
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "18",
+       "name": "R-Koiguchi",
+       "position": {
+        "x": 12.15,
+        "y": 0,
+        "z": 0
+       },
+       "orientation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+       },
+       "shape": {
+        "type": "box",
+        "offset": {
+         "x": 0,
+         "y": 0,
+         "z": 0
+        },
+        "stretch": {
+         "x": 0.25,
+         "y": 0.25,
+         "z": 0.25
+        },
+        "settings": {
+         "size": {
+          "x": 6,
+          "y": 29,
+          "z": 15
+         }
+        },
+        "textureLayout": {
+         "left": {
+          "offset": {
+           "x": 310,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "right": {
+          "offset": {
+           "x": 310,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "front": {
+          "offset": {
+           "x": 326,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "back": {
+          "offset": {
+           "x": 334,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "top": {
+          "offset": {
+           "x": 342,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "bottom": {
+          "offset": {
+           "x": 350,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "flat"
+       },
+       "children": []
+      },
+      {
+       "id": "19",
+       "name": "R-Bague",
+       "position": {
+        "x": 20.25,
+        "y": 0,
+        "z": 0
+       },
+       "orientation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+       },
+       "shape": {
+        "type": "box",
+        "offset": {
+         "x": 0,
+         "y": 0,
+         "z": 0
+        },
+        "stretch": {
+         "x": 0.25,
+         "y": 0.25,
+         "z": 0.25
+        },
+        "settings": {
+         "size": {
+          "x": 3,
+          "y": 29,
+          "z": 15
+         }
+        },
+        "textureLayout": {
+         "left": {
+          "offset": {
+           "x": 310,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "right": {
+          "offset": {
+           "x": 310,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "front": {
+          "offset": {
+           "x": 358,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "back": {
+          "offset": {
+           "x": 362,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "top": {
+          "offset": {
+           "x": 366,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "bottom": {
+          "offset": {
+           "x": 370,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "flat"
+       },
+       "children": []
+      },
+      {
+       "id": "20",
+       "name": "R-Kurikata",
+       "position": {
+        "x": 16.25,
+        "y": 1.0,
+        "z": 2.1
+       },
+       "orientation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+       },
+       "shape": {
+        "type": "box",
+        "offset": {
+         "x": 0,
+         "y": 0,
+         "z": 0
+        },
+        "stretch": {
+         "x": 0.25,
+         "y": 0.25,
+         "z": 0.25
+        },
+        "settings": {
+         "size": {
+          "x": 10,
+          "y": 8,
+          "z": 4
+         }
+        },
+        "textureLayout": {
+         "left": {
+          "offset": {
+           "x": 374,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "right": {
+          "offset": {
+           "x": 374,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "front": {
+          "offset": {
+           "x": 379,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "back": {
+          "offset": {
+           "x": 390,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "top": {
+          "offset": {
+           "x": 401,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "bottom": {
+          "offset": {
+           "x": 412,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "flat"
+       },
+       "children": []
+      },
+      {
+       "id": "21",
+       "name": "R-Sageo_A",
+       "position": {
+        "x": 18.5,
+        "y": 0.0,
+        "z": 2.5
+       },
+       "orientation": {
+        "x": -0.039142,
+        "y": 0.0,
+        "z": -0.880698,
+        "w": 0.472059
+       },
+       "shape": {
+        "type": "box",
+        "offset": {
+         "x": 0,
+         "y": 0,
+         "z": 0
+        },
+        "stretch": {
+         "x": 0.25,
+         "y": 0.25,
+         "z": 0.25
+        },
+        "settings": {
+         "size": {
+          "x": 4,
+          "y": 22,
+          "z": 4
+         }
+        },
+        "textureLayout": {
+         "left": {
+          "offset": {
+           "x": 423,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "right": {
+          "offset": {
+           "x": 423,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "front": {
+          "offset": {
+           "x": 428,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "back": {
+          "offset": {
+           "x": 433,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "top": {
+          "offset": {
+           "x": 438,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "bottom": {
+          "offset": {
+           "x": 443,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "flat"
+       },
+       "children": []
+      },
+      {
+       "id": "22",
+       "name": "R-Sageo_B",
+       "position": {
+        "x": 23.0,
+        "y": 0.25,
+        "z": 2.35
+       },
+       "orientation": {
+        "x": -0.009762,
+        "y": 0.0,
+        "z": -0.439297,
+        "w": 0.898289
+       },
+       "shape": {
+        "type": "box",
+        "offset": {
+         "x": 0,
+         "y": 0,
+         "z": 0
+        },
+        "stretch": {
+         "x": 0.25,
+         "y": 0.25,
+         "z": 0.25
+        },
+        "settings": {
+         "size": {
+          "x": 4,
+          "y": 23,
+          "z": 4
+         }
+        },
+        "textureLayout": {
+         "left": {
+          "offset": {
+           "x": 448,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "right": {
+          "offset": {
+           "x": 448,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "front": {
+          "offset": {
+           "x": 453,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "back": {
+          "offset": {
+           "x": 458,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "top": {
+          "offset": {
+           "x": 438,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "bottom": {
+          "offset": {
+           "x": 443,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "flat"
+       },
+       "children": []
+      }
+     ]
+    },
+    {
+     "id": "23",
+     "name": "L-Lame",
+     "position": {
+      "x": 23.028,
+      "y": 3.53,
+      "z": -16.25
+     },
+     "orientation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.990268,
+      "w": -0.139173
+     },
+     "shape": {
+      "type": "none",
+      "offset": {
+       "x": 0,
+       "y": 0,
+       "z": 0
+      },
+      "stretch": {
+       "x": 1,
+       "y": 1,
+       "z": 1
+      },
+      "settings": {
+       "isPiece": false
+      },
+      "textureLayout": {},
+      "unwrapMode": "custom",
+      "visible": true,
+      "doubleSided": false,
+      "shadingMode": "flat"
+     },
+     "children": [
+      {
+       "id": "24",
+       "name": "L-Tsuka",
+       "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+       },
+       "orientation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+       },
+       "shape": {
+        "type": "box",
+        "offset": {
+         "x": 0,
+         "y": 0,
+         "z": 0
+        },
+        "stretch": {
+         "x": 0.25,
+         "y": 0.25,
+         "z": 0.25
+        },
+        "settings": {
+         "size": {
+          "x": 64,
+          "y": 18,
+          "z": 15
+         }
+        },
+        "textureLayout": {
+         "left": {
+          "offset": {
+           "x": 463,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "right": {
+          "offset": {
+           "x": 463,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "front": {
+          "offset": {
+           "x": 0,
+           "y": 58
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "back": {
+          "offset": {
+           "x": 65,
+           "y": 58
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "top": {
+          "offset": {
+           "x": 130,
+           "y": 58
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "bottom": {
+          "offset": {
+           "x": 195,
+           "y": 58
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "flat"
+       },
+       "children": [
+        {
+         "id": "25",
+         "name": "L-Fuchi",
+         "position": {
+          "x": 8.6,
+          "y": 0,
+          "z": 0
+         },
+         "orientation": {
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "w": 1
+         },
+         "shape": {
+          "type": "box",
+          "offset": {
+           "x": 0,
+           "y": 0,
+           "z": 0
+          },
+          "stretch": {
+           "x": 0.25,
+           "y": 0.25,
+           "z": 0.25
+          },
+          "settings": {
+           "size": {
+            "x": 5,
+            "y": 20,
+            "z": 17
+           }
+          },
+          "textureLayout": {
+           "left": {
+            "offset": {
+             "x": 260,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "right": {
+            "offset": {
+             "x": 260,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "front": {
+            "offset": {
+             "x": 278,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "back": {
+            "offset": {
+             "x": 284,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "top": {
+            "offset": {
+             "x": 290,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "bottom": {
+            "offset": {
+             "x": 296,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           }
+          },
+          "unwrapMode": "custom",
+          "visible": true,
+          "doubleSided": false,
+          "shadingMode": "flat"
+         },
+         "children": []
+        },
+        {
+         "id": "26",
+         "name": "L-Seppa_A",
+         "position": {
+          "x": 9.5,
+          "y": 0,
+          "z": 0
+         },
+         "orientation": {
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "w": 1
+         },
+         "shape": {
+          "type": "box",
+          "offset": {
+           "x": 0,
+           "y": 0,
+           "z": 0
+          },
+          "stretch": {
+           "x": 0.25,
+           "y": 0.25,
+           "z": 0.25
+          },
+          "settings": {
+           "size": {
+            "x": 2,
+            "y": 26,
+            "z": 20
+           }
+          },
+          "textureLayout": {
+           "left": {
+            "offset": {
+             "x": 302,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "right": {
+            "offset": {
+             "x": 302,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "front": {
+            "offset": {
+             "x": 323,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "back": {
+            "offset": {
+             "x": 326,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "top": {
+            "offset": {
+             "x": 329,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "bottom": {
+            "offset": {
+             "x": 332,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           }
+          },
+          "unwrapMode": "custom",
+          "visible": true,
+          "doubleSided": false,
+          "shadingMode": "flat"
+         },
+         "children": []
+        },
+        {
+         "id": "27",
+         "name": "L-Tsuba",
+         "position": {
+          "x": 10.25,
+          "y": 0,
+          "z": 0
+         },
+         "orientation": {
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "w": 1
+         },
+         "shape": {
+          "type": "box",
+          "offset": {
+           "x": 0,
+           "y": 0,
+           "z": 0
+          },
+          "stretch": {
+           "x": 0.25,
+           "y": 0.25,
+           "z": 0.25
+          },
+          "settings": {
+           "size": {
+            "x": 4,
+            "y": 40,
+            "z": 40
+           }
+          },
+          "textureLayout": {
+           "left": {
+            "offset": {
+             "x": 335,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "right": {
+            "offset": {
+             "x": 335,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "front": {
+            "offset": {
+             "x": 376,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "back": {
+            "offset": {
+             "x": 381,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "top": {
+            "offset": {
+             "x": 386,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "bottom": {
+            "offset": {
+             "x": 391,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           }
+          },
+          "unwrapMode": "custom",
+          "visible": true,
+          "doubleSided": false,
+          "shadingMode": "flat"
+         },
+         "children": []
+        },
+        {
+         "id": "28",
+         "name": "L-Seppa_B",
+         "position": {
+          "x": 11.0,
+          "y": 0,
+          "z": 0
+         },
+         "orientation": {
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "w": 1
+         },
+         "shape": {
+          "type": "box",
+          "offset": {
+           "x": 0,
+           "y": 0,
+           "z": 0
+          },
+          "stretch": {
+           "x": 0.25,
+           "y": 0.25,
+           "z": 0.25
+          },
+          "settings": {
+           "size": {
+            "x": 2,
+            "y": 25,
+            "z": 18
+           }
+          },
+          "textureLayout": {
+           "left": {
+            "offset": {
+             "x": 396,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "right": {
+            "offset": {
+             "x": 396,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "front": {
+            "offset": {
+             "x": 415,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "back": {
+            "offset": {
+             "x": 418,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "top": {
+            "offset": {
+             "x": 421,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "bottom": {
+            "offset": {
+             "x": 424,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           }
+          },
+          "unwrapMode": "custom",
+          "visible": true,
+          "doubleSided": false,
+          "shadingMode": "flat"
+         },
+         "children": []
+        },
+        {
+         "id": "29",
+         "name": "L-Kashira",
+         "position": {
+          "x": -8.85,
+          "y": 0,
+          "z": 0
+         },
+         "orientation": {
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "w": 1
+         },
+         "shape": {
+          "type": "box",
+          "offset": {
+           "x": 0,
+           "y": 0,
+           "z": 0
+          },
+          "stretch": {
+           "x": 0.25,
+           "y": 0.25,
+           "z": 0.25
+          },
+          "settings": {
+           "size": {
+            "x": 7,
+            "y": 20,
+            "z": 17
+           }
+          },
+          "textureLayout": {
+           "left": {
+            "offset": {
+             "x": 427,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "right": {
+            "offset": {
+             "x": 427,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "front": {
+            "offset": {
+             "x": 445,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "back": {
+            "offset": {
+             "x": 453,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "top": {
+            "offset": {
+             "x": 461,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "bottom": {
+            "offset": {
+             "x": 469,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           }
+          },
+          "unwrapMode": "custom",
+          "visible": true,
+          "doubleSided": false,
+          "shadingMode": "flat"
+         },
+         "children": []
+        },
+        {
+         "id": "30",
+         "name": "L-Kashira_Oeil",
+         "position": {
+          "x": -9.85,
+          "y": 0,
+          "z": 0
+         },
+         "orientation": {
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "w": 1
+         },
+         "shape": {
+          "type": "box",
+          "offset": {
+           "x": 0,
+           "y": 0,
+           "z": 0
+          },
+          "stretch": {
+           "x": 0.25,
+           "y": 0.25,
+           "z": 0.25
+          },
+          "settings": {
+           "size": {
+            "x": 2,
+            "y": 10,
+            "z": 10
+           }
+          },
+          "textureLayout": {
+           "left": {
+            "offset": {
+             "x": 477,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "right": {
+            "offset": {
+             "x": 477,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "front": {
+            "offset": {
+             "x": 488,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "back": {
+            "offset": {
+             "x": 491,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "top": {
+            "offset": {
+             "x": 494,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "bottom": {
+            "offset": {
+             "x": 497,
+             "y": 58
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           }
+          },
+          "unwrapMode": "custom",
+          "visible": true,
+          "doubleSided": false,
+          "shadingMode": "fullbright"
+         },
+         "children": []
+        }
+       ]
+      },
+      {
+       "id": "31",
+       "name": "L-Saya_0",
+       "position": {
+        "x": 11.25,
+        "y": 0,
+        "z": 0
+       },
+       "orientation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 1.0
+       },
+       "shape": {
+        "type": "none",
+        "offset": {
+         "x": 0,
+         "y": 0,
+         "z": 0
+        },
+        "stretch": {
+         "x": 1,
+         "y": 1,
+         "z": 1
+        },
+        "settings": {
+         "isPiece": false
+        },
+        "textureLayout": {},
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "flat"
+       },
+       "children": [
+        {
+         "id": "32",
+         "name": "L-Saya_0_Box",
+         "position": {
+          "x": 7.5,
+          "y": 0,
+          "z": 0
+         },
+         "orientation": {
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "w": 1
+         },
+         "shape": {
+          "type": "box",
+          "offset": {
+           "x": 0,
+           "y": 0,
+           "z": 0
+          },
+          "stretch": {
+           "x": 0.25,
+           "y": 0.25,
+           "z": 0.25
+          },
+          "settings": {
+           "size": {
+            "x": 60,
+            "y": 27,
+            "z": 13
+           }
+          },
+          "textureLayout": {
+           "left": {
+            "offset": {
+             "x": 0,
+             "y": 99
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "right": {
+            "offset": {
+             "x": 0,
+             "y": 99
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "front": {
+            "offset": {
+             "x": 14,
+             "y": 99
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "back": {
+            "offset": {
+             "x": 75,
+             "y": 99
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "top": {
+            "offset": {
+             "x": 136,
+             "y": 99
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           },
+           "bottom": {
+            "offset": {
+             "x": 197,
+             "y": 99
+            },
+            "mirror": {
+             "x": false,
+             "y": false
+            },
+            "angle": 0
+           }
+          },
+          "unwrapMode": "custom",
+          "visible": true,
+          "doubleSided": false,
+          "shadingMode": "flat"
+         },
+         "children": []
+        },
+        {
+         "id": "33",
+         "name": "L-Saya_1",
+         "position": {
+          "x": 15.0,
+          "y": 0,
+          "z": 0
+         },
+         "orientation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.021815,
+          "w": 0.999762
+         },
+         "shape": {
+          "type": "none",
+          "offset": {
+           "x": 0,
+           "y": 0,
+           "z": 0
+          },
+          "stretch": {
+           "x": 1,
+           "y": 1,
+           "z": 1
+          },
+          "settings": {
+           "isPiece": false
+          },
+          "textureLayout": {},
+          "unwrapMode": "custom",
+          "visible": true,
+          "doubleSided": false,
+          "shadingMode": "flat"
+         },
+         "children": [
+          {
+           "id": "34",
+           "name": "L-Saya_1_Box",
+           "position": {
+            "x": 6.5,
+            "y": 0,
+            "z": 0
+           },
+           "orientation": {
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "w": 1
+           },
+           "shape": {
+            "type": "box",
+            "offset": {
+             "x": 0,
+             "y": 0,
+             "z": 0
+            },
+            "stretch": {
+             "x": 0.25,
+             "y": 0.25,
+             "z": 0.25
+            },
+            "settings": {
+             "size": {
+              "x": 52,
+              "y": 26,
+              "z": 12
+             }
+            },
+            "textureLayout": {
+             "left": {
+              "offset": {
+               "x": 258,
+               "y": 99
+              },
+              "mirror": {
+               "x": false,
+               "y": false
+              },
+              "angle": 0
+             },
+             "right": {
+              "offset": {
+               "x": 258,
+               "y": 99
+              },
+              "mirror": {
+               "x": false,
+               "y": false
+              },
+              "angle": 0
+             },
+             "front": {
+              "offset": {
+               "x": 271,
+               "y": 99
+              },
+              "mirror": {
+               "x": false,
+               "y": false
+              },
+              "angle": 0
+             },
+             "back": {
+              "offset": {
+               "x": 324,
+               "y": 99
+              },
+              "mirror": {
+               "x": false,
+               "y": false
+              },
+              "angle": 0
+             },
+             "top": {
+              "offset": {
+               "x": 377,
+               "y": 99
+              },
+              "mirror": {
+               "x": false,
+               "y": false
+              },
+              "angle": 0
+             },
+             "bottom": {
+              "offset": {
+               "x": 430,
+               "y": 99
+              },
+              "mirror": {
+               "x": false,
+               "y": false
+              },
+              "angle": 0
+             }
+            },
+            "unwrapMode": "custom",
+            "visible": true,
+            "doubleSided": false,
+            "shadingMode": "flat"
+           },
+           "children": []
+          },
+          {
+           "id": "35",
+           "name": "L-Saya_2",
+           "position": {
+            "x": 13.0,
+            "y": 0,
+            "z": 0
+           },
+           "orientation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.021815,
+            "w": 0.999762
+           },
+           "shape": {
+            "type": "none",
+            "offset": {
+             "x": 0,
+             "y": 0,
+             "z": 0
+            },
+            "stretch": {
+             "x": 1,
+             "y": 1,
+             "z": 1
+            },
+            "settings": {
+             "isPiece": false
+            },
+            "textureLayout": {},
+            "unwrapMode": "custom",
+            "visible": true,
+            "doubleSided": false,
+            "shadingMode": "flat"
+           },
+           "children": [
+            {
+             "id": "36",
+             "name": "L-Saya_2_Box",
+             "position": {
+              "x": 7.25,
+              "y": 0,
+              "z": 0
+             },
+             "orientation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+             },
+             "shape": {
+              "type": "box",
+              "offset": {
+               "x": 0,
+               "y": 0,
+               "z": 0
+              },
+              "stretch": {
+               "x": 0.25,
+               "y": 0.25,
+               "z": 0.25
+              },
+              "settings": {
+               "size": {
+                "x": 58,
+                "y": 25,
+                "z": 11
+               }
+              },
+              "textureLayout": {
+               "left": {
+                "offset": {
+                 "x": 483,
+                 "y": 99
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               },
+               "right": {
+                "offset": {
+                 "x": 483,
+                 "y": 99
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               },
+               "front": {
+                "offset": {
+                 "x": 0,
+                 "y": 127
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               },
+               "back": {
+                "offset": {
+                 "x": 59,
+                 "y": 127
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               },
+               "top": {
+                "offset": {
+                 "x": 118,
+                 "y": 127
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               },
+               "bottom": {
+                "offset": {
+                 "x": 177,
+                 "y": 127
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               }
+              },
+              "unwrapMode": "custom",
+              "visible": true,
+              "doubleSided": false,
+              "shadingMode": "flat"
+             },
+             "children": []
+            },
+            {
+             "id": "37",
+             "name": "L-Kojiri",
+             "position": {
+              "x": 15.5,
+              "y": 0,
+              "z": 0
+             },
+             "orientation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+             },
+             "shape": {
+              "type": "box",
+              "offset": {
+               "x": 0,
+               "y": 0,
+               "z": 0
+              },
+              "stretch": {
+               "x": 0.25,
+               "y": 0.25,
+               "z": 0.25
+              },
+              "settings": {
+               "size": {
+                "x": 8,
+                "y": 27,
+                "z": 14
+               }
+              },
+              "textureLayout": {
+               "left": {
+                "offset": {
+                 "x": 236,
+                 "y": 28
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               },
+               "right": {
+                "offset": {
+                 "x": 236,
+                 "y": 28
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               },
+               "front": {
+                "offset": {
+                 "x": 251,
+                 "y": 28
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               },
+               "back": {
+                "offset": {
+                 "x": 260,
+                 "y": 28
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               },
+               "top": {
+                "offset": {
+                 "x": 269,
+                 "y": 28
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               },
+               "bottom": {
+                "offset": {
+                 "x": 278,
+                 "y": 28
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               }
+              },
+              "unwrapMode": "custom",
+              "visible": true,
+              "doubleSided": false,
+              "shadingMode": "flat"
+             },
+             "children": []
+            },
+            {
+             "id": "38",
+             "name": "L-Kojiri_Bout",
+             "position": {
+              "x": 16.75,
+              "y": 0,
+              "z": 0
+             },
+             "orientation": {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "w": 1
+             },
+             "shape": {
+              "type": "box",
+              "offset": {
+               "x": 0,
+               "y": 0,
+               "z": 0
+              },
+              "stretch": {
+               "x": 0.25,
+               "y": 0.25,
+               "z": 0.25
+              },
+              "settings": {
+               "size": {
+                "x": 2,
+                "y": 20,
+                "z": 10
+               }
+              },
+              "textureLayout": {
+               "left": {
+                "offset": {
+                 "x": 287,
+                 "y": 28
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               },
+               "right": {
+                "offset": {
+                 "x": 287,
+                 "y": 28
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               },
+               "front": {
+                "offset": {
+                 "x": 298,
+                 "y": 28
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               },
+               "back": {
+                "offset": {
+                 "x": 301,
+                 "y": 28
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               },
+               "top": {
+                "offset": {
+                 "x": 304,
+                 "y": 28
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               },
+               "bottom": {
+                "offset": {
+                 "x": 307,
+                 "y": 28
+                },
+                "mirror": {
+                 "x": false,
+                 "y": false
+                },
+                "angle": 0
+               }
+              },
+              "unwrapMode": "custom",
+              "visible": true,
+              "doubleSided": false,
+              "shadingMode": "flat"
+             },
+             "children": []
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "39",
+       "name": "L-Koiguchi",
+       "position": {
+        "x": 12.15,
+        "y": 0,
+        "z": 0
+       },
+       "orientation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+       },
+       "shape": {
+        "type": "box",
+        "offset": {
+         "x": 0,
+         "y": 0,
+         "z": 0
+        },
+        "stretch": {
+         "x": 0.25,
+         "y": 0.25,
+         "z": 0.25
+        },
+        "settings": {
+         "size": {
+          "x": 6,
+          "y": 29,
+          "z": 15
+         }
+        },
+        "textureLayout": {
+         "left": {
+          "offset": {
+           "x": 310,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "right": {
+          "offset": {
+           "x": 310,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "front": {
+          "offset": {
+           "x": 326,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "back": {
+          "offset": {
+           "x": 334,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "top": {
+          "offset": {
+           "x": 342,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "bottom": {
+          "offset": {
+           "x": 350,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "flat"
+       },
+       "children": []
+      },
+      {
+       "id": "40",
+       "name": "L-Bague",
+       "position": {
+        "x": 20.25,
+        "y": 0,
+        "z": 0
+       },
+       "orientation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+       },
+       "shape": {
+        "type": "box",
+        "offset": {
+         "x": 0,
+         "y": 0,
+         "z": 0
+        },
+        "stretch": {
+         "x": 0.25,
+         "y": 0.25,
+         "z": 0.25
+        },
+        "settings": {
+         "size": {
+          "x": 3,
+          "y": 29,
+          "z": 15
+         }
+        },
+        "textureLayout": {
+         "left": {
+          "offset": {
+           "x": 310,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "right": {
+          "offset": {
+           "x": 310,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "front": {
+          "offset": {
+           "x": 358,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "back": {
+          "offset": {
+           "x": 362,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "top": {
+          "offset": {
+           "x": 366,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "bottom": {
+          "offset": {
+           "x": 370,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "flat"
+       },
+       "children": []
+      },
+      {
+       "id": "41",
+       "name": "L-Kurikata",
+       "position": {
+        "x": 16.25,
+        "y": 1.0,
+        "z": -2.1
+       },
+       "orientation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+       },
+       "shape": {
+        "type": "box",
+        "offset": {
+         "x": 0,
+         "y": 0,
+         "z": 0
+        },
+        "stretch": {
+         "x": 0.25,
+         "y": 0.25,
+         "z": 0.25
+        },
+        "settings": {
+         "size": {
+          "x": 10,
+          "y": 8,
+          "z": 4
+         }
+        },
+        "textureLayout": {
+         "left": {
+          "offset": {
+           "x": 374,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "right": {
+          "offset": {
+           "x": 374,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "front": {
+          "offset": {
+           "x": 379,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "back": {
+          "offset": {
+           "x": 390,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "top": {
+          "offset": {
+           "x": 401,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "bottom": {
+          "offset": {
+           "x": 412,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "flat"
+       },
+       "children": []
+      },
+      {
+       "id": "42",
+       "name": "L-Sageo_A",
+       "position": {
+        "x": 18.5,
+        "y": 0.0,
+        "z": -2.5
+       },
+       "orientation": {
+        "x": 0.039142,
+        "y": 0.0,
+        "z": -0.880698,
+        "w": 0.472059
+       },
+       "shape": {
+        "type": "box",
+        "offset": {
+         "x": 0,
+         "y": 0,
+         "z": 0
+        },
+        "stretch": {
+         "x": 0.25,
+         "y": 0.25,
+         "z": 0.25
+        },
+        "settings": {
+         "size": {
+          "x": 4,
+          "y": 22,
+          "z": 4
+         }
+        },
+        "textureLayout": {
+         "left": {
+          "offset": {
+           "x": 423,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "right": {
+          "offset": {
+           "x": 423,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "front": {
+          "offset": {
+           "x": 428,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "back": {
+          "offset": {
+           "x": 433,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "top": {
+          "offset": {
+           "x": 438,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "bottom": {
+          "offset": {
+           "x": 443,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "flat"
+       },
+       "children": []
+      },
+      {
+       "id": "43",
+       "name": "L-Sageo_B",
+       "position": {
+        "x": 23.0,
+        "y": 0.25,
+        "z": -2.35
+       },
+       "orientation": {
+        "x": 0.009762,
+        "y": 0.0,
+        "z": -0.439297,
+        "w": 0.898289
+       },
+       "shape": {
+        "type": "box",
+        "offset": {
+         "x": 0,
+         "y": 0,
+         "z": 0
+        },
+        "stretch": {
+         "x": 0.25,
+         "y": 0.25,
+         "z": 0.25
+        },
+        "settings": {
+         "size": {
+          "x": 4,
+          "y": 23,
+          "z": 4
+         }
+        },
+        "textureLayout": {
+         "left": {
+          "offset": {
+           "x": 448,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "right": {
+          "offset": {
+           "x": 448,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "front": {
+          "offset": {
+           "x": 453,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "back": {
+          "offset": {
+           "x": 458,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "top": {
+          "offset": {
+           "x": 438,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "bottom": {
+          "offset": {
+           "x": 443,
+           "y": 28
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "flat"
+       },
+       "children": []
+      }
+     ]
+    },
+    {
+     "id": "44",
+     "name": "Attache",
+     "position": {
+      "x": 0,
+      "y": -2.5,
+      "z": -10.0
+     },
+     "orientation": {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 1
+     },
+     "shape": {
+      "type": "box",
+      "offset": {
+       "x": 0,
+       "y": 0,
+       "z": 0
+      },
+      "stretch": {
+       "x": 0.25,
+       "y": 0.25,
+       "z": 0.25
+      },
+      "settings": {
+       "size": {
+        "x": 28,
+        "y": 28,
+        "z": 6
+       }
+      },
+      "textureLayout": {
+       "left": {
+        "offset": {
+         "x": 236,
+         "y": 127
+        },
+        "mirror": {
+         "x": false,
+         "y": false
+        },
+        "angle": 0
+       },
+       "right": {
+        "offset": {
+         "x": 236,
+         "y": 127
+        },
+        "mirror": {
+         "x": false,
+         "y": false
+        },
+        "angle": 0
+       },
+       "front": {
+        "offset": {
+         "x": 243,
+         "y": 127
+        },
+        "mirror": {
+         "x": false,
+         "y": false
+        },
+        "angle": 0
+       },
+       "back": {
+        "offset": {
+         "x": 272,
+         "y": 127
+        },
+        "mirror": {
+         "x": false,
+         "y": false
+        },
+        "angle": 0
+       },
+       "top": {
+        "offset": {
+         "x": 301,
+         "y": 127
+        },
+        "mirror": {
+         "x": false,
+         "y": false
+        },
+        "angle": 0
+       },
+       "bottom": {
+        "offset": {
+         "x": 330,
+         "y": 127
+        },
+        "mirror": {
+         "x": false,
+         "y": false
+        },
+        "angle": 0
+       }
+      },
+      "unwrapMode": "custom",
+      "visible": true,
+      "doubleSided": false,
+      "shadingMode": "flat"
+     },
+     "children": [
+      {
+       "id": "45",
+       "name": "Attache_Oeil",
+       "position": {
+        "x": 0,
+        "y": 0,
+        "z": -0.875
+       },
+       "orientation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "w": 1
+       },
+       "shape": {
+        "type": "box",
+        "offset": {
+         "x": 0,
+         "y": 0,
+         "z": 0
+        },
+        "stretch": {
+         "x": 0.25,
+         "y": 0.25,
+         "z": 0.25
+        },
+        "settings": {
+         "size": {
+          "x": 14,
+          "y": 14,
+          "z": 1
+         }
+        },
+        "textureLayout": {
+         "left": {
+          "offset": {
+           "x": 359,
+           "y": 127
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "right": {
+          "offset": {
+           "x": 359,
+           "y": 127
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "front": {
+          "offset": {
+           "x": 361,
+           "y": 127
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "back": {
+          "offset": {
+           "x": 376,
+           "y": 127
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "top": {
+          "offset": {
+           "x": 391,
+           "y": 127
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         },
+         "bottom": {
+          "offset": {
+           "x": 406,
+           "y": 127
+          },
+          "mirror": {
+           "x": false,
+           "y": false
+          },
+          "angle": 0
+         }
+        },
+        "unwrapMode": "custom",
+        "visible": true,
+        "doubleSided": false,
+        "shadingMode": "fullbright"
+       },
+       "children": []
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "lod": "auto"
+}

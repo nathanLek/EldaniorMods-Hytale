@@ -65,6 +65,8 @@ public final class GuardManager {
 
     // ===== Reglages =====
     static final double ALERT_RANGE = 24.0, PATROL_SIGHT = 20.0, PATROL_CALL = 60.0;
+    /** PNJ a poste fixe arrete a moins de cette distance de son poste (sans bouger depuis 1 s) : replace exactement dessus. */
+    static final double SNAP_RANGE = 2.5;
     static final long WANTED_MS = 30_000, RESPAWN_MS = 120_000, SPAWN_RETRY_MS = 30_000;
     /** Reapparition : seulement si un joueur est a moins de ce rayon (chunk charge). */
     static final double SPAWN_NEAR = 64.0;
@@ -106,6 +108,11 @@ public final class GuardManager {
         long skinSeed;                                                      // skin et prenom aleatoires, toujours les memes pour ce poste
         int level;                                                          // aventurier : niveau tire a la pose (0 : celui de NpcData)
         long bounty;                                                        // criminel : or ajoute a sa prime au tableau
+        String shop;                                                        // commerce : "BOUTIQUE:RANG" (boutique Luo) ou "AMBULANT" (LuoMerchants)
+        String lines;                                                       // discussion : repliques, une par ligne (NpcServices)
+        String quest;                                                       // quetes : identifiant de donneur (QuestModel.npcGiverId)
+        String allegiance;                                                  // famille du PNJ : null = celle du territoire, "neutre", ou un id de famille
+        String statut;                                                      // statut commun (NpcStatut) des PNJ sans systeme de rang : maitre de guilde, forgeron legendaire
         final List<UUID> allies = new java.util.concurrent.CopyOnWriteArrayList<>();   // criminel : ses complices (Criminals)
         transient String leader;                                            // complice : poste de son chef
         volatile UUID owner;                                                // aventurier : joueur qui l'a recrute (null : libre)
@@ -126,6 +133,18 @@ public final class GuardManager {
         transient long pauseUntil;
         transient double bestDistance = Double.MAX_VALUE;
         transient long progressAt;
+        // Clan Luo (LuoNpcs) : poste sur le territoire Luo (releve a chaque apparition) ; geste en cours (inclinaison, kata...), il ne bouge ni ne se retourne ; kata enchaines
+        transient volatile boolean luo;
+        transient volatile String family;                                     // nom de la famille du territoire (nom affiche)
+        /** luo et family releves pour ce poste depuis le demarrage (non sauvegardes : au rechargement, le PNJ ne reapparait pas). */
+        transient volatile boolean placeKnown;
+        transient volatile long luoBusyUntil;
+        transient int luoStep;                                                // disciple : kata de la serie en cours
+        transient long luoNext;                                               // disciple : fin du repos entre deux series
+        transient long sheatheAt;                                             // katana : rengainage en cours (fin de l'animation)
+        transient boolean fought;                                             // katana : a combattu depuis le dernier rengainage
+        transient boolean snapped;                                            // poste fixe : deja replace sur son poste depuis son retour
+        transient double lastX = Double.NaN, lastZ = Double.NaN;              // poste fixe : position a la seconde precedente (faceDuty)
 
         Post(String id, GuardType type, String world, double x, double y, double z, float yaw) {
             this.id = id; this.type = type; this.world = world; this.x = x; this.y = y; this.z = z; this.yaw = yaw;
@@ -140,6 +159,8 @@ public final class GuardManager {
         public int getLevel() { return level; }
         public long getSkinSeed() { return skinSeed; }
         public UUID getOwner() { return owner; }
+        /** Poste sur le territoire du Clan Luo (tenue et comportement du clan). */
+        public boolean isLuo() { return luo; }
     }
 
     private static final Map<String, Post> posts = new ConcurrentHashMap<>();
@@ -188,9 +209,47 @@ public final class GuardManager {
      */
     public static Post place(GuardType type, World world, Vector3d pos, float yaw,
                              AdventurerType wantType, AdventurerTier wantTier, int level) {
+        return place(type, world, pos, yaw, wantType, wantTier, level, null, null);
+    }
+
+    /** Comme ci-dessus ; marchand Luo : boutique et rang imposes (null : au hasard). */
+    public static Post place(GuardType type, World world, Vector3d pos, float yaw,
+                             AdventurerType wantType, AdventurerTier wantTier, int level,
+                             LuoMerchants.Shop shop, LuoMerchants.Rank rank) {
+        return place(type, world, pos, yaw, wantType, wantTier, level, shop, rank, null);
+    }
+
+    /** Comme ci-dessus ; commercant : metier impose (null : au hasard). */
+    public static Post place(GuardType type, World world, Vector3d pos, float yaw,
+                             AdventurerType wantType, AdventurerTier wantTier, int level,
+                             LuoMerchants.Shop shop, LuoMerchants.Rank rank, NpcTrades.Metier metier) {
+        return place(type, world, pos, yaw, wantType, wantTier, level, shop, rank, metier, null);
+    }
+
+    /**
+     * Comme ci-dessus ; presetShop (non nul) impose Post.shop AVANT l'apparition : rang du commercant (« METIER:X:RANG »),
+     * variante du forgeron legendaire (« LEGENDE:NAIN »). La tenue n'est posee qu'a l'apparition.
+     */
+    public static Post place(GuardType type, World world, Vector3d pos, float yaw,
+                             AdventurerType wantType, AdventurerTier wantTier, int level,
+                             LuoMerchants.Shop shop, LuoMerchants.Rank rank, NpcTrades.Metier metier, String presetShop) {
+        return place(type, world, pos, yaw, wantType, wantTier, level, shop, rank, metier, presetShop, null);
+    }
+
+    /** Comme ci-dessus ; statut (NpcStatut.arg, 2026-11-16) garde pour les PNJ sans systeme de rang, avant l'apparition (nom affiche). */
+    public static Post place(GuardType type, World world, Vector3d pos, float yaw,
+                             AdventurerType wantType, AdventurerTier wantTier, int level,
+                             LuoMerchants.Shop shop, LuoMerchants.Rank rank, NpcTrades.Metier metier, String presetShop, String statut) {
         Post p = new Post("garde_" + nextId.getAndIncrement(), type, world.getName(), pos.x, pos.y, pos.z, yaw);
         java.util.Random rng = new java.util.Random();
         p.skinSeed = rng.nextLong();
+        if (type == GuardType.MARCHAND) p.shop = LuoMerchants.draw(shop, rank, rng);
+        if (type == GuardType.LEGENDAIRE)                                                 // forgeron legendaire : Humain par defaut
+            p.shop = LegendarySmiths.value(LegendarySmiths.Smith.HUMAIN);
+        if (type == GuardType.COMMERCANT) {                                               // metier : impose (--type) ou tire au sort
+            NpcTrades.Metier m = metier != null ? metier : NpcTrades.Metier.values()[rng.nextInt(NpcTrades.Metier.RANDOM)];
+            p.shop = NpcTrades.value(m);
+        }
         if (type == GuardType.AVENTURIER || type == GuardType.CHASSEUR_PRIME || type == GuardType.CRIMINEL) {
             boolean hunter = type != GuardType.AVENTURIER;                  // chasseur, criminel : jamais mage
             p.level = level > 0 ? Math.clamp(level, ADVENTURER_MIN_LEVEL, ADVENTURER_MAX_LEVEL)
@@ -202,6 +261,10 @@ public final class GuardManager {
                 p.skinSeed = rng.nextLong();
             }
         }
+        if (MartialRanks.applies(type) && level > 0) p.level = Math.clamp(level, 1, 999);   // niveau martial regle au poste
+        if (type == GuardType.SENSEI && level > 0) p.level = Math.clamp(level, MartialRanks.SENSEI_MIN, MartialRanks.SENSEI_MAX);
+        if (presetShop != null) p.shop = presetShop;
+        p.statut = statut;
         posts.put(p.id, p);
         spawn(p, world);
         save();
@@ -218,7 +281,14 @@ public final class GuardManager {
             if (d <= bestD) { bestD = d; best = p; }
         }
         if (best == null) return null;
-        posts.remove(best.id);
+        return removeById(best.id, world);
+    }
+
+    /** Retire un poste et son PNJ (et les complices d'un criminel). Appeler dans le thread du monde. */
+    public static Post removeById(String id, World world) {
+        Post best = id != null ? posts.remove(id) : null;
+        if (best == null) return null;
+        DojoTraining.forget(best.id);                                                     // libere son mannequin
         if (best.type == GuardType.CRIMINEL) Criminals.removeAllies(best, world);
         UUID g = best.guard;
         if (g != null) {
@@ -245,6 +315,9 @@ public final class GuardManager {
     /** Fait apparaitre le PNJ du poste avec le role donne (aventurier recrute : role compagnon), a la position donnee. */
     static Ref<EntityStore> spawnAs(Post p, World world, String roleId, Vector3d at) {
         try {
+            allegiance(p, world);
+            p.placeKnown = true;
+            roleId = LuoNpcs.role(p, roleId);                                                   // territoire Luo : katana du clan
             Store<EntityStore> store = world.getEntityStore().getStore();
             Rotation3f rot = new Rotation3f(0, p.yaw, 0);
             var pair = NPCPlugin.get().spawnNPC(store, roleId, null, at, rot);
@@ -275,19 +348,30 @@ public final class GuardManager {
 
     /** Apparence du PNJ : skin de joueur aleatoire (stable par poste), nom affiche, armure et arme (aventurier, chasseur : selon son type). */
     private static void dress(Post p, Ref<EntityStore> ref, String roleId, Store<EntityStore> store) {
-        if (p.type.hasRandomSkin()) applySkin(p, ref, store);
+        if (randomSkin(p)) applySkin(p, ref, store);
+        SKINNED.add(ref);                                                      // habille pour cette session (voir SKINNED)
         store.putComponent(ref, Nameplate.getComponentType(), new Nameplate(nameplate(p)));
         AdventurerType adv = p.type == GuardType.AVENTURIER || p.type == GuardType.CHASSEUR_PRIME || p.type == GuardType.CRIMINEL
                              ? AdventurerType.of(p.skinSeed) : null;
-        List<String> armor = adv != null ? adv.getArmor(p) : p.type.getArmor();
+        List<String> armor = armorOf(p);
         NPCEntity npc = store.getComponent(ref, Objects.requireNonNull(NPCEntity.getComponentType()));
         var inv = npc != null ? npc.getInventory() : null;
         if (inv == null) return;
-        if (adv != null && inv.getHotbar() != null) {                                    // arme de son type
-            inv.getHotbar().setItemStackForSlot((short) 0, new ItemStack(adv.getWeapon(p), 1));
+        if (p.type == GuardType.LEGENDAIRE && inv.getHotbar() != null) {                 // forgeron legendaire : marteau en main droite
+            inv.getHotbar().setItemStackForSlot((short) 0, new ItemStack(SmithBehavior.HAMMER, 1));
             inv.setActiveHotbarSlot(ref, (byte) 0, store);
         }
-        String offHand = adv != null ? adv.getOffHand(p) : null;
+        if (p.type == GuardType.DISCIPLE && inv.getHotbar() != null) {                   // disciple : Bokken du Dojo (role civil, 2026-11-13)
+            inv.getHotbar().setItemStackForSlot((short) 0, new ItemStack(Sensei.BOKKEN + "_Degainee", 1));   // au clair : kata
+            inv.setActiveHotbarSlot(ref, (byte) 0, store);
+        }
+        if (adv != null && inv.getHotbar() != null) {                                    // arme de son type
+            String luoWeapon = LuoNpcs.weapon(p, adv);
+            inv.getHotbar().setItemStackForSlot((short) 0, new ItemStack(luoWeapon != null ? luoWeapon : adv.getWeapon(p), 1));
+            inv.setActiveHotbarSlot(ref, (byte) 0, store);
+        }
+        String offHand = adv != null && LuoNpcs.weapon(p, adv) == null ? adv.getOffHand(p) : null;   // katana : pas de bouclier
+        LuoNpcs.equipSheath(p, ref, inv, store);                                        // katana du clan : fourreau en main gauche
         if (offHand != null && inv.getUtility() != null) {                               // bouclier du guerrier
             inv.getUtility().setItemStackForSlot((short) 0, new ItemStack(offHand, 1));
             inv.setActiveUtilitySlot(ref, (byte) 0, store);
@@ -304,11 +388,115 @@ public final class GuardManager {
      * chasseur de prime (rang). Villageois : un prenom.
      */
     static String nameplate(Post p) {
-        if (p.type == GuardType.VILLAGEOIS) return firstName(p);
-        if (p.type == GuardType.AVENTURIER) return "Aventurier [" + getAdventureRank(p.level) + "]";
-        if (p.type == GuardType.CHASSEUR_PRIME) return "Chasseur de prime [" + getAdventureRank(p.level) + "]";
+        if (p.type == GuardType.MARCHAND || p.type == GuardType.AMBULANT) return LuoMerchants.nameplate(p);
+        if (p.type == GuardType.LEGENDAIRE) return LegendarySmiths.nameplate(p);
         if (p.type == GuardType.CRIMINEL) return Criminals.nameplate(p);
-        return p.type.getLabel();
+        String name = p.family != null ? givenName(p) + " " + p.family : givenName(p);   // « Kaito Luo »
+        String role = roleName(p);
+        String rank = MartialRanks.rankName(p);                                       // rang martial (gardes, chevaliers...)
+        if (rank != null) role = p.type == GuardType.SENSEI ? "Sensei, " + rank : rank;   // « Sensei, Saint Martial »
+        if (p.type == GuardType.AVENTURIER || p.type == GuardType.CHASSEUR_PRIME) role += " [" + getAdventureRank(p.level) + "]";
+        return name + " - " + role + NpcStatut.suffix(p);                             // « Maitre de guilde · Expert » (2026-11-16)
+    }
+
+    /** Role court affiche apres le nom : « Garde », « Pelerin », « Ombre » (assassin du Clan Luo)... */
+    static String roleName(Post p) {
+        return switch (p.type) {
+            case VILLE -> "Garde";
+            case ROYAL -> "Garde royal";
+            case CHEVALIER -> "Chevalier";
+            case PATROUILLEUR -> "Patrouilleur";
+            case MAGE_ROYAL -> p.luo ? "Alchimiste royal" : "Mage royal";             // pas de magie dans l'Empire Luo
+            case ASSASSIN -> p.luo ? "Ombre" : "Assassin";
+            case DISCIPLE -> "Disciple";
+            case VILLAGEOIS -> "Habitant";
+            case COMMERCANT -> NpcTrades.title(p);
+            case CHEVALIER_ERRANT -> "Chevalier errant";
+            case MAITRE_GUILDE -> "Maître de guilde";
+            case AVENTURIER -> "Aventurier";
+            case CHASSEUR_PRIME -> "Chasseur de primes";
+            default -> p.type.getLabel();
+        };
+    }
+    /** Prenom du PNJ (tire de sa graine) : du clan sur le territoire Luo, sinon du royaume. */
+    static String givenName(Post p) {
+        return p.luo ? LuoNpcs.givenName(p) : firstName(p);
+    }
+
+    /** Nom de la famille noble du territoire du poste (parcelle de famille), null hors des terres de famille. */
+    /** Famille du PNJ (reglage du poste) : celle du territoire, aucune (neutre) ou une famille choisie ; tenue Luo si c'est le Clan Luo. */
+    static void allegiance(Post p, World world) {
+        String a = p.allegiance;
+        if (a == null || a.isBlank()) {
+            p.luo = com.eldanior.system.luo.LuoClanSystem.onLuoLand(world.getName(), p.position());
+            p.family = familyAt(world, p.position());
+            // retour du 2026-11-10 (nuit) : terres d'un clan de l'Empire (Sama...) ou d'une zone de l'Empire = tenue de l'Empire
+            // (avant : seulement les terres de la famille Luo ; un chevalier pose chez les Sama gardait l'armure par defaut)
+            var here = com.eldanior.system.territory.ParcelManager.getParcelAt(world.getName(), p.x, p.y, p.z);
+            if (here != null && (com.eldanior.system.luo.LuoClans.isEmpire(here.getFamilyId())
+                    || com.eldanior.system.luo.LuoClanSystem.luoRealm(here) != null)) p.luo = true;
+            String clan = randomClan(p, world);                                   // empire Luo : un clan au hasard (sauf gardes)
+            if (clan != null) { p.family = clan.isEmpty() ? null : clan; p.luo = true; }
+        } else if (a.equals(NEUTRAL)) {
+            p.luo = false;
+            p.family = null;
+        } else {
+            var family = com.eldanior.system.titles.nobility.family.FamilyManager.get(a);
+            p.family = family != null ? family.getDisplayName() : null;
+            p.luo = family != null && com.eldanior.system.luo.LuoClans.isEmpire(family.getId());   // Clan Luo ou un de ses clans
+        }
+    }
+
+    static final String NEUTRAL = "neutre";
+
+    /**
+     * PNJ sur les terres de l'Empire Luo (hors gardes, patrouilleurs, chevaliers) : nom d'un des quatre clans ou des Luo, tire
+     * de sa graine (decision du 2026-11-10 : aleatoire, pas un reglage). null hors de l'empire ou pour un garde.
+     */
+    static String randomClan(Post p, World world) {
+        if (p.type == GuardType.VILLE || p.type == GuardType.PATROUILLEUR || p.type == GuardType.CHEVALIER) return null;
+        var parcel = com.eldanior.system.territory.ParcelManager.getParcelAt(world.getName(), p.x, p.y, p.z);
+        if (com.eldanior.system.luo.LuoClanSystem.luoRealm(parcel) == null) return null;
+        if (p.type == GuardType.ROYAL || p.type == GuardType.MAGE_ROYAL) {               // au service de l'Empereur : Luo
+            var luo = com.eldanior.system.titles.nobility.family.FamilyManager.get(com.eldanior.system.luo.LuoPlaques.FAMILY);
+            return luo != null ? luo.getDisplayName() : null;
+        }
+        var clans = com.eldanior.system.luo.LuoClans.Clan.values();
+        int pick = (int) Math.floorMod(p.skinSeed >> 11, (long) clans.length + 2);
+        if (pick == clans.length) return null;                                      // nom des Luo (famille du territoire)
+        if (pick == clans.length + 1 && civilian(p)) return NO_CLAN;                // simple citoyen : un prenom seulement
+        if (pick == clans.length + 1) return null;
+        var family = com.eldanior.system.titles.nobility.family.FamilyManager.get(clans[pick].id);
+        return family != null ? family.getDisplayName() : null;
+    }
+
+    /** Valeur de randomClan : pas de nom de famille du tout (citoyen de l'empire, prenom seul). */
+    static final String NO_CLAN = "";
+
+    private static boolean civilian(Post p) {
+        return p.type == GuardType.VILLAGEOIS || p.type == GuardType.COMMERCANT || p.type == GuardType.AMBULANT
+                || p.type == GuardType.MARCHAND;
+    }
+
+    /** Fait reapparaitre le PNJ du poste (famille changee : role, tenue et nom suivent). Thread du monde. */
+    static void respawn(Post p, World world) {
+        Ref<EntityStore> ref = p.guard != null ? world.getEntityStore().getRefFromUUID(p.guard) : null;
+        if (ref != null && ref.isValid()) world.getEntityStore().getStore().removeEntity(ref, RemoveReason.REMOVE);
+        p.guard = null;
+        p.respawnAt = 0;
+        spawn(p, world);
+        save();
+    }
+
+    static String familyAt(World world, Vector3d pos) {
+        try {
+            var parcel = com.eldanior.system.territory.ParcelManager.getParcelAt(world.getName(), pos.x, pos.y, pos.z);
+            String id = parcel != null ? parcel.getFamilyId() : null;
+            var family = id != null && !id.isEmpty() ? com.eldanior.system.titles.nobility.family.FamilyManager.get(id) : null;
+            return family != null ? family.getDisplayName() : null;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     /** Prenom du PNJ de ce poste (tire de sa graine). */
@@ -316,11 +504,112 @@ public final class GuardManager {
         return VILLAGER_NAMES[(int) Math.floorMod(p.skinSeed, (long) VILLAGER_NAMES.length)];
     }
 
+    /** Tenues de chevalier des familles hors Empire Luo (id de famille -> pieces) ; les autres gardent l'armure du type. */
+    private static final java.util.Map<String, List<String>> KNIGHT_ARMOR = java.util.Map.of(
+            "runkandel", List.of("Armor_Runkandel_Capitaine_Head", "Armor_Runkandel_Capitaine_Chest",
+                    "Armor_Runkandel_Capitaine_Hands", "Armor_Runkandel_Capitaine_Legs"));
+
+    /** Id de la famille du PNJ (reglage du poste, sinon celle du territoire), null si neutre ou sans famille. */
+    static String familyIdOf(Post p) {
+        if (p.allegiance != null && !p.allegiance.isBlank()) return p.allegiance.equals(NEUTRAL) ? null : p.allegiance;
+        if (p.family == null) return null;
+        var f = com.eldanior.system.titles.nobility.family.FamilyManager.getByDisplayName(p.family);
+        return f != null ? f.getId() : null;
+    }
+
+    /** Armure portee par le PNJ du poste (kimono du clan, tenue d'aventurier, ou armure de son type). */
+    static List<String> armorOf(Post p) {
+        if (p.type == GuardType.LEGENDAIRE) return LegendarySmiths.of(p).armor();
+        AdventurerType adv = p.type == GuardType.AVENTURIER || p.type == GuardType.CHASSEUR_PRIME || p.type == GuardType.CRIMINEL
+                             ? AdventurerType.of(p.skinSeed) : null;
+        if (LuoNpcs.dressed(p)) return LuoNpcs.armor(p);
+        if (adv != null) return adv.getArmor(p);
+        if (p.type == GuardType.SENSEI) return Sensei.armor(p);               // tenue noble hors de l'Empire Luo
+        if (p.type == GuardType.CHEVALIER) {                                  // tenue de chevalier de sa famille, si elle en a une
+            List<String> family = KNIGHT_ARMOR.get(familyIdOf(p) == null ? "" : familyIdOf(p));
+            if (family != null) return family;
+        }
+        NpcTrades.Metier m = p.type == GuardType.COMMERCANT ? NpcTrades.metier(p) : null;
+        return m != null ? m.armor() : p.type.getArmor();
+    }
+
+    /**
+     * Retire du skin les vetements cosmetiques que l'armure recouvre : le modele d'un PNJ est construit avec eux
+     * (CosmeticsModule.createModel) et le jeu ne les masque pas sous l'armure comme pour un joueur ; ils traversaient le kimono.
+     */
+    private static void stripCovered(PlayerSkin skin, List<String> armor) {
+        for (String id : armor) {
+            if (id.endsWith("_Chest")) {
+                strip(skin, () -> skin.overtop, v -> skin.overtop = v);
+                strip(skin, () -> skin.cape, v -> skin.cape = v);
+                strip(skin, () -> skin.undertop, v -> skin.undertop = v);
+            } else if (id.endsWith("_Legs")) {
+                strip(skin, () -> skin.overpants, v -> skin.overpants = v);
+                strip(skin, () -> skin.shoes, v -> skin.shoes = v);
+                strip(skin, () -> skin.pants, v -> skin.pants = v);
+            } else if (id.endsWith("_Hands")) {
+                strip(skin, () -> skin.gloves, v -> skin.gloves = v);
+            } else if (id.endsWith("_Head")) {
+                strip(skin, () -> skin.headAccessory, v -> skin.headAccessory = v);
+                strip(skin, () -> skin.faceAccessory, v -> skin.faceAccessory = v);
+                strip(skin, () -> skin.earAccessory, v -> skin.earAccessory = v);
+            }
+        }
+    }
+
+    /**
+     * Retire un vetement du skin s'il reste valide sans lui, sinon le garde. Avant, tout etait retire d'un coup et un skin refuse
+     * revenait complet (vetements qui traversent le kimono : retour du 2026-11-10 sur un habitant en Pelerin).
+     */
+    private static void strip(PlayerSkin skin, java.util.function.Supplier<String> get, java.util.function.Consumer<String> set) {
+        String before = get.get();
+        if (before == null) return;
+        set.accept(null);
+        try {
+            CosmeticsModule.get().validateSkin(skin);
+        } catch (Exception refused) {
+            set.accept(before);
+        }
+    }
+
+    /**
+     * Entites habillees par applySkin pendant cette session. Au rechargement (redemarrage, chunk recharge), le moteur
+     * (ModelSystems.ApplyRandomSkin, composant ApplyRandomSkinPersistedComponent du role) leur donne un NOUVEAU skin aleatoire,
+     * complet (vetements qui traversent l'armure) : le PlayerSkinComponent n'est donc jamais nul et ne suffit pas a savoir
+     * s'il faut rhabiller. Une entite rechargee a une nouvelle Ref (egalite par identite) : absente d'ici, elle est rhabillee.
+     */
+    private static final java.util.Set<Ref<EntityStore>> SKINNED =
+            java.util.Collections.synchronizedSet(java.util.Collections.newSetFromMap(new java.util.WeakHashMap<>()));
+
+    /**
+     * Le PNJ doit-il etre (re)habille : skin, nom, armure, arme ? Oui la premiere fois qu'il est vu dans la session
+     * (redemarrage, zone rechargee : le moteur lui a remis un skin aleatoire, l'armure et l'arme peuvent manquer).
+     */
+    static boolean needsSkin(Post p, Ref<EntityStore> ref) {
+        return !SKINNED.contains(ref);
+    }
+
     private static void applySkin(Post p, Ref<EntityStore> ref, Store<EntityStore> store) {
         PlayerSkin skin = CosmeticsModule.get().generateRandomSkin(new java.util.Random(p.skinSeed));
-        if (p.type == GuardType.AVENTURIER) wearHat(skin, AdventurerType.of(p.skinSeed).getHat(p));
+        if (p.type == GuardType.AVENTURIER && !LuoNpcs.dressed(p)) wearHat(skin, AdventurerType.of(p.skinSeed).getHat(p));
+        PlayerSkin full = new PlayerSkin(skin);
+        stripCovered(skin, armorOf(p));
+        com.hypixel.hytale.server.core.asset.type.model.config.Model model;
+        try {
+            model = CosmeticsModule.get().createModel(skin);
+        } catch (Exception e) {                                                   // skin refuse sans ces vetements : skin complet
+            EldaniorLogger.warn("[Guards] skin allege refuse (" + p.id + ") : " + e.getMessage());
+            skin = full;
+            model = CosmeticsModule.get().createModel(skin);
+        }
         store.putComponent(ref, PlayerSkinComponent.getComponentType(), new PlayerSkinComponent(skin));
-        store.putComponent(ref, ModelComponent.getComponentType(), new ModelComponent(CosmeticsModule.get().createModel(skin)));
+        store.putComponent(ref, ModelComponent.getComponentType(), new ModelComponent(model));
+        SKINNED.add(ref);
+    }
+
+    /** Skin de joueur aleatoire : types qui en ont un, et tout PNJ habille en kimono sur le territoire Luo (modele du garde remplace). */
+    static boolean randomSkin(Post p) {
+        return p.type.hasRandomSkin() || LuoNpcs.dressed(p);
     }
 
     /** Chapeau du mage : le premier candidat que le skin accepte (sinon son accessoire de tete d'origine). */
@@ -415,8 +704,7 @@ public final class GuardManager {
             for (Post p : posts.values()) {
                 if (!npc.equals(p.guard) || p.owner == null) continue;
                 var cls = AdventurerTier.classOf(p);
-                return (cls != null ? cls.getDisplayName() : "Aventurier " + AdventurerType.of(p.skinSeed).getLabel())
-                        + " [" + getAdventureRank(p.level) + "]";
+                return cls != null ? cls.getDisplayName() : "Aventurier " + AdventurerType.of(p.skinSeed).getLabel();
             }
         return "Aventurier";
     }
@@ -429,6 +717,22 @@ public final class GuardManager {
     }
 
     static void saveLater() { save(); }
+
+    /**
+     * Le PNJ d'un poste a ete tue en duel (son combattant est tombe, SenseiDuel) : le PNJ civil cache disparait et son poste le
+     * fera reapparaitre comme apres une mort (2026-11-13 : duels de disciples a mort).
+     */
+    public static void killedInDuel(String postId) {
+        Post p = post(postId);
+        if (p == null || p.guard == null) return;
+        UUID dead = p.guard;
+        World world = Universe.get().getWorld(p.world);
+        if (world != null) world.execute(() -> {
+            Ref<EntityStore> ref = world.getEntityStore().getRefFromUUID(dead);
+            if (ref != null && ref.isValid()) world.getEntityStore().getStore().removeEntity(ref, com.hypixel.hytale.component.RemoveReason.REMOVE);
+        });
+        onGuardDeath(dead);
+    }
 
     /** Un garde est mort : son poste le fera reapparaitre apres RESPAWN_MS (criminel : Criminals.RESPAWN_MS, prime remise a sa base). */
     static void onGuardDeath(UUID guard) {
@@ -557,7 +861,7 @@ public final class GuardManager {
     /**
      * Chaque seconde, pour chaque PNJ de poste charge : deplacement (PostMovement), sentinelle du patrouilleur (un monstre
      * proche : les gardes accourent), chasse aux PK du chasseur de prime et attaque des criminels (toutes les 2 s), et toutes
-     * les 5 s skin regenere s'il a ete perdu (rechargement de la zone).
+     * les 5 s skin du poste reapplique apres un rechargement (redemarrage, zone rechargee : voir SKINNED).
      */
     private static void watchPosts() {
         boolean scan = ticks % 2 == 0, slow = ticks % 5 == 0;
@@ -575,8 +879,12 @@ public final class GuardManager {
                     Store<EntityStore> store = world.getEntityStore().getStore();
                     Ref<EntityStore> ref = world.getEntityStore().getRefFromUUID(id);
                     if (ref == null || !ref.isValid()) return;                                // chunk decharge
+                    if (!p.placeKnown) {                                                    // redemarrage : PNJ recharge, pas reapparu
+                        allegiance(p, world);
+                        p.placeKnown = true;
+                    }
                     if (slow) {
-                        if (p.type.hasRandomSkin() && store.getComponent(ref, PlayerSkinComponent.getComponentType()) == null) applySkin(p, ref, store);
+                        if (needsSkin(p, ref)) dress(p, ref, null, store);
                         Nameplate np = store.getComponent(ref, Nameplate.getComponentType());
                         String name = nameplate(p);
                         if (np == null || !name.equals(np.getText())) store.putComponent(ref, Nameplate.getComponentType(), new Nameplate(name));
@@ -593,8 +901,18 @@ public final class GuardManager {
                         return;
                     }
                     Vector3d at = new Vector3d(t.getPosition());
+                    if (p.luo) LuoNpcs.sheathTick(p, ref, npc, store);                         // rengaine au repos, degaine en combat
+                    if (LuoNpcs.animates(p)) {                                                  // gestes ; immobile pendant un geste
+                        LuoNpcs.tick(p, ref, store);
+                        if (p.luoBusyUntil > System.currentTimeMillis()) {                       // (au poste : sa laisse reste le poste)
+                            if (moves) npc.setLeashPoint(new Vector3d(at));
+                            return;
+                        }
+                    }
                     if (companion) { AdventurerSystem.follow(p, ref, npc, at, world, store); return; }
-                    if (stays) { if (p.type.isGuard()) faceDuty(p, ref, at, store); return; }   // l'aventurier libre regarde les joueurs
+                    if (p.type == GuardType.LEGENDAIRE && !companion && SmithBehavior.tick(p, ref, npc, at, world, store)) return;   // etabli, tabouret
+                    if (p.type == GuardType.DISCIPLE && !companion && DojoTraining.tick(p, ref, npc, at, world, store)) return;     // mannequin du dojo
+                    if (stays) { faceDuty(p, ref, at, store); return; }                        // au repos : face a sa direction (bloc de poste, commande)
                     PostMovement.tick(p, ref, npc, at, world, store);
                     if (hunter && scan) BountyHunter.hunt(ref, at, store);
                     if (criminal) {
@@ -614,18 +932,36 @@ public final class GuardManager {
 
     /** Skin et nom d'un PNJ hors des postes enregistres (complice) : regeneres s'ils ont ete perdus (rechargement de la zone). */
     static void refreshLook(Post p, Ref<EntityStore> ref, Store<EntityStore> store) {
-        if (p.type.hasRandomSkin() && store.getComponent(ref, PlayerSkinComponent.getComponentType()) == null) applySkin(p, ref, store);
+        if (needsSkin(p, ref)) dress(p, ref, null, store);
         Nameplate np = store.getComponent(ref, Nameplate.getComponentType());
         String name = nameplate(p);
         if (np == null || !name.equals(np.getText())) store.putComponent(ref, Nameplate.getComponentType(), new Nameplate(name));
     }
 
-    /** Garde revenu a son poste (au repos) : il se remet face a sa direction d'origine. */
+    /**
+     * PNJ revenu a son poste (au repos, etat Idle) : il se remet face a sa direction d'origine (regard choisi au bloc de poste,
+     * ou direction du poseur). Les roles interactifs passent en etat Watching quand un joueur approche : ils le regardent alors.
+     */
     private static void faceDuty(Post p, Ref<EntityStore> ref, Vector3d at, Store<EntityStore> store) {
-        if (Math.hypot(at.x - p.x, at.z - p.z) > 1.2) return;
+        double d = Math.hypot(at.x - p.x, at.z - p.z);
+        boolean still = !Double.isNaN(p.lastX) && Math.hypot(at.x - p.lastX, at.z - p.lastZ) < 0.05;
+        p.lastX = at.x;
+        p.lastZ = at.z;
+        if (d > SNAP_RANGE) { p.snapped = false; return; }
         StateSupport st = StateSupport.get(ref, store);
         String state = st != null ? st.getStateName() : null;
         if (state == null || !state.startsWith("Idle")) return;
+        if (d > 0.35 && still && !p.snapped) {                       // arrete a cote du poste (le bloc de poste occupe sa case) : une fois
+            p.snapped = true;
+            try {
+                store.putComponent(ref, com.hypixel.hytale.server.core.modules.entity.teleport.Teleport.getComponentType(),
+                        new com.hypixel.hytale.server.core.modules.entity.teleport.Teleport(new Vector3d(p.x, p.y, p.z), new Rotation3f(0, p.yaw, 0)));
+            } catch (Exception e) {
+                EldaniorLogger.error("[Guards] retour au poste " + p.id, e);
+            }
+            return;
+        }
+        if (d > 1.2) return;
         Vector3d ahead = new Vector3d(p.x + PhysicsMath.headingX(p.yaw) * 6, at.y + 1.6, p.z + PhysicsMath.headingZ(p.yaw) * 6);
         NpcFacing.lookAt(ref, ahead, System.currentTimeMillis() + 1_500);
     }
@@ -693,6 +1029,11 @@ public final class GuardManager {
                 if (p.level > 0) props.setProperty(k + "level", String.valueOf(p.level));
                 if (p.owner != null) props.setProperty(k + "owner", p.owner.toString());
                 if (p.bounty > 0) props.setProperty(k + "bounty", String.valueOf(p.bounty));
+                if (p.shop != null) props.setProperty(k + "shop", p.shop);
+                if (p.lines != null && !p.lines.isBlank()) props.setProperty(k + "lines", p.lines);
+                if (p.quest != null && !p.quest.isBlank()) props.setProperty(k + "quest", p.quest);
+                if (p.allegiance != null && !p.allegiance.isBlank()) props.setProperty(k + "allegiance", p.allegiance);
+                if (p.statut != null && !p.statut.isBlank()) props.setProperty(k + "statut", p.statut);
                 if (!p.allies.isEmpty()) props.setProperty(k + "allies", String.join(",", p.allies.stream().map(UUID::toString).toList()));
             }
             PersistenceUtils.writeAtomicWithBackup(file, props, "Eldanior - postes de garde");
@@ -711,7 +1052,9 @@ public final class GuardManager {
             for (String key : props.stringPropertyNames()) {
                 if (!key.startsWith("post.") || !key.endsWith(".type")) continue;
                 String id = key.substring(5, key.length() - 5), k = "post." + id + ".";
-                GuardType type = GuardType.valueOf(props.getProperty(key));
+                GuardType type;
+                try { type = "PELERIN".equals(props.getProperty(key)) ? GuardType.VILLAGEOIS : GuardType.valueOf(props.getProperty(key)); }
+                catch (IllegalArgumentException unknown) { EldaniorLogger.warn("[Guards] type de poste inconnu ignore : " + props.getProperty(key)); continue; }
                 String[] c = props.getProperty(k + "pos", "0,0,0,0").split(",");
                 Post p = new Post(id, type, props.getProperty(k + "world", "default"), Double.parseDouble(c[0]),
                         Double.parseDouble(c[1]), Double.parseDouble(c[2]), Float.parseFloat(c[3]));
@@ -721,6 +1064,12 @@ public final class GuardManager {
                 p.skinSeed = Long.parseLong(props.getProperty(k + "skin", String.valueOf(id.hashCode())));
                 p.level = Integer.parseInt(props.getProperty(k + "level", "0"));
                 p.bounty = Long.parseLong(props.getProperty(k + "bounty", "0"));
+                p.shop = props.getProperty(k + "shop");
+                p.lines = props.getProperty(k + "lines");
+                p.quest = props.getProperty(k + "quest");
+                p.allegiance = props.getProperty(k + "allegiance");
+                p.statut = props.getProperty(k + "statut");
+                if (type == GuardType.MARCHAND && p.shop == null) p.shop = LuoMerchants.draw(null, null, new java.util.Random(p.skinSeed));
                 for (String a : props.getProperty(k + "allies", "").split(",")) if (!a.isBlank()) p.allies.add(UUID.fromString(a.trim()));
                 if ((type == GuardType.AVENTURIER || type == GuardType.CHASSEUR_PRIME || type == GuardType.CRIMINEL) && p.level <= 0)
                     p.level = ADVENTURER_MIN_LEVEL + (int) Math.floorMod(p.skinSeed, (long) (ADVENTURER_MAX_LEVEL - ADVENTURER_MIN_LEVEL + 1));

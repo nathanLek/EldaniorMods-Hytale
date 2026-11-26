@@ -1,0 +1,47 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune du Bosquet",
+    "Description": "Sort épique de terre (Mage, rune de prédilection de l'Arche Druide). Un bosquet pousse au point visé (rayon 7, jusqu'à 20 blocs) pendant 10 s : trois arbres au centre, une haie de ronces sur le pourtour. Vos alliés (vous compris) qui s'y tiennent récupèrent 3 % de leurs PV par seconde ; les ennemis y subissent 12 dégâts toutes les demi-secondes et sont ralentis (-40 %). Le bosquet disparaît ensuite (jamais en ville ni sur une parcelle). Épargne votre groupe, votre guilde et votre famille. Coût : 300 mana. Recharge : 120 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_Bosquet.png",
+  "Quality": "Epic",
+  "ItemLevel": 60,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_Runes.Terre"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_Bosquet.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 120,
+    "Cost": 300,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Earth",
+      "Damage",
+      "Aoe",
+      "Duration",
+      "Heal"
+    ],
+    "Cast": "Root_Ability_Bosquet"
+  }
+}

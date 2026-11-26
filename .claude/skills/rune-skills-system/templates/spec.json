@@ -45,7 +45,8 @@
     "handParticles": null,
     "handParticlesScale": 0.6,
     "costMoment": "start",
-    "$Comment_cast": "Animations : rune_tool.py assets anims <jeu>. costMoment : start (mana des l'appui) | release (mana juste avant l'effet, rien si interrompu)."
+    "hold": null,
+    "$Comment_cast": "Animations : rune_tool.py assets anims <jeu>. costMoment : start (mana des l'appui) | release (mana juste avant l'effet, rien si interrompu). hold : null = incantation automatique ; { \"minTime\": 0.6, \"earlyCooldown\": 0.5, \"localSound\": \"SFX_..._Local\", \"particles\": [ ... ] } = maintenir la touche pour charger (animation 'charging', son 'sound'), relacher pour lancer ; relache avant minTime = rien (ni mana ni recharge, petite recharge earlyCooldown). chargeTime et costMoment sont alors ignores."
   },
   "design": {
     "castTimeS": 0.4,

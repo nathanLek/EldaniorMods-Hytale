@@ -1,0 +1,16 @@
+{
+  "$Comment": "Bannissement (Rune_Bannissement) : le banni se dissout (ModelVFX Elda_Disparition), ne bouge plus (joueurs) et n'est pas projete. Duree reglee par le code.",
+  "Duration": 6,
+  "ApplicationEffects": {
+    "ModelVFXId": "Elda_Disparition",
+    "MovementEffects": {
+      "DisableAll": true
+    },
+    "KnockbackMultiplier": 0
+  },
+  "OverlapBehavior": "Overwrite",
+  "Infinite": false,
+  "Debuff": true,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Rune_Bannissement.png",
+  "Locale": "Banni"
+}

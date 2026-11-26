@@ -1,7 +1,6 @@
 package com.eldanior.system.titles.nobility.family.definitions.duc;
 
 import com.eldanior.system.config.configs.Rarity;
-import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
 import com.eldanior.system.titles.nobility.NobilityRank;
 import com.eldanior.system.titles.nobility.family.NobleFamilyModel;
 
@@ -18,8 +17,7 @@ public class Goldcrest extends NobleFamilyModel {
                 + "ou sont conservees les reserves d'or de la noblesse. "
                 + "On dit que les Goldcrest peuvent acheter une armee sans degainer une seule epee.",
                 Rarity.EPIC,
-                NobilityRank.DUC,
-                PassiveSkill.FAMILY_GOLDEN_FORTUNE
+                NobilityRank.DUC
         );
     }
 }

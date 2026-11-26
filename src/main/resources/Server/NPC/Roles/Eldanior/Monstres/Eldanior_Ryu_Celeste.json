@@ -1,0 +1,50 @@
+{
+  "$Comment": "Boss Mondial « Kokuō-Ryū, le Dragon Céleste Impérial » (gen_ryu_celeste.py) : Ryū volant (gabarit volant du jeu : monte, descend, tourne et plonge sur sa cible pour mordre) ; manoeuvres animees par RyuFlight.java ; taille x6, couronnes, niveau et nom posés par WorldBosses.",
+  "Type": "Variant",
+  "Reference": "Template_Flying_Aggressive",
+  "Modify": {
+    "Appearance": "Eldanior_Ryu_Celeste",
+    "DropList": "Empty",
+    "MaxHealth": 9000,
+    "DisableDamageGroups": [
+      "Self"
+    ],
+    "MotionFlyMaxHorizontalSpeed": 16,
+    "MotionFlyMinHeightAboveGround": 3,
+    "MotionFlyMaxHeightAboveGround": 45,
+    "MotionDesiredAltitudeCombat": [
+      3,
+      11
+    ],
+    "MotionDesiredAltitudeSearch": [
+      16,
+      32
+    ],
+    "ViewRange": 72,
+    "ViewSector": 240,
+    "HearingRange": 48,
+    "AbsoluteDetectionRange": 18,
+    "AlertedRange": 80,
+    "IdleWanderInCircleRadius": 50,
+    "CombatBehaviorDistance": 70,
+    "CombatRelativeSpeedFlyMotion": 0.6,
+    "CombatRelativeSpeedChase": 1,
+    "RangedAttack": "Root_NPC_Eldanior_Ryu_Celeste_Attack",
+    "RangedAttackDistance": 24,
+    "RangedAttackAimingRange": [
+      0.3,
+      0.6
+    ],
+    "RangedAttackPauseRange": [
+      1.4,
+      2.4
+    ],
+    "CombatSeekSlowdownDistance": 24,
+    "CombatSeekStopDistance": 13,
+    "TargetRange": 40,
+    "DeathAnimationTime": 3,
+    "KnockbackScale": 0,
+    "IsMemory": false,
+    "NameTranslationKey": "server.npcRoles.Dragon_Frost.name"
+  }
+}

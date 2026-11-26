@@ -1,0 +1,68 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_Distorsion",
+  "spell": "Distorsion",
+  "javaClass": "Distorsion",
+  "page": "rune_page_distorsion",
+  "name": "Rune de Distorsion",
+  "type": "Temps",
+  "rarity": "Epic",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Distorsion",
+  "summary": "zone de temps distordu 10 s (rayon 8) : ennemis ralentis de 60 %, projectiles ennemis figes en l'air.",
+  "description": "Sort épique du temps (Mage, rune de prédilection de l'Oracle). Vous distordez le temps sur la zone visée (rayon 8, jusqu'à 20 blocs) pendant 10 s : les ennemis qui s'y trouvent avancent 60 % moins vite, et les projectiles tirés vers vous ou vos alliés s'y figent en l'air, puis se dissipent quand la zone disparaît. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin dont les lignes ondulent comme vues à travers l'eau. Enseigne la Distorsion : ralentissez le monde autour de vos ennemis. Classes : tous les Mages (rune de prédilection de l'Oracle). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Duration",
+    "Aoe"
+  ],
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.5,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Arcane_Workbench_Craft",
+    "handParticles": "Chronos_Gold",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.5,
+    "range": 20,
+    "radius": "8",
+    "targets": "ennemis et projectiles de la zone",
+    "persistentFx": "anneau Chronos_Gold (16 points / 0,5 s), Chronos_Afterimage dans la zone",
+    "impactFx": "Chronos_Burst au centre (debut, fin), Chronos_Shatter sur chaque projectile dissipe",
+    "sounds": "SFX_Arcane_Workbench_Craft a l'incantation et toutes les 2 s",
+    "effects": "Elda_Distorsion (vitesse x0,4, 1 s, reapplique / 0,5 s) ; projectiles en vol vers le lanceur figes (hold) puis retires",
+    "terrain": "aucun",
+    "persistentDurationS": 10,
+    "interruptions": "aucune",
+    "restrictions": "mage",
+    "edgeCases": "projectiles du lanceur (qui s'eloignent de lui) jamais figes ; porteurs immobiles des sorts ignores (vitesse < 3)",
+    "limitations": "le ralentissement des monstres passe par HorizontalSpeedMultiplier (comme Elda_Givre) : a confirmer en jeu",
+    "balance": {
+      "damage": 0,
+      "range": 2,
+      "duration": 2,
+      "mobility": 0,
+      "control": 3,
+      "defense": 2,
+      "targets": 2,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    }
+  },
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null
+}

@@ -1,0 +1,67 @@
+{
+  "$Comment": "Fleche divine deplacee par le code (ArmesDivines). Genere par gen_divines.py.",
+  "Model": "Items/Projectiles/Projectile.blockymodel",
+  "Texture": "Items/Projectiles/Projectile_default.png",
+  "DefaultAttachments": [
+    {
+      "Model": "Items/Projectiles/Apollon_Fleche.blockymodel",
+      "Texture": "Items/Projectiles/Apollon_Fleche.png"
+    }
+  ],
+  "AnimationSets": {
+    "FlyIdle": {
+      "Animations": [
+        {
+          "Animation": "Items/Animations/Fly/Fly_Vertical.blockyanim"
+        }
+      ]
+    }
+  },
+  "MinScale": 1.0,
+  "MaxScale": 1.0,
+  "HitBox": {
+    "Max": {
+      "X": 0.6,
+      "Y": 0.1,
+      "Z": 0.1
+    },
+    "Min": {
+      "X": -0.6,
+      "Y": -0.1,
+      "Z": -0.1
+    }
+  },
+  "Trails": [
+    {
+      "TrailId": "Apollon_Fleche_Trail",
+      "TargetNodeName": "Handle",
+      "PositionOffset": {
+        "X": -0.3
+      },
+      "RotationOffset": {
+        "Roll": 0
+      }
+    },
+    {
+      "TrailId": "Apollon_Fleche_Trail",
+      "TargetNodeName": "Handle",
+      "PositionOffset": {
+        "X": -0.3
+      },
+      "RotationOffset": {
+        "Roll": 90
+      }
+    }
+  ],
+  "Light": {
+    "Color": "#ffc060",
+    "Radius": 5
+  },
+  "Particles": [
+    {
+      "SystemId": "Gilgamesh_Sword_Glow",
+      "TargetNodeName": "",
+      "Scale": 0.6
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "$Comment": "Avatar de l'orage : le lanceur charge d'electricite (teinte orage, x1,15). Pose une fois 15 s, retire par le code.",
+  "Duration": 15.0,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": false,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Rune_AvatarOrage.png",
+  "ApplicationEffects": {
+    "EntityTopTint": "#e8f4ff",
+    "EntityBottomTint": "#4f8cff",
+    "HorizontalSpeedMultiplier": 1.15
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_CeintureAsteroides (remplace le parchemin rune_page_ceinture_asteroides).",
+  "TranslationProperties": {
+    "Name": "Manuel Spatial : Ceinture d'Astéroïdes",
+    "Description": "Sort épique spatial (Mage, rune de prédilection du Mystique Supérieur). La gravité arrache 8 blocs du sol autour de vous, qui tournent en orbite pendant 10 s. Chaque clic en projette un vers le curseur (40 blocs/s) : 60 dégâts au premier ennemi touché et 30 aux ennemis à moins de 2 blocs de l'impact. Le sol est restauré après une minute (jamais en ville ni sur une parcelle). Épargne votre groupe, votre guilde et votre famille. Coût : 300 mana. Recharge : 120 s.\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Spatial"
+  ],
+  "Quality": "Epic",
+  "ItemLevel": 60,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Spatial_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Spatial_CeintureAsteroides.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

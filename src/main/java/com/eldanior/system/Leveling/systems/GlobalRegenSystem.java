@@ -95,11 +95,9 @@ public class GlobalRegenSystem extends EntityTickingSystem<EntityStore> {
 
     private static float getAmountToAdd(float dt, StatConfig config, float max, PlayerLevelData data) {
         float rate = config.getRegenRate();
-        if (data != null && data.getActivePassives() != null) {
-            for (PassiveSkill skill : data.getActivePassives()) {
-                if (skill.getLogic() != null) {
-                    rate *= skill.getLogic().getRegenMultiplier(config);
-                }
+        if (data != null) {
+            for (PlayerLevelData.ActivePassive a : data.getActivePassiveEntries()) {
+                rate *= a.skill().getLogic().getRegenMultiplier(config, a.rank(), data.isSkillMastered(a.skill().name()));
             }
         }
         return (max * rate) / 20.0f;

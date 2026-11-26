@@ -1,0 +1,45 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de la Méditation martiale",
+    "Description": "Technique du Clan Luo, à bascule (voie martiale) : vous vous asseyez en tailleur et méditez, immobile et vulnérable. Toutes les 10 s, vous regagnez de 2 à 12 points de vie, de mana et d'endurance, et toutes les 15 s de 1 à 5 points d'expérience, selon votre classe. Ré-utilisez la rune pour vous relever ; un coup reçu brise la méditation. Ne coûte pas de mana. Coût : 0 mana. Recharge : 1 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_MeditationMartiale.png",
+  "Quality": "Rare",
+  "ItemLevel": 40,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_Empire_Luo.Runes"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_MeditationMartiale.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 1,
+    "Cost": 0,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Physical",
+      "Melee",
+      "Buff",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_MeditationMartiale"
+  }
+}

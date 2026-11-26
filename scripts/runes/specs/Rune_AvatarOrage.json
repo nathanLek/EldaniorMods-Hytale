@@ -1,0 +1,68 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_AvatarOrage",
+  "spell": "AvatarOrage",
+  "javaClass": "AvatarOrage",
+  "page": "rune_page_avatar_orage",
+  "name": "Rune de l'Avatar de l'Orage",
+  "type": "Foudre",
+  "rarity": "Unique",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "AvatarOrage",
+  "summary": "15 s : chacun de vos coups appelle un eclair sur la cible (60 + etourdissement 0,3 s) qui saute sur un voisin (40).",
+  "description": "Sort unique de foudre (Mage, rune de prédilection de l'Archi-Magus). L'orage vous habite pendant 15 s : chacun de vos coups fait tomber un éclair sur la cible (60 dégâts, étourdissement 0,3 s), qui saute ensuite sur l'ennemi le plus proche à moins de 6 blocs (40 dégâts). 3 éclairs par seconde au plus. Vous allez 15 % plus vite. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin qui crépite et picote les doigts. Enseigne l'Avatar de l'Orage : que chaque coup soit un coup de tonnerre. Classes : tous les Mages (rune de prédilection de l'Archi-Magus). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Buff",
+    "Duration"
+  ],
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.5,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Emit_Goblin_Electric_Fence_Zap",
+    "handParticles": "Taranis_Electric_Burst",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.5,
+    "range": 6,
+    "radius": "saut 6",
+    "targets": "cible + 1 voisin",
+    "persistentFx": "effet Elda_AvatarOrage (teinte orage, x1,15) pose une fois ; Taranis_Electric_Burst autour du lanceur / s",
+    "impactFx": "Taranis_Bolt sur la cible, arc Taranis_Electric_Burst vers le voisin",
+    "sounds": "SFX_Emit_Goblin_Electric_Fence_Zap a chaque eclair",
+    "effects": "onOwnerHit -> eclair 60 Lightning + stun Taranis_Foudroye 0,3 s, saut 40 ; 3/s max (markEcho)",
+    "terrain": "aucun",
+    "persistentDurationS": 15,
+    "interruptions": "aucune",
+    "restrictions": "mage",
+    "edgeCases": "aucun voisin : pas de saut ; cible morte : pas d'eclair",
+    "balance": {
+      "damage": 3,
+      "range": 1,
+      "duration": 3,
+      "mobility": 1,
+      "control": 1,
+      "defense": 0,
+      "targets": 2,
+      "frequency": 3,
+      "terrain": 0,
+      "difficulty": 0
+    }
+  },
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null
+}

@@ -4,18 +4,12 @@ import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.config.Player.PlayerLevelData;
 // AdminTab moved to AdminScreen
 import com.eldanior.system.gui.tabs.BlackMarketTab;
-import com.eldanior.system.gui.tabs.QuestTab;
-import com.eldanior.system.gui.tabs.DuelTab;
 import com.eldanior.system.gui.tabs.ShopTab;
-import com.eldanior.system.gui.tabs.ClassementsTab;
 import com.eldanior.system.gui.tabs.FamilleTab;
 import com.eldanior.system.gui.tabs.WikiTab;
 import com.eldanior.system.gui.tabs.CompetencesTab;
 import com.eldanior.system.gui.tabs.GuildeTab;
 import com.eldanior.system.gui.tabs.GroupeTab;
-import com.eldanior.system.gui.tabs.InventaireTab;
-import com.eldanior.system.gui.tabs.TerritoiresTab;
-import com.eldanior.system.gui.tabs.ProprietesTab;
 import com.eldanior.system.gui.tabs.EchangesTab;
 import com.eldanior.system.gui.tabs.ProfilTab;
 import com.eldanior.system.gui.tabs.TitresTab;
@@ -42,16 +36,143 @@ import javax.annotation.Nonnull;
 public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEventData> {
 
     private static final String[] TAB_IDS = {
-            "Profil", "Inventaire", "Competences", "Guilde", "Groupe", "Famille", "Titres", "Quetes", "Classements", "Duel", "Shop", "BlackMarket", "Territoires", "Proprietes", "Echanges", "Wiki"
+            "Competences", "Quetes", "Guilde", "Groupe", "Famille", "Titres", "Shop", "BlackMarket", "Observateur", "Echanges", "Wiki"
     };
+
+    /** Titre du panneau de contenu par onglet (refonte du 2026-11-12, categories facon inventaire). */
+    private static final java.util.Map<String, String> TAB_LABELS = java.util.Map.of(
+            "Quetes", "Quêtes", "Competences", "Compétences", "Guilde", "Guilde", "Groupe", "Groupe", "Famille", "Famille",
+            "Titres", "Titres", "Shop", "Marché", "BlackMarket", "Marché noir", "Echanges", "Échanges", "Wiki", "Wiki");
+    /**
+     * Icone (objet du jeu) du bouton de chaque categorie, choisie le 2026-11-12 pour sa lisibilite a 52 px (planches
+     * comparees ; Guilde = banniere, Famille = banniere de famille, demandes de l'utilisateur). Verifier que l'objet EXISTE (fichier Server/Item/Items/...) et pas seulement son image : sinon rien ne
+     * s'affiche (cas de Weapon_Dual_Sword_Shield_Iron). Groupe : pas d'objet, image TabIconGroupe.png dans SystemPage.ui.
+     * Famille : banniere de la famille du joueur si elle existe.
+     */
+    private static final java.util.Map<String, String> TAB_ICONS = java.util.Map.of(
+            "Competences", "Rune_Fireball", "Quetes", "Deco_Map", "Guilde", "Furniture_Human_Ruins_Banner",
+            "Famille", "Eldanior_Banniere_Famille_Eldanior", "Titres", "Butin_Couronne_Trork", "Shop", "Butin_Bourse_Volee",
+            "BlackMarket", "Weapon_Daggers_Doomed", "Echanges", "Furniture_Temple_Light_Chest_Small", "Wiki", "Butin_Grimoire_Dechire");
+
+    private static boolean itemExists(String id) {
+        return id != null && com.hypixel.hytale.server.core.asset.type.item.config.Item.getAssetMap().getAsset(id) != null;
+    }
+
+    /** Categorie active : fond allume du bouton et titre du panneau de contenu. */
+    private static void markTab(UICommandBuilder ui, String active) {
+        for (String tab : TAB_IDS) ui.set("#TabOn" + tab + ".Visible", tab.equals(active));
+        ui.set("#ContentTitle.Text", TAB_LABELS.getOrDefault(active, active));
+    }
+
+    /** Cadre des deux fenetres (profil, contenu) : or, ou rouge pour un criminel (PK) ; couches #Frame* / #Frame*Red de SystemPage.ui. */
+    private static void frame(UICommandBuilder ui, boolean pk) {
+        for (String win : new String[]{"#Sidebar", "#ContentPanel"}) {               // la navigation n'a plus de cadre
+            for (String part : new String[]{"Title", "Body", "DecoTop", "DecoBottom"}) {
+                ui.set(win + " #Frame" + part + ".Visible", !pk);
+                ui.set(win + " #Frame" + part + "Red.Visible", pk);
+            }
+        }
+    }
+
+    /** Famille : seulement pour choisir sa famille (noble sans famille) ; sa gestion est chez l'intendant (2026-11-12). */
+    /** 2026-11-12 : tout ce qui touche a la famille passe par l'intendant (y compris prendre la tete d'une maison libre). */
+    /**
+     * 2026-11-13 (demande de l'utilisateur) : l'onglet Famille ne sert plus qu'au Marquis sans maison, pour acheter un grand
+     * territoire (un Marquisat et sa maison). Le Roi est Patriarche d'Eldanior d'office (RoyalHouse) ; Ducs et Comtes achetent
+     * un Territoire ou une ville chez l'intendant (LandOfficeScreen).
+     */
+    private boolean showFamily(PlayerLevelData d) {
+        if (steward) return true;
+        boolean house = d != null && d.getNobleFamilyId() != null && !d.getNobleFamilyId().isEmpty();
+        return d != null && !house && com.eldanior.system.titles.nobility.NobilityRank.fromString(d.getNobilityRank())
+                == com.eldanior.system.titles.nobility.NobilityRank.MARQUIS;
+    }
+
+    /** Distance maximale d'un autre joueur pour afficher l'onglet Echanges. */
+    private static final double TRADE_RANGE = 10.0;
+
+    /** Un autre joueur se tient-il pres de celui-ci (meme monde, <= TRADE_RANGE blocs) ? */
+    private static boolean nearPlayer(Ref<EntityStore> ref, Store<EntityStore> store) {
+        PlayerRef me = store.getComponent(ref, PlayerRef.getComponentType());
+        if (me == null) return false;
+        var pos = com.eldanior.system.config.Player.PlayerPositionTracker.PLAYER_POSITIONS;
+        org.joml.Vector3d mine = pos.get(me.getUuid());
+        if (mine == null) return false;
+        for (PlayerRef other : com.hypixel.hytale.server.core.universe.Universe.get().getPlayers()) {
+            if (other == null || other.getUuid().equals(me.getUuid())) continue;
+            Ref<EntityStore> r = other.getReference();
+            if (r == null || !r.isValid() || r.getStore() != store) continue;               // autre monde
+            org.joml.Vector3d at = pos.get(other.getUuid());
+            if (at != null && at.distanceSquared(mine) <= TRADE_RANGE * TRADE_RANGE) return true;
+        }
+        return false;
+    }
+
+    /** Onglets qui dependent du joueur : Famille (choix), Guilde (membre), Echanges (joueur proche). */
+    private void tabVisibility(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store, PlayerLevelData d) {
+        ui.set("#TabBtnFamille.Visible", showFamily(d));
+        ui.set("#TabBtnGuilde.Visible", d.hasGuild());
+        ui.set("#TabBtnEchanges.Visible", nearPlayer(ref, store));
+    }
+
+    // ===== statistiques en temps reel (vie, endurance, mana) tant que le menu est ouvert (2026-11-12) =====
+    private java.util.concurrent.ScheduledFuture<?> liveTask;
+    private String liveKey = "";
+
+    private void startLive(Ref<EntityStore> ref, Store<EntityStore> store) {
+        if (liveTask != null || steward) return;
+        com.hypixel.hytale.server.core.universe.world.World world = store.getExternalData().getWorld();
+        if (world == null) return;
+        liveTask = EldaniorLogger.SCHEDULER.scheduleAtFixedRate(() -> world.execute(() -> {
+            try {
+                var p = ref.isValid() ? store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType()) : null;
+                if (p == null || p.getPageManager().getCustomPage() != this) { stopLive(); return; }   // menu ferme ou remplace
+                String key = ProfilTab.resourceKey(ref, store);
+                if (key.equals(liveKey)) return;
+                liveKey = key;
+                UICommandBuilder u = new UICommandBuilder();
+                ProfilTab.populateResourceBars(u, ref, store);
+                sendUpdate(u);
+            } catch (Exception e) {
+                stopLive();
+            }
+        }), 500, 500, java.util.concurrent.TimeUnit.MILLISECONDS);
+    }
+
+    private void stopLive() {
+        if (liveTask != null) { liveTask.cancel(false); liveTask = null; }
+    }
+
+    private static String money(long v) {
+        return String.format(java.util.Locale.FRANCE, "%,d", v).replace('\u202f', ' ').replace('\u00a0', ' ') + " or";
+    }
 
     // Timer pour refresh automatique des cooldowns dans l'onglet compétences
     private java.util.concurrent.ScheduledFuture<?> cooldownRefreshTask = null;
     private Ref<EntityStore> cachedRef = null;
     private Store<EntityStore> cachedStore = null;
 
+    /**
+     * Mode intendant (guards/LuoMerchants, PNJ intendant du territoire) : seul l'onglet Famille, sans la barre laterale, avec
+     * la gestion de la famille (FamilleTab.STEWARD). Le menu systeme normal ne fait que la consulter.
+     */
+    private final boolean steward;
+
     public SystemScreen(@Nonnull PlayerRef playerRef) {
+        this(playerRef, false);
+    }
+
+    public SystemScreen(@Nonnull PlayerRef playerRef, boolean steward) {
         super(playerRef, CustomPageLifetime.CanDismiss, SystemEventData.CODEC);
+        this.steward = steward;
+    }
+
+    @Override
+    public void onDismiss(@Nonnull Ref<EntityStore> ref, @Nonnull Store<EntityStore> store) {
+        if (steward) FamilleTab.STEWARD.remove(com.eldanior.system.config.UUIDExtractor.getUUID(playerRef));
+        stopLive();
+        stopCooldownRefresh();
+        super.onDismiss(ref, store);
     }
 
     @Override
@@ -68,10 +189,30 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
 
         String playerName = getPlayerName(ref, store);
 
+        frame(ui, data.isPK());                                            // cadre rouge pour un criminel (2026-11-12)
+
+        // Icones des categories
+        for (String tab : TAB_IDS) {
+            String icon = TAB_ICONS.get(tab);
+            if (icon == null) continue;                                    // Groupe : image fixe, pas d'ItemIcon
+            if ("Famille".equals(tab) && data.getNobleFamilyId() != null && !data.getNobleFamilyId().isEmpty()) {
+                String fid = data.getNobleFamilyId();
+                String banner = "Eldanior_Banniere_Famille_" + Character.toUpperCase(fid.charAt(0)) + fid.substring(1);
+                if (itemExists(banner)) icon = banner;
+            }
+            if (itemExists(icon)) ui.set("#TabIcon" + tab + ".ItemId", icon);
+        }
+        // Poche dimensionnelle (2026-11-16) : sa case sous le personnage, ses deux grilles (PocheTab)
+        com.eldanior.system.poche.PocheTab.slot(ui, store.getComponent(ref, PlayerRef.getComponentType()));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#PocheSlot", EventData.of("Action", "open_poche"), false);
+        events.addEventBinding(CustomUIEventBindingType.SlotClicking, "#PocheGrid", EventData.of("Action", "poche_click"), false);
+        events.addEventBinding(CustomUIEventBindingType.SlotClicking, "#PocheInvGrid", EventData.of("Action", "poche_inv_click"), false);
+        events.addEventBinding(CustomUIEventBindingType.Dropped, "#PocheGrid", EventData.of("Action", "poche_drop"), false);
+        events.addEventBinding(CustomUIEventBindingType.Dropped, "#PocheInvGrid", EventData.of("Action", "poche_inv_drop"), false);
+
         // Sidebar info
         ui.set("#SidebarPlayerName.Text", playerName);
-        ui.set("#SidebarPlayerInfo.Text", data.getPlayerClass() + " - Niv." + data.getLevel());
-        ui.set("#SidebarMoney.Text", data.getMoney() + " Or");
+        ui.set("#SidebarMoney.Text", money(data.getMoney()));
         ui.set("#SidebarLevel.Text", "Niveau " + data.getLevel());
 
         // Admin separe — via /es admin
@@ -79,43 +220,25 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         com.hypixel.hytale.server.core.entity.entities.Player playerCheck = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
 
         // Famille visible si Duc, Marquis ou Roi (ou si a deja une famille)
-        String rankStr = data.getNobilityRank();
-        String familyId = data.getNobleFamilyId();
-        boolean showFamille = (familyId != null && !familyId.isEmpty());
-        if (!showFamille && rankStr != null) {
-            showFamille = "DUC".equals(rankStr) || "MARQUIS".equals(rankStr) || "ROI".equals(rankStr);
-        }
-        if (showFamille) {
-            ui.set("#TabBtnFamille.Visible", true);
-            FamilleTab.populate(ui, ref, store);
-        }
-
-        // Territoires visible si Comte+ (Comte, Duc, Marquis, Roi)
-        boolean showTerritoires = rankStr != null && ("COMTE".equals(rankStr) || "DUC".equals(rankStr) || "MARQUIS".equals(rankStr) || "ROI".equals(rankStr));
-        if (showTerritoires) {
-            ui.set("#TabBtnTerritoires.Visible", true);
-            TerritoiresTab.populate(ui, ref, store);
+        if (steward) FamilleTab.STEWARD.add(com.eldanior.system.config.UUIDExtractor.getUUID(playerRef));
+        else FamilleTab.STEWARD.remove(com.eldanior.system.config.UUIDExtractor.getUUID(playerRef));
+        if (showFamily(data)) FamilleTab.populate(ui, ref, store);
+        tabVisibility(ui, ref, store, data);
+        if (steward) {                                                     // fenetre de l'intendant : la famille seule
+            ui.set("#Sidebar.Visible", false);
+            ui.set("#CategoryBar.Visible", false);
+            for (String tab : TAB_IDS) ui.set("#Tab" + tab + ".Visible", "Famille".equals(tab));
+            markTab(ui, "Famille");
         }
 
-        // Proprietes visible pour tous
-        ProprietesTab.populate(ui, ref, store);
+        // Echanges : onglet visible seulement pres d'un autre joueur (tabVisibility)
+        EchangesTab.populate(ui, ref, store, playerCheck != null && playerCheck.getPlayerRef().hasPermission(EldaniorLogger.ADMIN_PERMISSION));
 
-        // Echanges visible pour Marchands, Dragons et Admins
-        String classType = data.getPlayerClassId();
-        com.eldanior.system.classes.models.ClassModel classModel = com.eldanior.system.classes.ClassManager.get(classType);
-        boolean showEchanges = classModel != null && (classModel.getType() == com.eldanior.system.config.configs.ClassType.MERCHANT
-            || classModel.getType() == com.eldanior.system.config.configs.ClassType.DRAGON);
-        if (!showEchanges && playerCheck != null && playerCheck.getPlayerRef().hasPermission(EldaniorLogger.ADMIN_PERMISSION)) showEchanges = true;
-        if (showEchanges) {
-            ui.set("#TabBtnEchanges.Visible", true);
-            EchangesTab.populate(ui, ref, store, false);
-        }
+        // Quetes en cours (lecture seule)
+        com.eldanior.system.gui.tabs.QuetesEnCoursTab.populate(ui, ref, store);
 
         // Populate profil tab (default)
         ProfilTab.populate(ui, ref, store, data, playerName);
-
-        // Populate inventaire tab (pre-load slots)
-        InventaireTab.populate(ui, events, ref, store);
 
         // Populate titres tab
         TitresTab.populate(ui, ref, store);
@@ -125,11 +248,22 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         for (int i = 0; i < CompetencesTab.MAX_SKILL_SLOTS; i++) {
             events.addEventBinding(CustomUIEventBindingType.Activating, "#SkillToggle" + i,
                     EventData.of("Action", "skill_toggle").append("Param", String.valueOf(i)));
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#SkillForget" + i,
+                    EventData.of("Action", "skill_forget").append("Param", String.valueOf(i)));
+        }
+        for (int k = 0; k < 10; k++) {
+            events.addEventBinding(CustomUIEventBindingType.Activating, "#SkillFilter" + k,
+                    EventData.of("Action", "skill_filter").append("Param", String.valueOf(k)));
         }
         events.addEventBinding(CustomUIEventBindingType.Activating, "#SkillBtnPrev", EventData.of("Action", "skill_prev"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#SkillBtnNext", EventData.of("Action", "skill_next"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#SkillTabPassive", EventData.of("Action", "skill_tab_passive"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#SkillTabActive", EventData.of("Action", "skill_tab_active"));
+        // Runes : clic et glisser-deposer sur les deux grilles (RunesTab.handle)
+        events.addEventBinding(CustomUIEventBindingType.SlotClicking, "#RuneBagGrid", EventData.of("Action", "rune_bag_click"), false);
+        events.addEventBinding(CustomUIEventBindingType.SlotClicking, "#RuneAbilityGrid", EventData.of("Action", "rune_slot_click"), false);
+        events.addEventBinding(CustomUIEventBindingType.Dropped, "#RuneAbilityGrid", EventData.of("Action", "rune_slot_drop"), false);
+        events.addEventBinding(CustomUIEventBindingType.Dropped, "#RuneBagGrid", EventData.of("Action", "rune_bag_drop"), false);
 
         // Populate guilde tab
         GuildeTab.populate(ui, ref, store);
@@ -208,6 +342,12 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         }
 
         // Famille accordion toggles
+        // categories de la fenetre de l'intendant et reserve de la famille (2026-11-10)
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#FamCatListes", EventData.of("Action", "fam_cat_listes"), false);
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#FamCatOrdres", EventData.of("Action", "fam_cat_ordres"), false);
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#FamCatGestion", EventData.of("Action", "fam_cat_gestion"), false);
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#FamCatAchats", EventData.of("Action", "fam_cat_achats"), false);
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#FamBtnReserve", EventData.of("Action", "fam_reserve"), false);
         events.addEventBinding(CustomUIEventBindingType.Activating, "#FamBtnToggleMembers", EventData.of("Action", "fam_toggle_members"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#FamBtnToggleOrdres", EventData.of("Action", "fam_toggle_ordres"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#FamBtnToggleInvite", EventData.of("Action", "fam_toggle_invite"));
@@ -253,23 +393,6 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             events.addEventBinding(CustomUIEventBindingType.Activating, "#OMemberBtnKick" + i, EventData.of("Action", "ordre_kick").append("Param", String.valueOf(i)));
         }
 
-        // Populate quest tab
-        QuestTab.populate(ui, ref, store);
-        for (int i = 0; i < QuestTab.MAX_QUEST_SLOTS; i++) {
-            events.addEventBinding(CustomUIEventBindingType.Activating, "#QSlotBtnAccept" + i, EventData.of("Action", "quest_accept").append("Param", String.valueOf(i)));
-            events.addEventBinding(CustomUIEventBindingType.Activating, "#QSlotBtnActivate" + i, EventData.of("Action", "quest_activate").append("Param", String.valueOf(i)));
-            events.addEventBinding(CustomUIEventBindingType.Activating, "#QSlotBtnClaim" + i, EventData.of("Action", "quest_claim").append("Param", String.valueOf(i)));
-            events.addEventBinding(CustomUIEventBindingType.Activating, "#QSlotBtnAbandon" + i, EventData.of("Action", "quest_abandon").append("Param", String.valueOf(i)));
-        }
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnQuetes", EventData.of("Action", "tab_quetes"));
-        // Quest category navigation
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#QBlasonDaily", EventData.of("Action", "quest_cat").append("Param", "daily"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#QBlasonSide", EventData.of("Action", "quest_cat").append("Param", "side"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#QBlasonMain", EventData.of("Action", "quest_cat").append("Param", "main"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#QBannerEnCours", EventData.of("Action", "quest_cat").append("Param", "progress"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#QBannerAClaim", EventData.of("Action", "quest_cat").append("Param", "done"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#QListBtnBack", EventData.of("Action", "quest_back"));
-
         // Populate shop tab (PK ne voient pas le shop normal)
         boolean isPK = data.isPK();
         if (isPK) {
@@ -287,24 +410,26 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         }
 
         // Populate black market (visible si PK ou admin)
-        boolean showBM = data.isPK() || (playerCheck != null && playerCheck.getPlayerRef().hasPermission(EldaniorLogger.ADMIN_PERMISSION));
+        boolean showBM = data.isPK() || com.eldanior.system.classes.observateur.ObservateurManager.isObservateur(data)   // Observateur : il voit le marche noir
+                || (playerCheck != null && playerCheck.getPlayerRef().hasPermission(EldaniorLogger.ADMIN_PERMISSION));
         ui.set("#TabBtnBlackMarket.Visible", showBM);
         if (showBM) {
             BlackMarketTab.populate(ui, ref, store);
         }
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnBlackMarket", EventData.of("Action", "tab_blackmarket"));
+        // Cour de l'Observateur (2026-11-17) : le Roi et l'Empereur Luo gerent leur Observateur sans commande ;
+        // 2026-11-19 : panneau #TabObservateur a droite des onglets (ObservateurCourTab), plus une fenetre a part
+        boolean showCour = com.eldanior.system.classes.observateur.ObservateurCourTab.canOpen(
+                playerCheck != null ? playerCheck.getPlayerRef() : null, data);
+        ui.set("#TabBtnObservateur.Visible", showCour && !steward);
+        if (showCour && itemExists("Rune_ArkiesDomini")) ui.set("#TabIconObservateur.ItemId", "Rune_ArkiesDomini");
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnObservateur", EventData.of("Action", "tab_observateur"), false);
+        com.eldanior.system.classes.observateur.ObservateurCourTab.bind(events);
         events.addEventBinding(CustomUIEventBindingType.Activating, "#BMBtnPrev", EventData.of("Action", "bm_prev"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#BMBtnNext", EventData.of("Action", "bm_next"));
         for (int i = 0; i < BlackMarketTab.MAX_SLOTS; i++) {
             events.addEventBinding(CustomUIEventBindingType.Activating, "#BMBtnBuy" + i, EventData.of("Action", "bm_buy").append("Param", String.valueOf(i)));
             events.addEventBinding(CustomUIEventBindingType.Activating, "#BMBtnCancel" + i, EventData.of("Action", "bm_cancel").append("Param", String.valueOf(i)));
-        }
-
-        // Populate duel tab
-        DuelTab.populate(ui, ref, store);
-        for (int i = 0; i < DuelTab.MAX_INVITE_SLOTS; i++) {
-            events.addEventBinding(CustomUIEventBindingType.Activating, "#DuelChallenge" + i,
-                    EventData.of("Action", "duel_challenge").append("Param", String.valueOf(i)));
         }
 
         // Echanges invite buttons
@@ -315,93 +440,20 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
                     EventData.of("Action", "ech_force").append("Param", String.valueOf(i)));
         }
 
-        // Territoires - pagination
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#TerrBtnPrev", EventData.of("Action", "terr_prev"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#TerrBtnNext", EventData.of("Action", "terr_next"));
-        // Territoires - clic sur un territoire (selection)
-        for (int i = 0; i < TerritoiresTab.MAX_TERR_SLOTS; i++) {
-            events.addEventBinding(CustomUIEventBindingType.Activating, "#TerrSlot" + i,
-                    EventData.of("Action", "terr_select").append("Param", String.valueOf(i)));
-        }
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnProt", EventData.of("Action", "terr_prot"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnFamily", EventData.of("Action", "terr_family"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnGuild", EventData.of("Action", "terr_guild"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnDel", EventData.of("Action", "terr_del"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnPvp", EventData.of("Action", "terr_pvp"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnTax", EventData.of("Action", "terr_tax"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnSellCity", EventData.of("Action", "terr_sell_city"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnTransfer", EventData.of("Action", "terr_transfer"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnInvasion", EventData.of("Action", "terr_invasion"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnDecretMarquis", EventData.of("Action", "terr_decret").append("Param", "MARQUIS"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnDecretDuc", EventData.of("Action", "terr_decret").append("Param", "DUC"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnDecretComte", EventData.of("Action", "terr_decret").append("Param", "COMTE"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnDecretBaron", EventData.of("Action", "terr_decret").append("Param", "BARON"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#TDetBtnDecretChevalier", EventData.of("Action", "terr_decret").append("Param", "CHEVALIER"));
-
-        // Proprietes - pagination
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#POwnPrev", EventData.of("Action", "prop_owned_prev"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#POwnNext", EventData.of("Action", "prop_owned_next"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#PAvPrev", EventData.of("Action", "prop_avail_prev"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#PAvNext", EventData.of("Action", "prop_avail_next"));
-        // Proprietes - clic sur un bien (selection)
-        for (int i = 0; i < ProprietesTab.MAX_OWNED_SLOTS; i++) {
-            events.addEventBinding(CustomUIEventBindingType.Activating, "#POwnSlot" + i,
-                    EventData.of("Action", "prop_select").append("Param", String.valueOf(i)));
-        }
-        // Proprietes - disponibles
-        for (int i = 0; i < ProprietesTab.MAX_AVAILABLE_SLOTS; i++) {
-            events.addEventBinding(CustomUIEventBindingType.Activating, "#PAvBtnBuy" + i,
-                    EventData.of("Action", "prop_buy").append("Param", String.valueOf(i)));
-            events.addEventBinding(CustomUIEventBindingType.Activating, "#PAvBtnRent" + i,
-                    EventData.of("Action", "prop_rent").append("Param", String.valueOf(i)));
-        }
-        // Proprietes - villes (Comte + Guilde)
-        for (int i = 0; i < ProprietesTab.MAX_CITY_SLOTS; i++) {
-            events.addEventBinding(CustomUIEventBindingType.Activating, "#CityBtnBuy" + i,
-                    EventData.of("Action", "prop_buy_city").append("Param", String.valueOf(i)));
-        }
-        // Proprietes - detail actions
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#PDetBtnProt", EventData.of("Action", "prop_prot"));
-        // prop_setprice and prop_setrent removed — admin-only, handled in AdminScreen via /es admin
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#PDetBtnFamily", EventData.of("Action", "prop_family"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#PDetBtnSell", EventData.of("Action", "prop_sellback"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#PDetBtnQuit", EventData.of("Action", "prop_quit"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#PDetBtnRenew", EventData.of("Action", "prop_renew"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#PDetBtnRentOut", EventData.of("Action", "prop_rentout"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#PDetBtnCancelRent", EventData.of("Action", "prop_cancelrent"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#PDetBtnDel", EventData.of("Action", "prop_del"));
-        // Invite buttons dans le detail
-        for (int i = 0; i < ProprietesTab.MAX_INVITE_SLOTS; i++) {
-            events.addEventBinding(CustomUIEventBindingType.Activating, "#PDetInvBtn" + i,
-                    EventData.of("Action", "prop_invite").append("Param", String.valueOf(i)));
-        }
-
-        // Populate classements
-        ClassementsTab.populate(ui, ref, store);
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#RkBtnMobs", EventData.of("Action", "rk_mobs"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#RkBtnPvP", EventData.of("Action", "rk_pvp"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#RkBtnGuildFam", EventData.of("Action", "rk_guildfam"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#RkBtnDuel", EventData.of("Action", "rk_duel"));
-
         // Admin separe — via /es admin
 
         // === EVENT BINDINGS ===
 
         // Tab navigation
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnProfil",      EventData.of("Action", "tab_profil"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnInventaire",  EventData.of("Action", "tab_inventaire"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnCompetences", EventData.of("Action", "tab_competences"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnGuilde",      EventData.of("Action", "tab_guilde"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnGroupe",      EventData.of("Action", "tab_groupe"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnFamille",     EventData.of("Action", "tab_famille"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnTitres",      EventData.of("Action", "tab_titres"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnClassements", EventData.of("Action", "tab_classements"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnDuel",        EventData.of("Action", "tab_duel"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnShop",        EventData.of("Action", "tab_shop"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnTerritoires", EventData.of("Action", "tab_territoires"));
-        events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnProprietes", EventData.of("Action", "tab_proprietes"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnEchanges",   EventData.of("Action", "tab_echanges"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnWiki",       EventData.of("Action", "tab_wiki"));
+        events.addEventBinding(CustomUIEventBindingType.Activating, "#TabBtnQuetes",     EventData.of("Action", "tab_quetes"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#WikiBtnPrev",      EventData.of("Action", "wiki_prev"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#WikiBtnNext",      EventData.of("Action", "wiki_next"));
         // Admin tab removed — /es admin
@@ -421,12 +473,27 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         events.addEventBinding(CustomUIEventBindingType.Activating, "#BtnEnd5", EventData.of("Action", "attr_end_5"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#BtnAgl5", EventData.of("Action", "attr_agl_5"));
         events.addEventBinding(CustomUIEventBindingType.Activating, "#BtnLck5", EventData.of("Action", "attr_lck_5"));
+
+        if (pocheOnOpen && !steward) showPoche(ui, ref, store);            // ouvert par l'objet : directement sur la poche
+        else if (observateurOnOpen && !steward) showObservateur(ui, ref, store, data);   // Sans Visage « Ma charge », commande
+        startLive(ref, store);
+    }
+
+    /** JSON brut du dernier evenement recu : les grilles de runes y lisent les cles du client (SlotIndex, DragSourceSlotId...). */
+    private String lastRawEvent;
+
+    @Override
+    public void handleDataEvent(@Nonnull Ref<EntityStore> ref, @Nonnull Store<EntityStore> store, String rawData) {
+        this.lastRawEvent = rawData;
+        super.handleDataEvent(ref, store, rawData);
     }
 
     @Override
     public void handleDataEvent(@Nonnull Ref<EntityStore> ref, @Nonnull Store<EntityStore> store,
                                 @Nonnull SystemEventData eventData) {
         if (eventData.action == null) return;
+        if (!steward && FamilleTab.MANAGEMENT_ACTIONS.contains(eventData.action)) return;   // gestion : chez l'intendant
+        if (steward && eventData.action.startsWith("tab_") && !"tab_famille".equals(eventData.action)) return;
 
         // Tab switching
         if (eventData.action.startsWith("tab_")) {
@@ -438,20 +505,6 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         if (eventData.action.startsWith("attr_")) {
             if (ProfilTab.handleAttribute(eventData.action, ref, store)) {
                 refreshProfilTab(ref, store);
-            }
-            return;
-        }
-
-        // Inventory actions
-        if ("inv_take".equals(eventData.action) && eventData.param != null) {
-            if (InventaireTab.handleTake(ref, store, EldaniorLogger.parseSafeInt(eventData.param, -1))) {
-                refreshInventaireTab(ref, store);
-            }
-            return;
-        }
-        if ("inv_deposit".equals(eventData.action) && eventData.param != null) {
-            if (InventaireTab.handleDeposit(ref, store, EldaniorLogger.parseSafeInt(eventData.param, -1))) {
-                refreshInventaireTab(ref, store);
             }
             return;
         }
@@ -508,6 +561,50 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             if (FamilleTab.handleChoose(eventData.param, ref, store)) {
                 refreshFamilleTab(ref, store);
                 refreshProfilTab(ref, store);
+            }
+            return;
+        }
+
+        // Intendant : categories et reserve
+        if (eventData.action.startsWith("fam_cat_")) {
+            FamilleTab.setCategory(getPlayerUUID(ref, store), eventData.action.substring("fam_cat_".length()));
+            refreshFamilleTab(ref, store);
+            return;
+        }
+        if ("open_poche".equals(eventData.action) || eventData.action.startsWith("poche_")) {   // poche : panneau dans le menu
+            try {
+                if (!"open_poche".equals(eventData.action))
+                    com.eldanior.system.poche.PocheTab.handle(ref, store, eventData.action, lastRawEvent);
+                UICommandBuilder u = new UICommandBuilder();
+                showPoche(u, ref, store);
+                sendUpdate(u);
+            } catch (Exception e) {
+                EldaniorLogger.error("[Poche] menu systeme", e);
+            }
+            return;
+        }
+        if (eventData.action.startsWith(com.eldanior.system.classes.observateur.ObservateurCourTab.PREFIX)) {   // Cour : panneau
+            if (steward) return;
+            try {
+                cour().handle(eventData.action.substring(com.eldanior.system.classes.observateur.ObservateurCourTab.PREFIX.length()),
+                        eventData.param, eventData.ocAlias, ref, store);
+                UICommandBuilder u = new UICommandBuilder();
+                cour().populate(u, ref, store);
+                sendUpdate(u);
+            } catch (Exception e) {
+                EldaniorLogger.error("[Observateur] cour", e);
+            }
+            return;
+        }
+        if ("fam_reserve".equals(eventData.action)) {
+            try {
+                PlayerLevelData d = store.getComponent(ref, EldaniorSystem.get().getPlayerLevelDataType());
+                String shop = d != null ? FamilleTab.reserveShop(d.getNobleFamilyId()) : null;
+                var pl = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
+                if (shop != null && pl != null)                                 // openCustomPage remplace cette page (ne pas fermer avant)
+                    pl.getPageManager().openCustomPage(ref, store, com.eldanior.system.guards.ShopPage.reserve(playerRef, shop));
+            } catch (Exception e) {
+                EldaniorLogger.error("[Intendant] reserve", e);
             }
             return;
         }
@@ -586,10 +683,9 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             return;
         }
         if ("fam_create_ordre".equals(eventData.action)) {
-            // Tell player to use chat command for now
             com.hypixel.hytale.server.core.entity.entities.Player player = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
             if (player != null) {
-                player.getPlayerRef().sendMessage(Message.raw("Tapez dans le chat : /es ordre create <nom> <devise>"));
+                player.getPlayerRef().sendMessage(Message.raw("Les ordres de chevalier se créent auprès de l'intendant de votre famille."));
             }
             return;
         }
@@ -632,52 +728,8 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         if ("ordre_invite".equals(eventData.action)) {
             com.hypixel.hytale.server.core.entity.entities.Player player = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
             if (player != null) {
-                player.getPlayerRef().sendMessage(Message.raw("Tapez dans le chat : /es ordre invite <joueur>"));
+                player.getPlayerRef().sendMessage(Message.raw("Les invitations dans un ordre se font auprès de l'intendant de votre famille."));
             }
-            return;
-        }
-
-        // Quest category navigation
-        if ("quest_cat".equals(eventData.action) && eventData.param != null) {
-            java.util.UUID qUuid = getPlayerUUID(ref, store);
-            if (qUuid != null) {
-                QuestTab.selectCategory(qUuid, eventData.param);
-                refreshQuestTab(ref, store);
-            }
-            return;
-        }
-        if ("quest_back".equals(eventData.action)) {
-            java.util.UUID qUuid = getPlayerUUID(ref, store);
-            if (qUuid != null) {
-                QuestTab.goBack(qUuid);
-                refreshQuestTab(ref, store);
-            }
-            return;
-        }
-
-        // Quest actions
-        if ("quest_accept".equals(eventData.action) && eventData.param != null) {
-            if (QuestTab.handleAccept(eventData.param, ref, store)) refreshQuestTab(ref, store);
-            return;
-        }
-        if ("quest_activate".equals(eventData.action) && eventData.param != null) {
-            if (QuestTab.handleActivate(eventData.param, ref, store)) {
-                refreshQuestTab(ref, store);
-                // Set le QuestHud
-                setQuestHud(ref, store);
-            }
-            return;
-        }
-        if ("quest_claim".equals(eventData.action) && eventData.param != null) {
-            if (QuestTab.handleClaim(eventData.param, ref, store)) refreshQuestTab(ref, store);
-            return;
-        }
-        if ("quest_abandon".equals(eventData.action) && eventData.param != null) {
-            if (QuestTab.handleAbandon(eventData.param, ref, store)) refreshQuestTab(ref, store);
-            return;
-        }
-        if ("quest_abandon_active".equals(eventData.action)) {
-            if (QuestTab.handleAbandonActive(ref, store)) refreshQuestTab(ref, store);
             return;
         }
 
@@ -713,14 +765,6 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             if (BlackMarketTab.handleCancel(eventData.param, ref, store)) refreshBlackMarketTab(ref, store); return;
         }
 
-        // Duel challenge
-        if ("duel_challenge".equals(eventData.action) && eventData.param != null) {
-            if (DuelTab.handleChallenge(eventData.param, ref, store)) {
-                refreshDuelTab(ref, store);
-            }
-            return;
-        }
-
         // Echange invite
         if ("ech_invite".equals(eventData.action) && eventData.param != null) {
             if (EchangesTab.handleInvite(EldaniorLogger.parseSafeInt(eventData.param, -1), ref, store)) {
@@ -735,85 +779,6 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             return;
         }
 
-        // Territoires - pagination
-        if ("terr_prev".equals(eventData.action)) {
-            if (TerritoiresTab.handlePrev(getPlayerUUID(ref, store))) refreshTerritoiresTab(ref, store);
-            return;
-        }
-        if ("terr_next".equals(eventData.action)) {
-            if (TerritoiresTab.handleNext(getPlayerUUID(ref, store))) refreshTerritoiresTab(ref, store);
-            return;
-        }
-        // Territoires - selection
-        if ("terr_select".equals(eventData.action) && eventData.param != null) {
-            if (TerritoiresTab.handleSelect(EldaniorLogger.parseSafeInt(eventData.param, -1), getPlayerUUID(ref, store))) {
-                refreshTerritoiresTab(ref, store);
-            }
-            return;
-        }
-        if ("terr_prot".equals(eventData.action)) {
-            if (TerritoiresTab.handleToggleProtection(getPlayerUUID(ref, store))) refreshTerritoiresTab(ref, store);
-            return;
-        }
-        if ("terr_family".equals(eventData.action)) {
-            com.hypixel.hytale.server.core.entity.entities.Player p = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
-            if (p != null) {
-                p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("Tapez dans le chat :"));
-                p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("/es parcel assign <familyId> _"));
-            }
-            return;
-        }
-        if ("terr_guild".equals(eventData.action)) {
-            com.hypixel.hytale.server.core.entity.entities.Player p = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
-            if (p != null) {
-                p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("Tapez dans le chat :"));
-                p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("/es parcel assignguild <guildId> _"));
-            }
-            return;
-        }
-        if ("terr_del".equals(eventData.action)) {
-            if (TerritoiresTab.handleDelete(getPlayerUUID(ref, store))) refreshTerritoiresTab(ref, store);
-            return;
-        }
-        if ("terr_sell_city".equals(eventData.action)) {
-            if (TerritoiresTab.handleSellCity(ref, store)) {
-                refreshTerritoiresTab(ref, store);
-                refreshProfilTab(ref, store);
-            }
-            return;
-        }
-        if ("terr_pvp".equals(eventData.action)) {
-            if (TerritoiresTab.handleTogglePvp(getPlayerUUID(ref, store))) refreshTerritoiresTab(ref, store);
-            return;
-        }
-        if ("terr_tax".equals(eventData.action)) {
-            if (TerritoiresTab.handleCollectTax(getPlayerUUID(ref, store))) {
-                refreshTerritoiresTab(ref, store);
-                com.hypixel.hytale.server.core.entity.entities.Player p = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
-                if (p != null) p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("Impots collectes !"));
-            }
-            return;
-        }
-        if ("terr_transfer".equals(eventData.action)) {
-            if (TerritoiresTab.handleTransferTreasury(getPlayerUUID(ref, store))) {
-                refreshTerritoiresTab(ref, store);
-                com.hypixel.hytale.server.core.entity.entities.Player p = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
-                if (p != null) p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("Tresorerie transferee !"));
-            }
-            return;
-        }
-        if ("terr_decret".equals(eventData.action) && eventData.param != null) {
-            if (TerritoiresTab.handleGiveDecret(eventData.param, ref, store)) {
-                refreshTerritoiresTab(ref, store);
-            }
-            return;
-        }
-        if ("terr_invasion".equals(eventData.action)) {
-            com.hypixel.hytale.server.core.entity.entities.Player p = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
-            if (p != null) p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("INVASION LANCEE ! (fonctionnalite en cours de developpement)"));
-            return;
-        }
-
         // Wiki - pagination
         if ("wiki_prev".equals(eventData.action)) {
             if (WikiTab.handlePrev(getPlayerUUID(ref, store))) { switchTab("wiki", ref, store); }
@@ -824,124 +789,20 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             return;
         }
 
-        // Proprietes - pagination
-        if ("prop_owned_prev".equals(eventData.action)) {
-            if (ProprietesTab.handleOwnedPrev(getPlayerUUID(ref, store))) refreshProprietesTab(ref, store);
-            return;
-        }
-        if ("prop_owned_next".equals(eventData.action)) {
-            if (ProprietesTab.handleOwnedNext(getPlayerUUID(ref, store))) refreshProprietesTab(ref, store);
-            return;
-        }
-        if ("prop_avail_prev".equals(eventData.action)) {
-            if (ProprietesTab.handleAvailablePrev(getPlayerUUID(ref, store))) refreshProprietesTab(ref, store);
-            return;
-        }
-        if ("prop_avail_next".equals(eventData.action)) {
-            if (ProprietesTab.handleAvailableNext(getPlayerUUID(ref, store))) refreshProprietesTab(ref, store);
-            return;
-        }
-
-        // Proprietes - selection d'un bien
-        if ("prop_select".equals(eventData.action) && eventData.param != null) {
-            if (ProprietesTab.handleSelect(EldaniorLogger.parseSafeInt(eventData.param, -1), getPlayerUUID(ref, store))) {
-                refreshProprietesTab(ref, store);
-            }
-            return;
-        }
-        // Proprietes - acheter ville
-        if ("prop_buy_city".equals(eventData.action) && eventData.param != null) {
-            if (ProprietesTab.handleBuyCity(EldaniorLogger.parseSafeInt(eventData.param, -1), ref, store)) {
-                refreshProprietesTab(ref, store);
-                refreshProfilTab(ref, store);
-            }
-            return;
-        }
-        // Proprietes - acheter/louer
-        if ("prop_buy".equals(eventData.action) && eventData.param != null) {
-            if (ProprietesTab.handleBuy(EldaniorLogger.parseSafeInt(eventData.param, -1), ref, store)) {
-                refreshProprietesTab(ref, store);
-                refreshProfilTab(ref, store);
-            }
-            return;
-        }
-        if ("prop_rent".equals(eventData.action) && eventData.param != null) {
-            if (ProprietesTab.handleRent(EldaniorLogger.parseSafeInt(eventData.param, -1), ref, store)) {
-                refreshProprietesTab(ref, store);
-                refreshProfilTab(ref, store);
-            }
-            return;
-        }
-        // Proprietes - detail actions
-        if ("prop_prot".equals(eventData.action)) {
-            if (ProprietesTab.handleToggleProtection(getPlayerUUID(ref, store))) refreshProprietesTab(ref, store);
-            return;
-        }
-        if ("prop_family".equals(eventData.action)) {
-            // Prefill la commande dans le chat
-            com.hypixel.hytale.server.core.entity.entities.Player p = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
-            if (p != null) {
-                p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("Tapez dans le chat :"));
-                p.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("/es parcel assign <familyId> _"));
-            }
-            return;
-        }
-        if ("prop_quit".equals(eventData.action)) {
-            if (ProprietesTab.handleQuitRental(getPlayerUUID(ref, store))) {
-                refreshProprietesTab(ref, store);
-            }
-            return;
-        }
-        if ("prop_renew".equals(eventData.action)) {
-            if (ProprietesTab.handleRenew(ref, store)) {
-                refreshProprietesTab(ref, store);
-                refreshProfilTab(ref, store);
-            }
-            return;
-        }
-        if ("prop_rentout".equals(eventData.action)) {
-            if (ProprietesTab.handleRentOut(getPlayerUUID(ref, store))) {
-                refreshProprietesTab(ref, store);
-            }
-            return;
-        }
-        if ("prop_cancelrent".equals(eventData.action)) {
-            if (ProprietesTab.handleCancelRent(getPlayerUUID(ref, store))) {
-                refreshProprietesTab(ref, store);
-            }
-            return;
-        }
-        if ("prop_sellback".equals(eventData.action)) {
-            if (ProprietesTab.handleSellSelected(getPlayerUUID(ref, store))) {
-                refreshProprietesTab(ref, store);
-            }
-            return;
-        }
-        if ("prop_invite".equals(eventData.action) && eventData.param != null) {
-            if (ProprietesTab.handleInvite(EldaniorLogger.parseSafeInt(eventData.param, -1), getPlayerUUID(ref, store))) {
-                refreshProprietesTab(ref, store);
-            }
-            return;
-        }
-        if ("prop_del".equals(eventData.action)) {
-            if (ProprietesTab.handleDeleteSelected(getPlayerUUID(ref, store))) {
-                refreshProprietesTab(ref, store);
-            }
-            return;
-        }
-
-        // Ranking category switch
-        if (eventData.action.startsWith("rk_")) {
-            String cat = eventData.action.substring(3);
-            UICommandBuilder update = new UICommandBuilder();
-            ClassementsTab.switchCategory(cat, update, getPlayerUUID(ref, store));
-            this.sendUpdate(update);
-            return;
-        }
-
         // Admin actions
         if (eventData.action.startsWith("admin_")) {
             // Admin actions moved to AdminScreen (/es admin)
+            return;
+        }
+
+        // Runes (onglet Competences, vue Runes actives)
+        if (eventData.action.startsWith("rune_")) {
+            try {
+                com.eldanior.system.gui.tabs.RunesTab.handle(ref, store, eventData.action, lastRawEvent);
+            } catch (Exception e) {
+                EldaniorLogger.error("[Runes] menu", e);
+            }
+            refreshCompetencesTab(ref, store);
             return;
         }
 
@@ -965,6 +826,19 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         if ("skill_tab_active".equals(eventData.action)) {
             CompetencesTab.switchToActives(getPlayerUUID(ref, store));
             refreshCompetencesTab(ref, store);
+            return;
+        }
+        // Filtre par theme de l'onglet Competences
+        if ("skill_filter".equals(eventData.action) && eventData.param != null) {
+            CompetencesTab.setFilter(getPlayerUUID(ref, store), eventData.param);
+            refreshCompetencesTab(ref, store);
+            return;
+        }
+        // Oublier un passif appris (deux clics)
+        if ("skill_forget".equals(eventData.action) && eventData.param != null) {
+            if (CompetencesTab.handleForget(eventData.param, ref, store)) {
+                refreshCompetencesTab(ref, store);
+            }
             return;
         }
         // Skill toggle
@@ -1105,32 +979,6 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         this.sendUpdate(update);
     }
 
-    private void refreshQuestTab(Ref<EntityStore> ref, Store<EntityStore> store) {
-        UICommandBuilder update = new UICommandBuilder();
-        QuestTab.populate(update, ref, store);
-        appendProfilRefresh(update, ref, store);
-        this.sendUpdate(update);
-    }
-
-    private void setQuestHud(Ref<EntityStore> ref, Store<EntityStore> store) {
-        try {
-            com.hypixel.hytale.server.core.entity.entities.Player player = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
-            PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
-            if (player == null || pRef == null) return;
-                        java.util.UUID uuid = UUIDExtractor.getUUID(pRef);
-
-            var currentHud = player.getHudManager().getCustomHud("combined_hud");
-            if (currentHud instanceof com.eldanior.system.hud.CombinedHud) {
-                currentHud.show(); // Refresh
-            } else {
-                var data = store.getComponent(ref, com.eldanior.system.EldaniorSystem.get().getPlayerLevelDataType());
-                com.eldanior.system.hud.CombinedHud hud = new com.eldanior.system.hud.CombinedHud(pRef, uuid);
-                hud.setCachedData(data, player);
-                player.getHudManager().addCustomHud(pRef, hud);
-            }
-        } catch (Exception e) { e.printStackTrace(); }
-    }
-
     /** Rafraichit la sidebar + le profil dans un UICommandBuilder existant */
     private void appendProfilRefresh(UICommandBuilder update, Ref<EntityStore> ref, Store<EntityStore> store) {
         ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
@@ -1141,42 +989,14 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
 
         // Sidebar
         update.set("#SidebarPlayerName.Text", playerName);
-        update.set("#SidebarPlayerInfo.Text", data.getPlayerClass() + " - Niv." + data.getLevel());
-        update.set("#SidebarMoney.Text", data.getMoney() + " Or");
+        update.set("#SidebarMoney.Text", money(data.getMoney()));
         update.set("#SidebarLevel.Text", "Niveau " + data.getLevel());
 
-        // Famille visible si Duc, Marquis ou Roi
-        String rankStr = data.getNobilityRank();
-        String familyId = data.getNobleFamilyId();
-        boolean showFamille = (familyId != null && !familyId.isEmpty());
-        if (!showFamille && rankStr != null) {
-            showFamille = "DUC".equals(rankStr) || "MARQUIS".equals(rankStr) || "ROI".equals(rankStr);
-        }
-        update.set("#TabBtnFamille.Visible", showFamille);
-
-        // Territoires visible si Comte+ ou si possede une ville/territoire via guilde
-        boolean showTerritoires = rankStr != null && ("COMTE".equals(rankStr) || "DUC".equals(rankStr) || "MARQUIS".equals(rankStr) || "ROI".equals(rankStr));
-        update.set("#TabBtnTerritoires.Visible", showTerritoires);
-
-        // Echanges visible pour Marchands, Dragons et Admins
-        com.eldanior.system.classes.models.ClassModel classModel = com.eldanior.system.classes.ClassManager.get(data.getPlayerClassId());
-        boolean showEchanges = classModel != null && (classModel.getType() == com.eldanior.system.config.configs.ClassType.MERCHANT
-            || classModel.getType() == com.eldanior.system.config.configs.ClassType.DRAGON);
-        if (!showEchanges) {
-            com.hypixel.hytale.server.core.entity.entities.Player pCheck = store.getComponent(ref, com.hypixel.hytale.server.core.entity.entities.Player.getComponentType());
-            if (pCheck != null && pCheck.getPlayerRef().hasPermission(EldaniorLogger.ADMIN_PERMISSION)) showEchanges = true;
-        }
-        update.set("#TabBtnEchanges.Visible", showEchanges);
+        // Onglets qui dependent du joueur
+        if (!steward) tabVisibility(update, ref, store, data);
 
         // Profil tab
         ProfilTab.populate(update, ref, store, data, playerName);
-    }
-
-    private void refreshDuelTab(Ref<EntityStore> ref, Store<EntityStore> store) {
-        UICommandBuilder update = new UICommandBuilder();
-        DuelTab.populate(update, ref, store);
-        appendProfilRefresh(update, ref, store);
-        this.sendUpdate(update);
     }
 
     private void refreshBlackMarketTab(Ref<EntityStore> ref, Store<EntityStore> store) {
@@ -1259,28 +1079,63 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         this.sendUpdate(update);
     }
 
-    private void refreshInventaireTab(Ref<EntityStore> ref, Store<EntityStore> store) {
-        UICommandBuilder update = new UICommandBuilder();
-        InventaireTab.refreshOnly(update, ref, store);
-        this.sendUpdate(update);
-    }
-
     private void refreshEchangesTab(Ref<EntityStore> ref, Store<EntityStore> store) {
         UICommandBuilder update = new UICommandBuilder();
         EchangesTab.populate(update, ref, store, false);
         this.sendUpdate(update);
     }
 
-    private void refreshTerritoiresTab(Ref<EntityStore> ref, Store<EntityStore> store) {
-        UICommandBuilder update = new UICommandBuilder();
-        TerritoiresTab.populate(update, ref, store);
-        this.sendUpdate(update);
+    /** Ouvrir le menu directement sur la poche (clic droit avec l'objet). */
+    private boolean pocheOnOpen;
+
+    public SystemScreen openOnPoche() {
+        this.pocheOnOpen = true;
+        return this;
     }
 
-    private void refreshProprietesTab(Ref<EntityStore> ref, Store<EntityStore> store) {
-        UICommandBuilder update = new UICommandBuilder();
-        ProprietesTab.populate(update, ref, store);
-        this.sendUpdate(update);
+    /** Cour de l'Observateur (panneau #TabObservateur) : etat du panneau, un par menu ouvert. */
+    private com.eldanior.system.classes.observateur.ObservateurCourTab cour;
+    /** Ouvrir le menu directement sur la Cour (Sans Visage « Ma charge », /es observateur menu). */
+    private boolean observateurOnOpen;
+
+    private com.eldanior.system.classes.observateur.ObservateurCourTab cour() {
+        if (cour == null) cour = new com.eldanior.system.classes.observateur.ObservateurCourTab(playerRef);
+        return cour;
+    }
+
+    public SystemScreen openOnObservateur() {
+        this.observateurOnOpen = true;
+        return this;
+    }
+
+    /**
+     * Panneau de la Cour a la place de celui de l'onglet ouvert (2026-11-19). Bouton allume s'il est affiche (souverain, admin) ;
+     * l'Observateur, sans bouton, y arrive par Sans Visage ou la commande.
+     */
+    private boolean showObservateur(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store, PlayerLevelData data) {
+        if (!com.eldanior.system.classes.observateur.ObservateurCourTab.allowed(playerRef, data)) return false;
+        stopCooldownRefresh();
+        for (String tab : TAB_IDS) ui.set("#Tab" + tab + ".Visible", "Observateur".equals(tab));
+        ui.set("#TabPoche.Visible", false);
+        markTab(ui, "Observateur");
+        cour().populate(ui, ref, store);
+        return true;
+    }
+
+    /**
+     * Panneau de la poche (2026-11-16) a la place de celui de l'onglet ouvert, sans quitter le menu : tous les onglets caches,
+     * aucun bouton de categorie allume.
+     */
+    private void showPoche(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store) {
+        stopCooldownRefresh();
+        for (String tab : TAB_IDS) {
+            ui.set("#Tab" + tab + ".Visible", false);
+            ui.set("#TabOn" + tab + ".Visible", false);
+        }
+        ui.set("#TabPoche.Visible", true);
+        ui.set("#ContentTitle.Text", "Poche dimensionnelle");
+        com.eldanior.system.poche.PocheTab.populate(ui, ref, store);
+        com.eldanior.system.poche.PocheTab.slot(ui, store.getComponent(ref, PlayerRef.getComponentType()));
     }
 
     private void switchTab(String tabName, Ref<EntityStore> ref, Store<EntityStore> store) {
@@ -1289,12 +1144,23 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             stopCooldownRefresh();
         }
 
+        boolean known = false;                                           // onglets retires le 2026-11-12 : ignorer
+        for (String tab : TAB_IDS) known |= tab.equalsIgnoreCase(tabName);
+        if (!known) return;
+
+        if ("observateur".equals(tabName)) {                             // Cour de l'Observateur (2026-11-19)
+            UICommandBuilder u = new UICommandBuilder();
+            if (showObservateur(u, ref, store, store.getComponent(ref, EldaniorSystem.get().getPlayerLevelDataType()))) sendUpdate(u);
+            return;
+        }
+
         UICommandBuilder update = new UICommandBuilder();
 
         // Hide all tabs
         for (String tab : TAB_IDS) {
             update.set("#Tab" + tab + ".Visible", false);
         }
+        update.set("#TabPoche.Visible", false);                          // panneau de la poche (2026-11-16)
 
         // Show target tab (find matching TAB_ID case-insensitive)
         String targetId = tabName.substring(0, 1).toUpperCase() + tabName.substring(1);
@@ -1302,28 +1168,14 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
             if (tab.equalsIgnoreCase(tabName)) { targetId = tab; break; }
         }
         update.set("#Tab" + targetId + ".Visible", true);
+        markTab(update, targetId);
 
         // Refresh tab data
-        if ("inventaire".equals(tabName)) {
-            InventaireTab.refreshOnly(update, ref, store);
-        }
         if ("blackmarket".equals(tabName)) {
             BlackMarketTab.populate(update, ref, store);
         }
-        if ("quetes".equals(tabName)) {
-            // Reset a l'ecran categories quand on switch vers l'onglet Quetes
-            java.util.UUID questUuid = getPlayerUUID(ref, store);
-            if (questUuid != null) QuestTab.goBack(questUuid);
-            QuestTab.populate(update, ref, store);
-        }
         if ("shop".equals(tabName)) {
             ShopTab.populate(update, ref, store);
-        }
-        if ("duel".equals(tabName)) {
-            DuelTab.populate(update, ref, store);
-        }
-        if ("classements".equals(tabName)) {
-            ClassementsTab.populate(update, ref, store);
         }
         // admin tab removed — /es admin
         if ("competences".equals(tabName)) {
@@ -1334,6 +1186,9 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
                 this.cachedStore = store;
                 EldaniorLogger.SCHEDULER.schedule(() -> startCooldownRefresh(ref, store), 500, java.util.concurrent.TimeUnit.MILLISECONDS);
             }
+        }
+        if ("quetes".equals(tabName)) {
+            com.eldanior.system.gui.tabs.QuetesEnCoursTab.populate(update, ref, store);
         }
         if ("guilde".equals(tabName)) {
             GuildeTab.populate(update, ref, store);
@@ -1346,12 +1201,6 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         }
         if ("titres".equals(tabName)) {
             TitresTab.populate(update, ref, store);
-        }
-        if ("territoires".equals(tabName)) {
-            TerritoiresTab.populate(update, ref, store);
-        }
-        if ("proprietes".equals(tabName)) {
-            ProprietesTab.populate(update, ref, store);
         }
         if ("wiki".equals(tabName)) {
             WikiTab.populate(update, ref, store);
@@ -1383,8 +1232,7 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
         ProfilTab.populate(update, ref, store, data, playerName);
 
         // Update sidebar too
-        update.set("#SidebarPlayerInfo.Text", data.getPlayerClass() + " - Niv." + data.getLevel());
-        update.set("#SidebarMoney.Text", data.getMoney() + " Or");
+        update.set("#SidebarMoney.Text", money(data.getMoney()));
 
         this.sendUpdate(update);
     }
@@ -1407,9 +1255,12 @@ public class SystemScreen extends InteractiveCustomUIPage<SystemScreen.SystemEve
                 .append(new KeyedCodec<>("Action", Codec.STRING), (d, v) -> d.action = v, d -> d.action).add()
                 .append(new KeyedCodec<>("Param", Codec.STRING), (d, v) -> d.param = v, d -> d.param).add()
                 .append(new KeyedCodec<>("InputText", Codec.STRING), (d, v) -> d.inputText = v, d -> d.inputText).add()
+                .append(new KeyedCodec<>(com.eldanior.system.classes.observateur.ObservateurCourTab.ALIAS_KEY, Codec.STRING), (d, v) -> d.ocAlias = v, d -> d.ocAlias).add()
                 .build();
         public String action;
         public String param;
         public String inputText;
+        /** Nom d'emprunt saisi dans la Cour de l'Observateur. */
+        public String ocAlias;
     }
 }

@@ -1,0 +1,1431 @@
+$C = "../Common.ui";
+
+// Editeur des prix (/es prix, economy/PriceEditorPage), genere par scripts/economie/gen_prix_ui.py : voir ce script.
+$C.@PageOverlay {
+  LayoutMode: Middle;
+
+  Group {
+    Anchor: (Width: 1304, Height: 720);
+    LayoutMode: Left;
+    Group #PxMain {
+      Anchor: (Width: 870, Height: 720);
+      Group #PxMainHead {
+        Anchor: (Height: 38, Top: 0);
+        Padding: (Top: 7);
+        Background: (TexturePath: "../Common/ContainerHeaderNoRunes.png", HorizontalBorder: 35, VerticalBorder: 0);
+        Group {
+          LayoutMode: Left;
+          Padding: (Left: 16, Right: 16);
+          Label {
+            Text: "Économie";
+            Style: (...$C.@TitleStyle);
+          }
+          Group {
+            Anchor: (Width: 6, Height: 10, Left: 10, Right: 8);
+            Background: "../Common/ContainerTitleArrow.png";
+          }
+          Label #PxSub {
+            Style: (...$C.@TitleStyle, RenderBold: true, TextColor: #ffffff);
+          }
+          Group { FlexWeight: 1; }
+          Label #PxCount {
+            Style: (FontSize: 13, RenderBold: true, TextColor: #96a9be, VerticalAlignment: Center);
+          }
+        }
+      }
+      Group #PxMainBody {
+        LayoutMode: Top;
+        Anchor: (Top: 38);
+        Padding: (Full: 17);
+        Background: (TexturePath: "../Common/ContainerPatch.png", Border: 23);
+        Group {
+          FlexWeight: 1;
+          LayoutMode: Left;
+          Group {
+            Anchor: (Width: 200);
+            LayoutMode: Top;
+            Padding: (Full: 6);
+            Background: (TexturePath: "../Common/ContainerPanelPatch.png", Border: 4);
+            Label {
+              Text: "Familles";
+              Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #878e9c, HorizontalAlignment: Center);
+            }
+            Button #PxFam0 {
+              Anchor: (Height: 24, Top: 2);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxFamLine0 { Anchor: (Width: 4); Background: #e8a93b; Visible: false; }
+              Label #PxFamText0 {
+                FlexWeight: 1;
+                Anchor: (Left: 10, Right: 6);
+                Style: (FontSize: 11, RenderBold: true, TextColor: #96a9be, VerticalAlignment: Center);
+              }
+            }
+            Button #PxFam1 {
+              Anchor: (Height: 24, Top: 2);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxFamLine1 { Anchor: (Width: 4); Background: #e8a93b; Visible: false; }
+              Label #PxFamText1 {
+                FlexWeight: 1;
+                Anchor: (Left: 10, Right: 6);
+                Style: (FontSize: 11, RenderBold: true, TextColor: #96a9be, VerticalAlignment: Center);
+              }
+            }
+            Button #PxFam2 {
+              Anchor: (Height: 24, Top: 2);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxFamLine2 { Anchor: (Width: 4); Background: #e8a93b; Visible: false; }
+              Label #PxFamText2 {
+                FlexWeight: 1;
+                Anchor: (Left: 10, Right: 6);
+                Style: (FontSize: 11, RenderBold: true, TextColor: #96a9be, VerticalAlignment: Center);
+              }
+            }
+            Button #PxFam3 {
+              Anchor: (Height: 24, Top: 2);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxFamLine3 { Anchor: (Width: 4); Background: #e8a93b; Visible: false; }
+              Label #PxFamText3 {
+                FlexWeight: 1;
+                Anchor: (Left: 10, Right: 6);
+                Style: (FontSize: 11, RenderBold: true, TextColor: #96a9be, VerticalAlignment: Center);
+              }
+            }
+            Button #PxFam4 {
+              Anchor: (Height: 24, Top: 2);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxFamLine4 { Anchor: (Width: 4); Background: #e8a93b; Visible: false; }
+              Label #PxFamText4 {
+                FlexWeight: 1;
+                Anchor: (Left: 10, Right: 6);
+                Style: (FontSize: 11, RenderBold: true, TextColor: #96a9be, VerticalAlignment: Center);
+              }
+            }
+            Button #PxFam5 {
+              Anchor: (Height: 24, Top: 2);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxFamLine5 { Anchor: (Width: 4); Background: #e8a93b; Visible: false; }
+              Label #PxFamText5 {
+                FlexWeight: 1;
+                Anchor: (Left: 10, Right: 6);
+                Style: (FontSize: 11, RenderBold: true, TextColor: #96a9be, VerticalAlignment: Center);
+              }
+            }
+            Button #PxFam6 {
+              Anchor: (Height: 24, Top: 2);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxFamLine6 { Anchor: (Width: 4); Background: #e8a93b; Visible: false; }
+              Label #PxFamText6 {
+                FlexWeight: 1;
+                Anchor: (Left: 10, Right: 6);
+                Style: (FontSize: 11, RenderBold: true, TextColor: #96a9be, VerticalAlignment: Center);
+              }
+            }
+            Button #PxFam7 {
+              Anchor: (Height: 24, Top: 2);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxFamLine7 { Anchor: (Width: 4); Background: #e8a93b; Visible: false; }
+              Label #PxFamText7 {
+                FlexWeight: 1;
+                Anchor: (Left: 10, Right: 6);
+                Style: (FontSize: 11, RenderBold: true, TextColor: #96a9be, VerticalAlignment: Center);
+              }
+            }
+            Button #PxFam8 {
+              Anchor: (Height: 24, Top: 2);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxFamLine8 { Anchor: (Width: 4); Background: #e8a93b; Visible: false; }
+              Label #PxFamText8 {
+                FlexWeight: 1;
+                Anchor: (Left: 10, Right: 6);
+                Style: (FontSize: 11, RenderBold: true, TextColor: #96a9be, VerticalAlignment: Center);
+              }
+            }
+            Button #PxFam9 {
+              Anchor: (Height: 24, Top: 2);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxFamLine9 { Anchor: (Width: 4); Background: #e8a93b; Visible: false; }
+              Label #PxFamText9 {
+                FlexWeight: 1;
+                Anchor: (Left: 10, Right: 6);
+                Style: (FontSize: 11, RenderBold: true, TextColor: #96a9be, VerticalAlignment: Center);
+              }
+            }
+            Button #PxFam10 {
+              Anchor: (Height: 24, Top: 2);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxFamLine10 { Anchor: (Width: 4); Background: #e8a93b; Visible: false; }
+              Label #PxFamText10 {
+                FlexWeight: 1;
+                Anchor: (Left: 10, Right: 6);
+                Style: (FontSize: 11, RenderBold: true, TextColor: #96a9be, VerticalAlignment: Center);
+              }
+            }
+            Button #PxFam11 {
+              Anchor: (Height: 24, Top: 2);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxFamLine11 { Anchor: (Width: 4); Background: #e8a93b; Visible: false; }
+              Label #PxFamText11 {
+                FlexWeight: 1;
+                Anchor: (Left: 10, Right: 6);
+                Style: (FontSize: 11, RenderBold: true, TextColor: #96a9be, VerticalAlignment: Center);
+              }
+            }
+            Button #PxFam12 {
+              Anchor: (Height: 24, Top: 2);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxFamLine12 { Anchor: (Width: 4); Background: #e8a93b; Visible: false; }
+              Label #PxFamText12 {
+                FlexWeight: 1;
+                Anchor: (Left: 10, Right: 6);
+                Style: (FontSize: 11, RenderBold: true, TextColor: #96a9be, VerticalAlignment: Center);
+              }
+            }
+            Button #PxFam13 {
+              Anchor: (Height: 24, Top: 2);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxFamLine13 { Anchor: (Width: 4); Background: #e8a93b; Visible: false; }
+              Label #PxFamText13 {
+                FlexWeight: 1;
+                Anchor: (Left: 10, Right: 6);
+                Style: (FontSize: 11, RenderBold: true, TextColor: #96a9be, VerticalAlignment: Center);
+              }
+            }
+            Button #PxFam14 {
+              Anchor: (Height: 24, Top: 2);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxFamLine14 { Anchor: (Width: 4); Background: #e8a93b; Visible: false; }
+              Label #PxFamText14 {
+                FlexWeight: 1;
+                Anchor: (Left: 10, Right: 6);
+                Style: (FontSize: 11, RenderBold: true, TextColor: #96a9be, VerticalAlignment: Center);
+              }
+            }
+            Button #PxFam15 {
+              Anchor: (Height: 24, Top: 2);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxFamLine15 { Anchor: (Width: 4); Background: #e8a93b; Visible: false; }
+              Label #PxFamText15 {
+                FlexWeight: 1;
+                Anchor: (Left: 10, Right: 6);
+                Style: (FontSize: 11, RenderBold: true, TextColor: #96a9be, VerticalAlignment: Center);
+              }
+            }
+            Button #PxFam16 {
+              Anchor: (Height: 24, Top: 2);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxFamLine16 { Anchor: (Width: 4); Background: #e8a93b; Visible: false; }
+              Label #PxFamText16 {
+                FlexWeight: 1;
+                Anchor: (Left: 10, Right: 6);
+                Style: (FontSize: 11, RenderBold: true, TextColor: #96a9be, VerticalAlignment: Center);
+              }
+            }
+            Button #PxFam17 {
+              Anchor: (Height: 24, Top: 2);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxFamLine17 { Anchor: (Width: 4); Background: #e8a93b; Visible: false; }
+              Label #PxFamText17 {
+                FlexWeight: 1;
+                Anchor: (Left: 10, Right: 6);
+                Style: (FontSize: 11, RenderBold: true, TextColor: #96a9be, VerticalAlignment: Center);
+              }
+            }
+            Button #PxFam18 {
+              Anchor: (Height: 24, Top: 2);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxFamLine18 { Anchor: (Width: 4); Background: #e8a93b; Visible: false; }
+              Label #PxFamText18 {
+                FlexWeight: 1;
+                Anchor: (Left: 10, Right: 6);
+                Style: (FontSize: 11, RenderBold: true, TextColor: #96a9be, VerticalAlignment: Center);
+              }
+            }
+            Button #PxFam19 {
+              Anchor: (Height: 24, Top: 2);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxFamLine19 { Anchor: (Width: 4); Background: #e8a93b; Visible: false; }
+              Label #PxFamText19 {
+                FlexWeight: 1;
+                Anchor: (Left: 10, Right: 6);
+                Style: (FontSize: 11, RenderBold: true, TextColor: #96a9be, VerticalAlignment: Center);
+              }
+            }
+            Button #PxFam20 {
+              Anchor: (Height: 24, Top: 2);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxFamLine20 { Anchor: (Width: 4); Background: #e8a93b; Visible: false; }
+              Label #PxFamText20 {
+                FlexWeight: 1;
+                Anchor: (Left: 10, Right: 6);
+                Style: (FontSize: 11, RenderBold: true, TextColor: #96a9be, VerticalAlignment: Center);
+              }
+            }
+          }
+          Group { Anchor: (Width: 12); }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Group {
+              Anchor: (Height: 32);
+              LayoutMode: Left;
+              $C.@TextField #PxSearch {
+                FlexWeight: 1;
+                Anchor: (Height: 30);
+                PlaceholderText: "Nom ou identifiant (ex. fer, Ingredient_Bar)";
+              }
+              $C.@SmallSecondaryTextButton #PxSearchBtn { @Anchor = (Width: 100, Left: 6); Text: "Chercher"; }
+              $C.@SmallSecondaryTextButton #PxClear { @Anchor = (Width: 90, Left: 4); Text: "Effacer"; }
+            }
+            Group {
+              Anchor: (Height: 20, Top: 8);
+              LayoutMode: Left;
+              Label {
+                FlexWeight: 1;
+                Anchor: (Left: 46);
+                Text: "Objet";
+                Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #878e9c, VerticalAlignment: Center);
+              }
+              Label {
+                Anchor: (Width: 210);
+                Text: "Prix";
+                Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #878e9c, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+              Label {
+                Anchor: (Width: 86);
+                Text: "Source";
+                Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #878e9c, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+            }
+            Button #PxRow0 {
+              Anchor: (Height: 38, Top: 3);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxRowQ0 { Anchor: (Width: 4); Background: #1b2836; }
+              Group {
+                Anchor: (Width: 42);
+                LayoutMode: Middle;
+                ItemIcon #PxRowIcon0 { Anchor: (Width: 32, Height: 32); }
+              }
+              Group {
+                FlexWeight: 1;
+                LayoutMode: Top;
+                Padding: (Top: 3);
+                Label #PxRowName0 {
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #ffffff);
+                }
+                Label #PxRowId0 {
+                  Style: (FontSize: 10, TextColor: #878e9c);
+                }
+              }
+              Group {
+                Anchor: (Width: 210);
+                LayoutMode: Center;
+                ItemIcon #PxRow0CIcon0 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow0CN0 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                ItemIcon #PxRow0CIcon1 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow0CN1 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                ItemIcon #PxRow0CIcon2 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow0CN2 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                Label #PxRowText0 {
+                  Style: (FontSize: 12, RenderBold: true, TextColor: #878e9c, VerticalAlignment: Center);
+                }
+              }
+              Label #PxRowSrc0 {
+                Anchor: (Width: 86);
+                Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+            }
+            Button #PxRow1 {
+              Anchor: (Height: 38, Top: 3);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxRowQ1 { Anchor: (Width: 4); Background: #1b2836; }
+              Group {
+                Anchor: (Width: 42);
+                LayoutMode: Middle;
+                ItemIcon #PxRowIcon1 { Anchor: (Width: 32, Height: 32); }
+              }
+              Group {
+                FlexWeight: 1;
+                LayoutMode: Top;
+                Padding: (Top: 3);
+                Label #PxRowName1 {
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #ffffff);
+                }
+                Label #PxRowId1 {
+                  Style: (FontSize: 10, TextColor: #878e9c);
+                }
+              }
+              Group {
+                Anchor: (Width: 210);
+                LayoutMode: Center;
+                ItemIcon #PxRow1CIcon0 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow1CN0 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                ItemIcon #PxRow1CIcon1 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow1CN1 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                ItemIcon #PxRow1CIcon2 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow1CN2 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                Label #PxRowText1 {
+                  Style: (FontSize: 12, RenderBold: true, TextColor: #878e9c, VerticalAlignment: Center);
+                }
+              }
+              Label #PxRowSrc1 {
+                Anchor: (Width: 86);
+                Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+            }
+            Button #PxRow2 {
+              Anchor: (Height: 38, Top: 3);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxRowQ2 { Anchor: (Width: 4); Background: #1b2836; }
+              Group {
+                Anchor: (Width: 42);
+                LayoutMode: Middle;
+                ItemIcon #PxRowIcon2 { Anchor: (Width: 32, Height: 32); }
+              }
+              Group {
+                FlexWeight: 1;
+                LayoutMode: Top;
+                Padding: (Top: 3);
+                Label #PxRowName2 {
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #ffffff);
+                }
+                Label #PxRowId2 {
+                  Style: (FontSize: 10, TextColor: #878e9c);
+                }
+              }
+              Group {
+                Anchor: (Width: 210);
+                LayoutMode: Center;
+                ItemIcon #PxRow2CIcon0 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow2CN0 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                ItemIcon #PxRow2CIcon1 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow2CN1 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                ItemIcon #PxRow2CIcon2 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow2CN2 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                Label #PxRowText2 {
+                  Style: (FontSize: 12, RenderBold: true, TextColor: #878e9c, VerticalAlignment: Center);
+                }
+              }
+              Label #PxRowSrc2 {
+                Anchor: (Width: 86);
+                Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+            }
+            Button #PxRow3 {
+              Anchor: (Height: 38, Top: 3);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxRowQ3 { Anchor: (Width: 4); Background: #1b2836; }
+              Group {
+                Anchor: (Width: 42);
+                LayoutMode: Middle;
+                ItemIcon #PxRowIcon3 { Anchor: (Width: 32, Height: 32); }
+              }
+              Group {
+                FlexWeight: 1;
+                LayoutMode: Top;
+                Padding: (Top: 3);
+                Label #PxRowName3 {
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #ffffff);
+                }
+                Label #PxRowId3 {
+                  Style: (FontSize: 10, TextColor: #878e9c);
+                }
+              }
+              Group {
+                Anchor: (Width: 210);
+                LayoutMode: Center;
+                ItemIcon #PxRow3CIcon0 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow3CN0 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                ItemIcon #PxRow3CIcon1 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow3CN1 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                ItemIcon #PxRow3CIcon2 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow3CN2 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                Label #PxRowText3 {
+                  Style: (FontSize: 12, RenderBold: true, TextColor: #878e9c, VerticalAlignment: Center);
+                }
+              }
+              Label #PxRowSrc3 {
+                Anchor: (Width: 86);
+                Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+            }
+            Button #PxRow4 {
+              Anchor: (Height: 38, Top: 3);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxRowQ4 { Anchor: (Width: 4); Background: #1b2836; }
+              Group {
+                Anchor: (Width: 42);
+                LayoutMode: Middle;
+                ItemIcon #PxRowIcon4 { Anchor: (Width: 32, Height: 32); }
+              }
+              Group {
+                FlexWeight: 1;
+                LayoutMode: Top;
+                Padding: (Top: 3);
+                Label #PxRowName4 {
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #ffffff);
+                }
+                Label #PxRowId4 {
+                  Style: (FontSize: 10, TextColor: #878e9c);
+                }
+              }
+              Group {
+                Anchor: (Width: 210);
+                LayoutMode: Center;
+                ItemIcon #PxRow4CIcon0 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow4CN0 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                ItemIcon #PxRow4CIcon1 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow4CN1 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                ItemIcon #PxRow4CIcon2 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow4CN2 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                Label #PxRowText4 {
+                  Style: (FontSize: 12, RenderBold: true, TextColor: #878e9c, VerticalAlignment: Center);
+                }
+              }
+              Label #PxRowSrc4 {
+                Anchor: (Width: 86);
+                Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+            }
+            Button #PxRow5 {
+              Anchor: (Height: 38, Top: 3);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxRowQ5 { Anchor: (Width: 4); Background: #1b2836; }
+              Group {
+                Anchor: (Width: 42);
+                LayoutMode: Middle;
+                ItemIcon #PxRowIcon5 { Anchor: (Width: 32, Height: 32); }
+              }
+              Group {
+                FlexWeight: 1;
+                LayoutMode: Top;
+                Padding: (Top: 3);
+                Label #PxRowName5 {
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #ffffff);
+                }
+                Label #PxRowId5 {
+                  Style: (FontSize: 10, TextColor: #878e9c);
+                }
+              }
+              Group {
+                Anchor: (Width: 210);
+                LayoutMode: Center;
+                ItemIcon #PxRow5CIcon0 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow5CN0 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                ItemIcon #PxRow5CIcon1 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow5CN1 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                ItemIcon #PxRow5CIcon2 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow5CN2 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                Label #PxRowText5 {
+                  Style: (FontSize: 12, RenderBold: true, TextColor: #878e9c, VerticalAlignment: Center);
+                }
+              }
+              Label #PxRowSrc5 {
+                Anchor: (Width: 86);
+                Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+            }
+            Button #PxRow6 {
+              Anchor: (Height: 38, Top: 3);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxRowQ6 { Anchor: (Width: 4); Background: #1b2836; }
+              Group {
+                Anchor: (Width: 42);
+                LayoutMode: Middle;
+                ItemIcon #PxRowIcon6 { Anchor: (Width: 32, Height: 32); }
+              }
+              Group {
+                FlexWeight: 1;
+                LayoutMode: Top;
+                Padding: (Top: 3);
+                Label #PxRowName6 {
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #ffffff);
+                }
+                Label #PxRowId6 {
+                  Style: (FontSize: 10, TextColor: #878e9c);
+                }
+              }
+              Group {
+                Anchor: (Width: 210);
+                LayoutMode: Center;
+                ItemIcon #PxRow6CIcon0 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow6CN0 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                ItemIcon #PxRow6CIcon1 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow6CN1 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                ItemIcon #PxRow6CIcon2 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow6CN2 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                Label #PxRowText6 {
+                  Style: (FontSize: 12, RenderBold: true, TextColor: #878e9c, VerticalAlignment: Center);
+                }
+              }
+              Label #PxRowSrc6 {
+                Anchor: (Width: 86);
+                Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+            }
+            Button #PxRow7 {
+              Anchor: (Height: 38, Top: 3);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxRowQ7 { Anchor: (Width: 4); Background: #1b2836; }
+              Group {
+                Anchor: (Width: 42);
+                LayoutMode: Middle;
+                ItemIcon #PxRowIcon7 { Anchor: (Width: 32, Height: 32); }
+              }
+              Group {
+                FlexWeight: 1;
+                LayoutMode: Top;
+                Padding: (Top: 3);
+                Label #PxRowName7 {
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #ffffff);
+                }
+                Label #PxRowId7 {
+                  Style: (FontSize: 10, TextColor: #878e9c);
+                }
+              }
+              Group {
+                Anchor: (Width: 210);
+                LayoutMode: Center;
+                ItemIcon #PxRow7CIcon0 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow7CN0 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                ItemIcon #PxRow7CIcon1 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow7CN1 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                ItemIcon #PxRow7CIcon2 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow7CN2 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                Label #PxRowText7 {
+                  Style: (FontSize: 12, RenderBold: true, TextColor: #878e9c, VerticalAlignment: Center);
+                }
+              }
+              Label #PxRowSrc7 {
+                Anchor: (Width: 86);
+                Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+            }
+            Button #PxRow8 {
+              Anchor: (Height: 38, Top: 3);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxRowQ8 { Anchor: (Width: 4); Background: #1b2836; }
+              Group {
+                Anchor: (Width: 42);
+                LayoutMode: Middle;
+                ItemIcon #PxRowIcon8 { Anchor: (Width: 32, Height: 32); }
+              }
+              Group {
+                FlexWeight: 1;
+                LayoutMode: Top;
+                Padding: (Top: 3);
+                Label #PxRowName8 {
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #ffffff);
+                }
+                Label #PxRowId8 {
+                  Style: (FontSize: 10, TextColor: #878e9c);
+                }
+              }
+              Group {
+                Anchor: (Width: 210);
+                LayoutMode: Center;
+                ItemIcon #PxRow8CIcon0 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow8CN0 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                ItemIcon #PxRow8CIcon1 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow8CN1 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                ItemIcon #PxRow8CIcon2 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow8CN2 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                Label #PxRowText8 {
+                  Style: (FontSize: 12, RenderBold: true, TextColor: #878e9c, VerticalAlignment: Center);
+                }
+              }
+              Label #PxRowSrc8 {
+                Anchor: (Width: 86);
+                Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+            }
+            Button #PxRow9 {
+              Anchor: (Height: 38, Top: 3);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxRowQ9 { Anchor: (Width: 4); Background: #1b2836; }
+              Group {
+                Anchor: (Width: 42);
+                LayoutMode: Middle;
+                ItemIcon #PxRowIcon9 { Anchor: (Width: 32, Height: 32); }
+              }
+              Group {
+                FlexWeight: 1;
+                LayoutMode: Top;
+                Padding: (Top: 3);
+                Label #PxRowName9 {
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #ffffff);
+                }
+                Label #PxRowId9 {
+                  Style: (FontSize: 10, TextColor: #878e9c);
+                }
+              }
+              Group {
+                Anchor: (Width: 210);
+                LayoutMode: Center;
+                ItemIcon #PxRow9CIcon0 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow9CN0 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                ItemIcon #PxRow9CIcon1 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow9CN1 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                ItemIcon #PxRow9CIcon2 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow9CN2 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                Label #PxRowText9 {
+                  Style: (FontSize: 12, RenderBold: true, TextColor: #878e9c, VerticalAlignment: Center);
+                }
+              }
+              Label #PxRowSrc9 {
+                Anchor: (Width: 86);
+                Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+            }
+            Button #PxRow10 {
+              Anchor: (Height: 38, Top: 3);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxRowQ10 { Anchor: (Width: 4); Background: #1b2836; }
+              Group {
+                Anchor: (Width: 42);
+                LayoutMode: Middle;
+                ItemIcon #PxRowIcon10 { Anchor: (Width: 32, Height: 32); }
+              }
+              Group {
+                FlexWeight: 1;
+                LayoutMode: Top;
+                Padding: (Top: 3);
+                Label #PxRowName10 {
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #ffffff);
+                }
+                Label #PxRowId10 {
+                  Style: (FontSize: 10, TextColor: #878e9c);
+                }
+              }
+              Group {
+                Anchor: (Width: 210);
+                LayoutMode: Center;
+                ItemIcon #PxRow10CIcon0 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow10CN0 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                ItemIcon #PxRow10CIcon1 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow10CN1 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                ItemIcon #PxRow10CIcon2 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow10CN2 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                Label #PxRowText10 {
+                  Style: (FontSize: 12, RenderBold: true, TextColor: #878e9c, VerticalAlignment: Center);
+                }
+              }
+              Label #PxRowSrc10 {
+                Anchor: (Width: 86);
+                Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+            }
+            Button #PxRow11 {
+              Anchor: (Height: 38, Top: 3);
+              LayoutMode: Left;
+              Visible: false;
+              Style: (
+                Default: (Background: #1b2836),
+                Hovered: (Background: #26384b),
+                Pressed: (Background: #2f4660),
+                Sounds: $C.@ButtonSounds
+              );
+              Group #PxRowQ11 { Anchor: (Width: 4); Background: #1b2836; }
+              Group {
+                Anchor: (Width: 42);
+                LayoutMode: Middle;
+                ItemIcon #PxRowIcon11 { Anchor: (Width: 32, Height: 32); }
+              }
+              Group {
+                FlexWeight: 1;
+                LayoutMode: Top;
+                Padding: (Top: 3);
+                Label #PxRowName11 {
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #ffffff);
+                }
+                Label #PxRowId11 {
+                  Style: (FontSize: 10, TextColor: #878e9c);
+                }
+              }
+              Group {
+                Anchor: (Width: 210);
+                LayoutMode: Center;
+                ItemIcon #PxRow11CIcon0 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow11CN0 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                ItemIcon #PxRow11CIcon1 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow11CN1 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                ItemIcon #PxRow11CIcon2 { Anchor: (Width: 16, Height: 16); Visible: false; }
+                Label #PxRow11CN2 {
+                  Anchor: (Left: 2, Right: 7);
+                  Visible: false;
+                  Style: (FontSize: 13, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+                }
+                Label #PxRowText11 {
+                  Style: (FontSize: 12, RenderBold: true, TextColor: #878e9c, VerticalAlignment: Center);
+                }
+              }
+              Label #PxRowSrc11 {
+                Anchor: (Width: 86);
+                Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+            }
+            Group { FlexWeight: 1; }
+            Group {
+              LayoutMode: Left;
+              Anchor: (Height: 32, Top: 6);
+              $C.@SmallSecondaryTextButton #PxPrev { @Anchor = (Width: 130); Text: "Précédent"; }
+              Label #PxPage {
+                FlexWeight: 1;
+                Style: (FontSize: 12, RenderBold: true, TextColor: #878e9c, HorizontalAlignment: Center, VerticalAlignment: Center);
+              }
+              $C.@SmallSecondaryTextButton #PxNext { @Anchor = (Width: 130); Text: "Suivant"; }
+            }
+          }
+        }
+        $C.@PanelSeparatorFancy { @Anchor = (Top: 8); }
+        Label #PxStats {
+          Anchor: (Top: 6, Height: 20);
+          Style: (FontSize: 11, TextColor: #878e9c, HorizontalAlignment: Center, VerticalAlignment: Center);
+        }
+      }
+    }
+    Group { Anchor: (Width: 14); }
+    Group #PxSide {
+      Anchor: (Width: 420, Height: 720);
+      Group #PxSideHead {
+        Anchor: (Height: 38, Top: 0);
+        Padding: (Top: 7);
+        Background: (TexturePath: "../Common/ContainerHeader.png", HorizontalBorder: 50, VerticalBorder: 0);
+        Group {
+          Anchor: (Width: 236, Height: 11, Top: -12);
+          Background: "../Common/ContainerDecorationTop.png";
+        }
+        Label #PxSideTitle {
+          Text: "Prix de l'objet";
+          Style: (...$C.@TitleStyle, HorizontalAlignment: Center);
+        }
+      }
+      Group #PxSideBody {
+        LayoutMode: Top;
+        Anchor: (Top: 38);
+        Padding: (Full: 17);
+        Background: (TexturePath: "../Common/ContainerPatch.png", Border: 23);
+        Group {
+          Anchor: (Height: 96);
+          LayoutMode: Left;
+          Group {
+            Anchor: (Width: 96, Height: 96);
+            LayoutMode: Middle;
+            Padding: (Full: 2);
+            Background: #e8a93b;
+            Group {
+              Anchor: (Width: 92, Height: 92);
+              LayoutMode: Middle;
+              Background: #1b2836;
+              ItemIcon #PxBig { Anchor: (Width: 78, Height: 78); }
+            }
+          }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Left: 12, Top: 2);
+            Label #PxName {
+              Style: (FontSize: 17, RenderBold: true, TextColor: #ffffff, Wrap: true);
+            }
+            Label #PxId {
+              Anchor: (Top: 2);
+              Style: (FontSize: 11, TextColor: #878e9c);
+            }
+            Label #PxKind {
+              Anchor: (Top: 4);
+              Style: (FontSize: 12, RenderBold: true, TextColor: #96a9be, Wrap: true);
+            }
+          }
+        }
+        $C.@PanelSeparatorFancy { @Anchor = (Top: 8); }
+        Group {
+          Anchor: (Top: 8, Height: 56);
+          LayoutMode: Top;
+          Background: (TexturePath: "../Common/ContainerPanelPatch.png", Border: 4);
+          Padding: (Top: 6);
+          Group {
+            Anchor: (Height: 26);
+            LayoutMode: Center;
+            ItemIcon #PxPriceCIcon0 { Anchor: (Width: 22, Height: 22); Visible: false; }
+            Label #PxPriceCN0 {
+              Anchor: (Left: 2, Right: 7);
+              Visible: false;
+              Style: (FontSize: 17, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+            }
+            ItemIcon #PxPriceCIcon1 { Anchor: (Width: 22, Height: 22); Visible: false; }
+            Label #PxPriceCN1 {
+              Anchor: (Left: 2, Right: 7);
+              Visible: false;
+              Style: (FontSize: 17, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+            }
+            ItemIcon #PxPriceCIcon2 { Anchor: (Width: 22, Height: 22); Visible: false; }
+            Label #PxPriceCN2 {
+              Anchor: (Left: 2, Right: 7);
+              Visible: false;
+              Style: (FontSize: 17, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+            }
+            ItemIcon #PxPriceCIcon3 { Anchor: (Width: 22, Height: 22); Visible: false; }
+            Label #PxPriceCN3 {
+              Anchor: (Left: 2, Right: 7);
+              Visible: false;
+              Style: (FontSize: 17, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+            }
+            ItemIcon #PxPriceCIcon4 { Anchor: (Width: 22, Height: 22); Visible: false; }
+            Label #PxPriceCN4 {
+              Anchor: (Left: 2, Right: 7);
+              Visible: false;
+              Style: (FontSize: 17, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+            }
+            ItemIcon #PxPriceCIcon5 { Anchor: (Width: 22, Height: 22); Visible: false; }
+            Label #PxPriceCN5 {
+              Anchor: (Left: 2, Right: 7);
+              Visible: false;
+              Style: (FontSize: 17, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+            }
+            Label #PxPriceText {
+              Style: (FontSize: 15, RenderBold: true, TextColor: #878e9c, VerticalAlignment: Center);
+            }
+          }
+          Label #PxPriceCap {
+            Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #878e9c, HorizontalAlignment: Center);
+          }
+        }
+        Group #PxRecipe {
+          Anchor: (Top: 8);
+          LayoutMode: Top;
+          Visible: false;
+          Label #PxRecipeCap {
+            Text: "Recette — cliquer un ingrédient pour l'ouvrir";
+            Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #e8a93b, HorizontalAlignment: Start);
+          }
+          Button #PxIng0 {
+            Anchor: (Height: 32, Top: 3);
+            LayoutMode: Left;
+            Visible: false;
+            Style: (
+              Default: (Background: #1b2836),
+              Hovered: (Background: #26384b),
+              Pressed: (Background: #2f4660),
+              Sounds: $C.@ButtonSounds
+            );
+            Group {
+              Anchor: (Width: 34);
+              LayoutMode: Middle;
+              ItemIcon #PxIngIcon0 { Anchor: (Width: 26, Height: 26); }
+            }
+            Label #PxIngName0 {
+              FlexWeight: 1;
+              Style: (FontSize: 12, RenderBold: true, TextColor: #ffffff, VerticalAlignment: Center);
+            }
+            Label #PxIngInfo0 {
+              Anchor: (Width: 150, Right: 6);
+              Style: (FontSize: 11, RenderBold: true, TextColor: #e8a93b, HorizontalAlignment: End, VerticalAlignment: Center);
+            }
+          }
+          Button #PxIng1 {
+            Anchor: (Height: 32, Top: 3);
+            LayoutMode: Left;
+            Visible: false;
+            Style: (
+              Default: (Background: #1b2836),
+              Hovered: (Background: #26384b),
+              Pressed: (Background: #2f4660),
+              Sounds: $C.@ButtonSounds
+            );
+            Group {
+              Anchor: (Width: 34);
+              LayoutMode: Middle;
+              ItemIcon #PxIngIcon1 { Anchor: (Width: 26, Height: 26); }
+            }
+            Label #PxIngName1 {
+              FlexWeight: 1;
+              Style: (FontSize: 12, RenderBold: true, TextColor: #ffffff, VerticalAlignment: Center);
+            }
+            Label #PxIngInfo1 {
+              Anchor: (Width: 150, Right: 6);
+              Style: (FontSize: 11, RenderBold: true, TextColor: #e8a93b, HorizontalAlignment: End, VerticalAlignment: Center);
+            }
+          }
+          Button #PxIng2 {
+            Anchor: (Height: 32, Top: 3);
+            LayoutMode: Left;
+            Visible: false;
+            Style: (
+              Default: (Background: #1b2836),
+              Hovered: (Background: #26384b),
+              Pressed: (Background: #2f4660),
+              Sounds: $C.@ButtonSounds
+            );
+            Group {
+              Anchor: (Width: 34);
+              LayoutMode: Middle;
+              ItemIcon #PxIngIcon2 { Anchor: (Width: 26, Height: 26); }
+            }
+            Label #PxIngName2 {
+              FlexWeight: 1;
+              Style: (FontSize: 12, RenderBold: true, TextColor: #ffffff, VerticalAlignment: Center);
+            }
+            Label #PxIngInfo2 {
+              Anchor: (Width: 150, Right: 6);
+              Style: (FontSize: 11, RenderBold: true, TextColor: #e8a93b, HorizontalAlignment: End, VerticalAlignment: Center);
+            }
+          }
+          Button #PxIng3 {
+            Anchor: (Height: 32, Top: 3);
+            LayoutMode: Left;
+            Visible: false;
+            Style: (
+              Default: (Background: #1b2836),
+              Hovered: (Background: #26384b),
+              Pressed: (Background: #2f4660),
+              Sounds: $C.@ButtonSounds
+            );
+            Group {
+              Anchor: (Width: 34);
+              LayoutMode: Middle;
+              ItemIcon #PxIngIcon3 { Anchor: (Width: 26, Height: 26); }
+            }
+            Label #PxIngName3 {
+              FlexWeight: 1;
+              Style: (FontSize: 12, RenderBold: true, TextColor: #ffffff, VerticalAlignment: Center);
+            }
+            Label #PxIngInfo3 {
+              Anchor: (Width: 150, Right: 6);
+              Style: (FontSize: 11, RenderBold: true, TextColor: #e8a93b, HorizontalAlignment: End, VerticalAlignment: Center);
+            }
+          }
+          Button #PxIng4 {
+            Anchor: (Height: 32, Top: 3);
+            LayoutMode: Left;
+            Visible: false;
+            Style: (
+              Default: (Background: #1b2836),
+              Hovered: (Background: #26384b),
+              Pressed: (Background: #2f4660),
+              Sounds: $C.@ButtonSounds
+            );
+            Group {
+              Anchor: (Width: 34);
+              LayoutMode: Middle;
+              ItemIcon #PxIngIcon4 { Anchor: (Width: 26, Height: 26); }
+            }
+            Label #PxIngName4 {
+              FlexWeight: 1;
+              Style: (FontSize: 12, RenderBold: true, TextColor: #ffffff, VerticalAlignment: Center);
+            }
+            Label #PxIngInfo4 {
+              Anchor: (Width: 150, Right: 6);
+              Style: (FontSize: 11, RenderBold: true, TextColor: #e8a93b, HorizontalAlignment: End, VerticalAlignment: Center);
+            }
+          }
+          Label #PxRecipeNote {
+            Anchor: (Top: 4);
+            Style: (FontSize: 11, TextColor: #96a9be, Wrap: true);
+          }
+        }
+        Label #PxUsed {
+          Anchor: (Top: 6);
+          Style: (FontSize: 11, TextColor: #878e9c, Wrap: true);
+        }
+        Group { FlexWeight: 1; }
+        Label {
+          Text: "Nouveau prix, en cuivres (1 or = 100)";
+          Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Start);
+        }
+        Group {
+          Anchor: (Top: 4, Height: 32);
+          LayoutMode: Left;
+          $C.@NumberField #PxValue {
+            Anchor: (Width: 170, Height: 30);
+            Format: (MaxDecimalPlaces: 0, Step: 10);
+          }
+          $C.@SmallSecondaryTextButton #PxSave { @Anchor = (Left: 6); Text: "Enregistrer"; FlexWeight: 1; }
+        }
+        Group {
+          Anchor: (Top: 6, Height: 32);
+          LayoutMode: Left;
+          $C.@SmallSecondaryTextButton #PxDiv2 { @Anchor = (Right: 3); Text: "/2"; FlexWeight: 1; }
+          $C.@SmallSecondaryTextButton #PxM10 { @Anchor = (Right: 3); Text: "-10 %"; FlexWeight: 1; }
+          $C.@SmallSecondaryTextButton #PxP10 { @Anchor = (Right: 3); Text: "+10 %"; FlexWeight: 1; }
+          $C.@SmallSecondaryTextButton #PxMul2 { Text: "x2"; FlexWeight: 1; }
+        }
+        Group {
+          Anchor: (Top: 6, Height: 32);
+          LayoutMode: Left;
+          $C.@SmallSecondaryTextButton #PxReset { Text: "Revenir au prix de base"; FlexWeight: 1; }
+        }
+        Label #PxMsg {
+          Anchor: (Top: 4, Height: 34);
+          Style: (FontSize: 12, RenderBold: true, TextColor: #00e7b6, HorizontalAlignment: Center, VerticalAlignment: Center, Wrap: true);
+        }
+      }
+      Group {
+        Anchor: (Width: 236, Height: 11, Bottom: -6);
+        Background: "../Common/ContainerDecorationBottom.png";
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "$Comment": "Bokken, maintien : posture de la Percee (Ki du palier sur la lame) ; relache avant 0,5 s = degaine, apres = Percee (LuoPercee).",
+  "Type": "Serial",
+  "Interactions": [
+    {
+      "Type": "RuneSpell",
+      "RunTime": 0.0,
+      "Spell": "LuoPerceePostureFourreau"
+    },
+    {
+      "Type": "Charging",
+      "Rules": {
+        "InterruptedBy": [
+          "Secondary"
+        ]
+      },
+      "DisplayProgress": true,
+      "HorizontalSpeedMultiplier": 0.45,
+      "Effects": {
+        "ItemAnimationId": "IaiCharging",
+        "LocalSoundEventId": "SFX_Sword_T2_Lunge_Charge_Local"
+      },
+      "Next": {
+        "0": "Tenryumaru_Degainer",
+        "0.5": "Luo_Percee_Fourreau"
+      }
+    }
+  ]
+}

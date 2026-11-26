@@ -41,6 +41,18 @@ public interface RuneSpell {
          */
         default void onOwnerHit(Ref<EntityStore> target, float amount) {}
 
+        /**
+         * Le lanceur va subir un coup (montant apres les multiplicateurs du mod) : renvoyer le montant a appliquer (0 = coup
+         * annule). attacker peut etre null (chute, feu...). Appele pendant le traitement des degats.
+         */
+        default float onOwnerHurt(Ref<EntityStore> attacker, float amount, String causeId) { return amount; }
+
+        /**
+         * Coup mortel sur le lanceur : true pour l'empecher (le coup est annule ; le sort soigne ou deplace lui-meme le lanceur
+         * avec le CommandBuffer fourni). Appele pendant le traitement des degats.
+         */
+        default boolean preventOwnerDeath(Ref<EntityStore> caster, Store<EntityStore> store, CommandBuffer<EntityStore> cb) { return false; }
+
         /** Clic du lanceur (livre sur le thread du monde, avant tick). target = entite sous le curseur, ou null. */
         default void onClick(boolean left, Ref<EntityStore> target, Ref<EntityStore> caster, Store<EntityStore> store, CommandBuffer<EntityStore> cb) {}
     }

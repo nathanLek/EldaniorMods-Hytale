@@ -1,0 +1,18 @@
+{
+  "$Comment": "Clic droit, lame au clair : clic bref = rengainer (Java TenryumaruRengaine : noto puis objet au fourreau), maintien = garde de l'epee vanilla.",
+  "Type": "Charging",
+  "DisplayProgress": false,
+  "Next": {
+    "0": {
+      "Type": "Serial",
+      "Interactions": [
+        {
+          "Type": "RuneSpell",
+          "RunTime": 0.05,
+          "Spell": "TenryumaruRengaine"
+        }
+      ]
+    },
+    "0.2": "Weapon_Sword_Secondary_Guard"
+  }
+}

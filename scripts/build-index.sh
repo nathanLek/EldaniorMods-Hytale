@@ -17,22 +17,27 @@ LANG="$RES/Server/Languages/en-US/server.lang"
 # 1) Carte des classes Java : chemin relatif de chaque .java (localisation instantanee)
 find "$SRC" -name "*.java" | sed "s|^$SRC/||" | sort > "$OUT/classes.txt"
 
-# 2) Skills passifs : ID enum | Nom | (impl) depuis PassiveSkill.java
+# 2) Passifs (series a rangs, refonte 2026-11-25) : ID | Theme | Nom | rangs min-max, depuis PassiveSkill.java (genere)
 PS="$SRC/skills/skillsInteraction/PassiveSkill.java"
 if [ -f "$PS" ]; then
-  grep -oE '[A-Z][A-Z0-9_]+\("[A-Z0-9_]+",[[:space:]]*"[^"]*"' "$PS" \
-    | sed -E 's/^[A-Z0-9_]+\("([A-Z0-9_]+)",[[:space:]]*"([^"]*)"/\1 | \2/' \
+  grep -oE '^    [A-Z][A-Z0-9_]+\(Theme\.[A-Z]+, "[^"]*", [0-9], [0-9]' "$PS" \
+    | sed -E 's/^    ([A-Z0-9_]+)\(Theme\.([A-Z]+), "([^"]*)", ([0-9]), ([0-9])/\1 | \2 | \3 | rangs \4-\5/' \
     | sort -u > "$OUT/skills-passives.txt" || true
 fi
 
-# 3) Definitions de classes : id | ClassType | tier | fichier
+# 3) Classes : id | ClassType | palier | source (catalogue scripts/classes/classes.json, classes speciales en Java)
 {
+  python3 - "scripts/classes/classes.json" <<'PY' || true
+import json, sys
+FAM = {"guerrier": "WARRIOR", "mage": "MAGE", "archer": "ARCHER", "assassin": "ASSASSIN", "marchand": "MERCHANT"}
+for c in json.load(open(sys.argv[1], encoding="utf-8")):
+    print(f"{c['id']} | {FAM[c['famille']]} | p{c['palier']} {c['rarete']} | scripts/classes/classes.json")
+PY
   find "$SRC/classes/definitions" -name "*.java" | while read -r f; do
     id=$(grep -oE 'super\("[a-z0-9_]+"' "$f" | head -1 | sed -E 's/super\("([a-z0-9_]+)"/\1/')
     ctype=$(grep -oE 'ClassType\.[A-Z]+' "$f" | head -1 | sed 's/ClassType\.//')
-    tier=$(grep -oE ',\s*[0-9]{3},\s*(true|false)' "$f" | head -1 | grep -oE '[0-9]{3}' | head -1)
     rel=${f#"$SRC"/}
-    printf '%s | %s | %s | %s\n' "${id:-?}" "${ctype:-?}" "${tier:-?}" "$rel"
+    printf '%s | %s | special | %s\n' "${id:-?}" "${ctype:-?}" "$rel"
   done
 } | sort > "$OUT/class-defs.txt" || true
 

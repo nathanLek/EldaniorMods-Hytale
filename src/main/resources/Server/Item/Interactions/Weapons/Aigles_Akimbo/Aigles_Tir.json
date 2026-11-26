@@ -1,0 +1,18 @@
+{
+  "$Comment": "Aigles du Desert : clic = Cadence de l'Aigle (droite, gauche, droite, double tir des deux pistolets) ; maintien 0.45 s = Balle Perforante. Genere par scripts/artefacts/gen_aigles_akimbo.py.",
+  "Type": "Charging",
+  "AllowIndefiniteHold": true,
+  "Next": {
+    "0": {
+      "Type": "Chaining",
+      "ChainingAllowance": 0.9,
+      "Next": [
+        "Aigles_Tir_Droite",
+        "Aigles_Tir_Gauche",
+        "Aigles_Tir_Droite",
+        "Aigles_Double"
+      ]
+    },
+    "0.45": "Aigles_Perforante"
+  }
+}

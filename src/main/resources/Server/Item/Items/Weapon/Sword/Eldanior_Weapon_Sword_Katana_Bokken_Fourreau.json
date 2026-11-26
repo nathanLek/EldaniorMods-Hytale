@@ -1,0 +1,47 @@
+{
+  "$Comment": "Fourreau de Bokken du Dojo Luo, objet utilitaire pose dans la main gauche par TenryumaruSystem. Genere par scripts/artefacts/gen_luo_katanas.py.",
+  "TranslationProperties": {
+    "Name": "Fourreau — Bokken du Dojo Luo",
+    "Description": "Il accompagne la lame et disparaît sans elle."
+  },
+  "Quality": "Common",
+  "ItemLevel": 3,
+  "Model": "Items/Weapons/artefacts/Eldanior_Weapon_Sword_Katana_Bokken_Fourreau.blockymodel",
+  "Texture": "Items/Weapons/artefacts/Eldanior_Weapon_Sword_Katana_Bokken.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Weapon_Sword_Katana_Bokken_Fourreau.png",
+  "IconProperties": {
+    "Scale": 0.33,
+    "Rotation": [
+      45,
+      90,
+      0
+    ],
+    "Translation": [
+      -33,
+      -38
+    ]
+  },
+  "MaxStack": 1,
+  "Variant": false,
+  "Utility": {
+    "Usable": true
+  },
+  "DropOnDeath": false,
+  "PlayerAnimationsId": "Tenryumaru_Fourreau",
+  "Interactions": {
+    "Secondary": "Root_Weapon_Sword_Secondary_Guard"
+  },
+  "InteractionVars": {
+    "Guard_Wield": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Secondary_Guard_Wield",
+          "StaminaCost": {
+            "Value": 10,
+            "CostType": "Damage"
+          }
+        }
+      ]
+    }
+  }
+}

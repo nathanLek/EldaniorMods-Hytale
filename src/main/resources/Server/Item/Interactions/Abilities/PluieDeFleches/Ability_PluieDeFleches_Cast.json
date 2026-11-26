@@ -1,0 +1,99 @@
+{
+  "$Comment": "Rune de Pluie de Flèches : maintenir pour charger (0.6 s min.), relacher pour lancer le sort Java 'PluieDeFleches' (RuneSpell). Genere par rune_tool.py, cout au relachement.",
+  "Type": "StatsCondition",
+  "UseAbilityCost": true,
+  "Failed": "Ability_Cast_Fail",
+  "Next": {
+    "Type": "Charging",
+    "AllowIndefiniteHold": true,
+    "DisplayProgress": true,
+    "CancelOnOtherClick": false,
+    "HorizontalSpeedMultiplier": 0.6,
+    "Effects": {
+      "ItemPlayerAnimationsId": "Shortbow",
+      "ItemAnimationId": "ShootCharging",
+      "ClearAnimationOnFinish": true,
+      "ClearSoundEventOnFinish": true,
+      "WorldSoundEventId": "SFX_Bow_T2_Draw",
+      "LocalSoundEventId": "SFX_Bow_T2_Draw_Local",
+      "Particles": [
+        {
+          "SystemId": "Bow_Charging",
+          "TargetNodeName": "Handle",
+          "Scale": 0.5,
+          "PositionOffset": {
+            "X": 0.075,
+            "Y": -0.4,
+            "Z": 0.075
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Roll": 0,
+            "Yaw": 90
+          }
+        }
+      ]
+    },
+    "Next": {
+      "0.0": {
+        "Type": "TriggerCooldown",
+        "Cooldown": {
+          "Id": "Root_Ability_PluieDeFleches",
+          "Cooldown": 0.5
+        }
+      },
+      "0.6": {
+        "Type": "StatsCondition",
+        "UseAbilityCost": true,
+        "Failed": {
+          "Type": "TriggerCooldown",
+          "Cooldown": {
+            "Id": "Root_Ability_PluieDeFleches",
+            "Cooldown": 0.5
+          }
+        },
+        "Next": {
+          "Type": "Parallel",
+          "Interactions": [
+            {
+              "Interactions": [
+                {
+                  "Type": "RuneSpell",
+                  "RunTime": 0.05,
+                  "Spell": "PluieDeFleches"
+                },
+                {
+                  "Type": "Simple",
+                  "RunTime": 0.35,
+                  "HorizontalSpeedMultiplier": 0.8,
+                  "Effects": {
+                    "ItemPlayerAnimationsId": "Shortbow",
+                    "ItemAnimationId": "ShootCharged",
+                    "ClearAnimationOnFinish": true,
+                    "WorldSoundEventId": "SFX_Bow_T2_Shoot"
+                  }
+                }
+              ]
+            },
+            {
+              "Interactions": [
+                {
+                  "Type": "TriggerCooldown",
+                  "UseAbilityCooldown": true
+                }
+              ]
+            },
+            {
+              "Interactions": [
+                {
+                  "Type": "ChangeStat",
+                  "UseAbilityCost": true
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

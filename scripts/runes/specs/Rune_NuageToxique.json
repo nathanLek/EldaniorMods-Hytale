@@ -1,0 +1,69 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_NuageToxique",
+  "spell": "NuageToxique",
+  "javaClass": "NuageToxique",
+  "page": "rune_page_nuage_toxique",
+  "name": "Rune du Nuage Toxique",
+  "type": "Tenebres",
+  "rarity": "Epic",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "NuageToxique",
+  "summary": "nuage de poison 10 s (rayon 6) qui derive lentement vers le curseur : 14 degats de poison / 0,5 s.",
+  "description": "Sort épique de ténèbres (Mage, rune de prédilection du Grand Alchimiste). Vous libérez un nuage de poison au point visé (rayon 6, jusqu'à 20 blocs) qui dure 10 s et dérive lentement vers votre curseur. Les ennemis qui le respirent subissent 14 dégâts de poison toutes les demi-secondes. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin taché de vert, à ne pas respirer de trop près. Enseigne le Nuage Toxique : guidez la mort qui flotte. Classes : tous les Mages (rune de prédilection du Grand Alchimiste). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe",
+    "Duration",
+    "Poison"
+  ],
+  "cast": {
+    "animationSet": "Spellbook",
+    "charging": "CastHurlCharging",
+    "release": "CastHurlCharged",
+    "chargeTime": 0.5,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Bomb_Fuse",
+    "handParticles": "Nyx_Void",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.5,
+    "range": 20,
+    "radius": "6",
+    "targets": "ennemis du nuage",
+    "persistentFx": "Nuage_Toxique (fumee verte, particule du mod) reemis / s",
+    "impactFx": "teinte Elda_Toxique sur les empoisonnes",
+    "sounds": "SFX_Bomb_Fuse a l'ouverture",
+    "effects": "14 Poison / 0,5 s (280 max sur 10 s) ; Elda_Toxique (teinte, 2 s, renouvelee avant expiration) ; derive 2 b/s vers le point vise",
+    "terrain": "aucun",
+    "persistentDurationS": 10,
+    "interruptions": "aucune",
+    "restrictions": "mage",
+    "edgeCases": "distinct du Puits d'ames (fixe, drain) : mobile, poison pur",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 2,
+      "mobility": 0,
+      "control": 1,
+      "defense": 0,
+      "targets": 3,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    }
+  },
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null
+}

@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_CouronneAutorite (remplace le parchemin rune_page_couronne_autorite).",
+  "TranslationProperties": {
+    "Name": "Manuel Spatial : Couronne d'Autorité",
+    "Description": "Sort unique spatial (Mage, rune de prédilection de l'Archonte Suprême). Une couronne d'autorité flotte au-dessus de votre tête pendant 15 s : aucun ennemi ne peut s'approcher à moins de 6 blocs (il est repoussé et subit 40 dégâts, une fois par seconde au plus) et les projectiles qui entrent dans ce cercle sont anéantis. Trois fois pendant ce temps, un clic prononce un décret : tous les ennemis à moins de 12 blocs subissent 150 dégâts et sont éjectés. Épargne votre groupe, votre guilde et votre famille. Coût : 600 mana. Recharge : 180 s.\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Spatial"
+  ],
+  "Quality": "Unique",
+  "ItemLevel": 75,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Spatial_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Spatial_CouronneAutorite.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

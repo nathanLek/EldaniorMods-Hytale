@@ -1,0 +1,40 @@
+{
+  "TranslationProperties": {
+    "Name": "Faille de rang D (sur le point de s'ouvrir)"
+  },
+  "Icon": "Icons/ItemsGenerated/Eldanior_Faille_Scellee_D.png",
+  "MaxStack": 1,
+  "Quality": "Technical",
+  "BlockType": {
+    "Material": "Empty",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "Particles": [
+      {
+        "SystemId": "Eldanior_Faille_D_Etincelle",
+        "PositionOffset": {
+          "Z": 0.25
+        }
+      }
+    ],
+    "AmbientSoundEventId": "SFX_Goblin_World_Breach_Passive",
+    "CustomModel": "Blocks/Miscellaneous/Map.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Items/Projectiles/Tornado_Texture.png",
+        "Weight": 1
+      }
+    ],
+    "Support": {
+      "Down": [
+        {
+          "Support": "Ignored"
+        }
+      ]
+    },
+    "Light": {
+      "Color": "#2196F3"
+    }
+  },
+  "PlayerAnimationsId": "Block"
+}

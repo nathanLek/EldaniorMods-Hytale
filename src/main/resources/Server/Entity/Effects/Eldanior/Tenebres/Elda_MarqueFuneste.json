@@ -1,0 +1,18 @@
+{
+  "$Comment": "Marque Funeste : visuel de la malediction (le bonus de degats est gere par le code).",
+  "Duration": 8,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#14001f",
+    "EntityTopTint": "#7a2bb3",
+    "Particles": [
+      {
+        "SystemId": "Void_Spectre_Body"
+      }
+    ],
+    "ModelVFXId": "Intangible_Dark"
+  },
+  "OverlapBehavior": "Overwrite",
+  "Infinite": false,
+  "Debuff": true,
+  "StatusEffectIcon": "UI/StatusEffects/Burn.png"
+}

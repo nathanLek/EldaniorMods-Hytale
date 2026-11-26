@@ -1,0 +1,69 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_LentilleGravitationnelle",
+  "spell": "LentilleGravitationnelle",
+  "javaClass": "LentilleGravitationnelle",
+  "page": "rune_page_lentille_gravitationnelle",
+  "name": "Rune de la Lentille Gravitationnelle",
+  "type": "Spatial",
+  "rarity": "Unique",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Lentille",
+  "summary": "lentille de gravite 12 s (rayon 8) au point vise : ennemis devies en orbite, vos coups +40 %, projectiles ennemis captures ; effondrement final 200 + 30 par projectile.",
+  "description": "Sort unique spatial (Mage, rune de prédilection de l'Archonte). Une lentille de gravité s'ouvre au point visé (rayon 8, jusqu'à 25 blocs) pendant 12 s. Elle courbe tout ce qui la traverse : les ennemis sont déviés et tournent autour de son cœur, vos coups sur eux sont concentrés (+40 % de dégâts), et les projectiles ennemis qui y entrent sont capturés en orbite (12 au plus). À la fin, la lentille s'effondre : les ennemis sont attirés en son centre et subissent 200 dégâts, plus 30 par projectile capturé. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin où les lignes d'écriture se courbent autour d'un point noir. Enseigne la Lentille Gravitationnelle : même la lumière ne passe plus droit. Classes : tous les Mages (rune de prédilection de l'Archonte). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Spellbook",
+    "charging": "CastHurlCharging",
+    "release": "CastHurlCharged",
+    "chargeTime": 0.6,
+    "releaseTime": 0.5,
+    "moveSpeed": 0.4,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Portal_Void",
+    "handParticles": "Chaos_Flash",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.6,
+    "range": 25,
+    "radius": "8",
+    "targets": "ennemis et projectiles ennemis de la zone",
+    "persistentFx": "trou noir Chaos_BlackHole (anneau de photons, arcs de lentille) / 0,3 s et disque Chaos_Accretion / 1 s au coeur (2 blocs au-dessus du sol) ; projectiles captures en orbite (hold)",
+    "impactFx": "Chaos_Accretion x2 et secousse a l'effondrement (pas d'explosion : la gravite est invisible)",
+    "sounds": "SFX_Portal_Void a l'ouverture et a l'effondrement",
+    "effects": "/ 0,25 s : poussee tangentielle (+ legere attraction) sur les ennemis ; vos coups sur eux +40 % (markEcho) ; projectiles dont le tireur probable est un ennemi : captures (12 max) ; fin : attraction au centre, 200 Crush + 30 / projectile",
+    "terrain": "aucun",
+    "persistentDurationS": 12,
+    "interruptions": "lanceur mort ou deconnecte : fin sans effondrement",
+    "restrictions": "mage",
+    "edgeCases": "tireur introuvable : projectile laisse passer ; projectiles retires a la fin et a l'interruption",
+    "limitations": "le composant Projectile ne connait pas son tireur : le camp est deduit de l'entite la plus proche de sa trajectoire inverse (comme Reflexion) ; les projectiles allies ne sont pas acceleres (vitesse cote client non garantie)",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 2,
+      "mobility": 0,
+      "control": 3,
+      "defense": 2,
+      "targets": 3,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    }
+  }
+}

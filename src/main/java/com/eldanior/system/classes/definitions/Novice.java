@@ -17,7 +17,7 @@ public class Novice extends ClassModel {
                 Rarity.COMMON,
                 ClassType.NOVICE,
                 List.of(),
-                List.of(WeaponMastery.ANY, WeaponMastery.SHIELD, WeaponMastery.SPEAR, WeaponMastery.STAFF, WeaponMastery.SPELLBOOK, WeaponMastery.SWORD, WeaponMastery.BOW, WeaponMastery.CLUB, WeaponMastery.AXE, WeaponMastery.MACE, WeaponMastery.DAGGER),
+                List.of(WeaponMastery.ANY, WeaponMastery.SHIELD, WeaponMastery.SPEAR, WeaponMastery.STAFF, WeaponMastery.SPELLBOOK, WeaponMastery.SWORD, WeaponMastery.BOW, WeaponMastery.CLUB, WeaponMastery.AXE, WeaponMastery.MACE, WeaponMastery.FLAIL, WeaponMastery.DAGGER),
                 List.of("assassin", "warrior", "mage", "merchant", "archer"),
                 20,
                 false,

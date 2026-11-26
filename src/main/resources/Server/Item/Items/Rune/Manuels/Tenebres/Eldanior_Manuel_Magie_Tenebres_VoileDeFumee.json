@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_VoileDeFumee (remplace le parchemin rune_page_voile_de_fumee).",
+  "TranslationProperties": {
+    "Name": "Manuel des Ténèbres : Voile de Fumée",
+    "Description": "Sort commun des ténèbres (Assassin, Dragon). Vous lâchez une bombe fumigène à vos pieds : invisible pendant 3 s, les monstres à moins de 8 blocs perdent votre trace, et votre premier coup porté dans ce délai inflige 50 % de dégâts en plus. Frapper vous révèle. Coût : 25 mana. Recharge : 15 s.\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Tenebres"
+  ],
+  "Quality": "Common",
+  "ItemLevel": 10,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Tenebres_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Tenebres_VoileDeFumee.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

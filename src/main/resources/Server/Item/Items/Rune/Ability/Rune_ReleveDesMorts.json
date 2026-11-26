@@ -1,0 +1,43 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de la Relève des Morts",
+    "Description": "Sort rare de ténèbres (Mage, rune de prédilection du Seigneur des Morts). Pendant 15 s, chaque monstre qui meurt à moins de 20 blocs de vous se relève en squelette allié (120 PV) qui combat pour vous pendant 15 s. Jusqu'à 4 squelettes. Coût : 120 mana. Recharge : 60 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_ReleveDesMorts.png",
+  "Quality": "Rare",
+  "ItemLevel": 40,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_Runes.Tenebres"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_ReleveDesMorts.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 60,
+    "Cost": 120,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_ReleveDesMorts"
+  }
+}

@@ -7,7 +7,9 @@ public enum ClassType {
     ASSASSIN("Assassin"),
     ARCHER("Archer"),
     MERCHANT("Marchand"),
-    DRAGON("Dragon Ancestral");
+    MOUSQUETAIRE("Mousquetaire"),   // seule a manier les armes a feu ; evolution de l'Archer depuis le 2026-11-16
+    DRAGON("Dragon Ancestral"),
+    OBSERVATEUR("Observateur");        // classe unique, donnee par le Roi ou l'Empereur Luo (2026-11-16) : toutes armes et runes
 
     private final String label;
 

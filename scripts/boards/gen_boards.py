@@ -1,13 +1,17 @@
-"""Tableaux de prime et de guilde (boards/BoardType) : blocs-objets 3x3 poses au mur par un admin.
+"""Tableaux (boards/BoardType) : prime, guilde, quetes, classements, duels ; blocs-objets 3x3 poses au mur par un admin.
 
 Modele : le tableau de taverne vanilla (Furniture_Tavern_Painting, TavernPainting.blockymodel) agrandi x3 a partir du plan
 du mur (cadre : montants vanilla etires x3, memes coordonnees de texture), fond en liege a la place de la toile et six
 affiches clouees, legerement de travers. Un seul modele, deux textures de meme disposition :
   - prime : avis de recherche (bandeau rouge, portrait, recompense), un avis "reclame" barre de rouge, contrat de monstre ;
-  - guilde : avis aux blasons de guilde, classement (or, argent, bronze), contrat de guilde avec barre de progression.
+  - guilde : avis aux blasons de guilde, classement (or, argent, bronze), contrat de guilde avec barre de progression ;
+  - quetes : affiche du jour au soleil d'or, listes de quetes cochees, contrat de monstre, commande de minage ;
+  - classements : podium, listes de classement, coupe d'or ;
+  - duels : affiches face a face (croix rouge), epees croisees, classement.
 Hitbox 3x3 (comme Painting_3x2 vanilla : X -1..2), icones dessinees depuis la vue de face.
 Emblemes de la fenetre (Board/Board.ui) : losange de l'embleme de recrutement (scripts/npcs/gen_recruit_ui.py), avec une
-piece d'or sous un viseur rouge (prime) ou un blason de guilde (guilde).
+piece d'or sous un viseur rouge (prime), un blason de guilde (guilde), un parchemin scelle (quetes), une coupe d'or
+(classements) ou deux epees croisees (duels).
 Icone d'oeil (bouton des lignes, BoardEye@2x.png) : blanche, teintee par la fenetre (Color).
 Arches de la fenetre, deux fois plus larges que celles du recrutement : sommet (et pied) a pans coupes, memes bords que le
 corps de la fenetre (sombre 3, or 7, sombre 2), fond degrade, filet dore interieur.
@@ -274,6 +278,104 @@ def guild_contract(cv, uv):
     cv.rect(x + 3, y + h - 5, (w - 6) * 3 // 5, 2, (74, 168, 88), 10)
 
 
+def checklist(cv, uv, done=2):
+    """Liste de quetes : cases a cocher (les premieres cochees en vert), lignes d'encre."""
+    x, y, w, h = uv
+    paper(cv, x, y, w, h)
+    cv.rect(x + 2, y + 2, w - 4, 2, (60, 100, 150), 6)
+    for r in range(6):
+        yy = y + 6 + r * 3
+        if yy + 2 >= y + h - 1:
+            break
+        for i in range(2):
+            for j in range(2):
+                cv.put(x + 3 + i, yy + j, rgba(INK))
+        if r < done:
+            cv.put(x + 3, yy, rgba((60, 168, 80))); cv.put(x + 4, yy + 1, rgba((60, 168, 80)))
+        cv.line(x + 7, yy, w - 10, INK)
+
+
+def sun_notice(cv, uv):
+    """Affiche du jour : soleil d'or en tete, texte, sceau."""
+    x, y, w, h = uv
+    paper(cv, x, y, w, h)
+    cx, cy = x + w // 2, y + 6
+    for j in range(-4, 5):
+        for i in range(-4, 5):
+            d = math.hypot(i, j)
+            if d <= 2.4:
+                cv.put(cx + i, cy + j, rgba((236, 176, 50)))
+            elif 3.2 <= d <= 4.2 and (i == 0 or j == 0 or abs(i) == abs(j)):
+                cv.put(cx + i, cy + j, rgba((214, 140, 40)))
+    text_lines(cv, x + 3, y + 13, w - 6, max(1, (h - 16) // 2))
+
+
+def pickaxe_notice(cv, uv):
+    """Commande de minage : pioche et pepite."""
+    x, y, w, h = uv
+    paper(cv, x, y, w, h, (214, 202, 168))
+    for i in range(7):
+        cv.put(x + 3 + i, y + 3 + i, rgba((120, 82, 50)))                                     # manche
+    for i in range(-3, 4):
+        cv.put(x + 5 + i, y + 5 - abs(i) // 2 - 2, rgba((170, 176, 186)))                     # fer
+    cv.rect(x + 11, y + 6, 3, 3, (96, 176, 220), 10)
+    text_lines(cv, x + 3, y + 12, w - 6, max(1, (h - 14) // 2))
+
+
+def podium(cv, uv):
+    """Podium : marches d'or, d'argent et de bronze."""
+    x, y, w, h = uv
+    paper(cv, x, y, w, h)
+    text_lines(cv, x + 3, y + 3, w - 6, 2)
+    bw = (w - 6) // 3
+    for k, (col, hh) in enumerate((((196, 202, 210), 6), ((232, 169, 59), 9), ((176, 112, 60), 4))):
+        cv.rect(x + 3 + k * bw, y + h - 3 - hh, bw, hh, col, 8)
+    cv.put(x + 3 + bw + bw // 2, y + h - 14, rgba((255, 222, 120)))
+
+
+def trophy_notice(cv, uv):
+    """Coupe d'or au-dessus d'un texte."""
+    x, y, w, h = uv
+    paper(cv, x, y, w, h)
+    cx = x + w // 2
+    for j in range(5):
+        half = 3 - j // 2
+        for i in range(-half, half + 1):
+            cv.put(cx + i, y + 3 + j, rgba((232, 169, 59)))
+    cv.put(cx - 4, y + 4, rgba((200, 140, 40))); cv.put(cx + 4, y + 4, rgba((200, 140, 40)))
+    cv.put(cx, y + 8, rgba((200, 140, 40))); cv.rect(cx - 2, y + 9, 5, 1, (200, 140, 40))
+    text_lines(cv, x + 3, y + 12, w - 6, max(1, (h - 14) // 2))
+
+
+def crossed_swords(cv, uv, wax=(150, 32, 26)):
+    """Epees croisees (duel), texte, sceau de cire."""
+    x, y, w, h = uv
+    paper(cv, x, y, w, h)
+    n = min(w, h) - 8
+    for i in range(n - 3):
+        cv.put(x + 3 + i, y + 3 + i, rgba((200, 206, 216)))
+        cv.put(x + w - 4 - i, y + 3 + i, rgba((200, 206, 216)))
+    for i in range(n - 3, n):
+        cv.put(x + 3 + i, y + 3 + i, rgba((150, 98, 30)))
+        cv.put(x + w - 4 - i, y + 3 + i, rgba((150, 98, 30)))
+    for j in range(3):
+        for i in range(3):
+            cv.put(x + w - 6 + i, y + h - 5 + j, shade(wax, cv.rng.randint(-15, 15)))
+
+
+def versus(cv, uv):
+    """Affiche de duel : deux portraits face a face, croix rouge entre eux."""
+    x, y, w, h = uv
+    paper(cv, x, y, w, h)
+    pw = (w - 8) // 2
+    portrait(cv, x + 2, y + 3, pw, pw + 2, (120, 140, 160), (214, 170, 130), (40, 60, 90))
+    portrait(cv, x + w - 2 - pw, y + 3, pw, pw + 2, (150, 120, 110), (180, 130, 96), (90, 30, 30))
+    mx, my = x + w // 2, y + 3 + pw // 2
+    for t in range(-2, 3):
+        cv.put(mx + t, my + t, rgba((190, 30, 26))); cv.put(mx + t, my - t, rgba((190, 30, 26)))
+    text_lines(cv, x + 3, y + pw + 8, w - 6, max(1, (h - pw - 10) // 2))
+
+
 def texture(kind, seed):
     cv = Canvas(random.Random(seed))
     for yy in range(VH):
@@ -292,6 +394,30 @@ def texture(kind, seed):
         wanted(cv, p[4], (150, 140, 120), (160, 112, 80), (30, 30, 30))
         seal_note(cv, p[5], (170, 30, 30))
         pin_tex(cv, (190, 40, 36))
+    elif kind == "Quetes":
+        sun_notice(cv, p[0])
+        checklist(cv, p[1], 3)
+        checklist(cv, p[2], 1)
+        monster_contract(cv, p[3])
+        pickaxe_notice(cv, p[4])
+        seal_note(cv, p[5], (46, 120, 70))
+        pin_tex(cv, (60, 140, 80))
+    elif kind == "Classement":
+        podium(cv, p[0])
+        ranking(cv, p[1])
+        trophy_notice(cv, p[2])
+        ranking(cv, p[3])
+        ranking(cv, p[4])
+        seal_note(cv, p[5], (200, 150, 40))
+        pin_tex(cv, (220, 180, 70))
+    elif kind == "Duel":
+        versus(cv, p[0])
+        crossed_swords(cv, p[1])
+        ranking(cv, p[2])
+        versus(cv, p[3])
+        crossed_swords(cv, p[4], (46, 92, 168))
+        seal_note(cv, p[5], (150, 32, 26))
+        pin_tex(cv, (170, 40, 40))
     else:
         guild_notice(cv, p[0], (46, 92, 168), (236, 196, 80))
         guild_notice(cv, p[1], (168, 40, 40), (236, 236, 236))
@@ -348,7 +474,9 @@ def icon(kind, tex):
 write("Server/Item/Block/Hitboxes/Eldanior/Tableau_3x3.json",
       {"Boxes": [{"Min": {"X": -1, "Y": 0, "Z": 0}, "Max": {"X": 2, "Y": 3, "Z": 0.4}}]})
 
-for kind, name, seed in (("Prime", "Tableau de prime", 7), ("Guilde", "Tableau de guilde", 11)):
+BOARDS = (("Prime", "Tableau de prime", 7), ("Guilde", "Tableau de guilde", 11), ("Quetes", "Tableau des quêtes", 13),
+          ("Classement", "Tableau des classements", 17), ("Duel", "Tableau des duels", 19))
+for kind, name, seed in BOARDS:
     icon(kind, texture(kind, seed))
     write(f"Server/Item/Items/Furniture/Eldanior/Eldanior_Tableau_{kind}.json", {
         "TranslationProperties": {"Name": name},
@@ -416,7 +544,54 @@ def guild_icon(u, v):
     return BLUE
 
 
-for kind, draw in (("Prime", bounty_icon), ("Guilde", guild_icon)):
+def quest_icon(u, v):
+    """Parchemin deroule (bords en rouleaux d'or), lignes d'encre, sceau de cire rouge."""
+    if abs(u) <= 0.3 and abs(v) <= 0.36:
+        if (u - 0.16) ** 2 + (v - 0.2) ** 2 < 0.012:
+            return (176, 30, 26)
+        if abs(u) <= 0.22 and -0.26 <= v <= 0.1 and int((v + 0.3) / 0.09) % 2 == 0 and abs((v + 0.3) % 0.09) < 0.03:
+            return (74, 58, 44)
+        return (232, 214, 170)
+    if abs(u) <= 0.36 and 0.34 <= abs(v) <= 0.46:
+        return GOLD if abs(abs(v) - 0.4) < 0.04 else GOLD_DARK
+    return None
+
+
+def ranking_icon(u, v):
+    """Coupe d'or : vasque, anses, pied, socle ; etoile pale sur la vasque."""
+    if -0.42 <= v <= -0.02 and abs(u) <= 0.3 * (1 - max(0.0, v + 0.42) / 0.5) + 0.06:
+        if math.hypot(u, v + 0.24) < 0.07:
+            return PALE
+        return GOLD
+    if -0.38 <= v <= -0.14 and 0.28 <= abs(u) <= 0.4 and not (0.31 < abs(u) < 0.37 and -0.33 < v < -0.19):
+        return GOLD_DARK
+    if -0.02 <= v <= 0.24 and abs(u) <= 0.05:
+        return GOLD_DARK
+    if 0.24 <= v <= 0.34 and abs(u) <= 0.22:
+        return GOLD
+    if 0.34 <= v <= 0.42 and abs(u) <= 0.3:
+        return GOLD_DARK
+    return None
+
+
+def duel_icon(u, v):
+    """Deux epees croisees : lames d'acier, gardes et poignees d'or."""
+    for s in (1, -1):
+        a = (u * s + v) / math.sqrt(2)                                                    # le long de la lame
+        b = (u * s - v) / math.sqrt(2)                                                    # en travers
+        if -0.5 <= a <= 0.22 and abs(b) <= 0.045:
+            return (214, 220, 230) if b > 0 else (160, 170, 184)
+        if 0.22 <= a <= 0.27 and abs(b) <= 0.16:
+            return GOLD
+        if 0.27 <= a <= 0.46 and abs(b) <= 0.035:
+            return GOLD_DARK
+        if 0.46 <= a <= 0.53 and abs(b) <= 0.06:
+            return GOLD
+    return None
+
+
+for kind, draw in (("Prime", bounty_icon), ("Guilde", guild_icon), ("Quetes", quest_icon), ("Classement", ranking_icon),
+                   ("Duel", duel_icon)):
     px = []
     for y in range(E):
         row = []

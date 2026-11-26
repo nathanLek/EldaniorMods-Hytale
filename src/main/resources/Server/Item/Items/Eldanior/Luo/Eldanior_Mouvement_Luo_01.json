@@ -1,0 +1,40 @@
+{
+  "$Comment": "Mouvement de la famille Luo (manuel de famille), genere par scripts/familles/gen_voie_martiale_objets.py. Maintenir le clic droit : lecture, puis LuoManuelApprendre (FamilyMovements.java) enseigne Rune_ExecutionCeleste.",
+  "TranslationProperties": {
+    "Name": "Manuel de la famille Luo — 1er Mouvement : Exécution Céleste",
+    "Description": "Manuel secret de la famille Luo : 1er Mouvement : Exécution Céleste. Technique évolutive : elle grandit avec votre rang martial. Maintenez le clic droit pour lire le manuel et apprendre la technique (Apprenti en Arts Martiaux ou plus haut, membres de la famille). Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Empire_Luo.Luo"
+  ],
+  "Quality": "Rare",
+  "ItemLevel": 20,
+  "Model": "Items/Eldanior/Luo/Voie/Manuel_Famille_Luo.blockymodel",
+  "Texture": "Items/Eldanior/Luo/Voie/Eldanior_Mouvement_Luo_01_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Mouvement_Luo_01.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Luo_Manuel_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 1.0
+}

@@ -106,6 +106,12 @@ public final class Criminals {
      * Criminel abattu par un joueur (DeathXPSystem, thread du monde) : sa prime (0 si ce n'est pas un criminel), annonce.
      * La prime revient a sa base pour sa prochaine apparition.
      */
+    /** Poste du criminel (cle de son avis de recherche), null si ce n'est pas un criminel. */
+    public static String postIdOf(Ref<EntityStore> victim, ComponentAccessor<EntityStore> store) {
+        GuardManager.Post p = GuardManager.postOf(victim, store);
+        return p != null && p.type == GuardType.CRIMINEL ? p.id : null;
+    }
+
     public static long claim(Ref<EntityStore> victim, ComponentAccessor<EntityStore> store, String killer) {
         GuardManager.Post p = GuardManager.postOf(victim, store);
         if (p == null || p.type != GuardType.CRIMINEL) return 0;

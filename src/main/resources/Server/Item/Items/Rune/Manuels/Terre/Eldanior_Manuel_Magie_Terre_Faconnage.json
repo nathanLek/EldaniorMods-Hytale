@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_Faconnage (remplace le parchemin rune_page_faconnage).",
+  "TranslationProperties": {
+    "Name": "Manuel de Terre : Façonnage",
+    "Description": "Sort unique de terre (Mage, rune de prédilection du Démiurge). Vous façonnez le sol du point visé (rayon 12, jusqu'à 25 blocs) pendant 12 s. Toutes les demi-secondes, un pic de roche jaillit sous l'un de vos ennemis : 90 dégâts et projection en l'air ; les pics restent dressés et barrent le terrain (24 au plus). Vos alliés qui se tiennent dans le domaine subissent 25 % de dégâts physiques en moins. À la fin, les pics s'effondrent (60 dégâts autour de chacun) et le sol est restauré (jamais en ville ni sur une parcelle). Épargne votre groupe, votre guilde et votre famille. Coût : 600 mana. Recharge : 180 s.\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Terre"
+  ],
+  "Quality": "Unique",
+  "ItemLevel": 75,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Terre_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Terre_Faconnage.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

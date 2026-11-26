@@ -76,8 +76,7 @@ public class QuestTab {
         int dailyCount = QuestManager.countByCategory(myUUID, QuestCategory.JOURNALIERE, isPK);
         int sideCount = QuestManager.countByCategory(myUUID, QuestCategory.SECONDAIRE, isPK);
         int mainCount = QuestManager.countByCategory(myUUID, QuestCategory.PRINCIPAL, isPK);
-        int inProgressCount = QuestManager.getInProgressQuests(myUUID).size()
-                + com.eldanior.system.boards.GuildBoard.missionsOf(myUUID).size();   // missions prises au tableau de guilde
+        int inProgressCount = QuestManager.getInProgressQuests(myUUID).size();   // missions de guilde comprises (quetes, 2026-11-19)
         int claimableCount = QuestManager.getClaimableQuests(myUUID).size();
 
         // Bandeaux
@@ -254,48 +253,7 @@ public class QuestTab {
             displayCache.add(pq.getQuestId());
             slotIdx++;
         }
-        return renderGuildMissions(ui, myUUID, slotIdx, displayCache);
-    }
-
-    /** Missions prises au tableau de guilde (boards/GuildBoard) : objectif, avancement, recompenses ; abandon possible ici. */
-    private static int renderGuildMissions(UICommandBuilder ui, UUID myUUID, int slotIdx, List<String> displayCache) {
-        for (com.eldanior.system.boards.GuildBoard.MissionView m : com.eldanior.system.boards.GuildBoard.missionsOf(myUUID)) {
-            if (slotIdx >= MAX_QUEST_SLOTS) break;
-            ui.set("#QSlot" + slotIdx + ".Visible", true);
-            ui.set("#QSlot" + slotIdx + ".Background", "#0d1610");
-            ui.set("#QSlotCat" + slotIdx + ".Text", "MISSION DE GUILDE");
-            ui.set("#QSlotCat" + slotIdx + ".Style.TextColor", "#caa15a");
-            ui.set("#QSlotDiff" + slotIdx + ".Text", m.done() ? "TERMINEE" : "");
-            ui.set("#QSlotDiff" + slotIdx + ".Style.TextColor", "#4CAF50");
-            ui.set("#QSlotName" + slotIdx + ".Text", m.title());
-            ui.set("#QSlotName" + slotIdx + ".Style.TextColor", "#ffffff");
-            ui.set("#QSlotProg" + slotIdx + ".Text", m.done() ? "A RECLAMER AU TABLEAU DE GUILDE" : "");
-            ui.set("#QSlotProg" + slotIdx + ".Style.TextColor", "#4CAF50");
-
-            ui.set("#QSlotObjABox" + slotIdx + ".Visible", true);
-            ui.set("#QSlotObjA" + slotIdx + ".Text", m.objective());
-            ui.set("#QSlotObjA" + slotIdx + ".Style.TextColor", m.done() ? "#4CAF50" : "#c8c8c8");
-            ui.set("#QSlotObjAC" + slotIdx + ".Text", m.done() ? "OK" : m.progress() + "/" + m.count());
-            ui.set("#QSlotObjAC" + slotIdx + ".Style.TextColor", m.done() ? "#4CAF50" : "#caa15a");
-            ui.set("#QSlotObjBBox" + slotIdx + ".Visible", false);
-            ui.set("#QSlotObjCBox" + slotIdx + ".Visible", false);
-
-            ui.set("#QSlotRewABox" + slotIdx + ".Visible", true);
-            ui.set("#QSlotRewA" + slotIdx + ".Text", "+" + formatNumber(m.gold()) + " Or");
-            ui.set("#QSlotRewBBox" + slotIdx + ".Visible", true);
-            ui.set("#QSlotRewB" + slotIdx + ".Text", "+" + formatNumber(m.xp()) + " XP");
-            ui.set("#QSlotRewCBox" + slotIdx + ".Visible", true);
-            ui.set("#QSlotRewC" + slotIdx + ".Text", "+" + formatNumber(m.contribution()) + " contribution");
-
-            ui.set("#QSlotBtnAccept" + slotIdx + ".Visible", false);
-            ui.set("#QSlotBtnActivate" + slotIdx + ".Visible", false);
-            ui.set("#QSlotBtnAbandon" + slotIdx + ".Visible", !m.done());
-            ui.set("#QSlotBtnClaim" + slotIdx + ".Visible", false);
-
-            displayCache.add("guild:" + m.id());
-            slotIdx++;
-        }
-        return slotIdx;
+        return slotIdx;                                                // missions de guilde : des quetes en cours (2026-11-19)
     }
 
     private static int renderClaimableList(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store,
@@ -477,7 +435,18 @@ public class QuestTab {
         List<String> cache = getCache(uuid);
         if (idx < 0 || idx >= cache.size()) return false;
 
-        String questId = cache.get(idx);
+        return claimQuest(cache.get(idx), ref, store);
+    }
+
+    /** Reclame une quete terminee (fenetre du systeme ou tableau des quetes) : objets rendus, XP, or, titre. */
+    public static boolean claimQuest(String questId, Ref<EntityStore> ref, Store<EntityStore> store) {
+        UUID uuid = getPlayerUUID(ref, store);
+        if (uuid == null || questId == null) return false;
+        // Acte d'une quete en chapitres : il se rend au PNJ (QuestChaptersPage), jamais deux fois par le menu
+        if (QuestManager.getQuest(questId) instanceof com.eldanior.system.quest.chapitres.ChapterQuests.ActQuest) return false;
+        boolean done = false;
+        for (PlayerQuest pq : QuestManager.getPlayerQuests(uuid)) if (pq.getQuestId().equals(questId) && pq.isCompleted()) done = true;
+        if (!done) return false;
         QuestModel model = QuestManager.getQuest(questId);
         if (model == null) return false;
 
@@ -551,11 +520,6 @@ public class QuestTab {
         if (idx < 0 || idx >= cache.size()) return false;
 
         Player player = store.getComponent(ref, Player.getComponentType());
-        if (cache.get(idx).startsWith("guild:")) {                                         // mission du tableau de guilde
-            com.eldanior.system.boards.GuildBoard.abandonMission(uuid, cache.get(idx).substring(6));
-            if (player != null) player.getPlayerRef().sendMessage(Message.raw("Mission de guilde abandonnee."));
-            return true;
-        }
         QuestManager.abandonQuest(uuid, cache.get(idx));
         saveQuestData(uuid, ref, store);
 
@@ -593,7 +557,7 @@ public class QuestTab {
     }
 
     /** Sauvegarde les quetes + cooldowns du joueur dans PlayerLevelData */
-    private static void saveQuestData(UUID uuid, Ref<EntityStore> ref, Store<EntityStore> store) {
+    public static void saveQuestData(UUID uuid, Ref<EntityStore> ref, Store<EntityStore> store) {
         ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
         PlayerLevelData data = store.getComponent(ref, type);
         if (data != null) {

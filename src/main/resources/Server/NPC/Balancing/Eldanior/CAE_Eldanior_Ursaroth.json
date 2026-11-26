@@ -1,0 +1,211 @@
+{
+  "$Comment": "Kit de combat d'Ursaroth (gen_ours_braises.py) : CAE_Bear_Voidtaken, coups de base elargis x2,5, degats x6.",
+  "Type": "CombatActionEvaluator",
+  "TargetMemoryDuration": 60,
+  "CombatActionEvaluator": {
+    "RunConditions": [
+      {
+        "Type": "TimeSinceLastUsed",
+        "Curve": {
+          "ResponseCurve": "Linear",
+          "XRange": [
+            0,
+            5
+          ]
+        }
+      },
+      {
+        "Type": "Randomiser",
+        "MinValue": 0.85,
+        "MaxValue": 1
+      }
+    ],
+    "MinRunUtility": 0.5,
+    "MinActionUtility": 0.05,
+    "AvailableActions": {
+      "SelectTarget": {
+        "Type": "SelectBasicAttackTarget",
+        "Conditions": [
+          {
+            "Type": "TargetDistance",
+            "Curve": {
+              "ResponseCurve": "SimpleDescendingLogistic",
+              "XRange": [
+                0,
+                10
+              ]
+            }
+          }
+        ]
+      },
+      "ConeSlam": {
+        "Type": "State",
+        "Description": "Lock facing and slam a telegraphed frontal cone.",
+        "Target": "Hostile",
+        "State": "Combat",
+        "SubState": "ConeAim",
+        "PostExecuteDistanceRange": [
+          2,
+          8
+        ],
+        "WeightCoefficient": 1.2,
+        "Conditions": [
+          {
+            "Type": "TimeSinceLastUsed",
+            "Curve": {
+              "Type": "Switch",
+              "SwitchPoint": 10
+            }
+          },
+          {
+            "Type": "TargetDistance",
+            "Curve": {
+              "ResponseCurve": "SimpleDescendingLogistic",
+              "XRange": [
+                0,
+                10
+              ]
+            }
+          }
+        ]
+      },
+      "Charge": {
+        "Type": "State",
+        "Description": "Charge at the target, stun on impact, and unleash a flurry of swipes after impact.",
+        "Target": "Hostile",
+        "State": "Combat",
+        "SubState": "ChargeWindup",
+        "PostExecuteDistanceRange": [
+          2,
+          8
+        ],
+        "WeightCoefficient": 1.15,
+        "Conditions": [
+          {
+            "Type": "TimeSinceLastUsed",
+            "Curve": {
+              "Type": "Switch",
+              "SwitchPoint": 16
+            }
+          },
+          {
+            "Type": "TargetDistance",
+            "Curve": {
+              "ResponseCurve": "Linear",
+              "XRange": [
+                8,
+                30
+              ]
+            }
+          }
+        ]
+      },
+      "TentacleStorm": {
+        "Type": "State",
+        "Description": "Erupt a tentacle beneath the hostile target and four random tentacles around the bear.",
+        "Target": "Hostile",
+        "State": "Combat",
+        "SubState": "TentacleStormCast",
+        "PostExecuteDistanceRange": [
+          1,
+          4
+        ],
+        "WeightCoefficient": 1.0,
+        "Conditions": [
+          {
+            "Type": "TimeSinceLastUsed",
+            "Curve": {
+              "ResponseCurve": "LateRise",
+              "XRange": [
+                10,
+                40
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "ActionSets": {
+      "Main": {
+        "BasicAttacks": {
+          "Attacks": [
+            "Root_NPC_Eldanior_Ursaroth_Attack"
+          ],
+          "Randomise": false,
+          "UseProjectedDistance": true,
+          "MaxRange": 10.0,
+          "Timeout": 0.25,
+          "CooldownRange": [
+            1.5,
+            3
+          ],
+          "InteractionVars": {
+            "Swipe_Left_Damage": {
+              "Interactions": [
+                {
+                  "Parent": "Bear_Grizzly_Swipe_Left_Damage",
+                  "DamageCalculator": {
+                    "Type": "Absolute",
+                    "BaseDamage": {
+                      "Physical": 138
+                    },
+                    "RandomPercentageModifier": 0.1
+                  },
+                  "DamageEffects": {
+                    "Knockback": {
+                      "Force": 0.5
+                    }
+                  }
+                }
+              ]
+            },
+            "Swipe_Right_Damage": {
+              "Interactions": [
+                {
+                  "Parent": "Bear_Grizzly_Swipe_Right_Damage",
+                  "DamageCalculator": {
+                    "Type": "Absolute",
+                    "BaseDamage": {
+                      "Physical": 144
+                    },
+                    "RandomPercentageModifier": 0.1
+                  },
+                  "DamageEffects": {
+                    "Knockback": {
+                      "Force": 0.5
+                    }
+                  }
+                }
+              ]
+            },
+            "Stomp_Damage": {
+              "Interactions": [
+                {
+                  "Parent": "Bear_Grizzly_Stomp_Damage",
+                  "DamageCalculator": {
+                    "Type": "Absolute",
+                    "BaseDamage": {
+                      "Physical": 228
+                    },
+                    "RandomPercentageModifier": 0.1
+                  },
+                  "DamageEffects": {
+                    "Knockback": {
+                      "Force": 10
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "Actions": [
+          "SelectTarget",
+          "ConeSlam",
+          "Charge",
+          "TentacleStorm"
+        ]
+      }
+    }
+  }
+}

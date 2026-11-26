@@ -1,0 +1,49 @@
+{
+  "$Comment": "Signature des mousquets, Concentration (energie pleine) : on epaule et retient son souffle, puis une balle a precision et degats doubles part (Eldanior_MousquetTir Concentration ; munitions requises, pas le rechargement).",
+  "Type": "StatsCondition",
+  "Costs": {
+    "SignatureEnergy": 100
+  },
+  "ValueType": "Percent",
+  "Next": {
+    "Type": "Serial",
+    "Interactions": [
+      {
+        "Type": "Simple",
+        "RunTime": 0.6,
+        "HorizontalSpeedMultiplier": 0.3,
+        "Effects": {
+          "ItemAnimationId": "ShootFlintlockCharging",
+          "LocalSoundEventId": "SFX_Sword_T2_Lunge_Charge_Local"
+        }
+      },
+      {
+        "Type": "Eldanior_MousquetTir",
+        "Concentration": true,
+        "Next": {
+          "Type": "Serial",
+          "Interactions": [
+            {
+              "Type": "ChangeStat",
+              "StatModifiers": {
+                "SignatureEnergy": -100
+              },
+              "ValueType": "Percent"
+            },
+            {
+              "Type": "Simple",
+              "RunTime": 0.6,
+              "Effects": {
+                "ItemAnimationId": "ShootFlintlockCharged",
+                "CameraEffect": "Handgun_Shoot",
+                "WorldSoundEventId": "SFX_Blunderbuss_Fire",
+                "LocalSoundEventId": "SFX_Blunderbuss_Fire_Local"
+              }
+            }
+          ]
+        },
+        "Failed": "Gun_Shoot_Fail"
+      }
+    ]
+  }
+}

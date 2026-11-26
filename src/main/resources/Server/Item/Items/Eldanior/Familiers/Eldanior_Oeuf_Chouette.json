@@ -1,0 +1,83 @@
+{
+  "TranslationProperties": {
+    "Name": "Œuf de Chouette des neiges",
+    "Description": "Bête rare. Posé au sol, l'œuf se lie à vous et éclot au bout de 5 minutes : une chouette duveteuse. Il naît sous un élément rare (Eau, Feu, Terre ou Air). Il vous suit, combat à vos côtés et gagne en force à chaque combat ; adulte, il peut évoluer et apprendre une compétence. Il ne se monte pas. Gérez-le depuis son œuf. S'il meurt, l'œuf se brise et le lien est rompu : -20 % d'expérience pendant 7 jours. Un seul compagnon par maître."
+  },
+  "Icon": "Icons/ItemsGenerated/Eldanior_Oeuf_Chouette.png",
+  "Categories": [
+    "Eldanior_System.Consommables"
+  ],
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/Eldanior/Familiers/Oeuf_Familier.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/Eldanior/Familiers/Oeuf_Chouette_Texture.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "Eldanior_Oeuf_Familier",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Benches"
+      }
+    },
+    "BlockParticleSetId": "Stone",
+    "ParticleColor": "#e8d8a0",
+    "BlockSoundSetId": "Stone",
+    "PhysicalMaterialId": "Stone",
+    "TextureComputedColor": "#D8B870",
+    "Support": {
+      "Down": [
+        {
+          "FaceType": "Full"
+        }
+      ]
+    },
+    "State": {
+      "Definitions": {
+        "Eclos": {
+          "CustomModel": "Blocks/Eldanior/Familiers/Oeuf_Familier_Eclos.blockymodel",
+          "CustomModelTexture": [
+            {
+              "Texture": "Blocks/Eldanior/Familiers/Oeuf_Chouette_Eclos_Texture.png",
+              "Weight": 1
+            }
+          ]
+        }
+      }
+    },
+    "Interactions": {
+      "Use": {
+        "Interactions": [
+          {
+            "Type": "Simple"
+          }
+        ]
+      }
+    }
+  },
+  "PlayerAnimationsId": "Block",
+  "IconProperties": {
+    "Scale": 0.5,
+    "Translation": [
+      0,
+      -14
+    ],
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ]
+  },
+  "MaxStack": 1,
+  "ItemLevel": 15,
+  "ItemSoundSetId": "ISS_Blocks_Stone",
+  "Quality": "Rare"
+}

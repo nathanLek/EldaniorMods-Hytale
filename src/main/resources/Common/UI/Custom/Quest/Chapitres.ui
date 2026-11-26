@@ -1,0 +1,1130 @@
+$C = "../Common.ui";
+
+// Quetes d'un PNJ facon « Chapitres » (quest/chapitres/QuestChaptersPage), generee par scripts/quetes/gen_chapitres_ui.py.
+Group {
+  LayoutMode: Middle;
+  Background: (TexturePath: "ChapBackground.png");
+
+  Group #ChapPage {
+    Anchor: (Width: 1920, Height: 1080);
+
+    // ---- fond : voile de droite, bande d'encre, lueur, ombre, eclats ----
+    Group { Anchor: (Left: 1003, Top: 0, Width: 917, Height: 1080); Background: #181822(0.5); }
+    Group { Anchor: (Left: 499, Top: 0, Width: 504, Height: 1080); Background: (TexturePath: "ChapSeparator.png"); }
+    Group #ChapGlows { Anchor: (Left: 480, Top: 25, Width: 488, Height: 1055); Background: (TexturePath: "ChapGlows.png"); }
+    Group { Anchor: (Left: 615, Top: 194, Width: 391, Height: 736); Background: (TexturePath: "ChapShadow.png"); }
+    Group { Anchor: (Left: 0, Top: 0, Width: 1920, Height: 1080); Background: (TexturePath: "ChapShards.png"); }
+
+    // ---- carrousel ----
+    Button #ChapCard0 {
+      Anchor: (Left: 587, Top: 204, Width: 392, Height: 720);
+      Style: (
+        Default: (Background: #000000(0)),
+        Hovered: (Background: (TexturePath: "ChapCardHover.png")),
+        Pressed: (Background: (TexturePath: "ChapCardHover.png", Color: #ffffff(0.6))),
+        Sounds: $C.@ButtonSounds
+      );
+      Group #ChapArtAubeG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtAubeG.png"); Visible: false; }
+      Group #ChapArtAubeC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtAubeC.png"); Visible: false; }
+      Group #ChapArtNuitG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtNuitG.png"); Visible: false; }
+      Group #ChapArtNuitC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtNuitC.png"); Visible: false; }
+      Group #ChapArtDuelG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtDuelG.png"); Visible: false; }
+      Group #ChapArtDuelC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtDuelC.png"); Visible: false; }
+      Group #ChapArtTroneG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtTroneG.png"); Visible: false; }
+      Group #ChapArtTroneC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtTroneC.png"); Visible: false; }
+      Group #ChapArtDojoG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtDojoG.png"); Visible: false; }
+      Group #ChapArtDojoC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtDojoC.png"); Visible: false; }
+      Group #ChapArtVentG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtVentG.png"); Visible: false; }
+      Group #ChapArtVentC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtVentC.png"); Visible: false; }
+      Group #ChapArtBrigandsG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtBrigandsG.png"); Visible: false; }
+      Group #ChapArtBrigandsC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtBrigandsC.png"); Visible: false; }
+      Group #ChapArtTrorkG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtTrorkG.png"); Visible: false; }
+      Group #ChapArtTrorkC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtTrorkC.png"); Visible: false; }
+      Group #ChapArtSenseiG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtSenseiG.png"); Visible: false; }
+      Group #ChapArtSenseiC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtSenseiC.png"); Visible: false; }
+      Group #ChapArtLisiereG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtLisiereG.png"); Visible: false; }
+      Group #ChapArtLisiereC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtLisiereC.png"); Visible: false; }
+      Group #ChapArtMaraisG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtMaraisG.png"); Visible: false; }
+      Group #ChapArtMaraisC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtMaraisC.png"); Visible: false; }
+      Group #ChapArtForgeG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtForgeG.png"); Visible: false; }
+      Group #ChapArtForgeC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtForgeC.png"); Visible: false; }
+      Group #ChapArtDunesG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtDunesG.png"); Visible: false; }
+      Group #ChapArtDunesC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtDunesC.png"); Visible: false; }
+      Group #ChapArtOutlandersG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtOutlandersG.png"); Visible: false; }
+      Group #ChapArtOutlandersC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtOutlandersC.png"); Visible: false; }
+      Group #ChapArtAreneG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtAreneG.png"); Visible: false; }
+      Group #ChapArtAreneC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtAreneC.png"); Visible: false; }
+      Group #ChapArtVideG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtVideG.png"); Visible: false; }
+      Group #ChapArtVideC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtVideC.png"); Visible: false; }
+      Group #ChapArtOmbreG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtOmbreG.png"); Visible: false; }
+      Group #ChapArtOmbreC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtOmbreC.png"); Visible: false; }
+      Group #ChapArtRumeursG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtRumeursG.png"); Visible: false; }
+      Group #ChapArtRumeursC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtRumeursC.png"); Visible: false; }
+      Group #ChapArtHameauG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtHameauG.png"); Visible: false; }
+      Group #ChapArtHameauC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtHameauC.png"); Visible: false; }
+      Group #ChapArtAzurG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtAzurG.png"); Visible: false; }
+      Group #ChapArtAzurC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtAzurC.png"); Visible: false; }
+      Group #ChapArtMineG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtMineG.png"); Visible: false; }
+      Group #ChapArtMineC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtMineC.png"); Visible: false; }
+      Group #ChapCardShade0 { Anchor: (Left: 34, Top: 483, Width: 324, Height: 165); Background: (TexturePath: "ChapCardShade.png"); }
+      Group #ChapFrameL0 { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameLocked.png"); Visible: false; }
+      Group #ChapFrameLS0 { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefault.png"); Visible: false; }
+      Group #ChapFrameD0 { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefault.png"); }
+      Group #ChapFrameS0 { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameSelected.png"); Visible: false; }
+      Group #ChapFrameD0Or { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefaultOr.png"); Visible: false; }
+      Group #ChapFrameS0Or { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameSelectedOr.png"); Visible: false; }
+      Group #ChapFrameD0Bleu { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefaultBleu.png"); Visible: false; }
+      Group #ChapFrameS0Bleu { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameSelectedBleu.png"); Visible: false; }
+      Group #ChapFrameD0Vert { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefaultVert.png"); Visible: false; }
+      Group #ChapFrameS0Vert { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameSelectedVert.png"); Visible: false; }
+      Group #ChapFrameD0Violet { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefaultViolet.png"); Visible: false; }
+      Group #ChapFrameS0Violet { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameSelectedViolet.png"); Visible: false; }
+      Group #ChapFrameD0Rouge { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefaultRouge.png"); Visible: false; }
+      Group #ChapFrameS0Rouge { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameSelectedRouge.png"); Visible: false; }
+      Group #ChapFrameD0Orange { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefaultOrange.png"); Visible: false; }
+      Group #ChapFrameS0Orange { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameSelectedOrange.png"); Visible: false; }
+      Group #ChapFrameD0Cyan { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefaultCyan.png"); Visible: false; }
+      Group #ChapFrameS0Cyan { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameSelectedCyan.png"); Visible: false; }
+      Group #ChapFrameD0Rose { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefaultRose.png"); Visible: false; }
+      Group #ChapFrameS0Rose { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameSelectedRose.png"); Visible: false; }
+      Group #ChapCardShards0 {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "ChapShard01.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "ChapShard02.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "ChapShard03.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "ChapShard04.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "ChapShard05.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "ChapShard06.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "ChapShard07.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "ChapShard08.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "ChapShard09.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "ChapShard10.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "ChapShard11.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "ChapShard12.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "ChapShard13.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "ChapShard14.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "ChapShard15.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "ChapShard16.png"); }
+      }
+      Group #ChapCardShards0Or {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "ChapShard01Or.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "ChapShard02Or.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "ChapShard03Or.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "ChapShard04Or.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "ChapShard05Or.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "ChapShard06Or.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "ChapShard07Or.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "ChapShard08Or.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "ChapShard09Or.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "ChapShard10Or.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "ChapShard11Or.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "ChapShard12Or.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "ChapShard13Or.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "ChapShard14Or.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "ChapShard15Or.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "ChapShard16Or.png"); }
+      }
+      Group #ChapCardShards0Bleu {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "ChapShard01Bleu.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "ChapShard02Bleu.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "ChapShard03Bleu.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "ChapShard04Bleu.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "ChapShard05Bleu.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "ChapShard06Bleu.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "ChapShard07Bleu.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "ChapShard08Bleu.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "ChapShard09Bleu.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "ChapShard10Bleu.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "ChapShard11Bleu.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "ChapShard12Bleu.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "ChapShard13Bleu.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "ChapShard14Bleu.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "ChapShard15Bleu.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "ChapShard16Bleu.png"); }
+      }
+      Group #ChapCardShards0Vert {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "ChapShard01Vert.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "ChapShard02Vert.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "ChapShard03Vert.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "ChapShard04Vert.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "ChapShard05Vert.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "ChapShard06Vert.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "ChapShard07Vert.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "ChapShard08Vert.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "ChapShard09Vert.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "ChapShard10Vert.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "ChapShard11Vert.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "ChapShard12Vert.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "ChapShard13Vert.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "ChapShard14Vert.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "ChapShard15Vert.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "ChapShard16Vert.png"); }
+      }
+      Group #ChapCardShards0Violet {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "ChapShard01Violet.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "ChapShard02Violet.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "ChapShard03Violet.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "ChapShard04Violet.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "ChapShard05Violet.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "ChapShard06Violet.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "ChapShard07Violet.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "ChapShard08Violet.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "ChapShard09Violet.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "ChapShard10Violet.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "ChapShard11Violet.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "ChapShard12Violet.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "ChapShard13Violet.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "ChapShard14Violet.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "ChapShard15Violet.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "ChapShard16Violet.png"); }
+      }
+      Group #ChapCardShards0Rouge {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "ChapShard01Rouge.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "ChapShard02Rouge.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "ChapShard03Rouge.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "ChapShard04Rouge.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "ChapShard05Rouge.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "ChapShard06Rouge.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "ChapShard07Rouge.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "ChapShard08Rouge.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "ChapShard09Rouge.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "ChapShard10Rouge.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "ChapShard11Rouge.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "ChapShard12Rouge.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "ChapShard13Rouge.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "ChapShard14Rouge.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "ChapShard15Rouge.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "ChapShard16Rouge.png"); }
+      }
+      Group #ChapCardShards0Orange {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "ChapShard01Orange.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "ChapShard02Orange.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "ChapShard03Orange.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "ChapShard04Orange.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "ChapShard05Orange.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "ChapShard06Orange.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "ChapShard07Orange.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "ChapShard08Orange.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "ChapShard09Orange.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "ChapShard10Orange.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "ChapShard11Orange.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "ChapShard12Orange.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "ChapShard13Orange.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "ChapShard14Orange.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "ChapShard15Orange.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "ChapShard16Orange.png"); }
+      }
+      Group #ChapCardShards0Cyan {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "ChapShard01Cyan.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "ChapShard02Cyan.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "ChapShard03Cyan.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "ChapShard04Cyan.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "ChapShard05Cyan.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "ChapShard06Cyan.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "ChapShard07Cyan.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "ChapShard08Cyan.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "ChapShard09Cyan.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "ChapShard10Cyan.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "ChapShard11Cyan.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "ChapShard12Cyan.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "ChapShard13Cyan.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "ChapShard14Cyan.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "ChapShard15Cyan.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "ChapShard16Cyan.png"); }
+      }
+      Group #ChapCardShards0Rose {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "ChapShard01Rose.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "ChapShard02Rose.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "ChapShard03Rose.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "ChapShard04Rose.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "ChapShard05Rose.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "ChapShard06Rose.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "ChapShard07Rose.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "ChapShard08Rose.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "ChapShard09Rose.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "ChapShard10Rose.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "ChapShard11Rose.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "ChapShard12Rose.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "ChapShard13Rose.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "ChapShard14Rose.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "ChapShard15Rose.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "ChapShard16Rose.png"); }
+      }
+      Group #ChapCardBadge0 { Anchor: (Left: 170, Top: 20, Width: 52, Height: 52); Background: (TexturePath: "ChapRankBadge.png"); }
+      Label #ChapCardPlus0 {
+        Anchor: (Left: 0, Top: 270, Width: 392, Height: 120);
+        Text: "+";
+        Visible: false;
+        Style: (FontName: "Secondary", FontSize: 110, RenderBold: true, TextColor: #c58643, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+      Label #ChapCardRank0 {
+        Anchor: (Left: 170, Top: 20, Width: 52, Height: 52);
+        Style: (FontName: "Secondary", FontSize: 24, RenderBold: true, TextColor: #ffe98a, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 14);
+      }
+      Group #ChapCardLock0 { Anchor: (Left: 168, Top: 300, Width: 56, Height: 56); Background: (TexturePath: "ChapLock.png"); Visible: false; }
+      Label #ChapCardTitle0 {
+        Anchor: (Left: 30, Top: 556, Width: 332, Height: 36);
+        Style: (FontName: "Secondary", FontSize: 21, RenderBold: true, RenderUppercase: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+      Label #ChapCardState0 {
+        Anchor: (Left: 30, Top: 594, Width: 332, Height: 20);
+        Style: (FontSize: 13, RenderBold: true, RenderUppercase: true, TextColor: #d1dae6, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+    }
+    Button #ChapCard1 {
+      Anchor: (Left: 966, Top: 204, Width: 392, Height: 720);
+      Style: (
+        Default: (Background: #000000(0)),
+        Hovered: (Background: (TexturePath: "ChapCardHover.png")),
+        Pressed: (Background: (TexturePath: "ChapCardHover.png", Color: #ffffff(0.6))),
+        Sounds: $C.@ButtonSounds
+      );
+      Group #ChapArtAubeG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtAubeG.png"); Visible: false; }
+      Group #ChapArtAubeC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtAubeC.png"); Visible: false; }
+      Group #ChapArtNuitG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtNuitG.png"); Visible: false; }
+      Group #ChapArtNuitC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtNuitC.png"); Visible: false; }
+      Group #ChapArtDuelG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtDuelG.png"); Visible: false; }
+      Group #ChapArtDuelC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtDuelC.png"); Visible: false; }
+      Group #ChapArtTroneG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtTroneG.png"); Visible: false; }
+      Group #ChapArtTroneC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtTroneC.png"); Visible: false; }
+      Group #ChapArtDojoG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtDojoG.png"); Visible: false; }
+      Group #ChapArtDojoC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtDojoC.png"); Visible: false; }
+      Group #ChapArtVentG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtVentG.png"); Visible: false; }
+      Group #ChapArtVentC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtVentC.png"); Visible: false; }
+      Group #ChapArtBrigandsG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtBrigandsG.png"); Visible: false; }
+      Group #ChapArtBrigandsC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtBrigandsC.png"); Visible: false; }
+      Group #ChapArtTrorkG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtTrorkG.png"); Visible: false; }
+      Group #ChapArtTrorkC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtTrorkC.png"); Visible: false; }
+      Group #ChapArtSenseiG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtSenseiG.png"); Visible: false; }
+      Group #ChapArtSenseiC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtSenseiC.png"); Visible: false; }
+      Group #ChapArtLisiereG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtLisiereG.png"); Visible: false; }
+      Group #ChapArtLisiereC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtLisiereC.png"); Visible: false; }
+      Group #ChapArtMaraisG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtMaraisG.png"); Visible: false; }
+      Group #ChapArtMaraisC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtMaraisC.png"); Visible: false; }
+      Group #ChapArtForgeG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtForgeG.png"); Visible: false; }
+      Group #ChapArtForgeC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtForgeC.png"); Visible: false; }
+      Group #ChapArtDunesG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtDunesG.png"); Visible: false; }
+      Group #ChapArtDunesC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtDunesC.png"); Visible: false; }
+      Group #ChapArtOutlandersG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtOutlandersG.png"); Visible: false; }
+      Group #ChapArtOutlandersC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtOutlandersC.png"); Visible: false; }
+      Group #ChapArtAreneG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtAreneG.png"); Visible: false; }
+      Group #ChapArtAreneC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtAreneC.png"); Visible: false; }
+      Group #ChapArtVideG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtVideG.png"); Visible: false; }
+      Group #ChapArtVideC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtVideC.png"); Visible: false; }
+      Group #ChapArtOmbreG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtOmbreG.png"); Visible: false; }
+      Group #ChapArtOmbreC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtOmbreC.png"); Visible: false; }
+      Group #ChapArtRumeursG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtRumeursG.png"); Visible: false; }
+      Group #ChapArtRumeursC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtRumeursC.png"); Visible: false; }
+      Group #ChapArtHameauG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtHameauG.png"); Visible: false; }
+      Group #ChapArtHameauC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtHameauC.png"); Visible: false; }
+      Group #ChapArtAzurG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtAzurG.png"); Visible: false; }
+      Group #ChapArtAzurC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtAzurC.png"); Visible: false; }
+      Group #ChapArtMineG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtMineG.png"); Visible: false; }
+      Group #ChapArtMineC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtMineC.png"); Visible: false; }
+      Group #ChapCardShade1 { Anchor: (Left: 34, Top: 483, Width: 324, Height: 165); Background: (TexturePath: "ChapCardShade.png"); }
+      Group #ChapFrameL1 { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameLocked.png"); Visible: false; }
+      Group #ChapFrameLS1 { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefault.png"); Visible: false; }
+      Group #ChapFrameD1 { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefault.png"); }
+      Group #ChapFrameS1 { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameSelected.png"); Visible: false; }
+      Group #ChapFrameD1Or { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefaultOr.png"); Visible: false; }
+      Group #ChapFrameS1Or { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameSelectedOr.png"); Visible: false; }
+      Group #ChapFrameD1Bleu { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefaultBleu.png"); Visible: false; }
+      Group #ChapFrameS1Bleu { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameSelectedBleu.png"); Visible: false; }
+      Group #ChapFrameD1Vert { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefaultVert.png"); Visible: false; }
+      Group #ChapFrameS1Vert { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameSelectedVert.png"); Visible: false; }
+      Group #ChapFrameD1Violet { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefaultViolet.png"); Visible: false; }
+      Group #ChapFrameS1Violet { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameSelectedViolet.png"); Visible: false; }
+      Group #ChapFrameD1Rouge { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefaultRouge.png"); Visible: false; }
+      Group #ChapFrameS1Rouge { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameSelectedRouge.png"); Visible: false; }
+      Group #ChapFrameD1Orange { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefaultOrange.png"); Visible: false; }
+      Group #ChapFrameS1Orange { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameSelectedOrange.png"); Visible: false; }
+      Group #ChapFrameD1Cyan { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefaultCyan.png"); Visible: false; }
+      Group #ChapFrameS1Cyan { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameSelectedCyan.png"); Visible: false; }
+      Group #ChapFrameD1Rose { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefaultRose.png"); Visible: false; }
+      Group #ChapFrameS1Rose { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameSelectedRose.png"); Visible: false; }
+      Group #ChapCardShards1 {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "ChapShard01.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "ChapShard02.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "ChapShard03.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "ChapShard04.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "ChapShard05.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "ChapShard06.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "ChapShard07.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "ChapShard08.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "ChapShard09.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "ChapShard10.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "ChapShard11.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "ChapShard12.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "ChapShard13.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "ChapShard14.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "ChapShard15.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "ChapShard16.png"); }
+      }
+      Group #ChapCardShards1Or {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "ChapShard01Or.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "ChapShard02Or.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "ChapShard03Or.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "ChapShard04Or.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "ChapShard05Or.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "ChapShard06Or.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "ChapShard07Or.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "ChapShard08Or.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "ChapShard09Or.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "ChapShard10Or.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "ChapShard11Or.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "ChapShard12Or.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "ChapShard13Or.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "ChapShard14Or.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "ChapShard15Or.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "ChapShard16Or.png"); }
+      }
+      Group #ChapCardShards1Bleu {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "ChapShard01Bleu.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "ChapShard02Bleu.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "ChapShard03Bleu.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "ChapShard04Bleu.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "ChapShard05Bleu.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "ChapShard06Bleu.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "ChapShard07Bleu.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "ChapShard08Bleu.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "ChapShard09Bleu.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "ChapShard10Bleu.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "ChapShard11Bleu.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "ChapShard12Bleu.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "ChapShard13Bleu.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "ChapShard14Bleu.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "ChapShard15Bleu.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "ChapShard16Bleu.png"); }
+      }
+      Group #ChapCardShards1Vert {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "ChapShard01Vert.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "ChapShard02Vert.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "ChapShard03Vert.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "ChapShard04Vert.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "ChapShard05Vert.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "ChapShard06Vert.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "ChapShard07Vert.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "ChapShard08Vert.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "ChapShard09Vert.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "ChapShard10Vert.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "ChapShard11Vert.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "ChapShard12Vert.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "ChapShard13Vert.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "ChapShard14Vert.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "ChapShard15Vert.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "ChapShard16Vert.png"); }
+      }
+      Group #ChapCardShards1Violet {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "ChapShard01Violet.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "ChapShard02Violet.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "ChapShard03Violet.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "ChapShard04Violet.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "ChapShard05Violet.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "ChapShard06Violet.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "ChapShard07Violet.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "ChapShard08Violet.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "ChapShard09Violet.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "ChapShard10Violet.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "ChapShard11Violet.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "ChapShard12Violet.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "ChapShard13Violet.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "ChapShard14Violet.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "ChapShard15Violet.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "ChapShard16Violet.png"); }
+      }
+      Group #ChapCardShards1Rouge {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "ChapShard01Rouge.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "ChapShard02Rouge.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "ChapShard03Rouge.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "ChapShard04Rouge.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "ChapShard05Rouge.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "ChapShard06Rouge.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "ChapShard07Rouge.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "ChapShard08Rouge.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "ChapShard09Rouge.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "ChapShard10Rouge.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "ChapShard11Rouge.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "ChapShard12Rouge.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "ChapShard13Rouge.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "ChapShard14Rouge.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "ChapShard15Rouge.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "ChapShard16Rouge.png"); }
+      }
+      Group #ChapCardShards1Orange {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "ChapShard01Orange.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "ChapShard02Orange.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "ChapShard03Orange.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "ChapShard04Orange.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "ChapShard05Orange.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "ChapShard06Orange.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "ChapShard07Orange.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "ChapShard08Orange.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "ChapShard09Orange.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "ChapShard10Orange.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "ChapShard11Orange.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "ChapShard12Orange.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "ChapShard13Orange.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "ChapShard14Orange.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "ChapShard15Orange.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "ChapShard16Orange.png"); }
+      }
+      Group #ChapCardShards1Cyan {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "ChapShard01Cyan.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "ChapShard02Cyan.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "ChapShard03Cyan.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "ChapShard04Cyan.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "ChapShard05Cyan.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "ChapShard06Cyan.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "ChapShard07Cyan.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "ChapShard08Cyan.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "ChapShard09Cyan.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "ChapShard10Cyan.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "ChapShard11Cyan.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "ChapShard12Cyan.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "ChapShard13Cyan.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "ChapShard14Cyan.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "ChapShard15Cyan.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "ChapShard16Cyan.png"); }
+      }
+      Group #ChapCardShards1Rose {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "ChapShard01Rose.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "ChapShard02Rose.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "ChapShard03Rose.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "ChapShard04Rose.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "ChapShard05Rose.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "ChapShard06Rose.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "ChapShard07Rose.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "ChapShard08Rose.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "ChapShard09Rose.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "ChapShard10Rose.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "ChapShard11Rose.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "ChapShard12Rose.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "ChapShard13Rose.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "ChapShard14Rose.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "ChapShard15Rose.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "ChapShard16Rose.png"); }
+      }
+      Group #ChapCardBadge1 { Anchor: (Left: 170, Top: 20, Width: 52, Height: 52); Background: (TexturePath: "ChapRankBadge.png"); }
+      Label #ChapCardPlus1 {
+        Anchor: (Left: 0, Top: 270, Width: 392, Height: 120);
+        Text: "+";
+        Visible: false;
+        Style: (FontName: "Secondary", FontSize: 110, RenderBold: true, TextColor: #c58643, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+      Label #ChapCardRank1 {
+        Anchor: (Left: 170, Top: 20, Width: 52, Height: 52);
+        Style: (FontName: "Secondary", FontSize: 24, RenderBold: true, TextColor: #ffe98a, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 14);
+      }
+      Group #ChapCardLock1 { Anchor: (Left: 168, Top: 300, Width: 56, Height: 56); Background: (TexturePath: "ChapLock.png"); Visible: false; }
+      Label #ChapCardTitle1 {
+        Anchor: (Left: 30, Top: 556, Width: 332, Height: 36);
+        Style: (FontName: "Secondary", FontSize: 21, RenderBold: true, RenderUppercase: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+      Label #ChapCardState1 {
+        Anchor: (Left: 30, Top: 594, Width: 332, Height: 20);
+        Style: (FontSize: 13, RenderBold: true, RenderUppercase: true, TextColor: #d1dae6, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+    }
+    Button #ChapCard2 {
+      Anchor: (Left: 1345, Top: 204, Width: 392, Height: 720);
+      Style: (
+        Default: (Background: #000000(0)),
+        Hovered: (Background: (TexturePath: "ChapCardHover.png")),
+        Pressed: (Background: (TexturePath: "ChapCardHover.png", Color: #ffffff(0.6))),
+        Sounds: $C.@ButtonSounds
+      );
+      Group #ChapArtAubeG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtAubeG.png"); Visible: false; }
+      Group #ChapArtAubeC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtAubeC.png"); Visible: false; }
+      Group #ChapArtNuitG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtNuitG.png"); Visible: false; }
+      Group #ChapArtNuitC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtNuitC.png"); Visible: false; }
+      Group #ChapArtDuelG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtDuelG.png"); Visible: false; }
+      Group #ChapArtDuelC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtDuelC.png"); Visible: false; }
+      Group #ChapArtTroneG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtTroneG.png"); Visible: false; }
+      Group #ChapArtTroneC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtTroneC.png"); Visible: false; }
+      Group #ChapArtDojoG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtDojoG.png"); Visible: false; }
+      Group #ChapArtDojoC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtDojoC.png"); Visible: false; }
+      Group #ChapArtVentG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtVentG.png"); Visible: false; }
+      Group #ChapArtVentC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtVentC.png"); Visible: false; }
+      Group #ChapArtBrigandsG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtBrigandsG.png"); Visible: false; }
+      Group #ChapArtBrigandsC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtBrigandsC.png"); Visible: false; }
+      Group #ChapArtTrorkG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtTrorkG.png"); Visible: false; }
+      Group #ChapArtTrorkC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtTrorkC.png"); Visible: false; }
+      Group #ChapArtSenseiG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtSenseiG.png"); Visible: false; }
+      Group #ChapArtSenseiC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtSenseiC.png"); Visible: false; }
+      Group #ChapArtLisiereG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtLisiereG.png"); Visible: false; }
+      Group #ChapArtLisiereC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtLisiereC.png"); Visible: false; }
+      Group #ChapArtMaraisG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtMaraisG.png"); Visible: false; }
+      Group #ChapArtMaraisC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtMaraisC.png"); Visible: false; }
+      Group #ChapArtForgeG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtForgeG.png"); Visible: false; }
+      Group #ChapArtForgeC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtForgeC.png"); Visible: false; }
+      Group #ChapArtDunesG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtDunesG.png"); Visible: false; }
+      Group #ChapArtDunesC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtDunesC.png"); Visible: false; }
+      Group #ChapArtOutlandersG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtOutlandersG.png"); Visible: false; }
+      Group #ChapArtOutlandersC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtOutlandersC.png"); Visible: false; }
+      Group #ChapArtAreneG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtAreneG.png"); Visible: false; }
+      Group #ChapArtAreneC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtAreneC.png"); Visible: false; }
+      Group #ChapArtVideG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtVideG.png"); Visible: false; }
+      Group #ChapArtVideC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtVideC.png"); Visible: false; }
+      Group #ChapArtOmbreG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtOmbreG.png"); Visible: false; }
+      Group #ChapArtOmbreC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtOmbreC.png"); Visible: false; }
+      Group #ChapArtRumeursG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtRumeursG.png"); Visible: false; }
+      Group #ChapArtRumeursC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtRumeursC.png"); Visible: false; }
+      Group #ChapArtHameauG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtHameauG.png"); Visible: false; }
+      Group #ChapArtHameauC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtHameauC.png"); Visible: false; }
+      Group #ChapArtAzurG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtAzurG.png"); Visible: false; }
+      Group #ChapArtAzurC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtAzurC.png"); Visible: false; }
+      Group #ChapArtMineG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtMineG.png"); Visible: false; }
+      Group #ChapArtMineC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtMineC.png"); Visible: false; }
+      Group #ChapCardShade2 { Anchor: (Left: 34, Top: 483, Width: 324, Height: 165); Background: (TexturePath: "ChapCardShade.png"); }
+      Group #ChapFrameL2 { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameLocked.png"); Visible: false; }
+      Group #ChapFrameLS2 { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefault.png"); Visible: false; }
+      Group #ChapFrameD2 { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefault.png"); }
+      Group #ChapFrameS2 { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameSelected.png"); Visible: false; }
+      Group #ChapFrameD2Or { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefaultOr.png"); Visible: false; }
+      Group #ChapFrameS2Or { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameSelectedOr.png"); Visible: false; }
+      Group #ChapFrameD2Bleu { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefaultBleu.png"); Visible: false; }
+      Group #ChapFrameS2Bleu { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameSelectedBleu.png"); Visible: false; }
+      Group #ChapFrameD2Vert { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefaultVert.png"); Visible: false; }
+      Group #ChapFrameS2Vert { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameSelectedVert.png"); Visible: false; }
+      Group #ChapFrameD2Violet { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefaultViolet.png"); Visible: false; }
+      Group #ChapFrameS2Violet { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameSelectedViolet.png"); Visible: false; }
+      Group #ChapFrameD2Rouge { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefaultRouge.png"); Visible: false; }
+      Group #ChapFrameS2Rouge { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameSelectedRouge.png"); Visible: false; }
+      Group #ChapFrameD2Orange { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefaultOrange.png"); Visible: false; }
+      Group #ChapFrameS2Orange { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameSelectedOrange.png"); Visible: false; }
+      Group #ChapFrameD2Cyan { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefaultCyan.png"); Visible: false; }
+      Group #ChapFrameS2Cyan { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameSelectedCyan.png"); Visible: false; }
+      Group #ChapFrameD2Rose { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefaultRose.png"); Visible: false; }
+      Group #ChapFrameS2Rose { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameSelectedRose.png"); Visible: false; }
+      Group #ChapCardShards2 {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "ChapShard01.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "ChapShard02.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "ChapShard03.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "ChapShard04.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "ChapShard05.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "ChapShard06.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "ChapShard07.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "ChapShard08.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "ChapShard09.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "ChapShard10.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "ChapShard11.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "ChapShard12.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "ChapShard13.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "ChapShard14.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "ChapShard15.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "ChapShard16.png"); }
+      }
+      Group #ChapCardShards2Or {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "ChapShard01Or.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "ChapShard02Or.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "ChapShard03Or.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "ChapShard04Or.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "ChapShard05Or.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "ChapShard06Or.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "ChapShard07Or.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "ChapShard08Or.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "ChapShard09Or.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "ChapShard10Or.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "ChapShard11Or.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "ChapShard12Or.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "ChapShard13Or.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "ChapShard14Or.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "ChapShard15Or.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "ChapShard16Or.png"); }
+      }
+      Group #ChapCardShards2Bleu {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "ChapShard01Bleu.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "ChapShard02Bleu.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "ChapShard03Bleu.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "ChapShard04Bleu.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "ChapShard05Bleu.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "ChapShard06Bleu.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "ChapShard07Bleu.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "ChapShard08Bleu.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "ChapShard09Bleu.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "ChapShard10Bleu.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "ChapShard11Bleu.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "ChapShard12Bleu.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "ChapShard13Bleu.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "ChapShard14Bleu.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "ChapShard15Bleu.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "ChapShard16Bleu.png"); }
+      }
+      Group #ChapCardShards2Vert {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "ChapShard01Vert.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "ChapShard02Vert.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "ChapShard03Vert.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "ChapShard04Vert.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "ChapShard05Vert.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "ChapShard06Vert.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "ChapShard07Vert.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "ChapShard08Vert.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "ChapShard09Vert.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "ChapShard10Vert.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "ChapShard11Vert.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "ChapShard12Vert.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "ChapShard13Vert.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "ChapShard14Vert.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "ChapShard15Vert.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "ChapShard16Vert.png"); }
+      }
+      Group #ChapCardShards2Violet {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "ChapShard01Violet.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "ChapShard02Violet.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "ChapShard03Violet.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "ChapShard04Violet.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "ChapShard05Violet.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "ChapShard06Violet.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "ChapShard07Violet.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "ChapShard08Violet.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "ChapShard09Violet.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "ChapShard10Violet.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "ChapShard11Violet.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "ChapShard12Violet.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "ChapShard13Violet.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "ChapShard14Violet.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "ChapShard15Violet.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "ChapShard16Violet.png"); }
+      }
+      Group #ChapCardShards2Rouge {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "ChapShard01Rouge.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "ChapShard02Rouge.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "ChapShard03Rouge.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "ChapShard04Rouge.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "ChapShard05Rouge.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "ChapShard06Rouge.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "ChapShard07Rouge.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "ChapShard08Rouge.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "ChapShard09Rouge.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "ChapShard10Rouge.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "ChapShard11Rouge.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "ChapShard12Rouge.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "ChapShard13Rouge.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "ChapShard14Rouge.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "ChapShard15Rouge.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "ChapShard16Rouge.png"); }
+      }
+      Group #ChapCardShards2Orange {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "ChapShard01Orange.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "ChapShard02Orange.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "ChapShard03Orange.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "ChapShard04Orange.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "ChapShard05Orange.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "ChapShard06Orange.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "ChapShard07Orange.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "ChapShard08Orange.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "ChapShard09Orange.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "ChapShard10Orange.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "ChapShard11Orange.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "ChapShard12Orange.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "ChapShard13Orange.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "ChapShard14Orange.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "ChapShard15Orange.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "ChapShard16Orange.png"); }
+      }
+      Group #ChapCardShards2Cyan {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "ChapShard01Cyan.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "ChapShard02Cyan.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "ChapShard03Cyan.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "ChapShard04Cyan.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "ChapShard05Cyan.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "ChapShard06Cyan.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "ChapShard07Cyan.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "ChapShard08Cyan.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "ChapShard09Cyan.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "ChapShard10Cyan.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "ChapShard11Cyan.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "ChapShard12Cyan.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "ChapShard13Cyan.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "ChapShard14Cyan.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "ChapShard15Cyan.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "ChapShard16Cyan.png"); }
+      }
+      Group #ChapCardShards2Rose {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "ChapShard01Rose.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "ChapShard02Rose.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "ChapShard03Rose.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "ChapShard04Rose.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "ChapShard05Rose.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "ChapShard06Rose.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "ChapShard07Rose.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "ChapShard08Rose.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "ChapShard09Rose.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "ChapShard10Rose.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "ChapShard11Rose.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "ChapShard12Rose.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "ChapShard13Rose.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "ChapShard14Rose.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "ChapShard15Rose.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "ChapShard16Rose.png"); }
+      }
+      Group #ChapCardBadge2 { Anchor: (Left: 170, Top: 20, Width: 52, Height: 52); Background: (TexturePath: "ChapRankBadge.png"); }
+      Label #ChapCardPlus2 {
+        Anchor: (Left: 0, Top: 270, Width: 392, Height: 120);
+        Text: "+";
+        Visible: false;
+        Style: (FontName: "Secondary", FontSize: 110, RenderBold: true, TextColor: #c58643, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+      Label #ChapCardRank2 {
+        Anchor: (Left: 170, Top: 20, Width: 52, Height: 52);
+        Style: (FontName: "Secondary", FontSize: 24, RenderBold: true, TextColor: #ffe98a, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 14);
+      }
+      Group #ChapCardLock2 { Anchor: (Left: 168, Top: 300, Width: 56, Height: 56); Background: (TexturePath: "ChapLock.png"); Visible: false; }
+      Label #ChapCardTitle2 {
+        Anchor: (Left: 30, Top: 556, Width: 332, Height: 36);
+        Style: (FontName: "Secondary", FontSize: 21, RenderBold: true, RenderUppercase: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+      Label #ChapCardState2 {
+        Anchor: (Left: 30, Top: 594, Width: 332, Height: 20);
+        Style: (FontSize: 13, RenderBold: true, RenderUppercase: true, TextColor: #d1dae6, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+    }
+    Button #ChapPrev {
+      Anchor: (Left: 553, Top: 547, Width: 40, Height: 80);
+      Visible: false;
+      Style: (Default: (Background: #000000(0)), Hovered: (Background: #000000(0)), Sounds: $C.@ButtonSounds);
+      Group { Anchor: (Left: 0, Top: 0, Width: 40, Height: 80); Background: (TexturePath: "ChapArrowLeft.png"); }
+    }
+    Button #ChapNext {
+      Anchor: (Left: 1734, Top: 547, Width: 40, Height: 80);
+      Visible: false;
+      Style: (Default: (Background: #000000(0)), Hovered: (Background: #000000(0)), Sounds: $C.@ButtonSounds);
+      Group { Anchor: (Left: 0, Top: 0, Width: 40, Height: 80); Background: (TexturePath: "ChapArrowRight.png"); }
+    }
+
+    // ---- actions (provisoires) ----
+    Group {
+      Anchor: (Left: 611, Top: 948, Width: 1105, Height: 48);
+      LayoutMode: Center;
+      Group #ChapActionBox {
+        LayoutMode: Left;
+        $C.@TextButton #ChapAction {
+          @Anchor = Anchor(MinWidth: 260, Right: 16);
+          Text: "Accepter";
+        }
+        $C.@SecondaryTextButton #ChapAlt {
+          @Anchor = (MinWidth: 180, Right: 16);
+          Text: "Autre quête";
+          Visible: false;
+        }
+        $C.@SecondaryTextButton #ChapFilter {
+          @Anchor = (MinWidth: 240, Right: 16);
+          Text: "Catégorie : toutes";
+          Visible: false;
+        }
+      }
+      $C.@SecondaryTextButton #ChapClose {
+        @Anchor = (MinWidth: 200);
+        Text: "Fermer";
+      }
+    }
+    Label #ChapHint {
+      Anchor: (Left: 611, Top: 1004, Width: 1105, Height: 24);
+      Style: (FontSize: 15, RenderBold: true, TextColor: #8a96a8, HorizontalAlignment: Center, VerticalAlignment: Center);
+    }
+    Label {
+      Anchor: (Left: 40, Top: 1028, Width: 300, Height: 24);
+      Text: "Échap  ·  Retour";
+      Style: (FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #77879d, VerticalAlignment: Center);
+    }
+
+    Label #ChapEmpty {
+      Anchor: (Left: 94, Top: 500, Width: 419, Height: 40);
+      Text: "Aucune quête pour le moment.";
+      Visible: false;
+      Style: (FontSize: 20, RenderBold: true, TextColor: #77879D, HorizontalAlignment: Center);
+    }
+
+    // ---- detail de l'acte choisi ----
+    Group #ChapDetail {
+      Anchor: (Left: 0, Top: 0, Width: 540, Height: 1080);
+
+      Group { Anchor: (Left: 196, Top: 123, Width: 216, Height: 216); Background: (TexturePath: "ChapEmblemFrame.png"); }
+      Group { Anchor: (Left: 234, Top: 158, Width: 140, Height: 140); Background: (TexturePath: "ChapEmblemBack.png"); }
+      Label #ChapRank {
+        Anchor: (Left: 234, Top: 166, Width: 140, Height: 104);
+        Style: (FontName: "Secondary", FontSize: 76, RenderBold: true, TextColor: #ffe98a, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 44);
+      }
+
+      Label #ChapMission {
+        Anchor: (Left: 96, Top: 254, Width: 415, Height: 22);
+        Style: (FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #b9a2d8, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+      Label #ChapChain {
+        Anchor: (Left: 96, Top: 280, Width: 415, Height: 22);
+        Style: (FontSize: 14, RenderBold: true, RenderUppercase: true, TextColor: #8a96a8, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+      Label #ChapTitle {
+        Anchor: (Left: 96, Top: 306, Width: 415, Height: 46);
+        Style: (FontName: "Secondary", FontSize: 30, RenderBold: true, RenderUppercase: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+      Label #ChapTagline {
+        Anchor: (Left: 96, Top: 358, Width: 415, Height: 32);
+        Style: (FontSize: 24, RenderBold: true, TextColor: #C58643, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+      Group { Anchor: (Left: 94, Top: 404, Width: 418, Height: 8); Background: (TexturePath: "ChapDivider.png", HorizontalBorder: 24, VerticalBorder: 0); }
+
+      Group #ChapBody {
+        Anchor: (Left: 96, Top: 422, Width: 429, Height: 372);
+        LayoutMode: TopScrolling;
+        ScrollbarStyle: $C.@DefaultScrollbarStyle;
+        Padding: (Right: 14);
+
+        Label #ChapStory {
+          Style: (FontSize: 16, RenderBold: true, TextColor: #b8c2d0, Wrap: true);
+        }
+        Group #ChapNote0 {
+          Anchor: (Top: 12);
+          LayoutMode: Left;
+          Visible: false;
+          Group { Anchor: (Width: 24); LayoutMode: Top; Group { Anchor: (Width: 24, Height: 24); Background: (TexturePath: "ChapBullet.png"); } }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Left: 12, Top: 2);
+            Label #ChapNoteText0 { Style: (FontSize: 15, RenderBold: true, TextColor: #77879D, Wrap: true); }
+          }
+        }
+        Group #ChapNote1 {
+          Anchor: (Top: 12);
+          LayoutMode: Left;
+          Visible: false;
+          Group { Anchor: (Width: 24); LayoutMode: Top; Group { Anchor: (Width: 24, Height: 24); Background: (TexturePath: "ChapBullet.png"); } }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Left: 12, Top: 2);
+            Label #ChapNoteText1 { Style: (FontSize: 15, RenderBold: true, TextColor: #77879D, Wrap: true); }
+          }
+        }
+        Group #ChapNote2 {
+          Anchor: (Top: 12);
+          LayoutMode: Left;
+          Visible: false;
+          Group { Anchor: (Width: 24); LayoutMode: Top; Group { Anchor: (Width: 24, Height: 24); Background: (TexturePath: "ChapBullet.png"); } }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Left: 12, Top: 2);
+            Label #ChapNoteText2 { Style: (FontSize: 15, RenderBold: true, TextColor: #77879D, Wrap: true); }
+          }
+        }
+        Label #ChapObjHead {
+          Anchor: (Top: 20, Height: 24);
+          Text: "Attendus";
+          Style: (FontName: "Secondary", FontSize: 20, RenderBold: true, RenderUppercase: true, TextColor: #C4CEDC, VerticalAlignment: Center);
+        }
+        Group { Anchor: (Top: 4, Height: 1); Background: #48455c; }
+        Group #ChapObj0 {
+          Anchor: (Top: 8, Height: 26);
+          LayoutMode: Left;
+          Visible: false;
+          Group {
+            Anchor: (Width: 22, Height: 22, Top: 2);
+            Group #ChapObjOff0 { Anchor: (Left: 0, Top: 0, Width: 22, Height: 22); Background: (TexturePath: "ChapCheckOff.png"); }
+            Group #ChapObjOn0 { Anchor: (Left: 0, Top: 0, Width: 22, Height: 22); Background: (TexturePath: "ChapCheckOn.png"); Visible: false; }
+          }
+          Label #ChapObjText0 {
+            FlexWeight: 1;
+            Anchor: (Left: 12);
+            Style: (FontSize: 16, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center);
+          }
+          Label #ChapObjCount0 {
+            Anchor: (Width: 110);
+            Style: (FontSize: 15, RenderBold: true, TextColor: #77879D, HorizontalAlignment: End, VerticalAlignment: Center);
+          }
+        }
+        Group #ChapObj1 {
+          Anchor: (Top: 8, Height: 26);
+          LayoutMode: Left;
+          Visible: false;
+          Group {
+            Anchor: (Width: 22, Height: 22, Top: 2);
+            Group #ChapObjOff1 { Anchor: (Left: 0, Top: 0, Width: 22, Height: 22); Background: (TexturePath: "ChapCheckOff.png"); }
+            Group #ChapObjOn1 { Anchor: (Left: 0, Top: 0, Width: 22, Height: 22); Background: (TexturePath: "ChapCheckOn.png"); Visible: false; }
+          }
+          Label #ChapObjText1 {
+            FlexWeight: 1;
+            Anchor: (Left: 12);
+            Style: (FontSize: 16, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center);
+          }
+          Label #ChapObjCount1 {
+            Anchor: (Width: 110);
+            Style: (FontSize: 15, RenderBold: true, TextColor: #77879D, HorizontalAlignment: End, VerticalAlignment: Center);
+          }
+        }
+        Group #ChapObj2 {
+          Anchor: (Top: 8, Height: 26);
+          LayoutMode: Left;
+          Visible: false;
+          Group {
+            Anchor: (Width: 22, Height: 22, Top: 2);
+            Group #ChapObjOff2 { Anchor: (Left: 0, Top: 0, Width: 22, Height: 22); Background: (TexturePath: "ChapCheckOff.png"); }
+            Group #ChapObjOn2 { Anchor: (Left: 0, Top: 0, Width: 22, Height: 22); Background: (TexturePath: "ChapCheckOn.png"); Visible: false; }
+          }
+          Label #ChapObjText2 {
+            FlexWeight: 1;
+            Anchor: (Left: 12);
+            Style: (FontSize: 16, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center);
+          }
+          Label #ChapObjCount2 {
+            Anchor: (Width: 110);
+            Style: (FontSize: 15, RenderBold: true, TextColor: #77879D, HorizontalAlignment: End, VerticalAlignment: Center);
+          }
+        }
+        Group #ChapObj3 {
+          Anchor: (Top: 8, Height: 26);
+          LayoutMode: Left;
+          Visible: false;
+          Group {
+            Anchor: (Width: 22, Height: 22, Top: 2);
+            Group #ChapObjOff3 { Anchor: (Left: 0, Top: 0, Width: 22, Height: 22); Background: (TexturePath: "ChapCheckOff.png"); }
+            Group #ChapObjOn3 { Anchor: (Left: 0, Top: 0, Width: 22, Height: 22); Background: (TexturePath: "ChapCheckOn.png"); Visible: false; }
+          }
+          Label #ChapObjText3 {
+            FlexWeight: 1;
+            Anchor: (Left: 12);
+            Style: (FontSize: 16, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center);
+          }
+          Label #ChapObjCount3 {
+            Anchor: (Width: 110);
+            Style: (FontSize: 15, RenderBold: true, TextColor: #77879D, HorizontalAlignment: End, VerticalAlignment: Center);
+          }
+        }
+      }
+
+      Group #ChapRewards {
+        Anchor: (Left: 0, Top: 0, Width: 540, Height: 1080);
+        Label {
+          Anchor: (Left: 97, Top: 812, Width: 414, Height: 32);
+          Text: "Récompenses";
+          Style: (FontName: "Secondary", FontSize: 24, RenderBold: true, RenderUppercase: true, TextColor: #C4CEDC, HorizontalAlignment: Center, VerticalAlignment: Center);
+        }
+        Group #ChapTick0 { Anchor: (Left: 223, Top: 922, Width: 8, Height: 2); Background: #d9d9d9(0.32); }
+        Group #ChapTick1 { Anchor: (Left: 361, Top: 922, Width: 8, Height: 2); Background: #d9d9d9(0.32); }
+    Button #ChapRew0 {
+      Anchor: (Left: 97, Top: 862, Width: 122, Height: 128);
+      Style: (Default: (Background: #000000(0)), Hovered: (Background: #000000(0)), Sounds: $C.@ButtonSounds);
+      TextTooltipStyle: $C.@DefaultTextTooltipStyle;
+      TextTooltipShowDelay: 0.1;
+      Group { Anchor: (Left: 0, Top: 0, Width: 122, Height: 122); Background: (TexturePath: "ChapSlot.png", Border: 23); }
+      ItemIcon #ChapRewIcon0 { Anchor: (Left: 17, Top: 13, Width: 88, Height: 88); }
+      Label #ChapRewXp0 {
+        Anchor: (Left: 0, Top: 22, Width: 122, Height: 56);
+        Text: "XP";
+        Visible: false;
+        Style: (FontName: "Secondary", FontSize: 44, RenderBold: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+      Label #ChapRewQty0 {
+        Anchor: (Left: 8, Top: 90, Width: 104, Height: 22);
+        Style: (FontSize: 16, RenderBold: true, TextColor: #ffffff, HorizontalAlignment: End, VerticalAlignment: Center);
+      }
+      Group #ChapRewCheck0 { Anchor: (Left: 48, Top: 101, Width: 27, Height: 27); Background: (TexturePath: "ChapRewardCheck.png"); Visible: false; }
+    }
+    Button #ChapRew1 {
+      Anchor: (Left: 235, Top: 862, Width: 122, Height: 128);
+      Style: (Default: (Background: #000000(0)), Hovered: (Background: #000000(0)), Sounds: $C.@ButtonSounds);
+      TextTooltipStyle: $C.@DefaultTextTooltipStyle;
+      TextTooltipShowDelay: 0.1;
+      Group { Anchor: (Left: 0, Top: 0, Width: 122, Height: 122); Background: (TexturePath: "ChapSlot.png", Border: 23); }
+      ItemIcon #ChapRewIcon1 { Anchor: (Left: 17, Top: 13, Width: 88, Height: 88); }
+      Label #ChapRewXp1 {
+        Anchor: (Left: 0, Top: 22, Width: 122, Height: 56);
+        Text: "XP";
+        Visible: false;
+        Style: (FontName: "Secondary", FontSize: 44, RenderBold: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+      Label #ChapRewQty1 {
+        Anchor: (Left: 8, Top: 90, Width: 104, Height: 22);
+        Style: (FontSize: 16, RenderBold: true, TextColor: #ffffff, HorizontalAlignment: End, VerticalAlignment: Center);
+      }
+      Group #ChapRewCheck1 { Anchor: (Left: 48, Top: 101, Width: 27, Height: 27); Background: (TexturePath: "ChapRewardCheck.png"); Visible: false; }
+    }
+    Button #ChapRew2 {
+      Anchor: (Left: 373, Top: 862, Width: 122, Height: 128);
+      Style: (Default: (Background: #000000(0)), Hovered: (Background: #000000(0)), Sounds: $C.@ButtonSounds);
+      TextTooltipStyle: $C.@DefaultTextTooltipStyle;
+      TextTooltipShowDelay: 0.1;
+      Group { Anchor: (Left: 0, Top: 0, Width: 122, Height: 122); Background: (TexturePath: "ChapSlot.png", Border: 23); }
+      ItemIcon #ChapRewIcon2 { Anchor: (Left: 17, Top: 13, Width: 88, Height: 88); }
+      Label #ChapRewXp2 {
+        Anchor: (Left: 0, Top: 22, Width: 122, Height: 56);
+        Text: "XP";
+        Visible: false;
+        Style: (FontName: "Secondary", FontSize: 44, RenderBold: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+      Label #ChapRewQty2 {
+        Anchor: (Left: 8, Top: 90, Width: 104, Height: 22);
+        Style: (FontSize: 16, RenderBold: true, TextColor: #ffffff, HorizontalAlignment: End, VerticalAlignment: Center);
+      }
+      Group #ChapRewCheck2 { Anchor: (Left: 48, Top: 101, Width: 27, Height: 27); Background: (TexturePath: "ChapRewardCheck.png"); Visible: false; }
+    }
+        Button #ChapRewPrev {
+      Anchor: (Left: 67, Top: 903, Width: 24, Height: 40);
+      Visible: false;
+      Style: (Default: (Background: #000000(0)), Hovered: (Background: #000000(0)), Sounds: $C.@ButtonSounds);
+      Group { Anchor: (Left: 0, Top: 0, Width: 24, Height: 40); Background: (TexturePath: "ChapRewArrowLeft.png"); }
+    }
+        Button #ChapRewNext {
+      Anchor: (Left: 501, Top: 903, Width: 24, Height: 40);
+      Visible: false;
+      Style: (Default: (Background: #000000(0)), Hovered: (Background: #000000(0)), Sounds: $C.@ButtonSounds);
+      Group { Anchor: (Left: 0, Top: 0, Width: 24, Height: 40); Background: (TexturePath: "ChapRewArrowRight.png"); }
+    }
+      }
+    }
+  }
+}

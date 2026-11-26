@@ -1,0 +1,68 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_Inversion",
+  "spell": "Inversion",
+  "javaClass": "Inversion",
+  "page": "rune_page_inversion",
+  "name": "Rune de l'Inversion",
+  "type": "Spatial",
+  "rarity": "Epic",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Inversion",
+  "summary": "zone de gravite inversee 6 s (rayon 7) : ennemis souleves a 4 blocs, puis plaques au sol toutes les 2 s (80).",
+  "description": "Sort épique spatial (Mage, rune de prédilection du Maître du Prodige). La gravité s'inverse sur la zone visée (rayon 7, jusqu'à 20 blocs) pendant 6 s : les ennemis s'élèvent et flottent à 4 blocs du sol, puis toutes les 2 s la gravité revient d'un coup et les écrase au sol (80 dégâts) avant de les soulever à nouveau. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin qui tombe vers le haut quand on le lâche. Enseigne l'Inversion : le ciel devient le sol. Classes : tous les Mages (rune de prédilection du Maître du Prodige). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe",
+    "Duration"
+  ],
+  "cast": {
+    "animationSet": "Spellbook",
+    "charging": "CastPushCharging",
+    "release": "CastPushCharged",
+    "chargeTime": 0.5,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Portal_Void",
+    "handParticles": "Telekinesie_Aura",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.5,
+    "range": 20,
+    "radius": "7",
+    "targets": "ennemis de la zone (12 max)",
+    "persistentFx": "Telekinesie_Aura sur les souleves / 0,3 s, Chaos_Vortex au centre / s",
+    "impactFx": "Chaos_Shockwave a chaque plaquage",
+    "sounds": "SFX_Portal_Void a l'ouverture, SFX_Golem_Earth_Slam_Impact a chaque plaquage",
+    "effects": "cycles de 2 s : 1,6 s de levitation (vitesse verticale vers 4 blocs, horizontale annulee) puis plaquage (poussee -25, 80 Physical) ; 3 cycles",
+    "terrain": "aucun",
+    "persistentDurationS": 6,
+    "interruptions": "aucune",
+    "restrictions": "mage",
+    "edgeCases": "invocations ignorees ; ennemi qui sort de la zone : relache ; plafond : il s'y cogne",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 2,
+      "mobility": 0,
+      "control": 3,
+      "defense": 0,
+      "targets": 2,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    }
+  },
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null
+}

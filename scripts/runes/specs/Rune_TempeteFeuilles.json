@@ -1,0 +1,69 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_TempeteFeuilles",
+  "spell": "TempeteFeuilles",
+  "javaClass": "TempeteFeuilles",
+  "page": "rune_page_tempete_feuilles",
+  "name": "Rune de la Tempête de Feuilles",
+  "type": "Air",
+  "rarity": "Epic",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "TempeteFeuilles",
+  "summary": "tornade de feuilles tranchantes 8 s qui suit le viseur (5 b/s) : aspire les ennemis (rayon 3,5), 16 / 0,5 s, puis les ejecte (60).",
+  "description": "Sort épique d'air (Mage, rune de prédilection du Druide Primordial). Une tornade de feuilles tranchantes se lève au point visé (jusqu'à 20 blocs) et suit votre viseur pendant 8 s. Elle aspire les ennemis à moins de 3,5 blocs, les fait tournoyer et les entaille (16 dégâts toutes les demi-secondes), puis les éjecte à la fin (60 dégâts). Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin qui ne tient pas en place, des feuilles mortes accrochées aux bords. Enseigne la Tempête de Feuilles : le vent de la forêt coupe comme une lame. Classes : tous les Mages (rune de prédilection du Druide Primordial). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Spellbook",
+    "charging": "CastPushCharging",
+    "release": "CastPushCharged",
+    "chargeTime": 0.5,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Leaves_Break",
+    "handParticles": "Block_Break_Leaves",
+    "handParticlesScale": 0.5,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.5,
+    "range": 20,
+    "radius": "3,5",
+    "targets": "ennemis de la tornade",
+    "executionFx": "modele Tempete_Feuilles (tornade vanilla : trainees Wind sur noeuds animes, echelle 3) deplace par le code",
+    "persistentFx": "particule du mod Tempete_Feuilles (spirale de feuilles vertes et rousses, 1,1 s) reemise / s ; Block_Break_Leaves sur les ennemis touches",
+    "sounds": "SFX_Tornado (porte par l'animation du modele), SFX_Leaves_Break a l'ejection",
+    "effects": "aspiration (poussee vers l'axe + rotation + leger soulevement) / 0,25 s ; 16 Slashing / 0,5 s ; fin : ejection 12 b/s vers l'exterieur + 60 Wind",
+    "terrain": "aucun",
+    "persistentDurationS": 8,
+    "interruptions": "lanceur mort ou deconnecte : fin",
+    "restrictions": "mage",
+    "edgeCases": "viseur dans le vide : point a 20 blocs ramene au sol ; modele non cree : particules seules",
+    "limitations": "",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 2,
+      "mobility": 0,
+      "control": 2,
+      "defense": 0,
+      "targets": 3,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    }
+  }
+}

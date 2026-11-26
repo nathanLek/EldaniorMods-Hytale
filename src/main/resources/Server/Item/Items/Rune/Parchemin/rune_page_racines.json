@@ -1,0 +1,34 @@
+{
+  "Id": "rune_page_racines",
+  "TranslationProperties": {
+    "Name": "Parchemin de Rune : Racines",
+    "Description": "Un parchemin d'écorce encore humide de sève. Enseigne les Racines : la forêt retient ceux qui la menacent. Classes : tous les Mages (rune de prédilection du Druide). Utilisez-le pour ajouter la rune à votre sac de runes. (Ancien parchemin : la rune s'apprend désormais dans un manuel.)"
+  },
+  "Icon": "Icons/ItemsGenerated/Recipe_Page.png",
+  "Quality": "Rare",
+  "Tags": {
+    "Type": [
+      "Item",
+      "Consumable"
+    ]
+  },
+  "MaxStack": 1,
+  "PlayerAnimationsId": "Item",
+  "Model": "Items/Consumables/Recipes/Recipe.blockymodel",
+  "Texture": "Items/Consumables/Recipes/Recipe_Texture.png",
+  "IconProperties": {
+    "Scale": 0.76,
+    "Rotation": [
+      135,
+      135,
+      0
+    ],
+    "Translation": [
+      -1,
+      5
+    ]
+  },
+  "Interactions": {
+    "Use": "Root_ConsumableItemSkillInteraction"
+  }
+}

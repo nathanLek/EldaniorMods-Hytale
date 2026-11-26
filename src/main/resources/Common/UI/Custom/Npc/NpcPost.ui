@@ -1,0 +1,315 @@
+$C = "../Common.ui";
+
+// Poste de PNJ (bloc Eldanior_Poste_PNJ, admins), genere par scripts/npcs/gen_npc_post_ui.py : voir ce script.
+Group {
+  LayoutMode: Middle;
+  Background: #05080d(0.55);
+
+  Group {
+    Anchor: (Width: 760);
+    LayoutMode: Top;
+    Padding: (Full: 3);
+    Background: #16212f;
+
+    Group {
+      LayoutMode: Top;
+      Padding: (Full: 3);
+      Background: #e8b34f;
+
+      Group {
+        LayoutMode: Top;
+        Padding: (Full: 2);
+        Background: #16212f;
+
+        Group {
+          LayoutMode: Top;
+          Background: #0b141d(0.96);
+          Padding: (Left: 26, Right: 26, Top: 16, Bottom: 14);
+
+          // ===== En-tete : embleme, titre, etat du poste =====
+          Group {
+            Anchor: (Height: 70);
+            LayoutMode: Left;
+            Group { Anchor: (Width: 70, Height: 70); Background: (TexturePath: "RecruitEmblem.png"); }
+            Group {
+              FlexWeight: 1;
+              LayoutMode: Top;
+              Padding: (Left: 14, Top: 8);
+              Label {
+                Text: "Poste de PNJ";
+                Style: (FontSize: 22, RenderBold: true, RenderUppercase: true, TextColor: #d1dae6);
+              }
+              Label #PostState {
+                Anchor: (Top: 4);
+                Style: (FontSize: 13, RenderBold: true, TextColor: #878e9c, Wrap: true);
+              }
+            }
+          }
+
+          Group { Anchor: (Top: 10, Height: 2); Background: #c99436; }
+
+        Group {
+          Anchor: (Top: 14, Height: 18);
+          LayoutMode: Left;
+          Group { FlexWeight: 1; LayoutMode: Top; Padding: (Top: 8); Group { Anchor: (Height: 1); Background: #c99436(0.55); } }
+          Label {
+            Anchor: (Left: 10, Right: 10);
+            Text: "Identité";
+            Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #c99436, VerticalAlignment: Center);
+          }
+          Group { FlexWeight: 1; LayoutMode: Top; Padding: (Top: 8); Group { Anchor: (Height: 1); Background: #c99436(0.55); } }
+        }
+        Group {
+          Anchor: (Top: 8, Height: 40);
+          LayoutMode: Left;
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Label {
+              Text: "Catégorie";
+              Style: (FontSize: 15, RenderBold: true, TextColor: #c9b37a);
+            }
+            Label {
+              Text: "Filtre la liste des PNJ : gardes, peuple, commerce, aventuriers, hors-la-loi.";
+              Style: (FontSize: 11, TextColor: #6f8296);
+            }
+          }
+          $C.@DropdownBox #PostCategory {
+            Anchor: (Width: 360, Height: 26);
+            Style: @DefaultDropdownBoxStyle;
+          }
+        }
+        Group {
+          Anchor: (Top: 8, Height: 40);
+          LayoutMode: Left;
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Label {
+              Text: "PNJ";
+              Style: (FontSize: 15, RenderBold: true, TextColor: #c9b37a);
+            }
+            Label {
+              Text: "Le type fixe son comportement, son combat et sa tenue.";
+              Style: (FontSize: 11, TextColor: #6f8296);
+            }
+          }
+          $C.@DropdownBox #PostType {
+            Anchor: (Width: 360, Height: 26);
+            Style: @DefaultDropdownBoxStyle;
+          }
+        }
+        Group {
+          Anchor: (Top: 8, Height: 40);
+          LayoutMode: Left;
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Label {
+              Text: "Spécialité";
+              Style: (FontSize: 15, RenderBold: true, TextColor: #c9b37a);
+            }
+            Label {
+              Text: "Classe, métier, boutique ; espèce d'un monstre étoilé.";
+              Style: (FontSize: 11, TextColor: #6f8296);
+            }
+          }
+          $C.@DropdownBox #PostSpec {
+            Anchor: (Width: 360, Height: 26);
+            Style: @DefaultDropdownBoxStyle;
+          }
+        }
+        Group {
+          Anchor: (Top: 8, Height: 40);
+          LayoutMode: Left;
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Label {
+              Text: "Statut";
+              Style: (FontSize: 15, RenderBold: true, TextColor: #c9b37a);
+            }
+            Label {
+              Text: "Apprenti, Expert, Maître (Héros chez les aventuriers ; 1 à 3 étoiles pour un monstre étoilé).";
+              Style: (FontSize: 11, TextColor: #6f8296);
+            }
+          }
+          $C.@DropdownBox #PostTier {
+            Anchor: (Width: 360, Height: 26);
+            Style: @DefaultDropdownBoxStyle;
+          }
+        }
+        Group {
+          Anchor: (Top: 8, Height: 40);
+          LayoutMode: Left;
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Label {
+              Text: "Niveau";
+              Style: (FontSize: 15, RenderBold: true, TextColor: #c9b37a);
+            }
+            Label {
+              Text: "0 : au hasard. Aventurier, chasseur, criminel ; gardes, chevaliers, assassins, disciples : niveau martial (rang).";
+              Style: (FontSize: 11, TextColor: #6f8296);
+            }
+          }
+          $C.@NumberField #PostLevel {
+            Anchor: (Width: 360, Height: 26);
+            Format: (MaxDecimalPlaces: 0, Step: 10);
+          }
+        }
+        Group {
+          Anchor: (Top: 8, Height: 40);
+          LayoutMode: Left;
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Label {
+              Text: "Regard";
+              Style: (FontSize: 15, RenderBold: true, TextColor: #c9b37a);
+            }
+            Label {
+              Text: "Direction vers laquelle il se tourne au repos.";
+              Style: (FontSize: 11, TextColor: #6f8296);
+            }
+          }
+          $C.@DropdownBox #PostFacing {
+            Anchor: (Width: 360, Height: 26);
+            Style: @DefaultDropdownBoxStyle;
+          }
+        }
+        Group {
+          Anchor: (Top: 8, Height: 40);
+          LayoutMode: Left;
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Label {
+              Text: "Famille";
+              Style: (FontSize: 15, RenderBold: true, TextColor: #c9b37a);
+            }
+            Label {
+              Text: "Celle du territoire, neutre, ou une famille. Empire Luo : clan tiré au hasard (sauf gardes).";
+              Style: (FontSize: 11, TextColor: #6f8296);
+            }
+          }
+          $C.@DropdownBox #PostFamily {
+            Anchor: (Width: 360, Height: 26);
+            Style: @DefaultDropdownBoxStyle;
+          }
+        }
+
+        Group {
+          Anchor: (Top: 14, Height: 18);
+          LayoutMode: Left;
+          Group { FlexWeight: 1; LayoutMode: Top; Padding: (Top: 8); Group { Anchor: (Height: 1); Background: #c99436(0.55); } }
+          Label {
+            Anchor: (Left: 10, Right: 10);
+            Text: "Services";
+            Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #c99436, VerticalAlignment: Center);
+          }
+          Group { FlexWeight: 1; LayoutMode: Top; Padding: (Top: 8); Group { Anchor: (Height: 1); Background: #c99436(0.55); } }
+        }
+
+          Group #PostServices {
+            LayoutMode: Top;
+        Group {
+          Anchor: (Top: 8, Height: 40);
+          LayoutMode: Left;
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Label {
+              Text: "Commerce";
+              Style: (FontSize: 15, RenderBold: true, TextColor: #c9b37a);
+            }
+            Label {
+              Text: "Boutique proposée quand on lui parle.";
+              Style: (FontSize: 11, TextColor: #6f8296);
+            }
+          }
+          $C.@DropdownBox #PostShop {
+            Anchor: (Width: 360, Height: 26);
+            Style: @DefaultDropdownBoxStyle;
+          }
+        }
+        Group {
+          Anchor: (Top: 8, Height: 40);
+          LayoutMode: Left;
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Label {
+              Text: "Quêtes";
+              Style: (FontSize: 15, RenderBold: true, TextColor: #c9b37a);
+            }
+            Label {
+              Text: "Quêtes du donneur choisi.";
+              Style: (FontSize: 11, TextColor: #6f8296);
+            }
+          }
+          $C.@DropdownBox #PostQuest {
+            Anchor: (Width: 360, Height: 26);
+            Style: @DefaultDropdownBoxStyle;
+          }
+        }
+        Group {
+          Anchor: (Top: 8, Height: 40);
+          LayoutMode: Left;
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Label {
+              Text: "Répliques";
+              Style: (FontSize: 15, RenderBold: true, TextColor: #c9b37a);
+            }
+            Label {
+              Text: "Séparées par | ; il les dit à tour de rôle (« Discuter »).";
+              Style: (FontSize: 11, TextColor: #6f8296);
+            }
+          }
+          $C.@TextField #PostLines {
+            Anchor: (Width: 360, Height: 28);
+            PlaceholderText: "Bonjour ! | La vallée est belle ce matin.";
+          }
+        }
+
+          }
+          Label #PostServicesOff {
+            Anchor: (Top: 10, Height: 60);
+            Style: (FontSize: 13, RenderBold: true, TextColor: #c9b37a, Wrap: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+          }
+
+          Group { Anchor: (Top: 14, Height: 2); Background: #c99436; }
+
+          Group {
+            LayoutMode: Left;
+            Anchor: (Top: 14, Height: 44);
+            $C.@TextButton #PostPlace {
+              @Anchor = (Right: 4);
+              Text: "Poser le PNJ";
+              FlexWeight: 1;
+            }
+            $C.@SecondaryTextButton #PostSave {
+              @Anchor = (Left: 4, Right: 4);
+              Text: "Enregistrer les services";
+              FlexWeight: 1;
+            }
+            $C.@SecondaryTextButton #PostRemove {
+              @Anchor = (Left: 4);
+              Text: "Retirer le PNJ";
+              FlexWeight: 1;
+            }
+          }
+
+          Label {
+            Anchor: (Top: 10);
+            Text: "Échap : fermer  ·  « Poser » remplace le PNJ ; « Enregistrer » garde le même PNJ et change ses services";
+            Style: (FontSize: 11, TextColor: #5a6a7a, HorizontalAlignment: Center);
+          }
+        }
+      }
+    }
+  }
+}

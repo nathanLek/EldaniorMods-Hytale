@@ -1,0 +1,40 @@
+{
+  "$Comment": "Signature de Baguette de Circé (energie de signature pleine) : sort Java PhiltreDeCirce (ArmesDivines). Genere par gen_divines.py.",
+  "Type": "StatsCondition",
+  "Costs": {
+    "SignatureEnergy": 100
+  },
+  "ValueType": "Percent",
+  "Next": {
+    "Type": "Serial",
+    "Interactions": [
+      {
+        "Type": "Simple",
+        "RunTime": 0.45,
+        "Effects": {
+          "ItemAnimationId": "CastLeftCharging"
+        }
+      },
+      {
+        "Type": "Simple",
+        "RunTime": 0.3,
+        "Effects": {
+          "ItemAnimationId": "CastLeftCharged",
+          "ClearAnimationOnFinish": true
+        }
+      },
+      {
+        "Type": "RuneSpell",
+        "RunTime": 0.05,
+        "Spell": "PhiltreDeCirce"
+      },
+      {
+        "Type": "ChangeStat",
+        "StatModifiers": {
+          "SignatureEnergy": -100
+        },
+        "ValueType": "Percent"
+      }
+    ]
+  }
+}

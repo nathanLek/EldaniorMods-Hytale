@@ -1,5 +1,11 @@
 # Effets Visuels Manquants pour Skills
 
+> [!warning] Obsolète depuis le 2026-11-25
+> Refonte des passifs : 59 passifs (45 séries à rangs Commun → Légendaire, 7 Anges, 7 Péchés), générés depuis
+> `scripts/passifs/conception.py` (`gen_passifs.py`). `SkillEffectConfig` est supprimé : les passifs ne jouent plus
+> aucun effet visuel. Cette note ne s'applique plus.
+
+
 #feature #moyenne #skills #effets
 
 ## Etat actuel

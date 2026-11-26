@@ -1,0 +1,106 @@
+{
+  "Parent": "Potion_Template",
+  "TranslationProperties": {
+    "Name": "Potion de Vie Suprême",
+    "Description": "Boire : rend 35 % de vie, puis 55 % en 5 s"
+  },
+  "Quality": "Epic",
+  "ItemLevel": 600,
+  "Categories": [
+    "Eldanior_System.Consommables"
+  ],
+  "Icon": "Icons/ItemsGenerated/Eld_Potion_Vie_Supreme.png",
+  "Recipe": {
+    "KnowledgeRequired": false,
+    "Input": [
+      {
+        "ItemId": "Potion_Empty_Large",
+        "Quantity": 1
+      },
+      {
+        "ItemId": "Butin_Coeur_Yeti",
+        "Quantity": 1
+      },
+      {
+        "ItemId": "Butin_Ame_Racines",
+        "Quantity": 1
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Id": "Alchemybench",
+        "Type": "Crafting",
+        "Categories": [
+          "Alchemy_Potions"
+        ],
+        "RequiredTierLevel": 3
+      }
+    ],
+    "OutputQuantity": 1,
+    "TimeSeconds": 1
+  },
+  "Interactions": {
+    "Secondary": "Root_Secondary_Consume_Potion_Health"
+  },
+  "InteractionVars": {
+    "RemoveEffect": {
+      "Interactions": [
+        {
+          "Type": "Simple"
+        }
+      ]
+    },
+    "Effect": {
+      "Interactions": [
+        {
+          "Type": "ApplyEffect",
+          "EffectId": "Potion_Health_Instant_Large",
+          "Next": {
+            "Type": "ApplyEffect",
+            "EffectId": "Potion_Health_Regen_Large"
+          }
+        }
+      ]
+    },
+    "ConsumeCooldown": {
+      "Interactions": [
+        "Consume_Potion_Health_Cooldown"
+      ]
+    },
+    "ConsumeSFX": {
+      "Interactions": [
+        {
+          "Parent": "Consume_SFX",
+          "Effects": {
+            "LocalSoundEventId": "SFX_Health_Potion_Low_Drink"
+          }
+        }
+      ]
+    },
+    "ConsumedSFX": {
+      "Interactions": [
+        {
+          "Parent": "Consumed_SFX",
+          "Effects": {
+            "LocalSoundEventId": "SFX_Potion_Drink_Success"
+          }
+        }
+      ]
+    }
+  },
+  "BlockType": {
+    "CustomModel": "Items/Consumables/Potions/Potion_Large.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Items/Consommables/Potions/Eld_Potion_Vie_Supreme.png",
+        "Weight": 1
+      }
+    ],
+    "BlockParticleSetId": "GlassMagic",
+    "ParticleColor": "#ffc24a",
+    "Light": {
+      "Color": "#480a0a"
+    },
+    "TextureComputedColor": "#A7A6A4"
+  }
+}

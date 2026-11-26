@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_AutoriteGravitationnelle (remplace le parchemin rune_page_autorite_gravitationnelle).",
+  "TranslationProperties": {
+    "Name": "Manuel Spatial : Autorité Gravitationnelle",
+    "Description": "Sort légendaire de gravité (Mage, Assassin, Dragon). Vous imposez votre gravité à tout ce qui vous entoure : pendant 30 s, chaque ennemi qui se trouve ou entre dans un rayon de 20 blocs autour de vous voit le sol s'effondrer sous ses pieds (cratère de 7 blocs de diamètre, fissures), une colonne de gravité noir-violet s'abat sur lui, et il reste cloué au sol, incapable de bouger, en subissant 2 dégâts par seconde jusqu'à la fin. La gravité est invisible : seuls le sol et les colonnes la trahissent. Jusqu'à 10 ennemis écrasés à la fois. Le terrain est restauré après 3 minutes. Épargne votre groupe, votre guilde et votre famille. Coût : 1200 mana. Recharge : 5 s (valeur de test).\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Spatial"
+  ],
+  "Quality": "Legendary",
+  "ItemLevel": 90,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Spatial_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Spatial_AutoriteGravitationnelle.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

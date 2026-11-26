@@ -1,0 +1,44 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de Distorsion",
+    "Description": "Sort épique du temps (Mage, rune de prédilection de l'Oracle). Vous distordez le temps sur la zone visée (rayon 8, jusqu'à 20 blocs) pendant 10 s : les ennemis qui s'y trouvent avancent 60 % moins vite, et les projectiles tirés vers vous ou vos alliés s'y figent en l'air, puis se dissipent quand la zone disparaît. Épargne votre groupe, votre guilde et votre famille. Coût : 300 mana. Recharge : 120 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_Distorsion.png",
+  "Quality": "Epic",
+  "ItemLevel": 60,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_Runes.Temps"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_Distorsion.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 120,
+    "Cost": 300,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Duration",
+      "Aoe"
+    ],
+    "Cast": "Root_Ability_Distorsion"
+  }
+}

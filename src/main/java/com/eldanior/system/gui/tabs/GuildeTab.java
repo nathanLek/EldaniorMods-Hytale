@@ -170,8 +170,8 @@ public class GuildeTab {
         }
         long days = com.eldanior.system.boards.GuildBoard.daysLeft();
         ui.set("#GuildeContractsEnd.Text", days == 0 ? "Fin ce soir" : "Fin dans " + days + " j");
-        int missions = com.eldanior.system.boards.GuildBoard.missionsOf(playerUUID).size();
-        ui.set("#GuildeMissions.Text", "Vos missions : " + missions + " / 2 (onglet Quetes)");
+        int missions = com.eldanior.system.quest.chapitres.GuildQuests.missionCount(playerUUID);   // quetes depuis le 2026-11-19
+        ui.set("#GuildeMissions.Text", "Vos missions : " + missions + " / " + com.eldanior.system.boards.GuildBoard.MAX_TAKEN + " (tableau de guilde)");
     }
 
     // ==================== MEMBERS ACCORDION ====================

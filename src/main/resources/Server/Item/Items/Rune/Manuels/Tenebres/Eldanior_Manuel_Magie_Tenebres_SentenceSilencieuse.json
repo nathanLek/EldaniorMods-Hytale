@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_SentenceSilencieuse (remplace le parchemin rune_page_sentencesilencieuse).",
+  "TranslationProperties": {
+    "Name": "Manuel des Ténèbres : Sentence Silencieuse",
+    "Description": "Technique ultime de l'Observateur, l'assassin privé du Roi. Visez une cible : elle est figée, vous disparaissez dans l'ombre et surgissez dans son dos pour une frappe unique. Sous 40 % de vie, c'est une exécution ; sinon elle perd 35 % de sa vie maximale. Avec Arkies Domini, la portée passe à 100 blocs et traverse les murs ; sous Sans Visage, le seuil d'exécution monte à 50 % mais le masque tombe. Vous restez invisible un court instant après le coup. Coût 1200 de mana, recharge 300 s, prélevés seulement si une cible est trouvée. Coût : 0 mana. Recharge : 1 s.\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Tenebres"
+  ],
+  "Quality": "Legendary",
+  "ItemLevel": 90,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Tenebres_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Tenebres_SentenceSilencieuse.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

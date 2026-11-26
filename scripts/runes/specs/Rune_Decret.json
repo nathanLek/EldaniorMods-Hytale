@@ -1,0 +1,67 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_Decret",
+  "spell": "Decret",
+  "javaClass": "Decret",
+  "page": "rune_page_decret",
+  "name": "Rune du Décret",
+  "type": "Spatial",
+  "rarity": "Epic",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Decret",
+  "summary": "ennemis a 8 blocs du point vise plaques au sol 2 s (40), puis ejectes vers le haut et l'exterieur (150).",
+  "description": "Sort épique spatial (Mage, rune de prédilection de l'Archimage Royal). Vous prononcez un décret sur la zone visée (rayon 8, jusqu'à 20 blocs) : la gravité y plaque les ennemis au sol pendant 2 s (40 dégâts), puis s'inverse brutalement et les éjecte vers le haut et l'extérieur (150 dégâts). Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin scellé d'un sceau royal violet, lourd comme une dalle. Enseigne le Décret : que la gravité obéisse à votre parole. Classes : tous les Mages (rune de prédilection de l'Archimage Royal). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe"
+  ],
+  "cast": {
+    "animationSet": "Spellbook",
+    "charging": "CastPushCharging",
+    "release": "CastPushCharged",
+    "chargeTime": 0.5,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Portal_Void",
+    "handParticles": "Telekinesie_Aura",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.5,
+    "range": 20,
+    "radius": "8",
+    "targets": "ennemis de la zone (12 max)",
+    "persistentFx": "Telekinesie_Aura sur les plaques / 0,3 s, effet Elda_Decret (2 s, sans KnockbackMultiplier)",
+    "impactFx": "Chaos_Shockwave au plaquage et a l'ejection, Fujin_Gust a l'ejection",
+    "sounds": "SFX_Golem_Earth_Slam_Impact au plaquage, SFX_Ability_Wind_Strike_Slash a l'ejection",
+    "effects": "plaquage : poussee -18 puis lockInPlace 2 s (apres 250 ms), 40 Physical ; ejection : 150 Physical + poussee 10 vers l'exterieur, 16 vers le haut",
+    "terrain": "aucun",
+    "persistentDurationS": 2.3,
+    "interruptions": "aucune",
+    "restrictions": "mage",
+    "edgeCases": "invocations ignorees ; cible morte pendant le plaquage : ignoree",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 1,
+      "mobility": 0,
+      "control": 3,
+      "defense": 0,
+      "targets": 2,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    }
+  },
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null
+}

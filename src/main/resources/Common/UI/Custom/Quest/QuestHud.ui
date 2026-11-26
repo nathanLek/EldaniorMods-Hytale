@@ -1,243 +1,411 @@
+// HUD des quetes en cours (quest/QuestHud.java), genere par scripts/quetes/gen_quest_hud.py.
 Group {
     LayoutMode: Top;
     Padding: (Top: 10);
 
     Group {
         LayoutMode: Left;
-        Anchor: (Height: 180);
+        Anchor: (Height: 520);
 
         Group { Anchor: (Width: 10); }
 
         Group {
-            Anchor: (Width: 460);
+            Anchor: (Width: 430);
             LayoutMode: Top;
 
-            // === HUD QUETE PRINCIPALE ===
+            // === QUETE PRINCIPALE ===
             Group #QHudMainPanel {
-                Anchor: (Height: 72);
-                Background: #0c0a06(0.90);
                 LayoutMode: Top;
-                Padding: (Horizontal: 10, Vertical: 4);
                 Visible: false;
+                Padding: (Full: 2);
+                Background: #f2c45e;
 
-                // Ligne 1 : categorie
-                Label #QHudMainCategory {
-                    Text: "QUETE PRINCIPALE";
-                    Style: (FontSize: 9, TextColor: #FFD700, RenderBold: true, RenderUppercase: true, LetterSpacing: 1);
-                    Anchor: (Height: 13);
-                }
-
-                // Ligne 2 : titre + difficulte
                 Group {
-                    LayoutMode: Left;
-                    Anchor: (Height: 17);
+                    LayoutMode: Top;
+                    Background: (TexturePath: "QHudPatch.png", Border: 16);
+                    Padding: (Left: 8, Right: 14, Top: 8, Bottom: 10);
 
-                    Label #QHudMainName {
-                        Text: "";
-                        Style: (FontSize: 13, TextColor: #FFD700, RenderBold: true);
-                        FlexWeight: 1;
-                    }
-                    Label #QHudMainDiff {
-                        Text: "";
-                        Style: (FontSize: 15, TextColor: #ff9800, RenderBold: true, HorizontalAlignment: End);
-                        Anchor: (Width: 36);
-                    }
-                }
-
-                Group { Anchor: (Height: 6); }
-
-                // Ligne 3 : objectifs dans des containers
-                Group {
-                    LayoutMode: Left;
-                    Anchor: (Height: 24);
-
-                    Group #QHudMainObj1Box {
-                        FlexWeight: 1;
-                        Anchor: (Height: 24);
-                        Background: #1a1a2e(0.8);
+                    Group {
+                        Anchor: (Height: 58);
                         LayoutMode: Left;
-                        Padding: (Horizontal: 6);
-                        Visible: false;
-
-                        Label #QHudMainObj1 {
-                            Text: "";
-                            Style: (FontSize: 10, TextColor: #ddeeff, VerticalAlignment: Center);
-                            FlexWeight: 1;
+                        Group #QHudMainRankTab {
+                            Anchor: (Width: 62, Height: 58);
+                            LayoutMode: Left;
+                            Group {
+                                Anchor: (Width: 58, Height: 58);
+                                Group #QHudMainBadgeF { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "QHudRankF.png"); Visible: false; }
+                                Group #QHudMainBadgeE { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "QHudRankE.png"); Visible: false; }
+                                Group #QHudMainBadgeD { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "QHudRankD.png"); Visible: false; }
+                                Group #QHudMainBadgeC { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "QHudRankC.png"); Visible: false; }
+                                Group #QHudMainBadgeB { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "QHudRankB.png"); Visible: false; }
+                                Group #QHudMainBadgeA { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "QHudRankA.png"); Visible: false; }
+                                Group #QHudMainBadgeS { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "QHudRankS.png"); Visible: false; }
+                                Group #QHudMainBadgeSS { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "QHudRankSS.png"); Visible: false; }
+                                Group #QHudMainBadgeEX { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "QHudRankEX.png"); Visible: false; }
+                                Label #QHudMainRank {
+                                    Anchor: (Left: 0, Top: 0, Width: 58, Height: 58);
+                                    Style: (FontName: "Secondary", FontSize: 24, RenderBold: true, TextColor: #ffe98a, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 14);
+                                }
+                            }
+                            Group { Anchor: (Width: 2); }
+                            Group #QHudMainRankLine { Anchor: (Width: 2); Background: #f2c45e; }
                         }
-                        Label #QHudMainObj1Count {
-                            Text: "";
-                            Style: (FontSize: 10, TextColor: #ffffff, VerticalAlignment: Center, HorizontalAlignment: End, RenderBold: true);
-                            Anchor: (Width: 40);
+                        Group {
+                            FlexWeight: 1;
+                            LayoutMode: Top;
+                            Padding: (Left: 10, Top: 4);
+                            Label #QHudMainType {
+                                Anchor: (Height: 16);
+                                Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #f2c45e, VerticalAlignment: Center, LetterSpacing: 1);
+                            }
+                            Label #QHudMainName {
+                                Style: (FontSize: 15, RenderBold: true, TextColor: #f2c45e, Wrap: true);
+                            }
                         }
                     }
-
-                    Group { Anchor: (Width: 4); }
-
-                    Group #QHudMainObj2Box {
-                        FlexWeight: 1;
-                        Anchor: (Height: 24);
-                        Background: #1a1a2e(0.8);
+                    Group { Anchor: (Top: 4, Height: 1); Background: #ffffff(0.14); }
+                    Group { Anchor: (Height: 4); }
+                    Group #QHudMainObj0 {
+                        Anchor: (Height: 21);
                         LayoutMode: Left;
-                        Padding: (Horizontal: 6);
                         Visible: false;
-
-                        Label #QHudMainObj2 {
-                            Text: "";
-                            Style: (FontSize: 10, TextColor: #ddeeff, VerticalAlignment: Center);
-                            FlexWeight: 1;
+                        Group {
+                            Anchor: (Width: 16, Height: 16, Top: 2);
+                            Group #QHudMainObjOff0 { Anchor: (Left: 0, Top: 0, Width: 16, Height: 16); Background: (TexturePath: "ChapCheckOff.png"); }
+                            Group #QHudMainObjOn0 { Anchor: (Left: 0, Top: 0, Width: 16, Height: 16); Background: (TexturePath: "ChapCheckOn.png"); Visible: false; }
                         }
-                        Label #QHudMainObj2Count {
-                            Text: "";
-                            Style: (FontSize: 10, TextColor: #ffffff, VerticalAlignment: Center, HorizontalAlignment: End, RenderBold: true);
-                            Anchor: (Width: 40);
+                        Label #QHudMainObjText0 {
+                            FlexWeight: 1;
+                            Anchor: (Left: 7);
+                            Style: (FontSize: 12, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center);
+                        }
+                        Label #QHudMainObjCount0 {
+                            Anchor: (Width: 78);
+                            Style: (FontSize: 12, RenderBold: true, TextColor: #77879d, HorizontalAlignment: End, VerticalAlignment: Center);
                         }
                     }
-
-                    Group { Anchor: (Width: 4); }
-
-                    Group #QHudMainObj3Box {
-                        FlexWeight: 1;
-                        Anchor: (Height: 24);
-                        Background: #1a1a2e(0.8);
+                    Group #QHudMainObj1 {
+                        Anchor: (Height: 21);
                         LayoutMode: Left;
-                        Padding: (Horizontal: 6);
                         Visible: false;
-
-                        Label #QHudMainObj3 {
-                            Text: "";
-                            Style: (FontSize: 10, TextColor: #ddeeff, VerticalAlignment: Center);
-                            FlexWeight: 1;
+                        Group {
+                            Anchor: (Width: 16, Height: 16, Top: 2);
+                            Group #QHudMainObjOff1 { Anchor: (Left: 0, Top: 0, Width: 16, Height: 16); Background: (TexturePath: "ChapCheckOff.png"); }
+                            Group #QHudMainObjOn1 { Anchor: (Left: 0, Top: 0, Width: 16, Height: 16); Background: (TexturePath: "ChapCheckOn.png"); Visible: false; }
                         }
-                        Label #QHudMainObj3Count {
-                            Text: "";
-                            Style: (FontSize: 10, TextColor: #ffffff, VerticalAlignment: Center, HorizontalAlignment: End, RenderBold: true);
-                            Anchor: (Width: 40);
+                        Label #QHudMainObjText1 {
+                            FlexWeight: 1;
+                            Anchor: (Left: 7);
+                            Style: (FontSize: 12, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center);
+                        }
+                        Label #QHudMainObjCount1 {
+                            Anchor: (Width: 78);
+                            Style: (FontSize: 12, RenderBold: true, TextColor: #77879d, HorizontalAlignment: End, VerticalAlignment: Center);
                         }
                     }
-
-                    // Progression simple (quetes sans multi-objectifs)
-                    Label #QHudMainProg {
-                        Text: "";
-                        Style: (FontSize: 11, TextColor: #4CAF50, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
-                        Anchor: (Width: 0);
+                    Group #QHudMainObj2 {
+                        Anchor: (Height: 21);
+                        LayoutMode: Left;
+                        Visible: false;
+                        Group {
+                            Anchor: (Width: 16, Height: 16, Top: 2);
+                            Group #QHudMainObjOff2 { Anchor: (Left: 0, Top: 0, Width: 16, Height: 16); Background: (TexturePath: "ChapCheckOff.png"); }
+                            Group #QHudMainObjOn2 { Anchor: (Left: 0, Top: 0, Width: 16, Height: 16); Background: (TexturePath: "ChapCheckOn.png"); Visible: false; }
+                        }
+                        Label #QHudMainObjText2 {
+                            FlexWeight: 1;
+                            Anchor: (Left: 7);
+                            Style: (FontSize: 12, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center);
+                        }
+                        Label #QHudMainObjCount2 {
+                            Anchor: (Width: 78);
+                            Style: (FontSize: 12, RenderBold: true, TextColor: #77879d, HorizontalAlignment: End, VerticalAlignment: Center);
+                        }
+                    }
+                    Group #QHudMainObj3 {
+                        Anchor: (Height: 21);
+                        LayoutMode: Left;
+                        Visible: false;
+                        Group {
+                            Anchor: (Width: 16, Height: 16, Top: 2);
+                            Group #QHudMainObjOff3 { Anchor: (Left: 0, Top: 0, Width: 16, Height: 16); Background: (TexturePath: "ChapCheckOff.png"); }
+                            Group #QHudMainObjOn3 { Anchor: (Left: 0, Top: 0, Width: 16, Height: 16); Background: (TexturePath: "ChapCheckOn.png"); Visible: false; }
+                        }
+                        Label #QHudMainObjText3 {
+                            FlexWeight: 1;
+                            Anchor: (Left: 7);
+                            Style: (FontSize: 12, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center);
+                        }
+                        Label #QHudMainObjCount3 {
+                            Anchor: (Width: 78);
+                            Style: (FontSize: 12, RenderBold: true, TextColor: #77879d, HorizontalAlignment: End, VerticalAlignment: Center);
+                        }
                     }
                 }
             }
 
-            Group { Anchor: (Height: 3); }
+            Group { Anchor: (Height: 6); }
 
-            // === HUD QUETE ACTIVE ===
-            Group #QuestHudPanel {
-                Anchor: (Height: 72);
-                Background: #080c14(0.88);
+            // === QUETE SUIVIE ===
+            Group #QHudPanel {
                 LayoutMode: Top;
-                Padding: (Horizontal: 10, Vertical: 4);
                 Visible: false;
+                Padding: (Full: 2);
+                Background: #f2c45e;
 
-                // Ligne 1 : categorie
-                Label #QHudCategory {
-                    Text: "QUETE ACTIVE";
-                    Style: (FontSize: 9, TextColor: #8899aa, RenderBold: true, RenderUppercase: true, LetterSpacing: 1);
-                    Anchor: (Height: 13);
-                }
-
-                // Ligne 2 : titre + difficulte
                 Group {
-                    LayoutMode: Left;
-                    Anchor: (Height: 17);
+                    LayoutMode: Top;
+                    Background: (TexturePath: "QHudPatch.png", Border: 16);
+                    Padding: (Left: 8, Right: 14, Top: 8, Bottom: 10);
 
-                    Label #QHudName {
-                        Text: "";
-                        Style: (FontSize: 13, TextColor: #ffffff, RenderBold: true);
-                        FlexWeight: 1;
+                    Group {
+                        Anchor: (Height: 58);
+                        LayoutMode: Left;
+                        Group #QHudRankTab {
+                            Anchor: (Width: 62, Height: 58);
+                            LayoutMode: Left;
+                            Group {
+                                Anchor: (Width: 58, Height: 58);
+                                Group #QHudBadgeF { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "QHudRankF.png"); Visible: false; }
+                                Group #QHudBadgeE { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "QHudRankE.png"); Visible: false; }
+                                Group #QHudBadgeD { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "QHudRankD.png"); Visible: false; }
+                                Group #QHudBadgeC { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "QHudRankC.png"); Visible: false; }
+                                Group #QHudBadgeB { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "QHudRankB.png"); Visible: false; }
+                                Group #QHudBadgeA { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "QHudRankA.png"); Visible: false; }
+                                Group #QHudBadgeS { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "QHudRankS.png"); Visible: false; }
+                                Group #QHudBadgeSS { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "QHudRankSS.png"); Visible: false; }
+                                Group #QHudBadgeEX { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "QHudRankEX.png"); Visible: false; }
+                                Label #QHudRank {
+                                    Anchor: (Left: 0, Top: 0, Width: 58, Height: 58);
+                                    Style: (FontName: "Secondary", FontSize: 24, RenderBold: true, TextColor: #ffe98a, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 14);
+                                }
+                            }
+                            Group { Anchor: (Width: 2); }
+                            Group #QHudRankLine { Anchor: (Width: 2); Background: #f2c45e; }
+                        }
+                        Group {
+                            FlexWeight: 1;
+                            LayoutMode: Top;
+                            Padding: (Left: 10, Top: 4);
+                            Label #QHudType {
+                                Anchor: (Height: 16);
+                                Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #f2c45e, VerticalAlignment: Center, LetterSpacing: 1);
+                            }
+                            Label #QHudName {
+                                Style: (FontSize: 15, RenderBold: true, TextColor: #f2c45e, Wrap: true);
+                            }
+                        }
                     }
-                    Label #QHudDiff {
-                        Text: "";
-                        Style: (FontSize: 15, TextColor: #ff9800, RenderBold: true, HorizontalAlignment: End);
-                        Anchor: (Width: 36);
+                    Group { Anchor: (Top: 4, Height: 1); Background: #ffffff(0.14); }
+                    Group { Anchor: (Height: 4); }
+                    Group #QHudObj0 {
+                        Anchor: (Height: 21);
+                        LayoutMode: Left;
+                        Visible: false;
+                        Group {
+                            Anchor: (Width: 16, Height: 16, Top: 2);
+                            Group #QHudObjOff0 { Anchor: (Left: 0, Top: 0, Width: 16, Height: 16); Background: (TexturePath: "ChapCheckOff.png"); }
+                            Group #QHudObjOn0 { Anchor: (Left: 0, Top: 0, Width: 16, Height: 16); Background: (TexturePath: "ChapCheckOn.png"); Visible: false; }
+                        }
+                        Label #QHudObjText0 {
+                            FlexWeight: 1;
+                            Anchor: (Left: 7);
+                            Style: (FontSize: 12, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center);
+                        }
+                        Label #QHudObjCount0 {
+                            Anchor: (Width: 78);
+                            Style: (FontSize: 12, RenderBold: true, TextColor: #77879d, HorizontalAlignment: End, VerticalAlignment: Center);
+                        }
+                    }
+                    Group #QHudObj1 {
+                        Anchor: (Height: 21);
+                        LayoutMode: Left;
+                        Visible: false;
+                        Group {
+                            Anchor: (Width: 16, Height: 16, Top: 2);
+                            Group #QHudObjOff1 { Anchor: (Left: 0, Top: 0, Width: 16, Height: 16); Background: (TexturePath: "ChapCheckOff.png"); }
+                            Group #QHudObjOn1 { Anchor: (Left: 0, Top: 0, Width: 16, Height: 16); Background: (TexturePath: "ChapCheckOn.png"); Visible: false; }
+                        }
+                        Label #QHudObjText1 {
+                            FlexWeight: 1;
+                            Anchor: (Left: 7);
+                            Style: (FontSize: 12, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center);
+                        }
+                        Label #QHudObjCount1 {
+                            Anchor: (Width: 78);
+                            Style: (FontSize: 12, RenderBold: true, TextColor: #77879d, HorizontalAlignment: End, VerticalAlignment: Center);
+                        }
+                    }
+                    Group #QHudObj2 {
+                        Anchor: (Height: 21);
+                        LayoutMode: Left;
+                        Visible: false;
+                        Group {
+                            Anchor: (Width: 16, Height: 16, Top: 2);
+                            Group #QHudObjOff2 { Anchor: (Left: 0, Top: 0, Width: 16, Height: 16); Background: (TexturePath: "ChapCheckOff.png"); }
+                            Group #QHudObjOn2 { Anchor: (Left: 0, Top: 0, Width: 16, Height: 16); Background: (TexturePath: "ChapCheckOn.png"); Visible: false; }
+                        }
+                        Label #QHudObjText2 {
+                            FlexWeight: 1;
+                            Anchor: (Left: 7);
+                            Style: (FontSize: 12, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center);
+                        }
+                        Label #QHudObjCount2 {
+                            Anchor: (Width: 78);
+                            Style: (FontSize: 12, RenderBold: true, TextColor: #77879d, HorizontalAlignment: End, VerticalAlignment: Center);
+                        }
+                    }
+                    Group #QHudObj3 {
+                        Anchor: (Height: 21);
+                        LayoutMode: Left;
+                        Visible: false;
+                        Group {
+                            Anchor: (Width: 16, Height: 16, Top: 2);
+                            Group #QHudObjOff3 { Anchor: (Left: 0, Top: 0, Width: 16, Height: 16); Background: (TexturePath: "ChapCheckOff.png"); }
+                            Group #QHudObjOn3 { Anchor: (Left: 0, Top: 0, Width: 16, Height: 16); Background: (TexturePath: "ChapCheckOn.png"); Visible: false; }
+                        }
+                        Label #QHudObjText3 {
+                            FlexWeight: 1;
+                            Anchor: (Left: 7);
+                            Style: (FontSize: 12, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center);
+                        }
+                        Label #QHudObjCount3 {
+                            Anchor: (Width: 78);
+                            Style: (FontSize: 12, RenderBold: true, TextColor: #77879d, HorizontalAlignment: End, VerticalAlignment: Center);
+                        }
                     }
                 }
+            }
 
-                Group { Anchor: (Height: 6); }
+            Group { Anchor: (Height: 6); }
 
-                // Ligne 3 : objectifs dans des containers
+            // === AUTRE QUETE EN COURS (limite : 2 + la principale) ===
+            Group #QHudAltPanel {
+                LayoutMode: Top;
+                Visible: false;
+                Padding: (Full: 2);
+                Background: #f2c45e;
+
                 Group {
-                    LayoutMode: Left;
-                    Anchor: (Height: 24);
+                    LayoutMode: Top;
+                    Background: (TexturePath: "QHudPatch.png", Border: 16);
+                    Padding: (Left: 8, Right: 14, Top: 8, Bottom: 10);
 
-                    Group #QHudObj1Box {
-                        FlexWeight: 1;
-                        Anchor: (Height: 24);
-                        Background: #1a1a2e(0.8);
+                    Group {
+                        Anchor: (Height: 58);
                         LayoutMode: Left;
-                        Padding: (Horizontal: 6);
-                        Visible: false;
-
-                        Label #QHudObj1 {
-                            Text: "";
-                            Style: (FontSize: 10, TextColor: #ddeeff, VerticalAlignment: Center);
-                            FlexWeight: 1;
+                        Group #QHudAltRankTab {
+                            Anchor: (Width: 62, Height: 58);
+                            LayoutMode: Left;
+                            Group {
+                                Anchor: (Width: 58, Height: 58);
+                                Group #QHudAltBadgeF { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "QHudRankF.png"); Visible: false; }
+                                Group #QHudAltBadgeE { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "QHudRankE.png"); Visible: false; }
+                                Group #QHudAltBadgeD { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "QHudRankD.png"); Visible: false; }
+                                Group #QHudAltBadgeC { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "QHudRankC.png"); Visible: false; }
+                                Group #QHudAltBadgeB { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "QHudRankB.png"); Visible: false; }
+                                Group #QHudAltBadgeA { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "QHudRankA.png"); Visible: false; }
+                                Group #QHudAltBadgeS { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "QHudRankS.png"); Visible: false; }
+                                Group #QHudAltBadgeSS { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "QHudRankSS.png"); Visible: false; }
+                                Group #QHudAltBadgeEX { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "QHudRankEX.png"); Visible: false; }
+                                Label #QHudAltRank {
+                                    Anchor: (Left: 0, Top: 0, Width: 58, Height: 58);
+                                    Style: (FontName: "Secondary", FontSize: 24, RenderBold: true, TextColor: #ffe98a, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 14);
+                                }
+                            }
+                            Group { Anchor: (Width: 2); }
+                            Group #QHudAltRankLine { Anchor: (Width: 2); Background: #f2c45e; }
                         }
-                        Label #QHudObj1Count {
-                            Text: "";
-                            Style: (FontSize: 10, TextColor: #ffffff, VerticalAlignment: Center, HorizontalAlignment: End, RenderBold: true);
-                            Anchor: (Width: 40);
+                        Group {
+                            FlexWeight: 1;
+                            LayoutMode: Top;
+                            Padding: (Left: 10, Top: 4);
+                            Label #QHudAltType {
+                                Anchor: (Height: 16);
+                                Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #f2c45e, VerticalAlignment: Center, LetterSpacing: 1);
+                            }
+                            Label #QHudAltName {
+                                Style: (FontSize: 15, RenderBold: true, TextColor: #f2c45e, Wrap: true);
+                            }
                         }
                     }
-
-                    Group { Anchor: (Width: 4); }
-
-                    Group #QHudObj2Box {
-                        FlexWeight: 1;
-                        Anchor: (Height: 24);
-                        Background: #1a1a2e(0.8);
+                    Group { Anchor: (Top: 4, Height: 1); Background: #ffffff(0.14); }
+                    Group { Anchor: (Height: 4); }
+                    Group #QHudAltObj0 {
+                        Anchor: (Height: 21);
                         LayoutMode: Left;
-                        Padding: (Horizontal: 6);
                         Visible: false;
-
-                        Label #QHudObj2 {
-                            Text: "";
-                            Style: (FontSize: 10, TextColor: #ddeeff, VerticalAlignment: Center);
-                            FlexWeight: 1;
+                        Group {
+                            Anchor: (Width: 16, Height: 16, Top: 2);
+                            Group #QHudAltObjOff0 { Anchor: (Left: 0, Top: 0, Width: 16, Height: 16); Background: (TexturePath: "ChapCheckOff.png"); }
+                            Group #QHudAltObjOn0 { Anchor: (Left: 0, Top: 0, Width: 16, Height: 16); Background: (TexturePath: "ChapCheckOn.png"); Visible: false; }
                         }
-                        Label #QHudObj2Count {
-                            Text: "";
-                            Style: (FontSize: 10, TextColor: #ffffff, VerticalAlignment: Center, HorizontalAlignment: End, RenderBold: true);
-                            Anchor: (Width: 40);
+                        Label #QHudAltObjText0 {
+                            FlexWeight: 1;
+                            Anchor: (Left: 7);
+                            Style: (FontSize: 12, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center);
+                        }
+                        Label #QHudAltObjCount0 {
+                            Anchor: (Width: 78);
+                            Style: (FontSize: 12, RenderBold: true, TextColor: #77879d, HorizontalAlignment: End, VerticalAlignment: Center);
                         }
                     }
-
-                    Group { Anchor: (Width: 4); }
-
-                    Group #QHudObj3Box {
-                        FlexWeight: 1;
-                        Anchor: (Height: 24);
-                        Background: #1a1a2e(0.8);
+                    Group #QHudAltObj1 {
+                        Anchor: (Height: 21);
                         LayoutMode: Left;
-                        Padding: (Horizontal: 6);
                         Visible: false;
-
-                        Label #QHudObj3 {
-                            Text: "";
-                            Style: (FontSize: 10, TextColor: #ddeeff, VerticalAlignment: Center);
+                        Group {
+                            Anchor: (Width: 16, Height: 16, Top: 2);
+                            Group #QHudAltObjOff1 { Anchor: (Left: 0, Top: 0, Width: 16, Height: 16); Background: (TexturePath: "ChapCheckOff.png"); }
+                            Group #QHudAltObjOn1 { Anchor: (Left: 0, Top: 0, Width: 16, Height: 16); Background: (TexturePath: "ChapCheckOn.png"); Visible: false; }
+                        }
+                        Label #QHudAltObjText1 {
                             FlexWeight: 1;
+                            Anchor: (Left: 7);
+                            Style: (FontSize: 12, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center);
                         }
-                        Label #QHudObj3Count {
-                            Text: "";
-                            Style: (FontSize: 10, TextColor: #ffffff, VerticalAlignment: Center, HorizontalAlignment: End, RenderBold: true);
-                            Anchor: (Width: 40);
+                        Label #QHudAltObjCount1 {
+                            Anchor: (Width: 78);
+                            Style: (FontSize: 12, RenderBold: true, TextColor: #77879d, HorizontalAlignment: End, VerticalAlignment: Center);
                         }
                     }
-
-                    Label #QHudProg {
-                        Text: "";
-                        Style: (FontSize: 11, TextColor: #4CAF50, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
-                        Anchor: (Width: 0);
-                    }
-                    Label #QHudReward {
-                        Text: "";
-                        Anchor: (Width: 0);
+                    Group #QHudAltObj2 {
+                        Anchor: (Height: 21);
+                        LayoutMode: Left;
                         Visible: false;
+                        Group {
+                            Anchor: (Width: 16, Height: 16, Top: 2);
+                            Group #QHudAltObjOff2 { Anchor: (Left: 0, Top: 0, Width: 16, Height: 16); Background: (TexturePath: "ChapCheckOff.png"); }
+                            Group #QHudAltObjOn2 { Anchor: (Left: 0, Top: 0, Width: 16, Height: 16); Background: (TexturePath: "ChapCheckOn.png"); Visible: false; }
+                        }
+                        Label #QHudAltObjText2 {
+                            FlexWeight: 1;
+                            Anchor: (Left: 7);
+                            Style: (FontSize: 12, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center);
+                        }
+                        Label #QHudAltObjCount2 {
+                            Anchor: (Width: 78);
+                            Style: (FontSize: 12, RenderBold: true, TextColor: #77879d, HorizontalAlignment: End, VerticalAlignment: Center);
+                        }
+                    }
+                    Group #QHudAltObj3 {
+                        Anchor: (Height: 21);
+                        LayoutMode: Left;
+                        Visible: false;
+                        Group {
+                            Anchor: (Width: 16, Height: 16, Top: 2);
+                            Group #QHudAltObjOff3 { Anchor: (Left: 0, Top: 0, Width: 16, Height: 16); Background: (TexturePath: "ChapCheckOff.png"); }
+                            Group #QHudAltObjOn3 { Anchor: (Left: 0, Top: 0, Width: 16, Height: 16); Background: (TexturePath: "ChapCheckOn.png"); Visible: false; }
+                        }
+                        Label #QHudAltObjText3 {
+                            FlexWeight: 1;
+                            Anchor: (Left: 7);
+                            Style: (FontSize: 12, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center);
+                        }
+                        Label #QHudAltObjCount3 {
+                            Anchor: (Width: 78);
+                            Style: (FontSize: 12, RenderBold: true, TextColor: #77879d, HorizontalAlignment: End, VerticalAlignment: Center);
+                        }
                     }
                 }
             }

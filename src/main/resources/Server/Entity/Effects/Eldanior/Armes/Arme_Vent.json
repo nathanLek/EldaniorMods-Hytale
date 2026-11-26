@@ -1,0 +1,18 @@
+{
+  "$Comment": "Sabre du Vent : chaque coup porte allege le porteur (+20 % de vitesse pendant 3 s).",
+  "Duration": 3,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#aaffaa",
+    "EntityTopTint": "#e0e0e0",
+    "Particles": [
+      {
+        "SystemId": "Wind_Spirit_Tail"
+      }
+    ],
+    "HorizontalSpeedMultiplier": 1.2
+  },
+  "OverlapBehavior": "Overwrite",
+  "Infinite": false,
+  "Debuff": false,
+  "StatusEffectIcon": "UI/StatusEffects/Burn.png"
+}

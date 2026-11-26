@@ -1,0 +1,47 @@
+{
+  "$Comment": "Fourreau de Kinryū-Ō, Lame du Dieu-Dragon d'Or, objet utilitaire pose dans la main gauche par TenryumaruSystem. Genere par scripts/artefacts/gen_luo_katanas.py.",
+  "TranslationProperties": {
+    "Name": "Fourreau — Kinryū-Ō, Lame du Dieu-Dragon d'Or",
+    "Description": "Il accompagne la lame et disparaît sans elle."
+  },
+  "Quality": "Divin",
+  "ItemLevel": 800,
+  "Model": "Items/Weapons/artefacts/Artefact_Sword_Kinryu_Fourreau.blockymodel",
+  "Texture": "Items/Weapons/artefacts/Artefact_Sword_Kinryu.png",
+  "Icon": "Icons/ItemsGenerated/Artefact_Sword_Kinryu_Fourreau.png",
+  "IconProperties": {
+    "Scale": 0.33,
+    "Rotation": [
+      45,
+      90,
+      0
+    ],
+    "Translation": [
+      -33,
+      -38
+    ]
+  },
+  "MaxStack": 1,
+  "Variant": false,
+  "Utility": {
+    "Usable": true
+  },
+  "DropOnDeath": false,
+  "PlayerAnimationsId": "Tenryumaru_Fourreau",
+  "Interactions": {
+    "Secondary": "Root_Weapon_Sword_Secondary_Guard"
+  },
+  "InteractionVars": {
+    "Guard_Wield": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Secondary_Guard_Wield",
+          "StaminaCost": {
+            "Value": 10,
+            "CostType": "Damage"
+          }
+        }
+      ]
+    }
+  }
+}

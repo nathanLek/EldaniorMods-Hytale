@@ -1,0 +1,818 @@
+$C = "../Common.ui";
+
+// Banque (guards/BankPage), facon fenetre Chapitres. Generee par scripts/npcs/gen_banque_ui.py : voir ce script.
+Group {
+  LayoutMode: Middle;
+  Background: (TexturePath: "../Quest/ChapBackground.png");
+
+  Group #BqPage {
+    Anchor: (Width: 1920, Height: 1080);
+
+    // ---- fond : voile de droite, bande d'encre, lueur, eclats ----
+    Group { Anchor: (Left: 1003, Top: 0, Width: 917, Height: 1080); Background: #181822(0.5); }
+    Group { Anchor: (Left: 499, Top: 0, Width: 504, Height: 1080); Background: (TexturePath: "../Quest/ChapSeparator.png"); }
+    Group { Anchor: (Left: 480, Top: 25, Width: 488, Height: 1055); Background: (TexturePath: "../Quest/ChapGlows.png"); }
+    Group { Anchor: (Left: 0, Top: 0, Width: 1920, Height: 1080); Background: (TexturePath: "../Quest/ChapShards.png"); }
+    Group { Anchor: (Left: 599, Top: 0, Width: 1321, Height: 1080); Background: #0b0b12(0.45); }
+
+    // ---- onglets ----
+    Group { Anchor: (Left: 603, Top: 28, Width: 1276, Height: 96); Background: #0b0b12(0.55); }
+    Group { Anchor: (Left: 603, Top: 124, Width: 1276, Height: 8); Background: (TexturePath: "../Quest/ChapDivider.png", HorizontalBorder: 24, VerticalBorder: 0); }
+    Button #BqTab0 {
+      Anchor: (Left: 611, Top: 34, Width: 408, Height: 84);
+      Style: (Default: (Background: #000000(0)), Hovered: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Sounds: $C.@ButtonSounds);
+      Group #BqTabGlow0 { Anchor: (Left: 0, Top: 0, Width: 408, Height: 84); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); Visible: false; }
+      ItemIcon #BqTabIcon0 { Anchor: (Left: 18, Top: 18, Width: 48, Height: 48); }
+      Label #BqTabLabel0 {
+        Anchor: (Left: 80, Top: 14, Width: 312, Height: 26);
+        Style: (FontName: "Secondary", FontSize: 20, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 12);
+      }
+      Label #BqTabSub0 {
+        Anchor: (Left: 80, Top: 42, Width: 312, Height: 26);
+        Style: (FontSize: 13, RenderBold: true, TextColor: #77879D, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group #BqTabOn0 { Anchor: (Left: 18, Top: 79, Width: 372, Height: 3); Background: #f2c45e; Visible: false; }
+    }
+    Button #BqTab1 {
+      Anchor: (Left: 1037, Top: 34, Width: 408, Height: 84);
+      Style: (Default: (Background: #000000(0)), Hovered: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Sounds: $C.@ButtonSounds);
+      Group #BqTabGlow1 { Anchor: (Left: 0, Top: 0, Width: 408, Height: 84); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); Visible: false; }
+      ItemIcon #BqTabIcon1 { Anchor: (Left: 18, Top: 18, Width: 48, Height: 48); }
+      Label #BqTabLabel1 {
+        Anchor: (Left: 80, Top: 14, Width: 312, Height: 26);
+        Style: (FontName: "Secondary", FontSize: 20, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 12);
+      }
+      Label #BqTabSub1 {
+        Anchor: (Left: 80, Top: 42, Width: 312, Height: 26);
+        Style: (FontSize: 13, RenderBold: true, TextColor: #77879D, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group #BqTabOn1 { Anchor: (Left: 18, Top: 79, Width: 372, Height: 3); Background: #f2c45e; Visible: false; }
+    }
+    Button #BqTab2 {
+      Anchor: (Left: 1463, Top: 34, Width: 408, Height: 84);
+      Style: (Default: (Background: #000000(0)), Hovered: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Sounds: $C.@ButtonSounds);
+      Group #BqTabGlow2 { Anchor: (Left: 0, Top: 0, Width: 408, Height: 84); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); Visible: false; }
+      ItemIcon #BqTabIcon2 { Anchor: (Left: 18, Top: 18, Width: 48, Height: 48); }
+      Label #BqTabLabel2 {
+        Anchor: (Left: 80, Top: 14, Width: 312, Height: 26);
+        Style: (FontName: "Secondary", FontSize: 20, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 12);
+      }
+      Label #BqTabSub2 {
+        Anchor: (Left: 80, Top: 42, Width: 312, Height: 26);
+        Style: (FontSize: 13, RenderBold: true, TextColor: #77879D, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group #BqTabOn2 { Anchor: (Left: 18, Top: 79, Width: 372, Height: 3); Background: #f2c45e; Visible: false; }
+    }
+
+    // ---- replique du banquier ----
+    Label #BqQuote {
+      Anchor: (Left: 611, Top: 136, Width: 1260, Height: 46);
+      Style: (FontSize: 17, RenderBold: true, TextColor: #C58643, HorizontalAlignment: Center, VerticalAlignment: Center, Wrap: true);
+    }
+
+    // ---- onglet 0 : deposer / retirer ----
+    Group #BqPanel0 {
+      Anchor: (Left: 611, Top: 196, Width: 1260, Height: 740);
+      Group { Anchor: (Left: 0, Top: 0, Width: 620, Height: 448); Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16); }
+      Label {
+        Anchor: (Left: 24, Top: 16, Width: 572, Height: 34);
+      Text: "Déposer";
+        Style: (FontName: "Secondary", FontSize: 26, RenderBold: true, TextColor: #f2c45e, RenderUppercase: true, VerticalAlignment: Center);
+      }
+      Label #BqDepFlow {
+        Anchor: (Left: 24, Top: 52, Width: 572, Height: 24);
+      Text: "Sac  →  Banque";
+        Style: (FontSize: 15, RenderBold: true, TextColor: #8fd18f, RenderUppercase: true, VerticalAlignment: Center);
+      }
+      Label {
+        Anchor: (Left: 24, Top: 78, Width: 572, Height: 22);
+      Text: "Vos pièces quittent le sac et sont mises à l'abri à la banque.";
+        Style: (FontSize: 14, RenderBold: true, TextColor: #77879D, VerticalAlignment: Center, Wrap: true);
+      }
+      Group { Anchor: (Left: 24, Top: 108, Width: 572, Height: 8); Background: (TexturePath: "../Quest/ChapDivider.png", HorizontalBorder: 24, VerticalBorder: 0); }
+      Label {
+        Anchor: (Left: 24, Top: 126, Width: 572, Height: 20);
+      Text: "Somme en cuivres (100 = 1 or)";
+        Style: (FontSize: 12, RenderBold: true, TextColor: #77879D, RenderUppercase: true, VerticalAlignment: Center);
+      }
+      Group {
+        Anchor: (Left: 24, Top: 150, Width: 230, Height: 40);
+        $C.@NumberField #BqDepAmount {
+          Anchor: (Left: 0, Top: 0, Width: 230, Height: 40);
+          Format: (MaxDecimalPlaces: 0, Step: 100);
+        }
+      }
+      Label #BqDepWorth {
+        Anchor: (Left: 268, Top: 150, Width: 328, Height: 40);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, Wrap: true, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Label #BqDepPreview {
+        Anchor: (Left: 24, Top: 198, Width: 572, Height: 52);
+      Text: "";
+        Style: (FontSize: 15, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center, Wrap: true);
+      }
+      Group {
+        Anchor: (Left: 24, Top: 260, Width: 572, Height: 50);
+        $C.@TextButton #BqDepGo {
+          @Anchor = Anchor(Left: 0, Top: 0, Width: 572);
+          Text: "Déposer";
+        }
+      }
+      Label {
+        Anchor: (Left: 24, Top: 356, Width: 572, Height: 20);
+      Text: "Raccourcis";
+        Style: (FontSize: 12, RenderBold: true, TextColor: #77879D, RenderUppercase: true, VerticalAlignment: Center);
+      }
+      Group {
+        Anchor: (Left: 24, Top: 384, Width: 137, Height: 44);
+        $C.@SecondaryTextButton #BqDepQ0 {
+          @Anchor = Anchor(Left: 0, Top: 0, Width: 137);
+          Text: "Tout le sac";
+        }
+      }
+      Group {
+        Anchor: (Left: 169, Top: 384, Width: 137, Height: 44);
+        $C.@SecondaryTextButton #BqDepQ1 {
+          @Anchor = Anchor(Left: 0, Top: 0, Width: 137);
+          Text: "1 or";
+        }
+      }
+      Group {
+        Anchor: (Left: 314, Top: 384, Width: 137, Height: 44);
+        $C.@SecondaryTextButton #BqDepQ2 {
+          @Anchor = Anchor(Left: 0, Top: 0, Width: 137);
+          Text: "1 diamant";
+        }
+      }
+      Group {
+        Anchor: (Left: 459, Top: 384, Width: 137, Height: 44);
+        $C.@SecondaryTextButton #BqDepQ3 {
+          @Anchor = Anchor(Left: 0, Top: 0, Width: 137);
+          Text: "1 zénith";
+        }
+      }
+      Group { Anchor: (Left: 640, Top: 0, Width: 620, Height: 448); Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16); }
+      Label {
+        Anchor: (Left: 664, Top: 16, Width: 572, Height: 34);
+      Text: "Retirer";
+        Style: (FontName: "Secondary", FontSize: 26, RenderBold: true, TextColor: #f2c45e, RenderUppercase: true, VerticalAlignment: Center);
+      }
+      Label #BqWdFlow {
+        Anchor: (Left: 664, Top: 52, Width: 572, Height: 24);
+      Text: "Banque  →  Sac";
+        Style: (FontSize: 15, RenderBold: true, TextColor: #f2c45e, RenderUppercase: true, VerticalAlignment: Center);
+      }
+      Label {
+        Anchor: (Left: 664, Top: 78, Width: 572, Height: 22);
+      Text: "L'argent du compte revient dans votre sac, en pièces.";
+        Style: (FontSize: 14, RenderBold: true, TextColor: #77879D, VerticalAlignment: Center, Wrap: true);
+      }
+      Group { Anchor: (Left: 664, Top: 108, Width: 572, Height: 8); Background: (TexturePath: "../Quest/ChapDivider.png", HorizontalBorder: 24, VerticalBorder: 0); }
+      Label {
+        Anchor: (Left: 664, Top: 126, Width: 572, Height: 20);
+      Text: "Somme en cuivres (100 = 1 or)";
+        Style: (FontSize: 12, RenderBold: true, TextColor: #77879D, RenderUppercase: true, VerticalAlignment: Center);
+      }
+      Group {
+        Anchor: (Left: 664, Top: 150, Width: 230, Height: 40);
+        $C.@NumberField #BqWdAmount {
+          Anchor: (Left: 0, Top: 0, Width: 230, Height: 40);
+          Format: (MaxDecimalPlaces: 0, Step: 100);
+        }
+      }
+      Label #BqWdWorth {
+        Anchor: (Left: 908, Top: 150, Width: 328, Height: 40);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, Wrap: true, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Label #BqWdPreview {
+        Anchor: (Left: 664, Top: 198, Width: 572, Height: 52);
+      Text: "";
+        Style: (FontSize: 15, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center, Wrap: true);
+      }
+      Group {
+        Anchor: (Left: 664, Top: 260, Width: 572, Height: 50);
+        $C.@TextButton #BqWdGo {
+          @Anchor = Anchor(Left: 0, Top: 0, Width: 572);
+          Text: "Retirer";
+        }
+      }
+      Label {
+        Anchor: (Left: 664, Top: 356, Width: 572, Height: 20);
+      Text: "Raccourcis";
+        Style: (FontSize: 12, RenderBold: true, TextColor: #77879D, RenderUppercase: true, VerticalAlignment: Center);
+      }
+      Group {
+        Anchor: (Left: 664, Top: 384, Width: 137, Height: 44);
+        $C.@SecondaryTextButton #BqWdQ0 {
+          @Anchor = Anchor(Left: 0, Top: 0, Width: 137);
+          Text: "Tout le compte";
+        }
+      }
+      Group {
+        Anchor: (Left: 809, Top: 384, Width: 137, Height: 44);
+        $C.@SecondaryTextButton #BqWdQ1 {
+          @Anchor = Anchor(Left: 0, Top: 0, Width: 137);
+          Text: "1 or";
+        }
+      }
+      Group {
+        Anchor: (Left: 954, Top: 384, Width: 137, Height: 44);
+        $C.@SecondaryTextButton #BqWdQ2 {
+          @Anchor = Anchor(Left: 0, Top: 0, Width: 137);
+          Text: "1 diamant";
+        }
+      }
+      Group {
+        Anchor: (Left: 1099, Top: 384, Width: 137, Height: 44);
+        $C.@SecondaryTextButton #BqWdQ3 {
+          @Anchor = Anchor(Left: 0, Top: 0, Width: 137);
+          Text: "1 zénith";
+        }
+      }
+      Label {
+        Anchor: (Left: 0, Top: 470, Width: 600, Height: 26);
+      Text: "Les pièces de votre sac";
+        Style: (FontSize: 13, RenderBold: true, TextColor: #C4CEDC, RenderUppercase: true, VerticalAlignment: Center);
+      }
+      Group { Anchor: (Left: 0, Top: 502, Width: 172, Height: 118); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #BqSacIcon0 { Anchor: (Left: 62, Top: 512, Width: 48, Height: 48); }
+      Label #BqSacName0 {
+        Anchor: (Left: 6, Top: 564, Width: 160, Height: 22);
+        Style: (FontSize: 13, RenderBold: true, TextColor: #77879D, RenderUppercase: true, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 9);
+      }
+      Label #BqSacCount0 {
+        Anchor: (Left: 6, Top: 586, Width: 160, Height: 26);
+        Style: (FontSize: 17, RenderBold: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+      Group { Anchor: (Left: 181, Top: 502, Width: 172, Height: 118); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #BqSacIcon1 { Anchor: (Left: 243, Top: 512, Width: 48, Height: 48); }
+      Label #BqSacName1 {
+        Anchor: (Left: 187, Top: 564, Width: 160, Height: 22);
+        Style: (FontSize: 13, RenderBold: true, TextColor: #77879D, RenderUppercase: true, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 9);
+      }
+      Label #BqSacCount1 {
+        Anchor: (Left: 187, Top: 586, Width: 160, Height: 26);
+        Style: (FontSize: 17, RenderBold: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+      Group { Anchor: (Left: 362, Top: 502, Width: 172, Height: 118); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #BqSacIcon2 { Anchor: (Left: 424, Top: 512, Width: 48, Height: 48); }
+      Label #BqSacName2 {
+        Anchor: (Left: 368, Top: 564, Width: 160, Height: 22);
+        Style: (FontSize: 13, RenderBold: true, TextColor: #77879D, RenderUppercase: true, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 9);
+      }
+      Label #BqSacCount2 {
+        Anchor: (Left: 368, Top: 586, Width: 160, Height: 26);
+        Style: (FontSize: 17, RenderBold: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+      Group { Anchor: (Left: 543, Top: 502, Width: 172, Height: 118); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #BqSacIcon3 { Anchor: (Left: 605, Top: 512, Width: 48, Height: 48); }
+      Label #BqSacName3 {
+        Anchor: (Left: 549, Top: 564, Width: 160, Height: 22);
+        Style: (FontSize: 13, RenderBold: true, TextColor: #77879D, RenderUppercase: true, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 9);
+      }
+      Label #BqSacCount3 {
+        Anchor: (Left: 549, Top: 586, Width: 160, Height: 26);
+        Style: (FontSize: 17, RenderBold: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+      Group { Anchor: (Left: 724, Top: 502, Width: 172, Height: 118); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #BqSacIcon4 { Anchor: (Left: 786, Top: 512, Width: 48, Height: 48); }
+      Label #BqSacName4 {
+        Anchor: (Left: 730, Top: 564, Width: 160, Height: 22);
+        Style: (FontSize: 13, RenderBold: true, TextColor: #77879D, RenderUppercase: true, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 9);
+      }
+      Label #BqSacCount4 {
+        Anchor: (Left: 730, Top: 586, Width: 160, Height: 26);
+        Style: (FontSize: 17, RenderBold: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+      Group { Anchor: (Left: 905, Top: 502, Width: 172, Height: 118); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #BqSacIcon5 { Anchor: (Left: 967, Top: 512, Width: 48, Height: 48); }
+      Label #BqSacName5 {
+        Anchor: (Left: 911, Top: 564, Width: 160, Height: 22);
+        Style: (FontSize: 13, RenderBold: true, TextColor: #77879D, RenderUppercase: true, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 9);
+      }
+      Label #BqSacCount5 {
+        Anchor: (Left: 911, Top: 586, Width: 160, Height: 26);
+        Style: (FontSize: 17, RenderBold: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+      Group { Anchor: (Left: 1086, Top: 502, Width: 172, Height: 118); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #BqSacIcon6 { Anchor: (Left: 1148, Top: 512, Width: 48, Height: 48); }
+      Label #BqSacName6 {
+        Anchor: (Left: 1092, Top: 564, Width: 160, Height: 22);
+        Style: (FontSize: 13, RenderBold: true, TextColor: #77879D, RenderUppercase: true, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 9);
+      }
+      Label #BqSacCount6 {
+        Anchor: (Left: 1092, Top: 586, Width: 160, Height: 26);
+        Style: (FontSize: 17, RenderBold: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+    }
+
+    // ---- onglet 1 : change ----
+    Group #BqPanel1 {
+      Anchor: (Left: 611, Top: 196, Width: 1260, Height: 740);
+      Visible: false;
+      Group { Anchor: (Left: 0, Top: 0, Width: 1260, Height: 92); Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16); }
+      Label {
+        Anchor: (Left: 24, Top: 10, Width: 800, Height: 34);
+      Text: "Échanger des pièces";
+        Style: (FontName: "Secondary", FontSize: 22, RenderBold: true, TextColor: #f2c45e, RenderUppercase: true, VerticalAlignment: Center);
+      }
+      Label {
+        Anchor: (Left: 24, Top: 46, Width: 800, Height: 40);
+      Text: "Gratuit. Chaque ligne échange deux pièces voisines : 10 petites valent 1 grosse. Chaque bouton dit ce que vous donnez et ce que vous recevez.";
+        Style: (FontSize: 14, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center, Wrap: true);
+      }
+      Group {
+        Anchor: (Left: 916, Top: 24, Width: 320, Height: 44);
+        $C.@TextButton #BqTidy {
+          @Anchor = Anchor(Left: 0, Top: 0, Width: 320);
+          Text: "Tout regrouper";
+        }
+      }
+      Group { Anchor: (Left: 0, Top: 108, Width: 1260, Height: 80); Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16); }
+      Group { Anchor: (Left: 20, Top: 118, Width: 64, Height: 64); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #BqChgSmallIcon0 { Anchor: (Left: 28, Top: 126, Width: 48, Height: 48); }
+      Label #BqChgSmallName0 {
+        Anchor: (Left: 100, Top: 122, Width: 216, Height: 28);
+        Style: (FontName: "Secondary", FontSize: 20, RenderBold: true, TextColor: #f2c45e, RenderUppercase: true, VerticalAlignment: Center);
+      }
+      Label #BqChgSmallCount0 {
+        Anchor: (Left: 100, Top: 152, Width: 216, Height: 24);
+        Style: (FontSize: 14, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center);
+      }
+      Group { Anchor: (Left: 1176, Top: 118, Width: 64, Height: 64); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #BqChgBigIcon0 { Anchor: (Left: 1184, Top: 126, Width: 48, Height: 48); }
+      Label #BqChgBigName0 {
+        Anchor: (Left: 876, Top: 122, Width: 216, Height: 28);
+        Style: (FontName: "Secondary", FontSize: 20, RenderBold: true, TextColor: #f2c45e, RenderUppercase: true, VerticalAlignment: Center, HorizontalAlignment: End);
+      }
+      Label #BqChgBigCount0 {
+        Anchor: (Left: 876, Top: 152, Width: 216, Height: 24);
+        Style: (FontSize: 14, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center, HorizontalAlignment: End);
+      }
+      Group {
+        Anchor: (Left: 400, Top: 124, Width: 222, Height: 44);
+        $C.@TextButton #BqUp0 {
+          @Anchor = Anchor(Left: 0, Top: 0, Width: 222);
+          Text: "Regrouper";
+        }
+      }
+      Label #BqUpNo0 {
+        Anchor: (Left: 400, Top: 124, Width: 222, Height: 44);
+      Visible: false;
+        Style: (FontSize: 13, RenderBold: true, TextColor: #56677a, HorizontalAlignment: Center, VerticalAlignment: Center, Wrap: true);
+      }
+      Group {
+        Anchor: (Left: 638, Top: 124, Width: 222, Height: 44);
+        $C.@TextButton #BqDown0 {
+          @Anchor = Anchor(Left: 0, Top: 0, Width: 222);
+          Text: "Casser";
+        }
+      }
+      Label #BqDownNo0 {
+        Anchor: (Left: 638, Top: 124, Width: 222, Height: 44);
+      Visible: false;
+        Style: (FontSize: 13, RenderBold: true, TextColor: #56677a, HorizontalAlignment: Center, VerticalAlignment: Center, Wrap: true);
+      }
+      Group { Anchor: (Left: 0, Top: 196, Width: 1260, Height: 80); Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16); }
+      Group { Anchor: (Left: 20, Top: 206, Width: 64, Height: 64); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #BqChgSmallIcon1 { Anchor: (Left: 28, Top: 214, Width: 48, Height: 48); }
+      Label #BqChgSmallName1 {
+        Anchor: (Left: 100, Top: 210, Width: 216, Height: 28);
+        Style: (FontName: "Secondary", FontSize: 20, RenderBold: true, TextColor: #f2c45e, RenderUppercase: true, VerticalAlignment: Center);
+      }
+      Label #BqChgSmallCount1 {
+        Anchor: (Left: 100, Top: 240, Width: 216, Height: 24);
+        Style: (FontSize: 14, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center);
+      }
+      Group { Anchor: (Left: 1176, Top: 206, Width: 64, Height: 64); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #BqChgBigIcon1 { Anchor: (Left: 1184, Top: 214, Width: 48, Height: 48); }
+      Label #BqChgBigName1 {
+        Anchor: (Left: 876, Top: 210, Width: 216, Height: 28);
+        Style: (FontName: "Secondary", FontSize: 20, RenderBold: true, TextColor: #f2c45e, RenderUppercase: true, VerticalAlignment: Center, HorizontalAlignment: End);
+      }
+      Label #BqChgBigCount1 {
+        Anchor: (Left: 876, Top: 240, Width: 216, Height: 24);
+        Style: (FontSize: 14, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center, HorizontalAlignment: End);
+      }
+      Group {
+        Anchor: (Left: 400, Top: 212, Width: 222, Height: 44);
+        $C.@TextButton #BqUp1 {
+          @Anchor = Anchor(Left: 0, Top: 0, Width: 222);
+          Text: "Regrouper";
+        }
+      }
+      Label #BqUpNo1 {
+        Anchor: (Left: 400, Top: 212, Width: 222, Height: 44);
+      Visible: false;
+        Style: (FontSize: 13, RenderBold: true, TextColor: #56677a, HorizontalAlignment: Center, VerticalAlignment: Center, Wrap: true);
+      }
+      Group {
+        Anchor: (Left: 638, Top: 212, Width: 222, Height: 44);
+        $C.@TextButton #BqDown1 {
+          @Anchor = Anchor(Left: 0, Top: 0, Width: 222);
+          Text: "Casser";
+        }
+      }
+      Label #BqDownNo1 {
+        Anchor: (Left: 638, Top: 212, Width: 222, Height: 44);
+      Visible: false;
+        Style: (FontSize: 13, RenderBold: true, TextColor: #56677a, HorizontalAlignment: Center, VerticalAlignment: Center, Wrap: true);
+      }
+      Group { Anchor: (Left: 0, Top: 284, Width: 1260, Height: 80); Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16); }
+      Group { Anchor: (Left: 20, Top: 294, Width: 64, Height: 64); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #BqChgSmallIcon2 { Anchor: (Left: 28, Top: 302, Width: 48, Height: 48); }
+      Label #BqChgSmallName2 {
+        Anchor: (Left: 100, Top: 298, Width: 216, Height: 28);
+        Style: (FontName: "Secondary", FontSize: 20, RenderBold: true, TextColor: #f2c45e, RenderUppercase: true, VerticalAlignment: Center);
+      }
+      Label #BqChgSmallCount2 {
+        Anchor: (Left: 100, Top: 328, Width: 216, Height: 24);
+        Style: (FontSize: 14, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center);
+      }
+      Group { Anchor: (Left: 1176, Top: 294, Width: 64, Height: 64); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #BqChgBigIcon2 { Anchor: (Left: 1184, Top: 302, Width: 48, Height: 48); }
+      Label #BqChgBigName2 {
+        Anchor: (Left: 876, Top: 298, Width: 216, Height: 28);
+        Style: (FontName: "Secondary", FontSize: 20, RenderBold: true, TextColor: #f2c45e, RenderUppercase: true, VerticalAlignment: Center, HorizontalAlignment: End);
+      }
+      Label #BqChgBigCount2 {
+        Anchor: (Left: 876, Top: 328, Width: 216, Height: 24);
+        Style: (FontSize: 14, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center, HorizontalAlignment: End);
+      }
+      Group {
+        Anchor: (Left: 400, Top: 300, Width: 222, Height: 44);
+        $C.@TextButton #BqUp2 {
+          @Anchor = Anchor(Left: 0, Top: 0, Width: 222);
+          Text: "Regrouper";
+        }
+      }
+      Label #BqUpNo2 {
+        Anchor: (Left: 400, Top: 300, Width: 222, Height: 44);
+      Visible: false;
+        Style: (FontSize: 13, RenderBold: true, TextColor: #56677a, HorizontalAlignment: Center, VerticalAlignment: Center, Wrap: true);
+      }
+      Group {
+        Anchor: (Left: 638, Top: 300, Width: 222, Height: 44);
+        $C.@TextButton #BqDown2 {
+          @Anchor = Anchor(Left: 0, Top: 0, Width: 222);
+          Text: "Casser";
+        }
+      }
+      Label #BqDownNo2 {
+        Anchor: (Left: 638, Top: 300, Width: 222, Height: 44);
+      Visible: false;
+        Style: (FontSize: 13, RenderBold: true, TextColor: #56677a, HorizontalAlignment: Center, VerticalAlignment: Center, Wrap: true);
+      }
+      Group { Anchor: (Left: 0, Top: 372, Width: 1260, Height: 80); Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16); }
+      Group { Anchor: (Left: 20, Top: 382, Width: 64, Height: 64); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #BqChgSmallIcon3 { Anchor: (Left: 28, Top: 390, Width: 48, Height: 48); }
+      Label #BqChgSmallName3 {
+        Anchor: (Left: 100, Top: 386, Width: 216, Height: 28);
+        Style: (FontName: "Secondary", FontSize: 20, RenderBold: true, TextColor: #f2c45e, RenderUppercase: true, VerticalAlignment: Center);
+      }
+      Label #BqChgSmallCount3 {
+        Anchor: (Left: 100, Top: 416, Width: 216, Height: 24);
+        Style: (FontSize: 14, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center);
+      }
+      Group { Anchor: (Left: 1176, Top: 382, Width: 64, Height: 64); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #BqChgBigIcon3 { Anchor: (Left: 1184, Top: 390, Width: 48, Height: 48); }
+      Label #BqChgBigName3 {
+        Anchor: (Left: 876, Top: 386, Width: 216, Height: 28);
+        Style: (FontName: "Secondary", FontSize: 20, RenderBold: true, TextColor: #f2c45e, RenderUppercase: true, VerticalAlignment: Center, HorizontalAlignment: End);
+      }
+      Label #BqChgBigCount3 {
+        Anchor: (Left: 876, Top: 416, Width: 216, Height: 24);
+        Style: (FontSize: 14, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center, HorizontalAlignment: End);
+      }
+      Group {
+        Anchor: (Left: 400, Top: 388, Width: 222, Height: 44);
+        $C.@TextButton #BqUp3 {
+          @Anchor = Anchor(Left: 0, Top: 0, Width: 222);
+          Text: "Regrouper";
+        }
+      }
+      Label #BqUpNo3 {
+        Anchor: (Left: 400, Top: 388, Width: 222, Height: 44);
+      Visible: false;
+        Style: (FontSize: 13, RenderBold: true, TextColor: #56677a, HorizontalAlignment: Center, VerticalAlignment: Center, Wrap: true);
+      }
+      Group {
+        Anchor: (Left: 638, Top: 388, Width: 222, Height: 44);
+        $C.@TextButton #BqDown3 {
+          @Anchor = Anchor(Left: 0, Top: 0, Width: 222);
+          Text: "Casser";
+        }
+      }
+      Label #BqDownNo3 {
+        Anchor: (Left: 638, Top: 388, Width: 222, Height: 44);
+      Visible: false;
+        Style: (FontSize: 13, RenderBold: true, TextColor: #56677a, HorizontalAlignment: Center, VerticalAlignment: Center, Wrap: true);
+      }
+      Group { Anchor: (Left: 0, Top: 460, Width: 1260, Height: 80); Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16); }
+      Group { Anchor: (Left: 20, Top: 470, Width: 64, Height: 64); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #BqChgSmallIcon4 { Anchor: (Left: 28, Top: 478, Width: 48, Height: 48); }
+      Label #BqChgSmallName4 {
+        Anchor: (Left: 100, Top: 474, Width: 216, Height: 28);
+        Style: (FontName: "Secondary", FontSize: 20, RenderBold: true, TextColor: #f2c45e, RenderUppercase: true, VerticalAlignment: Center);
+      }
+      Label #BqChgSmallCount4 {
+        Anchor: (Left: 100, Top: 504, Width: 216, Height: 24);
+        Style: (FontSize: 14, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center);
+      }
+      Group { Anchor: (Left: 1176, Top: 470, Width: 64, Height: 64); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #BqChgBigIcon4 { Anchor: (Left: 1184, Top: 478, Width: 48, Height: 48); }
+      Label #BqChgBigName4 {
+        Anchor: (Left: 876, Top: 474, Width: 216, Height: 28);
+        Style: (FontName: "Secondary", FontSize: 20, RenderBold: true, TextColor: #f2c45e, RenderUppercase: true, VerticalAlignment: Center, HorizontalAlignment: End);
+      }
+      Label #BqChgBigCount4 {
+        Anchor: (Left: 876, Top: 504, Width: 216, Height: 24);
+        Style: (FontSize: 14, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center, HorizontalAlignment: End);
+      }
+      Group {
+        Anchor: (Left: 400, Top: 476, Width: 222, Height: 44);
+        $C.@TextButton #BqUp4 {
+          @Anchor = Anchor(Left: 0, Top: 0, Width: 222);
+          Text: "Regrouper";
+        }
+      }
+      Label #BqUpNo4 {
+        Anchor: (Left: 400, Top: 476, Width: 222, Height: 44);
+      Visible: false;
+        Style: (FontSize: 13, RenderBold: true, TextColor: #56677a, HorizontalAlignment: Center, VerticalAlignment: Center, Wrap: true);
+      }
+      Group {
+        Anchor: (Left: 638, Top: 476, Width: 222, Height: 44);
+        $C.@TextButton #BqDown4 {
+          @Anchor = Anchor(Left: 0, Top: 0, Width: 222);
+          Text: "Casser";
+        }
+      }
+      Label #BqDownNo4 {
+        Anchor: (Left: 638, Top: 476, Width: 222, Height: 44);
+      Visible: false;
+        Style: (FontSize: 13, RenderBold: true, TextColor: #56677a, HorizontalAlignment: Center, VerticalAlignment: Center, Wrap: true);
+      }
+      Group { Anchor: (Left: 0, Top: 548, Width: 1260, Height: 80); Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16); }
+      Group { Anchor: (Left: 20, Top: 558, Width: 64, Height: 64); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #BqChgSmallIcon5 { Anchor: (Left: 28, Top: 566, Width: 48, Height: 48); }
+      Label #BqChgSmallName5 {
+        Anchor: (Left: 100, Top: 562, Width: 216, Height: 28);
+        Style: (FontName: "Secondary", FontSize: 20, RenderBold: true, TextColor: #f2c45e, RenderUppercase: true, VerticalAlignment: Center);
+      }
+      Label #BqChgSmallCount5 {
+        Anchor: (Left: 100, Top: 592, Width: 216, Height: 24);
+        Style: (FontSize: 14, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center);
+      }
+      Group { Anchor: (Left: 1176, Top: 558, Width: 64, Height: 64); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #BqChgBigIcon5 { Anchor: (Left: 1184, Top: 566, Width: 48, Height: 48); }
+      Label #BqChgBigName5 {
+        Anchor: (Left: 876, Top: 562, Width: 216, Height: 28);
+        Style: (FontName: "Secondary", FontSize: 20, RenderBold: true, TextColor: #f2c45e, RenderUppercase: true, VerticalAlignment: Center, HorizontalAlignment: End);
+      }
+      Label #BqChgBigCount5 {
+        Anchor: (Left: 876, Top: 592, Width: 216, Height: 24);
+        Style: (FontSize: 14, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center, HorizontalAlignment: End);
+      }
+      Group {
+        Anchor: (Left: 400, Top: 564, Width: 222, Height: 44);
+        $C.@TextButton #BqUp5 {
+          @Anchor = Anchor(Left: 0, Top: 0, Width: 222);
+          Text: "Regrouper";
+        }
+      }
+      Label #BqUpNo5 {
+        Anchor: (Left: 400, Top: 564, Width: 222, Height: 44);
+      Visible: false;
+        Style: (FontSize: 13, RenderBold: true, TextColor: #56677a, HorizontalAlignment: Center, VerticalAlignment: Center, Wrap: true);
+      }
+      Group {
+        Anchor: (Left: 638, Top: 564, Width: 222, Height: 44);
+        $C.@TextButton #BqDown5 {
+          @Anchor = Anchor(Left: 0, Top: 0, Width: 222);
+          Text: "Casser";
+        }
+      }
+      Label #BqDownNo5 {
+        Anchor: (Left: 638, Top: 564, Width: 222, Height: 44);
+      Visible: false;
+        Style: (FontSize: 13, RenderBold: true, TextColor: #56677a, HorizontalAlignment: Center, VerticalAlignment: Center, Wrap: true);
+      }
+      Label {
+        Anchor: (Left: 0, Top: 640, Width: 1260, Height: 30);
+      Text: "« Tout regrouper » range toute votre bourse dans le moins de pièces possible.";
+        Style: (FontSize: 13, RenderBold: true, TextColor: #77879D, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+    }
+
+    // ---- onglet 2 : pret ----
+    Group #BqPanel2 {
+      Anchor: (Left: 611, Top: 196, Width: 1260, Height: 740);
+      Visible: false;
+      Group { Anchor: (Left: 0, Top: 0, Width: 620, Height: 560); Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16); }
+      Label #BqLoanHead {
+        Anchor: (Left: 24, Top: 16, Width: 572, Height: 34);
+        Style: (FontName: "Secondary", FontSize: 26, RenderBold: true, TextColor: #f2c45e, RenderUppercase: true, VerticalAlignment: Center);
+      }
+      Group { Anchor: (Left: 24, Top: 56, Width: 572, Height: 8); Background: (TexturePath: "../Quest/ChapDivider.png", HorizontalBorder: 24, VerticalBorder: 0); }
+      Label #BqLoanBigKey {
+        Anchor: (Left: 24, Top: 74, Width: 572, Height: 20);
+        Style: (FontSize: 12, RenderBold: true, TextColor: #77879D, RenderUppercase: true, VerticalAlignment: Center);
+      }
+      Label #BqLoanBig {
+        Anchor: (Left: 24, Top: 96, Width: 572, Height: 44);
+        Style: (FontName: "Secondary", FontSize: 34, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 16);
+      }
+      Label #BqLoanSmall {
+        Anchor: (Left: 24, Top: 142, Width: 572, Height: 48);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center, Wrap: true);
+      }
+      Label {
+        Anchor: (Left: 24, Top: 204, Width: 572, Height: 20);
+      Text: "Somme en cuivres (100 = 1 or)";
+        Style: (FontSize: 12, RenderBold: true, TextColor: #77879D, RenderUppercase: true, VerticalAlignment: Center);
+      }
+      Group {
+        Anchor: (Left: 24, Top: 228, Width: 230, Height: 40);
+        $C.@NumberField #BqLoanAmount {
+          Anchor: (Left: 0, Top: 0, Width: 230, Height: 40);
+          Format: (MaxDecimalPlaces: 0, Step: 100);
+        }
+      }
+      Label #BqLoanWorth {
+        Anchor: (Left: 268, Top: 228, Width: 328, Height: 40);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, Wrap: true, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Label #BqLoanPreview {
+        Anchor: (Left: 24, Top: 276, Width: 572, Height: 60);
+      Text: "";
+        Style: (FontSize: 15, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center, Wrap: true);
+      }
+      Group #BqBorrowBox {
+        Anchor: (Left: 24, Top: 350, Width: 572, Height: 50);
+        $C.@CancelTextButton #BqBorrow {
+          @Anchor = Anchor(Left: 0, Top: 0, Width: 572);
+          Text: "Emprunter";
+        }
+      }
+      Group #BqRepayBox {
+        Anchor: (Left: 24, Top: 350, Width: 572, Height: 110);
+        Visible: false;
+        Group {
+          Anchor: (Left: 0, Top: 0, Width: 572, Height: 50);
+          $C.@TextButton #BqRepay {
+            @Anchor = Anchor(Left: 0, Top: 0, Width: 572);
+            Text: "Rembourser cette somme";
+          }
+        }
+        Group {
+          Anchor: (Left: 0, Top: 58, Width: 572, Height: 44);
+          $C.@SecondaryTextButton #BqRepayAll {
+            @Anchor = Anchor(Left: 0, Top: 0, Width: 572);
+            Text: "Tout rembourser";
+          }
+        }
+      }
+      Group { Anchor: (Left: 640, Top: 0, Width: 620, Height: 560); Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16); }
+      Label {
+        Anchor: (Left: 664, Top: 16, Width: 572, Height: 34);
+      Text: "Règles du prêt";
+        Style: (FontName: "Secondary", FontSize: 26, RenderBold: true, TextColor: #f2c45e, RenderUppercase: true, VerticalAlignment: Center);
+      }
+      Group { Anchor: (Left: 664, Top: 56, Width: 572, Height: 8); Background: (TexturePath: "../Quest/ChapDivider.png", HorizontalBorder: 24, VerticalBorder: 0); }
+      Group { Anchor: (Left: 664, Top: 78, Width: 20, Height: 20); Background: (TexturePath: "../Quest/ChapBullet.png"); }
+      Label {
+        Anchor: (Left: 694, Top: 76, Width: 542, Height: 70);
+      Text: "Vous pouvez emprunter jusqu'à 3 fois ce que vous possédez (sac + banque). Un seul prêt à la fois.";
+        Style: (FontSize: 15, RenderBold: true, TextColor: #b8c2d0, Wrap: true);
+      }
+      Group { Anchor: (Left: 664, Top: 154, Width: 20, Height: 20); Background: (TexturePath: "../Quest/ChapBullet.png"); }
+      Label {
+        Anchor: (Left: 694, Top: 152, Width: 542, Height: 70);
+      Text: "Vous rendez la somme + 20 % d'intérêts, ici, depuis votre compte en banque, dans les 7 jours.";
+        Style: (FontSize: 15, RenderBold: true, TextColor: #b8c2d0, Wrap: true);
+      }
+      Group { Anchor: (Left: 664, Top: 230, Width: 20, Height: 20); Background: (TexturePath: "../Quest/ChapBullet.png"); }
+      Label {
+        Anchor: (Left: 694, Top: 228, Width: 542, Height: 70);
+      Text: "Pour rembourser, déposez d'abord vos pièces dans l'onglet Déposer / Retirer.";
+        Style: (FontSize: 15, RenderBold: true, TextColor: #b8c2d0, Wrap: true);
+      }
+      Group { Anchor: (Left: 664, Top: 306, Width: 20, Height: 20); Background: (TexturePath: "../Quest/ChapBullet.png"); }
+      Label {
+        Anchor: (Left: 694, Top: 304, Width: 542, Height: 70);
+      Text: "Passé 7 jours, la banque met une prime sur votre tête : vous devenez CRIMINEL ÉTOILÉ, traqué par les chasseurs de prime.";
+        Style: (FontSize: 15, RenderBold: true, TextColor: #e8b48a, Wrap: true);
+      }
+      Group { Anchor: (Left: 664, Top: 382, Width: 20, Height: 20); Background: (TexturePath: "../Quest/ChapBullet.png"); }
+      Label {
+        Anchor: (Left: 694, Top: 380, Width: 542, Height: 70);
+      Text: "Si vous mourez alors, vous perdez TOUT : niveau 1, classe, objets, argent, famille et guilde.";
+        Style: (FontSize: 15, RenderBold: true, TextColor: #e8b48a, Wrap: true);
+      }
+      Group { Anchor: (Left: 664, Top: 458, Width: 20, Height: 20); Background: (TexturePath: "../Quest/ChapBullet.png"); }
+      Label {
+        Anchor: (Left: 694, Top: 456, Width: 542, Height: 70);
+      Text: "Solder la dette, même en retard, lève la prime.";
+        Style: (FontSize: 15, RenderBold: true, TextColor: #e8b48a, Wrap: true);
+      }
+    }
+
+    Group {
+      Anchor: (Left: 1651, Top: 960, Width: 220, Height: 44);
+      $C.@SecondaryTextButton #BqClose {
+        @Anchor = Anchor(Left: 0, Top: 0, Width: 220);
+        Text: "Fermer";
+      }
+    }
+    Label {
+      Anchor: (Left: 1651, Top: 1010, Width: 220, Height: 24);
+      Text: "Échap  ·  Retour";
+      Style: (FontSize: 13, RenderBold: true, RenderUppercase: true, TextColor: #77879d, HorizontalAlignment: Center, VerticalAlignment: Center);
+    }
+
+    // ---- fiche : banquier et avoirs ----
+    Group { Anchor: (Left: 80, Top: 20, Width: 445, Height: 1040); Background: #0b0b12(0.35); }
+    Group { Anchor: (Left: 219, Top: 30, Width: 168, Height: 168); Background: (TexturePath: "../Quest/ChapEmblemFrame.png"); }
+    Group { Anchor: (Left: 249, Top: 60, Width: 108, Height: 108); Background: (TexturePath: "../Quest/ChapEmblemBack.png"); }
+    ItemIcon #BqEmblem { Anchor: (Left: 263, Top: 74, Width: 80, Height: 80); }
+    Label {
+      Anchor: (Left: 96, Top: 202, Width: 415, Height: 20);
+      Text: "Banque d'Eldanior";
+      Style: (FontSize: 13, RenderBold: true, RenderUppercase: true, TextColor: #b9a2d8, HorizontalAlignment: Center, VerticalAlignment: Center);
+    }
+    Label #BqTitle {
+      Anchor: (Left: 96, Top: 224, Width: 415, Height: 40);
+      Style: (FontName: "Secondary", FontSize: 27, RenderBold: true, RenderUppercase: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 15);
+    }
+    Label #BqSub {
+      Anchor: (Left: 96, Top: 264, Width: 415, Height: 40);
+      Style: (FontSize: 16, RenderBold: true, TextColor: #C58643, HorizontalAlignment: Center, VerticalAlignment: Center, Wrap: true);
+    }
+    Group { Anchor: (Left: 94, Top: 312, Width: 418, Height: 8); Background: (TexturePath: "../Quest/ChapDivider.png", HorizontalBorder: 24, VerticalBorder: 0); }
+    Label {
+      Anchor: (Left: 96, Top: 330, Width: 415, Height: 26);
+      Text: "Vos avoirs";
+      Style: (FontName: "Secondary", FontSize: 19, RenderBold: true, RenderUppercase: true, TextColor: #C4CEDC, VerticalAlignment: Center);
+    }
+    Group { Anchor: (Left: 96, Top: 362, Width: 415, Height: 92); Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16); }
+    Group { Anchor: (Left: 110, Top: 378, Width: 60, Height: 60); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+    ItemIcon #BqPurseIcon { Anchor: (Left: 116, Top: 384, Width: 48, Height: 48); }
+    Label {
+      Anchor: (Left: 184, Top: 374, Width: 315, Height: 20);
+      Text: "Dans votre sac";
+      Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #77879D, VerticalAlignment: Center);
+    }
+    Label #BqPurse {
+      Anchor: (Left: 184, Top: 396, Width: 315, Height: 44);
+      Style: (FontName: "Secondary", FontSize: 30, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 14);
+    }
+    Group { Anchor: (Left: 96, Top: 464, Width: 415, Height: 92); Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16); }
+    Group { Anchor: (Left: 110, Top: 480, Width: 60, Height: 60); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+    ItemIcon #BqAccountIcon { Anchor: (Left: 116, Top: 486, Width: 48, Height: 48); }
+    Label {
+      Anchor: (Left: 184, Top: 476, Width: 315, Height: 20);
+      Text: "À la banque";
+      Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #77879D, VerticalAlignment: Center);
+    }
+    Label #BqAccount {
+      Anchor: (Left: 184, Top: 498, Width: 315, Height: 44);
+      Style: (FontName: "Secondary", FontSize: 30, RenderBold: true, TextColor: #8fd18f, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 14);
+    }
+    Label #BqTotal {
+      Anchor: (Left: 96, Top: 564, Width: 415, Height: 30);
+      Style: (FontSize: 16, RenderBold: true, TextColor: #b8c2d0, HorizontalAlignment: Center, VerticalAlignment: Center);
+    }
+    Group #BqDebtBox {
+      Anchor: (Left: 96, Top: 602, Width: 415, Height: 92);
+      Visible: false;
+      Group { Anchor: (Left: 0, Top: 0, Width: 415, Height: 92); Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16); }
+      Group { Anchor: (Left: 4, Top: 14, Width: 3, Height: 64); Background: #e0796b; }
+      Label {
+        Anchor: (Left: 20, Top: 10, Width: 381, Height: 20);
+        Text: "Dette envers la banque";
+        Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #77879D, VerticalAlignment: Center);
+      }
+      Label #BqDebt {
+        Anchor: (Left: 20, Top: 30, Width: 381, Height: 34);
+        Style: (FontName: "Secondary", FontSize: 24, RenderBold: true, TextColor: #e0796b, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 12);
+      }
+      Label #BqDebtTime {
+        Anchor: (Left: 20, Top: 64, Width: 381, Height: 20);
+        Style: (FontSize: 13, RenderBold: true, TextColor: #b8c2d0, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 9);
+      }
+    }
+
+    // ---- message de la banque ----
+    Group #BqMsgBox {
+      Anchor: (Left: 96, Top: 760, Width: 415, Height: 120);
+      Visible: false;
+      Group { Anchor: (Left: 0, Top: 0, Width: 415, Height: 120); Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16); }
+      Group #BqMsgBar { Anchor: (Left: 4, Top: 14, Width: 3, Height: 92); Background: #8fd18f; }
+      Label #BqMsg {
+        Anchor: (Left: 20, Top: 8, Width: 381, Height: 104);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #8fd18f, VerticalAlignment: Center, Wrap: true);
+      }
+    }
+  }
+}

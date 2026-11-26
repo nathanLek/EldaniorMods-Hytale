@@ -1,0 +1,97 @@
+{
+  "TranslationProperties": {
+    "Name": "Cuirasse de Capitaine",
+    "Description": "Harnois de Capitaine Runkandel. Une armure de parade cannelée et un manteau de velours damassé aux armes de la maison."
+  },
+  "Quality": "Epic",
+  "ItemLevel": 250,
+  "PlayerAnimationsId": "Block",
+  "ItemSoundSetId": "ISS_Armor_Heavy",
+  "Categories": [
+    "Eldanior_Familles.Runkandel",
+    "Items.Armors"
+  ],
+  "Icon": "Icons/ItemsGenerated/Armor_Runkandel_Capitaine_Chest.png",
+  "IconProperties": {
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Scale": 0.3,
+    "Translation": [
+      0,
+      0
+    ]
+  },
+  "Model": "Items/Armors/Runkandel/Capitaine/Chest.blockymodel",
+  "Texture": "Items/Armors/Runkandel/Capitaine/Chest_Texture.png",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    }
+  },
+  "Armor": {
+    "ArmorSlot": "Chest",
+    "BaseDamageResistance": 0,
+    "CosmeticsToHide": [
+      "Overtop",
+      "Cape"
+    ],
+    "StatModifiers": {
+      "Health": [
+        {
+          "Amount": 28,
+          "CalculationType": "Additive"
+        }
+      ],
+      "Mana": [
+        {
+          "Amount": 9,
+          "CalculationType": "Additive"
+        }
+      ]
+    },
+    "DamageResistance": {
+      "Physical": [
+        {
+          "Amount": 0.151,
+          "CalculationType": "Percent"
+        }
+      ],
+      "Projectile": [
+        {
+          "Amount": 0.151,
+          "CalculationType": "Percent"
+        }
+      ],
+      "Fire": [
+        {
+          "Amount": 0.0755,
+          "CalculationType": "Percent"
+        }
+      ]
+    }
+  },
+  "Tags": {
+    "Type": [
+      "Armor"
+    ],
+    "Family": [
+      "Plate_Runkandel"
+    ]
+  },
+  "MaxDurability": 260,
+  "DurabilityLossOnHit": 0.5
+}

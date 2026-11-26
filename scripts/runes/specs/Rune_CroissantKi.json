@@ -1,0 +1,60 @@
+{
+  "$Comment": "Fiche de conception : technique du Clan Luo (voie martiale), validee le 2026-11-09, type Luo le 2026-11-09 (docs/plan-clan-luo.md). Apprise par son manuel, aucun butin. Devenue technique de clan le 2026-11-10 (luo.LuoClans.TECHNIQUES) : reservee aux membres du clan, toutes classes.",
+  "id": "Rune_CroissantKi",
+  "spell": "CroissantKi",
+  "javaClass": "CroissantKi",
+  "page": "rune_page_croissant_ki",
+  "name": "Rune du Croissant de Ki",
+  "type": "Luo",
+  "rarity": "Rare",
+  "emblem": "CroissantKi",
+  "classes": "clan",
+  "persistent": true,
+  "summary": "Croissant de Ki : croissant geant (lame de Ki x2,4) sur 20 blocs, traverse tous les ennemis (220 chacun).",
+  "description": "Technique du Clan Luo, enseignée à la classe Maître Martial de la voie martiale. Vous projetez votre Ki en un croissant géant qui file droit devant vous sur 20 blocs et traverse tous les ennemis : 220 dégâts à chacun. Un mur l'arrête.",
+  "pageDescription": "Rouleau du dojo Luo : le premier maître qui trancha le vent à vingt pas. Technique du Clan Luo : elle s'apprend dans son manuel, jamais en butin.",
+  "keywords": [
+    "Damage",
+    "Projectile"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": {},
+  "cast": {
+    "animationSet": "Sword",
+    "charging": "SwingLeftCharging",
+    "release": "SwingLeftCharged",
+    "chargeTime": 0.35,
+    "releaseTime": 0.35,
+    "moveSpeed": 0.6,
+    "cameraEffect": null,
+    "sound": null,
+    "releaseSound": "SFX_Ability_Wind_Strike_Slash",
+    "handParticles": null,
+    "handParticlesScale": 0.6,
+    "costMoment": "start"
+  },
+  "design": {
+    "range": 20,
+    "targets": "ennemis en ligne",
+    "effects": "lame de Ki Tenryumaru_Lame_<couleur du palier> x2,4, 30 b/s, rayon de touche 2,4, 220 Physical",
+    "balance": {
+      "damage": 3,
+      "range": 3,
+      "duration": 0,
+      "mobility": 0,
+      "control": 0,
+      "defense": 0,
+      "targets": 2,
+      "frequency": 0,
+      "terrain": 0,
+      "difficulty": 0
+    }
+  },
+  "category": "Eldanior_Empire_Luo.Runes",
+  "manual": "Eldanior_Manuel_Luo_CroissantKi",
+  "$Comment_manual": "Technique apprise par son manuel secret (gen_voie_martiale_objets.py) : pas de parchemin rune_page_*."
+}

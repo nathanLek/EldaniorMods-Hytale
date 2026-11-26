@@ -1,0 +1,68 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_RayonCeleste",
+  "spell": "RayonCeleste",
+  "javaClass": "RayonCeleste",
+  "page": "rune_page_rayon_celeste",
+  "name": "Rune du Rayon Céleste",
+  "type": "Lumiere",
+  "rarity": "Epic",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "RayonCeleste",
+  "summary": "pilier de lumiere qui tombe du ciel et suit le curseur 6 s : brule les ennemis, soigne les allies.",
+  "description": "Sort épique de lumière (Mage, rune de prédilection du Devin Cosmique). Un pilier de lumière tombe du ciel sur le point visé et suit votre curseur (7 blocs/s, jusqu'à 30 blocs) pendant 6 s. Les ennemis pris dedans (rayon 2,5) subissent 14 dégâts tous les quarts de seconde, le double pour les morts-vivants ; les alliés y regagnent 1 % de leurs PV par demi-seconde. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin percé d'un trou d'où tombe un rai de lumière. Enseigne le Rayon Céleste : guidez la colère du ciel. Classes : tous les Mages (rune de prédilection du Devin Cosmique). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe",
+    "Duration"
+  ],
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.5,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Portal_Neutral",
+    "handParticles": "Bifrost_Divine",
+    "handParticlesScale": 0.2,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.5,
+    "range": 30,
+    "radius": "2,5",
+    "targets": "ennemis et allies dans le pilier",
+    "persistentFx": "Bifrost_Pillar (x0,6) toutes les 200 ms, Bifrost_Divine au sol toutes les 250 ms",
+    "impactFx": "Bifrost_Divine sur chaque ennemi touche",
+    "sounds": "SFX_Portal_Neutral a l'apparition puis toutes les 2 s",
+    "effects": "14 Elemental / 0,25 s (x2 morts-vivants) ; allies +1 % PV / 0,5 s",
+    "terrain": "aucun",
+    "persistentDurationS": 6,
+    "interruptions": "aucune",
+    "restrictions": "mage",
+    "edgeCases": "curseur dans le ciel : point a 30 blocs ramene au sol ; deplacement limite a 7 b/s (le pilier glisse vers le curseur)",
+    "balance": {
+      "damage": 2,
+      "range": 3,
+      "duration": 2,
+      "mobility": 0,
+      "control": 0,
+      "defense": 1,
+      "targets": 2,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    }
+  },
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null
+}

@@ -1,0 +1,68 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_PierrePhilosophale",
+  "spell": "PierrePhilosophale",
+  "javaClass": "PierrePhilosophale",
+  "page": "rune_page_pierre_philosophale",
+  "name": "Rune de la Pierre Philosophale",
+  "type": "Lumiere",
+  "rarity": "Epic",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "PierrePhilosophale",
+  "summary": "10 s : vous et vos allies a 8 blocs regenerez 3 % PV/s, immunises au poison, purifies toutes les 2 s.",
+  "description": "Sort épique de lumière (Mage, rune de prédilection du Philosophe Mage). La pierre philosophale s'éveille au-dessus de vous pendant 10 s : vous et vos alliés à moins de 8 blocs au moment de l'incantation regagnez 3 % de vos PV par seconde, êtes immunisés au poison et purifiés de vos malus toutes les 2 s.",
+  "pageDescription": "Un parchemin au centre duquel une pierre rouge a été sertie. Enseigne la Pierre Philosophale : la vie transmutée en abondance. Classes : tous les Mages (rune de prédilection du Philosophe Mage). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Buff",
+    "Aoe",
+    "Duration"
+  ],
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.5,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Deployable_Totem_Heal_Spawn",
+    "handParticles": "Bifrost_Divine",
+    "handParticlesScale": 0.2,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.5,
+    "range": 0,
+    "radius": "8 (a l'incantation)",
+    "targets": "allies (lanceur compris)",
+    "persistentFx": "pierre (Bifrost_Divine + Impact_Fire) au-dessus du lanceur / 0,4 s ; effet Elda_PierrePhilosophale (teinte or-rouge, DamageResistance Poison 100 %) 10 s",
+    "impactFx": "Apollo_Heal_Pulse sur chaque allie / 2 s",
+    "sounds": "SFX_Deployable_Totem_Heal_Spawn",
+    "effects": "+3 % PV / s, immunite poison (DamageResistance), cureAllDebuffs / 2 s",
+    "terrain": "aucun",
+    "persistentDurationS": 10,
+    "interruptions": "aucune",
+    "restrictions": "mage",
+    "edgeCases": "allie hors de portee ensuite : garde l'effet ; allie deconnecte : retire de la liste",
+    "balance": {
+      "damage": 0,
+      "range": 2,
+      "duration": 2,
+      "mobility": 0,
+      "control": 0,
+      "defense": 3,
+      "targets": 2,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 0
+    }
+  },
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null
+}

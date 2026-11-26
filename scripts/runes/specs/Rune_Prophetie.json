@@ -1,0 +1,68 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_Prophetie",
+  "spell": "Prophetie",
+  "javaClass": "Prophetie",
+  "page": "rune_page_prophetie",
+  "name": "Rune de la Prophétie",
+  "type": "Temps",
+  "rarity": "Legendaire",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Prophetie",
+  "summary": "15 s : vous et vos allies a 15 blocs voyez l'avenir : +30 % de degats, 3 coups esquives chacun (l'attaquant est frappe : 80 + fige 0,5 s).",
+  "description": "Sort légendaire de temps (Mage, rune de prédilection du Prophète). Vous prononcez une prophétie sur vous et vos alliés à moins de 15 blocs pendant 15 s : vous connaissez l'avenir. Chacun inflige 30 % de dégâts en plus et esquive les 3 premiers coups qu'il reçoit ; à chaque esquive, l'attaquant est frappé par le destin (80 dégâts) et figé 0,5 s.",
+  "pageDescription": "Un parchemin scellé dont le texte change chaque fois qu'on le rouvre. Enseigne la Prophétie : ce qui est écrit arrivera, et vous l'avez écrit. Classes : tous les Mages (rune de prédilection du Prophète). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Buff",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.8,
+    "releaseTime": 0.5,
+    "moveSpeed": 0.3,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Divine_Respawn",
+    "handParticles": "Chronos_Gold",
+    "handParticlesScale": 0.4,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.8,
+    "range": 0,
+    "radius": "15",
+    "targets": "lanceur et joueurs allies",
+    "persistentFx": "Elda_Prophetie (voile dore Prescience_Voile) 15 s ; Chronos_Gold sur chaque prophete / s",
+    "impactFx": "Chronos_Afterimage sur l'allie qui esquive, Chronos_Burst sur l'attaquant frappe",
+    "sounds": "SFX_Divine_Respawn a l'incantation, SFX_Portal_Neutral a chaque esquive",
+    "effects": "Elda_Prophetie : OutgoingDamage +30 % ; protection RuneSpellRuntime.ward : 3 coups annules par allie, riposte 80 Elemental + Chronos_Fige 0,5 s (stun) sur l'attaquant",
+    "terrain": "aucun",
+    "persistentDurationS": 15,
+    "interruptions": "lanceur mort ou deconnecte : protections retirees",
+    "restrictions": "mage",
+    "edgeCases": "un allie deja protege par une autre rune (Resurrection) : la derniere protection posee compte ; coups sans attaquant (chute, poison) : ne consomment pas d'esquive",
+    "limitations": "distincte de la Prescience (Epic, lanceur seul) : prophetie de groupe + bonus de degats",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 3,
+      "mobility": 0,
+      "control": 1,
+      "defense": 3,
+      "targets": 3,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 0
+    }
+  }
+}

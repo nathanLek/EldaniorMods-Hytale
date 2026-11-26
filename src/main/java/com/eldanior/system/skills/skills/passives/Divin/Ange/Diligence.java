@@ -1,21 +1,19 @@
 package com.eldanior.system.skills.skills.passives.Divin.Ange;
 
-import com.eldanior.system.config.configs.StatConfig;
+import com.eldanior.system.config.Player.PlayerLevelData;
+import com.eldanior.system.skills.skills.passives.Divin.PouvoirsDivins;
 import com.eldanior.system.skills.skillsInteraction.IPassiveCombatSkill;
+import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
-/**
- * Diligence (Métatron) — +20% XP, progression des skills x5, +100% agilité.
- * Le bonus XP et progression skills sont gérés par le système XP/skills qui vérifie ce passif.
- * L'agilité est appliquée via getStatMultiplier.
- * Église RELIGIEUX+ only.
- */
+import com.eldanior.system.config.configs.StatConfig;
+
+/** Diligence (Metatron, Eglise) : +100 % de vitesse ; +20 % d'XP (DeathXPSystem) et maitrise x5 (CombatStatsSystem). */
 public class Diligence implements IPassiveCombatSkill {
-
     @Override
-    public float getStatMultiplier(StatConfig stat) {
-        if (stat == StatConfig.AGILITY_SPEED) {
-            return 2.0f; // +100% agility
-        }
-        return 1.0f;
+    public float getStatMultiplier(StatConfig stat, int rank, boolean mastered) {
+        return stat == StatConfig.AGILITY_SPEED ? 2.0f : 1f;
     }
 }

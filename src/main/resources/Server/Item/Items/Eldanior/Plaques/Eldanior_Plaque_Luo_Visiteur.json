@@ -1,0 +1,41 @@
+{
+  "$Comment": "Plaque d'identification du Clan Luo, generee par scripts/familles/gen_plaques_luo.py. Remise et reprise par LuoPlaqueSystem.",
+  "TranslationProperties": {
+    "Name": "Plaque d'identification — Visiteur (laissez-passer)",
+    "Description": "Laissez-passer de bois au sceau vermillon, vendu aux étrangers par les marchands du Clan Luo. Le porter sur soi permet d'entrer sur le territoire Luo sans être attaqué. Valable deux jours : sa durabilité baisse avec le temps, puis il disparaît."
+  },
+  "Categories": [
+    "Eldanior_Empire_Luo.Civils"
+  ],
+  "ItemLevel": 20,
+  "Quality": "Uncommon",
+  "Model": "Items/Eldanior/Plaques/Plaque_Luo.blockymodel",
+  "Texture": "Items/Eldanior/Plaques/Eldanior_Plaque_Luo_Visiteur_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Plaque_Luo_Visiteur.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.55,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -12
+    ]
+  },
+  "Tags": {
+    "Type": [
+      "Ingredient"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Items_Ingots",
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Light": {
+    "Color": "#c32"
+  },
+  "MaxDurability": 2880,
+  "DurabilityLossOnHit": 0
+}

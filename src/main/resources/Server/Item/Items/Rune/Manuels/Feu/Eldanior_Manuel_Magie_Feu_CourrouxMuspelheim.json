@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_CourrouxMuspelheim (remplace le parchemin rune_page_courroux_muspelheim).",
+  "TranslationProperties": {
+    "Name": "Manuel de Feu : Courroux de Muspelheim",
+    "Description": "Sort divin ultime de feu (Mage, Dragon). Vous vous élevez, ailes et couronne de feu, et ouvrez le royaume de Muspelheim : un immense cercle runique s'embrase dans un ciel de flammes, sous une pluie de cendres. 20 météorites s'abattent sur la zone visée (35 blocs), certaines guidées sur vos ennemis : chaque impact explose (1200 dégâts, souffle qui projette), libère une vague de flammes (400 dégâts + brûlure), fait trembler la terre, laisse un cratère rempli de lave, des flaques de lave dans la terre brûlée et un sol ardent pendant 30 s (3 dégâts de feu par seconde). Enfin le Météore du Jugement, trois fois plus gros, s'écrase au centre (2500 dégâts, 14 blocs). Sur une zone gelée par la Porte de Niflheim, la glace fond et se vaporise en explosion de vapeur (500 dégâts), libérant les ennemis emprisonnés. Le terrain est restauré après 3 minutes. Épargne votre groupe, votre guilde et votre famille. Coût : 2000 mana. Recharge : 180 s.\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Feu"
+  ],
+  "Quality": "Divin",
+  "ItemLevel": 100,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Feu_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Feu_CourrouxMuspelheim.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

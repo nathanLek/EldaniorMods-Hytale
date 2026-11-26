@@ -211,5 +211,27 @@
     }
   ],
   "ItemSoundSetId": "ISS_Weapons_Wood",
-  "Variant": false
+  "Variant": false,
+  "Recipe": {
+    "TimeSeconds": 30,
+    "Input": [
+      {
+        "ItemId": "Ingredient_Bar_Divin",
+        "Quantity": 24
+      },
+      {
+        "ItemId": "Ingredient_Bar_Adamantite",
+        "Quantity": 40
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "Forge_Divine",
+        "Categories": [
+          "Forge_Lances"
+        ]
+      }
+    ]
+  }
 }

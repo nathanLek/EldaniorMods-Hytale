@@ -31,7 +31,7 @@ public final class SentierDHiver implements RuneSpell {
     // ===== Reglages (equilibrage) =====
     private static final long DURATION_MS = 6_000, STEP_EVERY_MS = 150, PULSE_EVERY_MS = 500, MIST_EVERY_MS = 2_000;
     private static final long FREEZE_AFTER_MS = 2_000, FREEZE_MS = 1_500, RESTORE_AFTER_MS = 30_000;
-    private static final double CELL_REACH = 1.2, SCAN_RADIUS = 40.0;
+    private static final double CELL_REACH = 1.2, SCAN_RADIUS = 25.0;
     private static final float DAMAGE = 8f;
     private static final int MAX_BLOCKS = 50, MAX_CELLS = 120;
 

@@ -1,0 +1,63 @@
+{
+  "Categories": [
+    "Eldanior_System.Artefacts",
+    "Items.Weapons"
+  ],
+  "Icon": "Icons/ItemsGenerated/Artefact_Mousquet_BlueTiger.png",
+  "Texture": "Items/Weapons/artefacts/Artefact_Mousquet_BlueTiger.png",
+  "PlayerAnimationsId": "Mousquet",
+  "IconProperties": {
+    "Scale": 0.3,
+    "Translation": [
+      -12,
+      -22
+    ],
+    "Rotation": [
+      320,
+      90,
+      0
+    ]
+  },
+  "Quality": "Legendary",
+  "Model": "Items/Weapons/artefacts/Artefact_Mousquet_BlueTiger.blockymodel",
+  "Scale": 1,
+  "Tags": {
+    "Type": [
+      "Weapon"
+    ],
+    "Family": [
+      "Gun"
+    ]
+  },
+  "Weapon": {},
+  "TranslationProperties": {
+    "Name": "Blue Tiger, le Perceur",
+    "Description": "Mousquet légendaire de force, crosse bleu nuit rayée comme un tigre, canon épais fretté à frein de bouche et pointe perforante. Dégâts ×1,5, la balle traverse deux ennemis. Réservé aux Mousquetaires. Chaque tir demande 1 Poudre à canon et 1 Balle de fer. Force : dégâts (70 à 2 000) et vitesse de la balle ; Agilité : rechargement (50 s, 1 s à 3 000 points) ; Endurance : portée sûre (10 à 500 blocs, 500 au plus), précision au-delà, grossissement de la lunette et entités vues de loin. Une balle qui tue annonce la distance du tir. Clic droit maintenu : viser à la lunette. Clic droit bref : coup de baïonnette (fixée le temps de l'estoc). Rune de Transformation d'Arme (Mousquetaire) : Blue Tiger devient pendant 5 minutes un canon de char à main qui tire des Obus Divins en ligne droite (un par chargement, 5 s, 100 blocs, dégâts ×5, traverse les ennemis et explose) ; puis il redevient mousquet (la rune se recharge)."
+  },
+  "$Comment": "Mousquet legendaire de force (2026-11-15) : Mousquet.Arme.BLUE_TIGER ; signature = canon de char 5 min (ArmeTransfo). Genere par scripts/artefacts/gen_mousquets.py.",
+  "ItemLevel": 560,
+  "MaxStack": 1,
+  "Interactions": {
+    "Primary": {
+      "$Comment": "BlockedBy sans Secondary : on tire en visant.",
+      "Rules": {
+        "BlockedBy": [
+          "Primary",
+          "Ability1",
+          "Ability2",
+          "Ability3",
+          "Use",
+          "Pick",
+          "SwapFrom",
+          "SwapTo"
+        ]
+      },
+      "Interactions": [
+        "Mousquet_Tir"
+      ]
+    },
+    "Secondary": "Root_Mousquet_Secondaire"
+  },
+  "MaxDurability": 0,
+  "DurabilityLossOnHit": 0
+}

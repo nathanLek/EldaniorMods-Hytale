@@ -1,0 +1,27 @@
+{
+  "$Comment": "Signature d'un katana Luo, Iaigiri (energie pleine) : sort Java LuoIaigiri.",
+  "Type": "StatsCondition",
+  "Costs": {
+    "SignatureEnergy": 100
+  },
+  "ValueType": "Percent",
+  "Next": {
+    "Type": "Serial",
+    "Interactions": [
+      {
+        "Type": "RuneSpell",
+        "RunTime": 0.05,
+        "Spell": "LuoIaigiri",
+        "OnItemChangeBehavior": "Ignore"
+      },
+      {
+        "Type": "ChangeStat",
+        "StatModifiers": {
+          "SignatureEnergy": -100
+        },
+        "ValueType": "Percent",
+        "OnItemChangeBehavior": "Ignore"
+      }
+    ]
+  }
+}

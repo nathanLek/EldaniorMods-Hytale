@@ -1,70 +1,38 @@
 package com.eldanior.system.skills.skills.passives.Divin.Peche;
 
 import com.eldanior.system.config.Player.PlayerLevelData;
-import com.eldanior.system.config.EldaniorLogger;
-import com.eldanior.system.EldaniorSystem;
+import com.eldanior.system.skills.skills.passives.Divin.PouvoirsDivins;
 import com.eldanior.system.skills.skillsInteraction.IPassiveCombatSkill;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
-import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
-import com.hypixel.hytale.server.core.modules.entitystats.EntityStatValue;
-import com.hypixel.hytale.server.core.modules.entitystats.EntityStatsModule;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+
+import com.eldanior.system.config.configs.StatConfig;
 import com.hypixel.hytale.server.core.Message;
+import com.hypixel.hytale.server.core.entity.entities.Player;
 
 import java.awt.Color;
 
-/**
- * Luxure (Lust) — 5% de chance de voler 10% de la fortune (or) du joueur tué.
- * Cooldown 2 jours (temps réel). PK only, PVP/Duel only.
- */
+/** Luxure (Peche, PK) : +10 % de vitesse ; en tuant un joueur, lui vole 10 % de son or (recharge de 12 h :
+ * PassiveSkill.PECHE_LUXURE). */
 public class Luxure implements IPassiveCombatSkill {
-
-    private static final float STEAL_CHANCE = 0.10f;
-    private static final float GOLD_STEAL_PERCENT = 0.10f;
-    private static final float COOLDOWN_SECONDS = 172800f; // 2 jours
+    @Override
+    public float getStatMultiplier(StatConfig stat, int rank, boolean mastered) {
+        return stat == StatConfig.AGILITY_SPEED ? 1.10f : 1f;
+    }
 
     @Override
-    public boolean onAttack(Damage damage, PlayerLevelData attackerData, Store<EntityStore> store,
-                           Ref<EntityStore> attackerRef, Ref<EntityStore> victimRef) {
-        // PVP only
-        Player victimPlayer = store.getComponent(victimRef, Player.getComponentType());
-        if (victimPlayer == null) return false;
-
-        // Check if this hit will kill the target
-        EntityStatMap victimStats = store.getComponent(victimRef, EntityStatsModule.get().getEntityStatMapComponentType());
-        if (victimStats == null) return false;
-        EntityStatValue victimHealth = victimStats.get(com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes.getHealth());
-        if (victimHealth == null || victimHealth.get() - damage.getAmount() > 0) return false;
-
-        // Roll chance
-        if (Math.random() > STEAL_CHANCE) return false;
-
-        try {
-            PlayerLevelData victimData = store.getComponent(victimRef, EldaniorSystem.get().getPlayerLevelDataType());
-            if (victimData == null) return false;
-
-            long victimMoney = victimData.getMoney();
-            if (victimMoney <= 0) return false;
-
-            long stolenAmount = (long)(victimMoney * GOLD_STEAL_PERCENT);
-            if (stolenAmount <= 0) return false;
-
-            victimData.removeMoney(stolenAmount);
-            attackerData.addMoney(stolenAmount);
-
-            Player attackerPlayer = store.getComponent(attackerRef, Player.getComponentType());
-            if (attackerPlayer != null) {
-                attackerPlayer.getPlayerRef().sendMessage(
-                        Message.raw("[Luxure] Vous avez volé " + stolenAmount + " or à votre victime !").color(Color.MAGENTA));
-            }
-
-            return true;
-        } catch (Exception e) {
-            EldaniorLogger.error("Luxure", e);
-            return false;
-        }
+    public boolean onAttack(Damage damage, PlayerLevelData data, Store<EntityStore> store, Ref<EntityStore> attackerRef,
+                            Ref<EntityStore> victimRef, int rank, boolean mastered) {
+        if (data == null || !PouvoirsDivins.killsPlayer(damage, victimRef, store)) return false;
+        PlayerLevelData victim = PouvoirsDivins.data(victimRef, store);
+        if (victim == null) return false;
+        long stolen = victim.getMoney() / 10;
+        if (stolen <= 0 || !victim.removeMoney(stolen)) return false;
+        data.addMoney(stolen);
+        Player attacker = store.getComponent(attackerRef, Player.getComponentType());
+        if (attacker != null) attacker.getPlayerRef().sendMessage(Message.raw("[Luxure] Vous avez volé " + stolen + " or à votre victime.").color(Color.MAGENTA));
+        return true;
     }
 }

@@ -1,0 +1,62 @@
+{
+  "$Comment": "Fiche de conception : competence de la voie martiale (classe Grand Maître Martial), validee le 2026-11-10 (docs/plan-clan-luo.md, B). Apprise par son manuel, aucun butin.",
+  "id": "Rune_ProjectionEpeeAura",
+  "spell": "ProjectionEpeeAura",
+  "javaClass": "ProjectionEpeeAura",
+  "page": "rune_page_projectionepeeaura",
+  "name": "Rune de la Projection d'épée d'Aura",
+  "type": "Luo",
+  "rarity": "Epic",
+  "emblem": "ProjectionEpeeAura",
+  "classes": "grand_maitre_martial, saint_martial, maitre_supreme, dieu_martial",
+  "persistent": true,
+  "summary": "20 s : 1 / 3 / 6 / 12 epees d'aura (Grand Maitre, Saint, Maitre Supreme, Dieu Martial) tournent autour du lanceur et frappent seules l'ennemi le plus proche a 12 blocs (45 / 55 / 65 / 80 par coup, 1 coup / 1,2 s par epee).",
+  "description": "Compétence de la voie martiale, enseignée à la classe Grand Maître Martial. Des épées de Ki, faites de lumière et de fumée de la couleur de votre aura, tournent autour de vous sur des trajectoires ondulantes : 1 épée (Grand Maître), 3 (Saint), 6 (Maître Suprême), 12 (Dieu Martial). Elles partent chacune à leur tour, s'acharnent sur leur cible (45 à 80 dégâts par coupe) et se dissipent après 3 attaques. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "« Quand la main ne suffit plus, l'âme tient l'épée. » Compétence de la voie martiale : elle s'apprend dans son manuel, jamais en butin.",
+  "keywords": [
+    "Damage",
+    "Physical",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": {},
+  "cast": {
+    "animationSet": "Sword",
+    "charging": "SpinRightCharging",
+    "release": "SpinRightCharged",
+    "chargeTime": 0.4,
+    "releaseTime": 0.5,
+    "moveSpeed": 0.6,
+    "cameraEffect": null,
+    "sound": null,
+    "releaseSound": "SFX_Longsword_Special_Impact",
+    "handParticles": null,
+    "handParticlesScale": 0.6,
+    "costMoment": "start"
+  },
+  "design": {
+    "radius": "12",
+    "persistentDurationS": 20,
+    "targets": "zone",
+    "effects": "epees en orbite qui frappent seules",
+    "balance": {
+      "damage": 3,
+      "range": 0,
+      "duration": 3,
+      "mobility": 0,
+      "control": 0,
+      "defense": 0,
+      "targets": 3,
+      "frequency": 2,
+      "terrain": 0,
+      "difficulty": 0
+    }
+  },
+  "category": "Eldanior_Empire_Luo.Runes",
+  "manual": "Eldanior_Manuel_Luo_ProjectionEpeeAura",
+  "$Comment_manual": "Technique apprise par son manuel secret (gen_voie_martiale_objets.py) : pas de parchemin rune_page_*."
+}

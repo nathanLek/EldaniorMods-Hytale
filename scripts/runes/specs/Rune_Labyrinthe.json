@@ -1,0 +1,69 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_Labyrinthe",
+  "spell": "Labyrinthe",
+  "javaClass": "Labyrinthe",
+  "page": "rune_page_labyrinthe",
+  "name": "Rune du Labyrinthe",
+  "type": "Espace",
+  "rarity": "Unique",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Labyrinthe",
+  "summary": "labyrinthe de pierre r 10 au point vise, 10 s : 3 anneaux de murs a breches ; toutes les 2 s l'espace se replie et chaque ennemi dedans est jete dans une autre allee (40 + etourdi 0,5 s).",
+  "description": "Sort unique d'espace (Mage, rune de prédilection de l'Architecte du Monde). Un labyrinthe de pierre surgit au point visé (rayon 10, jusqu'à 25 blocs) pendant 10 s : trois anneaux de murs de 2 blocs de haut, chacun percé de deux brèches. Toutes les 2 s, l'espace du labyrinthe se replie : chaque ennemi qui s'y trouve est jeté dans une autre allée, subit 40 dégâts et reste étourdi 0,5 s. Le sol est restauré ensuite (jamais en ville ni sur une parcelle). Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin plié en accordéon, dont les plis ne se remettent jamais dans le même ordre. Enseigne le Labyrinthe : l'espace replié sur lui-même n'a plus de sortie. Classes : tous les Mages (rune de prédilection de l'Architecte du Monde). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.6,
+    "releaseTime": 0.5,
+    "moveSpeed": 0.4,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Portal_Neutral_Open",
+    "handParticles": "Bifrost_Divine",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.6,
+    "range": 25,
+    "radius": "10",
+    "targets": "ennemis du labyrinthe",
+    "executionFx": "murs qui montent en 2 couches (0,15 s), Gaia_Dust_Burst",
+    "impactFx": "Bifrost_Divine au depart et a l'arrivee de chaque repli",
+    "sounds": "SFX_Portal_Neutral_Open a l'incantation, SFX_Portal_Neutral a chaque repli",
+    "effects": "/ 2 s : chaque ennemi du labyrinthe (12 max) teleporte sur une case libre au hasard d'une autre allee (rayon 0-9,5, a plus de 3 blocs de sa place), 40 Elemental + Gaia_Etourdi 0,5 s au tick suivant",
+    "terrain": "anneaux Rock_Stone_Brick r 4, 7, 10 sur 2 de haut, 2 breches de 3 blocs chacun (~250 blocs), cases occupees sautees, restaures a la fin",
+    "persistentDurationS": 10,
+    "interruptions": "lanceur mort ou deconnecte : murs retires",
+    "restrictions": "mage",
+    "edgeCases": "aucune case libre trouvee : pas de repli pour cet ennemi ; invocations exclues",
+    "limitations": "distinct de la Reecriture (permutation des places) : cases au hasard dans un vrai labyrinthe de murs",
+    "balance": {
+      "damage": 1,
+      "range": 2,
+      "duration": 2,
+      "mobility": 0,
+      "control": 3,
+      "defense": 2,
+      "targets": 3,
+      "frequency": 1,
+      "terrain": 3,
+      "difficulty": 1
+    }
+  }
+}

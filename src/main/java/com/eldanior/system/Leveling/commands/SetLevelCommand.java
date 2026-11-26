@@ -94,6 +94,8 @@ public class SetLevelCommand extends AbstractAsyncCommand {
 
                 if (clampedLevel == 1) {
                     // --- RESET COMPLET DU JOUEUR (Hard Reset) ---
+                    com.eldanior.system.poche.PocheDimensionnelle.resetBackpack(ref, store);   // sac a dos du jeu : niveau 1 (2026-11-16)
+                    com.eldanior.system.poche.PocheDimensionnelle.resetPoche(ref, store);      // poche dimensionnelle supprimee
                     data.setStrength(1);
                     data.setVitality(1);
                     data.setIntelligence(1);

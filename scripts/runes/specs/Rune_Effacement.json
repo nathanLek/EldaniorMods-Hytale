@@ -1,0 +1,67 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_Effacement",
+  "spell": "Effacement",
+  "javaClass": "Effacement",
+  "page": "rune_page_effacement",
+  "name": "Rune de l'Effacement",
+  "type": "Tenebres",
+  "rarity": "Unique",
+  "classes": "mage",
+  "persistent": false,
+  "emblem": "Effacement",
+  "summary": "rayon du vide perçant (30 blocs) : 25 % des PV max de chaque ennemi touche (150 a 2 000) ; ceux qui tombent sous 10 % sont effaces.",
+  "description": "Sort unique de ténèbres (Mage, rune de prédilection du Mage Void Absolu). Après 1 s de concentration, un rayon de vide traverse tout sur 30 blocs devant vous. Chaque ennemi touché perd 25 % de ses points de vie maximum (au moins 150, au plus 2 000), et celui qui tombe sous 10 % de ses PV est effacé de l'existence. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin dont l'encre disparaît à mesure qu'on le lit. Enseigne l'Effacement : ni blessure ni cendre, seulement l'absence. Classes : tous les Mages (rune de prédilection du Mage Void Absolu). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Spellbook",
+    "charging": "CastHurlCharging",
+    "release": "CastHurlCharged",
+    "chargeTime": 1.0,
+    "releaseTime": 0.5,
+    "moveSpeed": 0.3,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Portal_Void",
+    "handParticles": "Nyx_Void",
+    "handParticlesScale": 0.4,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 1.0,
+    "range": 30,
+    "radius": "1,5 (largeur du rayon)",
+    "targets": "ennemis alignes",
+    "executionFx": "Nyx_Drain_Burst tous les 1,5 blocs le long du rayon, arrete par le premier bloc solide",
+    "impactFx": "Nyx_Void sur chaque cible, Chaos_Flash sur les effaces",
+    "sounds": "SFX_Portal_Void a l'incantation, SFX_Void_Eviction (2D, sound2dNear) sur les effaces",
+    "effects": "25 % des PV max virtuels (MobVirtualHPSystem pour les monstres) bornes 150-2 000, Elemental ; si le reste estime < 10 % : degats egaux aux PV restants (meme borne) en plus",
+    "terrain": "aucun",
+    "persistentDurationS": 0,
+    "interruptions": "incantation de 1 s (deplacement x0,3)",
+    "restrictions": "mage",
+    "edgeCases": "monstres invincibles : 0 (MobDamageReductionSystem) ; boss : borne 2 000 par coup",
+    "limitations": "les PV des monstres sont virtuels (niveau) : le % est calcule sur les PV virtuels, le systeme de reduction ramene les degats a au moins ce % reel",
+    "balance": {
+      "damage": 3,
+      "range": 3,
+      "duration": 0,
+      "mobility": 0,
+      "control": 0,
+      "defense": 0,
+      "targets": 2,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    }
+  }
+}

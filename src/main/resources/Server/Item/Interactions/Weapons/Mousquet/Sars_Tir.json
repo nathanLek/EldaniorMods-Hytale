@@ -1,0 +1,15 @@
+{
+  "$Comment": "SARS : tir (chargeur de 5 Balles de sniper divines, verrou 0,9 s, rechargement 2,5 s), Mousquet.sarsTrigger.",
+  "Type": "Eldanior_MousquetTir",
+  "Next": {
+    "Type": "Simple",
+    "RunTime": 0.35,
+    "Effects": {
+      "ItemAnimationId": "Shoot",
+      "CameraEffect": "Handgun_Shoot",
+      "WorldSoundEventId": "SFX_Rifle_Fire",
+      "LocalSoundEventId": "SFX_Rifle_Fire_Local"
+    }
+  },
+  "Failed": "Gun_Shoot_Fail"
+}

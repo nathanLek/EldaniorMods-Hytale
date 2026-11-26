@@ -1,0 +1,48 @@
+// Barre d'experience en bas a gauche de l'ecran (demande du 2026-11-12) : meme dessin que la barre de vie vanilla
+// (Hud/Health/Health.ui : barre 318 x 12, textures Status/XP* taillees sur HealthBackground / HealthBarFill),
+// le niveau a la place de l'icone. Rempli par hud/XpHud.java.
+Group {
+  Anchor: (Left: 24, Bottom: 22, Width: 420, Height: 30);
+
+  Group {
+    LayoutMode: Left;
+    Anchor: (Left: 0, Bottom: 0, Width: 420, Height: 30);
+
+    // niveau (a la place du coeur de la barre de vie)
+    Group #XpLevelBox {
+      Anchor: (Width: 46, Height: 30);
+      Background: #0c0a06(0.75);
+
+      Label #XpLevel {
+        Text: "1";
+        Style: (FontSize: 16, TextColor: #f4d27a, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+    }
+
+    Group { Anchor: (Width: 6); }
+
+    Group {
+      LayoutMode: Top;
+      Anchor: (Width: 318, Height: 30);
+
+      Label #XpText {
+        Text: "";
+        Style: (FontSize: 10, TextColor: #d8dee9, RenderBold: true, HorizontalAlignment: End);
+        Anchor: (Height: 14);
+      }
+
+      Group { Anchor: (Height: 2); }
+
+      Group {
+        Anchor: (Width: 318, Height: 12);
+        Background: "../Status/XPBackground.png";
+
+        ProgressBar #XpBar {
+          Anchor: (Width: 318, Height: 12);
+          BarTexturePath: "../Status/XPFill.png";
+          Value: 0.0;
+        }
+      }
+    }
+  }
+}

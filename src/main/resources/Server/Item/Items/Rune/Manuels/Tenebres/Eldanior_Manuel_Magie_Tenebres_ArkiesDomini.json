@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_ArkiesDomini (remplace le parchemin rune_page_arkiesdomini).",
+  "TranslationProperties": {
+    "Name": "Manuel des Ténèbres : Arkies Domini",
+    "Description": "Compétence de l'Observateur, l'Œil et les Oreilles de l'Empereur. Tant qu'elle est active, toutes vos caractéristiques sont doublées et un domaine de 100 blocs de rayon s'ouvre autour de vous : chaque présence y est enveloppée d'une silhouette que vous seul voyez, même derrière les murs, et les présences invisibles sont révélées. Vous entendez tout : arrivées et départs, combats et morts vous sont rapportés. Un regard suffit : visez une créature ou un joueur, même à travers un mur, et sa carte complète s'affiche à droite de l'écran, avec son modèle en 3D ; même Sans Visage ne trompe pas l'Œil. Un second clic l'arrête ; elle consomme chaque seconde 1,5 % de votre mana maximal. Coût : 0 mana. Recharge : 1 s.\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Tenebres"
+  ],
+  "Quality": "Legendary",
+  "ItemLevel": 90,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Tenebres_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Tenebres_ArkiesDomini.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

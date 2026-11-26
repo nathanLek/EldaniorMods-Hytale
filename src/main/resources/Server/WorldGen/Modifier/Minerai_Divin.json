@@ -1,0 +1,324 @@
+{
+  "Target": {
+    "Root": "Default",
+    "Rules": [
+      "*Zone3_Tier3*",
+      "*Zone4_Tier4*",
+      "*Zone4_Tier5*"
+    ]
+  },
+  "Operations": [
+    {
+      "Type": "Add",
+      "Content": {
+        "Type": "CaveType",
+        "Name": "Minerai_Divin_Stone",
+        "PointGrid": {
+          "Seed": "Eldanior-Minerai-Divin-Stone",
+          "Scale": 0.009,
+          "Jitter": 0.75,
+          "Density": {
+            "Min": 0.0,
+            "Max": 1.0
+          }
+        },
+        "HeightRange": {
+          "Min": 8,
+          "Max": 90
+        },
+        "BlockMask": {
+          "Include": {
+            "Blocks": [
+              "Rock_Stone"
+            ]
+          }
+        },
+        "Generator": {
+          "Type": "OreCluster",
+          "Blocks": [
+            {
+              "Block": "Ore_Divin_Stone",
+              "Weight": 35
+            },
+            {
+              "Block": "Ore_Divin_Stone_Cracked",
+              "Weight": 65
+            }
+          ],
+          "Radius": {
+            "Min": 1,
+            "Max": 2
+          },
+          "Length": {
+            "Min": 3,
+            "Max": 6
+          },
+          "Repetitions": {
+            "Min": 2,
+            "Max": 3
+          }
+        }
+      }
+    },
+    {
+      "Type": "Add",
+      "Content": {
+        "Type": "CaveType",
+        "Name": "Minerai_Divin_Basalt",
+        "PointGrid": {
+          "Seed": "Eldanior-Minerai-Divin-Basalt",
+          "Scale": 0.009,
+          "Jitter": 0.75,
+          "Density": {
+            "Min": 0.0,
+            "Max": 1.0
+          }
+        },
+        "HeightRange": {
+          "Min": 8,
+          "Max": 90
+        },
+        "BlockMask": {
+          "Include": {
+            "Blocks": [
+              "Rock_Basalt"
+            ]
+          }
+        },
+        "Generator": {
+          "Type": "OreCluster",
+          "Blocks": [
+            {
+              "Block": "Ore_Divin_Basalt",
+              "Weight": 35
+            },
+            {
+              "Block": "Ore_Divin_Basalt_Cracked",
+              "Weight": 65
+            }
+          ],
+          "Radius": {
+            "Min": 1,
+            "Max": 2
+          },
+          "Length": {
+            "Min": 3,
+            "Max": 6
+          },
+          "Repetitions": {
+            "Min": 2,
+            "Max": 3
+          }
+        }
+      }
+    },
+    {
+      "Type": "Add",
+      "Content": {
+        "Type": "CaveType",
+        "Name": "Minerai_Divin_Slate",
+        "PointGrid": {
+          "Seed": "Eldanior-Minerai-Divin-Slate",
+          "Scale": 0.009,
+          "Jitter": 0.75,
+          "Density": {
+            "Min": 0.0,
+            "Max": 1.0
+          }
+        },
+        "HeightRange": {
+          "Min": 8,
+          "Max": 90
+        },
+        "BlockMask": {
+          "Include": {
+            "Blocks": [
+              "Rock_Slate"
+            ]
+          }
+        },
+        "Generator": {
+          "Type": "OreCluster",
+          "Blocks": [
+            {
+              "Block": "Ore_Divin_Slate",
+              "Weight": 35
+            },
+            {
+              "Block": "Ore_Divin_Slate_Cracked",
+              "Weight": 65
+            }
+          ],
+          "Radius": {
+            "Min": 1,
+            "Max": 2
+          },
+          "Length": {
+            "Min": 3,
+            "Max": 6
+          },
+          "Repetitions": {
+            "Min": 2,
+            "Max": 3
+          }
+        }
+      }
+    },
+    {
+      "Type": "Add",
+      "Content": {
+        "Type": "CaveType",
+        "Name": "Minerai_Divin_Shale",
+        "PointGrid": {
+          "Seed": "Eldanior-Minerai-Divin-Shale",
+          "Scale": 0.009,
+          "Jitter": 0.75,
+          "Density": {
+            "Min": 0.0,
+            "Max": 1.0
+          }
+        },
+        "HeightRange": {
+          "Min": 8,
+          "Max": 90
+        },
+        "BlockMask": {
+          "Include": {
+            "Blocks": [
+              "Rock_Shale"
+            ]
+          }
+        },
+        "Generator": {
+          "Type": "OreCluster",
+          "Blocks": [
+            {
+              "Block": "Ore_Divin_Shale",
+              "Weight": 35
+            },
+            {
+              "Block": "Ore_Divin_Shale_Cracked",
+              "Weight": 65
+            }
+          ],
+          "Radius": {
+            "Min": 1,
+            "Max": 2
+          },
+          "Length": {
+            "Min": 3,
+            "Max": 6
+          },
+          "Repetitions": {
+            "Min": 2,
+            "Max": 3
+          }
+        }
+      }
+    },
+    {
+      "Type": "Add",
+      "Content": {
+        "Type": "CaveType",
+        "Name": "Minerai_Divin_Volcanic",
+        "PointGrid": {
+          "Seed": "Eldanior-Minerai-Divin-Volcanic",
+          "Scale": 0.009,
+          "Jitter": 0.75,
+          "Density": {
+            "Min": 0.0,
+            "Max": 1.0
+          }
+        },
+        "HeightRange": {
+          "Min": 8,
+          "Max": 90
+        },
+        "BlockMask": {
+          "Include": {
+            "Blocks": [
+              "Rock_Volcanic"
+            ]
+          }
+        },
+        "Generator": {
+          "Type": "OreCluster",
+          "Blocks": [
+            {
+              "Block": "Ore_Divin_Volcanic",
+              "Weight": 35
+            },
+            {
+              "Block": "Ore_Divin_Volcanic_Cracked",
+              "Weight": 65
+            }
+          ],
+          "Radius": {
+            "Min": 1,
+            "Max": 2
+          },
+          "Length": {
+            "Min": 3,
+            "Max": 6
+          },
+          "Repetitions": {
+            "Min": 2,
+            "Max": 3
+          }
+        }
+      }
+    },
+    {
+      "Type": "Add",
+      "Content": {
+        "Type": "CaveType",
+        "Name": "Minerai_Divin_Magma",
+        "PointGrid": {
+          "Seed": "Eldanior-Minerai-Divin-Magma",
+          "Scale": 0.009,
+          "Jitter": 0.75,
+          "Density": {
+            "Min": 0.0,
+            "Max": 1.0
+          }
+        },
+        "HeightRange": {
+          "Min": 8,
+          "Max": 90
+        },
+        "BlockMask": {
+          "Include": {
+            "Blocks": [
+              "Rock_Magma_Cooled"
+            ]
+          }
+        },
+        "Generator": {
+          "Type": "OreCluster",
+          "Blocks": [
+            {
+              "Block": "Ore_Divin_Magma",
+              "Weight": 35
+            },
+            {
+              "Block": "Ore_Divin_Magma_Cracked",
+              "Weight": 65
+            }
+          ],
+          "Radius": {
+            "Min": 1,
+            "Max": 2
+          },
+          "Length": {
+            "Min": 3,
+            "Max": 6
+          },
+          "Repetitions": {
+            "Min": 2,
+            "Max": 3
+          }
+        }
+      }
+    }
+  ]
+}

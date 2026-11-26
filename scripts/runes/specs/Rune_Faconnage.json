@@ -1,0 +1,69 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_Faconnage",
+  "spell": "Faconnage",
+  "javaClass": "Faconnage",
+  "page": "rune_page_faconnage",
+  "name": "Rune du Façonnage",
+  "type": "Terre",
+  "rarity": "Unique",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Faconnage",
+  "summary": "domaine r 12, 12 s au point vise : toutes les 0,5 s un pic de roche surgit sous un ennemi (90 + projection) et reste ; allies -25 % de degats physiques ; a la fin les pics s'effondrent (60).",
+  "description": "Sort unique de terre (Mage, rune de prédilection du Démiurge). Vous façonnez le sol du point visé (rayon 12, jusqu'à 25 blocs) pendant 12 s. Toutes les demi-secondes, un pic de roche jaillit sous l'un de vos ennemis : 90 dégâts et projection en l'air ; les pics restent dressés et barrent le terrain (24 au plus). Vos alliés qui se tiennent dans le domaine subissent 25 % de dégâts physiques en moins. À la fin, les pics s'effondrent (60 dégâts autour de chacun) et le sol est restauré (jamais en ville ni sur une parcelle). Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin d'argile séchée, modelé au doigt plutôt qu'écrit. Enseigne le Façonnage : la terre prend la forme que vous voulez. Classes : tous les Mages (rune de prédilection du Démiurge). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe",
+    "Duration",
+    "Buff"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.6,
+    "releaseTime": 0.5,
+    "moveSpeed": 0.4,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Golem_Earth_Wake",
+    "handParticles": "Gaia_Dust_Burst",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.6,
+    "range": 25,
+    "radius": "12",
+    "targets": "ennemis et allies du domaine",
+    "executionFx": "Gaia_Dust_Burst a chaque pic, Block_Break_Dust a l'effondrement",
+    "sounds": "SFX_Golem_Earth_Wake a l'incantation, SFX_Golem_Earth_Stomp_Impact a chaque pic, SFX_Golem_Earth_Slam_Impact a l'effondrement",
+    "effects": "pic : 90 Earth + poussee 12 vers le haut, puis colonne Rock_Basalt de 2 + pointe Rock_Basalt (cases vides) 0,2 s plus tard ; allies : Elda_Faconnage (DamageResistance Physical/Projectile 25 %, renouvele) ; effondrement 60 Bludgeoning r 1,5",
+    "terrain": "24 pics de 3 blocs max (~72 blocs), restaures a la fin",
+    "persistentDurationS": 12,
+    "interruptions": "lanceur mort ou deconnecte : fin, sol restaure",
+    "restrictions": "mage",
+    "edgeCases": "ennemi encore dans la case au moment de poser le pic : case sautee ; un ennemi deja vise dans les 2 s est evite",
+    "limitations": "",
+    "balance": {
+      "damage": 2,
+      "range": 3,
+      "duration": 2,
+      "mobility": 0,
+      "control": 2,
+      "defense": 2,
+      "targets": 3,
+      "frequency": 1,
+      "terrain": 2,
+      "difficulty": 1
+    }
+  }
+}

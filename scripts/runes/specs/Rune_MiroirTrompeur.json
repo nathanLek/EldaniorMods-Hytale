@@ -1,0 +1,62 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_MiroirTrompeur",
+  "spell": "MiroirTrompeur",
+  "javaClass": "MiroirTrompeur",
+  "page": "rune_page_miroir_trompeur",
+  "name": "Rune du Miroir Trompeur",
+  "type": "Lumiere",
+  "rarity": "Rare",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "MiroirTrompeur",
+  "summary": "deux leurres a l'image du lanceur s'enfuient de part et d'autre et attirent les monstres ; le lanceur devient invisible 3 s.",
+  "description": "Sort rare de lumière (Mage, rune de prédilection de l'Illusionniste). Deux reflets parfaits de vous apparaissent et s'enfuient à gauche et à droite pendant 6 s ; les monstres à moins de 15 blocs se lancent à leur poursuite. Vous devenez invisible pendant 3 s. Chaque reflet se brise après avoir encaissé 60 dégâts.",
+  "pageDescription": "Un parchemin dont l'encre change de place quand on cligne des yeux. Enseigne le Miroir Trompeur : deux leurres pour semer vos poursuivants. Classes : tous les Mages (rune de prédilection de l'Illusionniste). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Duration",
+    "Buff"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Spellbook",
+    "charging": "CastPushCharging",
+    "release": "CastPushCharged",
+    "chargeTime": 0.25,
+    "releaseTime": 0.3,
+    "moveSpeed": 0.7,
+    "cameraEffect": null,
+    "sound": null,
+    "releaseSound": "SFX_Portal_Neutral_Open",
+    "handParticles": "Bifrost_Divine",
+    "handParticlesScale": 0.25,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.25,
+    "range": 15,
+    "targets": "soi + monstres proches",
+    "executionFx": "Bifrost_Divine a l'apparition des reflets",
+    "effects": "2 copies PNJ (role Eldanior_Clone_Lumiere_Melee, apparence et arme du lanceur, 60 PV) qui courent vers leur point de laisse ; monstres forces hostiles + LockedTarget vers les reflets ; Elda_InvisTotal 3 s sur le lanceur",
+    "terrain": "aucun",
+    "persistentDurationS": 6,
+    "restrictions": "mage",
+    "balance": {
+      "damage": 0,
+      "range": 2,
+      "duration": 2,
+      "mobility": 1,
+      "control": 2,
+      "defense": 3,
+      "targets": 2,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    }
+  }
+}

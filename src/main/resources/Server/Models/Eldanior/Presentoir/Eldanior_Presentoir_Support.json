@@ -1,0 +1,27 @@
+{
+  "Model": "Items/Eldanior/Presentoir/Support.blockymodel",
+  "Texture": "Items/Eldanior/Presentoir/Support_Texture.png",
+  "EyeHeight": 0.5,
+  "HitBox": {
+    "Min": {
+      "X": -0.4,
+      "Y": 0,
+      "Z": -0.4
+    },
+    "Max": {
+      "X": 0.4,
+      "Y": 2,
+      "Z": 0.4
+    }
+  },
+  "AnimationSets": {
+    "Idle": {
+      "Animations": [
+        {
+          "Animation": "Items/Eldanior/Presentoir/Support_Idle.blockyanim",
+          "Looping": true
+        }
+      ]
+    }
+  }
+}

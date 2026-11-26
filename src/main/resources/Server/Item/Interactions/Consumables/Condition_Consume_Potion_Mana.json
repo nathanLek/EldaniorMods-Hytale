@@ -1,0 +1,11 @@
+{
+  "Type": "Condition",
+  "RequiredGameMode": "Adventure",
+  "Crouching": false,
+  "Next": {
+    "Type": "CooldownCondition",
+    "Id": "Potion_Consume_Mana",
+    "Next": "Consume_Charge_Potion_Fast"
+  },
+  "Failed": "Block_Secondary"
+}

@@ -1,0 +1,43 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de la Porte des Mondes",
+    "Description": "Sort légendaire d'espace (Mage, rune de prédilection de l'Architecte du Monde). Une porte dorée s'ouvre devant vous pendant 25 s. Vous et vos alliés (groupe, guilde, famille) qui la franchissez êtes transportés à l'une de vos ancres de ce monde : un Cercle d'Ancrage que vous avez peint au sol et nommé (reçu avec les runes d'Espace). Connaître ce sort porte votre limite à 3 ancres ; si vous en avez plusieurs dans ce monde, vous choisissez la destination avant que la porte s'ouvre. Sans ancre, la porte mène au point d'apparition du monde. Coût : 1200 mana. Recharge : 300 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_PorteMondes.png",
+  "Quality": "Legendary",
+  "ItemLevel": 90,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_Runes.Espace"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_PorteMondes.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 300,
+    "Cost": 1200,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_PorteMondes"
+  }
+}

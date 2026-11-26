@@ -1,7 +1,6 @@
 package com.eldanior.system.titles.nobility.family.definitions.duc;
 
 import com.eldanior.system.config.configs.Rarity;
-import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
 import com.eldanior.system.titles.nobility.NobilityRank;
 import com.eldanior.system.titles.nobility.family.NobleFamilyModel;
 
@@ -18,8 +17,7 @@ public class Silkroad extends NobleFamilyModel {
                 + "Leur duche est un carrefour de cultures ou les marchands du monde entier se retrouvent. "
                 + "Les Silkroad connaissent le prix de chaque chose et la valeur de chaque alliance.",
                 Rarity.EPIC,
-                NobilityRank.DUC,
-                PassiveSkill.FAMILY_GOLDEN_FORTUNE
+                NobilityRank.DUC
         );
     }
 }

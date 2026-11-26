@@ -1,0 +1,18 @@
+{
+  "$Comment": "Armes de givre (Lame du Givre...) : ralentissement bref a chaque coup.",
+  "Duration": 2.5,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#a0d4ff",
+    "EntityTopTint": "#80ecff",
+    "Particles": [
+      {
+        "SystemId": "Effect_Snow"
+      }
+    ],
+    "HorizontalSpeedMultiplier": 0.6
+  },
+  "OverlapBehavior": "Overwrite",
+  "Infinite": false,
+  "Debuff": true,
+  "StatusEffectIcon": "UI/StatusEffects/Burn.png"
+}

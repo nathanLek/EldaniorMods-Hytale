@@ -1,0 +1,28 @@
+{
+  "$Comment": "Maintien, lame au clair (variable Thrust) : posture iai ; relache avant la fin = combo, charge pleine = LuoIai.",
+  "Type": "Charging",
+  "Rules": {
+    "InterruptedBy": [
+      "Secondary"
+    ]
+  },
+  "DisplayProgress": true,
+  "HorizontalSpeedMultiplier": 0.45,
+  "Effects": {
+    "ItemAnimationId": "IaiCharging",
+    "LocalSoundEventId": "SFX_Sword_T2_Lunge_Charge_Local"
+  },
+  "Next": {
+    "0": {
+      "Type": "Replace",
+      "Var": "Luo_Combo",
+      "DefaultOk": true,
+      "DefaultValue": {
+        "Interactions": [
+          "Luo_Combo"
+        ]
+      }
+    },
+    "0.75": "Luo_Iai_Release"
+  }
+}

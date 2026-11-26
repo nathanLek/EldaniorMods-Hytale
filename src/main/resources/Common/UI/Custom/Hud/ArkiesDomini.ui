@@ -1,0 +1,238 @@
+// Carte de l'entite visee pendant la rune Arkies Domini (hud/ArkiesDominiHud.java), style des cartes de quete du HUD.
+// Genere par scripts/observateur/gen_ui.py : modifier le script, pas ce fichier.
+// Place : a droite, SOUS le panneau de groupe (Party/PartyHud.ui, 210 x 310 en haut a droite, bas a ~320 px).
+// Contour #AdPanel et type #AdKind colores par le serveur (joueur, PNJ, creature) ; blason = rang de menace (F a EX).
+// La zone (Height) n'est qu'une reservation : LayoutMode Top pour que #AdPanel prenne la hauteur de son contenu (sans lui,
+// le contour colore s'etirait sur toute la zone : « fond rose trop grand », 2026-11-17).
+Group {
+  Anchor: (Right: 10, Top: 334, Width: 320, Height: 420);
+  LayoutMode: Top;
+
+  Group #AdPanel {
+    Visible: false;
+    LayoutMode: Top;
+    Padding: (Full: 2);
+    Background: #f2c45e;
+
+    Group {
+      LayoutMode: Top;
+      Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16);
+      Padding: (Left: 8, Right: 12, Top: 8, Bottom: 8);
+
+      // ---- en-tete : blason du rang, type, nom
+      Group {
+        Anchor: (Height: 58);
+        LayoutMode: Left;
+        Group {
+          Anchor: (Width: 58, Height: 58);
+          Group #AdBadgeF { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "../Quest/QHudRankF.png"); Visible: false; }
+          Group #AdBadgeE { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "../Quest/QHudRankE.png"); Visible: false; }
+          Group #AdBadgeD { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "../Quest/QHudRankD.png"); Visible: false; }
+          Group #AdBadgeC { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "../Quest/QHudRankC.png"); Visible: false; }
+          Group #AdBadgeB { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "../Quest/QHudRankB.png"); Visible: false; }
+          Group #AdBadgeA { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "../Quest/QHudRankA.png"); Visible: false; }
+          Group #AdBadgeS { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "../Quest/QHudRankS.png"); Visible: false; }
+          Group #AdBadgeSS { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "../Quest/QHudRankSS.png"); Visible: false; }
+          Group #AdBadgeEX { Anchor: (Left: 0, Top: 0, Width: 58, Height: 58); Background: (TexturePath: "../Quest/QHudRankEX.png"); Visible: false; }
+          Label #AdRankLetter {
+            Anchor: (Left: 0, Top: 0, Width: 58, Height: 58);
+            Text: "?";
+            Style: (FontName: "Secondary", FontSize: 24, RenderBold: true, TextColor: #ffe98a, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 14);
+          }
+        }
+        Group { Anchor: (Width: 2); }
+        Group #AdRankLine { Anchor: (Width: 2); Background: #f2c45e; }
+        Group {
+          FlexWeight: 1;
+          LayoutMode: Top;
+          Padding: (Left: 10, Top: 4);
+          Label #AdKind {
+            Anchor: (Height: 16);
+            Style: (FontSize: 10, RenderBold: true, RenderUppercase: true, TextColor: #f2c45e, VerticalAlignment: Center, LetterSpacing: 1);
+          }
+          Label #AdTitle {
+            Anchor: (Height: 22);
+            Style: (FontSize: 16, RenderBold: true, TextColor: #f2c45e, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 11);
+          }
+          Label #AdSub {
+            Anchor: (Height: 16);
+            Style: (FontSize: 11, RenderBold: true, TextColor: #77879d, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 9);
+          }
+        }
+      }
+      Group { Anchor: (Top: 4, Height: 1); Background: #ffffff(0.14); }
+
+      // ---- modele 3D a gauche ; vie, mana, classe, rang a droite
+      Group {
+        Anchor: (Top: 6, Height: 112);
+        LayoutMode: Left;
+        Group {
+          Anchor: (Width: 96, Height: 112);
+          LayoutMode: Top;
+          Padding: (Full: 1);
+          Background: #ffffff(0.12);
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Background: #0b0e14(0.88);
+            ItemPreviewComponent #AdModel {
+              Anchor: (Height: 110);
+              Visible: false;
+            }
+            Group #AdNoModel {
+              Anchor: (Height: 110);
+              LayoutMode: Middle;
+              Label { Text: "?"; Style: (FontSize: 40, TextColor: #3a4256, RenderBold: true, HorizontalAlignment: Center, VerticalAlignment: Center); }
+            }
+          }
+        }
+        Group {
+          FlexWeight: 1;
+          LayoutMode: Top;
+          Padding: (Left: 10);
+          Group { Anchor: (Height: 14); LayoutMode: Left;
+            Label { FlexWeight: 1; Text: "Vie"; Style: (FontSize: 10, TextColor: #e07070, RenderBold: true, RenderUppercase: true); }
+            Label #AdHpText { FlexWeight: 1; Text: ""; Style: (FontSize: 10, TextColor: #f0d0d0, RenderBold: true, HorizontalAlignment: End); }
+          }
+          Group { Anchor: (Top: 2, Height: 8); Background: #333a47;
+            ProgressBar #AdHp { BarTexturePath: "../Party/HPFill.png"; Value: 1.0; }
+          }
+          Group #AdManaRow {
+            Anchor: (Top: 5, Height: 24);
+            LayoutMode: Top;
+            Group { Anchor: (Height: 14); LayoutMode: Left;
+              Label { FlexWeight: 1; Text: "Mana"; Style: (FontSize: 10, TextColor: #7aa8e8, RenderBold: true, RenderUppercase: true); }
+              Label #AdManaText { FlexWeight: 1; Text: ""; Style: (FontSize: 10, TextColor: #d0dcf0, RenderBold: true, HorizontalAlignment: End); }
+            }
+            Group { Anchor: (Top: 2, Height: 8); Background: #1a2030;
+              ProgressBar #AdMana { BarTexturePath: "../Status/MPFill.png"; Value: 1.0; }
+            }
+          }
+          Group { Anchor: (Top: 7, Height: 1); Background: #ffffff(0.10); }
+          Label #AdClass { Anchor: (Height: 18, Top: 5); Text: ""; Style: (FontSize: 12, TextColor: #f0d58c, RenderBold: true, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 9); }
+          Label #AdRank { Anchor: (Height: 16); Text: ""; Style: (FontSize: 11, TextColor: #a9b8c8, RenderBold: false, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 9); }
+        }
+      }
+
+      // ---- caracteristiques (joueurs) : icones du menu Systeme
+      Group #AdStats {
+        Anchor: (Top: 8);
+        LayoutMode: Top;
+    Group {
+      Anchor: (Top: 0, Height: 20);
+      LayoutMode: Left;
+      Group {
+        FlexWeight: 1;
+        LayoutMode: Left;
+        Group { Anchor: (Width: 20, Height: 20); Background: "../System/CharacterPanelStatIconBackground.png";
+          Group { Background: "../System/StatIconForce.png"; }
+        }
+        Label #AdS0 { Text: ""; Style: (FontSize: 12, TextColor: #d1dae6, RenderBold: true, VerticalAlignment: Center);  Anchor: (Left: 6); FlexWeight: 1; }
+      }
+      Group {
+        FlexWeight: 1;
+        LayoutMode: Left;
+        Group { Anchor: (Width: 20, Height: 20); Background: "../System/CharacterPanelStatIconBackground.png";
+          Group { Background: "../System/StatIconVitalite.png"; }
+        }
+        Label #AdS1 { Text: ""; Style: (FontSize: 12, TextColor: #d1dae6, RenderBold: true, VerticalAlignment: Center);  Anchor: (Left: 6); FlexWeight: 1; }
+      }
+      Group {
+        FlexWeight: 1;
+        LayoutMode: Left;
+        Group { Anchor: (Width: 20, Height: 20); Background: "../System/CharacterPanelStatIconBackground.png";
+          Group { Background: "../System/StatIconIntelligence.png"; }
+        }
+        Label #AdS2 { Text: ""; Style: (FontSize: 12, TextColor: #d1dae6, RenderBold: true, VerticalAlignment: Center);  Anchor: (Left: 6); FlexWeight: 1; }
+      }
+    }
+    Group {
+      Anchor: (Top: 4, Height: 20);
+      LayoutMode: Left;
+      Group {
+        FlexWeight: 1;
+        LayoutMode: Left;
+        Group { Anchor: (Width: 20, Height: 20); Background: "../System/CharacterPanelStatIconBackground.png";
+          Group { Background: "../System/StatIconEndurance.png"; }
+        }
+        Label #AdS3 { Text: ""; Style: (FontSize: 12, TextColor: #d1dae6, RenderBold: true, VerticalAlignment: Center);  Anchor: (Left: 6); FlexWeight: 1; }
+      }
+      Group {
+        FlexWeight: 1;
+        LayoutMode: Left;
+        Group { Anchor: (Width: 20, Height: 20); Background: "../System/CharacterPanelStatIconBackground.png";
+          Group { Background: "../System/StatIconAgilite.png"; }
+        }
+        Label #AdS4 { Text: ""; Style: (FontSize: 12, TextColor: #d1dae6, RenderBold: true, VerticalAlignment: Center);  Anchor: (Left: 6); FlexWeight: 1; }
+      }
+      Group {
+        FlexWeight: 1;
+        LayoutMode: Left;
+        Group { Anchor: (Width: 20, Height: 20); Background: "../System/CharacterPanelStatIconBackground.png";
+          Group { Background: "../System/StatIconChance.png"; }
+        }
+        Label #AdS5 { Text: ""; Style: (FontSize: 12, TextColor: #d1dae6, RenderBold: true, VerticalAlignment: Center);  Anchor: (Left: 6); FlexWeight: 1; }
+      }
+    }
+      }
+
+      Group { Anchor: (Top: 7, Height: 1); Background: #ffffff(0.14); }
+
+      // ---- details (lignes masquees si vides)
+      Group {
+        Anchor: (Top: 4);
+        LayoutMode: Top;
+    Group #AdR0 {
+      Anchor: (Height: 18);
+      LayoutMode: Left;
+      Visible: false;
+      Group { Anchor: (Width: 5, Height: 5, Top: 7); Background: #c99436; }
+      Label #AdL0 { Text: ""; Style: (FontSize: 12, TextColor: #b8c2d0, RenderBold: true, VerticalAlignment: Center);  Anchor: (Left: 8); FlexWeight: 1; }
+    }
+    Group #AdR1 {
+      Anchor: (Height: 18);
+      LayoutMode: Left;
+      Visible: false;
+      Group { Anchor: (Width: 5, Height: 5, Top: 7); Background: #c99436; }
+      Label #AdL1 { Text: ""; Style: (FontSize: 12, TextColor: #b8c2d0, RenderBold: true, VerticalAlignment: Center);  Anchor: (Left: 8); FlexWeight: 1; }
+    }
+    Group #AdR2 {
+      Anchor: (Height: 18);
+      LayoutMode: Left;
+      Visible: false;
+      Group { Anchor: (Width: 5, Height: 5, Top: 7); Background: #c99436; }
+      Label #AdL2 { Text: ""; Style: (FontSize: 12, TextColor: #b8c2d0, RenderBold: true, VerticalAlignment: Center);  Anchor: (Left: 8); FlexWeight: 1; }
+    }
+    Group #AdR3 {
+      Anchor: (Height: 18);
+      LayoutMode: Left;
+      Visible: false;
+      Group { Anchor: (Width: 5, Height: 5, Top: 7); Background: #c99436; }
+      Label #AdL3 { Text: ""; Style: (FontSize: 12, TextColor: #b8c2d0, RenderBold: true, VerticalAlignment: Center);  Anchor: (Left: 8); FlexWeight: 1; }
+    }
+    Group #AdR4 {
+      Anchor: (Height: 18);
+      LayoutMode: Left;
+      Visible: false;
+      Group { Anchor: (Width: 5, Height: 5, Top: 7); Background: #c99436; }
+      Label #AdL4 { Text: ""; Style: (FontSize: 12, TextColor: #b8c2d0, RenderBold: true, VerticalAlignment: Center);  Anchor: (Left: 8); FlexWeight: 1; }
+    }
+    Group #AdR5 {
+      Anchor: (Height: 18);
+      LayoutMode: Left;
+      Visible: false;
+      Group { Anchor: (Width: 5, Height: 5, Top: 7); Background: #c99436; }
+      Label #AdL5 { Text: ""; Style: (FontSize: 12, TextColor: #b8c2d0, RenderBold: true, VerticalAlignment: Center);  Anchor: (Left: 8); FlexWeight: 1; }
+    }
+      }
+
+      // ---- pied : distance, mur
+      Group {
+        Anchor: (Top: 4, Height: 16);
+        LayoutMode: Left;
+        Label #AdDist { FlexWeight: 1; Text: ""; Style: (FontSize: 11, TextColor: #77879d, RenderBold: true, VerticalAlignment: Center); }
+        Label #AdWall { Anchor: (Width: 120); Text: ""; Style: (FontSize: 10, TextColor: #e05050, RenderBold: true, RenderUppercase: true, HorizontalAlignment: End, VerticalAlignment: Center); }
+      }
+    }
+  }
+}

@@ -71,12 +71,14 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
             UUID victimUUID = uuidComp.getUuid();
 
             if (processedDeaths.putIfAbsent(victimUUID, true) != null) return;
+            com.eldanior.system.skills.runes.spells.SansVisage.onDeath(victimUUID, entityRef, store, commandBuffer);   // le masque tombe
 
             // Skip tout si la victime ou le tueur est en duel (gere par DuelManager)
             if (DuelManager.isInDuel(victimUUID)) return;
 
             UUID killerUUID = EldaniorSystem.get().getLastAttackers().remove(victimUUID);
             if (killerUUID != null && DuelManager.isInDuel(killerUUID)) return;
+            com.eldanior.system.guards.BankLoans.onDeath(victimUUID);           // debiteur en defaut : il perdra tout
 
             // --- PÉNALITÉ DE MORT : -10% XP si la victime est un joueur ---
             if (store.getComponent(entityRef, Player.getComponentType()) != null) {
@@ -97,9 +99,18 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
         try {
             // Chasseur de prime : un PK tue perd sa prime (part au tresor de la ville), pas d'autre recompense
             if (com.eldanior.system.guards.BountyHunter.onKill(killerUUID, victimUUID, victimRef, store, commandBuffer)) return;
+            UUID petOwner = com.eldanior.system.familiers.FamilierManager.ownerOfPet(killerUUID);
+            if (petOwner != null) {                                                     // victoire d'un familier : XP du familier, part du maitre, butin
+                MobLevelData petVictim = store.getComponent(victimRef, EldaniorSystem.get().getMobLevelDataType());
+                com.eldanior.system.familiers.FamilierManager.onKill(killerUUID, petVictim != null ? petVictim.getLevel() : 1);
+                rewardCompanionKill(petOwner, victimRef, store, commandBuffer);
+                com.eldanior.system.monsterloot.MonsterLoot.drop(victimRef, store, commandBuffer);
+                return;
+            }
             UUID companionOwner = com.eldanior.system.guards.GuardManager.ownerOfCompanion(killerUUID);
             if (companionOwner != null) {
                 rewardCompanionKill(companionOwner, victimRef, store, commandBuffer);
+                com.eldanior.system.monsterloot.MonsterLoot.drop(victimRef, store, commandBuffer);
                 return;
             }
             PlayerRef killerRefObj = Universe.get().getPlayer(killerUUID);
@@ -184,7 +195,16 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
 
             // Criminel PNJ (guards/Criminals) ou monstre de contrat du jour (boards/MonsterContracts) : sa prime au tueur
             if (isMob) {
-                long reward = com.eldanior.system.guards.Criminals.claim(victimRef, store, killerRefObj.getUsername())
+                // 2026-11-13 : la prime d'un criminel ne va qu'au chasseur qui a pris son contrat (quete PRIME, un seul vainqueur)
+                String crim = com.eldanior.system.guards.Criminals.postIdOf(victimRef, store);
+                boolean contract = crim != null && com.eldanior.system.quest.chapitres.Primes.claim(killerUUID, crim, killerRefObj.getUsername());
+                com.eldanior.system.boards.DungeonBosses.killed(victimUUID, killerRefObj.getUsername());   // boss de donjon : annonce, retour plus tard
+                com.eldanior.system.boards.WorldBosses.killed(victimUUID, killerRefObj.getUsername());     // Boss Mondial (2026-11-19)
+                com.eldanior.system.territory.laws.Invasions.killed(victimUUID, killerUUID, killerRefObj.getUsername());   // defenseur d'une invasion
+                com.eldanior.system.failles.FailleManager.killed(victimUUID, killerUUID, killerRefObj.getUsername());   // failles-donjons
+                String contractKey = com.eldanior.system.boards.MonsterContracts.keyOf(victimUUID);   // contrat de monstre : fini pour tous
+                if (contractKey != null) com.eldanior.system.quest.chapitres.Primes.claim(killerUUID, contractKey, killerRefObj.getUsername());
+                long reward = (contract ? com.eldanior.system.guards.Criminals.claim(victimRef, store, killerRefObj.getUsername()) : 0)
                         + com.eldanior.system.boards.MonsterContracts.claim(victimUUID, killerRefObj.getUsername());
                 if (reward > 0) {
                     dataToWrite.addMoney(reward);
@@ -194,11 +214,20 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
                 }
             }
 
-            // Bonus XP Diligence (+20%)
-            if (dataToWrite.getActivePassives().contains(com.eldanior.system.skills.skillsInteraction.PassiveSkill.ANGE_DILIGENCE)) {
+            // Bonus XP Diligence (+20 %) et Bienveillance (+10 %)
+            if (dataToWrite.hasActivePassive(com.eldanior.system.skills.skillsInteraction.PassiveSkill.ANGE_DILIGENCE)) {
                 xpAmount = (int)(xpAmount * 1.20f);
             }
+            boolean bienveillance = dataToWrite.hasActivePassive(com.eldanior.system.skills.skillsInteraction.PassiveSkill.ANGE_BIENVEILLANCE);
+            if (bienveillance) xpAmount = (int)(xpAmount * 1.10f);
+            if (isMob && com.eldanior.system.config.Effects.EffectsManager.hasEffect(killerEntityRef, "Eld_Effet_Sagesse", killerStore)) {
+                xpAmount = (int) (xpAmount * 1.25f);                                           // Potion de Sagesse
+            }
+            if (com.eldanior.system.skills.runes.spells.LuoPassives.trainingBonus(killerEntityRef, killerStore)) {
+                xpAmount = (int) (xpAmount * 1.5f);                                            // Bokken du Dojo Luo : entrainement
+            }
             xpAmount = com.eldanior.system.guild.GuildUpgrade.applyXp(killerUUID, xpAmount);   // Sagesse de sa guilde
+            xpAmount = com.eldanior.system.familiers.FamilierManager.applyXp(killerUUID, xpAmount);   // deuil d'un familier : -20 %
             dataToWrite.addExperience(xpAmount);
 
             // --- GUILD STATS TRACKING ---
@@ -235,7 +264,9 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
 
                 // --- RECOMPENSE : si la victime etait PK, le tueur recoit la prime ---
                 PlayerLevelData victimDataPK = store.getComponent(victimRef, lvlType);
-                if (victimDataPK != null && victimDataPK.isPK()) {
+                // 2026-11-13 : la prime ne va qu'au chasseur qui a pris le contrat sur la victime (quete PRIME, un seul vainqueur)
+                if (victimDataPK != null && victimDataPK.getBounty() > 0
+                        && com.eldanior.system.quest.chapitres.Primes.claim(killerUUID, victimUUID.toString(), killerRefObj.getUsername())) {
                     long bountyReward = victimDataPK.getBounty();
                     long bonusXP = xpAmount * 2; // Double XP pour tuer un PK
                     long bonusGold = Math.max(1000, bountyReward);
@@ -310,7 +341,7 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
                 // Progression des skills de loot/chance à chaque kill de mob
                 for (var passive : dataToWrite.getActivePassives()) {
                     String name = passive.name();
-                    if ("FORTUNE_COINS".equals(name)) {
+                    if ("TREASURE_HUNTER".equals(name)) {
                         dataToWrite.addSkillProc(name);
                     }
                 }
@@ -330,7 +361,7 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
             // --- PARTAGE XP GROUPE (10% aux autres membres) ---
             Party killerParty = PartyManager.getParty(killerUUID);
             if (killerParty != null && xpAmount > 0) {
-                int sharedXP = Math.max(1, (int)(xpAmount * 0.10));
+                int sharedXP = Math.max(1, (int)(xpAmount * (bienveillance ? 0.30 : 0.10)));   // Bienveillance : 30 % au groupe
                 for (UUID memberUUID : killerParty.getMemberUUIDs()) {
                     if (memberUUID.equals(killerUUID)) continue;
                     PlayerRef memberRef = Universe.get().getPlayer(memberUUID);
@@ -343,7 +374,7 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
                     PlayerLevelData memberCopy = (PlayerLevelData) memberData.clone();
                     if (memberCopy == null) continue;
                     int memberOldLvl = memberCopy.getLevel();
-                    memberCopy.addExperience(sharedXP);
+                    memberCopy.addExperience(com.eldanior.system.familiers.FamilierManager.applyXp(memberUUID, sharedXP));
                     write(memberUUID, memberEntityRef, memberCopy, lvlType, commandBuffer);
                     NotificationHelper.sendNotification(memberRef,
                             "<color:aqua>+" + sharedXP + " XP (groupe)</color>",
@@ -355,6 +386,10 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
             }
 
             if (isMob) {
+                com.eldanior.system.monsterloot.MonsterLoot.drop(victimRef, store, commandBuffer);   // butin propre au monstre
+                if (com.eldanior.system.config.Effects.EffectsManager.hasEffect(killerEntityRef, "Eld_Effet_Fortune", killerStore)) {
+                    com.eldanior.system.monsterloot.MonsterLoot.drop(victimRef, store, commandBuffer);   // Potion de Fortune : second tirage
+                }
                 NPCEntity npcComp = store.getComponent(victimRef, NPCEntity.getComponentType());
                 if (npcComp != null) {
                     double chanceStat = (killerDataRead != null) ? killerDataRead.getLuck() : 0.0;
@@ -475,7 +510,7 @@ public class DeathXPSystem extends EntityTickingSystem<EntityStore> {
         PlayerLevelData data = latest(playerUUID, entityRef, entityRef.getStore(), lvlType);
         if (data == null) return;
         double multiplier = Math.clamp(1.0 + ((victimLevel - data.getLevel()) * 0.02), 0.2, 2.0);
-        int sharedXP = Math.max(1, (int) Math.round(xpAmount * multiplier * 0.10));
+        int sharedXP = com.eldanior.system.familiers.FamilierManager.applyXp(playerUUID, Math.max(1, (int) Math.round(xpAmount * multiplier * 0.10)));
         PlayerLevelData copy = (PlayerLevelData) data.clone();
         if (copy == null) return;
         int oldLvl = copy.getLevel();

@@ -1,0 +1,19 @@
+{
+  "$Comment": "Pierre philosophale : immunite au poison (comme Immunity_Poison vanilla), teinte or-rouge. Pose une fois 10 s.",
+  "Duration": 10.0,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": false,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Rune_PierrePhilosophale.png",
+  "ApplicationEffects": {
+    "EntityTopTint": "#fff0d8",
+    "EntityBottomTint": "#d8483a"
+  },
+  "DamageResistance": {
+    "Poison": [
+      {
+        "Amount": 1.0,
+        "CalculationType": "Percent"
+      }
+    ]
+  }
+}

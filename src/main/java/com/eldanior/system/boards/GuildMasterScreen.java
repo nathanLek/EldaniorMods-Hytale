@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Fenetre du Maitre de guilde (PNJ de poste, touche d'interaction : GuildMasterSystem), au design des tableaux :
+ * Fenetre du Maitre de guilde (PNJ de poste, touche d'interaction : NpcInteractSystem, NpcServices), au design des tableaux :
  *   - Fonder : guildes en recrutement ouvert (fiche, Rejoindre) ; sans selection, fonder sa guilde (nom, tag) pour
  *     {@link #FOUND_COST} or a partir du niveau {@link #FOUND_LEVEL} (memes regles que /es guildcreate, reservee aux admins).
  *   - Ameliorations : Sagesse, Fortune, Effectifs (GuildUpgrade), achetees par le chef avec le tresor de la guilde.

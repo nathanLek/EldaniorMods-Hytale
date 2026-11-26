@@ -1,0 +1,40 @@
+{
+  "$Comment": "Signature de Carnwennan, Dague de l'Ombre (energie de signature pleine) : sort Java VoileDeLOmbre (ArmesDivines). Genere par gen_divines.py.",
+  "Type": "StatsCondition",
+  "Costs": {
+    "SignatureEnergy": 100
+  },
+  "ValueType": "Percent",
+  "Next": {
+    "Type": "Serial",
+    "Interactions": [
+      {
+        "Type": "Simple",
+        "RunTime": 0.45,
+        "Effects": {
+          "ItemAnimationId": "RazorstrikeCharging"
+        }
+      },
+      {
+        "Type": "Simple",
+        "RunTime": 0.3,
+        "Effects": {
+          "ItemAnimationId": "RazorstrikeLunge",
+          "ClearAnimationOnFinish": true
+        }
+      },
+      {
+        "Type": "RuneSpell",
+        "RunTime": 0.05,
+        "Spell": "VoileDeLOmbre"
+      },
+      {
+        "Type": "ChangeStat",
+        "StatModifiers": {
+          "SignatureEnergy": -100
+        },
+        "ValueType": "Percent"
+      }
+    ]
+  }
+}

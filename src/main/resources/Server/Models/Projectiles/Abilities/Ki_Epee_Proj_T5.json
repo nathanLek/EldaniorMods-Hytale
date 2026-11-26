@@ -1,0 +1,51 @@
+{
+  "$Comment": "Epee 3D de Ki, palier 5 (Projection d'epee d'Aura) : katana vanilla recolore, trainee et fumee de Ki (gen_voie_martiale.py, epees_projection). L'origine du modele est la pointe.",
+  "Model": "Items/Projectiles/Projectile.blockymodel",
+  "Texture": "Items/Projectiles/Projectile_default.png",
+  "DefaultAttachments": [
+    {
+      "Model": "Items/Weapons/Longsword/Katana.blockymodel",
+      "Texture": "Items/Projectiles/Ki/Ki_Epee_T5.png"
+    }
+  ],
+  "MinScale": 1.5,
+  "MaxScale": 1.5,
+  "HitBox": {
+    "Max": {
+      "X": 0.5,
+      "Y": 0.1,
+      "Z": 0.1
+    },
+    "Min": {
+      "X": -0.5,
+      "Y": -0.1,
+      "Z": -0.1
+    }
+  },
+  "Trails": [
+    {
+      "TrailId": "Ki_Epee_Trail_T5",
+      "TargetNodeName": "Sword Base",
+      "PositionOffset": {
+        "X": 0.3,
+        "Y": 0,
+        "Z": 0
+      }
+    }
+  ],
+  "Particles": [
+    {
+      "SystemId": "Ki_Epee_Fumee_T5",
+      "TargetNodeName": "Sword Base",
+      "PositionOffset": {
+        "X": 0.3,
+        "Y": 0,
+        "Z": 0
+      }
+    }
+  ],
+  "Light": {
+    "Color": "#a050ff",
+    "Radius": 6
+  }
+}

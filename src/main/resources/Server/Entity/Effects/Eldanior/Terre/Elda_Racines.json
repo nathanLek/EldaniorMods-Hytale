@@ -1,0 +1,37 @@
+{
+  "$Comment": "Racines du Druide (Rune_Racines, Rune_EspritForet) : la cible est enserree par les racines de l'effet vanilla Root et immobilisee. Duree reglee par le code (applyCustomEffect).",
+  "Duration": 1.5,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": true,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Rune_Racines.png",
+  "ModelOverride": {
+    "Model": "VFX/Spells/Roots/Model.blockymodel",
+    "Texture": "VFX/Spells/Roots/Model.png",
+    "AnimationSets": {
+      "Spawn": {
+        "Animations": [
+          {
+            "Animation": "VFX/Spells/Roots/Spawn.blockyanim",
+            "Looping": false
+          }
+        ]
+      },
+      "Despawn": {
+        "Animations": [
+          {
+            "Animation": "VFX/Spells/Roots/Despawn.blockyanim",
+            "Looping": false
+          }
+        ]
+      }
+    }
+  },
+  "ApplicationEffects": {
+    "EntityTopTint": "#6a8a3a",
+    "EntityBottomTint": "#2a3a10",
+    "MovementEffects": {
+      "DisableAll": true
+    },
+    "KnockbackMultiplier": 0
+  }
+}

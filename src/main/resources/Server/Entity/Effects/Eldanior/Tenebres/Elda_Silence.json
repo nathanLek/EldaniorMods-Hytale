@@ -1,0 +1,13 @@
+{
+  "$Comment": "Silence du Neant (Rune_SilenceNeant) : teinte sombre et icone ; l'interdiction des runes est geree par RuneSpellRuntime.silence. Reapplique par le code tant que la cible est dans le domaine.",
+  "Duration": 1.5,
+  "ApplicationEffects": {
+    "EntityTopTint": "#2a1640",
+    "EntityBottomTint": "#0d0614"
+  },
+  "OverlapBehavior": "Overwrite",
+  "Infinite": false,
+  "Debuff": true,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Rune_SilenceNeant.png",
+  "Locale": "Silence"
+}

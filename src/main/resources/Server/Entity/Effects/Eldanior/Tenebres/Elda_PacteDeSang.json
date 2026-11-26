@@ -1,0 +1,20 @@
+{
+  "$Comment": "Pacte de Sang : visuel (bonus et vol de vie geres par le code).",
+  "Duration": 10,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#2a0000",
+    "EntityTopTint": "#c4001a",
+    "Particles": [
+      {
+        "SystemId": "Blood_Effect_Daggers",
+        "TargetEntityPart": "Entity",
+        "TargetNodeName": "Chest",
+        "Scale": 0.8
+      }
+    ]
+  },
+  "OverlapBehavior": "Overwrite",
+  "Infinite": false,
+  "Debuff": false,
+  "StatusEffectIcon": "UI/StatusEffects/Burn.png"
+}

@@ -1,0 +1,58 @@
+{
+  "$Comment": "Munition des mousquets (1 par tir, avec 1 Poudre a canon). scripts/artefacts/gen_mousquets.py.",
+  "TranslationProperties": {
+    "Name": "Balle de fer",
+    "Description": "Bourse de balles rondes de fer coulé, au calibre du mousquet. Une balle par tir, avec une Poudre à canon. Coulées par 8 à l'établi d'armes."
+  },
+  "Categories": [
+    "Items.Weapons"
+  ],
+  "Quality": "Common",
+  "ItemLevel": 20,
+  "Model": "Items/Weapons/artefacts/Munition_Balle_Fer.blockymodel",
+  "Texture": "Items/Weapons/artefacts/Munition_Balle_Fer.png",
+  "Icon": "Icons/ItemsGenerated/Munition_Balle_Fer.png",
+  "IconProperties": {
+    "Scale": 0.5,
+    "Rotation": [
+      45.0,
+      90.0,
+      0.0
+    ],
+    "Translation": [
+      -25.0,
+      -25.0
+    ]
+  },
+  "DroppedItemAnimation": "Items/Animations/Dropped/Dropped_Diagonal_Left.blockyanim",
+  "MaxStack": 100,
+  "DropOnDeath": true,
+  "Tags": {
+    "Type": [
+      "Weapon"
+    ],
+    "Family": [
+      "Munition"
+    ]
+  },
+  "Recipe": {
+    "TimeSeconds": 2,
+    "KnowledgeRequired": false,
+    "Input": [
+      {
+        "ItemId": "Ingredient_Bar_Iron",
+        "Quantity": 1
+      }
+    ],
+    "OutputQuantity": 8,
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "Weapon_Bench",
+        "Categories": [
+          "Weapon_Bow"
+        ]
+      }
+    ]
+  }
+}

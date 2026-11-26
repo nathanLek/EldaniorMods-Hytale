@@ -1,0 +1,40 @@
+{
+  "$Comment": "Manuel secret du Clan Luo, genere par scripts/familles/gen_voie_martiale_objets.py. Maintenir le clic droit : lecture (animation Lecture de Luo_Manuel), puis le sort Java LuoManuelApprendre enseigne Rune_TransformationHwakyung.",
+  "TranslationProperties": {
+    "Name": "Manuel secret du clan Sama — Transformation Hwakyung",
+    "Description": "Technique du clan Sama : Transformation Hwakyung. Maintenez le clic droit pour lire le manuel et apprendre la technique (membres du clan Sama, niveau 500). Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Empire_Luo.Sama"
+  ],
+  "Quality": "Legendary",
+  "ItemLevel": 60,
+  "Model": "Items/Eldanior/Luo/Voie/Manuel_Luo.blockymodel",
+  "Texture": "Items/Eldanior/Luo/Voie/Eldanior_Manuel_Luo_TransformationHwakyung_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Luo_TransformationHwakyung.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Luo_Manuel_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 1.0
+}

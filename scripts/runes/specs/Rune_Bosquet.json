@@ -1,0 +1,70 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_Bosquet",
+  "spell": "Bosquet",
+  "javaClass": "Bosquet",
+  "page": "rune_page_bosquet",
+  "name": "Rune du Bosquet",
+  "type": "Terre",
+  "rarity": "Epic",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Bosquet",
+  "summary": "bosquet 10 s au point vise (rayon 7) : 3 arbres et une haie de ronces ; allies +3 % PV/s, ennemis 12 / 0,5 s et ralentis.",
+  "description": "Sort épique de terre (Mage, rune de prédilection de l'Arche Druide). Un bosquet pousse au point visé (rayon 7, jusqu'à 20 blocs) pendant 10 s : trois arbres au centre, une haie de ronces sur le pourtour. Vos alliés (vous compris) qui s'y tiennent récupèrent 3 % de leurs PV par seconde ; les ennemis y subissent 12 dégâts toutes les demi-secondes et sont ralentis (-40 %). Le bosquet disparaît ensuite (jamais en ville ni sur une parcelle). Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin où sont pressées trois feuilles et une épine. Enseigne le Bosquet : un refuge pour les vôtres, un piège pour les autres. Classes : tous les Mages (rune de prédilection de l'Arche Druide). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe",
+    "Duration",
+    "Heal"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.5,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Deployable_Totem_Heal_Spawn",
+    "handParticles": "Gaia_Dust_Burst",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.5,
+    "range": 20,
+    "radius": "7",
+    "targets": "zone : allies et ennemis",
+    "executionFx": "arbres qui poussent couche par couche (0,15 s), Block_Break_Leaves a chaque couche",
+    "persistentFx": "Block_Break_Leaves sur les houppiers / s, Block_Break_Dirt dans les ronces",
+    "sounds": "SFX_Deployable_Totem_Heal_Spawn a la pousse, SFX_Emit_Tree_Creak, SFX_Bramble_MoveIn sur les ennemis",
+    "effects": "allies : +1,5 % PV / 0,5 s ; ennemis : 12 Physical / 0,5 s + Yggdrasil_Ronces (x0,6)",
+    "terrain": "3 arbres Wood_Oak_Trunk + Plant_Leaves_Oak (~80 blocs) et ronces Plant_Bramble_Moss_Twisted sur sol de terre (~40), restaures a 10 s",
+    "persistentDurationS": 10,
+    "interruptions": "aucune",
+    "restrictions": "mage",
+    "edgeCases": "cases non vides, blocs conserves, fluides, zone protegee : intouchees ; ronces seulement sur Soil_*",
+    "limitations": "les blocs du bosquet peuvent etre casses pendant 10 s (comme ceux de Rempart ou d'Yggdrasil) ; la restauration remet le sol d'origine",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 2,
+      "mobility": 0,
+      "control": 1,
+      "defense": 2,
+      "targets": 3,
+      "frequency": 1,
+      "terrain": 2,
+      "difficulty": 1
+    }
+  }
+}

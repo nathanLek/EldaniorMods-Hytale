@@ -1,6 +1,6 @@
 package com.eldanior.system.config;
 
-import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
+import com.eldanior.system.skills.skillsInteraction.Metier;
 
 import java.util.Map;
 import java.util.Set;
@@ -24,18 +24,19 @@ public final class CraftingConfig {
             "arcane", "workbench"
     );
 
-    // Mapping : mot-cle du bench -> competence requise
+    // Mapping : mot-cle du bench -> metier requis (les metiers sont sortis des passifs le 2026-11-24)
     // Utilise contains() donc matche "bench_weapon", "weapon_bench", etc.
-    public static final Map<String, PassiveSkill> BENCH_SKILLS = Map.ofEntries(
-            Map.entry("cooking", PassiveSkill.CRAFT_CUISINE),
-            Map.entry("furnace", PassiveSkill.CRAFT_FONDERIE),
-            Map.entry("armor", PassiveSkill.CRAFT_ARMURERIE),
-            Map.entry("armour", PassiveSkill.CRAFT_ARMURERIE),
-            Map.entry("weapon", PassiveSkill.CRAFT_FORGE_ARMES),
-            Map.entry("tannery", PassiveSkill.CRAFT_TANNERIE),
-            Map.entry("alchemy", PassiveSkill.CRAFT_ALCHIMIE),
-            Map.entry("lumbermill", PassiveSkill.CRAFT_SCIERIE),
-            Map.entry("farming", PassiveSkill.CRAFT_AGRICULTURE),
-            Map.entry("salvage", PassiveSkill.CRAFT_RECYCLAGE)
+    public static final Map<String, Metier> BENCH_SKILLS = Map.ofEntries(
+            Map.entry("cooking", Metier.CRAFT_CUISINE),
+            Map.entry("furnace", Metier.CRAFT_FONDERIE),
+            Map.entry("armor", Metier.CRAFT_ARMURERIE),
+            Map.entry("armour", Metier.CRAFT_ARMURERIE),
+            Map.entry("weapon", Metier.CRAFT_FORGE_ARMES),
+            Map.entry("forge_divine", Metier.CRAFT_FORGE_DIVINE),
+            Map.entry("tannery", Metier.CRAFT_TANNERIE),
+            Map.entry("alchemy", Metier.CRAFT_ALCHIMIE),
+            Map.entry("lumbermill", Metier.CRAFT_SCIERIE),
+            Map.entry("farming", Metier.CRAFT_AGRICULTURE),
+            Map.entry("salvage", Metier.CRAFT_RECYCLAGE)
     );
 }

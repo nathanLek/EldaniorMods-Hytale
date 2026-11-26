@@ -1,0 +1,10 @@
+{
+  "$Comment": "Bulle temporelle : ennemi ralenti (x0,5). Sans teinte : reapplique toutes les 0,5 s.",
+  "Duration": 1.0,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": true,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Rune_BulleTemporelle.png",
+  "ApplicationEffects": {
+    "HorizontalSpeedMultiplier": 0.5
+  }
+}

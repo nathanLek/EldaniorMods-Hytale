@@ -42,22 +42,6 @@ public class ConsumableItemStatsInteraction extends SimpleInteraction {
 
             String itemId = heldItem.getItemId();
 
-            // Bloquer l'utilisation si l'item est un catalyst de competence active non apprise
-            var skillOpt = com.eldanior.system.skills.SkillManager.getAllSkills().stream()
-                    .filter(s -> itemId.equals(s.catalystId()))
-                    .findFirst();
-            if (skillOpt.isPresent()) {
-                boolean hasSkill = data.getUnlockedSkills().contains(skillOpt.get().skillId());
-                if (!hasSkill) {
-                    var classModel = com.eldanior.system.classes.ClassManager.get(data.getPlayerClassId());
-                    hasSkill = classModel != null && classModel.getActiveSkillIds().contains(skillOpt.get().skillId());
-                }
-                if (!hasSkill) {
-                    player.getPlayerRef().sendMessage(com.hypixel.hytale.server.core.Message.raw("Vous n'avez pas appris cette competence !"));
-                    return;
-                }
-            }
-
             StatsItemEffect effect = StatsItemRegistry.getEffect(itemId).orElse(null);
             if (effect == null) return;
 
@@ -70,6 +54,8 @@ public class ConsumableItemStatsInteraction extends SimpleInteraction {
             }
 
             if (msgParts.length() == 0) return;
+            try { com.eldanior.system.titles.nobility.family.RoyalHouse.sync(playerRef, playerRef.getStore(), data); }   // rang Roi : Patriarche d'Eldanior
+            catch (Exception e) { EldaniorLogger.error("ConsumableItemStatsInteraction", e); }
 
             // Recalculer les stats
             try {

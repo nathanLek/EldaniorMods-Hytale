@@ -1,0 +1,69 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_EruptionPrimordiale",
+  "spell": "EruptionPrimordiale",
+  "javaClass": "EruptionPrimordiale",
+  "page": "rune_page_eruption_primordiale",
+  "name": "Rune de l'Éruption Primordiale",
+  "type": "Feu",
+  "rarity": "Unique",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Eruption",
+  "summary": "12 s au point vise (rayon 10) : 6 geysers de lave (alerte 0,8 s) sous les ennemis : 180 + projection + brulure, chacun laisse une mare de lave (15 / 0,5 s).",
+  "description": "Sort unique de feu (Mage, rune de prédilection du Primordial). Le sol du point visé (rayon 10, jusqu'à 25 blocs) s'éveille pendant 12 s : six geysers de lave jaillissent l'un après l'autre, de préférence sous vos ennemis, chacun annoncé par une lueur rouge 0,8 s avant. Un geyser inflige 180 dégâts, projette en l'air et enflamme ; il laisse une mare de lave qui brûle quiconque s'y tient (15 dégâts toutes les demi-secondes). Le sol est restauré ensuite (jamais en ville ni sur une parcelle). Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin tiède, marqué en son centre d'une brûlure ronde. Enseigne l'Éruption Primordiale : le feu d'avant le monde remonte à la surface. Classes : tous les Mages (rune de prédilection du Primordial). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.6,
+    "releaseTime": 0.5,
+    "moveSpeed": 0.4,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Flame_Ignite",
+    "handParticles": "Impact_Fire",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.6,
+    "range": 25,
+    "radius": "10 (zone) / 2,5 (geyser)",
+    "targets": "ennemis de la zone",
+    "executionFx": "alerte Muspelheim_Impact_Zone (0,8 s) puis colonne Muspelheim_Fire_Pillar + Impact_Fire",
+    "persistentFx": "mares de lave (blocs) ; Impact_Fire sur les ennemis brules",
+    "sounds": "SFX_Flame_Ignite a l'incantation, SFX_Emit_Goblin_Flame_Quadrant_Blast a chaque geyser",
+    "effects": "geyser : 180 Fire + poussee 14 vers le haut + Elda_Brulure (r 2,5) ; mare : 15 Fire / 0,5 s + Elda_Brulure",
+    "terrain": "6 mares de 3x3 en Rock_Volcanic_Cracked_Lava (surface, ~54 blocs), restaurees a la fin",
+    "persistentDurationS": 12,
+    "interruptions": "lanceur mort ou deconnecte : fin, sol restaure",
+    "restrictions": "mage",
+    "edgeCases": "geyser sans ennemi : point au hasard ; un ennemi deja vise par les 2 derniers geysers est evite ; sol protege ou eau : pas de mare",
+    "limitations": "Rock_Volcanic_Cracked_Lava est un bloc decoratif : la brulure de la mare est geree par le code",
+    "balance": {
+      "damage": 3,
+      "range": 2,
+      "duration": 2,
+      "mobility": 0,
+      "control": 1,
+      "defense": 0,
+      "targets": 3,
+      "frequency": 1,
+      "terrain": 2,
+      "difficulty": 1
+    }
+  }
+}

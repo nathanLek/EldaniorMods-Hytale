@@ -1,0 +1,66 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_EspritForet",
+  "spell": "EspritForet",
+  "javaClass": "EspritForet",
+  "page": "rune_page_esprit_foret",
+  "name": "Rune de l'Esprit de la Forêt",
+  "type": "Terre",
+  "rarity": "Epic",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "EspritForet",
+  "summary": "invoque un esprit-arbre gardien 25 s (800 PV) qui frappe au corps a corps et, toutes les 3 s, enracine les 2 ennemis les plus proches de vous (80, 1 s).",
+  "description": "Sort épique de terre (Mage, rune de prédilection du Gardien de la Nature). Un esprit de la forêt (800 PV) sort de terre devant vous pendant 25 s. Il frappe l'ennemi le plus proche de ses bras-branches et, toutes les 3 s, fait jaillir des racines sous les 2 ennemis les plus proches de vous (12 blocs) : 80 dégâts et immobilisés 1 s. Sans ennemi, il vous suit. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin noué d'un brin de lierre qui frémit tout seul. Enseigne l'Esprit de la Forêt : un gardien ancien veille sur vous. Classes : tous les Mages (rune de prédilection du Gardien de la Nature). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.6,
+    "releaseTime": 0.5,
+    "moveSpeed": 0.4,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Spirit_Root_Spawn",
+    "handParticles": "Gaia_Dust_Burst",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.6,
+    "range": 4,
+    "targets": "esprit allie (PNJ Eldanior_Summon_Esprit_Foret, modele Hedera vanilla recolore)",
+    "executionFx": "Gaia_Dust_Burst + Block_Break_Leaves a l'apparition",
+    "impactFx": "Block_Break_Dirt + Gaia_Dust_Burst sous chaque ennemi enracine",
+    "sounds": "SFX_Spirit_Root_Spawn, SFX_Emit_Tree_Creak a l'apparition, SFX_Bramble_Break a chaque enracinement",
+    "effects": "esprit 800 PV, griffes de Hedera (Root_NPC_Hedera_BasicAttacks) ; / 3 s : 2 ennemis a 12 blocs du lanceur (les plus proches) : 80 Earth + Elda_Racines + lockInPlace 1 s",
+    "terrain": "aucun",
+    "persistentDurationS": 25,
+    "interruptions": "esprit vaincu : fin du sort",
+    "restrictions": "mage",
+    "edgeCases": "esprit non cree (chunk) : fin apres 3 s ; ennemis invoques ignores",
+    "limitations": "invocation : duree au-dela de la fourchette Epic (10 s), comme le Golem de Pierre (Rare, 20 s) : une invocation de 10 s n'a pas de sens ; compensee par des PV limites et une recharge de 120 s",
+    "balance": {
+      "damage": 2,
+      "range": 1,
+      "duration": 3,
+      "mobility": 0,
+      "control": 2,
+      "defense": 2,
+      "targets": 2,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 0
+    }
+  }
+}

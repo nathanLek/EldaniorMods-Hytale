@@ -1,0 +1,1281 @@
+$C = "../Common.ui";
+
+// Fenetre a cartes d'Eldanior : accueil (accueil/WelcomePage) et statue des classes (classes/gui/ClassChoicePage),
+// generee par scripts/accueil/gen_accueil_ui.py.
+Group {
+  LayoutMode: Middle;
+  Background: (TexturePath: "AccBackground.png");
+
+  Group #AccPage {
+    Anchor: (Width: 1920, Height: 1080);
+
+    // ---- fond : carte du continent (AccBackground), bande d'encre, lueur, ombre, eclats ----
+    Group { Anchor: (Left: 499, Top: 0, Width: 504, Height: 1080); Background: (TexturePath: "../Quest/ChapSeparator.png"); }
+    Group { Anchor: (Left: 480, Top: 25, Width: 488, Height: 1055); Background: (TexturePath: "../Quest/ChapGlows.png"); }
+    Group { Anchor: (Left: 615, Top: 194, Width: 391, Height: 736); Background: (TexturePath: "../Quest/ChapShadow.png"); }
+    Group { Anchor: (Left: 0, Top: 0, Width: 1920, Height: 1080); Background: (TexturePath: "../Quest/ChapShards.png"); }
+
+    // ---- bandeau Eldanior ----
+    Group { Anchor: (Left: 0, Top: 0, Width: 1920, Height: 100); Background: #05070f(0.62); }
+    Group { Anchor: (Left: 0, Top: 100, Width: 1920, Height: 2); Background: #c58643(0.55); }
+    Group { Anchor: (Left: 64, Top: 12, Width: 76, Height: 76); Background: (TexturePath: "AccCrest.png"); }
+    Label {
+      Anchor: (Left: 152, Top: 10, Width: 420, Height: 50);
+      Text: "Eldanior";
+      Style: (FontName: "Secondary", FontSize: 42, RenderBold: true, RenderUppercase: true, TextColor: #f2c45e, VerticalAlignment: Center);
+    }
+    Label #AccBrandSub {
+      Anchor: (Left: 154, Top: 58, Width: 440, Height: 26);
+      Style: (FontSize: 14, RenderBold: true, RenderUppercase: true, TextColor: #b9a2d8, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+    }
+    Group #AccSteps {
+      Anchor: (Left: 611, Top: 18, Width: 1105, Height: 66);
+      Button #AccStep0 {
+        Anchor: (Left: 0, Top: 0, Width: 262, Height: 64);
+        Style: (Default: (Background: #000000(0)), Hovered: (Background: #ffffff(0.05)), Sounds: $C.@ButtonSounds);
+        Group #AccStepOff0 { Anchor: (Left: 6, Top: 13, Width: 38, Height: 38); Background: (TexturePath: "../Quest/ChapCheckOff.png"); }
+        Group #AccStepOn0 { Anchor: (Left: 6, Top: 13, Width: 38, Height: 38); Background: (TexturePath: "../Quest/ChapCheckOn.png"); Visible: false; }
+        Label #AccStepNum0 {
+          Anchor: (Left: 6, Top: 13, Width: 38, Height: 38);
+          Style: (FontName: "Secondary", FontSize: 17, RenderBold: true, TextColor: #1b1420, HorizontalAlignment: Center, VerticalAlignment: Center);
+        }
+        Label #AccStepLbl0 {
+          Anchor: (Left: 54, Top: 0, Width: 202, Height: 64);
+          Style: (FontName: "Secondary", FontSize: 21, RenderBold: true, RenderUppercase: true, TextColor: #77879d, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 14);
+        }
+        Group #AccStepBar0 { Anchor: (Left: 6, Top: 60, Width: 242, Height: 3); Background: #f2c45e; Visible: false; }
+      }
+      Button #AccStep1 {
+        Anchor: (Left: 276, Top: 0, Width: 262, Height: 64);
+        Style: (Default: (Background: #000000(0)), Hovered: (Background: #ffffff(0.05)), Sounds: $C.@ButtonSounds);
+        Group #AccStepOff1 { Anchor: (Left: 6, Top: 13, Width: 38, Height: 38); Background: (TexturePath: "../Quest/ChapCheckOff.png"); }
+        Group #AccStepOn1 { Anchor: (Left: 6, Top: 13, Width: 38, Height: 38); Background: (TexturePath: "../Quest/ChapCheckOn.png"); Visible: false; }
+        Label #AccStepNum1 {
+          Anchor: (Left: 6, Top: 13, Width: 38, Height: 38);
+          Style: (FontName: "Secondary", FontSize: 17, RenderBold: true, TextColor: #1b1420, HorizontalAlignment: Center, VerticalAlignment: Center);
+        }
+        Label #AccStepLbl1 {
+          Anchor: (Left: 54, Top: 0, Width: 202, Height: 64);
+          Style: (FontName: "Secondary", FontSize: 21, RenderBold: true, RenderUppercase: true, TextColor: #77879d, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 14);
+        }
+        Group #AccStepBar1 { Anchor: (Left: 6, Top: 60, Width: 242, Height: 3); Background: #f2c45e; Visible: false; }
+      }
+      Button #AccStep2 {
+        Anchor: (Left: 552, Top: 0, Width: 262, Height: 64);
+        Style: (Default: (Background: #000000(0)), Hovered: (Background: #ffffff(0.05)), Sounds: $C.@ButtonSounds);
+        Group #AccStepOff2 { Anchor: (Left: 6, Top: 13, Width: 38, Height: 38); Background: (TexturePath: "../Quest/ChapCheckOff.png"); }
+        Group #AccStepOn2 { Anchor: (Left: 6, Top: 13, Width: 38, Height: 38); Background: (TexturePath: "../Quest/ChapCheckOn.png"); Visible: false; }
+        Label #AccStepNum2 {
+          Anchor: (Left: 6, Top: 13, Width: 38, Height: 38);
+          Style: (FontName: "Secondary", FontSize: 17, RenderBold: true, TextColor: #1b1420, HorizontalAlignment: Center, VerticalAlignment: Center);
+        }
+        Label #AccStepLbl2 {
+          Anchor: (Left: 54, Top: 0, Width: 202, Height: 64);
+          Style: (FontName: "Secondary", FontSize: 21, RenderBold: true, RenderUppercase: true, TextColor: #77879d, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 14);
+        }
+        Group #AccStepBar2 { Anchor: (Left: 6, Top: 60, Width: 242, Height: 3); Background: #f2c45e; Visible: false; }
+      }
+      Button #AccStep3 {
+        Anchor: (Left: 828, Top: 0, Width: 262, Height: 64);
+        Style: (Default: (Background: #000000(0)), Hovered: (Background: #ffffff(0.05)), Sounds: $C.@ButtonSounds);
+        Group #AccStepOff3 { Anchor: (Left: 6, Top: 13, Width: 38, Height: 38); Background: (TexturePath: "../Quest/ChapCheckOff.png"); }
+        Group #AccStepOn3 { Anchor: (Left: 6, Top: 13, Width: 38, Height: 38); Background: (TexturePath: "../Quest/ChapCheckOn.png"); Visible: false; }
+        Label #AccStepNum3 {
+          Anchor: (Left: 6, Top: 13, Width: 38, Height: 38);
+          Style: (FontName: "Secondary", FontSize: 17, RenderBold: true, TextColor: #1b1420, HorizontalAlignment: Center, VerticalAlignment: Center);
+        }
+        Label #AccStepLbl3 {
+          Anchor: (Left: 54, Top: 0, Width: 202, Height: 64);
+          Style: (FontName: "Secondary", FontSize: 21, RenderBold: true, RenderUppercase: true, TextColor: #77879d, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 14);
+        }
+        Group #AccStepBar3 { Anchor: (Left: 6, Top: 60, Width: 242, Height: 3); Background: #f2c45e; Visible: false; }
+      }
+    }
+    Label #AccHeadline {
+      Anchor: (Left: 611, Top: 18, Width: 1105, Height: 64);
+      Visible: false;
+      Style: (FontName: "Secondary", FontSize: 36, RenderBold: true, RenderUppercase: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center);
+    }
+
+    // ---- carrousel ----
+    Button #AccCard0 {
+      Anchor: (Left: 587, Top: 204, Width: 392, Height: 720);
+      Style: (
+        Default: (Background: #000000(0)),
+        Hovered: (Background: (TexturePath: "../Quest/ChapCardHover.png")),
+        Pressed: (Background: (TexturePath: "../Quest/ChapCardHover.png", Color: #ffffff(0.6))),
+        Sounds: $C.@ButtonSounds
+      );
+      Group #AccArtRoyaumeG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtRoyaumeG.png"); Visible: false; }
+      Group #AccArtRoyaumeC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtRoyaumeC.png"); Visible: false; }
+      Group #AccArtGrimoireG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtGrimoireG.png"); Visible: false; }
+      Group #AccArtGrimoireC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtGrimoireC.png"); Visible: false; }
+      Group #AccArtGuerrierG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtGuerrierG.png"); Visible: false; }
+      Group #AccArtGuerrierC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtGuerrierC.png"); Visible: false; }
+      Group #AccArtMageG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtMageG.png"); Visible: false; }
+      Group #AccArtMageC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtMageC.png"); Visible: false; }
+      Group #AccArtArcherG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtArcherG.png"); Visible: false; }
+      Group #AccArtArcherC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtArcherC.png"); Visible: false; }
+      Group #AccArtAssassinG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtAssassinG.png"); Visible: false; }
+      Group #AccArtAssassinC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtAssassinC.png"); Visible: false; }
+      Group #AccArtMarchandG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtMarchandG.png"); Visible: false; }
+      Group #AccArtMarchandC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtMarchandC.png"); Visible: false; }
+      Group #AccArtRunesG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtRunesG.png"); Visible: false; }
+      Group #AccArtRunesC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtRunesC.png"); Visible: false; }
+      Group #AccArtFailleG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtFailleG.png"); Visible: false; }
+      Group #AccArtFailleC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtFailleC.png"); Visible: false; }
+      Group #AccArtGuildesG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtGuildesG.png"); Visible: false; }
+      Group #AccArtGuildesC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtGuildesC.png"); Visible: false; }
+      Group #AccArtBanqueG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtBanqueG.png"); Visible: false; }
+      Group #AccArtBanqueC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtBanqueC.png"); Visible: false; }
+      Group #AccArtDojoG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "../Quest/ChapArtDojoG.png"); Visible: false; }
+      Group #AccArtDojoC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "../Quest/ChapArtDojoC.png"); Visible: false; }
+      Group #AccArtAubeG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "../Quest/ChapArtAubeG.png"); Visible: false; }
+      Group #AccArtAubeC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "../Quest/ChapArtAubeC.png"); Visible: false; }
+      Group #AccArtAreneG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "../Quest/ChapArtAreneG.png"); Visible: false; }
+      Group #AccArtAreneC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "../Quest/ChapArtAreneC.png"); Visible: false; }
+      Group #AccArtRumeursG0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "../Quest/ChapArtRumeursG.png"); Visible: false; }
+      Group #AccArtRumeursC0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "../Quest/ChapArtRumeursC.png"); Visible: false; }
+      Group #AccArtSlot0 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); }
+      Group { Anchor: (Left: 34, Top: 483, Width: 324, Height: 165); Background: (TexturePath: "../Quest/ChapCardShade.png"); }
+      Group #AccFrameD0Base { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameDefault.png"); Visible: false; }
+      Group #AccFrameS0Base { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameSelected.png"); Visible: false; }
+      Group #AccFrameD0Blanc { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefaultBlanc.png"); Visible: false; }
+      Group #AccFrameS0Blanc { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameSelectedBlanc.png"); Visible: false; }
+      Group #AccFrameD0Or { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameDefaultOr.png"); Visible: false; }
+      Group #AccFrameS0Or { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameSelectedOr.png"); Visible: false; }
+      Group #AccFrameD0Bleu { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameDefaultBleu.png"); Visible: false; }
+      Group #AccFrameS0Bleu { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameSelectedBleu.png"); Visible: false; }
+      Group #AccFrameD0Violet { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameDefaultViolet.png"); Visible: false; }
+      Group #AccFrameS0Violet { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameSelectedViolet.png"); Visible: false; }
+      Group #AccFrameD0Vert { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameDefaultVert.png"); Visible: false; }
+      Group #AccFrameS0Vert { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameSelectedVert.png"); Visible: false; }
+      Group #AccFrameD0Rouge { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameDefaultRouge.png"); Visible: false; }
+      Group #AccFrameS0Rouge { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameSelectedRouge.png"); Visible: false; }
+      Group #AccFrameD0Cyan { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameDefaultCyan.png"); Visible: false; }
+      Group #AccFrameS0Cyan { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameSelectedCyan.png"); Visible: false; }
+      Group #AccShards0Base {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "../Quest/ChapShard01.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "../Quest/ChapShard02.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "../Quest/ChapShard03.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "../Quest/ChapShard04.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "../Quest/ChapShard05.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "../Quest/ChapShard06.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "../Quest/ChapShard07.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "../Quest/ChapShard08.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "../Quest/ChapShard09.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "../Quest/ChapShard10.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "../Quest/ChapShard11.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "../Quest/ChapShard12.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "../Quest/ChapShard13.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "../Quest/ChapShard14.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "../Quest/ChapShard15.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "../Quest/ChapShard16.png"); }
+      }
+      Group #AccShards0Blanc {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "ChapShard01Blanc.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "ChapShard02Blanc.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "ChapShard03Blanc.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "ChapShard04Blanc.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "ChapShard05Blanc.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "ChapShard06Blanc.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "ChapShard07Blanc.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "ChapShard08Blanc.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "ChapShard09Blanc.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "ChapShard10Blanc.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "ChapShard11Blanc.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "ChapShard12Blanc.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "ChapShard13Blanc.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "ChapShard14Blanc.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "ChapShard15Blanc.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "ChapShard16Blanc.png"); }
+      }
+      Group #AccShards0Or {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "../Quest/ChapShard01Or.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "../Quest/ChapShard02Or.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "../Quest/ChapShard03Or.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "../Quest/ChapShard04Or.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "../Quest/ChapShard05Or.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "../Quest/ChapShard06Or.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "../Quest/ChapShard07Or.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "../Quest/ChapShard08Or.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "../Quest/ChapShard09Or.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "../Quest/ChapShard10Or.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "../Quest/ChapShard11Or.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "../Quest/ChapShard12Or.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "../Quest/ChapShard13Or.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "../Quest/ChapShard14Or.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "../Quest/ChapShard15Or.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "../Quest/ChapShard16Or.png"); }
+      }
+      Group #AccShards0Bleu {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "../Quest/ChapShard01Bleu.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "../Quest/ChapShard02Bleu.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "../Quest/ChapShard03Bleu.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "../Quest/ChapShard04Bleu.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "../Quest/ChapShard05Bleu.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "../Quest/ChapShard06Bleu.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "../Quest/ChapShard07Bleu.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "../Quest/ChapShard08Bleu.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "../Quest/ChapShard09Bleu.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "../Quest/ChapShard10Bleu.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "../Quest/ChapShard11Bleu.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "../Quest/ChapShard12Bleu.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "../Quest/ChapShard13Bleu.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "../Quest/ChapShard14Bleu.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "../Quest/ChapShard15Bleu.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "../Quest/ChapShard16Bleu.png"); }
+      }
+      Group #AccShards0Violet {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "../Quest/ChapShard01Violet.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "../Quest/ChapShard02Violet.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "../Quest/ChapShard03Violet.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "../Quest/ChapShard04Violet.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "../Quest/ChapShard05Violet.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "../Quest/ChapShard06Violet.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "../Quest/ChapShard07Violet.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "../Quest/ChapShard08Violet.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "../Quest/ChapShard09Violet.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "../Quest/ChapShard10Violet.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "../Quest/ChapShard11Violet.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "../Quest/ChapShard12Violet.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "../Quest/ChapShard13Violet.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "../Quest/ChapShard14Violet.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "../Quest/ChapShard15Violet.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "../Quest/ChapShard16Violet.png"); }
+      }
+      Group #AccShards0Vert {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "../Quest/ChapShard01Vert.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "../Quest/ChapShard02Vert.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "../Quest/ChapShard03Vert.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "../Quest/ChapShard04Vert.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "../Quest/ChapShard05Vert.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "../Quest/ChapShard06Vert.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "../Quest/ChapShard07Vert.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "../Quest/ChapShard08Vert.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "../Quest/ChapShard09Vert.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "../Quest/ChapShard10Vert.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "../Quest/ChapShard11Vert.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "../Quest/ChapShard12Vert.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "../Quest/ChapShard13Vert.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "../Quest/ChapShard14Vert.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "../Quest/ChapShard15Vert.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "../Quest/ChapShard16Vert.png"); }
+      }
+      Group #AccShards0Rouge {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "../Quest/ChapShard01Rouge.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "../Quest/ChapShard02Rouge.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "../Quest/ChapShard03Rouge.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "../Quest/ChapShard04Rouge.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "../Quest/ChapShard05Rouge.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "../Quest/ChapShard06Rouge.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "../Quest/ChapShard07Rouge.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "../Quest/ChapShard08Rouge.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "../Quest/ChapShard09Rouge.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "../Quest/ChapShard10Rouge.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "../Quest/ChapShard11Rouge.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "../Quest/ChapShard12Rouge.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "../Quest/ChapShard13Rouge.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "../Quest/ChapShard14Rouge.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "../Quest/ChapShard15Rouge.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "../Quest/ChapShard16Rouge.png"); }
+      }
+      Group #AccShards0Cyan {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "../Quest/ChapShard01Cyan.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "../Quest/ChapShard02Cyan.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "../Quest/ChapShard03Cyan.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "../Quest/ChapShard04Cyan.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "../Quest/ChapShard05Cyan.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "../Quest/ChapShard06Cyan.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "../Quest/ChapShard07Cyan.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "../Quest/ChapShard08Cyan.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "../Quest/ChapShard09Cyan.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "../Quest/ChapShard10Cyan.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "../Quest/ChapShard11Cyan.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "../Quest/ChapShard12Cyan.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "../Quest/ChapShard13Cyan.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "../Quest/ChapShard14Cyan.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "../Quest/ChapShard15Cyan.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "../Quest/ChapShard16Cyan.png"); }
+      }
+      Label #AccCardTitle0 {
+        Anchor: (Left: 30, Top: 556, Width: 332, Height: 36);
+        Style: (FontName: "Secondary", FontSize: 21, RenderBold: true, RenderUppercase: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 14);
+      }
+      Label #AccCardState0 {
+        Anchor: (Left: 30, Top: 594, Width: 332, Height: 20);
+        Style: (FontSize: 13, RenderBold: true, RenderUppercase: true, TextColor: #7ed37e, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+    }
+    Button #AccCard1 {
+      Anchor: (Left: 966, Top: 204, Width: 392, Height: 720);
+      Style: (
+        Default: (Background: #000000(0)),
+        Hovered: (Background: (TexturePath: "../Quest/ChapCardHover.png")),
+        Pressed: (Background: (TexturePath: "../Quest/ChapCardHover.png", Color: #ffffff(0.6))),
+        Sounds: $C.@ButtonSounds
+      );
+      Group #AccArtRoyaumeG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtRoyaumeG.png"); Visible: false; }
+      Group #AccArtRoyaumeC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtRoyaumeC.png"); Visible: false; }
+      Group #AccArtGrimoireG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtGrimoireG.png"); Visible: false; }
+      Group #AccArtGrimoireC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtGrimoireC.png"); Visible: false; }
+      Group #AccArtGuerrierG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtGuerrierG.png"); Visible: false; }
+      Group #AccArtGuerrierC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtGuerrierC.png"); Visible: false; }
+      Group #AccArtMageG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtMageG.png"); Visible: false; }
+      Group #AccArtMageC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtMageC.png"); Visible: false; }
+      Group #AccArtArcherG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtArcherG.png"); Visible: false; }
+      Group #AccArtArcherC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtArcherC.png"); Visible: false; }
+      Group #AccArtAssassinG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtAssassinG.png"); Visible: false; }
+      Group #AccArtAssassinC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtAssassinC.png"); Visible: false; }
+      Group #AccArtMarchandG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtMarchandG.png"); Visible: false; }
+      Group #AccArtMarchandC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtMarchandC.png"); Visible: false; }
+      Group #AccArtRunesG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtRunesG.png"); Visible: false; }
+      Group #AccArtRunesC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtRunesC.png"); Visible: false; }
+      Group #AccArtFailleG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtFailleG.png"); Visible: false; }
+      Group #AccArtFailleC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtFailleC.png"); Visible: false; }
+      Group #AccArtGuildesG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtGuildesG.png"); Visible: false; }
+      Group #AccArtGuildesC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtGuildesC.png"); Visible: false; }
+      Group #AccArtBanqueG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtBanqueG.png"); Visible: false; }
+      Group #AccArtBanqueC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtBanqueC.png"); Visible: false; }
+      Group #AccArtDojoG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "../Quest/ChapArtDojoG.png"); Visible: false; }
+      Group #AccArtDojoC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "../Quest/ChapArtDojoC.png"); Visible: false; }
+      Group #AccArtAubeG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "../Quest/ChapArtAubeG.png"); Visible: false; }
+      Group #AccArtAubeC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "../Quest/ChapArtAubeC.png"); Visible: false; }
+      Group #AccArtAreneG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "../Quest/ChapArtAreneG.png"); Visible: false; }
+      Group #AccArtAreneC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "../Quest/ChapArtAreneC.png"); Visible: false; }
+      Group #AccArtRumeursG1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "../Quest/ChapArtRumeursG.png"); Visible: false; }
+      Group #AccArtRumeursC1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "../Quest/ChapArtRumeursC.png"); Visible: false; }
+      Group #AccArtSlot1 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); }
+      Group { Anchor: (Left: 34, Top: 483, Width: 324, Height: 165); Background: (TexturePath: "../Quest/ChapCardShade.png"); }
+      Group #AccFrameD1Base { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameDefault.png"); Visible: false; }
+      Group #AccFrameS1Base { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameSelected.png"); Visible: false; }
+      Group #AccFrameD1Blanc { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefaultBlanc.png"); Visible: false; }
+      Group #AccFrameS1Blanc { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameSelectedBlanc.png"); Visible: false; }
+      Group #AccFrameD1Or { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameDefaultOr.png"); Visible: false; }
+      Group #AccFrameS1Or { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameSelectedOr.png"); Visible: false; }
+      Group #AccFrameD1Bleu { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameDefaultBleu.png"); Visible: false; }
+      Group #AccFrameS1Bleu { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameSelectedBleu.png"); Visible: false; }
+      Group #AccFrameD1Violet { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameDefaultViolet.png"); Visible: false; }
+      Group #AccFrameS1Violet { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameSelectedViolet.png"); Visible: false; }
+      Group #AccFrameD1Vert { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameDefaultVert.png"); Visible: false; }
+      Group #AccFrameS1Vert { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameSelectedVert.png"); Visible: false; }
+      Group #AccFrameD1Rouge { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameDefaultRouge.png"); Visible: false; }
+      Group #AccFrameS1Rouge { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameSelectedRouge.png"); Visible: false; }
+      Group #AccFrameD1Cyan { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameDefaultCyan.png"); Visible: false; }
+      Group #AccFrameS1Cyan { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameSelectedCyan.png"); Visible: false; }
+      Group #AccShards1Base {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "../Quest/ChapShard01.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "../Quest/ChapShard02.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "../Quest/ChapShard03.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "../Quest/ChapShard04.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "../Quest/ChapShard05.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "../Quest/ChapShard06.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "../Quest/ChapShard07.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "../Quest/ChapShard08.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "../Quest/ChapShard09.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "../Quest/ChapShard10.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "../Quest/ChapShard11.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "../Quest/ChapShard12.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "../Quest/ChapShard13.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "../Quest/ChapShard14.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "../Quest/ChapShard15.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "../Quest/ChapShard16.png"); }
+      }
+      Group #AccShards1Blanc {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "ChapShard01Blanc.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "ChapShard02Blanc.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "ChapShard03Blanc.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "ChapShard04Blanc.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "ChapShard05Blanc.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "ChapShard06Blanc.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "ChapShard07Blanc.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "ChapShard08Blanc.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "ChapShard09Blanc.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "ChapShard10Blanc.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "ChapShard11Blanc.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "ChapShard12Blanc.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "ChapShard13Blanc.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "ChapShard14Blanc.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "ChapShard15Blanc.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "ChapShard16Blanc.png"); }
+      }
+      Group #AccShards1Or {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "../Quest/ChapShard01Or.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "../Quest/ChapShard02Or.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "../Quest/ChapShard03Or.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "../Quest/ChapShard04Or.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "../Quest/ChapShard05Or.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "../Quest/ChapShard06Or.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "../Quest/ChapShard07Or.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "../Quest/ChapShard08Or.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "../Quest/ChapShard09Or.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "../Quest/ChapShard10Or.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "../Quest/ChapShard11Or.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "../Quest/ChapShard12Or.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "../Quest/ChapShard13Or.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "../Quest/ChapShard14Or.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "../Quest/ChapShard15Or.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "../Quest/ChapShard16Or.png"); }
+      }
+      Group #AccShards1Bleu {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "../Quest/ChapShard01Bleu.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "../Quest/ChapShard02Bleu.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "../Quest/ChapShard03Bleu.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "../Quest/ChapShard04Bleu.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "../Quest/ChapShard05Bleu.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "../Quest/ChapShard06Bleu.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "../Quest/ChapShard07Bleu.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "../Quest/ChapShard08Bleu.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "../Quest/ChapShard09Bleu.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "../Quest/ChapShard10Bleu.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "../Quest/ChapShard11Bleu.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "../Quest/ChapShard12Bleu.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "../Quest/ChapShard13Bleu.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "../Quest/ChapShard14Bleu.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "../Quest/ChapShard15Bleu.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "../Quest/ChapShard16Bleu.png"); }
+      }
+      Group #AccShards1Violet {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "../Quest/ChapShard01Violet.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "../Quest/ChapShard02Violet.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "../Quest/ChapShard03Violet.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "../Quest/ChapShard04Violet.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "../Quest/ChapShard05Violet.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "../Quest/ChapShard06Violet.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "../Quest/ChapShard07Violet.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "../Quest/ChapShard08Violet.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "../Quest/ChapShard09Violet.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "../Quest/ChapShard10Violet.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "../Quest/ChapShard11Violet.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "../Quest/ChapShard12Violet.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "../Quest/ChapShard13Violet.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "../Quest/ChapShard14Violet.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "../Quest/ChapShard15Violet.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "../Quest/ChapShard16Violet.png"); }
+      }
+      Group #AccShards1Vert {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "../Quest/ChapShard01Vert.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "../Quest/ChapShard02Vert.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "../Quest/ChapShard03Vert.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "../Quest/ChapShard04Vert.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "../Quest/ChapShard05Vert.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "../Quest/ChapShard06Vert.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "../Quest/ChapShard07Vert.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "../Quest/ChapShard08Vert.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "../Quest/ChapShard09Vert.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "../Quest/ChapShard10Vert.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "../Quest/ChapShard11Vert.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "../Quest/ChapShard12Vert.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "../Quest/ChapShard13Vert.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "../Quest/ChapShard14Vert.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "../Quest/ChapShard15Vert.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "../Quest/ChapShard16Vert.png"); }
+      }
+      Group #AccShards1Rouge {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "../Quest/ChapShard01Rouge.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "../Quest/ChapShard02Rouge.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "../Quest/ChapShard03Rouge.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "../Quest/ChapShard04Rouge.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "../Quest/ChapShard05Rouge.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "../Quest/ChapShard06Rouge.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "../Quest/ChapShard07Rouge.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "../Quest/ChapShard08Rouge.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "../Quest/ChapShard09Rouge.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "../Quest/ChapShard10Rouge.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "../Quest/ChapShard11Rouge.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "../Quest/ChapShard12Rouge.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "../Quest/ChapShard13Rouge.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "../Quest/ChapShard14Rouge.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "../Quest/ChapShard15Rouge.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "../Quest/ChapShard16Rouge.png"); }
+      }
+      Group #AccShards1Cyan {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "../Quest/ChapShard01Cyan.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "../Quest/ChapShard02Cyan.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "../Quest/ChapShard03Cyan.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "../Quest/ChapShard04Cyan.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "../Quest/ChapShard05Cyan.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "../Quest/ChapShard06Cyan.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "../Quest/ChapShard07Cyan.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "../Quest/ChapShard08Cyan.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "../Quest/ChapShard09Cyan.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "../Quest/ChapShard10Cyan.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "../Quest/ChapShard11Cyan.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "../Quest/ChapShard12Cyan.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "../Quest/ChapShard13Cyan.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "../Quest/ChapShard14Cyan.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "../Quest/ChapShard15Cyan.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "../Quest/ChapShard16Cyan.png"); }
+      }
+      Label #AccCardTitle1 {
+        Anchor: (Left: 30, Top: 556, Width: 332, Height: 36);
+        Style: (FontName: "Secondary", FontSize: 21, RenderBold: true, RenderUppercase: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 14);
+      }
+      Label #AccCardState1 {
+        Anchor: (Left: 30, Top: 594, Width: 332, Height: 20);
+        Style: (FontSize: 13, RenderBold: true, RenderUppercase: true, TextColor: #7ed37e, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+    }
+    Button #AccCard2 {
+      Anchor: (Left: 1345, Top: 204, Width: 392, Height: 720);
+      Style: (
+        Default: (Background: #000000(0)),
+        Hovered: (Background: (TexturePath: "../Quest/ChapCardHover.png")),
+        Pressed: (Background: (TexturePath: "../Quest/ChapCardHover.png", Color: #ffffff(0.6))),
+        Sounds: $C.@ButtonSounds
+      );
+      Group #AccArtRoyaumeG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtRoyaumeG.png"); Visible: false; }
+      Group #AccArtRoyaumeC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtRoyaumeC.png"); Visible: false; }
+      Group #AccArtGrimoireG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtGrimoireG.png"); Visible: false; }
+      Group #AccArtGrimoireC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtGrimoireC.png"); Visible: false; }
+      Group #AccArtGuerrierG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtGuerrierG.png"); Visible: false; }
+      Group #AccArtGuerrierC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtGuerrierC.png"); Visible: false; }
+      Group #AccArtMageG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtMageG.png"); Visible: false; }
+      Group #AccArtMageC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtMageC.png"); Visible: false; }
+      Group #AccArtArcherG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtArcherG.png"); Visible: false; }
+      Group #AccArtArcherC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtArcherC.png"); Visible: false; }
+      Group #AccArtAssassinG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtAssassinG.png"); Visible: false; }
+      Group #AccArtAssassinC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtAssassinC.png"); Visible: false; }
+      Group #AccArtMarchandG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtMarchandG.png"); Visible: false; }
+      Group #AccArtMarchandC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtMarchandC.png"); Visible: false; }
+      Group #AccArtRunesG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtRunesG.png"); Visible: false; }
+      Group #AccArtRunesC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtRunesC.png"); Visible: false; }
+      Group #AccArtFailleG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtFailleG.png"); Visible: false; }
+      Group #AccArtFailleC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtFailleC.png"); Visible: false; }
+      Group #AccArtGuildesG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtGuildesG.png"); Visible: false; }
+      Group #AccArtGuildesC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtGuildesC.png"); Visible: false; }
+      Group #AccArtBanqueG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtBanqueG.png"); Visible: false; }
+      Group #AccArtBanqueC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "ChapArtBanqueC.png"); Visible: false; }
+      Group #AccArtDojoG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "../Quest/ChapArtDojoG.png"); Visible: false; }
+      Group #AccArtDojoC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "../Quest/ChapArtDojoC.png"); Visible: false; }
+      Group #AccArtAubeG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "../Quest/ChapArtAubeG.png"); Visible: false; }
+      Group #AccArtAubeC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "../Quest/ChapArtAubeC.png"); Visible: false; }
+      Group #AccArtAreneG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "../Quest/ChapArtAreneG.png"); Visible: false; }
+      Group #AccArtAreneC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "../Quest/ChapArtAreneC.png"); Visible: false; }
+      Group #AccArtRumeursG2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "../Quest/ChapArtRumeursG.png"); Visible: false; }
+      Group #AccArtRumeursC2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); Background: (TexturePath: "../Quest/ChapArtRumeursC.png"); Visible: false; }
+      Group #AccArtSlot2 { Anchor: (Left: 34, Top: 62, Width: 324, Height: 586); }
+      Group { Anchor: (Left: 34, Top: 483, Width: 324, Height: 165); Background: (TexturePath: "../Quest/ChapCardShade.png"); }
+      Group #AccFrameD2Base { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameDefault.png"); Visible: false; }
+      Group #AccFrameS2Base { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameSelected.png"); Visible: false; }
+      Group #AccFrameD2Blanc { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameDefaultBlanc.png"); Visible: false; }
+      Group #AccFrameS2Blanc { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "ChapFrameSelectedBlanc.png"); Visible: false; }
+      Group #AccFrameD2Or { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameDefaultOr.png"); Visible: false; }
+      Group #AccFrameS2Or { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameSelectedOr.png"); Visible: false; }
+      Group #AccFrameD2Bleu { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameDefaultBleu.png"); Visible: false; }
+      Group #AccFrameS2Bleu { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameSelectedBleu.png"); Visible: false; }
+      Group #AccFrameD2Violet { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameDefaultViolet.png"); Visible: false; }
+      Group #AccFrameS2Violet { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameSelectedViolet.png"); Visible: false; }
+      Group #AccFrameD2Vert { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameDefaultVert.png"); Visible: false; }
+      Group #AccFrameS2Vert { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameSelectedVert.png"); Visible: false; }
+      Group #AccFrameD2Rouge { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameDefaultRouge.png"); Visible: false; }
+      Group #AccFrameS2Rouge { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameSelectedRouge.png"); Visible: false; }
+      Group #AccFrameD2Cyan { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameDefaultCyan.png"); Visible: false; }
+      Group #AccFrameS2Cyan { Anchor: (Left: 0, Top: 0, Width: 392, Height: 720); Background: (TexturePath: "../Quest/ChapFrameSelectedCyan.png"); Visible: false; }
+      Group #AccShards2Base {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "../Quest/ChapShard01.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "../Quest/ChapShard02.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "../Quest/ChapShard03.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "../Quest/ChapShard04.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "../Quest/ChapShard05.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "../Quest/ChapShard06.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "../Quest/ChapShard07.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "../Quest/ChapShard08.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "../Quest/ChapShard09.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "../Quest/ChapShard10.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "../Quest/ChapShard11.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "../Quest/ChapShard12.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "../Quest/ChapShard13.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "../Quest/ChapShard14.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "../Quest/ChapShard15.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "../Quest/ChapShard16.png"); }
+      }
+      Group #AccShards2Blanc {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "ChapShard01Blanc.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "ChapShard02Blanc.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "ChapShard03Blanc.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "ChapShard04Blanc.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "ChapShard05Blanc.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "ChapShard06Blanc.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "ChapShard07Blanc.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "ChapShard08Blanc.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "ChapShard09Blanc.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "ChapShard10Blanc.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "ChapShard11Blanc.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "ChapShard12Blanc.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "ChapShard13Blanc.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "ChapShard14Blanc.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "ChapShard15Blanc.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "ChapShard16Blanc.png"); }
+      }
+      Group #AccShards2Or {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "../Quest/ChapShard01Or.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "../Quest/ChapShard02Or.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "../Quest/ChapShard03Or.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "../Quest/ChapShard04Or.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "../Quest/ChapShard05Or.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "../Quest/ChapShard06Or.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "../Quest/ChapShard07Or.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "../Quest/ChapShard08Or.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "../Quest/ChapShard09Or.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "../Quest/ChapShard10Or.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "../Quest/ChapShard11Or.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "../Quest/ChapShard12Or.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "../Quest/ChapShard13Or.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "../Quest/ChapShard14Or.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "../Quest/ChapShard15Or.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "../Quest/ChapShard16Or.png"); }
+      }
+      Group #AccShards2Bleu {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "../Quest/ChapShard01Bleu.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "../Quest/ChapShard02Bleu.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "../Quest/ChapShard03Bleu.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "../Quest/ChapShard04Bleu.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "../Quest/ChapShard05Bleu.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "../Quest/ChapShard06Bleu.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "../Quest/ChapShard07Bleu.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "../Quest/ChapShard08Bleu.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "../Quest/ChapShard09Bleu.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "../Quest/ChapShard10Bleu.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "../Quest/ChapShard11Bleu.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "../Quest/ChapShard12Bleu.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "../Quest/ChapShard13Bleu.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "../Quest/ChapShard14Bleu.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "../Quest/ChapShard15Bleu.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "../Quest/ChapShard16Bleu.png"); }
+      }
+      Group #AccShards2Violet {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "../Quest/ChapShard01Violet.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "../Quest/ChapShard02Violet.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "../Quest/ChapShard03Violet.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "../Quest/ChapShard04Violet.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "../Quest/ChapShard05Violet.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "../Quest/ChapShard06Violet.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "../Quest/ChapShard07Violet.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "../Quest/ChapShard08Violet.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "../Quest/ChapShard09Violet.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "../Quest/ChapShard10Violet.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "../Quest/ChapShard11Violet.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "../Quest/ChapShard12Violet.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "../Quest/ChapShard13Violet.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "../Quest/ChapShard14Violet.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "../Quest/ChapShard15Violet.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "../Quest/ChapShard16Violet.png"); }
+      }
+      Group #AccShards2Vert {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "../Quest/ChapShard01Vert.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "../Quest/ChapShard02Vert.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "../Quest/ChapShard03Vert.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "../Quest/ChapShard04Vert.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "../Quest/ChapShard05Vert.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "../Quest/ChapShard06Vert.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "../Quest/ChapShard07Vert.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "../Quest/ChapShard08Vert.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "../Quest/ChapShard09Vert.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "../Quest/ChapShard10Vert.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "../Quest/ChapShard11Vert.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "../Quest/ChapShard12Vert.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "../Quest/ChapShard13Vert.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "../Quest/ChapShard14Vert.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "../Quest/ChapShard15Vert.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "../Quest/ChapShard16Vert.png"); }
+      }
+      Group #AccShards2Rouge {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "../Quest/ChapShard01Rouge.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "../Quest/ChapShard02Rouge.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "../Quest/ChapShard03Rouge.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "../Quest/ChapShard04Rouge.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "../Quest/ChapShard05Rouge.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "../Quest/ChapShard06Rouge.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "../Quest/ChapShard07Rouge.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "../Quest/ChapShard08Rouge.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "../Quest/ChapShard09Rouge.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "../Quest/ChapShard10Rouge.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "../Quest/ChapShard11Rouge.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "../Quest/ChapShard12Rouge.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "../Quest/ChapShard13Rouge.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "../Quest/ChapShard14Rouge.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "../Quest/ChapShard15Rouge.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "../Quest/ChapShard16Rouge.png"); }
+      }
+      Group #AccShards2Cyan {
+        Anchor: (Left: 0, Top: 0, Width: 392, Height: 720);
+        Visible: false;
+        Group { Anchor: (Left: 42, Top: 78, Width: 6, Height: 17); Background: (TexturePath: "../Quest/ChapShard01Cyan.png"); }
+        Group { Anchor: (Left: 82, Top: 35, Width: 40, Height: 42); Background: (TexturePath: "../Quest/ChapShard02Cyan.png"); }
+        Group { Anchor: (Left: 48, Top: 52, Width: 20, Height: 9); Background: (TexturePath: "../Quest/ChapShard03Cyan.png"); }
+        Group { Anchor: (Left: 125, Top: 28, Width: 36, Height: 20); Background: (TexturePath: "../Quest/ChapShard04Cyan.png"); }
+        Group { Anchor: (Left: 206, Top: 24, Width: 32, Height: 11); Background: (TexturePath: "../Quest/ChapShard05Cyan.png"); }
+        Group { Anchor: (Left: 246, Top: 25, Width: 60, Height: 40); Background: (TexturePath: "../Quest/ChapShard06Cyan.png"); }
+        Group { Anchor: (Left: 297, Top: 58, Width: 17, Height: 17); Background: (TexturePath: "../Quest/ChapShard07Cyan.png"); }
+        Group { Anchor: (Left: 328, Top: 60, Width: 20, Height: 23); Background: (TexturePath: "../Quest/ChapShard08Cyan.png"); }
+        Group { Anchor: (Left: 312, Top: 619, Width: 38, Height: 35); Background: (TexturePath: "../Quest/ChapShard09Cyan.png"); }
+        Group { Anchor: (Left: 229, Top: 679, Width: 16, Height: 16); Background: (TexturePath: "../Quest/ChapShard10Cyan.png"); }
+        Group { Anchor: (Left: 258, Top: 668, Width: 23, Height: 10); Background: (TexturePath: "../Quest/ChapShard11Cyan.png"); }
+        Group { Anchor: (Left: 129, Top: 670, Width: 36, Height: 35); Background: (TexturePath: "../Quest/ChapShard12Cyan.png"); }
+        Group { Anchor: (Left: 62, Top: 651, Width: 51, Height: 38); Background: (TexturePath: "../Quest/ChapShard13Cyan.png"); }
+        Group { Anchor: (Left: 31, Top: 615, Width: 9, Height: 16); Background: (TexturePath: "../Quest/ChapShard14Cyan.png"); }
+        Group { Anchor: (Left: 164, Top: 668, Width: 19, Height: 16); Background: (TexturePath: "../Quest/ChapShard15Cyan.png"); }
+        Group { Anchor: (Left: 276, Top: 642, Width: 32, Height: 19); Background: (TexturePath: "../Quest/ChapShard16Cyan.png"); }
+      }
+      Label #AccCardTitle2 {
+        Anchor: (Left: 30, Top: 556, Width: 332, Height: 36);
+        Style: (FontName: "Secondary", FontSize: 21, RenderBold: true, RenderUppercase: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 14);
+      }
+      Label #AccCardState2 {
+        Anchor: (Left: 30, Top: 594, Width: 332, Height: 20);
+        Style: (FontSize: 13, RenderBold: true, RenderUppercase: true, TextColor: #7ed37e, HorizontalAlignment: Center, VerticalAlignment: Center);
+      }
+    }
+    Button #AccPrev {
+      Anchor: (Left: 553, Top: 547, Width: 40, Height: 80);
+      Visible: false;
+      Style: (Default: (Background: #000000(0)), Hovered: (Background: #000000(0)), Sounds: $C.@ButtonSounds);
+      Group { Anchor: (Left: 0, Top: 0, Width: 40, Height: 80); Background: (TexturePath: "../Quest/ChapArrowLeft.png"); }
+    }
+    Button #AccNext {
+      Anchor: (Left: 1734, Top: 547, Width: 40, Height: 80);
+      Visible: false;
+      Style: (Default: (Background: #000000(0)), Hovered: (Background: #000000(0)), Sounds: $C.@ButtonSounds);
+      Group { Anchor: (Left: 0, Top: 0, Width: 40, Height: 80); Background: (TexturePath: "../Quest/ChapArrowRight.png"); }
+    }
+    Label #AccCount {
+      Anchor: (Left: 611, Top: 914, Width: 1105, Height: 22);
+      Style: (FontSize: 14, RenderBold: true, TextColor: #8a96a8, HorizontalAlignment: Center, VerticalAlignment: Center);
+    }
+
+    // ---- actions ----
+    Group {
+      Anchor: (Left: 611, Top: 948, Width: 1105, Height: 48);
+      LayoutMode: Center;
+      $C.@SecondaryTextButton #AccBack {
+        @Anchor = (MinWidth: 180, Right: 16);
+        Text: "Retour";
+        Visible: false;
+      }
+      $C.@SecondaryTextButton #AccAlt {
+        @Anchor = (MinWidth: 200, Right: 16);
+        Text: "Relancer";
+        Visible: false;
+      }
+      $C.@TextButton #AccMain {
+        @Anchor = Anchor(MinWidth: 320);
+        Text: "Suivant";
+      }
+    }
+    Label #AccHint {
+      Anchor: (Left: 611, Top: 1004, Width: 1105, Height: 24);
+      Style: (FontSize: 15, RenderBold: true, TextColor: #8a96a8, HorizontalAlignment: Center, VerticalAlignment: Center);
+    }
+
+    // ---- detail de la carte designee ----
+    Group #AccDetail {
+      Anchor: (Left: 0, Top: 0, Width: 540, Height: 1080);
+
+      Group { Anchor: (Left: 228, Top: 116, Width: 150, Height: 150); Background: (TexturePath: "../Quest/ChapEmblemFrame.png"); }
+      Group { Anchor: (Left: 255, Top: 141, Width: 96, Height: 96); Background: (TexturePath: "../Quest/ChapEmblemBack.png"); }
+      Label #AccMark {
+        Anchor: (Left: 255, Top: 143, Width: 96, Height: 86);
+        Style: (FontName: "Secondary", FontSize: 52, RenderBold: true, TextColor: #ffe98a, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 26);
+      }
+
+      Label #AccKicker {
+        Anchor: (Left: 96, Top: 270, Width: 415, Height: 22);
+        Style: (FontSize: 14, RenderBold: true, RenderUppercase: true, TextColor: #b9a2d8, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Label #AccTitle {
+        Anchor: (Left: 96, Top: 294, Width: 415, Height: 44);
+        Style: (FontName: "Secondary", FontSize: 30, RenderBold: true, RenderUppercase: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 18);
+      }
+      Label #AccTagline {
+        Anchor: (Left: 96, Top: 338, Width: 415, Height: 28);
+        Style: (FontSize: 19, RenderBold: true, TextColor: #C58643, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 13);
+      }
+      Group { Anchor: (Left: 94, Top: 372, Width: 418, Height: 8); Background: (TexturePath: "../Quest/ChapDivider.png", HorizontalBorder: 24, VerticalBorder: 0); }
+
+      Group #AccBody {
+        Anchor: (Left: 96, Top: 388, Width: 429, Height: 662);
+        LayoutMode: TopScrolling;
+        ScrollbarStyle: $C.@DefaultScrollbarStyle;
+        Padding: (Right: 14, Bottom: 12);
+
+        Label #AccStory {
+          Style: (FontSize: 16, RenderBold: true, TextColor: #b8c2d0, Wrap: true);
+        }
+        Group #AccNote0 {
+          Anchor: (Top: 10);
+          LayoutMode: Left;
+          Visible: false;
+          Group { Anchor: (Width: 22); LayoutMode: Top; Group { Anchor: (Width: 20, Height: 20, Top: 1); Background: (TexturePath: "../Quest/ChapBullet.png"); } }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Left: 10, Top: 1);
+            Label #AccNoteText0 { Style: (FontSize: 15, RenderBold: true, TextColor: #77879D, Wrap: true); }
+          }
+        }
+        Group #AccNote1 {
+          Anchor: (Top: 10);
+          LayoutMode: Left;
+          Visible: false;
+          Group { Anchor: (Width: 22); LayoutMode: Top; Group { Anchor: (Width: 20, Height: 20, Top: 1); Background: (TexturePath: "../Quest/ChapBullet.png"); } }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Left: 10, Top: 1);
+            Label #AccNoteText1 { Style: (FontSize: 15, RenderBold: true, TextColor: #77879D, Wrap: true); }
+          }
+        }
+        Group #AccNote2 {
+          Anchor: (Top: 10);
+          LayoutMode: Left;
+          Visible: false;
+          Group { Anchor: (Width: 22); LayoutMode: Top; Group { Anchor: (Width: 20, Height: 20, Top: 1); Background: (TexturePath: "../Quest/ChapBullet.png"); } }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Left: 10, Top: 1);
+            Label #AccNoteText2 { Style: (FontSize: 15, RenderBold: true, TextColor: #77879D, Wrap: true); }
+          }
+        }
+        Group #AccNote3 {
+          Anchor: (Top: 10);
+          LayoutMode: Left;
+          Visible: false;
+          Group { Anchor: (Width: 22); LayoutMode: Top; Group { Anchor: (Width: 20, Height: 20, Top: 1); Background: (TexturePath: "../Quest/ChapBullet.png"); } }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Left: 10, Top: 1);
+            Label #AccNoteText3 { Style: (FontSize: 15, RenderBold: true, TextColor: #77879D, Wrap: true); }
+          }
+        }
+        Group #AccNote4 {
+          Anchor: (Top: 10);
+          LayoutMode: Left;
+          Visible: false;
+          Group { Anchor: (Width: 22); LayoutMode: Top; Group { Anchor: (Width: 20, Height: 20, Top: 1); Background: (TexturePath: "../Quest/ChapBullet.png"); } }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Left: 10, Top: 1);
+            Label #AccNoteText4 { Style: (FontSize: 15, RenderBold: true, TextColor: #77879D, Wrap: true); }
+          }
+        }
+        Group #AccPasHead {
+          Anchor: (Top: 22, Height: 34);
+          LayoutMode: Top;
+          Label #AccPasHeadText { Anchor: (Height: 28); Text: "Passifs de classe"; Style: (FontName: "Secondary", FontSize: 19, RenderBold: true, RenderUppercase: true, TextColor: #C4CEDC, VerticalAlignment: Center); }
+          Group { Anchor: (Height: 2); Background: #c58643(0.45); }
+        }
+        Group #AccPas0 {
+          Anchor: (Top: 10);
+          LayoutMode: Left;
+          Visible: false;
+          Group { Anchor: (Width: 4); Background: #9b7ad8; }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Left: 12, Top: 2, Bottom: 2);
+            Background: #ffffff(0.03);
+            Label #AccPasName0 { Anchor: (Height: 22); Style: (FontSize: 16, RenderBold: true, TextColor: #d6c4ff, VerticalAlignment: Center); }
+            Label #AccPasDesc0 { Style: (FontSize: 14, RenderBold: true, TextColor: #77879D, Wrap: true); }
+          }
+        }
+        Group #AccPas1 {
+          Anchor: (Top: 10);
+          LayoutMode: Left;
+          Visible: false;
+          Group { Anchor: (Width: 4); Background: #9b7ad8; }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Left: 12, Top: 2, Bottom: 2);
+            Background: #ffffff(0.03);
+            Label #AccPasName1 { Anchor: (Height: 22); Style: (FontSize: 16, RenderBold: true, TextColor: #d6c4ff, VerticalAlignment: Center); }
+            Label #AccPasDesc1 { Style: (FontSize: 14, RenderBold: true, TextColor: #77879D, Wrap: true); }
+          }
+        }
+        Group #AccPas2 {
+          Anchor: (Top: 10);
+          LayoutMode: Left;
+          Visible: false;
+          Group { Anchor: (Width: 4); Background: #9b7ad8; }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Left: 12, Top: 2, Bottom: 2);
+            Background: #ffffff(0.03);
+            Label #AccPasName2 { Anchor: (Height: 22); Style: (FontSize: 16, RenderBold: true, TextColor: #d6c4ff, VerticalAlignment: Center); }
+            Label #AccPasDesc2 { Style: (FontSize: 14, RenderBold: true, TextColor: #77879D, Wrap: true); }
+          }
+        }
+        Group #AccPas3 {
+          Anchor: (Top: 10);
+          LayoutMode: Left;
+          Visible: false;
+          Group { Anchor: (Width: 4); Background: #9b7ad8; }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Left: 12, Top: 2, Bottom: 2);
+            Background: #ffffff(0.03);
+            Label #AccPasName3 { Anchor: (Height: 22); Style: (FontSize: 16, RenderBold: true, TextColor: #d6c4ff, VerticalAlignment: Center); }
+            Label #AccPasDesc3 { Style: (FontSize: 14, RenderBold: true, TextColor: #77879D, Wrap: true); }
+          }
+        }
+        Group #AccRuneHead {
+          Anchor: (Top: 22, Height: 34);
+          LayoutMode: Top;
+          Label #AccRuneHeadText { Anchor: (Height: 28); Text: "Runes de classe"; Style: (FontName: "Secondary", FontSize: 19, RenderBold: true, RenderUppercase: true, TextColor: #C4CEDC, VerticalAlignment: Center); }
+          Group { Anchor: (Height: 2); Background: #c58643(0.45); }
+        }
+        Group #AccRune0 {
+          Anchor: (Top: 10);
+          LayoutMode: Left;
+          Visible: false;
+          Group {
+            Anchor: (Width: 60, Height: 60);
+            Group #AccRuneFrame0 { Anchor: (Left: 0, Top: 0, Width: 60, Height: 60); Background: #c9d2dd; }
+            Group { Anchor: (Left: 2, Top: 2, Width: 56, Height: 56); Background: #0c1220; }
+            ItemIcon #AccRuneIcon0 { Anchor: (Left: 6, Top: 6, Width: 48, Height: 48); }
+          }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Left: 12);
+            Label #AccRuneName0 { Anchor: (Height: 22); Style: (FontSize: 16, RenderBold: true, TextColor: #e8eef6, VerticalAlignment: Center); }
+            Label #AccRuneMeta0 { Anchor: (Height: 18); Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #c9d2dd, VerticalAlignment: Center); }
+            Label #AccRuneDesc0 { Style: (FontSize: 14, RenderBold: true, TextColor: #77879D, Wrap: true); }
+          }
+        }
+        Group #AccRune1 {
+          Anchor: (Top: 10);
+          LayoutMode: Left;
+          Visible: false;
+          Group {
+            Anchor: (Width: 60, Height: 60);
+            Group #AccRuneFrame1 { Anchor: (Left: 0, Top: 0, Width: 60, Height: 60); Background: #c9d2dd; }
+            Group { Anchor: (Left: 2, Top: 2, Width: 56, Height: 56); Background: #0c1220; }
+            ItemIcon #AccRuneIcon1 { Anchor: (Left: 6, Top: 6, Width: 48, Height: 48); }
+          }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Left: 12);
+            Label #AccRuneName1 { Anchor: (Height: 22); Style: (FontSize: 16, RenderBold: true, TextColor: #e8eef6, VerticalAlignment: Center); }
+            Label #AccRuneMeta1 { Anchor: (Height: 18); Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #c9d2dd, VerticalAlignment: Center); }
+            Label #AccRuneDesc1 { Style: (FontSize: 14, RenderBold: true, TextColor: #77879D, Wrap: true); }
+          }
+        }
+        Group #AccRune2 {
+          Anchor: (Top: 10);
+          LayoutMode: Left;
+          Visible: false;
+          Group {
+            Anchor: (Width: 60, Height: 60);
+            Group #AccRuneFrame2 { Anchor: (Left: 0, Top: 0, Width: 60, Height: 60); Background: #c9d2dd; }
+            Group { Anchor: (Left: 2, Top: 2, Width: 56, Height: 56); Background: #0c1220; }
+            ItemIcon #AccRuneIcon2 { Anchor: (Left: 6, Top: 6, Width: 48, Height: 48); }
+          }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Left: 12);
+            Label #AccRuneName2 { Anchor: (Height: 22); Style: (FontSize: 16, RenderBold: true, TextColor: #e8eef6, VerticalAlignment: Center); }
+            Label #AccRuneMeta2 { Anchor: (Height: 18); Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #c9d2dd, VerticalAlignment: Center); }
+            Label #AccRuneDesc2 { Style: (FontSize: 14, RenderBold: true, TextColor: #77879D, Wrap: true); }
+          }
+        }
+        Group #AccStatHead {
+          Anchor: (Top: 22, Height: 34);
+          LayoutMode: Top;
+          Label #AccStatHeadText { Anchor: (Height: 28); Style: (FontName: "Secondary", FontSize: 19, RenderBold: true, RenderUppercase: true, TextColor: #C4CEDC, VerticalAlignment: Center); }
+          Group { Anchor: (Height: 2); Background: #c58643(0.45); }
+        }
+        Group #AccStats {
+          Anchor: (Top: 8, Height: 60);
+          LayoutMode: Left;
+          Group {
+            Anchor: (Width: 69, Height: 60);
+            LayoutMode: Top;
+            Label #AccStatVal0 { Anchor: (Height: 34); Style: (FontName: "Secondary", FontSize: 25, RenderBold: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center); }
+            Label #AccStatLbl0 { Anchor: (Height: 20); Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8); }
+          }
+          Group {
+            Anchor: (Width: 69, Height: 60);
+            LayoutMode: Top;
+            Label #AccStatVal1 { Anchor: (Height: 34); Style: (FontName: "Secondary", FontSize: 25, RenderBold: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center); }
+            Label #AccStatLbl1 { Anchor: (Height: 20); Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8); }
+          }
+          Group {
+            Anchor: (Width: 69, Height: 60);
+            LayoutMode: Top;
+            Label #AccStatVal2 { Anchor: (Height: 34); Style: (FontName: "Secondary", FontSize: 25, RenderBold: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center); }
+            Label #AccStatLbl2 { Anchor: (Height: 20); Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8); }
+          }
+          Group {
+            Anchor: (Width: 69, Height: 60);
+            LayoutMode: Top;
+            Label #AccStatVal3 { Anchor: (Height: 34); Style: (FontName: "Secondary", FontSize: 25, RenderBold: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center); }
+            Label #AccStatLbl3 { Anchor: (Height: 20); Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8); }
+          }
+          Group {
+            Anchor: (Width: 69, Height: 60);
+            LayoutMode: Top;
+            Label #AccStatVal4 { Anchor: (Height: 34); Style: (FontName: "Secondary", FontSize: 25, RenderBold: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center); }
+            Label #AccStatLbl4 { Anchor: (Height: 20); Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8); }
+          }
+          Group {
+            Anchor: (Width: 69, Height: 60);
+            LayoutMode: Top;
+            Label #AccStatVal5 { Anchor: (Height: 34); Style: (FontName: "Secondary", FontSize: 25, RenderBold: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center); }
+            Label #AccStatLbl5 { Anchor: (Height: 20); Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8); }
+          }
+        }
+        Group #AccKitHead {
+          Anchor: (Top: 22, Height: 34);
+          LayoutMode: Top;
+          Label #AccKitHeadText { Anchor: (Height: 28); Style: (FontName: "Secondary", FontSize: 19, RenderBold: true, RenderUppercase: true, TextColor: #C4CEDC, VerticalAlignment: Center); }
+          Group { Anchor: (Height: 2); Background: #c58643(0.45); }
+        }
+        Group #AccKitRow0 {
+          Anchor: (Top: 10, Height: 52);
+          LayoutMode: Left;
+          Button #AccKit0 {
+            Anchor: (Width: 52, Height: 52, Right: 6);
+            Visible: false;
+            Style: (Default: (Background: #000000(0)), Hovered: (Background: #ffffff(0.08)), Sounds: $C.@ButtonSounds);
+            TextTooltipStyle: $C.@DefaultTextTooltipStyle;
+            TextTooltipShowDelay: 0.1;
+            Group { Anchor: (Left: 0, Top: 0, Width: 52, Height: 52); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 12); }
+            ItemIcon #AccKitIcon0 { Anchor: (Left: 7, Top: 6, Width: 38, Height: 38); }
+            Label #AccKitQty0 {
+              Anchor: (Left: 2, Top: 32, Width: 46, Height: 16);
+              Style: (FontSize: 12, RenderBold: true, TextColor: #ffffff, HorizontalAlignment: End, VerticalAlignment: Center);
+            }
+          }
+          Button #AccKit1 {
+            Anchor: (Width: 52, Height: 52, Right: 6);
+            Visible: false;
+            Style: (Default: (Background: #000000(0)), Hovered: (Background: #ffffff(0.08)), Sounds: $C.@ButtonSounds);
+            TextTooltipStyle: $C.@DefaultTextTooltipStyle;
+            TextTooltipShowDelay: 0.1;
+            Group { Anchor: (Left: 0, Top: 0, Width: 52, Height: 52); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 12); }
+            ItemIcon #AccKitIcon1 { Anchor: (Left: 7, Top: 6, Width: 38, Height: 38); }
+            Label #AccKitQty1 {
+              Anchor: (Left: 2, Top: 32, Width: 46, Height: 16);
+              Style: (FontSize: 12, RenderBold: true, TextColor: #ffffff, HorizontalAlignment: End, VerticalAlignment: Center);
+            }
+          }
+          Button #AccKit2 {
+            Anchor: (Width: 52, Height: 52, Right: 6);
+            Visible: false;
+            Style: (Default: (Background: #000000(0)), Hovered: (Background: #ffffff(0.08)), Sounds: $C.@ButtonSounds);
+            TextTooltipStyle: $C.@DefaultTextTooltipStyle;
+            TextTooltipShowDelay: 0.1;
+            Group { Anchor: (Left: 0, Top: 0, Width: 52, Height: 52); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 12); }
+            ItemIcon #AccKitIcon2 { Anchor: (Left: 7, Top: 6, Width: 38, Height: 38); }
+            Label #AccKitQty2 {
+              Anchor: (Left: 2, Top: 32, Width: 46, Height: 16);
+              Style: (FontSize: 12, RenderBold: true, TextColor: #ffffff, HorizontalAlignment: End, VerticalAlignment: Center);
+            }
+          }
+          Button #AccKit3 {
+            Anchor: (Width: 52, Height: 52, Right: 6);
+            Visible: false;
+            Style: (Default: (Background: #000000(0)), Hovered: (Background: #ffffff(0.08)), Sounds: $C.@ButtonSounds);
+            TextTooltipStyle: $C.@DefaultTextTooltipStyle;
+            TextTooltipShowDelay: 0.1;
+            Group { Anchor: (Left: 0, Top: 0, Width: 52, Height: 52); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 12); }
+            ItemIcon #AccKitIcon3 { Anchor: (Left: 7, Top: 6, Width: 38, Height: 38); }
+            Label #AccKitQty3 {
+              Anchor: (Left: 2, Top: 32, Width: 46, Height: 16);
+              Style: (FontSize: 12, RenderBold: true, TextColor: #ffffff, HorizontalAlignment: End, VerticalAlignment: Center);
+            }
+          }
+          Button #AccKit4 {
+            Anchor: (Width: 52, Height: 52, Right: 6);
+            Visible: false;
+            Style: (Default: (Background: #000000(0)), Hovered: (Background: #ffffff(0.08)), Sounds: $C.@ButtonSounds);
+            TextTooltipStyle: $C.@DefaultTextTooltipStyle;
+            TextTooltipShowDelay: 0.1;
+            Group { Anchor: (Left: 0, Top: 0, Width: 52, Height: 52); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 12); }
+            ItemIcon #AccKitIcon4 { Anchor: (Left: 7, Top: 6, Width: 38, Height: 38); }
+            Label #AccKitQty4 {
+              Anchor: (Left: 2, Top: 32, Width: 46, Height: 16);
+              Style: (FontSize: 12, RenderBold: true, TextColor: #ffffff, HorizontalAlignment: End, VerticalAlignment: Center);
+            }
+          }
+          Button #AccKit5 {
+            Anchor: (Width: 52, Height: 52, Right: 6);
+            Visible: false;
+            Style: (Default: (Background: #000000(0)), Hovered: (Background: #ffffff(0.08)), Sounds: $C.@ButtonSounds);
+            TextTooltipStyle: $C.@DefaultTextTooltipStyle;
+            TextTooltipShowDelay: 0.1;
+            Group { Anchor: (Left: 0, Top: 0, Width: 52, Height: 52); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 12); }
+            ItemIcon #AccKitIcon5 { Anchor: (Left: 7, Top: 6, Width: 38, Height: 38); }
+            Label #AccKitQty5 {
+              Anchor: (Left: 2, Top: 32, Width: 46, Height: 16);
+              Style: (FontSize: 12, RenderBold: true, TextColor: #ffffff, HorizontalAlignment: End, VerticalAlignment: Center);
+            }
+          }
+          Button #AccKit6 {
+            Anchor: (Width: 52, Height: 52, Right: 6);
+            Visible: false;
+            Style: (Default: (Background: #000000(0)), Hovered: (Background: #ffffff(0.08)), Sounds: $C.@ButtonSounds);
+            TextTooltipStyle: $C.@DefaultTextTooltipStyle;
+            TextTooltipShowDelay: 0.1;
+            Group { Anchor: (Left: 0, Top: 0, Width: 52, Height: 52); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 12); }
+            ItemIcon #AccKitIcon6 { Anchor: (Left: 7, Top: 6, Width: 38, Height: 38); }
+            Label #AccKitQty6 {
+              Anchor: (Left: 2, Top: 32, Width: 46, Height: 16);
+              Style: (FontSize: 12, RenderBold: true, TextColor: #ffffff, HorizontalAlignment: End, VerticalAlignment: Center);
+            }
+          }
+        }
+        Group #AccKitRow1 {
+          Anchor: (Top: 6, Height: 52);
+          LayoutMode: Left;
+          Button #AccKit7 {
+            Anchor: (Width: 52, Height: 52, Right: 6);
+            Visible: false;
+            Style: (Default: (Background: #000000(0)), Hovered: (Background: #ffffff(0.08)), Sounds: $C.@ButtonSounds);
+            TextTooltipStyle: $C.@DefaultTextTooltipStyle;
+            TextTooltipShowDelay: 0.1;
+            Group { Anchor: (Left: 0, Top: 0, Width: 52, Height: 52); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 12); }
+            ItemIcon #AccKitIcon7 { Anchor: (Left: 7, Top: 6, Width: 38, Height: 38); }
+            Label #AccKitQty7 {
+              Anchor: (Left: 2, Top: 32, Width: 46, Height: 16);
+              Style: (FontSize: 12, RenderBold: true, TextColor: #ffffff, HorizontalAlignment: End, VerticalAlignment: Center);
+            }
+          }
+          Button #AccKit8 {
+            Anchor: (Width: 52, Height: 52, Right: 6);
+            Visible: false;
+            Style: (Default: (Background: #000000(0)), Hovered: (Background: #ffffff(0.08)), Sounds: $C.@ButtonSounds);
+            TextTooltipStyle: $C.@DefaultTextTooltipStyle;
+            TextTooltipShowDelay: 0.1;
+            Group { Anchor: (Left: 0, Top: 0, Width: 52, Height: 52); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 12); }
+            ItemIcon #AccKitIcon8 { Anchor: (Left: 7, Top: 6, Width: 38, Height: 38); }
+            Label #AccKitQty8 {
+              Anchor: (Left: 2, Top: 32, Width: 46, Height: 16);
+              Style: (FontSize: 12, RenderBold: true, TextColor: #ffffff, HorizontalAlignment: End, VerticalAlignment: Center);
+            }
+          }
+          Button #AccKit9 {
+            Anchor: (Width: 52, Height: 52, Right: 6);
+            Visible: false;
+            Style: (Default: (Background: #000000(0)), Hovered: (Background: #ffffff(0.08)), Sounds: $C.@ButtonSounds);
+            TextTooltipStyle: $C.@DefaultTextTooltipStyle;
+            TextTooltipShowDelay: 0.1;
+            Group { Anchor: (Left: 0, Top: 0, Width: 52, Height: 52); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 12); }
+            ItemIcon #AccKitIcon9 { Anchor: (Left: 7, Top: 6, Width: 38, Height: 38); }
+            Label #AccKitQty9 {
+              Anchor: (Left: 2, Top: 32, Width: 46, Height: 16);
+              Style: (FontSize: 12, RenderBold: true, TextColor: #ffffff, HorizontalAlignment: End, VerticalAlignment: Center);
+            }
+          }
+          Button #AccKit10 {
+            Anchor: (Width: 52, Height: 52, Right: 6);
+            Visible: false;
+            Style: (Default: (Background: #000000(0)), Hovered: (Background: #ffffff(0.08)), Sounds: $C.@ButtonSounds);
+            TextTooltipStyle: $C.@DefaultTextTooltipStyle;
+            TextTooltipShowDelay: 0.1;
+            Group { Anchor: (Left: 0, Top: 0, Width: 52, Height: 52); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 12); }
+            ItemIcon #AccKitIcon10 { Anchor: (Left: 7, Top: 6, Width: 38, Height: 38); }
+            Label #AccKitQty10 {
+              Anchor: (Left: 2, Top: 32, Width: 46, Height: 16);
+              Style: (FontSize: 12, RenderBold: true, TextColor: #ffffff, HorizontalAlignment: End, VerticalAlignment: Center);
+            }
+          }
+          Button #AccKit11 {
+            Anchor: (Width: 52, Height: 52, Right: 6);
+            Visible: false;
+            Style: (Default: (Background: #000000(0)), Hovered: (Background: #ffffff(0.08)), Sounds: $C.@ButtonSounds);
+            TextTooltipStyle: $C.@DefaultTextTooltipStyle;
+            TextTooltipShowDelay: 0.1;
+            Group { Anchor: (Left: 0, Top: 0, Width: 52, Height: 52); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 12); }
+            ItemIcon #AccKitIcon11 { Anchor: (Left: 7, Top: 6, Width: 38, Height: 38); }
+            Label #AccKitQty11 {
+              Anchor: (Left: 2, Top: 32, Width: 46, Height: 16);
+              Style: (FontSize: 12, RenderBold: true, TextColor: #ffffff, HorizontalAlignment: End, VerticalAlignment: Center);
+            }
+          }
+          Button #AccKit12 {
+            Anchor: (Width: 52, Height: 52, Right: 6);
+            Visible: false;
+            Style: (Default: (Background: #000000(0)), Hovered: (Background: #ffffff(0.08)), Sounds: $C.@ButtonSounds);
+            TextTooltipStyle: $C.@DefaultTextTooltipStyle;
+            TextTooltipShowDelay: 0.1;
+            Group { Anchor: (Left: 0, Top: 0, Width: 52, Height: 52); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 12); }
+            ItemIcon #AccKitIcon12 { Anchor: (Left: 7, Top: 6, Width: 38, Height: 38); }
+            Label #AccKitQty12 {
+              Anchor: (Left: 2, Top: 32, Width: 46, Height: 16);
+              Style: (FontSize: 12, RenderBold: true, TextColor: #ffffff, HorizontalAlignment: End, VerticalAlignment: Center);
+            }
+          }
+          Button #AccKit13 {
+            Anchor: (Width: 52, Height: 52, Right: 6);
+            Visible: false;
+            Style: (Default: (Background: #000000(0)), Hovered: (Background: #ffffff(0.08)), Sounds: $C.@ButtonSounds);
+            TextTooltipStyle: $C.@DefaultTextTooltipStyle;
+            TextTooltipShowDelay: 0.1;
+            Group { Anchor: (Left: 0, Top: 0, Width: 52, Height: 52); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 12); }
+            ItemIcon #AccKitIcon13 { Anchor: (Left: 7, Top: 6, Width: 38, Height: 38); }
+            Label #AccKitQty13 {
+              Anchor: (Left: 2, Top: 32, Width: 46, Height: 16);
+              Style: (FontSize: 12, RenderBold: true, TextColor: #ffffff, HorizontalAlignment: End, VerticalAlignment: Center);
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,7 +1,6 @@
 package com.eldanior.system.titles.nobility.family.definitions.marquis;
 
 import com.eldanior.system.config.configs.Rarity;
-import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
 import com.eldanior.system.titles.nobility.NobilityRank;
 import com.eldanior.system.titles.nobility.family.NobleFamilyModel;
 
@@ -18,8 +17,7 @@ public class Runkandel extends NobleFamilyModel {
                 + "Leur marquisat au nord-est est une terre de forteresses et de champs d'entrainement "
                 + "ou chaque enfant apprend le maniement de l'epee avant de savoir lire.",
                 Rarity.LEGENDARY,
-                NobilityRank.MARQUIS,
-                PassiveSkill.FAMILY_DRAGON_FURY
+                NobilityRank.MARQUIS
         );
     }
 }

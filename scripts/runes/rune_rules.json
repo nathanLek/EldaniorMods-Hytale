@@ -21,7 +21,8 @@
     "Combat":    { "keywords": ["Physical", "Melee"],     "hue": 0.0,  "top": [60, 30, 26],  "bottom": [16, 8, 8],   "accent": [230, 90, 70],   "glyph": [240, 230, 220] },
     "Spatial":   { "keywords": ["Elemental"],             "hue": 0.83, "top": [44, 20, 60],  "bottom": [10, 4, 18],  "accent": [230, 120, 255], "glyph": [245, 215, 255] },
     "Foudre":    { "keywords": ["Elemental", "Charged"],  "hue": 0.15, "top": [26, 22, 70],  "bottom": [6, 6, 22],   "accent": [120, 170, 255], "glyph": [255, 245, 150] },
-    "Dragonic":  { "keywords": ["Elemental", "Fire"],     "hue": 0.11, "top": [50, 26, 10],  "bottom": [12, 6, 3],   "accent": [255, 170, 70],  "glyph": [255, 225, 160] }
+    "Dragonic":  { "keywords": ["Elemental", "Fire"],     "hue": 0.11, "top": [50, 26, 10],  "bottom": [12, 6, 3],   "accent": [255, 170, 70],  "glyph": [255, 225, 160] },
+    "Luo":       { "keywords": ["Physical", "Melee"], "hue": 0.12, "top": [44, 34, 16], "bottom": [8, 6, 3], "accent": [240, 196, 84], "glyph": [255, 238, 186], "$Comment": "Techniques du Clan Luo (voie martiale) : noir et or ; rangees dans Eldanior_Empire_Luo.Runes (champ category des fiches)." }
   },
   "exceptions": {
     "$Comment": "Runes dont le cout ou la recharge s'ecartent volontairement de la table. Toute entree doit donner une raison.",
@@ -40,6 +41,12 @@
     "Rune_SablierChronos": "Valeurs de test - a aligner sur Divin avant release.",
     "Rune_SanctuaireApollon": "Valeurs de test - a aligner sur Divin avant release.",
     "Rune_SanctuaireTaranis": "Valeurs de test - a aligner sur Divin avant release.",
-    "Rune_VoileNyx": "Valeurs de test - a aligner sur Divin avant release."
+    "Rune_VoileNyx": "Valeurs de test - a aligner sur Divin avant release.",
+    "Rune_ChainHook": "Rune du jeu de base (capacite vanilla, copiee sans sa recette le 2026-11-24) : cout et recharge d'origine, rune de base de classe.",
+    "Rune_ChargedShot": "Rune du jeu de base (capacite vanilla, copiee sans sa recette le 2026-11-24) : cout et recharge d'origine, rune de base de classe.",
+    "Rune_Enrage": "Rune du jeu de base (capacite vanilla, copiee sans sa recette le 2026-11-24) : cout et recharge d'origine, rune de base de classe.",
+    "Rune_GroundSlam": "Rune du jeu de base (capacite vanilla, copiee sans sa recette le 2026-11-24) : cout et recharge d'origine, rune de base de classe.",
+    "Rune_PoisonImbue": "Rune du jeu de base (capacite vanilla, copiee sans sa recette le 2026-11-24) : cout et recharge d'origine, rune de base de classe.",
+    "Rune_WindStrike": "Rune du jeu de base (capacite vanilla, copiee sans sa recette le 2026-11-24) : cout et recharge d'origine, rune de base de classe."
   }
 }

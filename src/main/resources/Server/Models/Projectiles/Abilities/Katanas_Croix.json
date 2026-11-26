@@ -1,0 +1,57 @@
+{
+  "$Comment": "Croix Jumelle / Eclipse des Jumeaux (Lames Jumelles) : croix de lames d'energie deplacee par le code (LamesJumelles). HitBox elargie en X (LOD serveur). Genere par scripts/artefacts/gen_katanas_jumeaux.py.",
+  "Model": "Items/Projectiles/Katanas_Croix.blockymodel",
+  "Texture": "Items/Projectiles/Katanas_Croix.png",
+  "MinScale": 1.0,
+  "MaxScale": 1.0,
+  "HitBox": {
+    "Max": {
+      "X": 1.2,
+      "Y": 0.6,
+      "Z": 0.6
+    },
+    "Min": {
+      "X": -1.2,
+      "Y": -0.6,
+      "Z": -0.6
+    }
+  },
+  "Trails": [
+    {
+      "TrailId": "Katanas_Croix_Trail_Soleil",
+      "TargetNodeName": "Lame_Soleil",
+      "PositionOffset": {
+        "X": 1.0,
+        "Z": 0.5
+      }
+    },
+    {
+      "TrailId": "Katanas_Croix_Trail_Soleil",
+      "TargetNodeName": "Lame_Soleil",
+      "PositionOffset": {
+        "X": -1.0,
+        "Z": 0.5
+      }
+    },
+    {
+      "TrailId": "Katanas_Croix_Trail_Lune",
+      "TargetNodeName": "Lame_Lune",
+      "PositionOffset": {
+        "X": 1.0,
+        "Z": 0.5
+      }
+    },
+    {
+      "TrailId": "Katanas_Croix_Trail_Lune",
+      "TargetNodeName": "Lame_Lune",
+      "PositionOffset": {
+        "X": -1.0,
+        "Z": 0.5
+      }
+    }
+  ],
+  "Light": {
+    "Color": "#ffe2b0",
+    "Radius": 6
+  }
+}

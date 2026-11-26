@@ -1,0 +1,65 @@
+{
+  "$Comment": "Deuxieme competence de l'Observateur (demandee le 2026-11-17) : jamais en butin, donnee avec la classe (Observateur.runes).",
+  "id": "Rune_SansVisage",
+  "spell": "SansVisage",
+  "javaClass": "SansVisage",
+  "page": "rune_page_sansvisage",
+  "name": "Rune Sans Visage",
+  "type": "Tenebres",
+  "rarity": "Legendaire",
+  "emblem": "SansVisage",
+  "classes": "observateur",
+  "persistent": false,
+  "summary": "Ouvre la fenetre Sans Visage (classes/observateur/SansVisagePage) : prendre l'apparence d'un joueur en ligne, d'un PNJ, d'un animal ou d'un monstre, une apparence de joueur aleatoire, une fausse classe et un nom d'emprunt ; chaque nouveau visage coute du mana ; le masque tombe a la mort, a la deconnexion et a la Sentence Silencieuse.",
+  "description": "Compétence de l'Observateur. Ouvre la fenêtre Sans Visage : prenez l'apparence d'un joueur, d'un PNJ, d'un animal ou d'un monstre, tirez un visage au hasard, affichez une fausse classe et faites-vous appeler d'un autre nom. Chaque nouveau visage coûte 300 de mana ; le masque tombe à votre mort ou d'un simple clic sur « Reprendre mon visage ».",
+  "pageDescription": "« Je suis le marchand qui vous sourit, le chien qui vous suit, et l'ami qui vous tend la main. » Savoir de l'Observateur : il vient avec la classe, jamais en butin.",
+  "keywords": [
+    "Buff"
+  ],
+  "overrides": {
+    "mana": 0,
+    "cooldown": 1,
+    "reason": "ouvrir la fenetre est gratuit : le mana (300) est preleve dans le code a chaque nouveau visage choisi (SansVisage.COST), rien si la fenetre est fermee sans choix"
+  },
+  "loot": {},
+  "cast": {
+    "animationSet": "Sword",
+    "charging": "CastEnchant",
+    "release": "CastEnchant",
+    "chargeTime": 0.1,
+    "releaseTime": 0.3,
+    "moveSpeed": 0.6,
+    "cameraEffect": null,
+    "sound": null,
+    "releaseSound": null,
+    "handParticles": null,
+    "handParticlesScale": 0.6,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.1,
+    "range": 0,
+    "radius": "",
+    "targets": "soi",
+    "triggers": "clic de la rune equipee : fenetre",
+    "persistentFx": "fumee noire Smoke_Black a chaque changement de visage",
+    "effects": "ModelComponent remplace (modele de PNJ/animal, ou modele construit depuis un PlayerSkin copie/aleatoire) ; PlayerSkinComponent remplace pour une apparence de joueur ; nom d'emprunt (ObservateurManager.ALIASES) ; fausse classe (ObservateurManager.disguiseClass) vue dans le groupe et par les autres",
+    "terrain": "aucun",
+    "persistentDurationS": 0,
+    "interruptions": "mort, deconnexion (les composants d'apparence ne sont pas sauvegardes), Sentence Silencieuse, bouton Reprendre mon visage",
+    "restrictions": "classe observateur seulement",
+    "limitations": "les composants ModelComponent / PlayerSkinComponent ne sont pas persistants : a la reconnexion le joueur retrouve son vrai visage (le nom d'emprunt reste).",
+    "balance": {
+      "damage": 0,
+      "range": 0,
+      "duration": 5,
+      "mobility": 0,
+      "control": 0,
+      "defense": 0,
+      "targets": 0,
+      "frequency": 0,
+      "terrain": 0,
+      "difficulty": 2
+    }
+  }
+}

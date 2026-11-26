@@ -1,0 +1,67 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_Prescience",
+  "spell": "Prescience",
+  "javaClass": "Prescience",
+  "page": "rune_page_prescience",
+  "name": "Rune de Prescience",
+  "type": "Temps",
+  "rarity": "Epic",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Prescience",
+  "summary": "10 s : les 3 prochains coups sont esquives (pas de cote, attaquant fige 1 s), riposte +50 %.",
+  "description": "Sort épique du temps (Mage, rune de prédilection du Voyant Arcane). Pendant 10 s, vous voyez chaque coup avant qu'il parte : les 3 prochaines attaques d'une créature ou d'un joueur sont esquivées (aucun dégât), vous faites un pas de côté de 2 blocs en laissant une image rémanente, et l'attaquant est figé 1 s. Votre coup suivant une esquive inflige 50 % de dégâts en plus.",
+  "pageDescription": "Un parchemin dont l'encre écrit les lignes avant qu'on les lise. Enseigne la Prescience : esquivez ce que vous avez déjà vu. Classes : tous les Mages (rune de prédilection du Voyant Arcane). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Buff",
+    "Duration"
+  ],
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.4,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Arcane_Workbench_Craft",
+    "handParticles": "Chronos_Gold",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.4,
+    "range": 0,
+    "radius": "pas de cote 2 blocs",
+    "targets": "soi ; attaquants",
+    "persistentFx": "effet Elda_Prescience (voile dore), Chronos_Gold toutes les secondes",
+    "impactFx": "Chronos_Afterimage + Chronos_Burst a l'esquive",
+    "sounds": "SFX_Arcane_Workbench_Craft a l'incantation, SFX_Goblin_Feastmaster_Whoosh_Quick a chaque esquive",
+    "effects": "onOwnerHurt (attaquant non nul) -> 0, 3 fois ; teleportation laterale 2 blocs (case libre) ; stun Chronos_Fige 1 s sur l'attaquant ; riposte +50 % (markEcho)",
+    "terrain": "aucun",
+    "persistentDurationS": 10,
+    "interruptions": "fin apres 3 esquives ou 10 s",
+    "restrictions": "mage",
+    "edgeCases": "degats sans attaquant (chute, feu, poison) non esquives ; pas de case libre a gauche ni a droite : esquive sur place",
+    "balance": {
+      "damage": 1,
+      "range": 0,
+      "duration": 2,
+      "mobility": 1,
+      "control": 2,
+      "defense": 3,
+      "targets": 1,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 0
+    }
+  },
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null
+}

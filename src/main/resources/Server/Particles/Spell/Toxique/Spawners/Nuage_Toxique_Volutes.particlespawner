@@ -1,0 +1,93 @@
+{
+  "$Comment": "Volutes de gaz toxique vert, moins opaques que la fumee du Voile (on voit les ennemis dedans).",
+  "RenderMode": "BlendLinear",
+  "EmitOffset": {
+    "X": {
+      "Min": -5.0,
+      "Max": 5.0
+    },
+    "Y": {
+      "Min": 0,
+      "Max": 2.0
+    },
+    "Z": {
+      "Min": -5.0,
+      "Max": 5.0
+    }
+  },
+  "ParticleRotationInfluence": "Billboard",
+  "LinearFiltering": true,
+  "LightInfluence": 0.7,
+  "ParticleRotateWithSpawner": false,
+  "MaxConcurrentParticles": 90,
+  "ParticleLifeSpan": {
+    "Min": 3.2,
+    "Max": 4.4
+  },
+  "SpawnRate": {
+    "Min": 55,
+    "Max": 65
+  },
+  "InitialVelocity": {
+    "Speed": {
+      "Min": 0.15,
+      "Max": 0.5
+    },
+    "Yaw": {
+      "Min": 0,
+      "Max": 360
+    },
+    "Pitch": {
+      "Min": 5,
+      "Max": 35
+    }
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Smoke/Smoke_Dense.png",
+    "FrameSize": {
+      "Width": 64,
+      "Height": 64
+    },
+    "ScaleRatioConstraint": "OneToOne",
+    "UVOption": "RandomFlipU",
+    "InitialAnimationFrame": {
+      "Scale": {
+        "X": {
+          "Min": 2.6,
+          "Max": 3.6
+        },
+        "Y": {
+          "Min": 2.6,
+          "Max": 3.6
+        }
+      },
+      "Opacity": 0.0,
+      "Color": "#6fb33a"
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0.0
+      },
+      "12": {
+        "Opacity": 0.5
+      },
+      "70": {
+        "Opacity": 0.5,
+        "Color": "#3d7a1c"
+      },
+      "100": {
+        "Opacity": 0.0,
+        "Scale": {
+          "X": {
+            "Min": 4.4,
+            "Max": 4.8
+          },
+          "Y": {
+            "Min": 4.4,
+            "Max": 4.8
+          }
+        }
+      }
+    }
+  }
+}

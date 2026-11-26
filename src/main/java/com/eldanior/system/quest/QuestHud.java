@@ -1,21 +1,29 @@
 package com.eldanior.system.quest;
 
-import com.eldanior.system.EldaniorSystem;
 import com.eldanior.system.config.Player.PlayerLevelData;
+import com.eldanior.system.quest.chapitres.ChapterQuests;
 import com.eldanior.system.quest.dialogue.NpcDialogueQuest;
 import com.eldanior.system.quest.dialogue.QuestCondition;
-import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.entity.entities.player.hud.CustomUIHud;
 import com.hypixel.hytale.server.core.ui.builder.UICommandBuilder;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
-import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * HUD des quetes en cours (Quest/QuestHud.ui, genere par scripts/quetes/gen_quest_hud.py), aussi rendu par hud/CombinedHud.
+ * 2026-11-13 (demande de l'utilisateur) : chaque quete est encadree comme une carte de la fenetre Chapitres (contour a la couleur
+ * de son type), avec son rang de mission dans un bandeau a gauche (teinte du type), son type, son nom et ses attendus comme dans
+ * la fenetre de quete (case, texte, avancement). Pas de recompense affichee (2026-11-13). Panneau du haut : la quete principale ; panneau du bas : la quete suivie (si ce n'est pas la principale).
+ */
 public class QuestHud extends CustomUIHud {
+
+    /** = OBJECTIVES de gen_quest_hud.py. */
+    static final int OBJECTIVES = 4;
+    private static final String GOLD = "#f2c45e";
 
     private final UUID ownerUUID;
     private PlayerLevelData cachedData;
@@ -46,154 +54,129 @@ public class QuestHud extends CustomUIHud {
     /** Accessible depuis CombinedHud */
     public void renderPublic(UICommandBuilder ui) { render(ui); }
 
+    /** Une ligne d'attendu : texte, avancement, rempli. */
+    private record Row(String text, String count, boolean ok) {}
+
     private void render(UICommandBuilder ui) {
-        // === QUETE PRINCIPALE ===
-        PlayerQuest mainQuest = findMainQuest();
-        if (mainQuest != null) {
-            QuestModel mainModel = QuestManager.getQuest(mainQuest.getQuestId());
-            if (mainModel != null) {
-                ui.set("#QHudMainPanel.Visible", true);
-                ui.set("#QHudMainName.Text", mainModel.getName());
-                ui.set("#QHudMainDiff.Text", mainModel.getDifficulty().getDisplayName());
-
-                if (mainModel instanceof NpcDialogueQuest nq && nq.getCompletionCondition() != null) {
-                    renderObjectiveBoxes(ui, "QHudMain", nq.getCompletionCondition());
-                } else {
-                    // Quete simple : afficher objectif + progression dans box 1
-                    String objText = mainModel.getObjectiveText();
-                    String prog;
-                    if (mainQuest.isCompleted()) {
-                        prog = "OK";
-                    } else if ((mainModel.getType() == QuestType.MINAGE || mainModel.getType() == QuestType.RECOLTE)
-                            && cachedPlayer != null && mainModel.getTargetId() != null) {
-                        int invCount = QuestManager.countItemInInventory(cachedPlayer, mainModel.getTargetId());
-                        prog = invCount + "/" + mainModel.getTargetAmount();
-                    } else {
-                        prog = mainQuest.getProgress() + "/" + mainModel.getTargetAmount();
-                    }
-                    boolean done = mainQuest.isCompleted() || "OK".equals(prog);
-                    ui.set("#QHudMainObj1Box.Visible", true);
-                    ui.set("#QHudMainObj1.Text", objText);
-                    ui.set("#QHudMainObj1Count.Text", prog);
-                    ui.set("#QHudMainObj1.Style.TextColor", done ? "#4CAF50" : "#ddeeff");
-                    ui.set("#QHudMainObj1Count.Style.TextColor", done ? "#4CAF50" : "#ffffff");
-                    ui.set("#QHudMainObj2Box.Visible", false);
-                    ui.set("#QHudMainObj3Box.Visible", false);
-                }
-                ui.set("#QHudMainProg.Text", "");
-            } else {
-                ui.set("#QHudMainPanel.Visible", false);
-            }
-        } else {
-            ui.set("#QHudMainPanel.Visible", false);
-        }
-
-        // === QUETE ACTIVE (journaliere/secondaire) ===
+        PlayerQuest main = findMainQuest();
+        renderPanel(ui, "QHudMain", main);
         PlayerQuest active = QuestManager.getActiveQuest(ownerUUID);
-        if (active != null && !active.getQuestId().equals(mainQuest != null ? mainQuest.getQuestId() : "")) {
-            QuestModel model = QuestManager.getQuest(active.getQuestId());
-            // Skip info-only quests (talk_tavernier etc)
-            if (model instanceof NpcDialogueQuest infoNq && infoNq.isInfoOnly()) model = null;
-            if (model != null) {
-                ui.set("#QuestHudPanel.Visible", true);
-                ui.set("#QHudName.Text", model.getName());
-                ui.set("#QHudDiff.Text", model.getDifficulty().getDisplayName());
+        if (active != null && main != null && active.getQuestId().equals(main.getQuestId())) active = null;
+        renderPanel(ui, "QHud", active);
+        renderPanel(ui, "QHudAlt", other(main, active));                                    // 2 quetes en cours + la principale
+    }
 
-                if (model instanceof NpcDialogueQuest nq && nq.getCompletionCondition() != null) {
-                    renderObjectiveBoxes(ui, "QHud", nq.getCompletionCondition());
-                } else {
-                    // Quete simple : afficher objectif + progression dans box 1
-                    String objText = model.getObjectiveText();
-                    String prog;
-                    if (active.isCompleted()) {
-                        prog = "OK";
-                    } else if ((model.getType() == QuestType.MINAGE || model.getType() == QuestType.RECOLTE)
-                            && cachedPlayer != null && model.getTargetId() != null) {
-                        // Progression basee sur l'inventaire pour MINAGE/RECOLTE
-                        int invCount = QuestManager.countItemInInventory(cachedPlayer, model.getTargetId());
-                        prog = invCount + "/" + model.getTargetAmount();
-                    } else {
-                        prog = active.getProgress() + "/" + model.getTargetAmount();
-                    }
-                    boolean done = active.isCompleted() || "OK".equals(prog);
-                    ui.set("#QHudObj1Box.Visible", true);
-                    ui.set("#QHudObj1.Text", objText);
-                    ui.set("#QHudObj1Count.Text", prog);
-                    ui.set("#QHudObj1.Style.TextColor", done ? "#4CAF50" : "#ddeeff");
-                    ui.set("#QHudObj1Count.Style.TextColor", done ? "#4CAF50" : "#ffffff");
-                    ui.set("#QHudObj2Box.Visible", false);
-                    ui.set("#QHudObj3Box.Visible", false);
-                }
-                ui.set("#QHudProg.Text", "");
-                ui.set("#QHudReward.Text", model.getRewardText());
-            } else {
-                ui.set("#QuestHudPanel.Visible", false);
-            }
-        } else {
-            ui.set("#QuestHudPanel.Visible", false);
+    private void renderPanel(UICommandBuilder ui, String p, PlayerQuest pq) {
+        QuestModel model = pq != null ? QuestManager.getQuest(pq.getQuestId()) : null;
+        if (model instanceof NpcDialogueQuest nq && nq.isInfoOnly()) model = null;           // talk_tavernier, etc.
+        if (model == null) { ui.set("#" + p + "Panel.Visible", false); return; }
+        ui.set("#" + p + "Panel.Visible", true);
+
+        String[] type = typeOf(model);
+        ui.set("#" + p + "Panel.Background", type[1]);                                       // contour de la carte
+        ui.set("#" + p + "RankLine.Background", type[1]);
+        ui.set("#" + p + "Type.Text", type[0]);
+        ui.set("#" + p + "Type.Style.TextColor", type[1]);
+        // blason du rang (2026-11-14) : losange a la couleur du rang (QHudRank<R>, gen_quest_hud.py), lettre claire dessus
+        QuestDifficulty rank = model.getDifficulty();
+        for (QuestDifficulty r : QuestDifficulty.values()) ui.set("#" + p + "Badge" + r.name() + ".Visible", r == rank);
+        ui.set("#" + p + "Rank.Text", rank.getDisplayName());
+        ui.set("#" + p + "Rank.Style.TextColor", light(rank.getColor()));
+        ui.set("#" + p + "Name.Text", model instanceof ChapterQuests.ActQuest aq ? aq.act.name : model.getName());
+
+        List<Row> rows = rows(model, pq);
+        for (int i = 0; i < OBJECTIVES; i++) {
+            boolean shown = i < rows.size();
+            ui.set("#" + p + "Obj" + i + ".Visible", shown);
+            if (!shown) continue;
+            Row r = rows.get(i);
+            ui.set("#" + p + "ObjOn" + i + ".Visible", r.ok());
+            ui.set("#" + p + "ObjOff" + i + ".Visible", !r.ok());
+            ui.set("#" + p + "ObjText" + i + ".Text", r.text());
+            ui.set("#" + p + "ObjText" + i + ".Style.TextColor", r.ok() ? "#d9c58a" : "#b8c2d0");
+            ui.set("#" + p + "ObjCount" + i + ".Text", r.count());
+            ui.set("#" + p + "ObjCount" + i + ".Style.TextColor", r.ok() ? GOLD : "#77879d");
         }
     }
 
-    /**
-     * Cherche la quete principale active du joueur.
-     */
-    private void renderObjectiveBoxes(UICommandBuilder ui, String prefix, QuestCondition cond) {
-        int num = 1;
-        List<String[]> objectives = new ArrayList<>(); // [label, counter, done]
-
-        if (cond.getRequiredLevel() > 0) {
-            int current = cachedData != null ? cachedData.getLevel() : 0;
-            boolean done = current >= cond.getRequiredLevel();
-            objectives.add(new String[]{"Lvl " + cond.getRequiredLevel(), done ? "OK" : current + "/" + cond.getRequiredLevel(), done ? "1" : "0"});
-        }
-
-        if (cond.getRequiredQuestCompleted() != null) {
-            boolean done = cachedData != null && cachedData.getQuestData() != null
-                    && cachedData.getQuestData().contains(cond.getRequiredQuestCompleted() + ":")
-                    && cachedData.getQuestData().contains(":COMPLETED");
-            objectives.add(new String[]{"Indice", done ? "OK" : "0/1", done ? "1" : "0"});
-        }
-
-        if (cond.getRequiredItemId() != null) {
-            boolean done = QuestManager.hasItemInFullInventory(cachedPlayer, cond.getRequiredItemId());
-            String name = cond.getRequiredItemId().replaceAll("([a-z])([A-Z])", "$1 $2").replace("_", " ");
-            if (name.contains(":")) name = name.substring(name.indexOf(':') + 1);
-            objectives.add(new String[]{name, done ? "OK" : "0/1", done ? "1" : "0"});
-        }
-
-        for (int i = 1; i <= 3; i++) {
-            if (i <= objectives.size()) {
-                String[] obj = objectives.get(i - 1);
-                boolean done = "1".equals(obj[2]);
-                ui.set("#" + prefix + "Obj" + i + "Box.Visible", true);
-                ui.set("#" + prefix + "Obj" + i + ".Text", i + ". " + obj[0]);
-                ui.set("#" + prefix + "Obj" + i + "Count.Text", obj[1]);
-
-                if (done) {
-                    ui.set("#" + prefix + "Obj" + i + ".Style.TextColor", "#4CAF50");
-                    ui.set("#" + prefix + "Obj" + i + "Count.Style.TextColor", "#4CAF50");
-                } else {
-                    ui.set("#" + prefix + "Obj" + i + ".Style.TextColor", "#ddeeff");
-                    ui.set("#" + prefix + "Obj" + i + "Count.Style.TextColor", "#ffffff");
-                }
-            } else {
-                ui.set("#" + prefix + "Obj" + i + "Box.Visible", false);
-            }
-        }
+    /** Couleur du rang eclaircie (60 % vers le blanc) pour la lettre posee sur le blason, en #rrggbb. */
+    private static String light(String hex) {
+        int c = Integer.parseInt(hex.substring(1), 16);
+        int r = (c >> 16) & 255, g = (c >> 8) & 255, b = c & 255;
+        return String.format("#%02x%02x%02x", r + (255 - r) * 6 / 10, g + (255 - g) * 6 / 10, b + (255 - b) * 6 / 10);
     }
 
-    private void hideObjectiveBoxes(UICommandBuilder ui, String prefix) {
-        for (int i = 1; i <= 3; i++) {
-            ui.set("#" + prefix + "Obj" + i + "Box.Visible", false);
+    /** Libelle du type et couleur du contour (memes couleurs que les cartes de la fenetre Chapitres). */
+    private static String[] typeOf(QuestModel m) {
+        if (m instanceof ChapterQuests.ActQuest aq) {
+            ChapterQuests.MissionType t = aq.act.chain.type;
+            String color = t == ChapterQuests.MissionType.PRIME ? t.color
+                    : t == ChapterQuests.MissionType.PRINCIPALE || aq.act.rank.atLeastS() ? GOLD : t.color;
+            return new String[]{aq.act.chain.evolutive() ? t.label + " · " + aq.act.actLabel() : t.label, color};
         }
+        return switch (m.getCategory()) {
+            case PRINCIPAL -> new String[]{"Quête principale", GOLD};
+            case JOURNALIERE -> new String[]{"Quête journalière", ChapterQuests.MissionType.JOURNALIERE.color};
+            case PRIME -> new String[]{"Prime", ChapterQuests.MissionType.PRIME.color};
+            default -> new String[]{"Quête secondaire", ChapterQuests.MissionType.SECONDAIRE.color};
+        };
+    }
+
+    /** Attendus, comme dans la fenetre de quete. */
+    private List<Row> rows(QuestModel model, PlayerQuest pq) {
+        List<Row> out = new ArrayList<>();
+        if (model instanceof ChapterQuests.ActQuest aq) {                                   // memes lignes que la fenetre (2026-11-14)
+            ChapterQuests.State st = pq.isCompleted() ? ChapterQuests.State.DONE : ChapterQuests.State.IN_PROGRESS;
+            for (var r : com.eldanior.system.quest.chapitres.QuestChaptersPage.rows(aq.act, st, pq, cachedData, cachedPlayer))
+                out.add(new Row(r.text(), r.count(), r.ok()));
+            return out;
+        }
+        if (model instanceof NpcDialogueQuest nq && nq.getCompletionCondition() != null) {
+            QuestCondition cond = nq.getCompletionCondition();
+            if (cond.getRequiredLevel() > 0) {
+                int cur = cachedData != null ? cachedData.getLevel() : 0;
+                boolean ok = cur >= cond.getRequiredLevel();
+                out.add(new Row("Atteindre le niveau " + cond.getRequiredLevel(), ok ? "Fait" : "Niv. " + cur + " / " + cond.getRequiredLevel(), ok));
+            }
+            if (cond.getRequiredQuestCompleted() != null) {
+                boolean ok = cachedData != null && cachedData.getQuestData() != null
+                        && cachedData.getQuestData().contains(cond.getRequiredQuestCompleted() + ":")
+                        && cachedData.getQuestData().contains(":COMPLETED");
+                out.add(new Row("Trouver l'indice", ok ? "Fait" : "0 / 1", ok));
+            }
+            if (cond.getRequiredItemId() != null) {
+                boolean ok = QuestManager.hasItemInFullInventory(cachedPlayer, cond.getRequiredItemId());
+                String name = cond.getRequiredItemId().replaceAll("([a-z])([A-Z])", "$1 $2").replace("_", " ");
+                if (name.contains(":")) name = name.substring(name.indexOf(':') + 1);
+                out.add(new Row("Obtenir : " + name, ok ? "Fait" : "0 / 1", ok));
+            }
+            return out;
+        }
+        int have, need = Math.max(1, model.getTargetAmount());
+        if ((model.getType() == QuestType.MINAGE || model.getType() == QuestType.RECOLTE) && cachedPlayer != null && model.getTargetId() != null)
+            have = QuestManager.countItemInInventory(cachedPlayer, model.getTargetId());
+        else
+            have = pq.getProgress();
+        boolean ok = pq.isCompleted() || have >= need;
+        out.add(new Row(model.getObjectiveText(), ok ? "Fait" : Math.min(have, need) + " / " + need, ok));
+        return out;
+    }
+
+    /** L'autre quete en cours (ni la principale, ni celle deja affichee), null si aucune. */
+    private PlayerQuest other(PlayerQuest main, PlayerQuest shown) {
+        for (PlayerQuest pq : QuestManager.getPlayerQuests(ownerUUID)) {
+            if (pq.isCompleted() || pq == main || pq == shown) continue;
+            QuestModel m = QuestManager.getQuest(pq.getQuestId());
+            if (m == null || m.isMainStory() || m instanceof NpcDialogueQuest nq && nq.isInfoOnly()) continue;
+            return pq;
+        }
+        return null;
     }
 
     private PlayerQuest findMainQuest() {
         for (PlayerQuest pq : QuestManager.getPlayerQuests(ownerUUID)) {
             QuestModel model = QuestManager.getQuest(pq.getQuestId());
-            if (model != null && model.isMainStory() && !pq.isCompleted()) {
-                return pq;
-            }
+            if (model != null && model.isMainStory() && !pq.isCompleted()) return pq;
         }
         return null;
     }

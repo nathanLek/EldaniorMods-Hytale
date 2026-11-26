@@ -1,0 +1,45 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de la Frappe des Méridiens",
+    "Description": "Technique du Clan Luo, enseignée à la classe Disciple Martial de la voie martiale. Trois frappes éclair sur les points vitaux de l'ennemi visé à 4 blocs : 3 × 40 dégâts. Ses méridiens sont scellés pendant 4 s : il est ralenti et subit 15 % de dégâts supplémentaires de toutes sources. Coût : 60 mana. Recharge : 30 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_FrappeMeridiens.png",
+  "Quality": "Uncommon",
+  "ItemLevel": 25,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_Empire_Luo.Runes"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_FrappeMeridiens.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 30,
+    "Cost": 60,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Physical",
+      "Melee",
+      "Damage",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_FrappeMeridiens"
+  }
+}

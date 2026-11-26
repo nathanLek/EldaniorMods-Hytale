@@ -1,0 +1,92 @@
+{
+  "TranslationProperties": {
+    "Name": "Grèves du Roi d'Eldanior",
+    "Description": "Armure du Roi d'Eldanior. Des cuissards et des grèves d'acier blanc, des genouillères gravées d'or ornées d'une améthyste."
+  },
+  "Quality": "Unique",
+  "ItemLevel": 600,
+  "PlayerAnimationsId": "Block",
+  "ItemSoundSetId": "ISS_Armor_Heavy",
+  "Categories": [
+    "Eldanior_Familles.Eldanior",
+    "Items.Armors"
+  ],
+  "Icon": "Icons/ItemsGenerated/Armor_Eldanior_Roi_Legs.png",
+  "IconProperties": {
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Scale": 0.34,
+    "Translation": [
+      0,
+      0
+    ]
+  },
+  "Model": "Items/Armors/Eldanior/Roi/Legs.blockymodel",
+  "Texture": "Items/Armors/Eldanior/Roi/Legs_Texture.png",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    }
+  },
+  "Armor": {
+    "ArmorSlot": "Legs",
+    "BaseDamageResistance": 0,
+    "CosmeticsToHide": [
+      "Pants",
+      "Shoes",
+      "Overpants"
+    ],
+    "StatModifiers": {
+      "Health": [
+        {
+          "Amount": 44,
+          "CalculationType": "Additive"
+        }
+      ],
+      "Mana": [
+        {
+          "Amount": 16,
+          "CalculationType": "Additive"
+        }
+      ]
+    },
+    "DamageResistance": {
+      "Physical": [
+        {
+          "Amount": 0.18,
+          "CalculationType": "Percent"
+        }
+      ],
+      "Projectile": [
+        {
+          "Amount": 0.18,
+          "CalculationType": "Percent"
+        }
+      ]
+    }
+  },
+  "Tags": {
+    "Type": [
+      "Armor"
+    ],
+    "Family": [
+      "Plate_Eldanior"
+    ]
+  },
+  "MaxDurability": 600,
+  "DurabilityLossOnHit": 0.5
+}

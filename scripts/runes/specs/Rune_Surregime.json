@@ -1,0 +1,68 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_Surregime",
+  "spell": "Surregime",
+  "javaClass": "Surregime",
+  "page": "rune_page_surregime",
+  "name": "Rune du Surrégime",
+  "type": "Temps",
+  "rarity": "Unique",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Surregime",
+  "summary": "15 s de temps accelere : vitesse x1,8, chaque coup repete a 40 %, mana +3 %/s.",
+  "description": "Sort unique du temps (Mage, rune de prédilection du Chrono-Seigneur). Votre temps s'emballe pendant 15 s : vous allez 80 % plus vite, chacun de vos coups frappe une seconde fois à 40 % un instant plus tard, et vous regagnez 3 % de mana par seconde.",
+  "pageDescription": "Un parchemin dont l'encre sèche avant d'avoir touché la page. Enseigne le Surrégime : vivez plus vite que vos ennemis. Classes : tous les Mages (rune de prédilection du Chrono-Seigneur). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Buff",
+    "Duration"
+  ],
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.4,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Arcane_Workbench_Craft",
+    "handParticles": "Chronos_Gold",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.4,
+    "range": 0,
+    "radius": "0",
+    "targets": "soi",
+    "persistentFx": "effet Elda_Surregime (voile dore, x1,8) pose une fois 15 s ; Chronos_Dash derriere le lanceur toutes les 150 ms quand il court",
+    "impactFx": "Chronos_Afterimage sur la cible a chaque echo",
+    "sounds": "SFX_Arcane_Workbench_Craft a l'incantation",
+    "effects": "vitesse x1,8 ; onOwnerHit -> echo 40 % 0,3 s plus tard (markEcho, 4/s max) ; mana +3 %/s",
+    "terrain": "aucun",
+    "persistentDurationS": 15,
+    "interruptions": "aucune",
+    "restrictions": "mage",
+    "edgeCases": "cible morte avant l'echo : rien",
+    "limitations": "la feuille de route prevoyait des recharges reduites : les recharges sont predites par le client, les reduire cote serveur desynchronise l'interface ; remplace par mana +3 %/s et echo des coups",
+    "balance": {
+      "damage": 2,
+      "range": 0,
+      "duration": 3,
+      "mobility": 3,
+      "control": 0,
+      "defense": 0,
+      "targets": 1,
+      "frequency": 3,
+      "terrain": 0,
+      "difficulty": 0
+    }
+  },
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null
+}

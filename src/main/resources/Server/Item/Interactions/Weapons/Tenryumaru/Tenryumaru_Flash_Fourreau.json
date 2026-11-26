@@ -1,0 +1,50 @@
+{
+  "$Comment": "Flash Celeste depuis le fourreau (l'objet devient l'objet degaine des le degaine).",
+  "Type": "Serial",
+  "Interactions": [
+    {
+      "Type": "Simple",
+      "RunTime": 0.08,
+      "Effects": {
+        "ItemAnimationId": "IaiCharged",
+        "WorldSoundEventId": "SFX_Ability_Wind_Strike_Slash",
+        "LocalSoundEventId": "SFX_Sword_T2_Lunge_Local",
+        "CameraEffect": "Sword_Stab"
+      }
+    },
+    {
+      "Type": "RuneSpell",
+      "RunTime": 0.0,
+      "Spell": "TenryumaruDegaine",
+      "OnItemChangeBehavior": "Ignore"
+    },
+    {
+      "Type": "Replace",
+      "Var": "Swing_Right_Selector",
+      "DefaultOk": true,
+      "DefaultValue": {
+        "Interactions": [
+          "Weapon_Sword_Primary_Swing_Right_Selector"
+        ]
+      },
+      "OnItemChangeBehavior": "Ignore"
+    },
+    {
+      "Type": "RuneSpell",
+      "RunTime": 0.0,
+      "Spell": "KiEpeeCharge",
+      "OnItemChangeBehavior": "Ignore"
+    },
+    {
+      "Type": "RuneSpell",
+      "RunTime": 0.05,
+      "Spell": "FlashCeleste",
+      "OnItemChangeBehavior": "Ignore"
+    },
+    {
+      "Type": "Simple",
+      "RunTime": 0.2,
+      "OnItemChangeBehavior": "Ignore"
+    }
+  ]
+}

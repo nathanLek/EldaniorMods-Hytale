@@ -1,0 +1,50 @@
+{
+  "Type": "EffectCondition",
+  "EntityEffectIds": [
+    "Voie_Combo_12"
+  ],
+  "Match": "All",
+  "Next": "Luo_Kata_Rapide_12",
+  "Failed": {
+    "Type": "EffectCondition",
+    "EntityEffectIds": [
+      "Voie_Combo_10"
+    ],
+    "Match": "All",
+    "Next": "Luo_Kata_Rapide_10",
+    "Failed": {
+      "Type": "EffectCondition",
+      "EntityEffectIds": [
+        "Voie_Combo_9"
+      ],
+      "Match": "All",
+      "Next": "Luo_Kata_Rapide_9",
+      "Failed": {
+        "Type": "EffectCondition",
+        "EntityEffectIds": [
+          "Voie_Combo_8"
+        ],
+        "Match": "All",
+        "Next": "Luo_Kata_Rapide_8",
+        "Failed": {
+          "Type": "EffectCondition",
+          "EntityEffectIds": [
+            "Voie_Combo_6"
+          ],
+          "Match": "All",
+          "Next": "Luo_Kata_Rapide_6",
+          "Failed": {
+            "Type": "EffectCondition",
+            "EntityEffectIds": [
+              "Voie_Combo_5"
+            ],
+            "Match": "All",
+            "Next": "Luo_Kata_Rapide_5",
+            "Failed": "Luo_Kata_Rapide_4"
+          }
+        }
+      }
+    }
+  },
+  "$Comment": "Combo Luo : le plus long kata dont le joueur porte l'effet Voie_Combo_<N> (LuoPassives.trackTier), 4 coups hors de la voie martiale. Version rapide (Hien)."
+}

@@ -1,0 +1,1779 @@
+$C = "../Common.ui";
+
+// Boutique des PNJ (guards/ShopPage), facon fenetre de l'intendant et Chapitres. Genere par scripts/npcs/gen_shop_ui.py.
+Group {
+  LayoutMode: Middle;
+  Background: (TexturePath: "../Quest/ChapBackground.png");
+
+  Group #ShopRoot {
+    Anchor: (Width: 1920, Height: 1080);
+
+    // ---- fond : voile de droite, bande d'encre, lueur, eclats ----
+    Group { Anchor: (Left: 1003, Top: 0, Width: 917, Height: 1080); Background: #181822(0.5); }
+    Group { Anchor: (Left: 499, Top: 0, Width: 504, Height: 1080); Background: (TexturePath: "../Quest/ChapSeparator.png"); }
+    Group { Anchor: (Left: 480, Top: 25, Width: 488, Height: 1055); Background: (TexturePath: "../Quest/ChapGlows.png"); }
+    Group { Anchor: (Left: 0, Top: 0, Width: 1920, Height: 1080); Background: (TexturePath: "../Quest/ChapShards.png"); }
+    Group { Anchor: (Left: 599, Top: 0, Width: 1321, Height: 1080); Background: #0b0b12(0.45); }
+
+    // ---- categories ----
+    Group { Anchor: (Left: 603, Top: 28, Width: 1302, Height: 90); Background: #0b0b12(0.55); }
+    Group { Anchor: (Left: 603, Top: 118, Width: 1302, Height: 8); Background: (TexturePath: "../Quest/ChapDivider.png", HorizontalBorder: 24, VerticalBorder: 0); }
+    Button #ShopTab0 {
+      Anchor: (Left: 611, Top: 34, Width: 114, Height: 78);
+      Visible: false;
+      Style: (Default: (Background: #000000(0)), Hovered: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Sounds: $C.@ButtonSounds);
+      Group #ShopTabGlow0 { Anchor: (Left: 0, Top: 0, Width: 114, Height: 78); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); Visible: false; }
+      ItemIcon #ShopTabIcon0 { Anchor: (Left: 35, Top: 6, Width: 44, Height: 44); }
+      Label #ShopTabText0 {
+        Anchor: (Left: 4, Top: 50, Width: 106, Height: 20);
+        Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 9);
+      }
+      Group #ShopTabLine0 { Anchor: (Left: 16, Top: 73, Width: 82, Height: 3); Background: #f2c45e; Visible: false; }
+    }
+    Button #ShopTab1 {
+      Anchor: (Left: 729, Top: 34, Width: 114, Height: 78);
+      Visible: false;
+      Style: (Default: (Background: #000000(0)), Hovered: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Sounds: $C.@ButtonSounds);
+      Group #ShopTabGlow1 { Anchor: (Left: 0, Top: 0, Width: 114, Height: 78); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); Visible: false; }
+      ItemIcon #ShopTabIcon1 { Anchor: (Left: 35, Top: 6, Width: 44, Height: 44); }
+      Label #ShopTabText1 {
+        Anchor: (Left: 4, Top: 50, Width: 106, Height: 20);
+        Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 9);
+      }
+      Group #ShopTabLine1 { Anchor: (Left: 16, Top: 73, Width: 82, Height: 3); Background: #f2c45e; Visible: false; }
+    }
+    Button #ShopTab2 {
+      Anchor: (Left: 847, Top: 34, Width: 114, Height: 78);
+      Visible: false;
+      Style: (Default: (Background: #000000(0)), Hovered: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Sounds: $C.@ButtonSounds);
+      Group #ShopTabGlow2 { Anchor: (Left: 0, Top: 0, Width: 114, Height: 78); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); Visible: false; }
+      ItemIcon #ShopTabIcon2 { Anchor: (Left: 35, Top: 6, Width: 44, Height: 44); }
+      Label #ShopTabText2 {
+        Anchor: (Left: 4, Top: 50, Width: 106, Height: 20);
+        Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 9);
+      }
+      Group #ShopTabLine2 { Anchor: (Left: 16, Top: 73, Width: 82, Height: 3); Background: #f2c45e; Visible: false; }
+    }
+    Button #ShopTab3 {
+      Anchor: (Left: 965, Top: 34, Width: 114, Height: 78);
+      Visible: false;
+      Style: (Default: (Background: #000000(0)), Hovered: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Sounds: $C.@ButtonSounds);
+      Group #ShopTabGlow3 { Anchor: (Left: 0, Top: 0, Width: 114, Height: 78); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); Visible: false; }
+      ItemIcon #ShopTabIcon3 { Anchor: (Left: 35, Top: 6, Width: 44, Height: 44); }
+      Label #ShopTabText3 {
+        Anchor: (Left: 4, Top: 50, Width: 106, Height: 20);
+        Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 9);
+      }
+      Group #ShopTabLine3 { Anchor: (Left: 16, Top: 73, Width: 82, Height: 3); Background: #f2c45e; Visible: false; }
+    }
+    Button #ShopTab4 {
+      Anchor: (Left: 1083, Top: 34, Width: 114, Height: 78);
+      Visible: false;
+      Style: (Default: (Background: #000000(0)), Hovered: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Sounds: $C.@ButtonSounds);
+      Group #ShopTabGlow4 { Anchor: (Left: 0, Top: 0, Width: 114, Height: 78); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); Visible: false; }
+      ItemIcon #ShopTabIcon4 { Anchor: (Left: 35, Top: 6, Width: 44, Height: 44); }
+      Label #ShopTabText4 {
+        Anchor: (Left: 4, Top: 50, Width: 106, Height: 20);
+        Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 9);
+      }
+      Group #ShopTabLine4 { Anchor: (Left: 16, Top: 73, Width: 82, Height: 3); Background: #f2c45e; Visible: false; }
+    }
+    Button #ShopTab5 {
+      Anchor: (Left: 1201, Top: 34, Width: 114, Height: 78);
+      Visible: false;
+      Style: (Default: (Background: #000000(0)), Hovered: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Sounds: $C.@ButtonSounds);
+      Group #ShopTabGlow5 { Anchor: (Left: 0, Top: 0, Width: 114, Height: 78); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); Visible: false; }
+      ItemIcon #ShopTabIcon5 { Anchor: (Left: 35, Top: 6, Width: 44, Height: 44); }
+      Label #ShopTabText5 {
+        Anchor: (Left: 4, Top: 50, Width: 106, Height: 20);
+        Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 9);
+      }
+      Group #ShopTabLine5 { Anchor: (Left: 16, Top: 73, Width: 82, Height: 3); Background: #f2c45e; Visible: false; }
+    }
+    Button #ShopTab6 {
+      Anchor: (Left: 1319, Top: 34, Width: 114, Height: 78);
+      Visible: false;
+      Style: (Default: (Background: #000000(0)), Hovered: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Sounds: $C.@ButtonSounds);
+      Group #ShopTabGlow6 { Anchor: (Left: 0, Top: 0, Width: 114, Height: 78); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); Visible: false; }
+      ItemIcon #ShopTabIcon6 { Anchor: (Left: 35, Top: 6, Width: 44, Height: 44); }
+      Label #ShopTabText6 {
+        Anchor: (Left: 4, Top: 50, Width: 106, Height: 20);
+        Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 9);
+      }
+      Group #ShopTabLine6 { Anchor: (Left: 16, Top: 73, Width: 82, Height: 3); Background: #f2c45e; Visible: false; }
+    }
+    Button #ShopTab7 {
+      Anchor: (Left: 1437, Top: 34, Width: 114, Height: 78);
+      Visible: false;
+      Style: (Default: (Background: #000000(0)), Hovered: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Sounds: $C.@ButtonSounds);
+      Group #ShopTabGlow7 { Anchor: (Left: 0, Top: 0, Width: 114, Height: 78); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); Visible: false; }
+      ItemIcon #ShopTabIcon7 { Anchor: (Left: 35, Top: 6, Width: 44, Height: 44); }
+      Label #ShopTabText7 {
+        Anchor: (Left: 4, Top: 50, Width: 106, Height: 20);
+        Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 9);
+      }
+      Group #ShopTabLine7 { Anchor: (Left: 16, Top: 73, Width: 82, Height: 3); Background: #f2c45e; Visible: false; }
+    }
+    Button #ShopTab8 {
+      Anchor: (Left: 1555, Top: 34, Width: 114, Height: 78);
+      Visible: false;
+      Style: (Default: (Background: #000000(0)), Hovered: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Sounds: $C.@ButtonSounds);
+      Group #ShopTabGlow8 { Anchor: (Left: 0, Top: 0, Width: 114, Height: 78); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); Visible: false; }
+      ItemIcon #ShopTabIcon8 { Anchor: (Left: 35, Top: 6, Width: 44, Height: 44); }
+      Label #ShopTabText8 {
+        Anchor: (Left: 4, Top: 50, Width: 106, Height: 20);
+        Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 9);
+      }
+      Group #ShopTabLine8 { Anchor: (Left: 16, Top: 73, Width: 82, Height: 3); Background: #f2c45e; Visible: false; }
+    }
+    Button #ShopTab9 {
+      Anchor: (Left: 1673, Top: 34, Width: 114, Height: 78);
+      Visible: false;
+      Style: (Default: (Background: #000000(0)), Hovered: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Sounds: $C.@ButtonSounds);
+      Group #ShopTabGlow9 { Anchor: (Left: 0, Top: 0, Width: 114, Height: 78); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); Visible: false; }
+      ItemIcon #ShopTabIcon9 { Anchor: (Left: 35, Top: 6, Width: 44, Height: 44); }
+      Label #ShopTabText9 {
+        Anchor: (Left: 4, Top: 50, Width: 106, Height: 20);
+        Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 9);
+      }
+      Group #ShopTabLine9 { Anchor: (Left: 16, Top: 73, Width: 82, Height: 3); Background: #f2c45e; Visible: false; }
+    }
+    Button #ShopTab10 {
+      Anchor: (Left: 1791, Top: 34, Width: 114, Height: 78);
+      Visible: false;
+      Style: (Default: (Background: #000000(0)), Hovered: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Sounds: $C.@ButtonSounds);
+      Group #ShopTabGlow10 { Anchor: (Left: 0, Top: 0, Width: 114, Height: 78); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); Visible: false; }
+      ItemIcon #ShopTabIcon10 { Anchor: (Left: 35, Top: 6, Width: 44, Height: 44); }
+      Label #ShopTabText10 {
+        Anchor: (Left: 4, Top: 50, Width: 106, Height: 20);
+        Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #96a9be, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 9);
+      }
+      Group #ShopTabLine10 { Anchor: (Left: 16, Top: 73, Width: 82, Height: 3); Background: #f2c45e; Visible: false; }
+    }
+
+    // ---- replique du marchand ----
+    Label #ShopQuote {
+      Anchor: (Left: 611, Top: 126, Width: 1286, Height: 46);
+      Style: (FontSize: 17, RenderBold: true, TextColor: #C58643, HorizontalAlignment: Center, VerticalAlignment: Center, Wrap: true);
+    }
+
+    // ---- tuiles ----
+    Group #ShopStat0 {
+      Anchor: (Left: 611, Top: 182, Width: 314, Height: 82);
+      Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16);
+      Label #ShopStatV0 {
+        Anchor: (Left: 12, Top: 10, Width: 290, Height: 38);
+        Style: (FontName: "Secondary", FontSize: 24, RenderBold: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 12);
+      }
+      Group { Anchor: (Left: 117, Top: 50, Width: 80, Height: 1); Background: #c58643(0.5); }
+      Label #ShopStatL0 {
+        Anchor: (Left: 12, Top: 54, Width: 290, Height: 20);
+        Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #77879D, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 9);
+      }
+    }
+    Group #ShopStat1 {
+      Anchor: (Left: 935, Top: 182, Width: 314, Height: 82);
+      Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16);
+      Label #ShopStatV1 {
+        Anchor: (Left: 12, Top: 10, Width: 290, Height: 38);
+        Style: (FontName: "Secondary", FontSize: 24, RenderBold: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 12);
+      }
+      Group { Anchor: (Left: 117, Top: 50, Width: 80, Height: 1); Background: #c58643(0.5); }
+      Label #ShopStatL1 {
+        Anchor: (Left: 12, Top: 54, Width: 290, Height: 20);
+        Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #77879D, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 9);
+      }
+    }
+    Group #ShopStat2 {
+      Anchor: (Left: 1259, Top: 182, Width: 314, Height: 82);
+      Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16);
+      Label #ShopStatV2 {
+        Anchor: (Left: 12, Top: 10, Width: 290, Height: 38);
+        Style: (FontName: "Secondary", FontSize: 24, RenderBold: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 12);
+      }
+      Group { Anchor: (Left: 117, Top: 50, Width: 80, Height: 1); Background: #c58643(0.5); }
+      Label #ShopStatL2 {
+        Anchor: (Left: 12, Top: 54, Width: 290, Height: 20);
+        Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #77879D, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 9);
+      }
+    }
+    Group #ShopStat3 {
+      Anchor: (Left: 1583, Top: 182, Width: 314, Height: 82);
+      Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16);
+      Label #ShopStatV3 {
+        Anchor: (Left: 12, Top: 10, Width: 290, Height: 38);
+        Style: (FontName: "Secondary", FontSize: 24, RenderBold: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 12);
+      }
+      Group { Anchor: (Left: 117, Top: 50, Width: 80, Height: 1); Background: #c58643(0.5); }
+      Label #ShopStatL3 {
+        Anchor: (Left: 12, Top: 54, Width: 290, Height: 20);
+        Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #77879D, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 9);
+      }
+    }
+
+    // ---- section ----
+    Label #ShopGridTitle {
+      Anchor: (Left: 611, Top: 278, Width: 700, Height: 30);
+      Style: (FontName: "Secondary", FontSize: 21, RenderBold: true, RenderUppercase: true, TextColor: #C4CEDC, VerticalAlignment: Center);
+    }
+    Group { Anchor: (Left: 611, Top: 310, Width: 1286, Height: 8); Background: (TexturePath: "../Quest/ChapDivider.png", HorizontalBorder: 24, VerticalBorder: 0); }
+    Label #ShopFooter {
+      Anchor: (Left: 1311, Top: 278, Width: 586, Height: 30);
+      Style: (FontSize: 13, RenderBold: true, TextColor: #77879D, HorizontalAlignment: End, VerticalAlignment: Center);
+    }
+
+    // ---- cartes ----
+    Button #ShopCell0 {
+      Anchor: (Left: 611, Top: 328, Width: 314, Height: 102);
+      Visible: false;
+      Style: (Default: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Hovered: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23, Color: #ffffff(0.7))), Sounds: $C.@ButtonSounds);
+      Group #ShopCellBar0 { Anchor: (Left: 4, Top: 12, Width: 3, Height: 78); Background: #56677a; }
+      Group #ShopCellSel0 {
+        Anchor: (Left: 0, Top: 0, Width: 314, Height: 102);
+        Visible: false;
+        Group { Anchor: (Left: 2, Top: 2, Width: 310, Height: 98); Background: #f2c45e(0.07); }
+        Group #ShopCellSelT0 { Anchor: (Left: 0, Top: 0, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelB0 { Anchor: (Left: 0, Top: 100, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelL0 { Anchor: (Left: 0, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+        Group #ShopCellSelR0 { Anchor: (Left: 312, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+      }
+      Group { Anchor: (Left: 12, Top: 15, Width: 72, Height: 72); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #ShopCellIcon0 { Anchor: (Left: 18, Top: 21, Width: 60, Height: 60); }
+      Label #ShopCellName0 {
+        Anchor: (Left: 94, Top: 8, Width: 210, Height: 26);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group { Anchor: (Left: 94, Top: 36, Width: 206, Height: 1); Background: #48455c; }
+      Group {
+        Anchor: (Left: 94, Top: 42, Width: 210, Height: 24);
+        LayoutMode: Left;
+        ItemIcon #ShopCell0CIcon0 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell0CN0 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell0CIcon1 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell0CN1 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell0CIcon2 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell0CN2 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        Label #ShopCellInfo0 {
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+      }
+      Label #ShopCellTag0 {
+        Anchor: (Left: 94, Top: 70, Width: 210, Height: 22);
+        Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+      }
+    }
+    Button #ShopCell1 {
+      Anchor: (Left: 935, Top: 328, Width: 314, Height: 102);
+      Visible: false;
+      Style: (Default: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Hovered: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23, Color: #ffffff(0.7))), Sounds: $C.@ButtonSounds);
+      Group #ShopCellBar1 { Anchor: (Left: 4, Top: 12, Width: 3, Height: 78); Background: #56677a; }
+      Group #ShopCellSel1 {
+        Anchor: (Left: 0, Top: 0, Width: 314, Height: 102);
+        Visible: false;
+        Group { Anchor: (Left: 2, Top: 2, Width: 310, Height: 98); Background: #f2c45e(0.07); }
+        Group #ShopCellSelT1 { Anchor: (Left: 0, Top: 0, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelB1 { Anchor: (Left: 0, Top: 100, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelL1 { Anchor: (Left: 0, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+        Group #ShopCellSelR1 { Anchor: (Left: 312, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+      }
+      Group { Anchor: (Left: 12, Top: 15, Width: 72, Height: 72); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #ShopCellIcon1 { Anchor: (Left: 18, Top: 21, Width: 60, Height: 60); }
+      Label #ShopCellName1 {
+        Anchor: (Left: 94, Top: 8, Width: 210, Height: 26);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group { Anchor: (Left: 94, Top: 36, Width: 206, Height: 1); Background: #48455c; }
+      Group {
+        Anchor: (Left: 94, Top: 42, Width: 210, Height: 24);
+        LayoutMode: Left;
+        ItemIcon #ShopCell1CIcon0 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell1CN0 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell1CIcon1 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell1CN1 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell1CIcon2 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell1CN2 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        Label #ShopCellInfo1 {
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+      }
+      Label #ShopCellTag1 {
+        Anchor: (Left: 94, Top: 70, Width: 210, Height: 22);
+        Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+      }
+    }
+    Button #ShopCell2 {
+      Anchor: (Left: 1259, Top: 328, Width: 314, Height: 102);
+      Visible: false;
+      Style: (Default: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Hovered: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23, Color: #ffffff(0.7))), Sounds: $C.@ButtonSounds);
+      Group #ShopCellBar2 { Anchor: (Left: 4, Top: 12, Width: 3, Height: 78); Background: #56677a; }
+      Group #ShopCellSel2 {
+        Anchor: (Left: 0, Top: 0, Width: 314, Height: 102);
+        Visible: false;
+        Group { Anchor: (Left: 2, Top: 2, Width: 310, Height: 98); Background: #f2c45e(0.07); }
+        Group #ShopCellSelT2 { Anchor: (Left: 0, Top: 0, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelB2 { Anchor: (Left: 0, Top: 100, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelL2 { Anchor: (Left: 0, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+        Group #ShopCellSelR2 { Anchor: (Left: 312, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+      }
+      Group { Anchor: (Left: 12, Top: 15, Width: 72, Height: 72); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #ShopCellIcon2 { Anchor: (Left: 18, Top: 21, Width: 60, Height: 60); }
+      Label #ShopCellName2 {
+        Anchor: (Left: 94, Top: 8, Width: 210, Height: 26);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group { Anchor: (Left: 94, Top: 36, Width: 206, Height: 1); Background: #48455c; }
+      Group {
+        Anchor: (Left: 94, Top: 42, Width: 210, Height: 24);
+        LayoutMode: Left;
+        ItemIcon #ShopCell2CIcon0 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell2CN0 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell2CIcon1 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell2CN1 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell2CIcon2 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell2CN2 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        Label #ShopCellInfo2 {
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+      }
+      Label #ShopCellTag2 {
+        Anchor: (Left: 94, Top: 70, Width: 210, Height: 22);
+        Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+      }
+    }
+    Button #ShopCell3 {
+      Anchor: (Left: 1583, Top: 328, Width: 314, Height: 102);
+      Visible: false;
+      Style: (Default: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Hovered: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23, Color: #ffffff(0.7))), Sounds: $C.@ButtonSounds);
+      Group #ShopCellBar3 { Anchor: (Left: 4, Top: 12, Width: 3, Height: 78); Background: #56677a; }
+      Group #ShopCellSel3 {
+        Anchor: (Left: 0, Top: 0, Width: 314, Height: 102);
+        Visible: false;
+        Group { Anchor: (Left: 2, Top: 2, Width: 310, Height: 98); Background: #f2c45e(0.07); }
+        Group #ShopCellSelT3 { Anchor: (Left: 0, Top: 0, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelB3 { Anchor: (Left: 0, Top: 100, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelL3 { Anchor: (Left: 0, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+        Group #ShopCellSelR3 { Anchor: (Left: 312, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+      }
+      Group { Anchor: (Left: 12, Top: 15, Width: 72, Height: 72); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #ShopCellIcon3 { Anchor: (Left: 18, Top: 21, Width: 60, Height: 60); }
+      Label #ShopCellName3 {
+        Anchor: (Left: 94, Top: 8, Width: 210, Height: 26);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group { Anchor: (Left: 94, Top: 36, Width: 206, Height: 1); Background: #48455c; }
+      Group {
+        Anchor: (Left: 94, Top: 42, Width: 210, Height: 24);
+        LayoutMode: Left;
+        ItemIcon #ShopCell3CIcon0 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell3CN0 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell3CIcon1 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell3CN1 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell3CIcon2 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell3CN2 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        Label #ShopCellInfo3 {
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+      }
+      Label #ShopCellTag3 {
+        Anchor: (Left: 94, Top: 70, Width: 210, Height: 22);
+        Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+      }
+    }
+    Button #ShopCell4 {
+      Anchor: (Left: 611, Top: 440, Width: 314, Height: 102);
+      Visible: false;
+      Style: (Default: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Hovered: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23, Color: #ffffff(0.7))), Sounds: $C.@ButtonSounds);
+      Group #ShopCellBar4 { Anchor: (Left: 4, Top: 12, Width: 3, Height: 78); Background: #56677a; }
+      Group #ShopCellSel4 {
+        Anchor: (Left: 0, Top: 0, Width: 314, Height: 102);
+        Visible: false;
+        Group { Anchor: (Left: 2, Top: 2, Width: 310, Height: 98); Background: #f2c45e(0.07); }
+        Group #ShopCellSelT4 { Anchor: (Left: 0, Top: 0, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelB4 { Anchor: (Left: 0, Top: 100, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelL4 { Anchor: (Left: 0, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+        Group #ShopCellSelR4 { Anchor: (Left: 312, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+      }
+      Group { Anchor: (Left: 12, Top: 15, Width: 72, Height: 72); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #ShopCellIcon4 { Anchor: (Left: 18, Top: 21, Width: 60, Height: 60); }
+      Label #ShopCellName4 {
+        Anchor: (Left: 94, Top: 8, Width: 210, Height: 26);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group { Anchor: (Left: 94, Top: 36, Width: 206, Height: 1); Background: #48455c; }
+      Group {
+        Anchor: (Left: 94, Top: 42, Width: 210, Height: 24);
+        LayoutMode: Left;
+        ItemIcon #ShopCell4CIcon0 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell4CN0 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell4CIcon1 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell4CN1 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell4CIcon2 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell4CN2 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        Label #ShopCellInfo4 {
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+      }
+      Label #ShopCellTag4 {
+        Anchor: (Left: 94, Top: 70, Width: 210, Height: 22);
+        Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+      }
+    }
+    Button #ShopCell5 {
+      Anchor: (Left: 935, Top: 440, Width: 314, Height: 102);
+      Visible: false;
+      Style: (Default: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Hovered: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23, Color: #ffffff(0.7))), Sounds: $C.@ButtonSounds);
+      Group #ShopCellBar5 { Anchor: (Left: 4, Top: 12, Width: 3, Height: 78); Background: #56677a; }
+      Group #ShopCellSel5 {
+        Anchor: (Left: 0, Top: 0, Width: 314, Height: 102);
+        Visible: false;
+        Group { Anchor: (Left: 2, Top: 2, Width: 310, Height: 98); Background: #f2c45e(0.07); }
+        Group #ShopCellSelT5 { Anchor: (Left: 0, Top: 0, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelB5 { Anchor: (Left: 0, Top: 100, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelL5 { Anchor: (Left: 0, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+        Group #ShopCellSelR5 { Anchor: (Left: 312, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+      }
+      Group { Anchor: (Left: 12, Top: 15, Width: 72, Height: 72); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #ShopCellIcon5 { Anchor: (Left: 18, Top: 21, Width: 60, Height: 60); }
+      Label #ShopCellName5 {
+        Anchor: (Left: 94, Top: 8, Width: 210, Height: 26);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group { Anchor: (Left: 94, Top: 36, Width: 206, Height: 1); Background: #48455c; }
+      Group {
+        Anchor: (Left: 94, Top: 42, Width: 210, Height: 24);
+        LayoutMode: Left;
+        ItemIcon #ShopCell5CIcon0 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell5CN0 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell5CIcon1 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell5CN1 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell5CIcon2 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell5CN2 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        Label #ShopCellInfo5 {
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+      }
+      Label #ShopCellTag5 {
+        Anchor: (Left: 94, Top: 70, Width: 210, Height: 22);
+        Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+      }
+    }
+    Button #ShopCell6 {
+      Anchor: (Left: 1259, Top: 440, Width: 314, Height: 102);
+      Visible: false;
+      Style: (Default: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Hovered: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23, Color: #ffffff(0.7))), Sounds: $C.@ButtonSounds);
+      Group #ShopCellBar6 { Anchor: (Left: 4, Top: 12, Width: 3, Height: 78); Background: #56677a; }
+      Group #ShopCellSel6 {
+        Anchor: (Left: 0, Top: 0, Width: 314, Height: 102);
+        Visible: false;
+        Group { Anchor: (Left: 2, Top: 2, Width: 310, Height: 98); Background: #f2c45e(0.07); }
+        Group #ShopCellSelT6 { Anchor: (Left: 0, Top: 0, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelB6 { Anchor: (Left: 0, Top: 100, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelL6 { Anchor: (Left: 0, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+        Group #ShopCellSelR6 { Anchor: (Left: 312, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+      }
+      Group { Anchor: (Left: 12, Top: 15, Width: 72, Height: 72); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #ShopCellIcon6 { Anchor: (Left: 18, Top: 21, Width: 60, Height: 60); }
+      Label #ShopCellName6 {
+        Anchor: (Left: 94, Top: 8, Width: 210, Height: 26);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group { Anchor: (Left: 94, Top: 36, Width: 206, Height: 1); Background: #48455c; }
+      Group {
+        Anchor: (Left: 94, Top: 42, Width: 210, Height: 24);
+        LayoutMode: Left;
+        ItemIcon #ShopCell6CIcon0 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell6CN0 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell6CIcon1 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell6CN1 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell6CIcon2 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell6CN2 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        Label #ShopCellInfo6 {
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+      }
+      Label #ShopCellTag6 {
+        Anchor: (Left: 94, Top: 70, Width: 210, Height: 22);
+        Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+      }
+    }
+    Button #ShopCell7 {
+      Anchor: (Left: 1583, Top: 440, Width: 314, Height: 102);
+      Visible: false;
+      Style: (Default: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Hovered: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23, Color: #ffffff(0.7))), Sounds: $C.@ButtonSounds);
+      Group #ShopCellBar7 { Anchor: (Left: 4, Top: 12, Width: 3, Height: 78); Background: #56677a; }
+      Group #ShopCellSel7 {
+        Anchor: (Left: 0, Top: 0, Width: 314, Height: 102);
+        Visible: false;
+        Group { Anchor: (Left: 2, Top: 2, Width: 310, Height: 98); Background: #f2c45e(0.07); }
+        Group #ShopCellSelT7 { Anchor: (Left: 0, Top: 0, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelB7 { Anchor: (Left: 0, Top: 100, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelL7 { Anchor: (Left: 0, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+        Group #ShopCellSelR7 { Anchor: (Left: 312, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+      }
+      Group { Anchor: (Left: 12, Top: 15, Width: 72, Height: 72); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #ShopCellIcon7 { Anchor: (Left: 18, Top: 21, Width: 60, Height: 60); }
+      Label #ShopCellName7 {
+        Anchor: (Left: 94, Top: 8, Width: 210, Height: 26);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group { Anchor: (Left: 94, Top: 36, Width: 206, Height: 1); Background: #48455c; }
+      Group {
+        Anchor: (Left: 94, Top: 42, Width: 210, Height: 24);
+        LayoutMode: Left;
+        ItemIcon #ShopCell7CIcon0 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell7CN0 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell7CIcon1 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell7CN1 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell7CIcon2 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell7CN2 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        Label #ShopCellInfo7 {
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+      }
+      Label #ShopCellTag7 {
+        Anchor: (Left: 94, Top: 70, Width: 210, Height: 22);
+        Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+      }
+    }
+    Button #ShopCell8 {
+      Anchor: (Left: 611, Top: 552, Width: 314, Height: 102);
+      Visible: false;
+      Style: (Default: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Hovered: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23, Color: #ffffff(0.7))), Sounds: $C.@ButtonSounds);
+      Group #ShopCellBar8 { Anchor: (Left: 4, Top: 12, Width: 3, Height: 78); Background: #56677a; }
+      Group #ShopCellSel8 {
+        Anchor: (Left: 0, Top: 0, Width: 314, Height: 102);
+        Visible: false;
+        Group { Anchor: (Left: 2, Top: 2, Width: 310, Height: 98); Background: #f2c45e(0.07); }
+        Group #ShopCellSelT8 { Anchor: (Left: 0, Top: 0, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelB8 { Anchor: (Left: 0, Top: 100, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelL8 { Anchor: (Left: 0, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+        Group #ShopCellSelR8 { Anchor: (Left: 312, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+      }
+      Group { Anchor: (Left: 12, Top: 15, Width: 72, Height: 72); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #ShopCellIcon8 { Anchor: (Left: 18, Top: 21, Width: 60, Height: 60); }
+      Label #ShopCellName8 {
+        Anchor: (Left: 94, Top: 8, Width: 210, Height: 26);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group { Anchor: (Left: 94, Top: 36, Width: 206, Height: 1); Background: #48455c; }
+      Group {
+        Anchor: (Left: 94, Top: 42, Width: 210, Height: 24);
+        LayoutMode: Left;
+        ItemIcon #ShopCell8CIcon0 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell8CN0 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell8CIcon1 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell8CN1 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell8CIcon2 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell8CN2 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        Label #ShopCellInfo8 {
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+      }
+      Label #ShopCellTag8 {
+        Anchor: (Left: 94, Top: 70, Width: 210, Height: 22);
+        Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+      }
+    }
+    Button #ShopCell9 {
+      Anchor: (Left: 935, Top: 552, Width: 314, Height: 102);
+      Visible: false;
+      Style: (Default: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Hovered: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23, Color: #ffffff(0.7))), Sounds: $C.@ButtonSounds);
+      Group #ShopCellBar9 { Anchor: (Left: 4, Top: 12, Width: 3, Height: 78); Background: #56677a; }
+      Group #ShopCellSel9 {
+        Anchor: (Left: 0, Top: 0, Width: 314, Height: 102);
+        Visible: false;
+        Group { Anchor: (Left: 2, Top: 2, Width: 310, Height: 98); Background: #f2c45e(0.07); }
+        Group #ShopCellSelT9 { Anchor: (Left: 0, Top: 0, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelB9 { Anchor: (Left: 0, Top: 100, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelL9 { Anchor: (Left: 0, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+        Group #ShopCellSelR9 { Anchor: (Left: 312, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+      }
+      Group { Anchor: (Left: 12, Top: 15, Width: 72, Height: 72); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #ShopCellIcon9 { Anchor: (Left: 18, Top: 21, Width: 60, Height: 60); }
+      Label #ShopCellName9 {
+        Anchor: (Left: 94, Top: 8, Width: 210, Height: 26);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group { Anchor: (Left: 94, Top: 36, Width: 206, Height: 1); Background: #48455c; }
+      Group {
+        Anchor: (Left: 94, Top: 42, Width: 210, Height: 24);
+        LayoutMode: Left;
+        ItemIcon #ShopCell9CIcon0 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell9CN0 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell9CIcon1 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell9CN1 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell9CIcon2 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell9CN2 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        Label #ShopCellInfo9 {
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+      }
+      Label #ShopCellTag9 {
+        Anchor: (Left: 94, Top: 70, Width: 210, Height: 22);
+        Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+      }
+    }
+    Button #ShopCell10 {
+      Anchor: (Left: 1259, Top: 552, Width: 314, Height: 102);
+      Visible: false;
+      Style: (Default: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Hovered: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23, Color: #ffffff(0.7))), Sounds: $C.@ButtonSounds);
+      Group #ShopCellBar10 { Anchor: (Left: 4, Top: 12, Width: 3, Height: 78); Background: #56677a; }
+      Group #ShopCellSel10 {
+        Anchor: (Left: 0, Top: 0, Width: 314, Height: 102);
+        Visible: false;
+        Group { Anchor: (Left: 2, Top: 2, Width: 310, Height: 98); Background: #f2c45e(0.07); }
+        Group #ShopCellSelT10 { Anchor: (Left: 0, Top: 0, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelB10 { Anchor: (Left: 0, Top: 100, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelL10 { Anchor: (Left: 0, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+        Group #ShopCellSelR10 { Anchor: (Left: 312, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+      }
+      Group { Anchor: (Left: 12, Top: 15, Width: 72, Height: 72); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #ShopCellIcon10 { Anchor: (Left: 18, Top: 21, Width: 60, Height: 60); }
+      Label #ShopCellName10 {
+        Anchor: (Left: 94, Top: 8, Width: 210, Height: 26);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group { Anchor: (Left: 94, Top: 36, Width: 206, Height: 1); Background: #48455c; }
+      Group {
+        Anchor: (Left: 94, Top: 42, Width: 210, Height: 24);
+        LayoutMode: Left;
+        ItemIcon #ShopCell10CIcon0 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell10CN0 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell10CIcon1 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell10CN1 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell10CIcon2 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell10CN2 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        Label #ShopCellInfo10 {
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+      }
+      Label #ShopCellTag10 {
+        Anchor: (Left: 94, Top: 70, Width: 210, Height: 22);
+        Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+      }
+    }
+    Button #ShopCell11 {
+      Anchor: (Left: 1583, Top: 552, Width: 314, Height: 102);
+      Visible: false;
+      Style: (Default: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Hovered: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23, Color: #ffffff(0.7))), Sounds: $C.@ButtonSounds);
+      Group #ShopCellBar11 { Anchor: (Left: 4, Top: 12, Width: 3, Height: 78); Background: #56677a; }
+      Group #ShopCellSel11 {
+        Anchor: (Left: 0, Top: 0, Width: 314, Height: 102);
+        Visible: false;
+        Group { Anchor: (Left: 2, Top: 2, Width: 310, Height: 98); Background: #f2c45e(0.07); }
+        Group #ShopCellSelT11 { Anchor: (Left: 0, Top: 0, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelB11 { Anchor: (Left: 0, Top: 100, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelL11 { Anchor: (Left: 0, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+        Group #ShopCellSelR11 { Anchor: (Left: 312, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+      }
+      Group { Anchor: (Left: 12, Top: 15, Width: 72, Height: 72); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #ShopCellIcon11 { Anchor: (Left: 18, Top: 21, Width: 60, Height: 60); }
+      Label #ShopCellName11 {
+        Anchor: (Left: 94, Top: 8, Width: 210, Height: 26);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group { Anchor: (Left: 94, Top: 36, Width: 206, Height: 1); Background: #48455c; }
+      Group {
+        Anchor: (Left: 94, Top: 42, Width: 210, Height: 24);
+        LayoutMode: Left;
+        ItemIcon #ShopCell11CIcon0 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell11CN0 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell11CIcon1 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell11CN1 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell11CIcon2 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell11CN2 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        Label #ShopCellInfo11 {
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+      }
+      Label #ShopCellTag11 {
+        Anchor: (Left: 94, Top: 70, Width: 210, Height: 22);
+        Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+      }
+    }
+    Button #ShopCell12 {
+      Anchor: (Left: 611, Top: 664, Width: 314, Height: 102);
+      Visible: false;
+      Style: (Default: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Hovered: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23, Color: #ffffff(0.7))), Sounds: $C.@ButtonSounds);
+      Group #ShopCellBar12 { Anchor: (Left: 4, Top: 12, Width: 3, Height: 78); Background: #56677a; }
+      Group #ShopCellSel12 {
+        Anchor: (Left: 0, Top: 0, Width: 314, Height: 102);
+        Visible: false;
+        Group { Anchor: (Left: 2, Top: 2, Width: 310, Height: 98); Background: #f2c45e(0.07); }
+        Group #ShopCellSelT12 { Anchor: (Left: 0, Top: 0, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelB12 { Anchor: (Left: 0, Top: 100, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelL12 { Anchor: (Left: 0, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+        Group #ShopCellSelR12 { Anchor: (Left: 312, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+      }
+      Group { Anchor: (Left: 12, Top: 15, Width: 72, Height: 72); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #ShopCellIcon12 { Anchor: (Left: 18, Top: 21, Width: 60, Height: 60); }
+      Label #ShopCellName12 {
+        Anchor: (Left: 94, Top: 8, Width: 210, Height: 26);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group { Anchor: (Left: 94, Top: 36, Width: 206, Height: 1); Background: #48455c; }
+      Group {
+        Anchor: (Left: 94, Top: 42, Width: 210, Height: 24);
+        LayoutMode: Left;
+        ItemIcon #ShopCell12CIcon0 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell12CN0 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell12CIcon1 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell12CN1 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell12CIcon2 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell12CN2 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        Label #ShopCellInfo12 {
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+      }
+      Label #ShopCellTag12 {
+        Anchor: (Left: 94, Top: 70, Width: 210, Height: 22);
+        Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+      }
+    }
+    Button #ShopCell13 {
+      Anchor: (Left: 935, Top: 664, Width: 314, Height: 102);
+      Visible: false;
+      Style: (Default: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Hovered: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23, Color: #ffffff(0.7))), Sounds: $C.@ButtonSounds);
+      Group #ShopCellBar13 { Anchor: (Left: 4, Top: 12, Width: 3, Height: 78); Background: #56677a; }
+      Group #ShopCellSel13 {
+        Anchor: (Left: 0, Top: 0, Width: 314, Height: 102);
+        Visible: false;
+        Group { Anchor: (Left: 2, Top: 2, Width: 310, Height: 98); Background: #f2c45e(0.07); }
+        Group #ShopCellSelT13 { Anchor: (Left: 0, Top: 0, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelB13 { Anchor: (Left: 0, Top: 100, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelL13 { Anchor: (Left: 0, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+        Group #ShopCellSelR13 { Anchor: (Left: 312, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+      }
+      Group { Anchor: (Left: 12, Top: 15, Width: 72, Height: 72); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #ShopCellIcon13 { Anchor: (Left: 18, Top: 21, Width: 60, Height: 60); }
+      Label #ShopCellName13 {
+        Anchor: (Left: 94, Top: 8, Width: 210, Height: 26);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group { Anchor: (Left: 94, Top: 36, Width: 206, Height: 1); Background: #48455c; }
+      Group {
+        Anchor: (Left: 94, Top: 42, Width: 210, Height: 24);
+        LayoutMode: Left;
+        ItemIcon #ShopCell13CIcon0 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell13CN0 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell13CIcon1 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell13CN1 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell13CIcon2 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell13CN2 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        Label #ShopCellInfo13 {
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+      }
+      Label #ShopCellTag13 {
+        Anchor: (Left: 94, Top: 70, Width: 210, Height: 22);
+        Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+      }
+    }
+    Button #ShopCell14 {
+      Anchor: (Left: 1259, Top: 664, Width: 314, Height: 102);
+      Visible: false;
+      Style: (Default: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Hovered: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23, Color: #ffffff(0.7))), Sounds: $C.@ButtonSounds);
+      Group #ShopCellBar14 { Anchor: (Left: 4, Top: 12, Width: 3, Height: 78); Background: #56677a; }
+      Group #ShopCellSel14 {
+        Anchor: (Left: 0, Top: 0, Width: 314, Height: 102);
+        Visible: false;
+        Group { Anchor: (Left: 2, Top: 2, Width: 310, Height: 98); Background: #f2c45e(0.07); }
+        Group #ShopCellSelT14 { Anchor: (Left: 0, Top: 0, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelB14 { Anchor: (Left: 0, Top: 100, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelL14 { Anchor: (Left: 0, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+        Group #ShopCellSelR14 { Anchor: (Left: 312, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+      }
+      Group { Anchor: (Left: 12, Top: 15, Width: 72, Height: 72); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #ShopCellIcon14 { Anchor: (Left: 18, Top: 21, Width: 60, Height: 60); }
+      Label #ShopCellName14 {
+        Anchor: (Left: 94, Top: 8, Width: 210, Height: 26);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group { Anchor: (Left: 94, Top: 36, Width: 206, Height: 1); Background: #48455c; }
+      Group {
+        Anchor: (Left: 94, Top: 42, Width: 210, Height: 24);
+        LayoutMode: Left;
+        ItemIcon #ShopCell14CIcon0 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell14CN0 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell14CIcon1 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell14CN1 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell14CIcon2 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell14CN2 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        Label #ShopCellInfo14 {
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+      }
+      Label #ShopCellTag14 {
+        Anchor: (Left: 94, Top: 70, Width: 210, Height: 22);
+        Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+      }
+    }
+    Button #ShopCell15 {
+      Anchor: (Left: 1583, Top: 664, Width: 314, Height: 102);
+      Visible: false;
+      Style: (Default: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Hovered: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23, Color: #ffffff(0.7))), Sounds: $C.@ButtonSounds);
+      Group #ShopCellBar15 { Anchor: (Left: 4, Top: 12, Width: 3, Height: 78); Background: #56677a; }
+      Group #ShopCellSel15 {
+        Anchor: (Left: 0, Top: 0, Width: 314, Height: 102);
+        Visible: false;
+        Group { Anchor: (Left: 2, Top: 2, Width: 310, Height: 98); Background: #f2c45e(0.07); }
+        Group #ShopCellSelT15 { Anchor: (Left: 0, Top: 0, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelB15 { Anchor: (Left: 0, Top: 100, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelL15 { Anchor: (Left: 0, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+        Group #ShopCellSelR15 { Anchor: (Left: 312, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+      }
+      Group { Anchor: (Left: 12, Top: 15, Width: 72, Height: 72); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #ShopCellIcon15 { Anchor: (Left: 18, Top: 21, Width: 60, Height: 60); }
+      Label #ShopCellName15 {
+        Anchor: (Left: 94, Top: 8, Width: 210, Height: 26);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group { Anchor: (Left: 94, Top: 36, Width: 206, Height: 1); Background: #48455c; }
+      Group {
+        Anchor: (Left: 94, Top: 42, Width: 210, Height: 24);
+        LayoutMode: Left;
+        ItemIcon #ShopCell15CIcon0 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell15CN0 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell15CIcon1 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell15CN1 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell15CIcon2 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell15CN2 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        Label #ShopCellInfo15 {
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+      }
+      Label #ShopCellTag15 {
+        Anchor: (Left: 94, Top: 70, Width: 210, Height: 22);
+        Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+      }
+    }
+    Button #ShopCell16 {
+      Anchor: (Left: 611, Top: 776, Width: 314, Height: 102);
+      Visible: false;
+      Style: (Default: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Hovered: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23, Color: #ffffff(0.7))), Sounds: $C.@ButtonSounds);
+      Group #ShopCellBar16 { Anchor: (Left: 4, Top: 12, Width: 3, Height: 78); Background: #56677a; }
+      Group #ShopCellSel16 {
+        Anchor: (Left: 0, Top: 0, Width: 314, Height: 102);
+        Visible: false;
+        Group { Anchor: (Left: 2, Top: 2, Width: 310, Height: 98); Background: #f2c45e(0.07); }
+        Group #ShopCellSelT16 { Anchor: (Left: 0, Top: 0, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelB16 { Anchor: (Left: 0, Top: 100, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelL16 { Anchor: (Left: 0, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+        Group #ShopCellSelR16 { Anchor: (Left: 312, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+      }
+      Group { Anchor: (Left: 12, Top: 15, Width: 72, Height: 72); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #ShopCellIcon16 { Anchor: (Left: 18, Top: 21, Width: 60, Height: 60); }
+      Label #ShopCellName16 {
+        Anchor: (Left: 94, Top: 8, Width: 210, Height: 26);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group { Anchor: (Left: 94, Top: 36, Width: 206, Height: 1); Background: #48455c; }
+      Group {
+        Anchor: (Left: 94, Top: 42, Width: 210, Height: 24);
+        LayoutMode: Left;
+        ItemIcon #ShopCell16CIcon0 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell16CN0 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell16CIcon1 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell16CN1 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell16CIcon2 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell16CN2 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        Label #ShopCellInfo16 {
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+      }
+      Label #ShopCellTag16 {
+        Anchor: (Left: 94, Top: 70, Width: 210, Height: 22);
+        Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+      }
+    }
+    Button #ShopCell17 {
+      Anchor: (Left: 935, Top: 776, Width: 314, Height: 102);
+      Visible: false;
+      Style: (Default: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Hovered: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23, Color: #ffffff(0.7))), Sounds: $C.@ButtonSounds);
+      Group #ShopCellBar17 { Anchor: (Left: 4, Top: 12, Width: 3, Height: 78); Background: #56677a; }
+      Group #ShopCellSel17 {
+        Anchor: (Left: 0, Top: 0, Width: 314, Height: 102);
+        Visible: false;
+        Group { Anchor: (Left: 2, Top: 2, Width: 310, Height: 98); Background: #f2c45e(0.07); }
+        Group #ShopCellSelT17 { Anchor: (Left: 0, Top: 0, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelB17 { Anchor: (Left: 0, Top: 100, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelL17 { Anchor: (Left: 0, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+        Group #ShopCellSelR17 { Anchor: (Left: 312, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+      }
+      Group { Anchor: (Left: 12, Top: 15, Width: 72, Height: 72); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #ShopCellIcon17 { Anchor: (Left: 18, Top: 21, Width: 60, Height: 60); }
+      Label #ShopCellName17 {
+        Anchor: (Left: 94, Top: 8, Width: 210, Height: 26);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group { Anchor: (Left: 94, Top: 36, Width: 206, Height: 1); Background: #48455c; }
+      Group {
+        Anchor: (Left: 94, Top: 42, Width: 210, Height: 24);
+        LayoutMode: Left;
+        ItemIcon #ShopCell17CIcon0 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell17CN0 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell17CIcon1 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell17CN1 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell17CIcon2 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell17CN2 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        Label #ShopCellInfo17 {
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+      }
+      Label #ShopCellTag17 {
+        Anchor: (Left: 94, Top: 70, Width: 210, Height: 22);
+        Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+      }
+    }
+    Button #ShopCell18 {
+      Anchor: (Left: 1259, Top: 776, Width: 314, Height: 102);
+      Visible: false;
+      Style: (Default: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Hovered: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23, Color: #ffffff(0.7))), Sounds: $C.@ButtonSounds);
+      Group #ShopCellBar18 { Anchor: (Left: 4, Top: 12, Width: 3, Height: 78); Background: #56677a; }
+      Group #ShopCellSel18 {
+        Anchor: (Left: 0, Top: 0, Width: 314, Height: 102);
+        Visible: false;
+        Group { Anchor: (Left: 2, Top: 2, Width: 310, Height: 98); Background: #f2c45e(0.07); }
+        Group #ShopCellSelT18 { Anchor: (Left: 0, Top: 0, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelB18 { Anchor: (Left: 0, Top: 100, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelL18 { Anchor: (Left: 0, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+        Group #ShopCellSelR18 { Anchor: (Left: 312, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+      }
+      Group { Anchor: (Left: 12, Top: 15, Width: 72, Height: 72); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #ShopCellIcon18 { Anchor: (Left: 18, Top: 21, Width: 60, Height: 60); }
+      Label #ShopCellName18 {
+        Anchor: (Left: 94, Top: 8, Width: 210, Height: 26);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group { Anchor: (Left: 94, Top: 36, Width: 206, Height: 1); Background: #48455c; }
+      Group {
+        Anchor: (Left: 94, Top: 42, Width: 210, Height: 24);
+        LayoutMode: Left;
+        ItemIcon #ShopCell18CIcon0 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell18CN0 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell18CIcon1 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell18CN1 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell18CIcon2 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell18CN2 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        Label #ShopCellInfo18 {
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+      }
+      Label #ShopCellTag18 {
+        Anchor: (Left: 94, Top: 70, Width: 210, Height: 22);
+        Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+      }
+    }
+    Button #ShopCell19 {
+      Anchor: (Left: 1583, Top: 776, Width: 314, Height: 102);
+      Visible: false;
+      Style: (Default: (Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16)), Hovered: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23)), Pressed: (Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23, Color: #ffffff(0.7))), Sounds: $C.@ButtonSounds);
+      Group #ShopCellBar19 { Anchor: (Left: 4, Top: 12, Width: 3, Height: 78); Background: #56677a; }
+      Group #ShopCellSel19 {
+        Anchor: (Left: 0, Top: 0, Width: 314, Height: 102);
+        Visible: false;
+        Group { Anchor: (Left: 2, Top: 2, Width: 310, Height: 98); Background: #f2c45e(0.07); }
+        Group #ShopCellSelT19 { Anchor: (Left: 0, Top: 0, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelB19 { Anchor: (Left: 0, Top: 100, Width: 314, Height: 2); Background: #f2c45e; }
+        Group #ShopCellSelL19 { Anchor: (Left: 0, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+        Group #ShopCellSelR19 { Anchor: (Left: 312, Top: 0, Width: 2, Height: 102); Background: #f2c45e; }
+      }
+      Group { Anchor: (Left: 12, Top: 15, Width: 72, Height: 72); Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23); }
+      ItemIcon #ShopCellIcon19 { Anchor: (Left: 18, Top: 21, Width: 60, Height: 60); }
+      Label #ShopCellName19 {
+        Anchor: (Left: 94, Top: 8, Width: 210, Height: 26);
+        Style: (FontSize: 15, RenderBold: true, TextColor: #f2c45e, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+      }
+      Group { Anchor: (Left: 94, Top: 36, Width: 206, Height: 1); Background: #48455c; }
+      Group {
+        Anchor: (Left: 94, Top: 42, Width: 210, Height: 24);
+        LayoutMode: Left;
+        ItemIcon #ShopCell19CIcon0 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell19CN0 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell19CIcon1 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell19CN1 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        ItemIcon #ShopCell19CIcon2 { Anchor: (Width: 18, Height: 18); Visible: false; }
+        Label #ShopCell19CN2 {
+          Anchor: (Left: 2, Right: 7);
+          Visible: false;
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+        Label #ShopCellInfo19 {
+          Style: (FontSize: 14, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+        }
+      }
+      Label #ShopCellTag19 {
+        Anchor: (Left: 94, Top: 70, Width: 210, Height: 22);
+        Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+      }
+    }
+    Label #ShopEmpty {
+      Anchor: (Left: 611, Top: 468, Width: 1286, Height: 60);
+      Visible: false;
+      Style: (FontSize: 18, RenderBold: true, TextColor: #77879D, HorizontalAlignment: Center, VerticalAlignment: Center, Wrap: true);
+    }
+
+    // ---- pages ----
+    Group {
+      Anchor: (Left: 611, Top: 892, Width: 1286, Height: 40);
+      LayoutMode: Center;
+      Group #ShopPager {
+        LayoutMode: Left;
+        Visible: false;
+        $C.@SmallSecondaryTextButton #ShopPrev {
+          @Anchor = Anchor(Width: 130, Right: 14);
+          Text: "Précédente";
+        }
+        Label #ShopPageLabel {
+          Anchor: (Width: 90);
+          Style: (FontSize: 15, RenderBold: true, TextColor: #b8c2d0, HorizontalAlignment: Center, VerticalAlignment: Center);
+        }
+        $C.@SmallSecondaryTextButton #ShopNext {
+          @Anchor = Anchor(Width: 130, Left: 14);
+          Text: "Suivante";
+        }
+      }
+    }
+
+    // ---- bourse et Fermer ----
+    Group {
+      Anchor: (Left: 611, Top: 960, Width: 1046, Height: 44);
+      LayoutMode: Left;
+      Label {
+        Anchor: (Width: 86);
+        Text: "Bourse";
+        Style: (FontSize: 14, RenderBold: true, RenderUppercase: true, TextColor: #77879D, VerticalAlignment: Center);
+      }
+      ItemIcon #ShopWalletIcon0 { Anchor: (Width: 22, Height: 22); Visible: false; }
+      Label #ShopWalletN0 {
+        Anchor: (Left: 2, Right: 7);
+        Visible: false;
+        Style: (FontSize: 16, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+      }
+      ItemIcon #ShopWalletIcon1 { Anchor: (Width: 22, Height: 22); Visible: false; }
+      Label #ShopWalletN1 {
+        Anchor: (Left: 2, Right: 7);
+        Visible: false;
+        Style: (FontSize: 16, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+      }
+      ItemIcon #ShopWalletIcon2 { Anchor: (Width: 22, Height: 22); Visible: false; }
+      Label #ShopWalletN2 {
+        Anchor: (Left: 2, Right: 7);
+        Visible: false;
+        Style: (FontSize: 16, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+      }
+      ItemIcon #ShopWalletIcon3 { Anchor: (Width: 22, Height: 22); Visible: false; }
+      Label #ShopWalletN3 {
+        Anchor: (Left: 2, Right: 7);
+        Visible: false;
+        Style: (FontSize: 16, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+      }
+      ItemIcon #ShopWalletIcon4 { Anchor: (Width: 22, Height: 22); Visible: false; }
+      Label #ShopWalletN4 {
+        Anchor: (Left: 2, Right: 7);
+        Visible: false;
+        Style: (FontSize: 16, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+      }
+      ItemIcon #ShopWalletIcon5 { Anchor: (Width: 22, Height: 22); Visible: false; }
+      Label #ShopWalletN5 {
+        Anchor: (Left: 2, Right: 7);
+        Visible: false;
+        Style: (FontSize: 16, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+      }
+      ItemIcon #ShopWalletIcon6 { Anchor: (Width: 22, Height: 22); Visible: false; }
+      Label #ShopWalletN6 {
+        Anchor: (Left: 2, Right: 7);
+        Visible: false;
+        Style: (FontSize: 16, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+      }
+      Label #ShopWalletEmpty {
+        Text: "vide";
+        Visible: false;
+        Style: (FontSize: 15, RenderBold: true, TextColor: #8a6a6a, VerticalAlignment: Center);
+      }
+      Label #ShopAccount {
+        Anchor: (Left: 18);
+        Style: (FontSize: 14, RenderBold: true, TextColor: #77879D, VerticalAlignment: Center);
+      }
+    }
+    Group {
+      Anchor: (Left: 1677, Top: 960, Width: 220, Height: 44);
+      $C.@SecondaryTextButton #ShopClose {
+        @Anchor = Anchor(Left: 0, Top: 0, Width: 220);
+        Text: "Fermer";
+      }
+    }
+    Label {
+      Anchor: (Left: 40, Top: 1028, Width: 300, Height: 24);
+      Text: "Échap  ·  Retour";
+      Style: (FontSize: 15, RenderBold: true, RenderUppercase: true, TextColor: #77879d, VerticalAlignment: Center);
+    }
+
+    // ---- marchand (colonne de gauche refaite le 2026-11-19, comme l'intendant) ----
+    Group { Anchor: (Left: 80, Top: 20, Width: 445, Height: 1040); Background: #0b0b12(0.35); }
+    Label #ShopTitle {
+      Anchor: (Left: 96, Top: 30, Width: 415, Height: 34);
+      Style: (FontName: "Secondary", FontSize: 22, RenderBold: true, RenderUppercase: true, TextColor: #C4CEDC, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 13);
+    }
+    Label #ShopSub {
+      Anchor: (Left: 96, Top: 64, Width: 415, Height: 22);
+      Style: (FontSize: 14, RenderBold: true, TextColor: #C58643, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+    }
+
+    // ---- fiche de l'article ----
+    Group { Anchor: (Left: 219, Top: 96, Width: 168, Height: 168); Background: (TexturePath: "../Quest/ChapEmblemFrame.png"); }
+    Group { Anchor: (Left: 249, Top: 126, Width: 108, Height: 108); Background: (TexturePath: "../Quest/ChapEmblemBack.png"); }
+    ItemIcon #ShopBig { Anchor: (Left: 263, Top: 140, Width: 80, Height: 80); }
+    Group #ShopBigMark { Anchor: (Left: 271, Top: 148, Width: 64, Height: 64); Background: (TexturePath: "ShopEmblem.png"); Visible: false; }
+    Label #ShopKind {
+      Anchor: (Left: 96, Top: 268, Width: 415, Height: 20);
+      Style: (FontSize: 13, RenderBold: true, RenderUppercase: true, TextColor: #b9a2d8, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 9);
+    }
+    Label #ShopName {
+      Anchor: (Left: 96, Top: 290, Width: 415, Height: 40);
+      Style: (FontName: "Secondary", FontSize: 25, RenderBold: true, RenderUppercase: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 14);
+    }
+    Label #ShopHint {
+      Anchor: (Left: 96, Top: 330, Width: 415, Height: 40);
+      Style: (FontSize: 15, RenderBold: true, TextColor: #3fbf6a, HorizontalAlignment: Center, VerticalAlignment: Center, Wrap: true);
+    }
+    Group { Anchor: (Left: 94, Top: 374, Width: 418, Height: 8); Background: (TexturePath: "../Quest/ChapDivider.png", HorizontalBorder: 24, VerticalBorder: 0); }
+
+    Group #ShopBody {
+      Anchor: (Left: 96, Top: 390, Width: 429, Height: 356);
+      LayoutMode: TopScrolling;
+      ScrollbarStyle: $C.@DefaultScrollbarStyle;
+      Padding: (Right: 14);
+
+      // prix (pieces) sur toute la largeur
+      Group {
+        Anchor: (Height: 62);
+        LayoutMode: Top;
+        Padding: (Top: 8, Bottom: 4);
+        Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16);
+        Group {
+          Anchor: (Height: 28);
+          LayoutMode: Center;
+          ItemIcon #ShopPriceCIcon0 { Anchor: (Width: 22, Height: 22); Visible: false; }
+          Label #ShopPriceCN0 {
+            Anchor: (Left: 2, Right: 7);
+            Visible: false;
+            Style: (FontSize: 17, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+          }
+          ItemIcon #ShopPriceCIcon1 { Anchor: (Width: 22, Height: 22); Visible: false; }
+          Label #ShopPriceCN1 {
+            Anchor: (Left: 2, Right: 7);
+            Visible: false;
+            Style: (FontSize: 17, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+          }
+          ItemIcon #ShopPriceCIcon2 { Anchor: (Width: 22, Height: 22); Visible: false; }
+          Label #ShopPriceCN2 {
+            Anchor: (Left: 2, Right: 7);
+            Visible: false;
+            Style: (FontSize: 17, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+          }
+          ItemIcon #ShopPriceCIcon3 { Anchor: (Width: 22, Height: 22); Visible: false; }
+          Label #ShopPriceCN3 {
+            Anchor: (Left: 2, Right: 7);
+            Visible: false;
+            Style: (FontSize: 17, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+          }
+          ItemIcon #ShopPriceCIcon4 { Anchor: (Width: 22, Height: 22); Visible: false; }
+          Label #ShopPriceCN4 {
+            Anchor: (Left: 2, Right: 7);
+            Visible: false;
+            Style: (FontSize: 17, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+          }
+          ItemIcon #ShopPriceCIcon5 { Anchor: (Width: 22, Height: 22); Visible: false; }
+          Label #ShopPriceCN5 {
+            Anchor: (Left: 2, Right: 7);
+            Visible: false;
+            Style: (FontSize: 17, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+          }
+          Label #ShopPriceText {
+            Style: (FontSize: 17, RenderBold: true, TextColor: #e8a93b, VerticalAlignment: Center);
+          }
+        }
+        Label #ShopPriceCap {
+          Anchor: (Top: 2);
+          Text: "Prix";
+          Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, HorizontalAlignment: Center);
+        }
+      }
+      Group #ShopFactRow0 {
+        Anchor: (Top: 6, Height: 50);
+        LayoutMode: Left;
+        Visible: false;
+          Group #ShopFact0 {
+            FlexWeight: 1;
+            Anchor: (Right: 4);
+            LayoutMode: Top;
+            Padding: (Left: 12, Right: 8, Top: 6);
+            Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16);
+            Label #ShopFactK0 {
+              Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+            }
+            Label #ShopFactV0 {
+              Anchor: (Top: 2);
+              Style: (FontSize: 15, RenderBold: true, TextColor: #e8d9b0, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+            }
+          }
+          Group #ShopFact1 {
+            FlexWeight: 1;
+            Anchor: (Left: 4);
+            LayoutMode: Top;
+            Padding: (Left: 12, Right: 8, Top: 6);
+            Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16);
+            Label #ShopFactK1 {
+              Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+            }
+            Label #ShopFactV1 {
+              Anchor: (Top: 2);
+              Style: (FontSize: 15, RenderBold: true, TextColor: #e8d9b0, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+            }
+          }
+      }
+      Group #ShopFactRow1 {
+        Anchor: (Top: 6, Height: 50);
+        LayoutMode: Left;
+        Visible: false;
+          Group #ShopFact2 {
+            FlexWeight: 1;
+            Anchor: (Right: 4);
+            LayoutMode: Top;
+            Padding: (Left: 12, Right: 8, Top: 6);
+            Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16);
+            Label #ShopFactK2 {
+              Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+            }
+            Label #ShopFactV2 {
+              Anchor: (Top: 2);
+              Style: (FontSize: 15, RenderBold: true, TextColor: #e8d9b0, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+            }
+          }
+          Group #ShopFact3 {
+            FlexWeight: 1;
+            Anchor: (Left: 4);
+            LayoutMode: Top;
+            Padding: (Left: 12, Right: 8, Top: 6);
+            Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16);
+            Label #ShopFactK3 {
+              Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+            }
+            Label #ShopFactV3 {
+              Anchor: (Top: 2);
+              Style: (FontSize: 15, RenderBold: true, TextColor: #e8d9b0, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+            }
+          }
+      }
+      Group #ShopFactRow2 {
+        Anchor: (Top: 6, Height: 50);
+        LayoutMode: Left;
+        Visible: false;
+          Group #ShopFact4 {
+            FlexWeight: 1;
+            Anchor: (Right: 4);
+            LayoutMode: Top;
+            Padding: (Left: 12, Right: 8, Top: 6);
+            Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16);
+            Label #ShopFactK4 {
+              Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+            }
+            Label #ShopFactV4 {
+              Anchor: (Top: 2);
+              Style: (FontSize: 15, RenderBold: true, TextColor: #e8d9b0, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+            }
+          }
+          Group #ShopFact5 {
+            FlexWeight: 1;
+            Anchor: (Left: 4);
+            LayoutMode: Top;
+            Padding: (Left: 12, Right: 8, Top: 6);
+            Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16);
+            Label #ShopFactK5 {
+              Style: (FontSize: 11, RenderBold: true, RenderUppercase: true, TextColor: #77879D, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 8);
+            }
+            Label #ShopFactV5 {
+              Anchor: (Top: 2);
+              Style: (FontSize: 15, RenderBold: true, TextColor: #e8d9b0, ShrinkTextToFit: true, MinShrinkTextToFitFontSize: 10);
+            }
+          }
+      }
+      Label #ShopDesc {
+        Anchor: (Top: 10);
+        Style: (FontSize: 14, RenderBold: true, TextColor: #b8c2d0, Wrap: true);
+      }
+
+      // ingredients requis : seulement quand l'article demande des objets en plus des pieces
+      Group #ShopIngPanel {
+        Anchor: (Top: 12);
+        LayoutMode: Top;
+        Visible: false;
+        Label #ShopIngCap {
+          Text: "Ingrédients requis";
+          Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #f2c45e);
+        }
+        Group #ShopIng0 {
+          Anchor: (Top: 6, Height: 50);
+          LayoutMode: Left;
+          Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16);
+          Visible: false;
+          Group { Anchor: (Width: 8); LayoutMode: Middle; Group #ShopIngBar0 { Anchor: (Width: 3, Height: 30); Background: #3fbf6a; } }
+          Group {
+            Anchor: (Width: 48);
+            LayoutMode: Middle;
+            ItemIcon #ShopIngIcon0 { Anchor: (Width: 36, Height: 36); }
+          }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Top: 7, Right: 4);
+            Label #ShopIngName0 {
+              Style: (FontSize: 14, RenderBold: true, TextColor: #C4CEDC);
+            }
+            Label #ShopIngHave0 {
+              Anchor: (Top: 2);
+              Style: (FontSize: 12, RenderBold: true, TextColor: #77879D);
+            }
+          }
+          Label #ShopIngQty0 {
+            Anchor: (Width: 60);
+            Style: (FontSize: 17, RenderBold: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center);
+          }
+        }
+        Group #ShopIng1 {
+          Anchor: (Top: 6, Height: 50);
+          LayoutMode: Left;
+          Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16);
+          Visible: false;
+          Group { Anchor: (Width: 8); LayoutMode: Middle; Group #ShopIngBar1 { Anchor: (Width: 3, Height: 30); Background: #3fbf6a; } }
+          Group {
+            Anchor: (Width: 48);
+            LayoutMode: Middle;
+            ItemIcon #ShopIngIcon1 { Anchor: (Width: 36, Height: 36); }
+          }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Top: 7, Right: 4);
+            Label #ShopIngName1 {
+              Style: (FontSize: 14, RenderBold: true, TextColor: #C4CEDC);
+            }
+            Label #ShopIngHave1 {
+              Anchor: (Top: 2);
+              Style: (FontSize: 12, RenderBold: true, TextColor: #77879D);
+            }
+          }
+          Label #ShopIngQty1 {
+            Anchor: (Width: 60);
+            Style: (FontSize: 17, RenderBold: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center);
+          }
+        }
+        Group #ShopIng2 {
+          Anchor: (Top: 6, Height: 50);
+          LayoutMode: Left;
+          Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16);
+          Visible: false;
+          Group { Anchor: (Width: 8); LayoutMode: Middle; Group #ShopIngBar2 { Anchor: (Width: 3, Height: 30); Background: #3fbf6a; } }
+          Group {
+            Anchor: (Width: 48);
+            LayoutMode: Middle;
+            ItemIcon #ShopIngIcon2 { Anchor: (Width: 36, Height: 36); }
+          }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Top: 7, Right: 4);
+            Label #ShopIngName2 {
+              Style: (FontSize: 14, RenderBold: true, TextColor: #C4CEDC);
+            }
+            Label #ShopIngHave2 {
+              Anchor: (Top: 2);
+              Style: (FontSize: 12, RenderBold: true, TextColor: #77879D);
+            }
+          }
+          Label #ShopIngQty2 {
+            Anchor: (Width: 60);
+            Style: (FontSize: 17, RenderBold: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center);
+          }
+        }
+        Group #ShopIng3 {
+          Anchor: (Top: 6, Height: 50);
+          LayoutMode: Left;
+          Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16);
+          Visible: false;
+          Group { Anchor: (Width: 8); LayoutMode: Middle; Group #ShopIngBar3 { Anchor: (Width: 3, Height: 30); Background: #3fbf6a; } }
+          Group {
+            Anchor: (Width: 48);
+            LayoutMode: Middle;
+            ItemIcon #ShopIngIcon3 { Anchor: (Width: 36, Height: 36); }
+          }
+          Group {
+            FlexWeight: 1;
+            LayoutMode: Top;
+            Padding: (Top: 7, Right: 4);
+            Label #ShopIngName3 {
+              Style: (FontSize: 14, RenderBold: true, TextColor: #C4CEDC);
+            }
+            Label #ShopIngHave3 {
+              Anchor: (Top: 2);
+              Style: (FontSize: 12, RenderBold: true, TextColor: #77879D);
+            }
+          }
+          Label #ShopIngQty3 {
+            Anchor: (Width: 60);
+            Style: (FontSize: 17, RenderBold: true, TextColor: #f2c45e, HorizontalAlignment: Center, VerticalAlignment: Center);
+          }
+        }
+        Label #ShopIngState {
+          Anchor: (Top: 6, Height: 20);
+          Style: (FontSize: 13, RenderBold: true, TextColor: #3fbf6a, HorizontalAlignment: Center, VerticalAlignment: Center);
+        }
+      }
+    }
+
+    // ---- achat : total en cases de recompense, puis quantite, puis bouton (2026-11-19) ----
+    Group {
+      Anchor: (Left: 96, Top: 750, Width: 415, Height: 20);
+      LayoutMode: Left;
+      Label #ShopActHead {
+        Anchor: (Width: 90);
+        Text: "Achat";
+        Style: (FontSize: 13, RenderBold: true, RenderUppercase: true, TextColor: #C58643, VerticalAlignment: Center);
+      }
+      Group { FlexWeight: 1; LayoutMode: Middle; Group { Anchor: (Height: 1); Background: #c58643(0.6); } }
+      Label #ShopTotalCap {
+        Anchor: (Left: 10);
+        Text: "Total";
+        Style: (FontSize: 12, RenderBold: true, RenderUppercase: true, TextColor: #77879D, VerticalAlignment: Center);
+      }
+    }
+    Group #ShopTotalSlot0 {
+      Anchor: (Left: 96, Top: 776, Width: 64, Height: 64);
+      Visible: false;
+      Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23);
+      ItemIcon #ShopTotalIcon0 { Anchor: (Left: 10, Top: 8, Width: 44, Height: 44); }
+      Label #ShopTotalQty0 {
+        Anchor: (Left: 4, Top: 40, Width: 54, Height: 20);
+        Style: (FontSize: 14, RenderBold: true, TextColor: #ffffff, HorizontalAlignment: End, VerticalAlignment: Center);
+      }
+    }
+    Group #ShopTotalSlot1 {
+      Anchor: (Left: 166, Top: 776, Width: 64, Height: 64);
+      Visible: false;
+      Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23);
+      ItemIcon #ShopTotalIcon1 { Anchor: (Left: 10, Top: 8, Width: 44, Height: 44); }
+      Label #ShopTotalQty1 {
+        Anchor: (Left: 4, Top: 40, Width: 54, Height: 20);
+        Style: (FontSize: 14, RenderBold: true, TextColor: #ffffff, HorizontalAlignment: End, VerticalAlignment: Center);
+      }
+    }
+    Group #ShopTotalSlot2 {
+      Anchor: (Left: 236, Top: 776, Width: 64, Height: 64);
+      Visible: false;
+      Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23);
+      ItemIcon #ShopTotalIcon2 { Anchor: (Left: 10, Top: 8, Width: 44, Height: 44); }
+      Label #ShopTotalQty2 {
+        Anchor: (Left: 4, Top: 40, Width: 54, Height: 20);
+        Style: (FontSize: 14, RenderBold: true, TextColor: #ffffff, HorizontalAlignment: End, VerticalAlignment: Center);
+      }
+    }
+    Group #ShopTotalSlot3 {
+      Anchor: (Left: 306, Top: 776, Width: 64, Height: 64);
+      Visible: false;
+      Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23);
+      ItemIcon #ShopTotalIcon3 { Anchor: (Left: 10, Top: 8, Width: 44, Height: 44); }
+      Label #ShopTotalQty3 {
+        Anchor: (Left: 4, Top: 40, Width: 54, Height: 20);
+        Style: (FontSize: 14, RenderBold: true, TextColor: #ffffff, HorizontalAlignment: End, VerticalAlignment: Center);
+      }
+    }
+    Group #ShopTotalSlot4 {
+      Anchor: (Left: 376, Top: 776, Width: 64, Height: 64);
+      Visible: false;
+      Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23);
+      ItemIcon #ShopTotalIcon4 { Anchor: (Left: 10, Top: 8, Width: 44, Height: 44); }
+      Label #ShopTotalQty4 {
+        Anchor: (Left: 4, Top: 40, Width: 54, Height: 20);
+        Style: (FontSize: 14, RenderBold: true, TextColor: #ffffff, HorizontalAlignment: End, VerticalAlignment: Center);
+      }
+    }
+    Group #ShopTotalSlot5 {
+      Anchor: (Left: 446, Top: 776, Width: 64, Height: 64);
+      Visible: false;
+      Background: (TexturePath: "../Quest/ChapSlot.png", Border: 23);
+      ItemIcon #ShopTotalIcon5 { Anchor: (Left: 10, Top: 8, Width: 44, Height: 44); }
+      Label #ShopTotalQty5 {
+        Anchor: (Left: 4, Top: 40, Width: 54, Height: 20);
+        Style: (FontSize: 14, RenderBold: true, TextColor: #ffffff, HorizontalAlignment: End, VerticalAlignment: Center);
+      }
+    }
+    Label #ShopTotalText {
+      Anchor: (Left: 96, Top: 776, Width: 415, Height: 64);
+      Style: (FontName: "Secondary", FontSize: 22, RenderBold: true, TextColor: #e8a93b, HorizontalAlignment: Center, VerticalAlignment: Center);
+    }
+    Group {
+      Anchor: (Left: 96, Top: 848, Width: 415, Height: 40);
+      LayoutMode: Left;
+      $C.@SmallSecondaryTextButton #ShopQMinus { @Anchor = (Width: 48, Right: 4); Text: "-"; }
+      Group {
+        FlexWeight: 1;
+        LayoutMode: Middle;
+        Background: (TexturePath: "../Quest/QHudPatch.png", Border: 16);
+        Label #ShopQty {
+          Style: (FontSize: 18, RenderBold: true, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center);
+        }
+      }
+      $C.@SmallSecondaryTextButton #ShopQPlus { @Anchor = (Width: 48, Left: 4); Text: "+"; }
+      $C.@SmallSecondaryTextButton #ShopQ10 { @Anchor = (Width: 62, Left: 8); Text: "+10"; }
+      $C.@SmallSecondaryTextButton #ShopQMax { @Anchor = (Width: 70, Left: 4); Text: "Max"; }
+    }
+    Group {
+      Anchor: (Left: 96, Top: 896, Width: 415, Height: 48);
+      $C.@TextButton #ShopBuy1 {
+        @Anchor = Anchor(Left: 0, Top: 0, Width: 415, Height: 48);
+        Text: "Acheter";
+      }
+    }
+    Label #ShopMsg {
+      Anchor: (Left: 96, Top: 948, Width: 415, Height: 56);
+      Style: (FontSize: 14, RenderBold: true, TextColor: #00e7b6, HorizontalAlignment: Center, VerticalAlignment: Center, Wrap: true);
+    }
+  }
+}

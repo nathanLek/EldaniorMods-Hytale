@@ -1,0 +1,140 @@
+{
+  "Parent": "Template_Weapon_Sword",
+  "TranslationProperties": {
+    "Name": "Hien, l'Hirondelle Écarlate",
+    "Description": "Artefact unique. Plus rapide qu'une hirondelle, sa lame noire brûle d'un fil écarlate ; chaque coup embrase la cible (6 dégâts de feu par seconde pendant 3 s). Fourreau de laque cramoisie à la garde d'or. Katana du Clan Luo, réservé à ses membres : tenu au fourreau dans la main gauche, dégainé au premier coup, il reste au clair tant que l'on frappe. Son kata s'allonge avec votre classe de la voie martiale. Clic droit : bref, rengainer ; maintenu, garde. Maintenir l'attaque (ou garde levée puis clic gauche) : Percée, un estoc qui grandit avec votre classe (ruée, aiguille de Ki, mille aiguilles, fleurs de prunier, canon de Ki du Maître Suprême, cinq lances de Ki du Dieu Martial), payée en endurance et en mana. Compétence (énergie de signature pleine) : rafale de tout le kata en un éclair (une lame de Ki par mouvement dès le Saint Martial, Ki de l'Épée déployé). Chaque coup coûte 5 % d'endurance, la rafale la moitié."
+  },
+  "Quality": "Unique",
+  "ItemLevel": 360,
+  "Texture": "Items/Weapons/artefacts/Artefact_Sword_Katana_Hien.png",
+  "Icon": "Icons/ItemsGenerated/Artefact_Sword_Katana_Hien.png",
+  "IconProperties": {
+    "Scale": 0.33,
+    "Rotation": [
+      45,
+      90,
+      0
+    ],
+    "Translation": [
+      -33,
+      -38
+    ]
+  },
+  "MaxStack": 1,
+  "Variant": false,
+  "InteractionVars": {
+    "Swing_Left_Damage": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Primary_Swing_Left_Damage",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Physical": 28
+            }
+          },
+          "DamageEffects": {
+            "WorldSoundEventId": "SFX_Sword_T2_Impact",
+            "LocalSoundEventId": "SFX_Sword_T2_Impact"
+          },
+          "EntityStatsOnHit": [
+            {
+              "EntityStatId": "SignatureEnergy",
+              "Amount": 2
+            }
+          ],
+          "Next": "Eldanior_OnHit_Embrasement"
+        }
+      ]
+    },
+    "Swing_Right_Damage": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Primary_Swing_Right_Damage",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Physical": 28
+            }
+          },
+          "DamageEffects": {
+            "WorldSoundEventId": "SFX_Sword_T2_Impact",
+            "LocalSoundEventId": "SFX_Sword_T2_Impact"
+          },
+          "EntityStatsOnHit": [
+            {
+              "EntityStatId": "SignatureEnergy",
+              "Amount": 2
+            }
+          ],
+          "Next": "Eldanior_OnHit_Embrasement"
+        }
+      ]
+    },
+    "Swing_Down_Damage": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Primary_Swing_Down_Damage",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Physical": 50
+            }
+          },
+          "DamageEffects": {
+            "WorldSoundEventId": "SFX_Sword_T2_Impact",
+            "LocalSoundEventId": "SFX_Sword_T2_Impact"
+          },
+          "EntityStatsOnHit": [
+            {
+              "EntityStatId": "SignatureEnergy",
+              "Amount": 4
+            }
+          ],
+          "Next": "Eldanior_OnHit_Embrasement"
+        }
+      ]
+    },
+    "Guard_Wield": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Secondary_Guard_Wield",
+          "StaminaCost": {
+            "Value": 10,
+            "CostType": "Damage"
+          }
+        }
+      ]
+    },
+    "Thrust": {
+      "Interactions": [
+        "Luo_Bokken_Percee"
+      ]
+    },
+    "Luo_Combo": {
+      "Interactions": [
+        "Luo_Combo_Rapide"
+      ]
+    },
+    "Thrust_Fourreau": {
+      "Interactions": [
+        "Luo_Bokken_Percee_Fourreau"
+      ]
+    },
+    "Guard_Bash": {
+      "Interactions": [
+        "Luo_Percee_Fourreau"
+      ]
+    }
+  },
+  "MaxDurability": 600,
+  "$Comment": "Katana du Clan Luo au fourreau (rien en main droite). Genere par scripts/artefacts/gen_luo_katanas.py.",
+  "Model": "Items/Weapons/artefacts/Artefact_Sword_Tenryumaru_Main_Vide.blockymodel",
+  "PlayerAnimationsId": "Tenryumaru_Fourreau",
+  "Categories": [
+    "Eldanior_Empire_Luo.Hanazakura",
+    "Items.Weapons"
+  ],
+  "Interactions": {
+    "Primary": "Root_Luo_Fourreau_Primary",
+    "Secondary": "Root_Weapon_Sword_Secondary_Guard",
+    "Ability1": "Root_Luo_Bokken_Rafale_Fourreau"
+  }
+}

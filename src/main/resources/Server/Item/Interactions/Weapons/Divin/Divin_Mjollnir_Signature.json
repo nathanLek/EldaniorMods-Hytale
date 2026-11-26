@@ -1,0 +1,40 @@
+{
+  "$Comment": "Signature de Mjöllnir, Marteau de Thor (energie de signature pleine) : sort Java ColereDeThor (ArmesDivines). Genere par gen_divines.py.",
+  "Type": "StatsCondition",
+  "Costs": {
+    "SignatureEnergy": 100
+  },
+  "ValueType": "Percent",
+  "Next": {
+    "Type": "Serial",
+    "Interactions": [
+      {
+        "Type": "Simple",
+        "RunTime": 0.45,
+        "Effects": {
+          "ItemAnimationId": "SwingDownCharging"
+        }
+      },
+      {
+        "Type": "Simple",
+        "RunTime": 0.3,
+        "Effects": {
+          "ItemAnimationId": "SwingDownCharged",
+          "ClearAnimationOnFinish": true
+        }
+      },
+      {
+        "Type": "RuneSpell",
+        "RunTime": 0.05,
+        "Spell": "ColereDeThor"
+      },
+      {
+        "Type": "ChangeStat",
+        "StatModifiers": {
+          "SignatureEnergy": -100
+        },
+        "ValueType": "Percent"
+      }
+    ]
+  }
+}

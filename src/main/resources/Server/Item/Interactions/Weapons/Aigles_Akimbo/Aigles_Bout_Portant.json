@@ -1,0 +1,57 @@
+{
+  "Type": "Eldanior_MousquetTir",
+  "Colt": 2,
+  "Next": {
+    "Type": "Serial",
+    "Interactions": [
+      {
+        "Type": "ApplyForce",
+        "Force": 9,
+        "Direction": {
+          "X": 0,
+          "Y": 0,
+          "Z": -10
+        },
+        "AdjustVertical": true,
+        "VerticalClamp": [
+          -85,
+          10
+        ],
+        "WaitForGround": false,
+        "ChangeVelocityType": "Add",
+        "VelocityConfig": {
+          "AirResistance": 0.97,
+          "AirResistanceMax": 0.96,
+          "GroundResistance": 0.94,
+          "GroundResistanceMax": 0.82,
+          "Threshold": 3.0,
+          "Style": "Exp"
+        }
+      },
+      {
+        "Type": "Simple",
+        "RunTime": 0.12,
+        "Effects": {
+          "CameraEffect": "Handgun_Shoot",
+          "WorldSoundEventId": "SFX_Handgun_Fire",
+          "LocalSoundEventId": "SFX_Handgun_Fire_Local",
+          "ItemAnimationId": "ShootBoth"
+        }
+      },
+      {
+        "Type": "RuneSpell",
+        "RunTime": 0.05,
+        "Spell": "AiglesBoutPortant"
+      },
+      {
+        "Type": "Simple",
+        "RunTime": 0.4,
+        "Effects": {
+          "ClearAnimationOnFinish": true
+        }
+      }
+    ]
+  },
+  "Failed": "Gun_Shoot_Fail",
+  "$Comment": "Aigles du Desert : 3e temps du gun-kata, bond et double tir a bout portant (chargeur : 2 balles), sort AiglesBoutPortant."
+}

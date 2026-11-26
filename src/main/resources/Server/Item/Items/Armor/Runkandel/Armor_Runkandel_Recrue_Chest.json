@@ -1,0 +1,97 @@
+{
+  "TranslationProperties": {
+    "Name": "Brigandine de Recrue",
+    "Description": "Tenue de Recrue Runkandel. Du velours cramoisi riveté de laiton, sur un hauberk de mailles : l'habit des écuyers de la maison."
+  },
+  "Quality": "Rare",
+  "ItemLevel": 60,
+  "PlayerAnimationsId": "Block",
+  "ItemSoundSetId": "ISS_Armor_Leather",
+  "Categories": [
+    "Eldanior_Familles.Runkandel",
+    "Items.Armors"
+  ],
+  "Icon": "Icons/ItemsGenerated/Armor_Runkandel_Recrue_Chest.png",
+  "IconProperties": {
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Scale": 0.3,
+    "Translation": [
+      0,
+      0
+    ]
+  },
+  "Model": "Items/Armors/Runkandel/Recrue/Chest.blockymodel",
+  "Texture": "Items/Armors/Runkandel/Recrue/Chest_Texture.png",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    }
+  },
+  "Armor": {
+    "ArmorSlot": "Chest",
+    "BaseDamageResistance": 0,
+    "CosmeticsToHide": [
+      "Overtop",
+      "Cape"
+    ],
+    "StatModifiers": {
+      "Health": [
+        {
+          "Amount": 14,
+          "CalculationType": "Additive"
+        }
+      ],
+      "Mana": [
+        {
+          "Amount": 3,
+          "CalculationType": "Additive"
+        }
+      ]
+    },
+    "DamageResistance": {
+      "Physical": [
+        {
+          "Amount": 0.09,
+          "CalculationType": "Percent"
+        }
+      ],
+      "Projectile": [
+        {
+          "Amount": 0.09,
+          "CalculationType": "Percent"
+        }
+      ],
+      "Fire": [
+        {
+          "Amount": 0.045,
+          "CalculationType": "Percent"
+        }
+      ]
+    }
+  },
+  "Tags": {
+    "Type": [
+      "Armor"
+    ],
+    "Family": [
+      "Plate_Runkandel"
+    ]
+  },
+  "MaxDurability": 120,
+  "DurabilityLossOnHit": 0.5
+}

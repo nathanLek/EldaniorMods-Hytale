@@ -1,0 +1,44 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune du Retour en Arrière",
+    "Description": "Sort unique du temps (Mage, rune de prédilection de l'Oracle Absolu). Vous posez une ancre dans le temps. 5 s plus tard, le temps se rembobine : vous revenez à l'endroit de l'ancre et retrouvez les PV que vous aviez alors (s'ils étaient plus élevés), et chaque coup que vous avez porté entre-temps frappe une seconde fois à 50 %. Un coup mortel pendant ces 5 s déclenche le retour immédiatement au lieu de vous tuer. Coût : 600 mana. Recharge : 180 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_RetourEnArriere.png",
+  "Quality": "Unique",
+  "ItemLevel": 75,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_Runes.Temps"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_RetourEnArriere.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 180,
+    "Cost": 600,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Duration",
+      "Buff"
+    ],
+    "Cast": "Root_Ability_RetourEnArriere"
+  }
+}

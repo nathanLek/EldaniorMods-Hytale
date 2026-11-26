@@ -1,0 +1,94 @@
+{
+  "$Comment": "Consommable du Clan Luo, genere par scripts/consommables/gen_luo_consommables.py. Vendu par les marchands Luo.",
+  "TranslationProperties": {
+    "Name": "Thé au jasmin des Mille Cerisiers",
+    "Description": "Thé parfumé servi aux hôtes du clan. Boire : régénère la santé."
+  },
+  "Quality": "Rare",
+  "ItemLevel": 90,
+  "Categories": [
+    "Eldanior_Empire_Luo.Comestibles"
+  ],
+  "Icon": "Icons/ItemsGenerated/Luo_The_Jasmin.png",
+  "IconProperties": {
+    "Scale": 0.8,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -8
+    ]
+  },
+  "Model": "Items/Consommables/Luo_The_Jasmin.blockymodel",
+  "Texture": "Items/Consommables/Luo_The_Jasmin.png",
+  "PlayerAnimationsId": {
+    "Parent": "Item",
+    "Animations": {
+      "Consume": {
+        "FirstPerson": "Characters/Animations/Items/Main_Handed/Item/Attacks/Drink/Drink_FPS.blockyanim",
+        "ThirdPerson": "Characters/Animations/Items/Main_Handed/Item/Attacks/Drink/Drink.blockyanim",
+        "Speed": 1,
+        "Looping": true
+      }
+    }
+  },
+  "Interactions": {
+    "Secondary": "Root_Secondary_Consume_Potion"
+  },
+  "InteractionVars": {
+    "RemoveEffect": {
+      "Interactions": [
+        {
+          "Type": "Simple"
+        }
+      ]
+    },
+    "Effect": {
+      "Interactions": [
+        {
+          "Type": "Serial",
+          "Interactions": [
+            {
+              "Type": "ApplyEffect",
+              "EffectId": "Potion_Health_Regen_Small"
+            }
+          ]
+        }
+      ]
+    },
+    "ConsumeSFX": {
+      "Interactions": [
+        {
+          "Parent": "Consume_SFX",
+          "Effects": {
+            "LocalSoundEventId": "SFX_Health_Potion_Low_Drink"
+          }
+        }
+      ]
+    },
+    "ConsumedSFX": {
+      "Interactions": [
+        {
+          "Parent": "Consumed_SFX",
+          "Effects": {
+            "LocalSoundEventId": "SFX_Potion_Drink_Success"
+          }
+        }
+      ]
+    }
+  },
+  "Consumable": true,
+  "Utility": {
+    "Compatible": false
+  },
+  "Tags": {
+    "Type": [
+      "Potion"
+    ]
+  },
+  "MaxStack": 10,
+  "DropOnDeath": true
+}

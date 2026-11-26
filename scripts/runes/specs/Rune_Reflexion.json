@@ -1,0 +1,67 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_Reflexion",
+  "spell": "Reflexion",
+  "javaClass": "Reflexion",
+  "page": "rune_page_reflexion",
+  "name": "Rune de la Réflexion",
+  "type": "Lumiere",
+  "rarity": "Epic",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Reflexion",
+  "summary": "8 s : dome de 5 blocs qui suit le lanceur ; projectiles ennemis renvoyes sur leur tireur (80), 30 % des coups recus renvoyes.",
+  "description": "Sort épique de lumière (Mage, rune de prédilection de l'Archimage Suprême). Un dôme miroitant de 5 blocs vous suit pendant 8 s. Les projectiles ennemis qui y entrent sont détruits et leur énergie est renvoyée en trait de lumière sur le tireur (80 dégâts). Les coups que vous subissez au corps à corps renvoient 30 % de leurs dégâts à l'attaquant.",
+  "pageDescription": "Un parchemin poli comme un miroir, où l'on voit son reflet. Enseigne la Réflexion : rendez à vos ennemis ce qu'ils vous envoient. Classes : tous les Mages (rune de prédilection de l'Archimage Suprême). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Buff",
+    "Duration"
+  ],
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.4,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Portal_Neutral_Open",
+    "handParticles": "Bifrost_Divine",
+    "handParticlesScale": 0.2,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.4,
+    "range": 30,
+    "radius": "5 (dome mobile)",
+    "targets": "projectiles entrants, attaquants",
+    "persistentFx": "2 anneaux Bifrost_Divine (0,3) autour du lanceur / 0,4 s",
+    "impactFx": "trait Bifrost_Divine du point d'interception au tireur",
+    "sounds": "SFX_Glass_Break a chaque renvoi",
+    "effects": "projectile volant vers le lanceur (vitesse > 3) dans le dome : retire, 80 Elemental a l'ennemi le plus proche de sa trajectoire inverse (30 blocs) ; onOwnerHurt avec attaquant : 30 % renvoyes (markEcho)",
+    "terrain": "aucun",
+    "persistentDurationS": 8,
+    "interruptions": "aucune",
+    "restrictions": "mage",
+    "edgeCases": "tireur introuvable : projectile simplement detruit ; les degats renvoyes ne sont jamais renvoyes a nouveau",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 2,
+      "mobility": 0,
+      "control": 0,
+      "defense": 3,
+      "targets": 2,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    }
+  },
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null
+}

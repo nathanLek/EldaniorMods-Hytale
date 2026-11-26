@@ -1,0 +1,34 @@
+{
+  "Id": "rune_page_salve_arcanique",
+  "TranslationProperties": {
+    "Name": "Parchemin de Rune : Salve Arcanique",
+    "Description": "Un parchemin constellé de cinq points dorés qui changent de place. Enseigne la Salve Arcanique : des traits qui ne manquent jamais. Classes : tous les Mages (rune de prédilection de l'Archimage). Utilisez-le pour ajouter la rune à votre sac de runes. (Ancien parchemin : la rune s'apprend désormais dans un manuel.)"
+  },
+  "Icon": "Icons/ItemsGenerated/Recipe_Page.png",
+  "Quality": "Rare",
+  "Tags": {
+    "Type": [
+      "Item",
+      "Consumable"
+    ]
+  },
+  "MaxStack": 1,
+  "PlayerAnimationsId": "Item",
+  "Model": "Items/Consumables/Recipes/Recipe.blockymodel",
+  "Texture": "Items/Consumables/Recipes/Recipe_Texture.png",
+  "IconProperties": {
+    "Scale": 0.76,
+    "Rotation": [
+      135,
+      135,
+      0
+    ],
+    "Translation": [
+      -1,
+      5
+    ]
+  },
+  "Interactions": {
+    "Use": "Root_ConsumableItemSkillInteraction"
+  }
+}

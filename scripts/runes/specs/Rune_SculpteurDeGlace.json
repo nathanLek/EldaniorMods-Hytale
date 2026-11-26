@@ -1,0 +1,69 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_SculpteurDeGlace",
+  "spell": "SculpteurDeGlace",
+  "javaClass": "SculpteurDeGlace",
+  "page": "rune_page_sculpteur_de_glace",
+  "name": "Rune du Sculpteur de Glace",
+  "type": "Glace",
+  "rarity": "Unique",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Sculpteur",
+  "summary": "15 s : clic gauche = mur de glace 4x3 au point vise, clic droit = rampe en escalier (6 structures max) ; a la fin ou au 7e clic, tout vole en eclats : 100 + givre (r 3).",
+  "description": "Sort unique de glace (Mage, rune de prédilection du Primordial Ancien). Pendant 15 s, vous sculptez la glace là où vous visez (jusqu'à 20 blocs) : un clic gauche dresse un mur de 4 blocs de large sur 3 de haut, un clic droit une rampe en escalier qui monte vers l'avant. Six structures au plus ; un septième clic, ou la fin du sort, les fait toutes voler en éclats : 100 dégâts et givre aux ennemis à moins de 3 blocs de chacune. Jamais en ville ni sur une parcelle. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin givré dont les lettres sont gravées au burin dans la glace. Enseigne le Sculpteur de Glace : murs, ponts et pièges, à votre guise. Classes : tous les Mages (rune de prédilection du Primordial Ancien). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.5,
+    "releaseTime": 0.5,
+    "moveSpeed": 0.4,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Golem_Frost_Wake",
+    "handParticles": "Niflheim_Freeze_Burst",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.5,
+    "range": 20,
+    "radius": "3 (eclats)",
+    "targets": "bloc vise ; ennemis pres des structures",
+    "executionFx": "structures qui poussent couche par couche (0,1 s), Block_Break_Ice a chaque couche",
+    "impactFx": "Ability_Ice_Explosion + Block_Break_Ice a l'eclatement de chaque structure",
+    "sounds": "SFX_Golem_Frost_Wake a l'incantation, SFX_Ice_Build a chaque sculpture, SFX_Ice_Break a l'eclatement",
+    "effects": "mur : 4 x 3 Rock_Ice en travers du regard ; rampe : 4 de large, 4 marches d'un bloc vers l'avant (colonnes pleines) ; eclatement : 100 Ice + Elda_Givre r 3 par structure (une fois par ennemi et par structure)",
+    "terrain": "jusqu'a 6 structures (12 a 40 blocs chacune, ~240 max), cases vides seulement, retirees a l'eclatement",
+    "persistentDurationS": 15,
+    "interruptions": "lanceur mort ou deconnecte : structures retirees sans degats",
+    "restrictions": "mage",
+    "edgeCases": "clic dans le vide : point a 20 blocs ramene au sol ; 0,4 s minimum entre deux sculptures",
+    "limitations": "pas de bloc d'escalier en glace : la rampe est faite de marches d'un bloc (a monter en sautant)",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 2,
+      "mobility": 1,
+      "control": 2,
+      "defense": 2,
+      "targets": 2,
+      "frequency": 1,
+      "terrain": 2,
+      "difficulty": 2
+    }
+  }
+}

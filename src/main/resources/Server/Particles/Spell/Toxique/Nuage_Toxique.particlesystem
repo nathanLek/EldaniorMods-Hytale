@@ -1,0 +1,20 @@
+{
+  "$Comment": "Nuage Toxique : gaz vert (rayon ~6), emission courte reemise par le code chaque seconde.",
+  "Spawners": [
+    {
+      "SpawnerId": "Nuage_Toxique_Volutes",
+      "PositionOffset": {
+        "Y": 0.6
+      }
+    },
+    {
+      "SpawnerId": "Nuage_Toxique_Sol",
+      "PositionOffset": {
+        "Y": 0.2
+      }
+    }
+  ],
+  "LifeSpan": 1.1,
+  "IsImportant": true,
+  "CullDistance": 160
+}

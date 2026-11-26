@@ -1,0 +1,93 @@
+{
+  "TranslationProperties": {
+    "Name": "Heaume Couronné d'Eldanior",
+    "Description": "Armure du Roi d'Eldanior. Un heaume d'acier blanc ouvert sur le visage, ceint de la couronne fermée du royaume : croix pattées et fleurons d'or, perles, rubis, améthystes et saphirs, sous le globe crucigère."
+  },
+  "Quality": "Unique",
+  "ItemLevel": 600,
+  "PlayerAnimationsId": "Block",
+  "ItemSoundSetId": "ISS_Armor_Heavy",
+  "Categories": [
+    "Eldanior_Familles.Eldanior",
+    "Items.Armors"
+  ],
+  "Icon": "Icons/ItemsGenerated/Armor_Eldanior_Roi_Head.png",
+  "IconProperties": {
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Scale": 0.34,
+    "Translation": [
+      0,
+      0
+    ]
+  },
+  "Model": "Items/Armors/Eldanior/Roi/Head.blockymodel",
+  "Texture": "Items/Armors/Eldanior/Roi/Head_Texture.png",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    }
+  },
+  "Armor": {
+    "ArmorSlot": "Head",
+    "BaseDamageResistance": 0,
+    "CosmeticsToHide": [
+      "EarAccessory",
+      "Ear",
+      "Haircut",
+      "HeadAccessory"
+    ],
+    "StatModifiers": {
+      "Health": [
+        {
+          "Amount": 34,
+          "CalculationType": "Additive"
+        }
+      ],
+      "Mana": [
+        {
+          "Amount": 14,
+          "CalculationType": "Additive"
+        }
+      ]
+    },
+    "DamageResistance": {
+      "Physical": [
+        {
+          "Amount": 0.13,
+          "CalculationType": "Percent"
+        }
+      ],
+      "Projectile": [
+        {
+          "Amount": 0.13,
+          "CalculationType": "Percent"
+        }
+      ]
+    }
+  },
+  "Tags": {
+    "Type": [
+      "Armor"
+    ],
+    "Family": [
+      "Plate_Eldanior"
+    ]
+  },
+  "MaxDurability": 600,
+  "DurabilityLossOnHit": 0.5
+}

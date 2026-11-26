@@ -1,0 +1,26 @@
+{
+  "$Comment": "Balise de route des PNJ (guards/NpcRouteBlocks) : bloc invisible et traversable ; les PNJ de poste qui se deplacent suivent les balises de leur rayon d'action (admins).",
+  "TranslationProperties": {
+    "Name": "Balise de route de PNJ",
+    "Description": "Admins : posez ces blocs invisibles et traversables le long d'un chemin, à 12 blocs au plus l'une de l'autre. Les PNJ qui se déplacent (patrouilleur, villageois, chevalier errant, chasseur de prime, criminel) suivent les balises posées dans leur rayon d'action, font demi-tour au bout de la route et après 20 minutes dans un même sens. Seuls les admins qui tiennent une balise voient leur marque bleue."
+  },
+  "Categories": [
+    "Eldanior_System.Autres"
+  ],
+  "Quality": "Technical",
+  "PlayerAnimationsId": "Block",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Route_PNJ.png",
+  "MaxStack": 64,
+  "BlockType": {
+    "Material": "Empty",
+    "DrawType": "Empty",
+    "Opacity": "Transparent",
+    "Support": {
+      "Down": [
+        {
+          "Support": "Ignored"
+        }
+      ]
+    }
+  }
+}

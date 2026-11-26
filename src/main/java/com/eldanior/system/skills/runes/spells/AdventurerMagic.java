@@ -100,6 +100,56 @@ public class AdventurerMagic extends EntityTickingSystem<EntityStore> {
                 "Cratère sous sa cible : elle est clouée au sol 10 s.", 45, Use.ZONE, 0, 25));
         known(spell("AutoriteGravitationnelle", "Autorité Gravitationnelle", Rarity.LEGENDARY,
                 "Domaine de 30 s : jusqu'à 10 ennemis autour de lui cloués au sol.", 120, Use.DOMAIN, 0, 20));
+        // Runes des classes de mage (scripts/runes/specs). Ecartees : celles qui attendent les clics du joueur (Clonage,
+        // Doppelganger, Telekinesie, Danse des Vents) et les soins d'allies vises (Soin Mineur, Lien d'Ame, Fontaine de Vie).
+        known(spell("Flammeche", "Flammèche", Rarity.COMMON,
+                "Petite boule de feu rapide qui enflamme sa cible.", 6, Use.TARGET, 2, 28));
+        known(spell("EclatDeGivre", "Éclat de Givre", Rarity.COMMON,
+                "Boule de givre rapide qui ralentit sa cible.", 6, Use.TARGET, 2, 28));
+        known(spell("Decharge", "Décharge", Rarity.COMMON,
+                "Éclair instantané qui étourdit sa cible.", 8, Use.TARGET, 2, 18));
+        known(spell("OndeRepulsion", "Onde de Répulsion", Rarity.COMMON,
+                "Onde de gravité qui repousse les ennemis autour de lui.", 10, Use.NEAR_AOE, 0, 4));
+        known(spell("EspritFollet", "Esprit Follet", Rarity.COMMON,
+                "Un esprit de lumière tire des traits sur l'ennemi le plus proche.", 14, Use.TARGET, 0, 15));
+        known(spell("HaloProtecteur", "Halo Protecteur", Rarity.COMMON,
+                "Halo de lumière : -30 % de dégâts subis pendant 8 s.", 18, Use.MELEE_BUFF, 0, 6));
+        known(spell("MurDeFlammes", "Mur de Flammes", Rarity.RARE,
+                "Mur de feu en travers de sa cible : brûle quiconque le franchit.", 16, Use.ZONE, 4, 20));
+        known(spell("ChaineDEclairs", "Chaîne d'Éclairs", Rarity.RARE,
+                "Éclair qui saute de sa cible jusqu'à 4 ennemis proches.", 12, Use.TARGET, 2, 25));
+        known(spell("LanceDeCristal", "Lance de Cristal", Rarity.RARE,
+                "Lance de glace qui transperce les ennemis alignés.", 12, Use.TARGET, 3, 28));
+        known(spell("LanceDeLumiere", "Lance de Lumière", Rarity.RARE,
+                "Rayon sacré qui blesse les ennemis traversés.", 12, Use.TARGET, 3, 28));
+        known(spell("MarqueInfernale", "Marque Infernale", Rarity.RARE,
+                "Marque sa cible : elle explose et enflamme ses voisins.", 15, Use.TARGET, 2, 25));
+        known(spell("PrisonDeGlace", "Prison de Glace", Rarity.RARE,
+                "Enferme sa cible dans une cage de glace.", 18, Use.TARGET, 2, 25));
+        known(spell("OrbeStatique", "Orbe Statique", Rarity.RARE,
+                "Orbe électrique lent qui foudroie les ennemis proches.", 14, Use.TARGET, 3, 15));
+        known(spell("GlyphesFoudroyants", "Glyphes Foudroyants", Rarity.RARE,
+                "Glyphes-pièges : la foudre frappe l'ennemi qui marche dessus.", 18, Use.ZONE, 3, 20));
+        known(spell("AuraDeBraise", "Aura de Braise", Rarity.RARE,
+                "Aura de feu de 12 s qui brûle les ennemis proches.", 25, Use.NEAR_AOE, 0, 5));
+        known(spell("SentierDHiver", "Sentier d'Hiver", Rarity.RARE,
+                "Le sol gèle sous ses pas : ralentit puis gèle les ennemis.", 20, Use.NEAR_AOE, 0, 5));
+        known(spell("EgideRoyale", "Égide Royale", Rarity.RARE,
+                "Dôme de lumière : détruit les projectiles, repousse les ennemis.", 25, Use.NEAR_AOE, 0, 6));
+        known(spell("ArmeBenie", "Arme Bénie", Rarity.RARE,
+                "10 s : chaque coup libère un éclat sacré.", 22, Use.MELEE_BUFF, 0, 5));
+        known(spell("GolemDePierre", "Golem de Pierre", Rarity.RARE,
+                "Invoque un golem de pierre qui provoque les ennemis.", 30, Use.TARGET, 0, 15));
+        known(spell("MeuteSpectrale", "Meute Spectrale", Rarity.RARE,
+                "Invoque trois loups spectraux qui chassent les ennemis.", 30, Use.TARGET, 0, 15));
+        known(spell("SentinelleDeGivre", "Sentinelle de Givre", Rarity.RARE,
+                "Tourelle de glace qui tire des éclats ralentissants.", 25, Use.TARGET, 0, 18));
+        known(spell("Blizzard", "Blizzard", Rarity.EPIC,
+                "Tempête de neige de 10 s sur la zone de sa cible.", 30, Use.ZONE, 5, 25));
+        known(spell("TremblementTectonique", "Tremblement Tectonique", Rarity.UNIQUE,
+                "Quatre séismes en chaîne droit devant : étourdit.", 35, Use.CONE, 2, 20));
+        known(spell("DomaineElementaire", "Domaine Élémentaire", Rarity.UNIQUE,
+                "Domaine de 15 s qui alterne feu, glace et foudre.", 60, Use.DOMAIN, 0, 15));
     }
 
     /** Classe de base de chaque type : ses runes sont celles des aventuriers ordinaires (sans classe). */

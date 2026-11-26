@@ -1,0 +1,12 @@
+{
+  "$Comment": "Suite d'un coup de Solarys : interruption vanilla, puis la cible s'embrase (Arme_Embrasement).",
+  "Type": "Serial",
+  "Interactions": [
+    "DamageEntityParent_Hit_Interrupt_On_Hit",
+    {
+      "Type": "ApplyEffect",
+      "Entity": "Target",
+      "EffectId": "Arme_Embrasement"
+    }
+  ]
+}

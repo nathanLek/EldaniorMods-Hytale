@@ -1,0 +1,19 @@
+{
+  "$Comment": "Rouleau de la Voie Martiale : clic droit = derouler (sort VoieMartialeParchemin -> fenetre de serment).",
+  "Type": "Serial",
+  "Interactions": [
+    {
+      "Type": "Simple",
+      "RunTime": 0.3,
+      "Effects": {
+        "ItemAnimationId": "Interact",
+        "LocalSoundEventId": "SFX_Drag_Items_Paper"
+      }
+    },
+    {
+      "Type": "RuneSpell",
+      "RunTime": 0.05,
+      "Spell": "VoieMartialeParchemin"
+    }
+  ]
+}

@@ -40,6 +40,13 @@ public class NobilityManager {
     public static String getCurrentKingName() { return currentKingName; }
 
     public static void setKing(UUID uuid, String name) {
+        boolean elected = uuid != null && !uuid.equals(currentKingUUID);
+        setKingQuiet(uuid, name);
+        // 2026-11-13 (demande de l'utilisateur) : annonce a tous les joueurs ; la quete principale se ferme pour tout le monde
+        if (elected) com.eldanior.system.titles.nobility.family.RoyalHouse.announce(uuid, name);
+    }
+
+    private static void setKingQuiet(UUID uuid, String name) {
         // Si un ancien roi existe, il devient Marquis
         if (currentKingUUID != null && !currentKingUUID.equals(uuid)) {
             // L'ancien roi sera retrogradé par la commande
@@ -109,6 +116,63 @@ public class NobilityManager {
         return getRemainingSlots(NobilityRank.ROI, rank);
     }
 
+    // ==================== TITRES CONFERES PAR CHAQUE NOBLE (2026-11-18) ====================
+
+    /**
+     * Registre personnel et cumulatif : ce que chaque noble a deja confere, tous rangs confondus et depuis toujours. Restant =
+     * quota de son rang actuel - deja donne (un Comte qui a donne ses 2 Chevaliers et devient Duc n'en a plus qu'1 sur 3).
+     * Persiste dans hierarchies.properties : nobility.grant.<uuid>.<RANG> = nombre ; nobility.grantlog.<uuid>.<n> = instant|rang.
+     */
+    private static final Map<UUID, Map<NobilityRank, Integer>> grants = new java.util.concurrent.ConcurrentHashMap<>();
+    private static final Map<UUID, List<long[]>> grantLog = new java.util.concurrent.ConcurrentHashMap<>();
+
+    public static int given(UUID granter, NobilityRank target) {
+        Map<NobilityRank, Integer> m = granter != null ? grants.get(granter) : null;
+        return m != null ? m.getOrDefault(target, 0) : 0;
+    }
+
+    /**
+     * Titres en plus pour le Marquisat Luo (2026-11-18, demande de l'utilisateur : « ajoute 4 titres de Ducs, 3 Comtes en plus,
+     * 8 Barons et 20 Chevaliers »), ajoutes aux quotas du rang de son Patriarche.
+     */
+    public static final Map<NobilityRank, Integer> LUO_BONUS = Map.of(
+            NobilityRank.DUC, 4, NobilityRank.COMTE, 3, NobilityRank.BARON, 8, NobilityRank.CHEVALIER, 20);
+
+    /** Quota d'un noble : celui de son rang, plus le bonus du Marquisat Luo s'il en est le Patriarche. */
+    public static int quota(NobilityRank granterRank, NobilityRank target, boolean luoMarquis) {
+        int base = granterRank != null ? granterRank.getMaxPromotions(target) : 0;
+        return base + (luoMarquis ? LUO_BONUS.getOrDefault(target, 0) : 0);
+    }
+
+    /** Titres de ce rang que ce noble peut encore conferer avec son rang actuel. */
+    public static int remaining(UUID granter, NobilityRank granterRank, NobilityRank target) {
+        return remaining(granter, granterRank, target, false);
+    }
+
+    public static int remaining(UUID granter, NobilityRank granterRank, NobilityRank target, boolean luoMarquis) {
+        if (granter == null) return 0;
+        return Math.max(0, quota(granterRank, target, luoMarquis) - given(granter, target));
+    }
+
+    public static void recordGrant(UUID granter, NobilityRank target) {
+        if (granter == null || target == null) return;
+        grants.computeIfAbsent(granter, k -> new java.util.concurrent.ConcurrentHashMap<>()).merge(target, 1, Integer::sum);
+        grantLog.computeIfAbsent(granter, k -> new java.util.concurrent.CopyOnWriteArrayList<>())
+                .add(0, new long[]{System.currentTimeMillis(), target.ordinal()});
+        if (target != null && granter.equals(currentKingUUID)) kingdomCounts.merge(target, 1, Integer::sum);
+    }
+
+    /** Decrets delivres par ce noble, du plus recent au plus ancien : {instant, rang (ordinal)}. */
+    public static List<long[]> grantHistory(UUID granter) {
+        List<long[]> l = granter != null ? grantLog.get(granter) : null;
+        return l != null ? List.copyOf(l) : List.of();
+    }
+
+    /** Ce rang peut-il conferer au moins un titre ? */
+    public static boolean grantsTitles(NobilityRank r) {
+        return r != null && r.getPromotionQuotas() != null && !r.getPromotionQuotas().isEmpty();
+    }
+
     // ==================== CHEVALIERS ====================
 
     public static boolean canPromoteKnight(UUID lordUUID, NobilityRank lordRank) {
@@ -162,7 +226,7 @@ public class NobilityManager {
             sb.append("[PK] ");
         }
 
-        // Prefixes : [PK] [Rang Noblesse] [Rang Eglise] Nom Von Famille
+        // Prefixes : [PK] [Rang Noblesse] [Rang Eglise] Nom Famille
         if (hasNobility) {
             sb.append(nobilityRank.getColorCode()).append("[").append(nobilityRank.getDisplayName()).append("] ");
         }
@@ -176,7 +240,7 @@ public class NobilityManager {
         if (familyId != null && !familyId.isEmpty()) {
             NobleFamilyModel family = FamilyManager.get(familyId);
             if (family != null) {
-                sb.append(" Von ").append(family.getDisplayName());
+                sb.append(" ").append(family.getDisplayName());
             }
         }
 
@@ -209,6 +273,17 @@ public class NobilityManager {
             promoIdx++;
         }
         props.setProperty("nobility.promo.count", String.valueOf(promoIdx));
+
+        for (var g : grants.entrySet())
+            for (var e : g.getValue().entrySet())
+                props.setProperty("nobility.grant." + g.getKey() + "." + e.getKey().name(), String.valueOf(e.getValue()));
+        for (var g : grantLog.entrySet()) {
+            int i = 0;
+            for (long[] l : g.getValue()) {
+                if (i >= 40) break;
+                props.setProperty("nobility.grantlog." + g.getKey() + "." + (i++), l[0] + "|" + l[1]);
+            }
+        }
     }
 
     public static void loadFrom(java.util.Properties props) {
@@ -249,6 +324,35 @@ public class NobilityManager {
             if (key != null && val != null) {
                 try { promotionCounts.put(key, Integer.parseInt(val)); } catch (Exception e) { /* skip */ }
             }
+        }
+
+        grants.clear();
+        grantLog.clear();
+        Map<UUID, java.util.TreeMap<Integer, long[]>> logs = new HashMap<>();
+        for (String k : props.stringPropertyNames()) {
+            try {
+                if (k.startsWith("nobility.grant.")) {
+                    String[] p = k.substring("nobility.grant.".length()).split("\\.");
+                    NobilityRank r = NobilityRank.fromString(p[1]);
+                    if (r != null) grants.computeIfAbsent(UUID.fromString(p[0]), x -> new java.util.concurrent.ConcurrentHashMap<>())
+                            .put(r, Integer.parseInt(props.getProperty(k)));
+                } else if (k.startsWith("nobility.grantlog.")) {
+                    String[] p = k.substring("nobility.grantlog.".length()).split("\\.");
+                    String[] v = props.getProperty(k).split("\\|");
+                    logs.computeIfAbsent(UUID.fromString(p[0]), x -> new java.util.TreeMap<>())
+                            .put(Integer.parseInt(p[1]), new long[]{Long.parseLong(v[0]), Long.parseLong(v[1])});
+                }
+            } catch (Exception e) { /* skip */ }
+        }
+        for (var e : logs.entrySet()) grantLog.put(e.getKey(), new java.util.concurrent.CopyOnWriteArrayList<>(e.getValue().values()));
+        // Anciens compteurs partages du Roi ("ROI:MARQUIS") : au Roi actuel, une fois
+        if (currentKingUUID != null && !grants.containsKey(currentKingUUID)) {
+            Map<NobilityRank, Integer> mine = new java.util.concurrent.ConcurrentHashMap<>();
+            for (NobilityRank r : NobilityRank.values()) {
+                int n = promotionCounts.getOrDefault(promoKey(NobilityRank.ROI, r), 0);
+                if (n > 0) mine.put(r, n);
+            }
+            if (!mine.isEmpty()) grants.put(currentKingUUID, mine);
         }
     }
 

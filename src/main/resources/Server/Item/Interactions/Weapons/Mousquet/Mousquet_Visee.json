@@ -1,0 +1,181 @@
+{
+  "$Comment": "Visee a la lunette : grossissement selon l'endurance (paliers [12.0, 9.5, 7.0, 5.0, 3.5, 2.5]), entites lointaines envoyees au tireur (sort MousquetVisee). Relacher le clic droit finit la visee ; on tire sans la perdre.",
+  "Type": "Serial",
+  "Interactions": [
+    {
+      "Type": "RuneSpell",
+      "RunTime": 0.0,
+      "Spell": "MousquetVisee"
+    },
+    {
+      "Type": "Eldanior_SeuilEndurance",
+      "Endurance": 3000,
+      "Next": {
+        "Type": "Charging",
+        "AllowIndefiniteHold": true,
+        "DisplayProgress": false,
+        "CancelOnOtherClick": false,
+        "HorizontalSpeedMultiplier": 0.45,
+        "Effects": {
+          "MovementEffects": {
+            "DisableSprint": true
+          },
+          "HideFirstPersonHeldItem": true,
+          "Zoom": {
+            "MagnificationMultiplier": 12.0,
+            "MouseSensitivityMultiplier": 0.173,
+            "OverlayTexture": "ScreenEffects/Eldanior_Lunette_Mousquet.png",
+            "DepthOfField": false,
+            "ForcePerspective": "FirstPerson",
+            "LodMultiplier": 5.0,
+            "InLerp": 0.1,
+            "OutLerp": 0.15,
+            "OverlayFade": true,
+            "OverlayFadePerSecond": 12
+          }
+        }
+      },
+      "Failed": {
+        "Type": "Eldanior_SeuilEndurance",
+        "Endurance": 2100,
+        "Next": {
+          "Type": "Charging",
+          "AllowIndefiniteHold": true,
+          "DisplayProgress": false,
+          "CancelOnOtherClick": false,
+          "HorizontalSpeedMultiplier": 0.45,
+          "Effects": {
+            "MovementEffects": {
+              "DisableSprint": true
+            },
+            "HideFirstPersonHeldItem": true,
+            "Zoom": {
+              "MagnificationMultiplier": 9.5,
+              "MouseSensitivityMultiplier": 0.195,
+              "OverlayTexture": "ScreenEffects/Eldanior_Lunette_Mousquet.png",
+              "DepthOfField": false,
+              "ForcePerspective": "FirstPerson",
+              "LodMultiplier": 4.166666666666666,
+              "InLerp": 0.1,
+              "OutLerp": 0.15,
+              "OverlayFade": true,
+              "OverlayFadePerSecond": 12
+            }
+          }
+        },
+        "Failed": {
+          "Type": "Eldanior_SeuilEndurance",
+          "Endurance": 1350,
+          "Next": {
+            "Type": "Charging",
+            "AllowIndefiniteHold": true,
+            "DisplayProgress": false,
+            "CancelOnOtherClick": false,
+            "HorizontalSpeedMultiplier": 0.45,
+            "Effects": {
+              "MovementEffects": {
+                "DisableSprint": true
+              },
+              "HideFirstPersonHeldItem": true,
+              "Zoom": {
+                "MagnificationMultiplier": 7.0,
+                "MouseSensitivityMultiplier": 0.227,
+                "OverlayTexture": "ScreenEffects/Eldanior_Lunette_Mousquet.png",
+                "DepthOfField": false,
+                "ForcePerspective": "FirstPerson",
+                "LodMultiplier": 3.3333333333333335,
+                "InLerp": 0.1,
+                "OutLerp": 0.15,
+                "OverlayFade": true,
+                "OverlayFadePerSecond": 12
+              }
+            }
+          },
+          "Failed": {
+            "Type": "Eldanior_SeuilEndurance",
+            "Endurance": 750,
+            "Next": {
+              "Type": "Charging",
+              "AllowIndefiniteHold": true,
+              "DisplayProgress": false,
+              "CancelOnOtherClick": false,
+              "HorizontalSpeedMultiplier": 0.45,
+              "Effects": {
+                "MovementEffects": {
+                  "DisableSprint": true
+                },
+                "HideFirstPersonHeldItem": true,
+                "Zoom": {
+                  "MagnificationMultiplier": 5.0,
+                  "MouseSensitivityMultiplier": 0.268,
+                  "OverlayTexture": "ScreenEffects/Eldanior_Lunette_Mousquet.png",
+                  "DepthOfField": false,
+                  "ForcePerspective": "FirstPerson",
+                  "LodMultiplier": 2.666666666666667,
+                  "InLerp": 0.1,
+                  "OutLerp": 0.15,
+                  "OverlayFade": true,
+                  "OverlayFadePerSecond": 12
+                }
+              }
+            },
+            "Failed": {
+              "Type": "Eldanior_SeuilEndurance",
+              "Endurance": 300,
+              "Next": {
+                "Type": "Charging",
+                "AllowIndefiniteHold": true,
+                "DisplayProgress": false,
+                "CancelOnOtherClick": false,
+                "HorizontalSpeedMultiplier": 0.45,
+                "Effects": {
+                  "MovementEffects": {
+                    "DisableSprint": true
+                  },
+                  "HideFirstPersonHeldItem": true,
+                  "Zoom": {
+                    "MagnificationMultiplier": 3.5,
+                    "MouseSensitivityMultiplier": 0.321,
+                    "OverlayTexture": "ScreenEffects/Eldanior_Lunette_Mousquet.png",
+                    "DepthOfField": false,
+                    "ForcePerspective": "FirstPerson",
+                    "LodMultiplier": 2.166666666666667,
+                    "InLerp": 0.1,
+                    "OutLerp": 0.15,
+                    "OverlayFade": true,
+                    "OverlayFadePerSecond": 12
+                  }
+                }
+              },
+              "Failed": {
+                "Type": "Charging",
+                "AllowIndefiniteHold": true,
+                "DisplayProgress": false,
+                "CancelOnOtherClick": false,
+                "HorizontalSpeedMultiplier": 0.45,
+                "Effects": {
+                  "MovementEffects": {
+                    "DisableSprint": true
+                  },
+                  "HideFirstPersonHeldItem": true,
+                  "Zoom": {
+                    "MagnificationMultiplier": 2.5,
+                    "MouseSensitivityMultiplier": 0.379,
+                    "OverlayTexture": "ScreenEffects/Eldanior_Lunette_Mousquet.png",
+                    "DepthOfField": false,
+                    "ForcePerspective": "FirstPerson",
+                    "LodMultiplier": 1.8333333333333335,
+                    "InLerp": 0.1,
+                    "OutLerp": 0.15,
+                    "OverlayFade": true,
+                    "OverlayFadePerSecond": 12
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

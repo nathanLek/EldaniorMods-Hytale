@@ -1,0 +1,143 @@
+{
+  "$Comment": "Rune du Pas léger : incantation puis sort Java 'PasLeger' (RuneSpell). Genere par rune_tool.py, cout : start. Retour du 2026-11-10 (nuit) : trainees du dash vanilla (Daggers_Dash_Effect, celles du dash de l'arc) au lieu de l'eclat.",
+  "Type": "StatsCondition",
+  "UseAbilityCost": true,
+  "Failed": "Ability_Cast_Fail",
+  "Next": {
+    "Type": "Parallel",
+    "Interactions": [
+      {
+        "Interactions": [
+          {
+            "Type": "Simple",
+            "RunTime": 0.05,
+            "HorizontalSpeedMultiplier": 0.6,
+            "Effects": {
+              "ItemPlayerAnimationsId": "Bow",
+              "ItemAnimationId": "DashForward",
+              "WaitForAnimationToFinish": false
+            }
+          },
+          {
+            "Type": "RuneSpell",
+            "RunTime": 0.05,
+            "Spell": "PasLeger"
+          },
+          {
+            "Type": "Simple",
+            "RunTime": 0.55,
+            "HorizontalSpeedMultiplier": 1.0,
+            "Effects": {
+              "ItemPlayerAnimationsId": "Bow",
+              "ItemAnimationId": "DashForward",
+              "ClearAnimationOnFinish": true,
+              "WorldSoundEventId": "SFX_Light_Melee_T2_Lunge",
+              "CameraEffect": "Daggers_Dash",
+              "Trails": [
+                {
+                  "TargetNodeName": "Head",
+                  "TrailId": "Daggers_Dash_Straight",
+                  "TargetEntityPart": "Entity",
+                  "RotationOffset": {
+                    "Pitch": 180.0
+                  },
+                  "PositionOffset": {
+                    "Y": -0.5
+                  }
+                },
+                {
+                  "TargetNodeName": "Head",
+                  "TrailId": "Daggers_Dash_Straight",
+                  "TargetEntityPart": "Entity",
+                  "RotationOffset": {
+                    "Roll": 90.0
+                  },
+                  "PositionOffset": {
+                    "Y": -0.5
+                  }
+                },
+                {
+                  "TargetNodeName": "Hip",
+                  "TrailId": "Daggers_Dash_Distortion",
+                  "TargetEntityPart": "Entity",
+                  "PositionOffset": {
+                    "Y": 1.0
+                  }
+                },
+                {
+                  "TargetNodeName": "Hip",
+                  "TrailId": "Daggers_Dash_Distortion",
+                  "TargetEntityPart": "Entity",
+                  "PositionOffset": {
+                    "Y": 1.0
+                  },
+                  "RotationOffset": {
+                    "Roll": 90.0
+                  }
+                },
+                {
+                  "TargetNodeName": "Hip",
+                  "TrailId": "Daggers_Dash_Straight",
+                  "TargetEntityPart": "Entity",
+                  "PositionOffset": {
+                    "Y": 0.6
+                  }
+                }
+              ],
+              "FirstPersonParticles": [
+                {
+                  "SystemId": "Dagger_Dash_Forward_FP",
+                  "TargetEntityPart": "Entity",
+                  "TargetNodeName": "Head",
+                  "Color": "#d7e5ec",
+                  "PositionOffset": {
+                    "Z": 1.0,
+                    "Y": 0.0,
+                    "X": -0.5
+                  },
+                  "RotationOffset": {
+                    "Yaw": -90.0,
+                    "Pitch": 0.0,
+                    "Roll": 0.0
+                  }
+                },
+                {
+                  "SystemId": "Dagger_Dash_Forward_FP",
+                  "TargetEntityPart": "Entity",
+                  "TargetNodeName": "Head",
+                  "Color": "#d7e5ec",
+                  "PositionOffset": {
+                    "Z": 1.0,
+                    "Y": 0.0,
+                    "X": 0.5
+                  },
+                  "RotationOffset": {
+                    "Yaw": -90.0,
+                    "Pitch": 0.0,
+                    "Roll": 0.0
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "TriggerCooldown",
+            "UseAbilityCooldown": true
+          }
+        ]
+      },
+      {
+        "Interactions": [
+          {
+            "Type": "ChangeStat",
+            "UseAbilityCost": true
+          }
+        ]
+      }
+    ]
+  }
+}

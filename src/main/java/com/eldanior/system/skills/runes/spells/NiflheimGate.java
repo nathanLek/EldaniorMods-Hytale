@@ -148,8 +148,16 @@ public final class NiflheimGate {
     private static final Map<UUID, List<Wave>> waves = new ConcurrentHashMap<>();
     /** Lance l'onde de givre autour du lanceur. Appele depuis l'interaction (thread du monde). */
     public static void cast(Ref<EntityStore> caster, Store<EntityStore> store) {
+        castAt(caster, SpellFx.position(caster, store), store);
+    }
+
+    /**
+     * Porte ouverte en center au nom de caster (un joueur : ses ennemis, son tick). Le Fenrir au niveau maximal l'ouvre ainsi
+     * sur lui-meme, au nom de son maitre (familiers.FamilierManager).
+     */
+    public static void castAt(Ref<EntityStore> caster, Vector3d center, Store<EntityStore> store) {
         UUID uuid = SpellFx.uuid(caster, store);
-        Vector3d pos = SpellFx.position(caster, store);
+        Vector3d pos = center != null ? new Vector3d(center) : null;
         if (uuid == null || pos == null) return;
         World world = SpellFx.world(store);
         // La porte apparait et s'ouvre (tickZones), puis l'onde de givre part une fois les battants ouverts

@@ -22,9 +22,9 @@ public class KingdomCommand extends AbstractAsyncCommand {
 
     public KingdomCommand() {
         super("kingdom", "Vue d'ensemble du royaume");
+        requireNoPermission();                                   // commande joueur : ouverte a tous
     }
 
-    protected boolean canGeneratePermission() { return false; }
 
     @Nonnull
     @Override

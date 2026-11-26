@@ -1,0 +1,44 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de la Matière Vive",
+    "Description": "Sort épique spatial (Mage, rune de prédilection du Démiurge Suprême). Six blocs du sol du point visé (jusqu'à 20 blocs) s'arrachent et prennent vie pendant 10 s. Ils bondissent d'ennemi en ennemi (jusqu'à 15 blocs) et les percutent : 60 dégâts et recul à chaque impact, trois impacts chacun, puis ils retombent en poussière. Le sol est restauré ensuite (jamais en ville ni sur une parcelle). Épargne votre groupe, votre guilde et votre famille. Coût : 300 mana. Recharge : 120 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_MatiereVive.png",
+  "Quality": "Epic",
+  "ItemLevel": 60,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_Runes.Spatial"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_MatiereVive.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 120,
+    "Cost": 300,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Damage",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_MatiereVive"
+  }
+}

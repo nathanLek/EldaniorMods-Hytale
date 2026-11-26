@@ -1,0 +1,72 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Rune de classe de tous les Mages (Mage.java), creee le 2026-11-24 : le parchemin rune_page_fireball existait sans la rune.",
+  "id": "Rune_Fireball",
+  "spell": "BouleDeFeu",
+  "javaClass": "BouleDeFeu",
+  "page": "rune_page_fireball",
+  "name": "Rune de Boule de Feu",
+  "type": "Feu",
+  "rarity": "Rare",
+  "classes": "mage, dragon",
+  "persistent": true,
+  "summary": "grosse sphere de flammes lente qui explose au premier contact (ennemi, mur, sol ou fin de course) : degats de zone, projection et brulure.",
+  "description": "Sort rare de feu (Mage, toutes les sous-classes ; Dragon). Vous lancez une grosse sphère de flammes qui file droit devant à 20 blocs par seconde (portée 35 blocs). Elle explose au premier contact, ennemi, mur ou sol, ou au bout de sa course : 180 dégâts de feu au cœur de l'explosion (2 blocs), 110 jusqu'à 4 blocs, projection et brûlure (4 dégâts par seconde pendant 5 s). Le terrain n'est pas touché. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin encore tiède, marqué d'un sceau ardent. Enseigne la Boule de Feu : une sphère de flammes qui explose au contact. Classes : tous les Mages, Dragon. Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Projectile",
+    "Area"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "emblem": "BouleFeu",
+  "cast": {
+    "animationSet": "Spellbook",
+    "charging": "CastHurlCharging",
+    "release": "CastHurlCharged",
+    "chargeTime": 0.45,
+    "releaseTime": 0.35,
+    "moveSpeed": 0.6,
+    "cameraEffect": null,
+    "sound": null,
+    "releaseSound": "SFX_Staff_Flame_Fireball_Launch",
+    "handParticles": "Fire_Charge_Soak1",
+    "handParticlesScale": 0.5,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.45,
+    "animationTimeS": 0.8,
+    "range": 35,
+    "radius": "explosion 4 blocs (coeur 2)",
+    "targets": "tous les ennemis dans l'explosion",
+    "triggers": "clic de la rune equipee",
+    "characterAnimation": "Spellbook CastHurlCharging -> CastHurlCharged",
+    "castFx": "Fire_Charge_Soak1 dans la main",
+    "executionFx": "modele Fireball x2,2 porte par Projectile_Config_BouleDeFeu, deplace par le code",
+    "impactFx": "Explosion_Medium + Impact_Fire",
+    "sounds": "SFX_Staff_Flame_Fireball_Launch, SFX_Fireball_Death + SFX_Staff_Flame_Fireball_Impact a l'explosion",
+    "effects": "180 Fire (r 2) / 110 Fire (r 4) + Elda_Brulure, projection vers l'exterieur",
+    "terrain": "aucun",
+    "persistentDurationS": 2,
+    "interruptions": "bloc solide, portee max (explose quand meme), lanceur invalide",
+    "restrictions": "classes mage (toutes) et dragon",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 1,
+      "mobility": 0,
+      "control": 1,
+      "defense": 0,
+      "targets": 2,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    },
+    "edgeCases": "explosion au sol si elle frappe un bloc (centre recule d'un demi-pas), cible morte ignoree, chunk non charge = explosion sur place"
+  }
+}

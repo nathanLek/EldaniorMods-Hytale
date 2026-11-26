@@ -1,0 +1,94 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Les champs du haut sont lus par rune_tool.py ; 'design' documente la competence.",
+  "id": "Rune_PluieDeFleches",
+  "spell": "PluieDeFleches",
+  "javaClass": "PluieDeFleches",
+  "page": "rune_page_pluie_de_fleches",
+  "name": "Rune de Pluie de Flèches",
+  "type": "Combat",
+  "rarity": "Common",
+  "emblem": "PluieFleches",
+  "classes": "archer, dragon",
+  "persistent": true,
+  "summary": "volee de 10 fleches qui retombent sur la zone visee.",
+  "description": "Sort commun de combat (Archer, Dragon). Maintenez la touche pour bander l'arc (0,6 s), relâchez pour tirer une volée vers le ciel : 10 flèches retombent en une seconde sur la zone visée (rayon 4, jusqu'à 20 blocs). Chaque flèche inflige 18 dégâts (3 flèches au plus par ennemi). Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin percé de petits trous. Enseigne la Pluie de Flèches : une volée qui s'abat sur une zone. Classes : Archer, Dragon. Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe",
+    "Projectile"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Shortbow",
+    "charging": "ShootCharging",
+    "release": "ShootCharged",
+    "chargeTime": 0.35,
+    "releaseTime": 0.35,
+    "moveSpeed": 0.6,
+    "cameraEffect": null,
+    "sound": "SFX_Bow_T2_Draw",
+    "releaseSound": "SFX_Bow_T2_Shoot",
+    "handParticles": null,
+    "handParticlesScale": 0.6,
+    "costMoment": "release",
+    "hold": {
+      "minTime": 0.6,
+      "earlyCooldown": 0.5,
+      "localSound": "SFX_Bow_T2_Draw_Local",
+      "particles": [
+        {
+          "SystemId": "Bow_Charging",
+          "TargetNodeName": "Handle",
+          "Scale": 0.5,
+          "PositionOffset": {
+            "X": 0.075,
+            "Y": -0.4,
+            "Z": 0.075
+          },
+          "RotationOffset": {
+            "Pitch": 0,
+            "Roll": 0,
+            "Yaw": 90
+          }
+        }
+      ]
+    }
+  },
+  "design": {
+    "castTimeS": 0.6,
+    "animationTimeS": 0.7,
+    "range": 20,
+    "radius": "4",
+    "targets": "ennemis de la zone",
+    "characterAnimation": "Shortbow / ShootCharging tant que la touche est maintenue (Charging, comme la rune vanilla ChargedShot), ShootCharged au relachement",
+    "castFx": "",
+    "executionFx": "10 fleches (modele Arrow_Iron) qui tombent de 12 blocs a 30 b/s, deplacees par le code",
+    "impactFx": "Block_Hit_Dust a chaque impact",
+    "sounds": "SFX_Bow_T2_Draw pendant la charge, SFX_Bow_T2_Shoot au tir, SFX_Outlander_Hunter_Arrow_Hit aux impacts",
+    "effects": "18 degats Projectile par fleche, rayon 1,3 a l'impact, 3 fleches max par ennemi",
+    "terrain": "aucun",
+    "persistentDurationS": 1.5,
+    "interruptions": "relachee avant 0,6 s : aucun tir, ni mana ni recharge (recharge de 0,5 s)",
+    "restrictions": "archer, dragon",
+    "balance": {
+      "damage": 1,
+      "range": 2,
+      "duration": 1,
+      "mobility": 0,
+      "control": 0,
+      "defense": 0,
+      "targets": 2,
+      "frequency": 2,
+      "terrain": 0,
+      "difficulty": 1
+    },
+    "edgeCases": "point vise dans le vide : 20 blocs devant ; sol non charge : la fleche s'arrete a la hauteur de depart - 12",
+    "limitations": ""
+  }
+}

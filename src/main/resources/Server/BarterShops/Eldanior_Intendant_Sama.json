@@ -1,0 +1,105 @@
+{
+  "DisplayNameKey": "Réserve de la famille Sama",
+  "RefreshInterval": {
+    "Days": 2
+  },
+  "RestockHour": 6,
+  "TradeSlots": [
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Eldanior_Banniere_Famille_Sama",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Gold_Coins",
+            "Quantity": 10
+          }
+        ],
+        "Stock": 4
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Eldanior_Presentoir_Famille_Sama",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Diamond_Coins",
+            "Quantity": 5
+          }
+        ],
+        "Stock": 4
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Armor_Kimono_Sama_Chest",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Zenith_Coins",
+            "Quantity": 8
+          }
+        ],
+        "Stock": 6
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Armor_Kimono_Sama_Hands",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Zenith_Coins",
+            "Quantity": 8
+          }
+        ],
+        "Stock": 6
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Armor_Kimono_Sama_Head",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Zenith_Coins",
+            "Quantity": 8
+          }
+        ],
+        "Stock": 6
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Armor_Kimono_Sama_Legs",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Zenith_Coins",
+            "Quantity": 8
+          }
+        ],
+        "Stock": 6
+      }
+    }
+  ]
+}

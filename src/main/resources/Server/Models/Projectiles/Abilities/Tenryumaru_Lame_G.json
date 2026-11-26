@@ -1,0 +1,41 @@
+{
+  "$Comment": "Lame d'air d'or de Tenryumaru (signature et Premier Serment), deplacee par le code. Genere par scripts/artefacts/gen_tenryumaru.py.",
+  "Model": "Items/Projectiles/Tenryumaru_Lame_G.blockymodel",
+  "Texture": "Items/Projectiles/Tenryumaru_Lame.png",
+  "MinScale": 1.0,
+  "MaxScale": 1.0,
+  "HitBox": {
+    "Max": {
+      "X": 1.2,
+      "Y": 1.2,
+      "Z": 0.6
+    },
+    "Min": {
+      "X": -1.2,
+      "Y": -1.2,
+      "Z": -0.6
+    }
+  },
+  "Trails": [
+    {
+      "TrailId": "Tenryumaru_Lame_Trail",
+      "TargetNodeName": "Lame",
+      "PositionOffset": {
+        "X": 1.0,
+        "Z": 0.5
+      }
+    },
+    {
+      "TrailId": "Tenryumaru_Lame_Trail",
+      "TargetNodeName": "Lame",
+      "PositionOffset": {
+        "X": -1.0,
+        "Z": 0.5
+      }
+    }
+  ],
+  "Light": {
+    "Color": "#ffd27a",
+    "Radius": 6
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "$Comment": "Colosse de Pierre (Rune_ColossePierre) : aspect de pierre, -35 % de degats, vitesse x0,8. Duree reglee par le code ; la taille x2 est appliquee par ColossePierre.java.",
+  "Duration": 20,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#72745e",
+    "EntityTopTint": "#8a8c88",
+    "ModelVFXId": "Stoneskin",
+    "HorizontalSpeedMultiplier": 0.8
+  },
+  "DamageResistance": {
+    "Physical": [{"Amount": 0.35, "CalculationType": "Percent"}],
+    "Projectile": [{"Amount": 0.35, "CalculationType": "Percent"}],
+    "Elemental": [{"Amount": 0.35, "CalculationType": "Percent"}]
+  },
+  "OverlapBehavior": "Overwrite",
+  "Infinite": false,
+  "Debuff": false,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Rune_ColossePierre.png"
+}

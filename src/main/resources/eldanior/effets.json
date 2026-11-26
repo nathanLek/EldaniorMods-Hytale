@@ -1,0 +1,1696 @@
+{
+ "_lisez_moi": "Genere par scripts/passifs/gen_effets_index.py : ne pas modifier.",
+ "dossiers": {
+  "Abilities": [
+   {
+    "id": "Ability_AuraBlade_Buff",
+    "duree": 8.0,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Ability_Aura_Buff",
+    "duree": 8.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Marqueur d'aura ACTIVE (indicateur combat pour CombatStatsSystem + icone HUD). Le visuel colore est porte par les effets Ability_Aura_Visual_* selon le palier ("
+   },
+   {
+    "id": "Ability_Aura_Dragon",
+    "duree": 8.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Visuel supplementaire du palier Dragon de l'Aura de Dignite : aura noire menacante (Void_Dragon) + fumee noire + foudre. Applique en plus de Ability_Aura_Buff q"
+   },
+   {
+    "id": "Ability_Aura_Toggle",
+    "duree": 0.6,
+    "negatif": false,
+    "infini": false,
+    "note": "Signal transitoire d'appui sur la Rune d'Aura. Detecte puis consomme par RuneAuraSystem pour basculer l'aura ON/OFF. Aucun effet de gameplay propre."
+   },
+   {
+    "id": "Ability_Aura_Visual_1",
+    "duree": 8.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Visuel du palier : Aura (Chevalier) - blanc. Memes particules que la rune Enrage (Buff_Enrage) recolorees : Buff_Aura_T1. Applique en infini par RuneAuraSystem "
+   },
+   {
+    "id": "Ability_Aura_Visual_2",
+    "duree": 8.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Visuel du palier : Aura Mineure (Baron) - cyan. Memes particules que la rune Enrage (Buff_Enrage) recolorees : Buff_Aura_T2. Applique en infini par RuneAuraSyst"
+   },
+   {
+    "id": "Ability_Aura_Visual_3",
+    "duree": 8.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Visuel du palier : Aura Noble (Comte) - vert. Memes particules que la rune Enrage (Buff_Enrage) recolorees : Buff_Aura_T3. Applique en infini par RuneAuraSystem"
+   },
+   {
+    "id": "Ability_Aura_Visual_4",
+    "duree": 8.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Visuel du palier : Aura Imposante (Duc) - bleu royal. Memes particules que la rune Enrage (Buff_Enrage) recolorees : Buff_Aura_T4. Applique en infini par RuneAu"
+   },
+   {
+    "id": "Ability_Aura_Visual_5",
+    "duree": 8.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Visuel du palier : Aura Royale (Marquis) - violet. Memes particules que la rune Enrage (Buff_Enrage) recolorees : Buff_Aura_T5. Applique en infini par RuneAuraS"
+   },
+   {
+    "id": "Ability_Aura_Visual_6",
+    "duree": 8.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Visuel du palier : Aura Absolue (Roi) - or. Memes particules que la rune Enrage (Buff_Enrage) recolorees : Buff_Aura_T6. Applique en infini par RuneAuraSystem s"
+   },
+   {
+    "id": "Ability_Aura_Visual_7",
+    "duree": 8.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Visuel du palier : Aura Draconique (Dragon) - rouge et noir. Memes particules que la rune Enrage (Buff_Enrage) recolorees : Buff_Aura_T7. Applique en infini par"
+   },
+   {
+    "id": "Rune_Aura_Dragon_Fear",
+    "duree": 1.5,
+    "negatif": true,
+    "infini": false,
+    "note": "Peur draconique : appliquee aux MONSTRES proches d'un porteur d'aura de palier Dragon (DragonicFearSystem). Fort ralentissement + sprint/saut coupes. Re-appliqu"
+   },
+   {
+    "id": "Rune_Aura_Dragon_Heat_High",
+    "duree": 1.5,
+    "negatif": true,
+    "infini": false,
+    "note": "Zone draconique - chaleur intense (pres de la barriere 7 blocs). Gros degats de feu + teinte ardente + overlay ecran void + VFX de combustion."
+   },
+   {
+    "id": "Rune_Aura_Dragon_Heat_Low",
+    "duree": 1.5,
+    "negatif": true,
+    "infini": false,
+    "note": "Zone draconique - chaleur faible (loin du porteur). Degats de feu legers + teinte rouge sombre. Applique aux mobs ET joueurs par RuneAuraSystem/DragonicFearSyst"
+   },
+   {
+    "id": "Rune_Aura_Dragon_Heat_Mid",
+    "duree": 1.5,
+    "negatif": true,
+    "infini": false,
+    "note": "Zone draconique - chaleur moyenne. Degats de feu + teinte + overlay ecran sombre (void) pour reduire/obscurcir la vision du joueur."
+   },
+   {
+    "id": "Rune_Aura_Slow_Heavy",
+    "duree": 1.5,
+    "negatif": true,
+    "infini": false,
+    "note": "Palier fort de ralentissement de l'aura de dignite (Rune d'Aura)."
+   },
+   {
+    "id": "Rune_Aura_Slow_Light",
+    "duree": 1.5,
+    "negatif": true,
+    "infini": false,
+    "note": "Palier leger de ralentissement de l'aura de dignite (Rune d'Aura). Applique par RuneAuraSystem aux ennemis proches, re-applique chaque tick tant qu'ils sont dan"
+   },
+   {
+    "id": "Rune_Aura_Slow_Medium",
+    "duree": 1.5,
+    "negatif": true,
+    "infini": false,
+    "note": "Palier moyen de ralentissement de l'aura de dignite (Rune d'Aura)."
+   }
+  ],
+  "Armor": [
+   {
+    "id": "Armure_Dieu_Dragon",
+    "duree": 8.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Benediction du Dieu-Dragon d'Or : tenue ancestrale complete portee (4 pieces Armor_Kimono_Divin_*). Pose en infini par ArmorSetBonusSystem, retire des qu'une pi"
+   },
+   {
+    "id": "Armure_Fumee_Ombre",
+    "duree": 8.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Tete de fumee noire de l'armure divine de l'Assassin (Voile d'Ombre de la Lune Noire). Pose en infini par ArmorVisualSystem tant que le casque est porte. Meme r"
+   }
+  ],
+  "Damage": [
+   {
+    "id": "CrowDraconic_Effect",
+    "duree": 5,
+    "negatif": false,
+    "infini": true,
+    "note": ""
+   }
+  ],
+  "Dignity": [
+   {
+    "id": "Dignity_Aura_Heavy",
+    "duree": 3,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Dignity_Aura_Light",
+    "duree": 3,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Dignity_Aura_Medium",
+    "duree": 3,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Dignity_Aura_Root",
+    "duree": 5,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   }
+  ],
+  "Eldanior/Armes": [
+   {
+    "id": "Arme_Choc",
+    "duree": 0.35,
+    "negatif": true,
+    "infini": false,
+    "note": "Armes de foudre (Epee des Tempetes...) : arc electrique, paralysie tres breve (visuels du Hazard_Electric_Stun vanilla)."
+   },
+   {
+    "id": "Arme_Embrasement",
+    "duree": 3,
+    "negatif": true,
+    "infini": false,
+    "note": "Solarys, Epee du Soleil : chaque frappe embrase la cible, 6 degats de feu par seconde pendant 3 s."
+   },
+   {
+    "id": "Arme_Givre",
+    "duree": 2.5,
+    "negatif": true,
+    "infini": false,
+    "note": "Armes de givre (Lame du Givre...) : ralentissement bref a chaque coup."
+   },
+   {
+    "id": "Arme_Venin",
+    "duree": 5,
+    "negatif": true,
+    "infini": false,
+    "note": "Armes empoisonnees (Croc de Wyverne...) : poison leger, 3 degats par seconde pendant 5 s."
+   },
+   {
+    "id": "Arme_Vent",
+    "duree": 3,
+    "negatif": false,
+    "infini": false,
+    "note": "Sabre du Vent : chaque coup porte allege le porteur (+20 % de vitesse pendant 3 s)."
+   },
+   {
+    "id": "Divin_Petrification",
+    "duree": 4.0,
+    "negatif": true,
+    "infini": false,
+    "note": "Petrification (Regard de Meduse, Egide) : la cible est changee en pierre, immobile et sans attaque. Duree donnee par le code."
+   }
+  ],
+  "Eldanior/Contrats": [
+   {
+    "id": "Eldanior_Contrat_Aura",
+    "duree": 8.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Aura des monstres de contrat du jour (boards/MonsterContracts) : Ability_Aura_Visual_7 a demi-echelle (x2 au lieu de x4), le monstre etant lui-meme agrandi x2."
+   }
+  ],
+  "Eldanior/Detection": [
+   {
+    "id": "Elda_Tracking",
+    "duree": 60,
+    "negatif": true,
+    "infini": false,
+    "note": ""
+   }
+  ],
+  "Eldanior/Eau": [
+   {
+    "id": "Elda_Guerison",
+    "duree": 8,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Elda_Noyade",
+    "duree": 6,
+    "negatif": true,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Elda_Trempe",
+    "duree": 5,
+    "negatif": true,
+    "infini": false,
+    "note": ""
+   }
+  ],
+  "Eldanior/Espace": [
+   {
+    "id": "Chaos_Attraction",
+    "duree": 1.0,
+    "negatif": true,
+    "infini": false,
+    "note": "Aspire par la singularite de l'Abime du Chaos."
+   },
+   {
+    "id": "Elda_Banni",
+    "duree": 6,
+    "negatif": true,
+    "infini": false,
+    "note": "Bannissement (Rune_Bannissement) : le banni se dissout (ModelVFX Elda_Disparition), ne bouge plus (joueurs) et n'est pas projete. Duree reglee par le code."
+   }
+  ],
+  "Eldanior/Feu": [
+   {
+    "id": "Bahamut_Terreur",
+    "duree": 3.0,
+    "negatif": true,
+    "infini": false,
+    "note": "Terreur du rugissement de Bahamut : la cible tremble, ralentie et incapable d'attaquer pendant 3 s (les creatures sont aussi figees par le code)."
+   },
+   {
+    "id": "Dragon_Avatar_Forme",
+    "duree": 1.6,
+    "negatif": false,
+    "infini": false,
+    "note": "Forme de l'Avatar du Dragon Divin : +20 % de vitesse, endurance max x1.5, insensible aux projections (degats et aura geres par le code)."
+   },
+   {
+    "id": "Elda_AuraDeBraise",
+    "duree": 6,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Elda_Brulure",
+    "duree": 5,
+    "negatif": true,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Elda_Embrasement",
+    "duree": 4,
+    "negatif": true,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Elda_Ignition",
+    "duree": 0.5,
+    "negatif": true,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Elda_MarqueInfernale",
+    "duree": 6,
+    "negatif": true,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Muspelheim_Brulure",
+    "duree": 6,
+    "negatif": false,
+    "infini": false,
+    "note": "Brulure celeste infligee par la vague de flammes du Courroux de Muspelheim : version renforcee d'Elda_Brulure (memes visuels, ecran de feu, sons), 25 degats de "
+   },
+   {
+    "id": "Muspelheim_Embrasement",
+    "duree": 1.6,
+    "negatif": true,
+    "infini": false,
+    "note": "Embrasement du sol ardent du Courroux de Muspelheim : reapplique chaque seconde par le code (qui inflige 3 degats de feu/s) tant que l'ennemi reste sur une zone"
+   }
+  ],
+  "Eldanior/Foudre": [
+   {
+    "id": "Elda_AvatarOrage",
+    "duree": 15.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Avatar de l'orage : le lanceur charge d'electricite (teinte orage, x1,15). Pose une fois 15 s, retire par le code."
+   },
+   {
+    "id": "Taranis_Benediction",
+    "duree": 1.6,
+    "negatif": false,
+    "infini": false,
+    "note": "Benediction du Sanctuaire de Taranis : le lanceur et ses allies dans la zone se deplacent plus vite (reappliquee chaque seconde par le code)."
+   },
+   {
+    "id": "Taranis_Foudroye",
+    "duree": 0.8,
+    "negatif": true,
+    "infini": false,
+    "note": "Foudroiement du Sanctuaire de Taranis : paralysie electrique breve (visuels du Hazard_Electric_Stun vanilla)."
+   },
+   {
+    "id": "Taranis_Surcharge",
+    "duree": 2.0,
+    "negatif": true,
+    "infini": false,
+    "note": "Surcharge du Sanctuaire de Taranis (5 charges) : paralysie electrique longue."
+   }
+  ],
+  "Eldanior/Glace": [
+   {
+    "id": "Elda_Gel",
+    "duree": 3,
+    "negatif": true,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Elda_Givre",
+    "duree": 6,
+    "negatif": true,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Elda_Hypothermie",
+    "duree": 8,
+    "negatif": true,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Niflheim_Engelure",
+    "duree": 1.6,
+    "negatif": true,
+    "infini": false,
+    "note": "Engelure de la Porte de Niflheim : tant qu'un ennemi reste dans la zone gelee, le code reapplique cet effet chaque seconde (et inflige 5 degats de glace/s). Vit"
+   },
+   {
+    "id": "Niflheim_Gel",
+    "duree": 20,
+    "negatif": true,
+    "infini": false,
+    "note": "Gel du Porte de Niflheim : entite figee dans la glace 20 s (visuels du Freeze vanilla), ni deplacement ni attaque."
+   }
+  ],
+  "Eldanior/Ki": [
+   {
+    "id": "Execution_Ame",
+    "duree": 4.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Execution Celeste, Dieu Martial : ame de Ki blanc nacre (gen_execution_celeste.py)."
+   },
+   {
+    "id": "Execution_Remanence",
+    "duree": 3.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Execution Celeste : image remanente doree du lanceur (gen_execution_celeste.py)."
+   },
+   {
+    "id": "Hwakyung_Corps",
+    "duree": 2.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Transformation Hwakyung : corps de Ki. Rafraichi par TransformationHwakyung (gen_voie_martiale.py). Nom : Corps Hwakyung."
+   },
+   {
+    "id": "Incarnation_Ame",
+    "duree": 2.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Incarnation de l'Ame : double spirituel translucide (ModelVFX Ame_Spectrale), rafraichi par IncarnationAme (gen_voie_martiale.py). Nom : Âme."
+   },
+   {
+    "id": "Ki_Epee_Corps_T1",
+    "duree": 60.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Epee 3D de Ki translucide, palier 1 (ModelVFX Ki_Epee_Spectrale_T1), posee par ProjectionEpeeAura (gen_voie_martiale.py). Nom : Épée de Ki."
+   },
+   {
+    "id": "Ki_Epee_Corps_T2",
+    "duree": 60.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Epee 3D de Ki translucide, palier 2 (ModelVFX Ki_Epee_Spectrale_T2), posee par ProjectionEpeeAura (gen_voie_martiale.py). Nom : Épée de Ki."
+   },
+   {
+    "id": "Ki_Epee_Corps_T3",
+    "duree": 60.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Epee 3D de Ki translucide, palier 3 (ModelVFX Ki_Epee_Spectrale_T3), posee par ProjectionEpeeAura (gen_voie_martiale.py). Nom : Épée de Ki."
+   },
+   {
+    "id": "Ki_Epee_Corps_T4",
+    "duree": 60.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Epee 3D de Ki translucide, palier 4 (ModelVFX Ki_Epee_Spectrale_T4), posee par ProjectionEpeeAura (gen_voie_martiale.py). Nom : Épée de Ki."
+   },
+   {
+    "id": "Ki_Epee_Corps_T5",
+    "duree": 60.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Epee 3D de Ki translucide, palier 5 (ModelVFX Ki_Epee_Spectrale_T5), posee par ProjectionEpeeAura (gen_voie_martiale.py). Nom : Épée de Ki."
+   },
+   {
+    "id": "Ki_Epee_Corps_T6",
+    "duree": 60.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Epee 3D de Ki translucide, palier 6 (ModelVFX Ki_Epee_Spectrale_T6), posee par ProjectionEpeeAura (gen_voie_martiale.py). Nom : Épée de Ki."
+   },
+   {
+    "id": "Ki_Epee_Corps_T7",
+    "duree": 60.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Epee 3D de Ki translucide, palier 7 (ModelVFX Ki_Epee_Spectrale_T7), posee par ProjectionEpeeAura (gen_voie_martiale.py). Nom : Épée de Ki."
+   },
+   {
+    "id": "Ki_Epee_Corps_T8",
+    "duree": 60.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Epee 3D de Ki translucide, palier 8 (ModelVFX Ki_Epee_Spectrale_T8), posee par ProjectionEpeeAura (gen_voie_martiale.py). Nom : Épée de Ki."
+   },
+   {
+    "id": "Ki_Visual_1",
+    "duree": 2.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Ki de l'Epee, palier 1 (couleur #e8eef5) : rien de visible. Pose et rafraichi chaque seconde par KiEpee (gen_voie_martiale.py). Nom : Ki de l'Épée."
+   },
+   {
+    "id": "Ki_Visual_2",
+    "duree": 2.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Ki de l'Epee, palier 2 (couleur #a8d0ff) : rien de visible. Pose et rafraichi chaque seconde par KiEpee (gen_voie_martiale.py). Nom : Ki de l'Épée."
+   },
+   {
+    "id": "Ki_Visual_3",
+    "duree": 2.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Ki de l'Epee, palier 3 (couleur #3d7dff) : lueur de Ki sur la lame. Pose et rafraichi chaque seconde par KiEpee (gen_voie_martiale.py). Nom : Ki de l'Épée."
+   },
+   {
+    "id": "Ki_Visual_4",
+    "duree": 2.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Ki de l'Epee, palier 4 (couleur #3fe6ff) : lueur de Ki sur la lame. Pose et rafraichi chaque seconde par KiEpee (gen_voie_martiale.py). Nom : Ki de l'Épée."
+   },
+   {
+    "id": "Ki_Visual_5",
+    "duree": 2.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Ki de l'Epee, palier 5 (couleur #a050ff) : lueur de Ki sur la lame. Pose et rafraichi chaque seconde par KiEpee (gen_voie_martiale.py). Nom : Ki de l'Épée."
+   },
+   {
+    "id": "Ki_Visual_6",
+    "duree": 2.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Ki de l'Epee, palier 6 (couleur #ffc83a) : lueur de Ki sur la lame. Pose et rafraichi chaque seconde par KiEpee (gen_voie_martiale.py). Nom : Ki de l'Épée."
+   },
+   {
+    "id": "Ki_Visual_7",
+    "duree": 2.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Ki de l'Epee, palier 7 (couleur #fff3e6) : lueur de Ki sur la lame. Pose et rafraichi chaque seconde par KiEpee (gen_voie_martiale.py). Nom : Ki de l'Épée."
+   },
+   {
+    "id": "Ki_Visual_8",
+    "duree": 2.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Ki de l'Epee, palier 8 (couleur #d8ffe0) : lueur de Ki sur la lame. Pose et rafraichi chaque seconde par KiEpee (gen_voie_martiale.py). Nom : Ki de l'Épée."
+   },
+   {
+    "id": "Meditation_Martiale",
+    "duree": 2.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Meditation martiale : posture assise, deplacements, attaque et garde bloques (les runes restent utilisables pour se relever). Rafraichi par MeditationMartiale ("
+   },
+   {
+    "id": "Meditation_Martiale_T1",
+    "duree": 2.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Meditation martiale, palier 1 : posture assise, deplacements, attaque et garde bloques ; aura aucune. Rafraichi par MeditationMartiale (gen_voie_martiale.py). N"
+   },
+   {
+    "id": "Meditation_Martiale_T2",
+    "duree": 2.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Meditation martiale, palier 2 : posture assise, deplacements, attaque et garde bloques ; aura #a8d0ff. Rafraichi par MeditationMartiale (gen_voie_martiale.py). "
+   },
+   {
+    "id": "Meditation_Martiale_T3",
+    "duree": 2.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Meditation martiale, palier 3 : posture assise, deplacements, attaque et garde bloques ; aura #3d7dff. Rafraichi par MeditationMartiale (gen_voie_martiale.py). "
+   },
+   {
+    "id": "Meditation_Martiale_T4",
+    "duree": 2.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Meditation martiale, palier 4 : posture assise, deplacements, attaque et garde bloques ; aura #3fe6ff. Rafraichi par MeditationMartiale (gen_voie_martiale.py). "
+   },
+   {
+    "id": "Meditation_Martiale_T5",
+    "duree": 2.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Meditation martiale, palier 5 : posture assise, deplacements, attaque et garde bloques ; aura #a050ff. Rafraichi par MeditationMartiale (gen_voie_martiale.py). "
+   },
+   {
+    "id": "Meditation_Martiale_T6",
+    "duree": 2.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Meditation martiale, palier 6 : posture assise, deplacements, attaque et garde bloques ; aura #ffc83a. Rafraichi par MeditationMartiale (gen_voie_martiale.py). "
+   },
+   {
+    "id": "Meditation_Martiale_T7",
+    "duree": 2.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Meditation martiale, palier 7 : posture assise, deplacements, attaque et garde bloques ; aura #fff3e6. Rafraichi par MeditationMartiale (gen_voie_martiale.py). "
+   },
+   {
+    "id": "Meditation_Martiale_T8",
+    "duree": 2.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Meditation martiale, palier 8 : posture assise, deplacements, attaque et garde bloques ; aura #fff3c8. Rafraichi par MeditationMartiale (gen_voie_martiale.py). "
+   },
+   {
+    "id": "Meridiens_Scelles",
+    "duree": 4.0,
+    "negatif": true,
+    "infini": false,
+    "note": "Frappe des Meridiens : meridiens scelles 4 s, ralenti (gen_voie_martiale.py). Nom : Méridiens scellés."
+   },
+   {
+    "id": "Pas_Leger_3",
+    "duree": 4.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Pas leger, palier 3 : vitesse x1.15 pendant 4 s apres le pas (PasLeger, gen_voie_martiale.py). Nom : Pas léger."
+   },
+   {
+    "id": "Pas_Leger_4",
+    "duree": 4.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Pas leger, palier 4 : vitesse x1.18 pendant 4 s apres le pas (PasLeger, gen_voie_martiale.py). Nom : Pas léger."
+   },
+   {
+    "id": "Pas_Leger_5",
+    "duree": 4.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Pas leger, palier 5 : vitesse x1.22 pendant 4 s apres le pas (PasLeger, gen_voie_martiale.py). Nom : Pas léger."
+   },
+   {
+    "id": "Pas_Leger_6",
+    "duree": 4.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Pas leger, palier 6 : vitesse x1.26 pendant 4 s apres le pas (PasLeger, gen_voie_martiale.py). Nom : Pas léger."
+   },
+   {
+    "id": "Pas_Leger_7",
+    "duree": 4.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Pas leger, palier 7 : vitesse x1.3 pendant 4 s apres le pas (PasLeger, gen_voie_martiale.py). Nom : Pas léger."
+   },
+   {
+    "id": "Pas_Leger_8",
+    "duree": 4.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Pas leger, palier 8 : vitesse x1.35 pendant 4 s apres le pas (PasLeger, gen_voie_martiale.py). Nom : Pas léger."
+   },
+   {
+    "id": "Pas_Leger_Sillage_3",
+    "duree": 0.9,
+    "negatif": false,
+    "infini": false,
+    "note": "Pas leger, palier 3 : sillage de Ki et corps lumineux pendant la ruee (PasLeger, gen_voie_martiale.py). Nom : Pas léger."
+   },
+   {
+    "id": "Pas_Leger_Sillage_4",
+    "duree": 0.9,
+    "negatif": false,
+    "infini": false,
+    "note": "Pas leger, palier 4 : sillage de Ki et corps lumineux pendant la ruee (PasLeger, gen_voie_martiale.py). Nom : Pas léger."
+   },
+   {
+    "id": "Pas_Leger_Sillage_5",
+    "duree": 0.9,
+    "negatif": false,
+    "infini": false,
+    "note": "Pas leger, palier 5 : sillage de Ki et corps lumineux pendant la ruee (PasLeger, gen_voie_martiale.py). Nom : Pas léger."
+   },
+   {
+    "id": "Pas_Leger_Sillage_6",
+    "duree": 0.9,
+    "negatif": false,
+    "infini": false,
+    "note": "Pas leger, palier 6 : sillage de Ki et corps lumineux pendant la ruee (PasLeger, gen_voie_martiale.py). Nom : Pas léger."
+   },
+   {
+    "id": "Pas_Leger_Sillage_7",
+    "duree": 0.9,
+    "negatif": false,
+    "infini": false,
+    "note": "Pas leger, palier 7 : sillage de Ki et corps lumineux pendant la ruee (PasLeger, gen_voie_martiale.py). Nom : Pas léger."
+   },
+   {
+    "id": "Pas_Leger_Sillage_8",
+    "duree": 0.9,
+    "negatif": false,
+    "infini": false,
+    "note": "Pas leger, palier 8 : sillage de Ki et corps lumineux pendant la ruee (PasLeger, gen_voie_martiale.py). Nom : Pas léger."
+   },
+   {
+    "id": "Renforcement_Corps",
+    "duree": 2.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Renforcement corporel : corps durci par le Ki. Rafraichi par RenforcementCorps (gen_voie_martiale.py). Nom : Renforcement corporel."
+   },
+   {
+    "id": "Renforcement_Corps_T1",
+    "duree": 2.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Renforcement corporel, palier 1 : aura #e8eef5. Rafraichi par RenforcementCorps (gen_voie_martiale.py). Nom : Renforcement corporel."
+   },
+   {
+    "id": "Renforcement_Corps_T2",
+    "duree": 2.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Renforcement corporel, palier 2 : aura #a8d0ff. Rafraichi par RenforcementCorps (gen_voie_martiale.py). Nom : Renforcement corporel."
+   },
+   {
+    "id": "Renforcement_Corps_T3",
+    "duree": 2.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Renforcement corporel, palier 3 : aura #3d7dff. Rafraichi par RenforcementCorps (gen_voie_martiale.py). Nom : Renforcement corporel."
+   },
+   {
+    "id": "Renforcement_Corps_T4",
+    "duree": 2.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Renforcement corporel, palier 4 : aura #3fe6ff. Rafraichi par RenforcementCorps (gen_voie_martiale.py). Nom : Renforcement corporel."
+   },
+   {
+    "id": "Renforcement_Corps_T5",
+    "duree": 2.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Renforcement corporel, palier 5 : aura #a050ff. Rafraichi par RenforcementCorps (gen_voie_martiale.py). Nom : Renforcement corporel."
+   },
+   {
+    "id": "Renforcement_Corps_T6",
+    "duree": 2.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Renforcement corporel, palier 6 : aura #ffc83a. Rafraichi par RenforcementCorps (gen_voie_martiale.py). Nom : Renforcement corporel."
+   },
+   {
+    "id": "Renforcement_Corps_T7",
+    "duree": 2.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Renforcement corporel, palier 7 : aura #fff3e6. Rafraichi par RenforcementCorps (gen_voie_martiale.py). Nom : Renforcement corporel."
+   },
+   {
+    "id": "Renforcement_Corps_T8",
+    "duree": 2.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Renforcement corporel, palier 8 : aura #fff3c8. Rafraichi par RenforcementCorps (gen_voie_martiale.py). Nom : Renforcement corporel."
+   },
+   {
+    "id": "Sens_Fantome",
+    "duree": 120.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Sens martial : double rouge d'un ennemi vu a travers les murs (ModelVFX Sens_Fantome_Rouge), pose par SensMartial (gen_voie_martiale.py). Nom : Sens martial."
+   },
+   {
+    "id": "Sens_Fantome_Loin",
+    "duree": 120.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Sens martial : double d'un ennemi lointain (rouge sombre), pose par SensMartial (gen_voie_martiale.py). Nom : Sens martial."
+   },
+   {
+    "id": "Unite_Vent",
+    "duree": 1.0,
+    "negatif": true,
+    "infini": false,
+    "note": "Unite du Ciel et de la Terre : ennemis ralentis par le vent, rafraichi par le sort (gen_voie_martiale.py). Nom : Vent du Ciel et de la Terre."
+   }
+  ],
+  "Eldanior/Lumiere": [
+   {
+    "id": "Apollo_Aveugle",
+    "duree": 2.0,
+    "negatif": true,
+    "infini": false,
+    "note": "Aveuglement des fleches solaires d'Apollon : ralenti, eblouissement."
+   },
+   {
+    "id": "Apollo_Benediction",
+    "duree": 1.6,
+    "negatif": false,
+    "infini": false,
+    "note": "Benediction du Sanctuaire d'Apollon (allies a l'interieur : soin, mana, endurance et protection geres par le code)."
+   },
+   {
+    "id": "Apollo_Feu_Sacre",
+    "duree": 1.6,
+    "negatif": true,
+    "infini": false,
+    "note": "Feu sacre du Sanctuaire d'Apollon : les ennemis qui y entrent brulent (degats geres par le code)."
+   },
+   {
+    "id": "Apollo_Grace",
+    "duree": 2.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Grace d'Apollon : un allie sauve de la mort par le sanctuaire est invulnerable 2 s (gere par le code)."
+   },
+   {
+    "id": "Clonage_Reflet",
+    "duree": 60.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Clone de lumiere (sort Clonage) : voile dore lumineux, etincelles. Pose une seule fois (pas de clignotement), retire a la fin du sort."
+   },
+   {
+    "id": "Elda_ArmeBenie",
+    "duree": 10,
+    "negatif": false,
+    "infini": false,
+    "note": "Arme Benie : visuel seul (les eclats sacres sont geres par le code)."
+   },
+   {
+    "id": "Elda_Aveuglement",
+    "duree": 4,
+    "negatif": true,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Elda_Benediction",
+    "duree": 10,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Elda_BouclierSacre",
+    "duree": 8,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Elda_Canalisation",
+    "duree": 5.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Rayon arcanique : le lanceur canalise (vitesse x0,5). Pose une fois pour la duree du rayon, retire par le code."
+   },
+   {
+    "id": "Elda_Eblouissement",
+    "duree": 1.5,
+    "negatif": true,
+    "infini": false,
+    "note": "Galerie des Glaces : eblouissement final (paralysie breve)."
+   },
+   {
+    "id": "Elda_Egide",
+    "duree": 6,
+    "negatif": false,
+    "infini": false,
+    "note": "Egide Royale : -40 % de degats subis tant que l'allie est dans le dome."
+   },
+   {
+    "id": "Elda_Enseignement",
+    "duree": 10.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Enseignement : +30 % de degats infliges (OutgoingDamage, comme Ability_Enrage_Buff vanilla). Pose une fois 10 s."
+   },
+   {
+    "id": "Elda_HaloProtecteur",
+    "duree": 8,
+    "negatif": false,
+    "infini": false,
+    "note": "Halo Protecteur : -30 % de degats subis (types parents Physical, Elemental, Projectile)."
+   },
+   {
+    "id": "Elda_LienDAme",
+    "duree": 8,
+    "negatif": false,
+    "infini": false,
+    "note": "Lien d'Ame : l'allie lie subit 20 % de degats en moins (le transfert de vie est gere par le code)."
+   },
+   {
+    "id": "Elda_PierrePhilosophale",
+    "duree": 10.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Pierre philosophale : immunite au poison (comme Immunity_Poison vanilla), teinte or-rouge. Pose une fois 10 s."
+   },
+   {
+    "id": "Elda_Revele",
+    "duree": 12.0,
+    "negatif": true,
+    "infini": false,
+    "note": "Revelation (Rune_Revelation) : l'ennemi revele brille d'une lueur doree ; la vulnerabilite (+30 % de degats subis) est geree par RuneSpellRuntime.expose. Pose u"
+   },
+   {
+    "id": "Elda_Sanctuaire",
+    "duree": 8.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Sanctuaire mineur : -40 % de degats subis tant que l'allie est dans le dome (pose a l'entree, retire a la sortie)."
+   },
+   {
+    "id": "Gilgamesh_Roi_Dore",
+    "duree": 1.6,
+    "negatif": false,
+    "infini": false,
+    "note": "Descente de Gilgamesh : le lanceur de Gilgamesh Babylon devient entierement dore et rayonne de poussiere d'or tant que le sort est actif (reapplique chaque seco"
+   }
+  ],
+  "Eldanior/Luo": [
+   {
+    "id": "Kinryu_Eclipse_Ciel",
+    "duree": 2.4,
+    "negatif": false,
+    "infini": false,
+    "note": "Eclipse du Dieu-Dragon (Kinryu-O, signature) : le ciel s'assombrit pour les joueurs proches de la zone. Pose par le code (Kinryu.Eclipse)."
+   },
+   {
+    "id": "Kinryu_Eclipse_Effroi",
+    "duree": 2.4,
+    "negatif": true,
+    "infini": false,
+    "note": "Eclipse du Dieu-Dragon : ennemi pris dans l'ombre du soleil avale, silhouette noire et or, ralenti. Pose par le code (Kinryu.Eclipse)."
+   },
+   {
+    "id": "Luo_Elan_Hirondelle",
+    "duree": 2.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Hien : Elan de l'hirondelle (3 coups enchaines) : deplacement plus rapide. Genere par gen_luo_katanas.py."
+   },
+   {
+    "id": "Luo_Ombre_Lune",
+    "duree": 0.8,
+    "negatif": false,
+    "infini": false,
+    "note": "Tsukikage : fondu d'ombre au degaine et a l'Eclipse (invisible 0,8 s). Genere par gen_luo_katanas.py."
+   },
+   {
+    "id": "Percee_Posture_T1",
+    "duree": 4.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Posture de la Percee, palier 1 (Ki #e8eef5) : le Ki est aspire vers la lame pendant la charge. Pose et retire par PerceePosture.java (gen_percee.py)."
+   },
+   {
+    "id": "Percee_Posture_T2",
+    "duree": 4.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Posture de la Percee, palier 2 (Ki #a8d0ff) : le Ki est aspire vers la lame pendant la charge. Pose et retire par PerceePosture.java (gen_percee.py)."
+   },
+   {
+    "id": "Percee_Posture_T3",
+    "duree": 4.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Posture de la Percee, palier 3 (Ki #3d7dff) : le Ki est aspire vers la lame pendant la charge. Pose et retire par PerceePosture.java (gen_percee.py)."
+   },
+   {
+    "id": "Percee_Posture_T4",
+    "duree": 4.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Posture de la Percee, palier 4 (Ki #3fe6ff) : le Ki est aspire vers la lame pendant la charge. Pose et retire par PerceePosture.java (gen_percee.py)."
+   },
+   {
+    "id": "Percee_Posture_T5",
+    "duree": 4.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Posture de la Percee, palier 5 (Ki #a050ff) : le Ki est aspire vers la lame pendant la charge. Pose et retire par PerceePosture.java (gen_percee.py)."
+   },
+   {
+    "id": "Percee_Posture_T6",
+    "duree": 4.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Posture de la Percee, palier 6 (Ki #ffc83a) : le Ki est aspire vers la lame pendant la charge. Pose et retire par PerceePosture.java (gen_percee.py)."
+   },
+   {
+    "id": "Percee_Posture_T7",
+    "duree": 4.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Posture de la Percee, palier 7 (Ki #fff3e6) : le Ki est aspire vers la lame pendant la charge. Pose et retire par PerceePosture.java (gen_percee.py)."
+   },
+   {
+    "id": "Percee_Posture_T8",
+    "duree": 4.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Posture de la Percee, palier 8 (Ki #fff3c8) : le Ki est aspire vers la lame pendant la charge. Pose et retire par PerceePosture.java (gen_percee.py)."
+   },
+   {
+    "id": "Voie_Combo_10",
+    "duree": 1.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Marqueur invisible : combo du Bokken en 10 coups (palier de la voie martiale). Pose et rafraichi par LuoPassives.trackTier, lu par Luo_Combo_Bokken. Genere par "
+   },
+   {
+    "id": "Voie_Combo_12",
+    "duree": 1.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Marqueur invisible : combo du Bokken en 12 coups (palier de la voie martiale). Pose et rafraichi par LuoPassives.trackTier, lu par Luo_Combo_Bokken. Genere par "
+   },
+   {
+    "id": "Voie_Combo_3",
+    "duree": 1.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Marqueur invisible : combo du Bokken en 3 coups (palier de la voie martiale). Pose et rafraichi par LuoPassives.trackTier, lu par Luo_Combo_Bokken. Genere par g"
+   },
+   {
+    "id": "Voie_Combo_4",
+    "duree": 1.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Marqueur invisible : combo du Bokken en 4 coups (palier de la voie martiale). Pose et rafraichi par LuoPassives.trackTier, lu par Luo_Combo_Bokken. Genere par g"
+   },
+   {
+    "id": "Voie_Combo_5",
+    "duree": 1.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Marqueur invisible : combo du Bokken en 5 coups (palier de la voie martiale). Pose et rafraichi par LuoPassives.trackTier, lu par Luo_Combo_Bokken. Genere par g"
+   },
+   {
+    "id": "Voie_Combo_6",
+    "duree": 1.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Marqueur invisible : combo du Bokken en 6 coups (palier de la voie martiale). Pose et rafraichi par LuoPassives.trackTier, lu par Luo_Combo_Bokken. Genere par g"
+   },
+   {
+    "id": "Voie_Combo_7",
+    "duree": 1.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Marqueur invisible : combo du Bokken en 7 coups (palier de la voie martiale). Pose et rafraichi par LuoPassives.trackTier, lu par Luo_Combo_Bokken. Genere par g"
+   },
+   {
+    "id": "Voie_Combo_8",
+    "duree": 1.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Marqueur invisible : combo du Bokken en 8 coups (palier de la voie martiale). Pose et rafraichi par LuoPassives.trackTier, lu par Luo_Combo_Bokken. Genere par g"
+   },
+   {
+    "id": "Voie_Combo_9",
+    "duree": 1.5,
+    "negatif": false,
+    "infini": false,
+    "note": "Marqueur invisible : combo du Bokken en 9 coups (palier de la voie martiale). Pose et rafraichi par LuoPassives.trackTier, lu par Luo_Combo_Bokken. Genere par g"
+   }
+  ],
+  "Eldanior/Maledictions": [
+   {
+    "id": "Eld_Paresse_Lenteur",
+    "duree": 3,
+    "negatif": true,
+    "infini": false,
+    "note": "Peche de Paresse (passif divin, 2026-11-24) : un joueur qui frappe le porteur est ralenti 3 s. Aucun visuel (les passifs n'en jouent plus)."
+   },
+   {
+    "id": "Elda_Faiblesse",
+    "duree": 10,
+    "negatif": true,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Elda_Malediction",
+    "duree": 8,
+    "negatif": true,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Elda_Putrefaction",
+    "duree": 12,
+    "negatif": true,
+    "infini": false,
+    "note": ""
+   }
+  ],
+  "Eldanior/Spatial": [
+   {
+    "id": "Elda_Decret",
+    "duree": 2.5,
+    "negatif": true,
+    "infini": false,
+    "note": "Decret : plaque au sol (mouvement desactive pour les joueurs ; les monstres sont figes par le code). Sans KnockbackMultiplier : le plaquage et l'ejection doiven"
+   },
+   {
+    "id": "Gravite_Ecrasement",
+    "duree": 10.0,
+    "negatif": true,
+    "infini": false,
+    "note": "Ecrase par le Puits Gravitationnel : cloue au sol (mouvement desactive). Applique sans fin par le code et retire a la fin de la zone (pas de clignotement)."
+   },
+   {
+    "id": "Telekinesie_Saisi",
+    "duree": 20.0,
+    "negatif": true,
+    "infini": false,
+    "note": "Saisi par telekinesie : ne peut plus se deplacer seul (porte par le lanceur). Applique pour la duree restante du sort, retire au lacher."
+   }
+  ],
+  "Eldanior/Temps": [
+   {
+    "id": "Chronos_Fige",
+    "duree": 40.0,
+    "negatif": true,
+    "infini": false,
+    "note": "Arret du temps (Sablier de Chronos) : la cible est figee dans une stase verte (glyphe d'horloge, sable du temps) ; ses degats sont mis en reserve. Retire par le"
+   },
+   {
+    "id": "Chronos_Hate",
+    "duree": 1.6,
+    "negatif": false,
+    "infini": false,
+    "note": "Acceleration du temps (Sablier de Chronos) : +30 % de vitesse pour les allies."
+   },
+   {
+    "id": "Chronos_Remanence",
+    "duree": 2.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Image remanente de Chronos (echo du lanceur, avec son skin et ses mouvements) : voile vert lumineux. Reappliquee par le code."
+   },
+   {
+    "id": "Elda_BulleHate",
+    "duree": 1.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Bulle temporelle : allie accelere (x1,4). Sans teinte : reapplique toutes les 0,5 s."
+   },
+   {
+    "id": "Elda_BulleLenteur",
+    "duree": 1.0,
+    "negatif": true,
+    "infini": false,
+    "note": "Bulle temporelle : ennemi ralenti (x0,5). Sans teinte : reapplique toutes les 0,5 s."
+   },
+   {
+    "id": "Elda_Distorsion",
+    "duree": 1.0,
+    "negatif": true,
+    "infini": false,
+    "note": "Distorsion : temps ralenti dans la zone (vitesse x0,4). Sans teinte ni ModelVFX : reapplique toutes les 0,5 s par le code, une teinte clignoterait."
+   },
+   {
+    "id": "Elda_Echo",
+    "duree": 15.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Echos du passe : remanence du lanceur (voile vert lumineux). Pose une fois a la creation de l'echo (15 s)."
+   },
+   {
+    "id": "Elda_Eternite",
+    "duree": 10.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Eternite : voile blanc-or du lanceur que rien ne peut tuer. Pose une fois 10 s, retire par le code."
+   },
+   {
+    "id": "Elda_Prescience",
+    "duree": 10.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Prescience : voile dore du lanceur qui voit les coups venir. Pose une fois pour la duree du sort, retire par le code."
+   },
+   {
+    "id": "Elda_Prophetie",
+    "duree": 15.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Prophetie (Rune_Prophetie) : voile dore de ceux qui connaissent l'avenir, +30 % de degats infliges (OutgoingDamage). Les esquives sont gerees par la protection "
+   },
+   {
+    "id": "Elda_SavoirAccelere",
+    "duree": 10.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Savoir accelere : +20 % de degats elementaires (sorts). Pose une fois 10 s, retire par le code."
+   },
+   {
+    "id": "Elda_Surregime",
+    "duree": 15.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Surregime : temps du lanceur accelere (x1,8), voile dore. Pose une fois 15 s, retire par le code."
+   }
+  ],
+  "Eldanior/Tenebres": [
+   {
+    "id": "Doppel_Ombre",
+    "duree": 60.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Doppelganger (sort Doppelganger) : silhouette noire (teinte quasi noire, #000000 est ignore), voile sombre, volutes de fumee. Pose une seule fois."
+   },
+   {
+    "id": "Elda_AppelDesMorts",
+    "duree": 8,
+    "negatif": true,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Elda_Corruption",
+    "duree": 8,
+    "negatif": true,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Elda_DrainDeVie",
+    "duree": 6,
+    "negatif": true,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Elda_FormeSpectrale",
+    "duree": 10,
+    "negatif": false,
+    "infini": false,
+    "note": "Forme Spectrale : visuel et vitesse (les reductions de degats sont gerees par le code)."
+   },
+   {
+    "id": "Elda_Hallucination",
+    "duree": 8,
+    "negatif": true,
+    "infini": false,
+    "note": "Hallucination : visuel des monstres pris dans la brume (le combat entre eux est force par le code)."
+   },
+   {
+    "id": "Elda_InvisPartielle",
+    "duree": 30,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Elda_InvisTotal",
+    "duree": 30,
+    "negatif": false,
+    "infini": false,
+    "note": "Invisibilite totale (Voile de Fumee, Miroir Trompeur) : le modele se dissout (ModelVFX Elda_Disparition) et reapparait au retrait de l'effet. La teinte alpha ne"
+   },
+   {
+    "id": "Elda_MaledictionNecrotique",
+    "duree": 10,
+    "negatif": true,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Elda_Marionnette",
+    "duree": 10,
+    "negatif": true,
+    "infini": false,
+    "note": "Marionnette : visuel du monstre controle (le comportement est force par le code)."
+   },
+   {
+    "id": "Elda_MarqueFuneste",
+    "duree": 8,
+    "negatif": true,
+    "infini": false,
+    "note": "Marque Funeste : visuel de la malediction (le bonus de degats est gere par le code)."
+   },
+   {
+    "id": "Elda_PacteDeSang",
+    "duree": 10,
+    "negatif": false,
+    "infini": false,
+    "note": "Pacte de Sang : visuel (bonus et vol de vie geres par le code)."
+   },
+   {
+    "id": "Elda_Silence",
+    "duree": 1.5,
+    "negatif": true,
+    "infini": false,
+    "note": "Silence du Neant (Rune_SilenceNeant) : teinte sombre et icone ; l'interdiction des runes est geree par RuneSpellRuntime.silence. Reapplique par le code tant que"
+   },
+   {
+    "id": "Elda_Spectral",
+    "duree": 30,
+    "negatif": false,
+    "infini": false,
+    "note": "Loups de la Meute Spectrale : teinte bleutee spectrale."
+   },
+   {
+    "id": "Elda_Terreur",
+    "duree": 5,
+    "negatif": true,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Elda_Toxique",
+    "duree": 2.0,
+    "negatif": true,
+    "infini": false,
+    "note": "Nuage toxique : teinte verte des empoisonnes (les degats sont infliges par le code). Renouvele avant expiration."
+   },
+   {
+    "id": "Nyx_Clone",
+    "duree": 120.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Ombre (Trone du Neant) : copie noire de l'ennemi (voile sombre du jeu + teinte quasi noire ; #000000 est ignore). Posee une seule fois pour toute sa vie (pas de"
+   },
+   {
+    "id": "Nyx_Couronne",
+    "duree": 65.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Couronne du souverain du Trone du Neant : couronne noire aux gemmes violettes au-dessus de la tete, petite flamme violette en son centre. Posee une fois pour la"
+   },
+   {
+    "id": "Nyx_Enchaine",
+    "duree": 1.5,
+    "negatif": true,
+    "infini": false,
+    "note": "Enchaine par les chaines de l'enfer du Trone du Neant : immobilise, ne peut plus agir, son mana est aspire (legere teinte sombre ; les chaines autour du corps s"
+   },
+   {
+    "id": "Nyx_Etreinte",
+    "duree": 2.5,
+    "negatif": true,
+    "infini": false,
+    "note": "Etreinte d'une tentacule du Voile de Nyx : immobilise."
+   },
+   {
+    "id": "Nyx_Marque",
+    "duree": 1.3,
+    "negatif": true,
+    "infini": false,
+    "note": "Ennemi dans le Voile de Nyx : silhouette eclairee de violet et etoile au-dessus de la tete (on le voit dans la nuit) ; ecran assombri sur les bords pour les jou"
+   },
+   {
+    "id": "Nyx_Ombre",
+    "duree": 65.0,
+    "negatif": false,
+    "infini": false,
+    "note": "Trone du Neant : le souverain devient une ombre (+50 % de degats geres par le code). Pose une fois pour la duree du sort, retire a la fin."
+   }
+  ],
+  "Eldanior/Terre": [
+   {
+    "id": "Elda_Colosse",
+    "duree": 20,
+    "negatif": false,
+    "infini": false,
+    "note": "Colosse de Pierre (Rune_ColossePierre) : aspect de pierre, -35 % de degats, vitesse x0,8. Duree reglee par le code ; la taille x2 est appliquee par ColossePierr"
+   },
+   {
+    "id": "Elda_Enlisement",
+    "duree": 1.0,
+    "negatif": true,
+    "infini": false,
+    "note": "Sables mouvants : enlise (vitesse x0,3). Sans teinte : reapplique toutes les 0,5 s."
+   },
+   {
+    "id": "Elda_Enracinement",
+    "duree": 4,
+    "negatif": true,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Elda_Faconnage",
+    "duree": 2,
+    "negatif": false,
+    "infini": false,
+    "note": "Faconnage (Rune_Faconnage) : allies dans le domaine, -25 % de degats physiques et de projectiles. Renouvele par le code avant expiration."
+   },
+   {
+    "id": "Elda_PeauDePierre",
+    "duree": 10,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Elda_Petrifie",
+    "duree": 2.0,
+    "negatif": true,
+    "infini": false,
+    "note": "Petrification : statue de pierre (ModelVFX Stoneskin), mouvement desactive pour les joueurs ; les monstres sont figes par le code. Sans KnockbackMultiplier."
+   },
+   {
+    "id": "Elda_Racines",
+    "duree": 1.5,
+    "negatif": true,
+    "infini": false,
+    "note": "Racines du Druide (Rune_Racines, Rune_EspritForet) : la cible est enserree par les racines de l'effet vanilla Root et immobilisee. Duree reglee par le code (app"
+   },
+   {
+    "id": "Elda_Seisme",
+    "duree": 2,
+    "negatif": true,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Gaia_Etourdi",
+    "duree": 1.5,
+    "negatif": true,
+    "infini": false,
+    "note": "Etourdissement du Reveil de Gaia (pilier de roche, poing du golem)."
+   },
+   {
+    "id": "Yggdrasil_Benediction",
+    "duree": 1.6,
+    "negatif": false,
+    "infini": false,
+    "note": "Benediction de l'arbre-monde (allies dans le jardin d'Yggdrasil) : soin, endurance et mana rendus, -20 % de degats subis (geres par le code)."
+   },
+   {
+    "id": "Yggdrasil_Poison",
+    "duree": 4,
+    "negatif": true,
+    "infini": false,
+    "note": "Poison des racines et des spores d'Yggdrasil : 15 degats de poison par seconde pendant 4 s."
+   },
+   {
+    "id": "Yggdrasil_Racines",
+    "duree": 3.0,
+    "negatif": true,
+    "infini": false,
+    "note": "Racines d'Yggdrasil : la cible est enserree par des racines qui sortent du sol (modele de l'effet vanilla Root) et immobilisee."
+   },
+   {
+    "id": "Yggdrasil_Ronces",
+    "duree": 1.6,
+    "negatif": true,
+    "infini": false,
+    "note": "Ronces d'Yggdrasil : ralentissement dans la zone (degats geres par le code)."
+   }
+  ],
+  "Eldanior/Vent": [
+   {
+    "id": "Elda_Bourrasque",
+    "duree": 3,
+    "negatif": true,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Elda_Legerete",
+    "duree": 8,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Elda_Tourbillon",
+    "duree": 4,
+    "negatif": true,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Fujin_Happe",
+    "duree": 2.5,
+    "negatif": true,
+    "infini": false,
+    "note": "Happe par une tornade du Courroux de Fujin : ne peut plus attaquer."
+   },
+   {
+    "id": "Fujin_Vent_Arriere",
+    "duree": 12,
+    "negatif": false,
+    "infini": false,
+    "note": "Vent arriere du Courroux de Fujin : +40 % de vitesse pendant les tornades."
+   }
+  ],
+  "Potion": [
+   {
+    "id": "Eld_Effet_Antigel",
+    "duree": 180,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Eld_Effet_Arcane",
+    "duree": 120,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Eld_Effet_Bouclier",
+    "duree": 60,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Eld_Effet_Celerite",
+    "duree": 120,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Eld_Effet_Force_Vitale",
+    "duree": 300,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Eld_Effet_Fortune",
+    "duree": 1800,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Eld_Effet_Ignifuge",
+    "duree": 180,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Eld_Effet_Mana",
+    "duree": 0.1,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Eld_Effet_Mana_Grand",
+    "duree": 0.1,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Eld_Effet_Mana_Petit",
+    "duree": 0.1,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Eld_Effet_Mana_Vive",
+    "duree": 10.05,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Eld_Effet_Peau_Pierre",
+    "duree": 120,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Eld_Effet_Plume",
+    "duree": 180,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Eld_Effet_Precision",
+    "duree": 120,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Eld_Effet_Rage",
+    "duree": 120,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Eld_Effet_Sagesse",
+    "duree": 1800,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Morph_Dragon",
+    "duree": 120,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   }
+  ],
+  "Status": [
+   {
+    "id": "Apocalypse_Invulnerability",
+    "duree": 8,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Arcane_Curse",
+    "duree": 8,
+    "negatif": true,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Blood_Rage",
+    "duree": 20,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Drain_Vie",
+    "duree": 6,
+    "negatif": true,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Enchantement_Buff",
+    "duree": 10,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Magic_Shield",
+    "duree": 10,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Nova_Burn",
+    "duree": 5,
+    "negatif": true,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Nova_Fire_Aura",
+    "duree": 5,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   },
+   {
+    "id": "Nova_Invulnerability",
+    "duree": 5,
+    "negatif": false,
+    "infini": false,
+    "note": ""
+   }
+  ]
+ }
+}

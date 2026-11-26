@@ -1,0 +1,82 @@
+{
+  "$Comment": "Nappe de gaz toxique au ras du sol (rayon ~6).",
+  "RenderMode": "BlendLinear",
+  "EmitOffset": {
+    "X": {
+      "Min": -6.0,
+      "Max": 6.0
+    },
+    "Y": {
+      "Min": 0,
+      "Max": 0.2
+    },
+    "Z": {
+      "Min": -6.0,
+      "Max": 6.0
+    }
+  },
+  "ParticleRotationInfluence": "Billboard",
+  "LinearFiltering": true,
+  "LightInfluence": 0.6,
+  "ParticleRotateWithSpawner": false,
+  "MaxConcurrentParticles": 50,
+  "ParticleLifeSpan": {
+    "Min": 3.0,
+    "Max": 4.0
+  },
+  "SpawnRate": {
+    "Min": 35,
+    "Max": 40
+  },
+  "InitialVelocity": {
+    "Speed": {
+      "Min": 0.2,
+      "Max": 0.6
+    },
+    "Yaw": {
+      "Min": 0,
+      "Max": 360
+    },
+    "Pitch": {
+      "Min": -2,
+      "Max": 2
+    }
+  },
+  "Particle": {
+    "Texture": "Particles/Textures/Smoke/Smoke_Dense.png",
+    "FrameSize": {
+      "Width": 64,
+      "Height": 64
+    },
+    "ScaleRatioConstraint": "None",
+    "UVOption": "RandomFlipU",
+    "InitialAnimationFrame": {
+      "Scale": {
+        "X": {
+          "Min": 3.0,
+          "Max": 4.0
+        },
+        "Y": {
+          "Min": 1.2,
+          "Max": 1.6
+        }
+      },
+      "Opacity": 0.0,
+      "Color": "#2f5a14"
+    },
+    "Animation": {
+      "0": {
+        "Opacity": 0.0
+      },
+      "15": {
+        "Opacity": 0.7
+      },
+      "85": {
+        "Opacity": 0.65
+      },
+      "100": {
+        "Opacity": 0.0
+      }
+    }
+  }
+}

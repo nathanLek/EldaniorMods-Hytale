@@ -1,7 +1,7 @@
 {
   "TranslationProperties": {
     "Name": "Pièce de Bronze",
-    "Description": "[Clic F]: Transférer Dans la Banque"
+    "Description": "Monnaie d'Eldanior. Elle se dépose et se change chez le banquier."
   },
   "Categories": [
     "Eldanior_System.Coins"
@@ -46,17 +46,23 @@
   "PlayerAnimationsId": "Item",
   "IconProperties": {
     "Scale": 1.4,
-    "Rotation": [347, 333, 360],
-    "Translation": [7, -7]
+    "Rotation": [
+      347,
+      333,
+      360
+    ],
+    "Translation": [
+      7,
+      -7
+    ]
   },
   "Tags": {
-    "Type": ["Deco"]
+    "Type": [
+      "Deco"
+    ]
   },
   "Icon": "Icons/ItemsGenerated/Elda_Copper_Coins_Icone.png",
   "ItemSoundSetId": "ISS_Blocks_Wood",
   "Quality": "Common",
-  "DropOnDeath": true,
-  "Interactions": {
-    "Use": "Root_ConsumableItemMoneyInteraction"
-  }
+  "DropOnDeath": true
 }

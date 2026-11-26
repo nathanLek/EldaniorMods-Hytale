@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_ReveilGaia (remplace le parchemin rune_page_reveil_gaia).",
+  "TranslationProperties": {
+    "Name": "Manuel de Terre : Réveil de Gaïa",
+    "Description": "Sort divin de terre (Guerrier, Dragon). Vous êtes l'épicentre : toute la zone autour de vous (35 blocs) se soulève, sauf le pilier de terre sur lequel vous vous tenez. De grands crocs rocheux (14 à 22 blocs, courbés, veinés de lave) jaillissent un à un en bordure de zone en laissant de larges passages (300 dégâts et projection aux ennemis proches) ; ils se rétractent dans le sol à la fin. Le sol se fend de failles profondes remplies de lave d'où jaillissent des geysers (120 dégâts) et se découpe en seize plaques. Par vagues, du centre vers l'extérieur, les plaques s'arrachent avec tout ce qu'elles portent (sol sur 6 blocs, plantes, arbres), montent jusqu'à 40 blocs, tournent autour de vous et s'entrechoquent (400 dégâts aux ennemis pris entre elles). Puis chacune se retourne et s'abat sur son trou (1500 dégâts dessous) : chaque impact déclenche un tremblement de terre qui fait onduler le sol et projette les ennemis (250 dégâts). Quand tout est retombé, un dernier séisme traverse toute la zone (600 dégâts). Le terrain est restauré après 3 minutes. Épargne votre groupe, votre guilde et votre famille. Coût : 2000 mana. Recharge : 5 s (valeur de test).\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Terre"
+  ],
+  "Quality": "Divin",
+  "ItemLevel": 100,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Terre_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Terre_ReveilGaia.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

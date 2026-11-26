@@ -1,0 +1,64 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_PacteDeSang",
+  "spell": "PacteDeSang",
+  "javaClass": "PacteDeSang",
+  "page": "rune_page_pacte_de_sang",
+  "name": "Rune du Pacte de Sang",
+  "type": "Tenebres",
+  "rarity": "Epic",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "PacteSang",
+  "summary": "sacrifie 20 % des PV : 10 s de coups +50 % et vol de vie de 15 %.",
+  "description": "Sort épique de ténèbres (Mage, rune de prédilection du Sorcier Suprême). Vous sacrifiez 20 % de vos points de vie (sans pouvoir en mourir). Pendant 10 s, chacun de vos coups (sorts compris) inflige 50 % de dégâts en plus et vous rend 15 % des dégâts infligés.",
+  "pageDescription": "Un parchemin signé d'une goutte de sang séché. Enseigne le Pacte de Sang : payez de votre vie pour une puissance dévorante. Classes : tous les Mages (rune de prédilection du Sorcier Suprême). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Buff",
+    "Duration",
+    "Damage"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.4,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.6,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Bear_Voidtaken_Growl",
+    "handParticles": "Critical_Hit_Blood",
+    "handParticlesScale": 0.4,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.4,
+    "range": 0,
+    "targets": "soi",
+    "executionFx": "Critical_Hit_Blood",
+    "persistentFx": "Elda_PacteDeSang (teinte rouge, Blood_Effect_Daggers)",
+    "effects": "-20 % PV max (plancher 1 PV) ; onOwnerHit -> +50 % (markEcho) et soin 15 % du total (SpellFx.heal)",
+    "terrain": "aucun",
+    "persistentDurationS": 10,
+    "restrictions": "mage",
+    "balance": {
+      "damage": 3,
+      "range": 0,
+      "duration": 2,
+      "mobility": 0,
+      "control": 0,
+      "defense": 1,
+      "targets": 1,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 2
+    }
+  }
+}

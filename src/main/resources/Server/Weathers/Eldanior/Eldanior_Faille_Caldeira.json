@@ -1,0 +1,137 @@
+{
+  "Tags": {
+    "Eldanior_Caldeira": []
+  },
+  "Moons": [
+    {
+      "Day": 0,
+      "Texture": "Sky/MoonCycle/Moon_Full.png"
+    },
+    {
+      "Day": 1,
+      "Texture": "Sky/MoonCycle/Moon_Gibbous.png"
+    },
+    {
+      "Day": 2,
+      "Texture": "Sky/MoonCycle/Moon_Half.png"
+    },
+    {
+      "Day": 3,
+      "Texture": "Sky/MoonCycle/Moon_Crescent.png"
+    },
+    {
+      "Day": 4,
+      "Texture": "Sky/MoonCycle/Moon_New.png"
+    }
+  ],
+  "SunlightDampingMultipliers": [
+    {
+      "Hour": 0,
+      "Value": 0.72
+    }
+  ],
+  "Clouds": [
+    {
+      "Texture": "Sky/Clouds/Storm_Highlights.png",
+      "Colors": [
+        {
+          "Hour": 0,
+          "Color": "rgba(#4a1408, 0.85)"
+        }
+      ],
+      "Speeds": [
+        {
+          "Hour": 0,
+          "Value": 0.5
+        }
+      ]
+    }
+  ],
+  "SkyTopColors": [
+    {
+      "Hour": 0,
+      "Color": "rgba(#2a0b08, 1)"
+    }
+  ],
+  "SkySunsetColors": [
+    {
+      "Hour": 0,
+      "Color": "#ff6a1fff"
+    }
+  ],
+  "SunColors": [
+    {
+      "Hour": 0,
+      "Color": "#ff4a14"
+    }
+  ],
+  "SunGlowColors": [
+    {
+      "Hour": 0,
+      "Color": "rgba(#ff3c0a, 0.95)"
+    }
+  ],
+  "MoonColors": [
+    {
+      "Hour": 0,
+      "Color": "#ff2a10ff"
+    }
+  ],
+  "MoonGlowColors": [
+    {
+      "Hour": 0,
+      "Color": "#802e18ff"
+    }
+  ],
+  "FogDistance": [
+    -12,
+    96
+  ],
+  "FogColors": [
+    {
+      "Hour": 0,
+      "Color": "#3d1a10"
+    }
+  ],
+  "SunScales": [
+    {
+      "Hour": 0,
+      "Value": 2.4
+    }
+  ],
+  "MoonScales": [
+    {
+      "Hour": 0,
+      "Value": 1.8
+    }
+  ],
+  "Particle": {
+    "SystemId": "Eldanior_Faille_Caldeira",
+    "OvergroundOnly": true
+  },
+  "FogHeightFalloffs": [
+    {
+      "Hour": 0,
+      "Value": 4
+    }
+  ],
+  "FogDensities": [
+    {
+      "Hour": 0,
+      "Value": 0.72
+    }
+  ],
+  "SunlightColors": [
+    {
+      "Hour": 0,
+      "Color": "#ff9a66"
+    }
+  ],
+  "$Comment": "Faille de rang D, la Caldeira (scripts/failles/gen_failles.py) : couleurs constantes, heure figee a 17 h.",
+  "SkyBottomColors": [
+    {
+      "Hour": 0,
+      "Color": "rgba(#8f2d12, 1)"
+    }
+  ]
+}

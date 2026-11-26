@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_SculpteurDeGlace (remplace le parchemin rune_page_sculpteur_de_glace).",
+  "TranslationProperties": {
+    "Name": "Manuel de Glace : Sculpteur de Glace",
+    "Description": "Sort unique de glace (Mage, rune de prédilection du Primordial Ancien). Pendant 15 s, vous sculptez la glace là où vous visez (jusqu'à 20 blocs) : un clic gauche dresse un mur de 4 blocs de large sur 3 de haut, un clic droit une rampe en escalier qui monte vers l'avant. Six structures au plus ; un septième clic, ou la fin du sort, les fait toutes voler en éclats : 100 dégâts et givre aux ennemis à moins de 3 blocs de chacune. Jamais en ville ni sur une parcelle. Épargne votre groupe, votre guilde et votre famille. Coût : 600 mana. Recharge : 180 s.\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Glace"
+  ],
+  "Quality": "Unique",
+  "ItemLevel": 75,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Glace_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Glace_SculpteurDeGlace.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

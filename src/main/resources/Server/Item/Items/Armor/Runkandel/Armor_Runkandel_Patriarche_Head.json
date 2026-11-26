@@ -1,0 +1,99 @@
+{
+  "TranslationProperties": {
+    "Name": "Armet Couronné de Vorn",
+    "Description": "Harnois de Vorn. Un armet d'acier noir mat ceint de la couronne de marquis, dressé des cornes d'ivoire du premier dragon tombé sous une lame Runkandel."
+  },
+  "Quality": "Legendary",
+  "ItemLevel": 550,
+  "PlayerAnimationsId": "Block",
+  "ItemSoundSetId": "ISS_Armor_Heavy",
+  "Categories": [
+    "Eldanior_Familles.Runkandel",
+    "Items.Armors"
+  ],
+  "Icon": "Icons/ItemsGenerated/Armor_Runkandel_Patriarche_Head.png",
+  "IconProperties": {
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Scale": 0.34,
+    "Translation": [
+      0,
+      0
+    ]
+  },
+  "Model": "Items/Armors/Runkandel/Patriarche/Head.blockymodel",
+  "Texture": "Items/Armors/Runkandel/Patriarche/Head_Texture.png",
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "EquipItem"
+        }
+      ]
+    }
+  },
+  "Armor": {
+    "ArmorSlot": "Head",
+    "BaseDamageResistance": 0,
+    "CosmeticsToHide": [
+      "EarAccessory",
+      "Ear",
+      "Haircut",
+      "HeadAccessory"
+    ],
+    "StatModifiers": {
+      "Health": [
+        {
+          "Amount": 30,
+          "CalculationType": "Additive"
+        }
+      ],
+      "Mana": [
+        {
+          "Amount": 12,
+          "CalculationType": "Additive"
+        }
+      ]
+    },
+    "DamageResistance": {
+      "Physical": [
+        {
+          "Amount": 0.116,
+          "CalculationType": "Percent"
+        }
+      ],
+      "Projectile": [
+        {
+          "Amount": 0.116,
+          "CalculationType": "Percent"
+        }
+      ],
+      "Fire": [
+        {
+          "Amount": 0.058,
+          "CalculationType": "Percent"
+        }
+      ]
+    }
+  },
+  "Tags": {
+    "Type": [
+      "Armor"
+    ],
+    "Family": [
+      "Plate_Runkandel"
+    ]
+  },
+  "MaxDurability": 500,
+  "DurabilityLossOnHit": 0.5
+}

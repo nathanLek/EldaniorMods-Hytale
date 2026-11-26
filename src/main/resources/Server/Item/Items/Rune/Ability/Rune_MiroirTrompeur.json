@@ -1,0 +1,44 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune du Miroir Trompeur",
+    "Description": "Sort rare de lumière (Mage, rune de prédilection de l'Illusionniste). Deux reflets parfaits de vous apparaissent et s'enfuient à gauche et à droite pendant 6 s ; les monstres à moins de 15 blocs se lancent à leur poursuite. Vous devenez invisible pendant 3 s. Chaque reflet se brise après avoir encaissé 60 dégâts. Coût : 120 mana. Recharge : 60 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_MiroirTrompeur.png",
+  "Quality": "Rare",
+  "ItemLevel": 40,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_Runes.Lumiere"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_MiroirTrompeur.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 60,
+    "Cost": 120,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Buff",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_MiroirTrompeur"
+  }
+}

@@ -37,7 +37,7 @@ public class CombatStatsSystem extends DamageEventSystem {
 
     private static final HytaleLogger LOGGER = HytaleLogger.forEnclosingClass();
 
-    // Configurable ici : Multiplicateur de dégâts critique (1.8 = +80% dégâts)
+    // Multiplicateur de dégâts critique (2 = +100 % de dégâts)
     private static final float CRIT_MULTIPLIER = 2f;
 
     @Override
@@ -87,18 +87,51 @@ public class CombatStatsSystem extends DamageEventSystem {
             }
         }
 
-        // 1. GESTION DE L'ESQUIVE (Maintenant gérée par le StatConfig !)
-        if (tryDodge(victimRef, store, damage)) {
-            return; // Si l'attaque est esquivée, on arrête tout calcul !
+        // Journal de combat (/es combat log) : victime et/ou attaquant qui l'ont active
+        Ref<EntityStore> logAttacker = damage.getSource() instanceof Damage.EntitySource es0 ? es0.getRef() : null;
+        boolean logVictim = CombatLog.isOn(victimRef, store);
+        boolean logHitter = logAttacker != null && CombatLog.isOn(logAttacker, store);
+        StringBuilder dodgeLog = logVictim ? new StringBuilder() : null;
+        float rawAmount = damage.getAmount();
+
+        // 1. ESQUIVE AUTOMATIQUE (refonte 2026-11-25 : AutoDodge, dash a l'oppose de l'ennemi)
+        if (AutoDodge.tryDodge(victimRef, store, damage, commandBuffer, dodgeLog)) {
+            logHit(logVictim, logHitter, victimRef, logAttacker, store, damage, rawAmount, -1f, dodgeLog);
+            return; // coup esquive : plus aucun calcul
         }
 
         // 2. Gestion de l'Attaquant (Force + Critique + Passifs)
         applyOffensiveStats(damage, store, victimRef, commandBuffer);
+        float afterAttack = damage.getAmount();
 
-        if (damage.isCancelled()) return;
+        if (damage.isCancelled()) { logHit(logVictim, logHitter, victimRef, logAttacker, store, damage, rawAmount, afterAttack, dodgeLog); return; }
 
         // 3. Gestion de la Victime (Endurance + Passifs)
         applyEnduranceDefense(victimRef, store, damage, commandBuffer);
+
+        // 4. Bokken du Dojo (sabre d'entrainement) : le coup ne tue jamais, il laisse au moins 1 PV
+        if (damage.getSource() instanceof Damage.EntitySource hitter)
+            com.eldanior.system.skills.runes.spells.LuoPassives.trainingCap(damage, hitter.getRef(), victimRef, store);
+
+        logHit(logVictim, logHitter, victimRef, logAttacker, store, damage, rawAmount, afterAttack, dodgeLog);
+    }
+
+    /** Ecrit le coup dans le journal de combat de la victime et/ou de l'attaquant (avant armure et PV virtuels). */
+    private static void logHit(boolean logVictim, boolean logHitter, Ref<EntityStore> victim, Ref<EntityStore> attacker,
+                               Store<EntityStore> store, Damage damage, float raw, float afterAttack, StringBuilder dodgeLog) {
+        if (!logVictim && !logHitter) return;
+        try {
+            String cause = damage.getCause() != null ? damage.getCause().getId() : "?";
+            String result = damage.isCancelled() ? "ANNULÉ" : CombatLog.num(damage.getAmount());
+            String steps = CombatLog.num(raw) + (afterAttack >= 0 ? " → attaque " + CombatLog.num(afterAttack) : "") + " → " + result;
+            PlayerLevelData hitterData = attacker != null ? store.getComponent(attacker, EldaniorSystem.get().getPlayerLevelDataType()) : null;
+            String crit = hitterData != null && hitterData.wasLastAttackCrit() && afterAttack >= 0 ? " (critique)" : "";
+            if (logVictim)
+                CombatLog.send(victim, store, "[Combat] reçu de " + CombatLog.name(attacker, store) + " (" + cause + ") : " + steps + crit
+                        + (dodgeLog != null && dodgeLog.length() > 0 ? " | " + dodgeLog : ""));
+            if (logHitter && attacker != null)
+                CombatLog.send(attacker, store, "[Combat] donné à " + CombatLog.name(victim, store) + " (" + cause + ") : " + steps + crit);
+        } catch (Exception e) { EldaniorLogger.error("CombatStatsSystem:journal", e); }
     }
 
     /**
@@ -124,80 +157,6 @@ public class CombatStatsSystem extends DamageEventSystem {
                     "<color:red>PvP desactive dans cette zone !</color>",
                     NotificationStyle.Warning);
         } catch (Exception e) { EldaniorLogger.error("CombatStatsSystem:pvpNotif", e); }
-    }
-
-    private boolean tryDodge(Ref<EntityStore> victimRef, Store<EntityStore> store, Damage damage) {
-        PlayerLevelData victimData = store.getComponent(victimRef, EldaniorSystem.get().getPlayerLevelDataType());
-        if (victimData == null) return false;
-
-        ClassModel victimClass = ClassManager.get(victimData.getPlayerClassId());
-        float dodgeChance = StatConfig.DODGE_CHANCE.getFinalValue(victimData, victimClass);
-
-        // --- 1. RECHERCHE DE L'ATTAQUANT ET DE SON NIVEAU ---
-        int attackerLevel = -1;
-
-        if (damage.getSource() instanceof Damage.EntitySource entitySource) {
-            Ref<EntityStore> attackerRef = entitySource.getRef();
-            if (attackerRef.isValid()) {
-
-                // Est-ce un Mob ?
-                var mobLevelType = EldaniorSystem.get().getMobLevelDataType();
-                if (mobLevelType != null) {
-                    var mobData = store.getComponent(attackerRef, mobLevelType);
-                    if (mobData != null) {
-                        attackerLevel = mobData.getLevel();
-                    }
-                }
-
-                // Si ce n'est pas un Mob, est-ce un Joueur ?
-                if (attackerLevel == -1) {
-                    PlayerLevelData attackerData = store.getComponent(attackerRef, EldaniorSystem.get().getPlayerLevelDataType());
-                    if (attackerData != null) {
-                        attackerLevel = attackerData.getLevel();
-                    }
-                }
-            }
-        }
-
-        // --- 2. CALCUL DU MALUS DE NIVEAU ---
-        if (attackerLevel != -1) {
-            int victimLevel = victimData.getLevel();
-            int levelGap = attackerLevel - victimLevel;
-
-            // Si l'ennemi a plus de 5 niveaux de plus que le joueur
-            if (levelGap > 5) {
-                // Exemple : On retire 5% de la chance d'esquive pour chaque niveau de différence au-dessus de 5.
-                // Si l'ennemi a 10 niveaux de plus (levelGap = 10) : (10 - 5) * 0.05 = 0.25 (25% de malus)
-                float penaltyMultiplier = 1.0f - ((levelGap - 5) * 0.05f);
-
-                // On s'assure que le joueur a toujours au moins une infime chance d'esquiver (ex: max 90% de malus)
-                if (penaltyMultiplier < 0.1f) {
-                    penaltyMultiplier = 0.1f;
-                }
-
-                // On applique la réduction
-                dodgeChance *= penaltyMultiplier;
-            }
-        }
-
-        // Plancher minimum : 2% d'esquive quoi qu'il arrive
-        if (dodgeChance < 2.0f) {
-            dodgeChance = 2.0f;
-        }
-
-        // --- 3. LANCEMENT DU DÉ ---
-        if (Math.random() < (dodgeChance / 100.0f)) {
-            damage.setCancelled(true);
-
-            // Appliquer l'effet visuel Dodge_Left ou Dodge_Right aleatoirement
-            try {
-                String dodgeEffect = Math.random() < 0.5 ? "Dodge_Left" : "Dodge_Right";
-                com.eldanior.system.config.Effects.EffectsManager.applyEffect(victimRef, dodgeEffect, store);
-            } catch (Exception e) { EldaniorLogger.error("CombatStatsSystem", e); }
-
-            return true;
-        }
-        return false;
     }
 
     private void applyOffensiveStats(Damage damage, Store<EntityStore> store, Ref<EntityStore> victimRef,
@@ -228,11 +187,19 @@ public class CombatStatsSystem extends DamageEventSystem {
 
         ClassModel attackerClass = ClassManager.get(attackerData.getPlayerClassId());
 
-        float strengthBonus = StatConfig.STRENGTH_DAMAGE.getFinalValue(attackerData, attackerClass);
-        float currentDamage = damage.getAmount() + strengthBonus;
+        // Force : +0,5 % de degats par point (2026-11-25 ; avant, +0,5 degat fixe par point plafonne a +50 des le niveau ~35)
+        float strengthPct = StatConfig.STRENGTH_DAMAGE.getFinalValue(attackerData, attackerClass);
+        float currentDamage = damage.getAmount() * (1f + strengthPct / 100f);
+
+        currentDamage = com.eldanior.system.skills.runes.spells.ArtefactWeapons.modifyDamage(currentDamage, attackerRef, victimRef, store);  // Excalibur, Gram, Roi Dechu, Ryukiri
+        currentDamage *= com.eldanior.system.skills.runes.spells.KiEpee.damageMultiplier(attackerRef, store);   // voie martiale : Ki de l'Epee
+        currentDamage *= com.eldanior.system.skills.runes.spells.TransformationHwakyung.damageMultiplier(attackerRef, store);   // Transformation Hwakyung
 
         boolean isCrit = LuckSystem.isCriticalHit(attackerData)
-                || com.eldanior.system.skills.runes.spells.GungnirRavens.huginCrit(attackerRef, store);   // Gungnir : Hugin et Munin
+                || com.eldanior.system.skills.runes.spells.GungnirRavens.huginCrit(attackerRef, store)    // Gungnir : Hugin et Munin
+                || com.eldanior.system.skills.runes.spells.ArtefactWeapons.bonusCrit(attackerRef, store)  // Masamune
+                || (com.eldanior.system.config.Effects.EffectsManager.hasEffect(attackerRef, "Eld_Effet_Precision", store)
+                    && java.util.concurrent.ThreadLocalRandom.current().nextFloat() < 0.20f);             // Potion de Precision
         attackerData.setLastAttackWasCrit(isCrit);
         if (isCrit) {
             currentDamage *= CRIT_MULTIPLIER;
@@ -244,58 +211,30 @@ public class CombatStatsSystem extends DamageEventSystem {
         }
 
         damage.setAmount(currentDamage);
+        com.eldanior.system.skills.runes.spells.ArtefactWeapons.onHit(currentDamage, attackerRef, victimRef, store, commandBuffer);  // armes divines
 
-        // Lire le vrai mana depuis le système de stats Hytale (celui qui se régénère)
-        EntityStatMap attackerStatMap = store.getComponent(attackerRef, EntityStatsModule.get().getEntityStatMapComponentType());
-        float realMana = attackerStatMap != null ? attackerStatMap.get(DefaultEntityStatTypes.getMana()).get() : 0;
-
-        // Travailler directement sur attackerData (pas de clone — même pattern que applyEnduranceDefense)
+        // Passifs d'attaque (refonte du 2026-11-24) : chaque passif agit a son rang ; plus de cout en mana ni de recharge,
+        // sauf certains Peches (recharge propre). Un declenchement fait progresser la maitrise (x5 avec Diligence).
         boolean dataChanged = false;
-
-        for (PassiveSkill skill : attackerData.getActivePassives()) {
-            if (skill.getLogic() != null) {
-                // Vérifier le cooldown du skill passif
-                if (skill.getCooldownSeconds() > 0 && !attackerData.canCast(skill.getId())) {
-                    LOGGER.atInfo().log("[Passive] " + skill.getId() + " en COOLDOWN — skip (reste " + attackerData.getRemainingCooldown(skill.getId()) / 1000 + "s)");
-                    continue;
-                }
-
-                int manaCost = skill.getManaCost();
-                if (manaCost > 0 && realMana < manaCost) {
-                    LOGGER.atInfo().log("[Passive] " + skill.getId() + " pas assez de MANA (" + (int)realMana + "/" + manaCost + ") — skip");
-                    continue;
-                }
-
-                boolean mastered = attackerData.isSkillMastered(skill.getId());
-                boolean procced = skill.getLogic().onAttack(damage, attackerData, store, attackerRef, victimRef, mastered);
-
-                // Le mana n'est consommé QUE si le skill a effectivement proc
-                if (procced) {
-                    if (manaCost > 0) {
-                        realMana -= manaCost;
-                        attackerStatMap.setStatValue(DefaultEntityStatTypes.getMana(), realMana);
-                    }
-                    // Diligence : progression x5
-                    int procCount = attackerData.getActivePassives().contains(PassiveSkill.ANGE_DILIGENCE) ? 5 : 1;
-                    for (int p = 0; p < procCount; p++) attackerData.addSkillProc(skill.getId());
-                    LOGGER.atInfo().log("[Passive] " + skill.getId() + " PROC! Mana: " + (int)realMana + " (-" + manaCost + ") | Progression: " + String.format("%.2f", attackerData.getSkillProgression(skill.getId())) + "% | Mastered: " + mastered);
-                    if (skill.getCooldownSeconds() > 0) {
-                        attackerData.applyCooldown(skill.getId(), skill.getCooldownSeconds());
-                        LOGGER.atInfo().log("[Passive] " + skill.getId() + " COOLDOWN activé: " + skill.getCooldownSeconds() + "s");
-                    }
-                    dataChanged = true;
-                }
-
-                // Effet visuel du skill
-                com.eldanior.system.config.Effects.SkillEffectConfig.applySkillEffects(skill, attackerRef, victimRef, store);
-            }
+        int procWeight = attackerData.hasActivePassive(PassiveSkill.ANGE_DILIGENCE) ? 5 : 1;
+        for (PlayerLevelData.ActivePassive a : attackerData.getActivePassiveEntries()) {
+            PassiveSkill skill = a.skill();
+            if (skill.getCooldownSeconds() > 0 && !attackerData.canCast(skill.name())) continue;
+            boolean procced = skill.getLogic().onAttack(damage, attackerData, store, attackerRef, victimRef, a.rank(),
+                    attackerData.isSkillMastered(skill.name()));
+            if (!procced) continue;
+            for (int p = 0; p < procWeight; p++) attackerData.addSkillProc(skill.name());
+            if (skill.getCooldownSeconds() > 0) attackerData.applyCooldown(skill.name(), skill.getCooldownSeconds());
+            dataChanged = true;
         }
 
         // --- Rune d'Aura active : bonus de degats scale sur la dignite (remplace l'ancien passif) ---
         if (!damage.isCancelled()
                 && com.eldanior.system.config.Effects.EffectsManager.hasEffect(attackerRef,
                         com.eldanior.system.titles.nobility.systems.RuneAuraSystem.BUFF_ID, store)) {
-            float auraBonus = com.eldanior.system.titles.nobility.systems.RuneAuraSystem.getDamageBonus(attackerData.getDignity());
+            PlayerLevelData auraVictim = store.getComponent(victimRef, EldaniorSystem.get().getPlayerLevelDataType());
+            boolean resists = com.eldanior.system.titles.nobility.systems.RuneAuraSystem.isMartial(auraVictim);   // artiste martial
+            float auraBonus = resists ? 0f : com.eldanior.system.titles.nobility.systems.RuneAuraSystem.getDamageBonus(attackerData.getDignity());
             if (auraBonus > 0f) damage.setAmount(damage.getAmount() * (1.0f + auraBonus));
         }
 
@@ -341,8 +280,9 @@ public class CombatStatsSystem extends DamageEventSystem {
 
         ClassModel victimClass = ClassManager.get(victimData.getPlayerClassId());
 
-        float defense = StatConfig.ENDURANCE_DEFENSE.getFinalValue(victimData, victimClass);
-        float currentDamage = damage.getAmount() - defense;
+        // Defense : -% de degats recus (2026-11-25 ; avant, -0,1 degat fixe par point plafonne a -35)
+        float defensePct = StatConfig.ENDURANCE_DEFENSE.getFinalValue(victimData, victimClass);
+        float currentDamage = damage.getAmount() * (1f - defensePct / 100f);
 
         if (currentDamage < 1) currentDamage = 1;
         damage.setAmount(currentDamage);
@@ -352,29 +292,19 @@ public class CombatStatsSystem extends DamageEventSystem {
             attackerRef = entitySource.getRef();
         }
 
+        // Passifs de defense : meme regle que l'attaque (rang, maitrise, recharge des seuls Peches qui en ont une)
+        victimData.setLastDamageTakenTime(System.currentTimeMillis());   // Frappe Opportuniste, Retablissement Naturel
         boolean defenseDataChanged = false;
-        for (PassiveSkill skill : victimData.getActivePassives()) {
-            if (skill.getLogic() != null) {
-                // Vérifier le cooldown du skill passif
-                if (skill.getCooldownSeconds() > 0 && !victimData.canCast(skill.getId())) continue;
-
-                boolean mastered = victimData.isSkillMastered(skill.getId());
-                boolean procced = skill.getLogic().onDefend(damage, victimData, store, attackerRef, victimRef, mastered);
-
-                // Si le skill a proc : incrémenter progression + appliquer cooldown
-                if (procced) {
-                    // Diligence : progression x5
-                    int defProcCount = victimData.getActivePassives().contains(PassiveSkill.ANGE_DILIGENCE) ? 5 : 1;
-                    for (int p = 0; p < defProcCount; p++) victimData.addSkillProc(skill.getId());
-                    if (skill.getCooldownSeconds() > 0) {
-                        victimData.applyCooldown(skill.getId(), skill.getCooldownSeconds());
-                    }
-                    defenseDataChanged = true;
-                }
-
-                // Effet visuel du skill (pour la defense, l'attaquant et victime sont inverses)
-                com.eldanior.system.config.Effects.SkillEffectConfig.applySkillEffects(skill, victimRef, attackerRef, store);
-            }
+        int defWeight = victimData.hasActivePassive(PassiveSkill.ANGE_DILIGENCE) ? 5 : 1;
+        for (PlayerLevelData.ActivePassive a : victimData.getActivePassiveEntries()) {
+            PassiveSkill skill = a.skill();
+            if (skill.getCooldownSeconds() > 0 && !victimData.canCast(skill.name())) continue;
+            boolean procced = skill.getLogic().onDefend(damage, victimData, store, attackerRef, victimRef, a.rank(),
+                    victimData.isSkillMastered(skill.name()));
+            if (!procced) continue;
+            for (int p = 0; p < defWeight; p++) victimData.addSkillProc(skill.name());
+            if (skill.getCooldownSeconds() > 0) victimData.applyCooldown(skill.name(), skill.getCooldownSeconds());
+            defenseDataChanged = true;
         }
 
         // --- Rune d'Aura active : reduction de degats scale sur la dignite (remplace l'ancien passif) ---
@@ -383,6 +313,12 @@ public class CombatStatsSystem extends DamageEventSystem {
                         com.eldanior.system.titles.nobility.systems.RuneAuraSystem.BUFF_ID, store)) {
             float auraRed = com.eldanior.system.titles.nobility.systems.RuneAuraSystem.getDamageReduction(victimData.getDignity());
             if (auraRed > 0f) damage.setAmount(damage.getAmount() * (1.0f - auraRed));
+        }
+
+        // --- Artefact tenu : protection elementaire (Ryukiri : feu reduit) ---
+        if (!damage.isCancelled()) {
+            String causeId = damage.getCause() != null ? damage.getCause().getId() : null;
+            damage.setAmount(com.eldanior.system.skills.runes.spells.ArtefactWeapons.modifyTaken(damage.getAmount(), causeId, victimRef, store));
         }
 
         // Persister les procs/cooldowns défensifs

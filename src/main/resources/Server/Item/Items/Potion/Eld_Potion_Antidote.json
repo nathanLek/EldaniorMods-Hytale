@@ -1,0 +1,120 @@
+{
+  "Parent": "Potion_Template",
+  "TranslationProperties": {
+    "Name": "Antidote Ancien",
+    "Description": "Boire : soigne tous les poisons"
+  },
+  "Quality": "Uncommon",
+  "ItemLevel": 50,
+  "Categories": [
+    "Eldanior_System.Consommables"
+  ],
+  "Icon": "Icons/ItemsGenerated/Eld_Potion_Antidote.png",
+  "Recipe": {
+    "KnowledgeRequired": false,
+    "Input": [
+      {
+        "ItemId": "Potion_Empty_Small",
+        "Quantity": 1
+      },
+      {
+        "ItemId": "Butin_Glande_Venin",
+        "Quantity": 1
+      },
+      {
+        "ItemId": "Butin_Soie_Araignee",
+        "Quantity": 1
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Id": "Alchemybench",
+        "Type": "Crafting",
+        "Categories": [
+          "Alchemy_Potions"
+        ]
+      }
+    ],
+    "OutputQuantity": 1,
+    "TimeSeconds": 1
+  },
+  "Interactions": {
+    "Secondary": "Root_Secondary_Consume_Potion"
+  },
+  "InteractionVars": {
+    "RemoveEffect": {
+      "Interactions": [
+        {
+          "Type": "Simple"
+        }
+      ]
+    },
+    "Effect": {
+      "Interactions": [
+        {
+          "Type": "ClearEntityEffect",
+          "EntityEffectId": "Poison_T1",
+          "Next": {
+            "Type": "ClearEntityEffect",
+            "EntityEffectId": "Poison_T2",
+            "Next": {
+              "Type": "ClearEntityEffect",
+              "EntityEffectId": "Poison_T3",
+              "Next": {
+                "Type": "ClearEntityEffect",
+                "EntityEffectId": "Ability_Poison_Stack_A",
+                "Next": {
+                  "Type": "ClearEntityEffect",
+                  "EntityEffectId": "Ability_Poison_Stack_B",
+                  "Next": {
+                    "Type": "ClearEntityEffect",
+                    "EntityEffectId": "Ability_Poison_Stack_C",
+                    "Next": {
+                      "Type": "ApplyEffect",
+                      "EffectId": "Antidote"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ConsumeSFX": {
+      "Interactions": [
+        {
+          "Parent": "Consume_SFX",
+          "Effects": {
+            "LocalSoundEventId": "SFX_Health_Potion_Low_Drink"
+          }
+        }
+      ]
+    },
+    "ConsumedSFX": {
+      "Interactions": [
+        {
+          "Parent": "Consumed_SFX",
+          "Effects": {
+            "LocalSoundEventId": "SFX_Potion_Drink_Success"
+          }
+        }
+      ]
+    }
+  },
+  "BlockType": {
+    "CustomModel": "Items/Consumables/Potions/Potion_Lesser.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Items/Consommables/Potions/Eld_Potion_Antidote.png",
+        "Weight": 1
+      }
+    ],
+    "BlockParticleSetId": "GlassMagic",
+    "ParticleColor": "#c8f03a",
+    "Light": {
+      "Color": "#1a2f06"
+    },
+    "TextureComputedColor": "#A7A6A4"
+  }
+}

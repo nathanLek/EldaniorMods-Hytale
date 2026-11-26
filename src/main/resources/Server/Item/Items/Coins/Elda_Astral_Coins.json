@@ -1,0 +1,68 @@
+{
+  "TranslationProperties": {
+    "Name": "Pièce Astrale",
+    "Description": "Monnaie d'Eldanior. Elle se dépose et se change chez le banquier."
+  },
+  "Categories": [
+    "Eldanior_System.Coins"
+  ],
+  "Set": "Scrap",
+  "BlockType": {
+    "DrawType": "Model",
+    "CustomModel": "Items/Coins/Elda_Coins.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Items/Coins/Elda_Astral_Coins.png",
+        "Weight": 1
+      },
+      {
+        "Texture": "Items/Coins/Elda_Astral_Coins.png",
+        "Weight": 1
+      }
+    ],
+    "Flags": {},
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "SoftBlocks"
+      }
+    },
+    "BlockParticleSetId": "Metal",
+    "BlockSoundSetId": "Coins",
+    "VariantRotation": "NESW",
+    "Material": "Solid",
+    "Opacity": "Semitransparent",
+    "RandomRotation": "YawStep1",
+    "ParticleColor": "#4a7dff",
+    "Particles": [
+      {
+        "SystemId": "Block_Gem_Sparks",
+        "Color": "#8fb8ff",
+        "TargetEntityPart": "Entity"
+      }
+    ],
+    "HitboxType": "Rubble",
+    "RequiresAlphaBlending": false
+  },
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 1.4,
+    "Rotation": [
+      347,
+      333,
+      360
+    ],
+    "Translation": [
+      7,
+      -7
+    ]
+  },
+  "Tags": {
+    "Type": [
+      "Deco"
+    ]
+  },
+  "Icon": "Icons/ItemsGenerated/Elda_Astral_Coins_Icone.png",
+  "ItemSoundSetId": "ISS_Blocks_Wood",
+  "Quality": "Legendary",
+  "DropOnDeath": true
+}

@@ -1,0 +1,12 @@
+{
+  "$Comment": "Revelation (Rune_Revelation) : l'ennemi revele brille d'une lueur doree ; la vulnerabilite (+30 % de degats subis) est geree par RuneSpellRuntime.expose. Pose une fois 12 s.",
+  "Duration": 12.0,
+  "ApplicationEffects": {
+    "EntityTopTint": "#fff6c8",
+    "EntityBottomTint": "#ffd86a",
+    "Particles": [{"SystemId": "Aura_Sphere"}]
+  },
+  "OverlapBehavior": "Overwrite",
+  "Debuff": true,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Rune_Revelation.png"
+}

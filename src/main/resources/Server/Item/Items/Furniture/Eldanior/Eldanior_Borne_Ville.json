@@ -1,0 +1,76 @@
+{
+  "$Comment": "Borne de ville (guards/CityBornes) : stele a blason. Genere par scripts/territoire/gen_borne_ville.py.",
+  "TranslationProperties": {
+    "Name": "Borne de ville",
+    "Description": "Posée par le Comte dans sa ville (une par ville). Touche d'interaction : le registre de la ville (trésor, règles, lois, biens, Bailli) pour le Comte, les lois de la ville pour les visiteurs."
+  },
+  "Icon": "Icons/ItemsGenerated/Eldanior_Borne_Ville.png",
+  "IconProperties": {
+    "Scale": 0.45,
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Translation": [
+      0,
+      -26
+    ]
+  },
+  "Categories": [
+    "Eldanior_System.Autres"
+  ],
+  "MaxStack": 1,
+  "Quality": "Rare",
+  "PlayerAnimationsId": "Block",
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  },
+  "BlockType": {
+    "CustomModel": "Blocks/Eldanior/Territoire/Borne_Ville.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/Eldanior/Territoire/Borne_Ville_Texture.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "Eldanior_Borne_Ville",
+    "VariantRotation": "NESW",
+    "Material": "Solid",
+    "Opacity": "Transparent",
+    "DrawType": "Model",
+    "Light": {
+      "Color": "#7ac"
+    },
+    "BlockSoundSetId": "Stone",
+    "PhysicalMaterialId": "Stone",
+    "BlockParticleSetId": "Stone",
+    "ParticleColor": "#e6e2d6",
+    "TextureComputedColor": "#b8b2a0",
+    "Support": {
+      "Down": [
+        {
+          "FaceType": "Full"
+        }
+      ]
+    },
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Benches"
+      }
+    },
+    "Flags": {},
+    "InteractionHint": "server.interactionHints.eldanior_borne_ville",
+    "Interactions": {
+      "Use": {
+        "Interactions": [
+          {
+            "Type": "Simple"
+          }
+        ]
+      }
+    }
+  },
+  "ItemSoundSetId": "ISS_Blocks_Stone"
+}

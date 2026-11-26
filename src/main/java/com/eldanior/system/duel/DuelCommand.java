@@ -25,10 +25,10 @@ public class DuelCommand extends AbstractAsyncCommand {
 
     public DuelCommand() {
         super("duel", "Duel (accept/decline/player)");
+        requireNoPermission();                                   // commande joueur : ouverte a tous
         this.actionArg = this.withRequiredArg("action", "accept|decline|<player>", ArgTypes.STRING);
     }
 
-    protected boolean canGeneratePermission() { return false; }
 
     @Nonnull
     @Override

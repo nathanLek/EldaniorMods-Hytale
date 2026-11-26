@@ -1,0 +1,62 @@
+{
+  "$Comment": "Fiche de conception : technique du Clan Luo (voie martiale), validee le 2026-11-09, type Luo le 2026-11-09 (docs/plan-clan-luo.md). Apprise par son manuel, aucun butin. Devenue technique de clan le 2026-11-10 (luo.LuoClans.TECHNIQUES) : reservee aux membres du clan, toutes classes.",
+  "id": "Rune_DomaineEpee",
+  "spell": "DomaineEpee",
+  "javaClass": "DomaineEpee",
+  "page": "rune_page_domaine_epee",
+  "name": "Rune du Domaine de l'Épée",
+  "type": "Luo",
+  "rarity": "Epic",
+  "emblem": "DomaineEpee",
+  "classes": "clan",
+  "persistent": true,
+  "summary": "Domaine de l'Epee : domaine de 8 blocs autour du lanceur, 8 s ; tout ennemi qui y bouge est tranche (60, 2 fois/s max) ; ennemis dedans -20 % de degats infliges.",
+  "description": "Technique du Clan Luo, enseignée à la classe Grand Maître Martial de la voie martiale. Votre Ki déploie le domaine de l'épée sur 8 blocs autour de vous pendant 8 s : tout ennemi qui y bouge est tranché automatiquement (60 dégâts, 2 fois par seconde au plus) et les ennemis dans le domaine vous infligent 20 % de dégâts en moins. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Rouleau scellé des grands maîtres Luo : « Dans mon domaine, même le vent demande la permission. » Technique du Clan Luo : elle s'apprend dans son manuel, jamais en butin.",
+  "keywords": [
+    "Damage",
+    "Aoe",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": {},
+  "cast": {
+    "animationSet": "Sword",
+    "charging": "CastEnchant",
+    "release": "CastEnchant",
+    "chargeTime": 0.4,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.6,
+    "cameraEffect": null,
+    "sound": null,
+    "releaseSound": "SFX_Longsword_Special_Impact",
+    "handParticles": null,
+    "handParticlesScale": 0.6,
+    "costMoment": "start"
+  },
+  "design": {
+    "radius": "8",
+    "persistentDurationS": 8,
+    "targets": "zone",
+    "effects": "coupe 60 Physical si l'ennemi s'est deplace de plus de 0,3 bloc (2 / s max) ; -20 % de degats des ennemis dans le domaine (Ward du lanceur, onOwnerHurt)",
+    "balance": {
+      "damage": 3,
+      "range": 0,
+      "duration": 3,
+      "mobility": 0,
+      "control": 0,
+      "defense": 1,
+      "targets": 3,
+      "frequency": 2,
+      "terrain": 0,
+      "difficulty": 0
+    }
+  },
+  "category": "Eldanior_Empire_Luo.Runes",
+  "manual": "Eldanior_Manuel_Luo_DomaineEpee",
+  "$Comment_manual": "Technique apprise par son manuel secret (gen_voie_martiale_objets.py) : pas de parchemin rune_page_*."
+}

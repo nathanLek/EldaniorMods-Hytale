@@ -1,0 +1,52 @@
+{
+  "$Comment": "Faille-donjon de la Necropole Calcinee (rang D) : la Caldeira (biome exterieur, scripts/failles/biome_caldeira.py), teinte brulee, ciel de braise, cendres et braises ; le donjon est construit par l'admin en edition.",
+  "RequiredPlugins": {},
+  "ChunkStorage": {
+    "Type": "Hytale"
+  },
+  "GameMode": "Creative",
+  "IsPvpEnabled": false,
+  "IsSpawningNPC": false,
+  "GameTime": "0001-01-01T17:00:00Z",
+  "UUID": {
+    "$binary": "RWxkYW5pb3JlY3JvcG9sZQ==",
+    "$type": "04"
+  },
+  "GameplayConfig": "Eldanior_Faille",
+  "WorldMap": {
+    "Type": "Disabled"
+  },
+  "IsCompassUpdating": false,
+  "IsTicking": true,
+  "IsGameTimePaused": true,
+  "IsObjectiveMarkersEnabled": false,
+  "IsAllNPCFrozen": false,
+  "IsSavingPlayers": false,
+  "WorldGen": {
+    "Type": "Void",
+    "Environment": "Env_Eldanior_Faille_Caldeira",
+    "Tint": "#6b4b33"
+  },
+  "SpawnProvider": {
+    "Id": "Global",
+    "SpawnPoint": {
+      "X": 0.5,
+      "Y": 121,
+      "Z": 0.5,
+      "Pitch": 0,
+      "Yaw": 90,
+      "Roll": 0.0
+    }
+  },
+  "IsSpawnMarkersEnabled": true,
+  "Instance": {
+    "RemovalConditions": [
+      {
+        "Type": "WorldEmpty"
+      }
+    ]
+  },
+  "DeleteOnRemove": true,
+  "Version": 2,
+  "ForcedWeather": "Eldanior_Faille_Caldeira"
+}

@@ -59,8 +59,8 @@ public class MobNameplateColorSystem extends EntityTickingSystem<EntityStore> {
         if (specialTitle != null) {
             // PNJ nommes avec un niveau (gardes) : "Nom Lv.X" ; sans niveau (marchands) : le nom seul
             MobLevelData leveled = store.getComponent(mobRef, EldaniorSystem.get().getMobLevelDataType());
-            Nameplate nameplate = new Nameplate(leveled != null && leveled.isStatsApplied() ? specialTitle + " Lv." + leveled.getLevel() : specialTitle);
-            commandBuffer.putComponent(mobRef, Nameplate.getComponentType(), nameplate);
+            String text = leveled != null && leveled.isStatsApplied() ? specialTitle + " Lv." + leveled.getLevel() : specialTitle;
+            put(mobRef, text, store, commandBuffer);
             return;
         }
 
@@ -91,8 +91,16 @@ public class MobNameplateColorSystem extends EntityTickingSystem<EntityStore> {
             nameplateText = "Lv." + mobLevel;
         }
 
-        Nameplate nameplate = new Nameplate(nameplateText);
-        commandBuffer.putComponent(mobRef, Nameplate.getComponentType(), nameplate);
+        put(mobRef, nameplateText, store, commandBuffer);                 // barre de vie : celle du jeu, au-dessus du nom
+    }
+
+    /**
+     * Nom reecrit a CHAQUE passage (toutes les 0,5 s), meme inchange : c'est ce renvoi qui garde la barre de vie du jeu affichee
+     * au-dessus du nom (sinon le client la cache apres son delai). L'ecrire seulement s'il change (2026-11-16) l'avait fait
+     * disparaitre de tous les monstres.
+     */
+    private static void put(Ref<EntityStore> ref, String text, Store<EntityStore> store, CommandBuffer<EntityStore> cb) {
+        cb.putComponent(ref, Nameplate.getComponentType(), new Nameplate(text));
     }
 
     private @Nullable String getSpecialNPCTitle(String mobTypeId) {

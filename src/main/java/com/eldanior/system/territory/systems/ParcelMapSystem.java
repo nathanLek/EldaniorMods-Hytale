@@ -42,7 +42,7 @@ import java.util.concurrent.CompletableFuture;
 public class ParcelMapSystem {
 
     private static final Set<ParcelType> MAP_TYPES = EnumSet.of(
-            ParcelType.KINGDOM, ParcelType.GRAND_TERRITORY, ParcelType.TERRITORY, ParcelType.CITY, ParcelType.ARENA
+            ParcelType.KINGDOM, ParcelType.GRAND_TERRITORY, ParcelType.TERRITORY, ParcelType.CITY, ParcelType.ARENA, ParcelType.FOREST
     );
 
     private static final int BLOCKS_PER_CHUNK = 32;
@@ -59,6 +59,8 @@ public class ParcelMapSystem {
 
             // Feature A : marqueurs colores
             mapManager.addMarkerProvider("eldanior_zones", new ZoneMarkerProvider());
+            // 2026-11-19 : Boss Mondial et failles d'invasion, marques comme les failles des gobelins du jeu
+            mapManager.addMarkerProvider("eldanior_events", new EventMarkerProvider());
 
             // Feature B : overlay colore DESACTIVE pour le moment
             // L'overlay modifie les MapImage et cause des IndexOutOfRangeException cote client.
@@ -101,13 +103,22 @@ public class ParcelMapSystem {
 
             for (ParcelData parcel : ParcelManager.getAll()) {
                 if (!MAP_TYPES.contains(parcel.getType())) continue;
+                // territoires de l'empire Luo de nouveau marques sur la carte (retour du 2026-11-10 nuit : poses par la borne)
 
-                double centerX = (parcel.getMinX() + parcel.getMaxX()) / 2.0;
-                double centerY = (parcel.getMinY() + parcel.getMaxY()) / 2.0;
-                double centerZ = (parcel.getMinZ() + parcel.getMaxZ()) / 2.0;
+                double centerX = (parcel.getMinX() + parcel.getMaxX() + 1) / 2.0;
+                double centerY = 100;
+                double centerZ = (parcel.getMinZ() + parcel.getMaxZ() + 1) / 2.0;
+                String borne = parcel.getBorne();                      // 2026-11-20 : le marqueur sur la borne (vrai centre de la zone)
+                if (!borne.isEmpty()) {
+                    String[] k = borne.split("\\|");
+                    if (k.length == 4) try {
+                        centerX = Integer.parseInt(k[1]) + 0.5; centerY = Integer.parseInt(k[2]); centerZ = Integer.parseInt(k[3]) + 0.5;
+                    } catch (NumberFormatException ignored) { }
+                }
 
                 Color color = getMarkerColor(parcel.getType());
-                String label = parcel.getName() + " [" + parcel.getType().getLabel() + "]";
+                boolean realm = parcel == com.eldanior.system.luo.LuoClanSystem.luoRealm(parcel);
+                String label = parcel.getName() + " [" + (realm ? "Empire du Clan Luo" : parcel.getType().getLabel()) + "]";
 
                 try {
                     Transform transform = new Transform(
@@ -123,6 +134,8 @@ public class ParcelMapSystem {
 
                     builder.withCustomName(label);
                     builder.withComponent(new TintComponent(color));
+                    // 2026-11-19 (demande de l'utilisateur) : plus de marqueurs de zone dans la boussole, seulement sur la carte
+                    builder.withCompassImage(EMPTY_COMPASS);
 
                     markers.add(builder.build());
                 } catch (Exception e) {
@@ -132,6 +145,37 @@ public class ParcelMapSystem {
 
             cachedMarkers = markers;
             EldaniorLogger.info("[ParcelMap] Marqueurs reconstruits: " + markers.size() + " zones");
+        }
+    }
+
+    /** Image transparente (scripts/territoire/gen_evenements.py) : le marqueur n'apparait pas dans la boussole. */
+    static final String EMPTY_COMPASS = "Eldanior_Vide.png";
+
+    /** Boss Mondial apparu et failles d'invasion ouvertes (icones de la faille des gobelins du jeu pour les failles). */
+    private static class EventMarkerProvider implements WorldMapManager.MarkerProvider {
+        @Override
+        public void update(World world, Player player, MarkersCollector collector) {
+            try {
+                MapMarker boss = com.eldanior.system.boards.WorldBosses.marker(world.getName());
+                if (boss != null) collector.addIgnoreViewDistance(boss);
+                for (Object[] r : com.eldanior.system.failles.FailleManager.markers(world.getName())) {   // failles-donjons
+                    MapMarkerBuilder b = new MapMarkerBuilder("eldanior_fd_" + r[0], (String) r[4],
+                            new Transform(new Vector3d((int) r[1] + 0.5, (int) r[2], (int) r[3] + 0.5), new com.hypixel.hytale.math.vector.Rotation3f(0, 0, 0)));
+                    b.withCustomName((String) r[6]);
+                    b.withCompassImage((String) r[5]);
+                    collector.addIgnoreViewDistance(b.build());
+                }
+                for (Object[] r : com.eldanior.system.territory.laws.Invasions.rifts()) {
+                    if (!world.getName().equals(r[0])) continue;
+                    MapMarkerBuilder b = new MapMarkerBuilder("eldanior_faille_" + r[2] + "_" + r[4], "GoblinBreach.png",
+                            new Transform(new Vector3d((int) r[2] + 0.5, (int) r[3], (int) r[4] + 0.5), new com.hypixel.hytale.math.vector.Rotation3f(0, 0, 0)));
+                    b.withCustomName("Faille d'invasion (" + r[1] + ")");
+                    b.withCompassImage("GoblinBreachCompass.png");
+                    collector.addIgnoreViewDistance(b.build());
+                }
+            } catch (Exception e) {
+                EldaniorLogger.error("EventMarkerProvider.update", e);
+            }
         }
     }
 
@@ -206,97 +250,42 @@ public class ParcelMapSystem {
 
         for (ParcelData parcel : ParcelManager.getAll()) {
             if (!MAP_TYPES.contains(parcel.getType())) continue;
+            if (com.eldanior.system.luo.LuoClanSystem.hiddenInLuoRealm(parcel)) continue;   // empire Luo : pas de bordure de duche
 
             if (parcel.getMaxX() < chunkBlockMinX || parcel.getMinX() > chunkBlockMaxX) continue;
             if (parcel.getMaxZ() < chunkBlockMinZ || parcel.getMinZ() > chunkBlockMaxZ) continue;
 
-            int relMinX = Math.max(0, parcel.getMinX() - chunkBlockMinX);
-            int relMinZ = Math.max(0, parcel.getMinZ() - chunkBlockMinZ);
-            int relMaxX = Math.min(BLOCKS_PER_CHUNK - 1, parcel.getMaxX() - chunkBlockMinX);
-            int relMaxZ = Math.min(BLOCKS_PER_CHUNK - 1, parcel.getMaxZ() - chunkBlockMinZ);
+            paintParcel(image, parcel, chunkBlockMinX, chunkBlockMinZ, scaleX, scaleZ);
+        }
+    }
 
-            int pixMinX = Math.max(0, (int) (relMinX * scaleX));
-            int pixMinZ = Math.max(0, (int) (relMinZ * scaleZ));
-            int pixMaxX = Math.min(image.width - 1, (int) ((relMaxX + 1) * scaleX) - 1);
-            int pixMaxZ = Math.min(image.height - 1, (int) ((relMaxZ + 1) * scaleZ) - 1);
-
-            int overlayRGBA = getOverlayColorRGBA(parcel.getType());
-            int borderRGBA = getBorderColorRGBA(parcel.getType());
-            tintImageRegion(image, pixMinX, pixMinZ, pixMaxX, pixMaxZ, overlayRGBA);
-            drawBorder(image, pixMinX, pixMinZ, pixMaxX, pixMaxZ, borderRGBA, 2);
+    /**
+     * Peint une zone sur l'image d'un chunk, pixel par pixel (2026-11-10, bornes de territoire) : bordure seulement sur le vrai
+     * bord de la zone (avant : chaque chunk recevait son propre cadre), cercle pour une zone cylindrique. Plus de teinte a
+     * l'interieur (les hachures genaient, demande de l'utilisateur).
+     */
+    private static void paintParcel(MapImage image, ParcelData parcel, int chunkMinX, int chunkMinZ, float scaleX, float scaleZ) {
+        if (image.bitsPerIndex <= 0 || image.bitsPerIndex > 8) return;
+        int borderIdx = findClosestPaletteEntry(image.palette, getBorderColorRGBA(parcel.getType()));
+        double border = 2.0 / Math.max(0.01, scaleX);                         // 2 pixels, en blocs
+        double x1 = parcel.getMinX(), x2 = parcel.getMaxX() + 1, z1 = parcel.getMinZ(), z2 = parcel.getMaxZ() + 1;
+        double cx = (x1 + x2) / 2, cz = (z1 + z2) / 2, r = (x2 - x1) / 2;
+        for (int pz = 0; pz < image.height; pz++) {
+            double wz = chunkMinZ + (pz + 0.5) / scaleZ;
+            for (int px = 0; px < image.width; px++) {
+                double wx = chunkMinX + (px + 0.5) / scaleX;
+                double edge;                                                   // distance au bord (negative dehors)
+                if (parcel.isCylinder()) edge = r - Math.hypot(wx - cx, wz - cz);
+                else edge = Math.min(Math.min(wx - x1, x2 - wx), Math.min(wz - z1, z2 - wz));
+                if (edge < 0) continue;
+                int i = pz * image.width + px;
+                if (i >= image.packedIndices.length) continue;
+                if (edge < border) image.packedIndices[i] = (byte) (borderIdx & 0xFF);   // bordure seule : plus de hachures (2026-11-10)
+            }
         }
     }
 
     // ==================== PIXEL OPERATIONS ====================
-
-    private static void tintImageRegion(MapImage image, int minX, int minZ, int maxX, int maxZ, int tintRGBA) {
-        int bpi = image.bitsPerIndex;
-        if (bpi <= 0 || bpi > 8) return;
-
-        int width = image.width;
-        int mask = (1 << bpi) - 1;
-        int maxPaletteIdx = (1 << bpi) - 1;
-
-        int tintR = (tintRGBA >> 24) & 0xFF;
-        int tintG = (tintRGBA >> 16) & 0xFF;
-        int tintB = (tintRGBA >> 8) & 0xFF;
-        float alpha = (tintRGBA & 0xFF) / 255.0f;
-
-        // Pre-calculer le mapping de palette : ancien index -> nouvel index blende
-        int[] paletteMapping = new int[image.palette.length];
-        for (int i = 0; i < image.palette.length; i++) {
-            int orig = image.palette[i];
-            int origR = (orig >> 24) & 0xFF;
-            int origG = (orig >> 16) & 0xFF;
-            int origB = (orig >> 8) & 0xFF;
-            int origA = orig & 0xFF;
-
-            int blendR = (int) (origR * (1 - alpha) + tintR * alpha);
-            int blendG = (int) (origG * (1 - alpha) + tintG * alpha);
-            int blendB = (int) (origB * (1 - alpha) + tintB * alpha);
-
-            int blended = (blendR << 24) | (blendG << 16) | (blendB << 8) | origA;
-            paletteMapping[i] = findClosestPaletteEntry(image.palette, blended);
-        }
-
-        for (int z = minZ; z <= maxZ; z++) {
-            for (int x = minX; x <= maxX; x++) {
-                int pixelIndex = z * width + x;
-                int byteIndex = pixelIndex;  // bpi=8 -> 1 pixel per byte
-
-                if (byteIndex >= image.packedIndices.length) continue;
-
-                int curIdx = image.packedIndices[byteIndex] & 0xFF;
-                if (curIdx >= image.palette.length) continue;
-
-                image.packedIndices[byteIndex] = (byte) (paletteMapping[curIdx] & 0xFF);
-            }
-        }
-    }
-
-    private static void drawBorder(MapImage image, int minX, int minZ, int maxX, int maxZ,
-                                   int borderRGBA, int thickness) {
-        if (image.palette == null || image.packedIndices == null) return;
-
-        int width = image.width;
-        int height = image.height;
-
-        int borderIdx = findClosestPaletteEntry(image.palette, borderRGBA);
-
-        for (int z = minZ; z <= maxZ; z++) {
-            for (int x = minX; x <= maxX; x++) {
-                boolean onBorder = (x < minX + thickness || x > maxX - thickness
-                        || z < minZ + thickness || z > maxZ - thickness);
-                if (!onBorder) continue;
-                if (x < 0 || x >= width || z < 0 || z >= height) continue;
-
-                int byteIndex = z * width + x;
-                if (byteIndex >= image.packedIndices.length) continue;
-
-                image.packedIndices[byteIndex] = (byte) (borderIdx & 0xFF);
-            }
-        }
-    }
 
     /**
      * Trouve l'entree palette la plus proche (distance RGB euclidienne).
@@ -334,26 +323,11 @@ public class ParcelMapSystem {
      * A appeler UNIQUEMENT depuis l'admin apres reset/modification de parcelles.
      */
     public static void refreshMap(World world) {
+        // Retour du 2026-11-10 (nuit) : vider les images (clearImages + ClearWorldMap) gelait la carte du client a chaque
+        // creation de territoire (il fallait se reconnecter) ; le dessin des zones sur les images est desactive (Feature B),
+        // il n'y a donc rien a redessiner. Les marqueurs se reconstruisent seuls (ParcelManager.getVersion change a la sauvegarde).
         if (world == null) return;
-        try {
-            WorldMapManager mapManager = world.getWorldMapManager();
-            if (mapManager != null) {
-                mapManager.clearImages();
-            }
-
-            ClearWorldMap clearPacket = new ClearWorldMap();
-            for (java.util.UUID uuid :
-                    com.eldanior.system.config.Player.PlayerPositionTracker.PLAYER_POSITIONS.keySet()) {
-                try {
-                    PlayerRef pRef = Universe.get().getPlayer(uuid);
-                    if (pRef != null) pRef.getPacketHandler().writeNoCache(clearPacket);
-                } catch (Exception ignored) {}
-            }
-
-            EldaniorLogger.info("[ParcelMap] Map rafraichie (serveur + clients)");
-        } catch (Exception e) {
-            EldaniorLogger.error("ParcelMapSystem.refreshMap", e);
-        }
+        EldaniorLogger.info("[ParcelMap] Zones modifiees : marqueurs reconstruits a la prochaine mise a jour (" + world.getName() + ")");
     }
 
     // ==================== COULEURS ====================
@@ -365,6 +339,7 @@ public class ParcelMapSystem {
             case TERRITORY -> new Color((byte) 0x34, (byte) 0x98, (byte) 0xDB);     // Bleu clair
             case CITY -> new Color((byte) 0x2E, (byte) 0xCC, (byte) 0x71);          // Vert
             case ARENA -> new Color((byte) 0xE7, (byte) 0x4C, (byte) 0x3C);         // Rouge
+            case FOREST -> new Color((byte) 0x1E, (byte) 0x8A, (byte) 0x3A);        // Vert sombre (2026-11-19, forets posees par borne)
             default -> new Color((byte) 0xFF, (byte) 0xFF, (byte) 0xFF);
         };
     }
@@ -372,6 +347,7 @@ public class ParcelMapSystem {
     private static int getOverlayColorRGBA(ParcelType type) {
         return switch (type) {
             case KINGDOM -> 0xFFD700A0;
+            case GRAND_TERRITORY -> 0x9B59FF90;
             case TERRITORY -> 0x3498DBA0;
             case CITY -> 0x2ECC71A0;
             case ARENA -> 0xE74C3CA0;
@@ -382,6 +358,7 @@ public class ParcelMapSystem {
     private static int getBorderColorRGBA(ParcelType type) {
         return switch (type) {
             case KINGDOM -> 0xFFD700FF;
+            case GRAND_TERRITORY -> 0x9B59FFFF;
             case TERRITORY -> 0x3498DBFF;
             case CITY -> 0x2ECC71FF;
             case ARENA -> 0xE74C3CFF;

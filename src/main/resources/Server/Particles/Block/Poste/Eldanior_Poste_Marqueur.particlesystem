@@ -1,0 +1,20 @@
+{
+  "$Comment": "Marque du poste de PNJ (guards/NpcPostBlocks) : anneau blanc qui s'ouvre au-dessus du sol et etincelles blanches qui montent, relancee chaque seconde, pour les seuls admins tenant le bloc.",
+  "Spawners": [
+    {
+      "SpawnerId": "Eldanior_Poste_Anneau",
+      "PositionOffset": {
+        "Y": 0.15
+      }
+    },
+    {
+      "SpawnerId": "Eldanior_Poste_Marqueur",
+      "PositionOffset": {
+        "Y": 0.1
+      }
+    }
+  ],
+  "IsImportant": true,
+  "CullDistance": 40,
+  "LifeSpan": 0.1
+}

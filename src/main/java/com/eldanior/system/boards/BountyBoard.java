@@ -45,9 +45,9 @@ public final class BountyBoard {
     private BountyBoard() {}
 
     /** Prime minimale placee, commission (au tresor de la ville du tableau), rachat (multiple de la prime). */
-    static final long MIN_BOUNTY = 100;
-    static final double COMMISSION = 0.10;
-    static final long BUYBACK_FACTOR = 2;
+    public static final long MIN_BOUNTY = 100;
+    public static final double COMMISSION = 0.10;
+    public static final long BUYBACK_FACTOR = 2;
     /** Prime placee a partir de laquelle tout le serveur est prevenu. */
     private static final long ANNOUNCE_FROM = 10_000;
     private static final int TRACK_SECONDS = 10, SAVE_SECONDS = 60;
@@ -119,7 +119,7 @@ public final class BountyBoard {
     }
 
     /** Tous les recherches : PK connectes (a jour), PK hors ligne du registre, criminels. Du plus recherche au moins. */
-    static List<Wanted> list() {
+    public static List<Wanted> list() {
         Map<UUID, QuestManager.BountyInfo> players = new HashMap<>();
         for (QuestManager.BountyInfo b : QuestManager.getActiveBounties()) players.put(b.uuid, b);
         for (QuestManager.BountyInfo b : online.values()) if (isOnline(b.uuid)) players.put(b.uuid, b);
@@ -127,7 +127,8 @@ public final class BountyBoard {
         for (QuestManager.BountyInfo b : players.values()) {
             boolean on = isOnline(b.uuid);
             if (on && !online.containsKey(b.uuid)) continue;                                  // connecte, plus PK ni prime
-            out.add(new Wanted(b.uuid, null, b.name, b.level, b.bounty, on, zones.get(b.uuid), seenAt(b.uuid), 0));
+            String name = com.eldanior.system.guards.BankLoans.isStarred(b.uuid) ? b.name + " (étoilé)" : b.name;   // debiteur en defaut
+            out.add(new Wanted(b.uuid, null, name, b.level, b.bounty, on, zones.get(b.uuid), seenAt(b.uuid), 0));
         }
         for (Criminals.Wanted c : Criminals.list()) {
             if (!c.alive()) continue;                                                         // abattu : hors liste jusqu'a son retour
@@ -139,7 +140,7 @@ public final class BountyBoard {
     }
 
     /** Ville, territoire ou royaume ; sinon la parcelle (donjon, mine...) ; sinon terres sauvages, position a 50 blocs pres. */
-    static String zoneName(String world, Vector3d pos) {
+    public static String zoneName(String world, Vector3d pos) {
         ParcelData town = BountyHunter.treasuryAt(world, pos);
         if (town != null) return town.getName();
         ParcelData parcel = ParcelManager.getParcelAt(world, pos.x, pos.y, pos.z);
@@ -150,7 +151,7 @@ public final class BountyBoard {
     // ===== Primes =====
 
     /** Ajoute add a la prime d'un recherche (joueur ou criminel) ; false s'il n'est plus recherche. */
-    static boolean addBounty(Wanted w, long add) {
+    public static boolean addBounty(Wanted w, long add) {
         if (w.isCriminal()) return Criminals.addBounty(w.criminal(), add);
         addBounty(new QuestManager.BountyInfo(w.player(), w.name(), w.level(), w.bounty()), add);
         return true;
@@ -189,6 +190,16 @@ public final class BountyBoard {
         save();
     }
 
+    /** Prime minimale posee par la banque sur un debiteur (BankLoans). */
+    public static final long MIN_PLAYER_BOUNTY = MIN_BOUNTY;
+
+    /** Prime posee de l'exterieur (banque) sur un joueur, connecte ou non : s'ajoute a sa prime actuelle du registre. */
+    public static void placeOnPlayer(UUID player, String name, int level, long add) {
+        long current = 0;
+        for (QuestManager.BountyInfo b : QuestManager.getActiveBounties()) if (b.uuid.equals(player)) current = b.bounty;
+        addBounty(new QuestManager.BountyInfo(player, name, level, current), add);
+    }
+
     /** Primes placees pendant son absence (a ajouter a sa prime a la connexion), retirees de l'attente. */
     public static long collectPending(UUID player) {
         Long amount = pending.remove(player);
@@ -196,7 +207,7 @@ public final class BountyBoard {
         return amount != null ? amount : 0;
     }
 
-    static void announce(String text) {
+    public static void announce(String text) {
         for (PlayerRef pr : Universe.get().getPlayers()) pr.sendMessage(Message.raw(text).color(Color.ORANGE));
     }
 

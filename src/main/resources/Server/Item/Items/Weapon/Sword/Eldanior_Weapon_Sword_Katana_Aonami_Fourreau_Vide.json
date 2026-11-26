@@ -1,0 +1,47 @@
+{
+  "$Comment": "Fourreau de Aonami, la Vague Bleue, objet utilitaire pose dans la main gauche par TenryumaruSystem. Genere par scripts/artefacts/gen_luo_katanas.py.",
+  "TranslationProperties": {
+    "Name": "Fourreau — Aonami, la Vague Bleue",
+    "Description": "Il accompagne la lame et disparaît sans elle."
+  },
+  "Quality": "Rare",
+  "ItemLevel": 85,
+  "Model": "Items/Weapons/artefacts/Eldanior_Weapon_Sword_Katana_Aonami_Fourreau_Vide.blockymodel",
+  "Texture": "Items/Weapons/artefacts/Eldanior_Weapon_Sword_Katana_Aonami.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Weapon_Sword_Katana_Aonami_Fourreau.png",
+  "IconProperties": {
+    "Scale": 0.33,
+    "Rotation": [
+      45,
+      90,
+      0
+    ],
+    "Translation": [
+      -33,
+      -38
+    ]
+  },
+  "MaxStack": 1,
+  "Variant": false,
+  "Utility": {
+    "Usable": true
+  },
+  "DropOnDeath": false,
+  "PlayerAnimationsId": "Tenryumaru_Degainee",
+  "Interactions": {
+    "Secondary": "Root_Tenryumaru_Secondary_Degainee"
+  },
+  "InteractionVars": {
+    "Guard_Wield": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Secondary_Guard_Wield",
+          "StaminaCost": {
+            "Value": 10,
+            "CostType": "Damage"
+          }
+        }
+      ]
+    }
+  }
+}

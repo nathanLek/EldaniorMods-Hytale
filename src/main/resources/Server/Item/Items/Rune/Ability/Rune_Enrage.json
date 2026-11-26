@@ -1,0 +1,45 @@
+{
+  "$Comment": "Copie de la rune du jeu de base SANS sa recette du Labo gobelin (2026-11-24) : une rune ne s'obtient que par son manuel (gen_manuels_magie.py).",
+  "TranslationProperties": {
+    "Name": "server.items.Rune_Enrage.name",
+    "Description": "server.items.Rune_Enrage.description"
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_Enrage.png",
+  "Quality": "Rare",
+  "ItemLevel": 10,
+  "Categories": [
+    "Items.Ingredients"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_Enrage.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 4,
+    "Cost": 45,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Buff",
+      "Duration"
+    ],
+    "Attributes": {
+      "Duration": 8.0
+    },
+    "Cast": "Root_Ability_Enrage"
+  }
+}

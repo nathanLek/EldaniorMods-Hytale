@@ -20,9 +20,10 @@ import javax.annotation.Nonnull;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * /es garde poser [ville|royal|chevalier|patrouilleur|mage|errant|villageois|aventurier|chasseur|criminel|maitre_guilde] : PNJ de poste a votre position.
+ * /es garde poser [ville|royal|chevalier|patrouilleur|mage|errant|villageois|aventurier|chasseur|criminel|maitre_guilde|assassin|disciple|pelerin|marchand|ambulant|commercant] : PNJ de poste a votre position.
  *   Aventurier : --type guerrier|mage|archer|assassin, --statut ordinaire|exceptionnel|heros, --niveau 20..600 (sinon au hasard).
  *   Chasseur de prime, criminel : --type guerrier|archer|assassin, --niveau 20..600 (sinon au hasard).
+ *   Marchand Luo : --type armurerie|tailleur|herboriste|maison_the, --statut apprenti|negociant|grand (sinon au hasard).
  * /es garde retirer : retire le poste le plus proche (6 blocs) et son garde.
  * /es garde liste : postes et etat des gardes.
  * (Sous-commandes : un argument optionnel de commande Hytale s'ecrit --nom valeur, pas en position.)
@@ -72,8 +73,8 @@ public class GuardCommand extends AbstractCommandCollection {
         Place() {
             super("poser", "Poste un PNJ ici : " + GuardType.args());
             this.rankArg = this.withRequiredArg("rang", GuardType.args(), ArgTypes.STRING);
-            this.typeArg = this.withOptionalArg("type", "Aventurier : guerrier|mage|archer|assassin ; chasseur, criminel : guerrier|archer|assassin", ArgTypes.STRING);
-            this.tierArg = this.withOptionalArg("statut", "Aventurier : ordinaire|exceptionnel|heros", ArgTypes.STRING);
+            this.typeArg = this.withOptionalArg("type", "Aventurier : guerrier|mage|archer|assassin ; chasseur, criminel : guerrier|archer|assassin ; marchand : armurerie|tailleur|herboriste|maison_the ; commercant : metier ; legendaire : humain|nain|elfe", ArgTypes.STRING);
+            this.tierArg = this.withOptionalArg("statut", "Aventurier : ordinaire|exceptionnel|heros ; marchand : apprenti|negociant|grand ; commercant : apprenti|compagnon|maitre", ArgTypes.STRING);
             this.levelArg = this.withOptionalArg("niveau", "Aventurier, chasseur, criminel : 20 a 600", ArgTypes.INTEGER);
         }
 
@@ -90,12 +91,45 @@ public class GuardCommand extends AbstractCommandCollection {
                 if (type == null) { sender.sendMessage(Message.raw("Rang inconnu : " + rank + " (" + GuardType.args().replace("|", ", ") + ")")); return; }
                 AdventurerType advType = AdventurerType.fromArg(typeName);
                 AdventurerTier advTier = AdventurerTier.fromArg(tierName);
-                if (typeName != null && advType == null) { sender.sendMessage(Message.raw("Type inconnu : " + typeName + " (guerrier, mage, archer, assassin)")); return; }
                 if ((type == GuardType.CHASSEUR_PRIME || type == GuardType.CRIMINEL) && advType != null && !BountyHunter.isHunterType(advType)) {
                     sender.sendMessage(Message.raw(type.getLabel() + " : guerrier, archer ou assassin.")); return;
                 }
-                if (tierName != null && advTier == null) { sender.sendMessage(Message.raw("Statut inconnu : " + tierName + " (ordinaire, exceptionnel, heros)")); return; }
-                GuardManager.Post p = GuardManager.place(type, world, pos, yaw, advType, advTier, level != null ? level : 0);
+                NpcTrades.Metier metier = null;
+                NpcTrades.Rang tradeRang = null;
+                LegendarySmiths.Smith smith = null;
+                LuoMerchants.Shop shop = null;
+                LuoMerchants.Rank merchantRank = null;
+                if (type == GuardType.COMMERCANT) {                                              // --type metier
+                    metier = NpcTrades.ofArg(typeName);
+                    if (typeName != null && metier == null) { sender.sendMessage(Message.raw("Métier inconnu : " + typeName + " (" + java.util.Arrays.stream(NpcTrades.Metier.values()).map(m -> m.name().toLowerCase()).toList() + ")")); return; }
+                    tradeRang = NpcTrades.rangArg(tierName);
+                    if (tierName != null && tradeRang == null) { sender.sendMessage(Message.raw("Rang inconnu : " + tierName + " (apprenti, compagnon, maitre)")); return; }
+                    advType = null;
+                    advTier = null;
+                } else if (type == GuardType.LEGENDAIRE) {                                       // --type humain|nain|elfe
+                    smith = LegendarySmiths.ofArg(typeName);
+                    if (typeName != null && smith == null) { sender.sendMessage(Message.raw("Forgeron inconnu : " + typeName + " (humain, nain, elfe)")); return; }
+                    advType = null;
+                    advTier = null;
+                } else if (type == GuardType.MARCHAND) {                                         // --type boutique, --statut rang
+                    shop = LuoMerchants.shopArg(typeName);
+                    merchantRank = LuoMerchants.rankArg(tierName);
+                    if (typeName != null && shop == null) { sender.sendMessage(Message.raw("Boutique inconnue : " + typeName + " (armurerie, tailleur, herboriste, maison_the)")); return; }
+                    if (tierName != null && merchantRank == null) { sender.sendMessage(Message.raw("Rang inconnu : " + tierName + " (apprenti, negociant, grand)")); return; }
+                    advType = null;
+                    advTier = null;
+                } else {
+                    if (typeName != null && advType == null) { sender.sendMessage(Message.raw("Type inconnu : " + typeName + " (guerrier, mage, archer, assassin)")); return; }
+                    if (tierName != null && advTier == null) { sender.sendMessage(Message.raw("Statut inconnu : " + tierName + " (ordinaire, exceptionnel, heros)")); return; }
+                }
+                if (metier == NpcTrades.Metier.INTENDANT) {                                      // un seul intendant par territoire
+                    GuardManager.Post other = NpcTrades.stewardOn(world.getName(), pos.x, pos.y, pos.z);
+                    if (other != null) { sender.sendMessage(Message.raw("Ce territoire a déjà son intendant (" + other.getId() + ").")); return; }
+                }
+                String preset = smith != null ? LegendarySmiths.value(smith)
+                        : tradeRang != null && metier != null ? NpcTrades.value(metier, tradeRang) : null;
+                GuardManager.Post p = GuardManager.place(type, world, pos, yaw, advType, advTier, level != null ? level : 0, shop, merchantRank, metier, preset);
+                if (tradeRang != null && metier == null && NpcTrades.metier(p) != null) { p.shop = NpcTrades.value(NpcTrades.metier(p), tradeRang); GuardManager.saveLater(); }
                 sender.sendMessage(Message.raw(type.getLabel() + " poste ici (" + p.getId() + ")."
                         + switch (type) {
                     case PATROUILLEUR -> " Il fait sa ronde autour de ce point.";
@@ -105,13 +139,19 @@ public class GuardCommand extends AbstractCommandCollection {
                     case MAITRE_GUILDE -> " Parlez-lui (touche d'interaction) pour fonder, rejoindre ou améliorer une guilde.";
                     case CRIMINEL -> " " + GuardManager.nameplate(p) + " (" + AdventurerType.of(p.getSkinSeed()).getLabel()
                             + ", niveau " + p.level + ") rôde autour de ce repaire. Prime : " + Criminals.bounty(p) + " or.";
-                    case VILLAGEOIS -> " Il se promene dans 30 blocs autour de ce point.";
+                    case VILLAGEOIS -> " " + GuardManager.nameplate(p) + " se promene dans 30 blocs autour de ce point.";
+                    case ASSASSIN -> " Il garde ce poste, dagues en main.";
+                    case DISCIPLE -> " Il s'exerce au kata a ce poste.";
+                    case COMMERCANT -> " " + GuardManager.nameplate(p) + " tient boutique ici.";
+                    case AMBULANT -> " " + GuardManager.nameplate(p) + " vend un peu de tout, a tout le monde (assortiment renouvele chaque jour).";
+                    case MARCHAND -> " " + GuardManager.nameplate(p) + " tient boutique ici (" + LuoMerchants.rankOf(p).getLabel()
+                            + ") : membres du clan selon leur rang, Comptoir pour les marchands agrees.";
                     case AVENTURIER -> " " + GuardManager.nameplate(p) + " (niveau " + p.level + ", "
                             + AdventurerTier.of(p).getLabel()
                             + (AdventurerTier.classOf(p) != null ? ", " + AdventurerTier.classOf(p).getDisplayName() : "")
                             + "), recrutable pour " + GuardManager.priceOf(p) + " or.";
                     default -> " Il revient toujours a ce poste.";
-                }));
+                } + (p.isLuo() ? " Territoire du Clan Luo : il en porte la tenue et attaque les étrangers sans plaque." : "")));
             });
         }
     }

@@ -1,0 +1,68 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_NuageOrage",
+  "spell": "NuageOrage",
+  "javaClass": "NuageOrage",
+  "page": "rune_page_nuage_orage",
+  "name": "Rune du Nuage d'Orage",
+  "type": "Foudre",
+  "rarity": "Epic",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "NuageOrage",
+  "summary": "nuage d'orage 10 s au point vise (rayon 7) : un eclair toutes les 0,5 s sur un ennemi au hasard (70 + etourdissement).",
+  "description": "Sort épique de foudre (Mage, rune de prédilection du Grand Archimage). Un nuage d'orage se forme au-dessus du point visé (jusqu'à 20 blocs) pendant 10 s. Toutes les demi-secondes, un éclair frappe un ennemi au hasard sous le nuage (rayon 7) : 70 dégâts et 0,5 s d'étourdissement à 1,5 bloc autour. Sans ennemi, la foudre tombe au hasard dans la zone. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin gris qui sent la pluie et l'ozone. Enseigne le Nuage d'Orage : laissez le ciel choisir ses victimes. Classes : tous les Mages (rune de prédilection du Grand Archimage). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Aoe",
+    "Duration"
+  ],
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.5,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Emit_Goblin_Electric_Fence_Zap",
+    "handParticles": "Taranis_Electric_Burst",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.5,
+    "range": 20,
+    "radius": "7",
+    "targets": "1 ennemi / 0,5 s (+ voisins a 1,5)",
+    "persistentFx": "nuage Taranis_Storm_Clouds_Low ramene a l'echelle 12 a 12 blocs de haut, Taranis_Zone au sol (reemis)",
+    "impactFx": "Taranis_Bolt + Taranis_Electric_Burst a chaque eclair, Taranis_Sky_Flash dans le nuage",
+    "sounds": "SFX_Emit_Goblin_Electric_Fence_Zap a chaque eclair",
+    "effects": "70 Lightning rayon 1,5 + Taranis_Foudroye 0,5 s, 20 eclairs",
+    "terrain": "aucun",
+    "persistentDurationS": 10,
+    "interruptions": "aucune",
+    "restrictions": "mage",
+    "edgeCases": "aucun ennemi : point au hasard ; nuage a l'echelle des sorts divins reduite (52 -> 12) : taille a confirmer en jeu",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 2,
+      "mobility": 0,
+      "control": 1,
+      "defense": 0,
+      "targets": 2,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    }
+  },
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null
+}

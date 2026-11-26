@@ -1,0 +1,380 @@
+{
+  "DisplayNameKey": "Herboriste du Clan Luo — Apprenti",
+  "RefreshInterval": {
+    "Days": 1
+  },
+  "RestockHour": 6,
+  "TradeSlots": [
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Luo_The_Vert",
+          "Quantity": 2
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Gold_Coins",
+            "Quantity": 3
+          }
+        ],
+        "Stock": 20
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Luo_Onguent_Cerisier",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Gold_Coins",
+            "Quantity": 10
+          }
+        ],
+        "Stock": 8
+      }
+    },
+    {
+      "Type": "Pool",
+      "SlotCount": 1,
+      "Trades": [
+        {
+          "Output": {
+            "ItemId": "Luo_The_Jasmin",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 11
+            }
+          ],
+          "Stock": [
+            3,
+            6
+          ],
+          "Weight": 60
+        },
+        {
+          "Output": {
+            "ItemId": "Potion_Antidote",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Silver_Coins",
+              "Quantity": 11
+            }
+          ],
+          "Stock": [
+            2,
+            4
+          ],
+          "Weight": 40
+        }
+      ]
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Potion_Health_Lesser",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Copper_Coins",
+            "Quantity": 10
+          }
+        ],
+        "Stock": 10
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Bandage_Crude",
+          "Quantity": 3
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Gold_Coins",
+            "Quantity": 2
+          }
+        ],
+        "Stock": 10
+      }
+    },
+    {
+      "Type": "Pool",
+      "SlotCount": 6,
+      "Trades": [
+        {
+          "Output": {
+            "ItemId": "Potion_Health_Small",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Silver_Coins",
+              "Quantity": 2
+            }
+          ],
+          "Stock": [
+            2,
+            5
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Potion_Stamina_Small",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Silver_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            2,
+            5
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Potion_Stamina_Lesser",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Copper_Coins",
+              "Quantity": 10
+            }
+          ],
+          "Stock": [
+            2,
+            5
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Eld_Potion_Mana_Petite",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            2,
+            5
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Eld_Potion_Antidote",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Gold_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            2,
+            5
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Potion_Regen_Health_Small",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Silver_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            2,
+            5
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Potion_Regen_Stamina_Small",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Silver_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            2,
+            5
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Potion_Mana_Small",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Silver_Coins",
+              "Quantity": 3
+            }
+          ],
+          "Stock": [
+            2,
+            5
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Potion_Antidote",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Silver_Coins",
+              "Quantity": 11
+            }
+          ],
+          "Stock": [
+            2,
+            5
+          ],
+          "Weight": 20
+        }
+      ]
+    },
+    {
+      "Type": "Pool",
+      "SlotCount": 1,
+      "Trades": [
+        {
+          "Output": {
+            "ItemId": "Consomable_Stat_Force_One",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 10
+            }
+          ],
+          "Stock": [
+            1,
+            1
+          ],
+          "Weight": 10
+        },
+        {
+          "Output": {
+            "ItemId": "Consomable_Stat_Vitalite_One",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 10
+            }
+          ],
+          "Stock": [
+            1,
+            1
+          ],
+          "Weight": 10
+        },
+        {
+          "Output": {
+            "ItemId": "Consomable_Stat_Intelligence_One",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 10
+            }
+          ],
+          "Stock": [
+            1,
+            1
+          ],
+          "Weight": 10
+        },
+        {
+          "Output": {
+            "ItemId": "Consomable_Stat_Endurance_One",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 10
+            }
+          ],
+          "Stock": [
+            1,
+            1
+          ],
+          "Weight": 10
+        },
+        {
+          "Output": {
+            "ItemId": "Consomable_Stat_Agilite_One",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 10
+            }
+          ],
+          "Stock": [
+            1,
+            1
+          ],
+          "Weight": 10
+        },
+        {
+          "Output": {
+            "ItemId": "Consomable_Stat_Chance_One",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 10
+            }
+          ],
+          "Stock": [
+            1,
+            1
+          ],
+          "Weight": 10
+        }
+      ]
+    }
+  ]
+}

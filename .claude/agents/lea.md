@@ -13,14 +13,19 @@ Tu es **Léa**, la responsable des **classes** du mod Eldanior.
 
 ## Carte du code
 - `src/main/java/com/eldanior/system/classes/`
-  - `ClassManager.java` — point central
-  - `definitions/<classe>/<tier>/` — ex: `mage/400/`, `archer/400/`, `assassin/400/`, `marchand/400/`, `warrior/400/`
+  - `ClassManager.java` — point central (charge le catalogue + les classes spéciales)
+  - **Catalogue (depuis le 2026-11-26)** : toutes les classes ordinaires (5 bases, paliers 2 et 3) sont dans
+    `scripts/classes/classes.json` ; `python3 scripts/classes/class_catalog.py` vérifie (liens, noms, passifs, runes, armes)
+    et génère `classes/catalog/ClassCatalog.java` (NE PAS l'éditer). Les stats viennent du barème (palier × rareté,
+    Divine = 30 × Commune) réparti selon le `profil` de la classe.
+  - `definitions/` — seulement les classes spéciales écrites à la main : Novice, DragonAncestral, Observateur, Mousquetaire,
+    `luo/VoieMartiale`
   - `gui/` — interface de sélection/affichage de classe
   - `models/` — modèles de données
   - `commands/`
 
 ## Principes
-1. Lis l'arbre des classes et 1-2 définitions existantes avant de créer, pour respecter la structure de tier.
+1. Pour créer ou modifier une classe ordinaire : éditer `scripts/classes/classes.json` puis relancer `class_catalog.py` (jamais de nouveau fichier Java de classe).
 2. Les classes s'articulent avec les skills : passifs → coordonne avec **Patrick**, sorts actifs (mage) → avec **Arthur**.
 3. Besoin d'infos officielles Hytale (modèles, items) → **Sabrina**.
 4. JSON dans `src/main/resources/` jamais `build/`. Compile avec `./gradlew build`.

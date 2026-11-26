@@ -1,0 +1,23 @@
+{
+  "$Comment": "Guandao du Dragon de Jade : clic = enchainement ; maintien (0.8 s) = sort Java GuandaoLancer. Genere par gen_divines.py.",
+  "Type": "Charging",
+  "Effects": {
+    "ItemAnimationId": "ThrowCharging",
+    "ClearAnimationOnFinish": true
+  },
+  "AllowIndefiniteHold": true,
+  "Next": {
+    "0": {
+      "Type": "Chaining",
+      "ChainingAllowance": 1.3,
+      "Next": [
+        "Spear_Swing_Left",
+        "Spear_Swing_Right",
+        "Spear_Stab",
+        "Spear_Spin_Swing_Right",
+        "Spear_Spin_Swing_Left_Heavy"
+      ]
+    },
+    "0.8": "Divin_Guandao_Hold"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "$Comment": "Petrification : statue de pierre (ModelVFX Stoneskin), mouvement desactive pour les joueurs ; les monstres sont figes par le code. Sans KnockbackMultiplier.",
+  "Duration": 2.0,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": true,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Rune_Petrification.png",
+  "ApplicationEffects": {
+    "EntityTopTint": "#9a9a9a",
+    "EntityBottomTint": "#555550",
+    "ModelVFXId": "Stoneskin",
+    "MovementEffects": {
+      "DisableAll": true
+    }
+  }
+}

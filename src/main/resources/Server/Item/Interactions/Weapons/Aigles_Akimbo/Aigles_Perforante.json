@@ -1,0 +1,33 @@
+{
+  "Type": "Eldanior_MousquetTir",
+  "Colt": 3,
+  "Next": {
+    "Type": "Serial",
+    "Interactions": [
+      {
+        "Type": "Simple",
+        "RunTime": 0.08,
+        "Effects": {
+          "CameraEffect": "Handgun_Shoot",
+          "WorldSoundEventId": "SFX_Handgun_Fire",
+          "LocalSoundEventId": "SFX_Handgun_Fire_Local",
+          "ItemAnimationId": "ShootBoth"
+        }
+      },
+      {
+        "Type": "RuneSpell",
+        "RunTime": 0.05,
+        "Spell": "AiglesPerforante"
+      },
+      {
+        "Type": "Simple",
+        "RunTime": 0.5,
+        "Effects": {
+          "ClearAnimationOnFinish": true
+        }
+      }
+    ]
+  },
+  "Failed": "Gun_Shoot_Fail",
+  "$Comment": "Aigles du Desert : attaque maintenue, Balle Perforante (chargeur : 3 balles) : traverse tous les ennemis et 4 blocs."
+}

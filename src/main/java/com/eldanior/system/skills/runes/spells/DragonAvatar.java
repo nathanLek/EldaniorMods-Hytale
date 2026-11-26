@@ -160,7 +160,7 @@ public final class DragonAvatar {
      * Rend au joueur son apparence : modele reconstruit depuis son skin (avec tous ses cosmetiques), puis le skin est
      * renvoye aux clients. A defaut de skin, modele d'origine memorise, sinon modele joueur par defaut.
      */
-    private static void restoreAppearance(Ref<EntityStore> caster, Model original, Store<EntityStore> store, CommandBuffer<EntityStore> cb) {
+    static void restoreAppearance(Ref<EntityStore> caster, Model original, Store<EntityStore> store, CommandBuffer<EntityStore> cb) {
         Model model = null;
         var skin = store.getComponent(caster, com.hypixel.hytale.server.core.modules.entity.player.PlayerSkinComponent.getComponentType());
         try {

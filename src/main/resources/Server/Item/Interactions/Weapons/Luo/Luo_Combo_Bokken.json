@@ -1,0 +1,66 @@
+{
+  "Type": "EffectCondition",
+  "EntityEffectIds": [
+    "Voie_Combo_12"
+  ],
+  "Match": "All",
+  "Next": "Luo_Kata_12",
+  "Failed": {
+    "Type": "EffectCondition",
+    "EntityEffectIds": [
+      "Voie_Combo_10"
+    ],
+    "Match": "All",
+    "Next": "Luo_Kata_10",
+    "Failed": {
+      "Type": "EffectCondition",
+      "EntityEffectIds": [
+        "Voie_Combo_9"
+      ],
+      "Match": "All",
+      "Next": "Luo_Kata_9",
+      "Failed": {
+        "Type": "EffectCondition",
+        "EntityEffectIds": [
+          "Voie_Combo_8"
+        ],
+        "Match": "All",
+        "Next": "Luo_Kata_8",
+        "Failed": {
+          "Type": "EffectCondition",
+          "EntityEffectIds": [
+            "Voie_Combo_6"
+          ],
+          "Match": "All",
+          "Next": "Luo_Kata_6",
+          "Failed": {
+            "Type": "EffectCondition",
+            "EntityEffectIds": [
+              "Voie_Combo_5"
+            ],
+            "Match": "All",
+            "Next": "Luo_Kata_5",
+            "Failed": {
+              "Type": "EffectCondition",
+              "EntityEffectIds": [
+                "Voie_Combo_4"
+              ],
+              "Match": "All",
+              "Next": "Luo_Kata_4",
+              "Failed": {
+                "Type": "EffectCondition",
+                "EntityEffectIds": [
+                  "Voie_Combo_3"
+                ],
+                "Match": "All",
+                "Next": "Luo_Kata_3",
+                "Failed": "Luo_Kata_2"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$Comment": "Combo du Bokken : le kata de la voie martiale (2 coups hors de la voie), comme les autres katanas."
+}

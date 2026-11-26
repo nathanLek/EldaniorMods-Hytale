@@ -15,7 +15,8 @@ public abstract class ClassModel {
     private final String description;
     private final Rarity rarity;
     private final ClassType type;
-    private final List<PassiveSkill> passiveSkills;
+    /** Passifs innes de la classe, chacun a son rang (refonte des passifs du 2026-11-24). */
+    private final List<PassiveSkill.Ranked> passiveSkills;
     private final List<String> activeSkillIds;
     private final List<WeaponMastery> allowedMasteries;
 
@@ -32,6 +33,10 @@ public abstract class ClassModel {
 
     /** Runes de la classe (competences actives, objets Rune_*), declarees dans son constructeur comme ses passifs. */
     private List<String> runeIds = Collections.emptyList();
+    /** Metiers (etablis) que la classe connait d'office : ARTISANAT, CRAFT_... (sortis des passifs le 2026-11-24). */
+    private List<String> metierIds = Collections.emptyList();
+    /** Palier de la classe : 1 base, 2 et 3 evolutions (catalogue), 0 classe speciale (Novice, Dragon, Observateur, voie martiale). */
+    private int tier = 0;
 
     public ClassModel(
             String id,
@@ -39,7 +44,7 @@ public abstract class ClassModel {
             String description,
             Rarity rarity,
             ClassType type,
-            List<PassiveSkill> passiveSkills,
+            List<PassiveSkill.Ranked> passiveSkills,
             List<WeaponMastery> allowedMasteries,
             List<String> nextClassId,
             int promotionLevel,
@@ -61,7 +66,7 @@ public abstract class ClassModel {
             String description,
             Rarity rarity,
             ClassType type,
-            List<PassiveSkill> passiveSkills,
+            List<PassiveSkill.Ranked> passiveSkills,
             List<String> activeSkillIds,
             List<WeaponMastery> allowedMasteries,
             List<String> nextClassId,
@@ -99,12 +104,21 @@ public abstract class ClassModel {
     public Rarity getRarity() { return rarity; }
     public ClassType getType() { return type; }
 
-    public List<PassiveSkill> getSkillsPassiveIds() { return passiveSkills; }
+    /** Passifs innes de la classe et leur rang. */
+    public List<PassiveSkill.Ranked> getClassPassives() { return passiveSkills; }
     public List<String> getActiveSkillIds() { return activeSkillIds; }
     public List<String> getRuneIds() { return runeIds; }
 
     /** Runes de la classe, dans son constructeur apres super(...) (ecrit par scripts/classes/class_runes.py). */
     protected final void runes(String... ids) { this.runeIds = List.of(ids); }
+
+    /** Metiers de la classe, dans son constructeur apres super(...) (ecrit par scripts/passifs/gen_passifs.py). */
+    protected final void metiers(String... ids) { this.metierIds = List.of(ids); }
+    public List<String> getMetierIds() { return metierIds; }
+
+    /** Palier, dans le constructeur apres super(...) (catalogue : scripts/classes/class_catalog.py). */
+    protected final void tier(int tier) { this.tier = tier; }
+    public int getTier() { return tier; }
     public List<WeaponMastery> getAllowedMasteries() { return allowedMasteries; }
 
     public List<String> getNextClassId() { return nextClassId; }
@@ -118,8 +132,10 @@ public abstract class ClassModel {
     public int getBonusAgl() { return bonusAgl; }
     public int getBonusLck() { return bonusLck; }
 
-    public boolean hasPassive(PassiveSkill skill) {
-        return passiveSkills.contains(skill);
+    /** Rang du passif donne par la classe (0 si elle ne le donne pas). */
+    public int passiveRank(PassiveSkill skill) {
+        for (PassiveSkill.Ranked r : passiveSkills) if (r.skill() == skill) return r.rank();
+        return 0;
     }
 
     public boolean canEquip(WeaponMastery mastery) {

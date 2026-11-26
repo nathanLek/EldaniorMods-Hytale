@@ -1,0 +1,17 @@
+{
+  "$Comment": "Prophetie (Rune_Prophetie) : voile dore de ceux qui connaissent l'avenir, +30 % de degats infliges (OutgoingDamage). Les esquives sont gerees par la protection RuneSpellRuntime.ward. Pose une fois 15 s.",
+  "Duration": 15.0,
+  "ApplicationEffects": {
+    "EntityTopTint": "#fff2c8",
+    "EntityBottomTint": "#c89a3a",
+    "ModelVFXId": "Prescience_Voile"
+  },
+  "OutgoingDamage": {
+    "Physical": [{"Amount": 0.3, "CalculationType": "Percent"}],
+    "Elemental": [{"Amount": 0.3, "CalculationType": "Percent"}],
+    "Projectile": [{"Amount": 0.3, "CalculationType": "Percent"}]
+  },
+  "OverlapBehavior": "Overwrite",
+  "Debuff": false,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Rune_Prophetie.png"
+}

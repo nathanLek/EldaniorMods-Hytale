@@ -1,0 +1,67 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_GolemsCristal",
+  "spell": "GolemsCristal",
+  "javaClass": "GolemsCristal",
+  "page": "rune_page_golems_cristal",
+  "name": "Rune des Golems de Cristal",
+  "type": "Terre",
+  "rarity": "Epic",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "GolemsCristal",
+  "summary": "3 golems de cristal (feu, givre, foudre ; 250 PV) 15 s : chacun ajoute son element a sa cible (25 / 1,5 s), et eclate a sa fin (120, r 3).",
+  "description": "Sort épique de terre (Mage, rune de prédilection du Démiurge). Trois golems de cristal (250 PV chacun) sortent de terre autour de vous pendant 15 s : un de feu, un de givre, un de foudre. Ils combattent les ennemis proches, et toutes les 1,5 s chacun inflige 25 dégâts de son élément à sa cible (brûlure, givre ou étourdissement bref). Quand un golem tombe ou que le sort prend fin, il éclate : 120 dégâts de son élément à moins de 3 blocs. Sans ennemi, ils vous suivent. Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin où sont incrustés trois éclats de cristal : rouge, bleu et jaune. Enseigne les Golems de Cristal : le Démiurge donne forme et vie à la pierre. Classes : tous les Mages (rune de prédilection du Démiurge). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.6,
+    "releaseTime": 0.5,
+    "moveSpeed": 0.4,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Golem_Earth_Wake",
+    "handParticles": "Gaia_Dust_Burst",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.6,
+    "range": 4,
+    "targets": "3 golems allies (PNJ Eldanior_Summon_Golem_Feu / _Givre / _Foudre, modeles Golem_Crystal_Flame / Frost / Thunder vanilla)",
+    "executionFx": "Gaia_Dust_Burst a l'apparition de chaque golem",
+    "impactFx": "Impact_Fire / Ability_Ice_Impact / Taranis_Bolt sur la cible ; eclatement : Explosion_Small + l'impact de l'element",
+    "sounds": "SFX_Golem_Earth_Wake a l'apparition, SFX_Crystal_Break a l'eclatement",
+    "effects": "golems 250 PV, attaque vanilla du golem de cristal ; / 1,5 s, cible a 3,5 blocs : 25 Fire + Elda_Brulure / 25 Ice + Elda_Givre / 25 Lightning + Taranis_Foudroye 0,3 s ; eclatement 120 de l'element r 3",
+    "terrain": "aucun",
+    "persistentDurationS": 15,
+    "interruptions": "tous les golems tombes : fin",
+    "restrictions": "mage",
+    "edgeCases": "golem non cree (chunk) : ignore apres 3 s",
+    "limitations": "invocation : duree au-dela de la fourchette Epic (10 s), comme le Golem de Pierre ; compensee par des PV faibles. Les coups des golems ne passent pas par onOwnerHit : l'element est applique par le sort a la cible de chaque golem",
+    "balance": {
+      "damage": 2,
+      "range": 1,
+      "duration": 3,
+      "mobility": 0,
+      "control": 1,
+      "defense": 2,
+      "targets": 3,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 0
+    }
+  }
+}

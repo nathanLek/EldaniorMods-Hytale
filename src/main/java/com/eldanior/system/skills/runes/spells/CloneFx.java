@@ -154,6 +154,13 @@ public final class CloneFx {
         return hp != null ? hp.getMax() : 0f;
     }
 
+    /** Maximum d'une statistique (0 si inconnue). */
+    static float maxStat(Ref<EntityStore> ref, int stat, ComponentAccessor<EntityStore> accessor) {
+        EntityStatMap stats = accessor.getComponent(ref, EntityStatsModule.get().getEntityStatMapComponentType());
+        EntityStatValue v = stats != null ? stats.get(stat) : null;
+        return v != null ? v.getMax() : 0f;
+    }
+
     /** Remplit une stat (ex. energie de signature : le clone peut lancer la competence de son arme). */
     static void fillStat(Ref<EntityStore> ref, int stat, ComponentAccessor<EntityStore> accessor) {
         EntityStatMap stats = accessor.getComponent(ref, EntityStatsModule.get().getEntityStatMapComponentType());

@@ -1,7 +1,6 @@
 package com.eldanior.system.titles.nobility.family.definitions.duc;
 
 import com.eldanior.system.config.configs.Rarity;
-import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
 import com.eldanior.system.titles.nobility.NobilityRank;
 import com.eldanior.system.titles.nobility.family.NobleFamilyModel;
 
@@ -17,8 +16,7 @@ public class Spellweave extends NobleFamilyModel {
                 + "une technique revolutionnaire qui changea l'art de la guerre magique. "
                 + "Leurs enchanteurs sont capables de creer des artefacts d'une puissance inegalee.",
                 Rarity.EPIC,
-                NobilityRank.DUC,
-                PassiveSkill.FAMILY_DIVINE_LIGHT
+                NobilityRank.DUC
         );
     }
 }

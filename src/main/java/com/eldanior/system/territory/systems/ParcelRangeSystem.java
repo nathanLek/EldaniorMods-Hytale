@@ -102,7 +102,12 @@ public class ParcelRangeSystem extends EntityTickingSystem<EntityStore> {
                     // === TRACKING DECOUVERTE ===
                     trackDiscovery(currentParcel, player, playerUUID, pRef, store, ref);
 
-                    if (currentParcel.getType() == ParcelType.ARENA) {
+                    if ("off".equals(currentParcel.getAnnounce())) {
+                        // zone de borne reglee « pas d'annonce » : silence
+                    } else if ("on".equals(currentParcel.getAnnounce()) && isBigZone(currentParcel.getType())) {
+                        // zone de borne reglee « annonce » : toujours annoncee a l'entree (meme dans l'Empire Luo)
+                        if (!isAncestor(currentParcel, previousParcel)) showZoneTitle(pRef, currentParcel);
+                    } else if (currentParcel.getType() == ParcelType.ARENA) {
                         // ARENE : message + inscription
                         ArenaManager.enterArena(playerUUID, currentParcel.getId());
                         NotificationHelper.showEventTitle(pRef, fmt(currentParcel.getName()), "ARENE — PvP Libre", false);
@@ -116,6 +121,13 @@ public class ParcelRangeSystem extends EntityTickingSystem<EntityStore> {
                         NotificationHelper.showEventTitle(pRef, fmt(currentParcel.getName()), "MINE — Zone de Minage", false);
                     } else if (currentParcel.getType() == ParcelType.FOREST) {
                         NotificationHelper.showEventTitle(pRef, fmt(currentParcel.getName()), "FORET — Zone de Recolte", false);
+                    } else if (currentParcel == com.eldanior.system.luo.LuoClanSystem.luoRealm(currentParcel)
+                            || com.eldanior.system.luo.LuoClanSystem.hiddenInLuoRealm(currentParcel)) {
+                        // Empire du Clan Luo : seul le marquisat s'annonce, a l'entree ; ses duches sont muets
+                        ParcelData realm = com.eldanior.system.luo.LuoClanSystem.luoRealm(currentParcel);
+                        ParcelData before = com.eldanior.system.luo.LuoClanSystem.luoRealm(previousParcel);
+                        if (before == null || !before.getId().equals(realm.getId()))
+                            NotificationHelper.showEventTitle(pRef, fmt(realm.getName()), "EMPIRE INDÉPENDANT DU CLAN LUO", false);
                     } else if (isBigZone(currentParcel.getType())) {
                         // Verifier toute la hierarchie (parent, grand-parent, etc.)
                         boolean isAncestorOfPrevious = false;
@@ -214,6 +226,17 @@ public class ParcelRangeSystem extends EntityTickingSystem<EntityStore> {
     /** Formate un nom de parcelle pour l'affichage : remplace les _ par des espaces */
     private static String fmt(String name) {
         return name != null ? name.replace('_', ' ') : "";
+    }
+
+    /** true si zone est un parent (a n'importe quel niveau) de inner : on y etait deja. */
+    private static boolean isAncestor(ParcelData zone, ParcelData inner) {
+        String pid = inner != null ? inner.getParentId() : null;
+        for (int guard = 0; pid != null && !pid.isEmpty() && guard < 32; guard++) {
+            if (zone.getId().equals(pid)) return true;
+            ParcelData pp = ParcelManager.get(pid);
+            pid = pp != null ? pp.getParentId() : null;
+        }
+        return false;
     }
 
     private boolean isBigZone(ParcelType type) {

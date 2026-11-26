@@ -1,0 +1,180 @@
+{
+  "DisplayNameKey": "Armurerie du Clan Luo — Grand Marchand",
+  "RefreshInterval": {
+    "Days": 3
+  },
+  "RestockHour": 6,
+  "TradeSlots": [
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Eldanior_Weapon_Sword_Katana_Tsukikage",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Zenith_Coins",
+            "Quantity": 4
+          }
+        ],
+        "Stock": 1
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Artefact_Sword_Katana_Shirasagi",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Zenith_Coins",
+            "Quantity": 9
+          }
+        ],
+        "Stock": 1
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Artefact_Sword_Katana_Hien",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Zenith_Coins",
+            "Quantity": 8
+          }
+        ],
+        "Stock": 1
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Artefact_Sword_Katana_Gotetsu",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Zenith_Coins",
+            "Quantity": 9
+          }
+        ],
+        "Stock": 1
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Output": {
+          "ItemId": "Artefact_Sword_Katana_Yamikiri",
+          "Quantity": 1
+        },
+        "Input": [
+          {
+            "ItemId": "Elda_Zenith_Coins",
+            "Quantity": 9
+          }
+        ],
+        "Stock": 1
+      }
+    },
+    {
+      "Type": "Pool",
+      "SlotCount": 2,
+      "Trades": [
+        {
+          "Output": {
+            "ItemId": "Weapon_Sword_Onyxium",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 6
+            }
+          ],
+          "Stock": [
+            1,
+            1
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Sword_Adamantite",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 5
+            }
+          ],
+          "Stock": [
+            1,
+            1
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Longsword_Mithril",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 6
+            }
+          ],
+          "Stock": [
+            1,
+            1
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Daggers_Onyxium",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 6
+            }
+          ],
+          "Stock": [
+            1,
+            1
+          ],
+          "Weight": 20
+        },
+        {
+          "Output": {
+            "ItemId": "Weapon_Shield_Onyxium",
+            "Quantity": 1
+          },
+          "Input": [
+            {
+              "ItemId": "Elda_Diamond_Coins",
+              "Quantity": 6
+            }
+          ],
+          "Stock": [
+            1,
+            1
+          ],
+          "Weight": 20
+        }
+      ]
+    }
+  ]
+}

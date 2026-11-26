@@ -1,0 +1,82 @@
+$C = "../Common.ui";
+
+// Teleporteur Continental (territory/teleport/ContinentalPage) : une ligne par Marquisat relie (8 au plus), prix du voyage.
+$C.@PageOverlay {
+  LayoutMode: Middle;
+
+  $C.@DecoratedContainer {
+    Anchor: (Width: 560);
+
+    #Title {
+      $C.@Title {
+        @Text = "Téléporteur Continental";
+      }
+    }
+
+    #Content {
+      Padding: (Vertical: 24, Horizontal: 45);
+
+      Label #TpFrom {
+        Style: (FontSize: 16, RenderBold: true, RenderUppercase: true, TextColor: #f2c45e, HorizontalAlignment: Center);
+      }
+      Label #TpPrice {
+        Anchor: (Top: 6);
+        Style: (FontSize: 14, RenderBold: true, TextColor: #94a7bb, HorizontalAlignment: Center, Wrap: true);
+      }
+
+      Group #TpRow0 {
+        Anchor: (Top: 10);
+        LayoutMode: Center;
+        $C.@SecondaryTextButton #TpPick0 { Text: ""; FlexWeight: 1; }
+      }
+      Group #TpRow1 {
+        Anchor: (Top: 6);
+        LayoutMode: Center;
+        $C.@SecondaryTextButton #TpPick1 { Text: ""; FlexWeight: 1; }
+      }
+      Group #TpRow2 {
+        Anchor: (Top: 6);
+        LayoutMode: Center;
+        $C.@SecondaryTextButton #TpPick2 { Text: ""; FlexWeight: 1; }
+      }
+      Group #TpRow3 {
+        Anchor: (Top: 6);
+        LayoutMode: Center;
+        $C.@SecondaryTextButton #TpPick3 { Text: ""; FlexWeight: 1; }
+      }
+      Group #TpRow4 {
+        Anchor: (Top: 6);
+        LayoutMode: Center;
+        $C.@SecondaryTextButton #TpPick4 { Text: ""; FlexWeight: 1; }
+      }
+      Group #TpRow5 {
+        Anchor: (Top: 6);
+        LayoutMode: Center;
+        $C.@SecondaryTextButton #TpPick5 { Text: ""; FlexWeight: 1; }
+      }
+      Group #TpRow6 {
+        Anchor: (Top: 6);
+        LayoutMode: Center;
+        $C.@SecondaryTextButton #TpPick6 { Text: ""; FlexWeight: 1; }
+      }
+      Group #TpRow7 {
+        Anchor: (Top: 6);
+        LayoutMode: Center;
+        $C.@SecondaryTextButton #TpPick7 { Text: ""; FlexWeight: 1; }
+      }
+
+      Label #TpEmpty {
+        Anchor: (Top: 10);
+        Visible: false;
+        Text: "Aucun autre Téléporteur Continental n'est actif.";
+        Style: (FontSize: 14, RenderBold: true, TextColor: #8a6a6a, HorizontalAlignment: Center, Wrap: true);
+      }
+      Label #TpMsg {
+        Anchor: (Top: 12);
+        Style: (FontSize: 13, RenderBold: true, TextColor: #cc3361, HorizontalAlignment: Center, Wrap: true);
+      }
+    }
+  }
+}
+
+$C.@BackButton {}

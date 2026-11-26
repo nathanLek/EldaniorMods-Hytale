@@ -1,0 +1,67 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_Sentence",
+  "spell": "Sentence",
+  "javaClass": "Sentence",
+  "page": "rune_page_sentence",
+  "name": "Rune de la Sentence",
+  "type": "Temps",
+  "rarity": "Unique",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Sentence",
+  "summary": "3 ennemis condamnes 8 s : a l'echeance, ils subissent a nouveau tous les degats que vous leur avez infliges (min 100, max 800).",
+  "description": "Sort unique du temps (Mage, rune de prédilection du Prophète du Destin). Vous condamnez l'ennemi visé et jusqu'à 2 ennemis proches (6 blocs) : une horloge tourne au-dessus d'eux pendant 8 s. À l'échéance, la sentence tombe : chacun subit à nouveau tous les dégâts que vous lui avez infligés pendant ce temps (au moins 100, au plus 800). Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin scellé d'une horloge sans aiguilles. Enseigne la Sentence : chaque coup porté sera payé deux fois. Classes : tous les Mages (rune de prédilection du Prophète du Destin). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Duration"
+  ],
+  "cast": {
+    "animationSet": "Spellbook",
+    "charging": "CastHurlCharging",
+    "release": "CastHurlCharged",
+    "chargeTime": 0.5,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Arcane_Workbench_Craft",
+    "handParticles": "Chronos_Gold",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.5,
+    "range": 25,
+    "radius": "6 (cibles secondaires)",
+    "targets": "3 ennemis",
+    "persistentFx": "Chronos_Gold au-dessus de chaque condamne toutes les 500 ms",
+    "impactFx": "Chronos_Shatter + Impact_Critical a l'echeance",
+    "sounds": "SFX_Arcane_Workbench_Craft toutes les 2 s, SFX_Crystal_Break a l'echeance",
+    "effects": "onOwnerHit sur un condamne : cumul ; a 8 s, degats Elemental = cumul borne [100, 800] (markEcho)",
+    "terrain": "aucun",
+    "persistentDurationS": 8,
+    "interruptions": "aucune",
+    "restrictions": "mage",
+    "edgeCases": "aucune cible visee : la plus proche a 25 blocs devant ; aucune : rien ne se passe (mana consomme) ; condamne mort : retire",
+    "balance": {
+      "damage": 3,
+      "range": 2,
+      "duration": 2,
+      "mobility": 0,
+      "control": 0,
+      "defense": 0,
+      "targets": 2,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 2
+    }
+  },
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null
+}

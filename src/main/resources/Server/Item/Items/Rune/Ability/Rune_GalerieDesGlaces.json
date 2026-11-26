@@ -1,0 +1,45 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de la Galerie des Glaces",
+    "Description": "Sort épique de lumière (Mage, rune de prédilection du Grand Illusionniste). Dix reflets de vous apparaissent en cercle autour de l'ennemi visé (20 blocs) pendant 10 s. Chaque coup que vous lui portez est répété par chaque reflet encore debout (15 % du coup chacun). À la fin, les reflets convergent et éclatent : 40 dégâts par reflet dans un rayon de 3 blocs, et la cible est éblouie 1,5 s. Un reflet se brise au premier coup reçu. Coût : 300 mana. Recharge : 120 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_GalerieDesGlaces.png",
+  "Quality": "Epic",
+  "ItemLevel": 60,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_Runes.Lumiere"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_GalerieDesGlaces.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 120,
+    "Cost": 300,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Buff",
+      "Damage",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_GalerieDesGlaces"
+  }
+}

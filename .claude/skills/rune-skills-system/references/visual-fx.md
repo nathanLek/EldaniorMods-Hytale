@@ -10,6 +10,10 @@
 - Particules dans les mains pendant l'incantation : `Effects.Particles` avec `TargetEntityPart: "Entity"` et `TargetNodeName: "R-Hand"` / `"L-Hand"`.
 - Caméra : `Effects.CameraEffect` (`Ability_Cast_Generic`) et `SpellFx.shake(pos, r, "Impact_Strong" | "Impact_Light")`.
 
+- **Maintenir pour charger** (arc bandé, sort chargé) : fiche `cast.hold` (`rune_tool.py` génère un `Charging` comme la rune
+  vanilla `Ability_ChargedShot_Cast` : `Next` indexé par le temps tenu, `"0.0"` = relâché trop tôt → petite recharge, sans mana).
+  Exemple : `Rune_PluieDeFleches` (`Shortbow/ShootCharging`, `SFX_Bow_T2_Draw`, particule `Bow_Charging` sur `Handle`).
+
 ## Particules émises par le code (`SpellFx.fx`)
 - **Un système sans `LifeSpan` dont un spawner émet en continu boucle à l'infini** quand on l'émet seul (ex. `Ability_ChainHook_Hit` :
   anneaux restés après la mort). Faire une copie du mod avec `LifeSpan`. `rune_tool.py check` et `assets particles` le signalent.
@@ -50,6 +54,23 @@
 - Une teinte `#000000` est ignorée : utiliser `#0d0614` / `#030106` pour du noir.
 - Lister : `rune_tool.py assets effects <regex>`.
 
+- **Invisibilité réelle** : une teinte `EntityTopTint`/`EntityBottomTint` à alpha 00 ne cache **rien**. Utiliser un ModelVFX
+  `"SwitchTo": "Disappear"` (`Elda_Disparition`, porté par l'effet `Elda_InvisTotal`) : le modèle se dissout et réapparaît au
+  retrait de l'effet. Autres modes du moteur : `Transparency`, `AlphaTransparency`, `Distortion` (non testés dans le mod).
+
+- **Sons stéréo** : un son dont le `.ogg` est stéréo (ex. `SFX_Coffer_Goblin_Timer_*`, la plupart des `*_Local`) en
+  `WorldSoundEventId` d'une interaction fait **échouer tout le mod** (« Stereo instead of Mono ») ; en code, seulement via
+  `SpellFx.sound2dNear`. `rune_tool.py check` le détecte (erreur en interaction, avertissement dans le code).
+
+- **Effet + poussée** : un effet avec `"KnockbackMultiplier": 0` (ex. `Gravite_Ecrasement`) annule aussi les poussées du sort
+  (`damage(..., knockback)`, `push`) : pour plaquer puis éjecter, utiliser un effet sans ce réglage (`Elda_Decret`).
+
+- **Bonus de dégâts infligés** : clé `OutgoingDamage` d'un effet (même format que `DamageResistance`, vanilla `Ability_Enrage_Buff`) ;
+  réduction subie : `DamageResistance`. Pas besoin de crochet dans `DivineDamageSystem`.
+- **ModelVFX fragiles** : d'après le commentaire de `Ability_Enrage_Buff` vanilla, le client réinitialise les ModelVFX au retrait de
+  **n'importe quel** effet de l'entité. Une invisibilité par ModelVFX (`Elda_InvisTotal`) peut donc s'interrompre si un autre effet
+  expire pendant ce temps : à vérifier en jeu.
+
 ## Beams (chaînes, rayons)
 `Server/Entity/Beams/<Id>.json` + texture `Common/Trails/...`. Les beams attachés à une entité (`toEntity`) disparaissent : utiliser des
 beams de position rafraîchis toutes les 100 ms (`NyxVeil`).
@@ -61,3 +82,6 @@ beams de position rafraîchis toutes les 100 ms (`NyxVeil`).
 Common : 1 effet d'incantation + 1 d'impact. Rare : + traînée / particules de trajet, son dédié. Epic : zone visible persistante,
 secousse caméra. Unique / Legendaire : modèle invoqué, lumière, terrain transformé. Divin : changement d'ambiance (brume, sol,
 dôme, ciel via modèles géants), effets à 100–200 blocs, multiples phases (apparition, règne, final).
+
+## Agrandir un joueur (forme colossale)
+- `ColossePierre.scaled(Model, f)` recopie le modele courant du joueur (skin et accessoires compris) a l'echelle f, avec les memes champs que `Model.createScaledModel` (boite, yeux, camera, physique, particules, boites de detail). Retour : `DragonAvatar.restoreAppearance` (skin reconstruit). Non teste en jeu au 2026-11-01.

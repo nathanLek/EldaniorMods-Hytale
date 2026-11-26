@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_PontBifrost (remplace le parchemin rune_page_pont_bifrost).",
+  "TranslationProperties": {
+    "Name": "Manuel de l'Espace : Pont du Bifröst",
+    "Description": "Sort divin de téléportation (Mage, Assassin, Archer, Dragon). Le pont arc-en-ciel des dieux. Un cercle runique suit votre curseur jusqu'à 600 blocs (visez le ciel pour partir à portée maximale droit devant) et un arc-en-ciel en pointillés dessine déjà le trajet ; un clic confirme (sinon le sort part seul au bout de 6 s). Une colonne de lumière s'abat sur vous et le pont du Bifröst, aux sept couleurs, se déploie dans le ciel jusqu'à la destination. Après 1,5 s, vous et vos alliés proches (8 blocs) devenez lumière et filez sur le pont, puis descendez dans un pilier de lumière de 7 blocs de diamètre qui s'élève à 200 blocs de haut aux couleurs de l'arc-en-ciel. À l'impact, le Bifröst frappe le sol comme un éclair divin : onde de choc, jusqu'à 900 dégâts et forte projection sur 12 blocs, et son sceau runique reste gravé dans le sol (restauré après 3 minutes). Aucun dégât de chute. Épargne votre groupe, votre guilde et votre famille. Coût : 2000 mana. Recharge : 5 s (valeur de test).\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Espace"
+  ],
+  "Quality": "Divin",
+  "ItemLevel": 100,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Espace_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Espace_PontBifrost.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

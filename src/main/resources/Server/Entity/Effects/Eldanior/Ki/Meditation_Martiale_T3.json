@@ -1,0 +1,30 @@
+{
+  "$Comment": "Meditation martiale, palier 3 : posture assise, deplacements, attaque et garde bloques ; aura #3d7dff. Rafraichi par MeditationMartiale (gen_voie_martiale.py). Nom : Méditation.",
+  "ApplicationEffects": {
+    "Particles": [
+      {
+        "SystemId": "Ki_Meditation_T3",
+        "TargetNodeName": "Chest",
+        "PositionOffset": {
+          "X": 0,
+          "Y": -1,
+          "Z": 0
+        },
+        "Scale": 1.0
+      }
+    ],
+    "HorizontalSpeedMultiplier": 0,
+    "MovementEffects": {
+      "DisableAll": true
+    },
+    "AbilityEffects": {
+      "Disabled": [
+        "Primary",
+        "Secondary"
+      ]
+    }
+  },
+  "Duration": 2.5,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": false
+}

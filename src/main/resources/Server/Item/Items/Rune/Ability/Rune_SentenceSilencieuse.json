@@ -1,0 +1,44 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune Sentence Silencieuse",
+    "Description": "Technique ultime de l'Observateur, l'assassin privé du Roi. Visez une cible : elle est figée, vous disparaissez dans l'ombre et surgissez dans son dos pour une frappe unique. Sous 40 % de vie, c'est une exécution ; sinon elle perd 35 % de sa vie maximale. Avec Arkies Domini, la portée passe à 100 blocs et traverse les murs ; sous Sans Visage, le seuil d'exécution monte à 50 % mais le masque tombe. Vous restez invisible un court instant après le coup. Coût 1200 de mana, recharge 300 s, prélevés seulement si une cible est trouvée. Coût : 0 mana. Recharge : 1 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_SentenceSilencieuse.png",
+  "Quality": "Legendary",
+  "ItemLevel": 90,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_Runes.Tenebres"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_SentenceSilencieuse.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 1,
+    "Cost": 0,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Damage",
+      "Melee"
+    ],
+    "Cast": "Root_Ability_SentenceSilencieuse"
+  }
+}

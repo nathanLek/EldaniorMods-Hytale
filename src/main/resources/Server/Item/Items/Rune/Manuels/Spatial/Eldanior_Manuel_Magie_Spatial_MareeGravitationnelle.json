@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_MareeGravitationnelle (remplace le parchemin rune_page_maree_gravitationnelle).",
+  "TranslationProperties": {
+    "Name": "Manuel Spatial : Marée Gravitationnelle",
+    "Description": "Sort légendaire spatial (Mage, rune de prédilection du Démiurge Suprême). Pendant 20 s, la gravité reflue et déferle autour de vous (rayon 25), toutes les 2 s. Marée basse : les ennemis s'élèvent de 4 blocs et des blocs du sol montent avec eux. Marée haute : tout retombe d'un coup, les ennemis sont plaqués au sol (60 dégâts) et une cuvette se creuse un peu plus au centre. Vous et vos alliés ne subissez aucune chute. Le terrain est restauré ensuite (jamais en ville ni sur une parcelle). Épargne votre groupe, votre guilde et votre famille. Coût : 1200 mana. Recharge : 300 s.\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Spatial"
+  ],
+  "Quality": "Legendary",
+  "ItemLevel": 90,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Spatial_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Spatial_MareeGravitationnelle.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

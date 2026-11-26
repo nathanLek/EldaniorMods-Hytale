@@ -5,7 +5,6 @@ import com.eldanior.system.Leveling.utils.NotificationHelper;
 import com.eldanior.system.config.Player.PlayerLevelData;
 import com.eldanior.system.config.configs.StatConfig;
 import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
-import com.eldanior.system.skills.skills.passives.Legendaire.Magique.Fly;
 import com.hypixel.hytale.component.ArchetypeChunk;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.ComponentType;
@@ -34,6 +33,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class FlySystem extends EntityTickingSystem<EntityStore> {
 
+    /** Cout du passif Vol en mana par seconde de vol (description du passif : 20/s depuis le 2026-11-24). */
+    public static final int MANA_COST_PER_SECOND = 20;
+
     private static final float FLY_SPEED = 6.5f;
 
     private final Map<UUID, Float> flightTimers = new ConcurrentHashMap<>();
@@ -56,7 +58,7 @@ public class FlySystem extends EntityTickingSystem<EntityStore> {
             return;
         }
 
-        boolean hasVol = data.getActivePassives().contains(PassiveSkill.VOL);
+        boolean hasVol = data.hasActivePassive(PassiveSkill.VOL);
 
         MovementManager movementManager = store.getComponent(player.getReference(), MovementManager.getComponentType());
         MovementStatesComponent movementStates = store.getComponent(player.getReference(), MovementStatesComponent.getComponentType());
@@ -86,10 +88,10 @@ public class FlySystem extends EntityTickingSystem<EntityStore> {
                 if (timeFlying >= 1.0f) {
 
                     // On vérifie le mana actuel (via le système natif)
-                    if (currentMana >= Fly.MANA_COST_PER_SECOND) {
+                    if (currentMana >= MANA_COST_PER_SECOND) {
 
                         // On réduit le mana natif (l'UI va se rafraîchir toute seule !)
-                        statMap.setStatValue(StatConfig.INTELLIGENCE.getStatId(), currentMana - Fly.MANA_COST_PER_SECOND);
+                        statMap.setStatValue(StatConfig.INTELLIGENCE.getStatId(), currentMana - MANA_COST_PER_SECOND);
                         commandBuffer.putComponent(player.getReference(), statMapType, statMap);
 
                         flightTimers.put(playerUUID, timeFlying - 1.0f);
@@ -110,7 +112,7 @@ public class FlySystem extends EntityTickingSystem<EntityStore> {
                 flightTimers.remove(playerUUID);
             }
 
-            if (!currentlyCanFly && currentMana >= Fly.MANA_COST_PER_SECOND) {
+            if (!currentlyCanFly && currentMana >= MANA_COST_PER_SECOND) {
                 settings.fly = FlyMode.Allowed;
                 settings.horizontalFlySpeed = FLY_SPEED;
                 settings.verticalFlySpeed = FLY_SPEED;

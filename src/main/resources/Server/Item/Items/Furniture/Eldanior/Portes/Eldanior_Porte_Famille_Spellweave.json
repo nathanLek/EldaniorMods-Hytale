@@ -1,0 +1,92 @@
+{
+  "TranslationProperties": {
+    "Name": "Porte du Trésor - Spellweave",
+    "Description": "Porte blindée de 5 blocs sur 7. Seul le Patriarche de la famille Spellweave l'ouvre, avec sa clé. Se pose au milieu du bas de l'ouverture."
+  },
+  "Icon": "Icons/ItemsGenerated/Eldanior_Porte_Famille_Spellweave.png",
+  "Categories": [
+    "Eldanior_Familles.Spellweave",
+    "Furniture.Doors"
+  ],
+  "PlayerAnimationsId": "Block",
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  },
+  "IconProperties": {
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Scale": 0.2,
+    "Translation": [
+      0,
+      -40
+    ]
+  },
+  "BlockType": {
+    "BlockParticleSetId": "Stone",
+    "CustomModel": "Blocks/Eldanior/Porte_Tresor.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/Eldanior/Porte_Tresor_Spellweave_Texture.png"
+      }
+    ],
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "HitboxType": "Eldanior_Porte_Tresor",
+    "Material": "Solid",
+    "State": {
+      "Definitions": {
+        "DoorBlocked": {},
+        "CloseDoorIn": {
+          "InteractionSoundEventId": "SFX_Door_Temple_Dark_Close",
+          "CustomModelAnimation": "Blocks/Eldanior/Porte_Tresor_Close_In.blockyanim"
+        },
+        "OpenDoorIn": {
+          "SoundOcclusionOpacity": 0.0,
+          "HitboxType": "Eldanior_Porte_Tresor_Open_In",
+          "InteractionHitboxType": "Eldanior_Porte_Tresor_Open_In_Interaction",
+          "InteractionSoundEventId": "SFX_Door_Temple_Dark_Open",
+          "CustomModelAnimation": "Blocks/Eldanior/Porte_Tresor_Open_In.blockyanim",
+          "InteractionHint": "server.interactionHints.closeDoor"
+        },
+        "CloseDoorOut": {
+          "InteractionSoundEventId": "SFX_Door_Temple_Dark_Close",
+          "CustomModelAnimation": "Blocks/Eldanior/Porte_Tresor_Close_Out.blockyanim"
+        },
+        "OpenDoorOut": {
+          "SoundOcclusionOpacity": 0.0,
+          "HitboxType": "Eldanior_Porte_Tresor_Open_Out",
+          "InteractionHitboxType": "Eldanior_Porte_Tresor_Open_Out_Interaction",
+          "InteractionSoundEventId": "SFX_Door_Temple_Dark_Open",
+          "CustomModelAnimation": "Blocks/Eldanior/Porte_Tresor_Open_Out.blockyanim",
+          "InteractionHint": "server.interactionHints.closeDoor"
+        }
+      }
+    },
+    "VariantRotation": "NESW",
+    "ParticleColor": "#62288c",
+    "BlockSoundSetId": "Stone",
+    "PhysicalMaterialId": "Stone",
+    "SoundOcclusionOpacity": 2.0,
+    "InteractionHint": "server.interactionHints.openDoor",
+    "IsDoor": true,
+    "Interactions": {
+      "Use": "Door"
+    }
+  },
+  "Scale": 0.2,
+  "MaxStack": 1,
+  "Quality": "Legendary",
+  "Tags": {
+    "Type": [
+      "Furniture"
+    ],
+    "Family": [
+      "Eldanior"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Blocks_Wood"
+}

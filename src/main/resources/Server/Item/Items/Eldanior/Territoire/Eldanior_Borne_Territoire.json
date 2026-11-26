@@ -1,0 +1,36 @@
+{
+  "$Comment": "Borne de territoire (territory/borne) : bloc invisible et traversable ; le poser ou F dessus ouvre la fenetre de la zone (admins). Genere par scripts/territoire/gen_borne.py.",
+  "TranslationProperties": {
+    "Name": "Borne de territoire",
+    "Description": "Admins : posez cette borne invisible au centre d'un royaume, d'un grand territoire, d'un territoire ou d'une ville, puis réglez la zone (type, nom, famille, dimensions rectangulaires ou cylindriques, PvP, protection, régénération). Touche F sur la borne pour y revenir. La zone n'existe que tant que la borne reste posée : la casser supprime la zone. Tenez une borne en main pour voir les bornes et les bords des zones."
+  },
+  "Categories": [
+    "Eldanior_System.Autres"
+  ],
+  "Quality": "Technical",
+  "PlayerAnimationsId": "Block",
+  "Icon": "Icons/ItemsGenerated/Editor_Empty.png",
+  "MaxStack": 64,
+  "BlockType": {
+    "Material": "Empty",
+    "DrawType": "Empty",
+    "Opacity": "Transparent",
+    "Support": {
+      "Down": [
+        {
+          "Support": "Ignored"
+        }
+      ]
+    },
+    "InteractionHint": "server.interactionHints.eldanior_npcpost",
+    "Interactions": {
+      "Use": {
+        "Interactions": [
+          {
+            "Type": "Simple"
+          }
+        ]
+      }
+    }
+  }
+}

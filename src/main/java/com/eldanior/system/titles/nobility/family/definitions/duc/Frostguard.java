@@ -1,7 +1,6 @@
 package com.eldanior.system.titles.nobility.family.definitions.duc;
 
 import com.eldanior.system.config.configs.Rarity;
-import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
 import com.eldanior.system.titles.nobility.NobilityRank;
 import com.eldanior.system.titles.nobility.family.NobleFamilyModel;
 
@@ -17,8 +16,7 @@ public class Frostguard extends NobleFamilyModel {
                 + "et en fit une arme redoutable. Leurs mages-boucliers sont les meilleurs defenseurs magiques du royaume, "
                 + "capables d'eriger des remparts de glace impenetrables en un instant.",
                 Rarity.EPIC,
-                NobilityRank.DUC,
-                PassiveSkill.FAMILY_FROST_RESILIENCE
+                NobilityRank.DUC
         );
     }
 }

@@ -65,6 +65,16 @@ public class MobDamageReductionSystem extends DamageEventSystem {
         Player attackerPlayer = store.getComponent(attackerRef, Player.getComponentType());
         ComponentType<EntityStore, MobLevelData> mobLevelType = EldaniorSystem.get().getMobLevelDataType();
 
+        // Familier : morsure selon son niveau et son age, puis PV virtuels (niveau) du monstre, comme pour les aventuriers
+        com.eldanior.system.familiers.Familier pet = attackerPlayer == null ? com.eldanior.system.familiers.FamilierManager.petOf(attackerRef, store) : null;
+        if (pet != null) {
+            damage.setAmount(com.eldanior.system.familiers.FamilierManager.biteDamage(pet, damage.getAmount(), damage.getCause() != null ? damage.getCause().getId() : null));
+            MobLevelData targetData = store.getComponent(targetRef, mobLevelType);
+            if (targetData != null && targetData.isStatsApplied())
+                damage.setAmount(damage.getAmount() / MobVirtualHPSystem.getHPMultiplier(targetData.getLevel(), getBaseHP(store, targetRef)));
+            return;
+        }
+
         // PNJ de poste qui frappe un monstre : les PV virtuels (niveau) du monstre comptent, comme contre un joueur
         NPCEntity attackerNpc = attackerPlayer == null ? store.getComponent(attackerRef, NPCEntity.getComponentType()) : null;
         if (attackerNpc != null && com.eldanior.system.guards.GuardType.fromRole(attackerNpc.getNPCTypeId()) != null

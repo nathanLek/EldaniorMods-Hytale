@@ -1,0 +1,68 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_MatiereVive",
+  "spell": "MatiereVive",
+  "javaClass": "MatiereVive",
+  "page": "rune_page_matiere_vive",
+  "name": "Rune de la Matière Vive",
+  "type": "Spatial",
+  "rarity": "Epic",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "MatiereVive",
+  "summary": "6 blocs du sol au point vise prennent vie 10 s : ils bondissent vers les ennemis et les percutent (60 + recul, 3 fois chacun) puis retombent en poussiere.",
+  "description": "Sort épique spatial (Mage, rune de prédilection du Démiurge Suprême). Six blocs du sol du point visé (jusqu'à 20 blocs) s'arrachent et prennent vie pendant 10 s. Ils bondissent d'ennemi en ennemi (jusqu'à 15 blocs) et les percutent : 60 dégâts et recul à chaque impact, trois impacts chacun, puis ils retombent en poussière. Le sol est restauré ensuite (jamais en ville ni sur une parcelle). Épargne votre groupe, votre guilde et votre famille.",
+  "pageDescription": "Un parchemin dont les lettres se déplacent quand on ne les regarde pas. Enseigne la Matière Vive : le Démiurge souffle, et la pierre se met à chasser. Classes : tous les Mages (rune de prédilection du Démiurge Suprême). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Damage",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.5,
+    "releaseTime": 0.5,
+    "moveSpeed": 0.4,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Golem_Earth_Wake",
+    "handParticles": "Gaia_Dust_Burst",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.5,
+    "range": 20,
+    "radius": "3 (blocs arraches) / 15 (chasse)",
+    "targets": "6 blocs ; ennemis proches",
+    "executionFx": "entites-blocs (le vrai bloc arrache) deplacees par le code en bonds paraboliques (0,6 s, 2,5 blocs de haut)",
+    "impactFx": "Block_Break_Dust a chaque impact et a la fin",
+    "sounds": "SFX_Golem_Earth_Wake a l'eveil, SFX_Golem_Earth_Swing_Impact a chaque impact",
+    "effects": "chaque bloc : bond vers l'ennemi le plus proche de lui (15 blocs, cible differente si possible), impact a l'arrivee si l'ennemi est a 1,8 bloc : 60 Bludgeoning + recul 8 ; 3 impacts puis poussiere ; sans ennemi : repos au sol",
+    "terrain": "6 cases de surface videes (r 3), restaurees a la fin",
+    "persistentDurationS": 10,
+    "interruptions": "lanceur mort ou deconnecte : blocs retires, sol restaure",
+    "restrictions": "mage",
+    "edgeCases": "cible morte pendant le bond : impact dans le vide (rate) ; aucun bloc arrachable : sort sans effet",
+    "limitations": "",
+    "balance": {
+      "damage": 2,
+      "range": 2,
+      "duration": 2,
+      "mobility": 0,
+      "control": 1,
+      "defense": 0,
+      "targets": 3,
+      "frequency": 1,
+      "terrain": 1,
+      "difficulty": 0
+    }
+  }
+}

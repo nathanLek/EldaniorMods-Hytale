@@ -1,0 +1,35 @@
+{
+  "$Comment": "Generateur de monstres (failles/Generateurs) : bloc invisible et traversable ; le poser ou F dessus ouvre sa fenetre (admins).",
+  "TranslationProperties": {
+    "Name": "Générateur de monstres",
+    "Description": "Admins : posez ce bloc invisible et traversable, puis choisissez le monstre et le nombre (F sur le bloc pour y revenir). Les monstres apparaissent quand un joueur approche et reviennent 1 h après leur mort. Dans le modèle d'une faille, chaque faille ouverte le reprend. Tenez-le en main pour voir les générateurs posés."
+  },
+  "Categories": [
+    "Eldanior_System.Autres"
+  ],
+  "Quality": "Technical",
+  "PlayerAnimationsId": "Block",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Generateur_Monstres.png",
+  "MaxStack": 64,
+  "BlockType": {
+    "Material": "Empty",
+    "DrawType": "Empty",
+    "Opacity": "Transparent",
+    "Support": {
+      "Down": [
+        {
+          "Support": "Ignored"
+        }
+      ]
+    },
+    "Interactions": {
+      "Use": {
+        "Interactions": [
+          {
+            "Type": "Simple"
+          }
+        ]
+      }
+    }
+  }
+}

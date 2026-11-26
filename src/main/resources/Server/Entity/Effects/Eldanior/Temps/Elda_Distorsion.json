@@ -1,0 +1,10 @@
+{
+  "$Comment": "Distorsion : temps ralenti dans la zone (vitesse x0,4). Sans teinte ni ModelVFX : reapplique toutes les 0,5 s par le code, une teinte clignoterait.",
+  "Duration": 1.0,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": true,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Rune_Distorsion.png",
+  "ApplicationEffects": {
+    "HorizontalSpeedMultiplier": 0.4
+  }
+}

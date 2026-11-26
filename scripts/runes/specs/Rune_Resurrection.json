@@ -1,0 +1,69 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_Resurrection",
+  "spell": "Resurrection",
+  "javaClass": "Resurrection",
+  "page": "rune_page_resurrection",
+  "name": "Rune de la Résurrection",
+  "type": "Lumiere",
+  "rarity": "Unique",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Resurrection",
+  "summary": "15 s : vous et vos allies a 15 blocs etes benis ; le premier coup mortel est annule : relevement a 50 % PV, purification, 2 s invulnerable, onde sacree 150 (r 5).",
+  "description": "Sort unique de lumière (Mage, rune de prédilection du Genèse Mage). Vous et vos alliés à moins de 15 blocs recevez la bénédiction de la Genèse pendant 15 s. Le premier coup qui devrait tuer un béni est annulé : il se relève dans une colonne de lumière avec 50 % de ses PV, purifié de ses malus et invulnérable 2 s, tandis qu'une onde sacrée frappe les ennemis à moins de 5 blocs (150 dégâts, double contre les morts-vivants). Chaque béni ne peut être relevé qu'une fois.",
+  "pageDescription": "Un parchemin doré dont la dernière ligne s'écrit d'elle-même. Enseigne la Résurrection : la mort attendra son tour. Classes : tous les Mages (rune de prédilection du Genèse Mage). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Buff",
+    "Duration",
+    "Heal"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.6,
+    "releaseTime": 0.5,
+    "moveSpeed": 0.4,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Divine_Respawn",
+    "handParticles": "Bifrost_Divine",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.6,
+    "range": 0,
+    "radius": "15 (benediction) / 5 (onde)",
+    "targets": "lanceur et joueurs allies",
+    "persistentFx": "Bifrost_Divine en anneau sur chaque beni / s",
+    "impactFx": "Bifrost_Pillar + Apollo_Heal_Pulse au relevement, Bifrost_Divine sur les ennemis frappes",
+    "sounds": "SFX_Divine_Respawn a l'incantation et au relevement",
+    "effects": "protection (RuneSpellRuntime.ward) : coup mortel annule, PV = max(actuels, 50 %), cureAllDebuffs, 2 s de coups annules ; onde : 150 Elemental (x2 morts-vivants) + recul r 5",
+    "terrain": "aucun",
+    "persistentDurationS": 15,
+    "interruptions": "lanceur mort sans protection : fin ; deconnexion : protections retirees",
+    "restrictions": "mage",
+    "edgeCases": "un allie protege par deux lanceurs : la derniere benediction compte ; allies arrives apres l'incantation : non benis",
+    "limitations": "ranimer un joueur deja mort (ecran de mort) n'a pas d'API verifiee : le sort annule le coup mortel a l'avance (crochet RuneSpellRuntime.ward dans onOwnerHurt)",
+    "balance": {
+      "damage": 1,
+      "range": 2,
+      "duration": 2,
+      "mobility": 0,
+      "control": 0,
+      "defense": 3,
+      "targets": 3,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    }
+  }
+}

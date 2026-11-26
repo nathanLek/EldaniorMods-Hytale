@@ -1,0 +1,14 @@
+{
+  "$Comment": "Decret : plaque au sol (mouvement desactive pour les joueurs ; les monstres sont figes par le code). Sans KnockbackMultiplier : le plaquage et l'ejection doivent pousser.",
+  "Duration": 2.5,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": true,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Rune_Decret.png",
+  "ApplicationEffects": {
+    "EntityTopTint": "#4a2070",
+    "EntityBottomTint": "#12061e",
+    "MovementEffects": {
+      "DisableAll": true
+    }
+  }
+}

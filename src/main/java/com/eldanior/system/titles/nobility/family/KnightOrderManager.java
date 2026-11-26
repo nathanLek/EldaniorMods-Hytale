@@ -103,9 +103,14 @@ public class KnightOrderManager {
         return new ArrayList<>(list);
     }
 
-    public static boolean canCreateOrder(String familyId) {
-        List<KnightOrder> list = familyOrders.get(familyId);
-        return list == null || list.size() < 3;
+    /** Prix d'un ordre (2026-11-18) : 1 000 000 or pris aux coffres de la maison ; plus de limite du nombre d'ordres. */
+    public static final long ORDER_PRICE = 1_000_000L;
+
+    public static boolean canCreateOrder(String familyId) { return true; }
+
+    /** Demandes d'entree de ce joueur, retirees de tous les ordres (il vient d'entrer dans l'un d'eux). */
+    public static void clearCandidacies(UUID playerUUID) {
+        for (KnightOrder o : orders.values()) o.removeCandidate(playerUUID);
     }
 
     public static int getOrderCountForFamily(String familyId) {

@@ -1,0 +1,19 @@
+{
+  "$Comment": "Forme Spectrale : visuel et vitesse (les reductions de degats sont gerees par le code).",
+  "Duration": 10,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#0c1830",
+    "EntityTopTint": "#9fd0ff",
+    "ModelVFXId": "Intangible_Dark",
+    "HorizontalSpeedMultiplier": 1.3,
+    "Particles": [
+      {
+        "SystemId": "Void_Spectre_Body"
+      }
+    ]
+  },
+  "OverlapBehavior": "Overwrite",
+  "Infinite": false,
+  "Debuff": false,
+  "StatusEffectIcon": "UI/StatusEffects/Burn.png"
+}

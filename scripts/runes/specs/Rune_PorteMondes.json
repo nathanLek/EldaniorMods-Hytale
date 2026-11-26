@@ -1,0 +1,67 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_PorteMondes",
+  "spell": "PorteMondes",
+  "javaClass": "PorteMondes",
+  "page": "rune_page_porte_mondes",
+  "name": "Rune de la Porte des Mondes",
+  "type": "Espace",
+  "rarity": "Legendaire",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "PorteMondes",
+  "summary": "porte doree 25 s devant le lanceur : vous et vos allies qui la franchissez etes transportes a l'une de vos ancres (Cercle d'Ancrage pose et nomme, meme monde ; choix si plusieurs) ou, a defaut, au point d'apparition du monde.",
+  "description": "Sort légendaire d'espace (Mage, rune de prédilection de l'Architecte du Monde). Une porte dorée s'ouvre devant vous pendant 25 s. Vous et vos alliés (groupe, guilde, famille) qui la franchissez êtes transportés à l'une de vos ancres de ce monde : un Cercle d'Ancrage que vous avez peint au sol et nommé (reçu avec les runes d'Espace). Connaître ce sort porte votre limite à 3 ancres ; si vous en avez plusieurs dans ce monde, vous choisissez la destination avant que la porte s'ouvre. Sans ancre, la porte mène au point d'apparition du monde.",
+  "pageDescription": "Un parchemin dont le dos montre un autre paysage que la face. Enseigne la Porte des Mondes : un seul pas, et vous êtes ailleurs. Classes : tous les Mages (rune de prédilection de l'Architecte du Monde). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null,
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 1.0,
+    "releaseTime": 0.5,
+    "moveSpeed": 0.2,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Portal_Neutral_Open",
+    "handParticles": "Bifrost_Divine",
+    "handParticlesScale": 0.4,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 1.0,
+    "range": 3,
+    "radius": "1,3 (passage)",
+    "targets": "lanceur et joueurs allies",
+    "persistentFx": "modele Gilgamesh_Portal agrandi (x2,4, ~4 blocs) face au lanceur, Bifrost_Divine / s",
+    "impactFx": "Bifrost_Divine + Bifrost_Pillar au depart et a l'arrivee",
+    "sounds": "SFX_Portal_Neutral_Open a l'ouverture, SFX_Portal_Neutral a chaque passage",
+    "effects": "joueur allie a 1,3 bloc du centre de la porte : teleporte au centre de l'ancre choisie du lanceur (meme monde) sinon au premier point d'apparition du monde, protection de chute 5 s, 3 s avant un nouveau passage",
+    "terrain": "aucun",
+    "persistentDurationS": 25,
+    "interruptions": "lanceur deconnecte : porte retiree ; lanceur mort : porte retiree",
+    "restrictions": "mage",
+    "edgeCases": "plusieurs ancres dans le monde : fenetre de choix, la porte s'ouvre au choix (fermee sans choix ou 30 s : derniere destination) ; ancres d'un autre monde ignorees ; cercle efface : ancre retiree, point d'apparition ; monstres : jamais transportes",
+    "limitations": "duree ramenee a 25 s (plafond Legendaire) au lieu de 60 s ; ancres = blocs Cercle d'Ancrage sauvegardes (eldanior_data/ancres.json, decision utilisateur 2026-11-04, remplace l'ancre en memoire de /es ancre) ; connaitre le sort donne 3 ancres au lieu de 1 ; pas de porte de retour ; distincte du Bifrost (destination choisie, passage de groupe)",
+    "balance": {
+      "damage": 0,
+      "range": 3,
+      "duration": 3,
+      "mobility": 3,
+      "control": 0,
+      "defense": 2,
+      "targets": 3,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    }
+  }
+}

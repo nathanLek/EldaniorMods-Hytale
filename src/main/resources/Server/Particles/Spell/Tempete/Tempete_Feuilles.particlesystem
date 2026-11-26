@@ -1,0 +1,17 @@
+{
+  "$Comment": "Tempete de Feuilles : spirale de feuilles vertes et rousses (rayon ~2, hauteur ~6), emission courte reemise par le code chaque seconde.",
+  "Spawners": [
+    {
+      "SpawnerId": "Tempete_Feuilles_Vertes"
+    },
+    {
+      "SpawnerId": "Tempete_Feuilles_Rousses",
+      "PositionOffset": {
+        "Y": 0.5
+      }
+    }
+  ],
+  "LifeSpan": 1.1,
+  "IsImportant": true,
+  "CullDistance": 160
+}

@@ -1,0 +1,32 @@
+{
+  "$Comment": "Suite d'un coup d'arme de foudre : interruption vanilla, puis arc electrique (Arme_Choc) sauf cible immunisee.",
+  "Type": "Serial",
+  "Interactions": [
+    "DamageEntityParent_Hit_Interrupt_On_Hit",
+    {
+      "Type": "EffectCondition",
+      "Entity": "Target",
+      "EntityEffectIds": [
+        "Immune"
+      ],
+      "Match": "None",
+      "Next": {
+        "Type": "Serial",
+        "Interactions": [
+          {
+            "Type": "ChangeStat",
+            "Entity": "Target",
+            "StatModifiers": {
+              "Immunity": 25
+            }
+          },
+          {
+            "Type": "ApplyEffect",
+            "Entity": "Target",
+            "EffectId": "Arme_Choc"
+          }
+        ]
+      }
+    }
+  ]
+}

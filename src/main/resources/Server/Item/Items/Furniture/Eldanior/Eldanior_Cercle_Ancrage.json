@@ -1,0 +1,82 @@
+{
+  "TranslationProperties": {
+    "Name": "Cercle d'Ancrage",
+    "Description": "Cercle magique de 3 blocs sur 3, peint au sol par son centre. En le posant, vous le nommez : il devient une ancre, point d'arrivée de votre Porte des Mondes. Une ancre par joueur, trois si vous connaissez la Porte des Mondes. Donné avec les runes d'Espace. Touche d'interaction : renommer. Seul son propriétaire peut l'effacer."
+  },
+  "Icon": "Icons/ItemsGenerated/Eldanior_Cercle_Ancrage.png",
+  "Categories": [
+    "Eldanior_System.Autres",
+    "Furniture.Furniture"
+  ],
+  "Interactions": {
+    "Primary": "Block_Primary",
+    "Secondary": "Block_Secondary"
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/Eldanior/Cercle_Ancrage.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/Eldanior/Cercle_Ancrage_Texture.png",
+        "Weight": 1
+      }
+    ],
+    "HitboxType": "Eldanior_Cercle_Ancrage",
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Benches"
+      }
+    },
+    "BlockParticleSetId": "Dust",
+    "ParticleColor": "#9a6cff",
+    "BlockSoundSetId": "Cloth",
+    "PhysicalMaterialId": "Wool",
+    "TextureComputedColor": "#6a48c0",
+    "Support": {
+      "Down": [
+        {
+          "FaceType": "Full"
+        }
+      ]
+    },
+    "Light": {
+      "Color": "#536"
+    },
+    "Particles": [
+      {
+        "SystemId": "Block_Gem_Sparks",
+        "Color": "#c8a8ff",
+        "TargetNodeName": "Cercle"
+      }
+    ],
+    "Interactions": {
+      "Use": {
+        "Interactions": [
+          {
+            "Type": "Simple"
+          }
+        ]
+      }
+    }
+  },
+  "PlayerAnimationsId": "Block",
+  "IconProperties": {
+    "Scale": 0.3,
+    "Translation": [
+      0,
+      -10
+    ],
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ]
+  },
+  "MaxStack": 10,
+  "DropOnDeath": false,
+  "ItemLevel": 1,
+  "ItemSoundSetId": "ISS_Items_Cloth",
+  "Quality": "Rare"
+}

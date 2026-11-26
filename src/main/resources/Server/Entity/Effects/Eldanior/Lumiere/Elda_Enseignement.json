@@ -1,0 +1,31 @@
+{
+  "$Comment": "Enseignement : +30 % de degats infliges (OutgoingDamage, comme Ability_Enrage_Buff vanilla). Pose une fois 10 s.",
+  "Duration": 10.0,
+  "ApplicationEffects": {
+    "EntityTopTint": "#f4f8ff",
+    "EntityBottomTint": "#9cc8ff"
+  },
+  "OutgoingDamage": {
+    "Physical": [
+      {
+        "Amount": 0.3,
+        "CalculationType": "Percent"
+      }
+    ],
+    "Elemental": [
+      {
+        "Amount": 0.3,
+        "CalculationType": "Percent"
+      }
+    ],
+    "Projectile": [
+      {
+        "Amount": 0.3,
+        "CalculationType": "Percent"
+      }
+    ]
+  },
+  "OverlapBehavior": "Overwrite",
+  "Debuff": false,
+  "StatusEffectIcon": "Icons/ItemsGenerated/Rune_Enseignement.png"
+}

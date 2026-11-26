@@ -1,0 +1,32 @@
+{
+  "$Comment": "Attaque d'un katana Luo au clair : clic = combo Luo (variable Luo_Combo), maintien = posture iai (variable Thrust).",
+  "Type": "Charging",
+  "Rules": {
+    "InterruptedBy": [
+      "Secondary"
+    ]
+  },
+  "DisplayProgress": false,
+  "Next": {
+    "0": {
+      "Type": "Replace",
+      "Var": "Luo_Combo",
+      "DefaultOk": true,
+      "DefaultValue": {
+        "Interactions": [
+          "Luo_Combo"
+        ]
+      }
+    },
+    "0.174": {
+      "Type": "Replace",
+      "Var": "Thrust",
+      "DefaultOk": true,
+      "DefaultValue": {
+        "Interactions": [
+          "Luo_Iai_Degainee"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_Eternite",
+  "spell": "Eternite",
+  "javaClass": "Eternite",
+  "page": "rune_page_eternite",
+  "name": "Rune de l'Éternité",
+  "type": "Temps",
+  "rarity": "Unique",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Eternite",
+  "summary": "10 s : impossible de passer sous 1 PV ; a la fin, soin de 20 % des PV max si un coup mortel a ete evite.",
+  "description": "Sort unique du temps (Mage, rune de prédilection du Magus Éternel). Pendant 10 s, le temps refuse votre fin : aucun coup ne peut vous faire passer sous 1 PV. Si l'Éternité vous a sauvé au moins une fois, vous regagnez 20 % de vos PV max quand elle prend fin.",
+  "pageDescription": "Un parchemin qui ne vieillit pas : l'encre y semble encore fraîche depuis des siècles. Enseigne l'Éternité : dix secondes pendant lesquelles rien ne peut vous tuer. Classes : tous les Mages (rune de prédilection du Magus Éternel). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Buff",
+    "Duration"
+  ],
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.4,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Arcane_Workbench_Craft",
+    "handParticles": "Chronos_Gold",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.4,
+    "range": 0,
+    "radius": "0",
+    "targets": "soi",
+    "persistentFx": "effet Elda_Eternite (voile blanc-or) pose une fois 10 s, Chronos_Gold au-dessus / s",
+    "impactFx": "Chronos_Burst a chaque coup mortel evite",
+    "sounds": "SFX_Arcane_Workbench_Craft a l'incantation, SFX_Crystal_Break a chaque coup mortel evite",
+    "effects": "preventOwnerDeath -> PV fixes a 1, coup annule ; fin : +20 % PV max si au moins un sauvetage",
+    "terrain": "aucun",
+    "persistentDurationS": 10,
+    "interruptions": "aucune",
+    "restrictions": "mage",
+    "edgeCases": "degats du vide / mise a mort forcee : hors du systeme de degats, non empeches",
+    "balance": {
+      "damage": 0,
+      "range": 0,
+      "duration": 2,
+      "mobility": 0,
+      "control": 0,
+      "defense": 3,
+      "targets": 1,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 0
+    }
+  },
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null
+}

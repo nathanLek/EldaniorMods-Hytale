@@ -1,8 +1,8 @@
 {
+  "$Comment": "Invisibilite totale (Voile de Fumee, Miroir Trompeur) : le modele se dissout (ModelVFX Elda_Disparition) et reapparait au retrait de l'effet. La teinte alpha ne cachait rien.",
   "Duration": 30,
   "ApplicationEffects": {
-    "EntityBottomTint": "#ffffff00",
-    "EntityTopTint": "#ffffff00"
+    "ModelVFXId": "Elda_Disparition"
   },
   "OverlapBehavior": "Overwrite",
   "Infinite": false,

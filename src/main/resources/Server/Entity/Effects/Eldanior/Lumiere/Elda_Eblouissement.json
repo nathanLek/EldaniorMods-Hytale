@@ -1,0 +1,24 @@
+{
+  "$Comment": "Galerie des Glaces : eblouissement final (paralysie breve).",
+  "Duration": 1.5,
+  "ApplicationEffects": {
+    "EntityBottomTint": "#fff6d0",
+    "EntityTopTint": "#ffffff",
+    "ScreenEffect": "ScreenEffects/Snow.png",
+    "MovementEffects": {
+      "DisableAll": true
+    },
+    "AbilityEffects": {
+      "Disabled": [
+        "Primary",
+        "Secondary",
+        "Ability1",
+        "Ability3"
+      ]
+    }
+  },
+  "OverlapBehavior": "Overwrite",
+  "Infinite": false,
+  "Debuff": true,
+  "StatusEffectIcon": "UI/StatusEffects/Burn.png"
+}

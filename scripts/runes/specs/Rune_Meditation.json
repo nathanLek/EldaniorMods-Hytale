@@ -1,0 +1,67 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_Meditation",
+  "spell": "Meditation",
+  "javaClass": "Meditation",
+  "page": "rune_page_meditation",
+  "name": "Rune de la Méditation",
+  "type": "Lumiere",
+  "rarity": "Rare",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "Meditation",
+  "summary": "4 s de meditation immobile : +5 % PV et +8 % mana par seconde ; menee a terme, onde purifiante (allies purifies et soignes, ennemis repousses).",
+  "description": "Sort rare de lumière (Mage, rune de prédilection du Sage). Vous méditez 4 s : chaque seconde, vous regagnez 5 % de vos PV et 8 % de votre mana. Bouger ou être frappé interrompt la méditation. Menée à son terme, elle libère une onde purifiante de 6 blocs : vos alliés sont purifiés de leurs malus et soignés de 10 %, les ennemis subissent 60 dégâts et sont repoussés.",
+  "pageDescription": "Un parchemin vierge, sauf une seule ligne au centre : « respire ». Enseigne la Méditation : le calme comme arme. Classes : tous les Mages (rune de prédilection du Sage). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Buff",
+    "Duration"
+  ],
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.3,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Deployable_Totem_Heal_Spawn",
+    "handParticles": "Bifrost_Divine",
+    "handParticlesScale": 0.2,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.3,
+    "range": 0,
+    "radius": "6 (onde finale)",
+    "targets": "soi ; allies et ennemis a 6 blocs a la fin",
+    "persistentFx": "Apollo_Heal_Pulse autour du lanceur / 0,5 s, Bifrost_Divine au-dessus / s",
+    "impactFx": "anneau Bifrost_Divine de 6 blocs + Apollo_Heal_Pulse a l'onde",
+    "sounds": "SFX_Deployable_Totem_Heal_Spawn au debut, SFX_Deployable_Totem_Heal_Despawn a l'onde",
+    "effects": "+5 % PV et +8 % mana / s (4 s) ; fin : allies cureAllDebuffs + 10 % PV, ennemis 60 Elemental + recul ; interruption : deplacement > 0,6 bloc ou coup recu",
+    "terrain": "aucun",
+    "persistentDurationS": 4,
+    "interruptions": "bouger ou etre frappe : fin sans onde (les gains deja recus restent)",
+    "restrictions": "mage",
+    "edgeCases": "degats de chute/feu comptent comme un coup",
+    "balance": {
+      "damage": 1,
+      "range": 1,
+      "duration": 1,
+      "mobility": 0,
+      "control": 1,
+      "defense": 2,
+      "targets": 2,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 2
+    }
+  },
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null
+}

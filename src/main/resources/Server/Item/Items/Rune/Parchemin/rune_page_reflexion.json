@@ -1,0 +1,34 @@
+{
+  "Id": "rune_page_reflexion",
+  "TranslationProperties": {
+    "Name": "Parchemin de Rune : Réflexion",
+    "Description": "Un parchemin poli comme un miroir, où l'on voit son reflet. Enseigne la Réflexion : rendez à vos ennemis ce qu'ils vous envoient. Classes : tous les Mages (rune de prédilection de l'Archimage Suprême). Utilisez-le pour ajouter la rune à votre sac de runes. (Ancien parchemin : la rune s'apprend désormais dans un manuel.)"
+  },
+  "Icon": "Icons/ItemsGenerated/Recipe_Page.png",
+  "Quality": "Epic",
+  "Tags": {
+    "Type": [
+      "Item",
+      "Consumable"
+    ]
+  },
+  "MaxStack": 1,
+  "PlayerAnimationsId": "Item",
+  "Model": "Items/Consumables/Recipes/Recipe.blockymodel",
+  "Texture": "Items/Consumables/Recipes/Recipe_Texture.png",
+  "IconProperties": {
+    "Scale": 0.76,
+    "Rotation": [
+      135,
+      135,
+      0
+    ],
+    "Translation": [
+      -1,
+      5
+    ]
+  },
+  "Interactions": {
+    "Use": "Root_ConsumableItemSkillInteraction"
+  }
+}

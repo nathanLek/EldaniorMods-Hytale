@@ -367,9 +367,21 @@ public class TerritoiresTab {
     public static boolean handleCollectTax(UUID uuid) {
         TerrState st = getState(uuid);
         if (st.selectedTerrId == null) return false;
-        ParcelData p = ParcelManager.get(st.selectedTerrId);
-        if (p == null) return false;
-        if (!p.canCollectTax()) return false;
+        return collectTax(ParcelManager.get(st.selectedTerrId)) >= 0;
+    }
+
+    /** Taux de levee de l'impot sur les zones filles (0 : la zone ne leve pas d'impot, une ville par exemple). */
+    public static double collectionRate(ParcelData p) {
+        return p == null || p.getType() == ParcelType.CITY ? 0 : TaxConfig.getCollectionRate(p.getType());
+    }
+
+    /**
+     * Leve l'impot de la zone sur ses zones filles directes (une fois par semaine) ; rend le montant leve, -1 si impossible.
+     * Partage par l'onglet Territoires et l'intendant (IntendantPage, 2026-11-18).
+     */
+    public static long collectTax(ParcelData p) {
+        if (p == null) return -1;
+        if (!p.canCollectTax()) return -1;
 
         // Impots : chaque niveau prend de ses enfants directs
         // Duc prend 40% des villes, Marquis prend 60% du Duc, Royaume prend 80% du Marquis
@@ -379,11 +391,11 @@ public class TerritoiresTab {
         // Duc prend 90% de la ville, Marquis 85% du Duc, Royaume 80% du Marquis
         // Ville 20000 → Duc prend 18000 (reste ville 2000) → Marquis prend 15300 (reste Duc 2700) → Royaume prend 12240 (reste Marquis 3060)
         // = Royaume 12240 > Marquis 3060 > Duc 2700 > Ville 2000 ✓
-        if (p.getType() == ParcelType.CITY) return false;
+        if (p.getType() == ParcelType.CITY) return -1;
 
         double taxRate = TaxConfig.getCollectionRate(p.getType());
 
-        if (taxRate <= 0) return false;
+        if (taxRate <= 0) return -1;
 
         long totalCollected = 0;
         for (String childId : p.getChildIds()) {
@@ -397,7 +409,7 @@ public class TerritoiresTab {
         p.setLastTaxCollection(System.currentTimeMillis());
         p.setLastTaxAmount(totalCollected);
         ParcelManager.save();
-        return true;
+        return totalCollected;
     }
     /** @deprecated Use handleCollectTax(uuid) */
     public static boolean handleCollectTax() { return false; }
@@ -405,13 +417,20 @@ public class TerritoiresTab {
     public static boolean handleTransferTreasury(UUID uuid) {
         TerrState st = getState(uuid);
         if (st.selectedTerrId == null) return false;
-        ParcelData p = ParcelManager.get(st.selectedTerrId);
-        if (p == null) return false;
-        if (!p.canTransferTreasury()) return false;
-        if (p.getTreasury() <= 0) return false;
+        return transferTreasury(ParcelManager.get(st.selectedTerrId)) > 0;
+    }
+
+    /**
+     * Rapatrie la moitie du tresor de la zone vers sa guilde, sinon sa famille (une fois par semaine) ; rend le montant verse,
+     * 0 si impossible. Partage par l'onglet Territoires et l'intendant (IntendantPage, 2026-11-18).
+     */
+    public static long transferTreasury(ParcelData p) {
+        if (p == null) return 0;
+        if (!p.canTransferTreasury()) return 0;
+        if (p.getTreasury() <= 0) return 0;
 
         long transferAmount = p.getTreasury() / 2; // 50%
-        if (transferAmount <= 0) return false;
+        if (transferAmount <= 0) return 0;
 
         boolean transferred = false;
 
@@ -443,7 +462,7 @@ public class TerritoiresTab {
             p.setLastTreasuryTransfer(System.currentTimeMillis());
             ParcelManager.save();
         }
-        return transferred;
+        return transferred ? transferAmount : 0;
     }
     /** @deprecated Use handleTransferTreasury(uuid) */
     public static boolean handleTransferTreasury() { return false; }

@@ -1,0 +1,182 @@
+{
+  "TranslationProperties": {
+    "Name": "Forge Divine",
+    "Description": "Forge céleste. Seule sa chaleur peut façonner le métal divin en artefact. Compétence requise : Forge Divine."
+  },
+  "Icon": "Icons/ItemsGenerated/Bench_Forge_Divine.png",
+  "Categories": [
+    "Eldanior_System.Autres",
+    "Furniture.Benches"
+  ],
+  "Recipe": {
+    "TimeSeconds": 8,
+    "Input": [
+      {
+        "ItemId": "Ingredient_Bar_Divin",
+        "Quantity": 12
+      },
+      {
+        "ItemId": "Ingredient_Bar_Adamantite",
+        "Quantity": 12
+      },
+      {
+        "ResourceTypeId": "Rock",
+        "Quantity": 20
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Categories": [
+          "Weapon_Sword"
+        ],
+        "Id": "Weapon_Bench",
+        "RequiredTierLevel": 3
+      }
+    ]
+  },
+  "BlockType": {
+    "Material": "Solid",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Blocks/Eldanior/Forge_Divine.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Blocks/Eldanior/Forge_Divine_Texture.png",
+        "Weight": 1
+      }
+    ],
+    "VariantRotation": "NESW",
+    "HitboxType": "Bench_Forge_Divine",
+    "BlockEntity": {
+      "Components": {
+        "BenchBlock": {}
+      }
+    },
+    "State": {
+      "Definitions": {
+        "CraftCompleted": {
+          "CustomModelAnimation": "Blocks/Eldanior/Forge_Divine_Crafting.blockyanim",
+          "Looping": true
+        },
+        "CraftCompletedInstant": {
+          "CustomModelAnimation": "Blocks/Eldanior/Forge_Divine_Crafting.blockyanim"
+        }
+      }
+    },
+    "Gathering": {
+      "Breaking": {
+        "GatherType": "Benches"
+      }
+    },
+    "Bench": {
+      "Type": "Crafting",
+      "LocalOpenSoundEventId": "SFX_Weapon_Bench_Open",
+      "LocalCloseSoundEventId": "SFX_Weapon_Bench_Close",
+      "CompletedSoundEventId": "SFX_Weapon_Bench_Craft",
+      "BenchUpgradeSoundEventId": "SFX_Workbench_Upgrade_Start_Default",
+      "BenchUpgradeCompletedSoundEventId": "SFX_Workbench_Upgrade_Complete_Default",
+      "Categories": [
+        {
+          "Id": "Forge_Epees",
+          "Icon": "Icons/CraftingCategories/Armory/Sword.png",
+          "Name": "server.benchCategories.forge_epees"
+        },
+        {
+          "Id": "Forge_Lances",
+          "Icon": "Icons/CraftingCategories/Armory/Weapons.png",
+          "Name": "server.benchCategories.forge_lances"
+        },
+        {
+          "Id": "Forge_Dagues",
+          "Icon": "Icons/CraftingCategories/Armory/Daggers.png",
+          "Name": "server.benchCategories.forge_dagues"
+        },
+        {
+          "Id": "Forge_Haches",
+          "Icon": "Icons/CraftingCategories/Armory/Battleaxe.png",
+          "Name": "server.benchCategories.forge_haches"
+        },
+        {
+          "Id": "Forge_Masses",
+          "Icon": "Icons/CraftingCategories/Armory/Mace.png",
+          "Name": "server.benchCategories.forge_masses"
+        },
+        {
+          "Id": "Forge_Arcs",
+          "Icon": "Icons/CraftingCategories/Armory/Bow.png",
+          "Name": "server.benchCategories.forge_arcs"
+        },
+        {
+          "Id": "Forge_Batons",
+          "Icon": "Icons/CraftingCategories/Armory/Weapons.png",
+          "Name": "server.benchCategories.forge_batons"
+        },
+        {
+          "Id": "Forge_Boucliers",
+          "Icon": "Icons/CraftingCategories/Armory/Shield.png",
+          "Name": "server.benchCategories.forge_boucliers"
+        },
+        {
+          "Id": "Forge_Blocs",
+          "Icon": "Icons/CraftingCategories/Armory/MetalArmor.png",
+          "Name": "server.benchCategories.forge_blocs"
+        }
+      ],
+      "Id": "Forge_Divine",
+      "TierLevels": [
+        {
+          "CraftingTimeReductionModifier": 0.0
+        }
+      ]
+    },
+    "BlockParticleSetId": "Stone",
+    "ParticleColor": "#3a3a44",
+    "Support": {
+      "Down": [
+        {
+          "FaceType": "Full"
+        }
+      ]
+    },
+    "BlockSoundSetId": "Stone",
+    "TextureComputedColor": "#35343C",
+    "Light": {
+      "Color": "#fc8"
+    },
+    "Particles": [
+      {
+        "SystemId": "Fire_Furnace_On",
+        "TargetNodeName": "Fire",
+        "Scale": 1.1,
+        "PositionOffset": {
+          "X": 0,
+          "Z": 0
+        }
+      }
+    ],
+    "PhysicalMaterialId": "Stone"
+  },
+  "PlayerAnimationsId": "Block",
+  "IconProperties": {
+    "Scale": 0.3,
+    "Translation": [
+      0,
+      -20
+    ],
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ]
+  },
+  "Tags": {
+    "Type": [
+      "Bench"
+    ]
+  },
+  "MaxStack": 1,
+  "ItemLevel": 800,
+  "ItemSoundSetId": "ISS_Blocks_Wood",
+  "Quality": "Divin"
+}

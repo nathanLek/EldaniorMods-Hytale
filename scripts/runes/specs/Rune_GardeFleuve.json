@@ -1,0 +1,61 @@
+{
+  "$Comment": "Fiche de conception : technique du Clan Luo (voie martiale), validee le 2026-11-09, type Luo le 2026-11-09 (docs/plan-clan-luo.md). Apprise par son manuel, aucun butin. Devenue technique de clan le 2026-11-10 (luo.LuoClans.TECHNIQUES) : reservee aux membres du clan, toutes classes.",
+  "id": "Rune_GardeFleuve",
+  "spell": "GardeFleuve",
+  "javaClass": "GardeFleuve",
+  "page": "rune_page_garde_fleuve",
+  "name": "Rune de la Garde du Fleuve",
+  "type": "Luo",
+  "rarity": "Rare",
+  "emblem": "GardeFleuve",
+  "classes": "clan",
+  "persistent": true,
+  "summary": "Garde du Fleuve : posture 1,5 s ; le premier coup recu est annule et renvoye a l'attaquant (250 degats de Ki).",
+  "description": "Technique du Clan Luo, enseignée à la classe Expert Martial de la voie martiale. Vous prenez la garde du fleuve pendant 1,5 s : le premier coup reçu est annulé, et votre Ki le renvoie à l'attaquant (250 dégâts, repoussé). Contre un coup sans attaquant (chute, feu), la garde se contente de l'annuler.",
+  "pageDescription": "Rouleau du dojo Luo : « Le fleuve ne frappe pas la pierre ; il la contourne, puis l'emporte. » Technique du Clan Luo : elle s'apprend dans son manuel, jamais en butin.",
+  "keywords": [
+    "Damage",
+    "Melee",
+    "Duration"
+  ],
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": {},
+  "cast": {
+    "animationSet": "Sword",
+    "charging": "Guard",
+    "release": "Guard",
+    "chargeTime": 0.05,
+    "releaseTime": 0.2,
+    "moveSpeed": 0.3,
+    "cameraEffect": null,
+    "sound": null,
+    "releaseSound": "SFX_Longsword_Special_Swing",
+    "handParticles": null,
+    "handParticlesScale": 0.6,
+    "costMoment": "start"
+  },
+  "design": {
+    "persistentDurationS": 1.5,
+    "targets": "soi / attaquant",
+    "effects": "onOwnerHurt -> 0 ; riposte 250 Physical + recul a l'attaquant",
+    "balance": {
+      "damage": 3,
+      "range": 0,
+      "duration": 0,
+      "mobility": 0,
+      "control": 0,
+      "defense": 3,
+      "targets": 0,
+      "frequency": 0,
+      "terrain": 0,
+      "difficulty": 2
+    }
+  },
+  "category": "Eldanior_Empire_Luo.Runes",
+  "manual": "Eldanior_Manuel_Luo_GardeFleuve",
+  "$Comment_manual": "Technique apprise par son manuel secret (gen_voie_martiale_objets.py) : pas de parchemin rune_page_*."
+}

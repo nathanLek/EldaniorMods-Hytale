@@ -1,0 +1,39 @@
+{
+  "$Comment": "Balle divine (Aigles du Desert), deplacee par le code (AiglesDuDesert). HitBox elargie (LOD serveur). Genere par scripts/artefacts/gen_aigles_akimbo.py.",
+  "Model": "Items/Projectiles/Balle_Divine.blockymodel",
+  "Texture": "Items/Projectiles/Balle_Divine.png",
+  "MinScale": 1.0,
+  "MaxScale": 1.0,
+  "HitBox": {
+    "Max": {
+      "X": 0.6,
+      "Y": 0.1,
+      "Z": 0.1
+    },
+    "Min": {
+      "X": -0.6,
+      "Y": -0.1,
+      "Z": -0.1
+    }
+  },
+  "Trails": [
+    {
+      "TrailId": "Balle_Divine_Trail",
+      "TargetNodeName": "Noyau",
+      "RotationOffset": {
+        "Roll": 0
+      }
+    },
+    {
+      "TrailId": "Balle_Divine_Trail",
+      "TargetNodeName": "Noyau",
+      "RotationOffset": {
+        "Roll": 90
+      }
+    }
+  ],
+  "Light": {
+    "Color": "#ffd070",
+    "Radius": 3
+  }
+}

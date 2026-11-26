@@ -1,0 +1,67 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_RetourEnArriere",
+  "spell": "RetourEnArriere",
+  "javaClass": "RetourEnArriere",
+  "page": "rune_page_retour_en_arriere",
+  "name": "Rune du Retour en Arrière",
+  "type": "Temps",
+  "rarity": "Unique",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "RetourArriere",
+  "summary": "ancre temporelle : 5 s plus tard (ou sur un coup mortel), retour a la position et aux PV de l'ancre, coups rejoues a 50 %.",
+  "description": "Sort unique du temps (Mage, rune de prédilection de l'Oracle Absolu). Vous posez une ancre dans le temps. 5 s plus tard, le temps se rembobine : vous revenez à l'endroit de l'ancre et retrouvez les PV que vous aviez alors (s'ils étaient plus élevés), et chaque coup que vous avez porté entre-temps frappe une seconde fois à 50 %. Un coup mortel pendant ces 5 s déclenche le retour immédiatement au lieu de vous tuer.",
+  "pageDescription": "Un parchemin dont l'encre remonte dans la plume. Enseigne le Retour en Arrière : effacez les 5 dernières secondes. Classes : tous les Mages (rune de prédilection de l'Oracle Absolu). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Buff",
+    "Duration"
+  ],
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.4,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Arcane_Workbench_Craft",
+    "handParticles": "Chronos_Gold",
+    "handParticlesScale": 0.3,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.4,
+    "range": 0,
+    "radius": "0",
+    "targets": "soi ; ennemis frappes pendant les 5 s",
+    "persistentFx": "silhouette Chronos_Afterimage a l'ancre toutes les 200 ms, Chronos_Gold au-dessus",
+    "impactFx": "Chronos_Burst au depart et a l'arrivee, Chronos_Dash entre les deux",
+    "sounds": "SFX_Arcane_Workbench_Craft a la pose, SFX_Crystal_Break au retour",
+    "effects": "teleportation a l'ancre ; PV = max(actuels, ancre) ; coups portes rejoues a 50 % (markEcho, 20 max) ; preventOwnerDeath -> retour immediat (PV de l'ancre, au moins 20 %) + 1 s d'invulnerabilite",
+    "terrain": "aucun",
+    "persistentDurationS": 5,
+    "interruptions": "coup mortel = retour anticipe",
+    "restrictions": "mage",
+    "edgeCases": "ancre devenue bloc solide : retour sur la position actuelle (PV quand meme) ; cibles mortes : pas de rejeu",
+    "balance": {
+      "damage": 2,
+      "range": 1,
+      "duration": 1,
+      "mobility": 2,
+      "control": 0,
+      "defense": 3,
+      "targets": 2,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    }
+  },
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null
+}

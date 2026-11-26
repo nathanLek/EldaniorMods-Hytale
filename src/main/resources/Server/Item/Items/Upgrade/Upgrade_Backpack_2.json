@@ -1,0 +1,58 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.UpgradeBackpack_2.name",
+    "Description": "server.items.UpgradeBackpack_2.description"
+  },
+  "Icon": "Icons/ItemsGenerated/Recipe_Page.png",
+  "Quality": "Uncommon",
+  "MaxStack": 1,
+  "ItemLevel": 30,
+  "Categories": [
+    "Upgrade"
+  ],
+  "PlayerAnimationsId": "Item",
+  "Model": "Items/Consumables/Recipes/Recipe.blockymodel",
+  "Texture": "Items/Consumables/Recipes/Recipe_Texture.png",
+  "IconProperties": {
+    "Scale": 0.76,
+    "Translation": [
+      -0.895,
+      -1.11
+    ],
+    "Rotation": [
+      33.92,
+      68.795,
+      40.67
+    ]
+  },
+  "Consumable": true,
+  "Interactions": {
+    "Primary": {
+      "Interactions": [
+        {
+          "Type": "IncreaseBackpackCapacity",
+          "From": 9,
+          "Capacity": 18
+        }
+      ]
+    },
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "IncreaseBackpackCapacity",
+          "From": 9,
+          "Capacity": 18
+        }
+      ]
+    }
+  },
+  "Tags": {
+    "Family": [
+      "Backpack"
+    ],
+    "Type": [
+      "Upgrade"
+    ]
+  },
+  "$Comment": "Surcharge Eldanior (2026-11-16) : recette retiree. Le sac a dos est deja au niveau 1 a l'arrivee ; les ameliorations I et II s'achetent chez le Maroquinier (NpcTrades.Metier.MAROQUINIER), la III reste celle du jeu."
+}

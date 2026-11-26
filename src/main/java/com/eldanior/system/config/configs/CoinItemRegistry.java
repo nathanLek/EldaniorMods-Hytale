@@ -10,7 +10,9 @@ public final class CoinItemRegistry {
             "Elda_Silver_Coins",      10L,
             "Elda_Gold_Coins",  100L,
             "Elda_Diamond_Coins", 1000L,
-            "Elda_Zenith_Coins", 10000L
+            "Elda_Zenith_Coins", 10000L,
+            "Elda_Astral_Coins", 100000L,
+            "Elda_Imperial_Coins", 1000000L                  // 2026-11-16 : 10 astrales
     );
 
     private CoinItemRegistry() {}

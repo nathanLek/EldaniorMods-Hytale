@@ -1,0 +1,68 @@
+{
+  "$Comment": "Fiche de conception (modele : .claude/skills/rune-skills-system/templates/spec.json). Feuille de route des mages (references/mage-roadmap.md), validee le 2026-10-26.",
+  "id": "Rune_SanctuaireMineur",
+  "spell": "SanctuaireMineur",
+  "javaClass": "SanctuaireMineur",
+  "page": "rune_page_sanctuaire_mineur",
+  "name": "Rune du Sanctuaire Mineur",
+  "type": "Lumiere",
+  "rarity": "Epic",
+  "classes": "mage",
+  "persistent": true,
+  "emblem": "SanctuaireMineur",
+  "summary": "dome de lumiere 6 blocs, 8 s : allies -40 % de degats, immunises aux controles (purifies et liberes), +1 % PV/s.",
+  "description": "Sort épique de lumière (Mage, rune de prédilection du Grand Sage). Un dôme de lumière dorée de 6 blocs se pose autour de vous pendant 8 s. Vous et vos alliés à l'intérieur subissez 40 % de dégâts en moins, regagnez 1 % de vos PV par seconde et êtes immunisés aux contrôles : étourdissements, gels, ralentissements et autres malus sont dissipés en permanence.",
+  "pageDescription": "Un parchemin doré qui tiédit la paume. Enseigne le Sanctuaire Mineur : un abri de lumière où rien ne vous retient. Classes : tous les Mages (rune de prédilection du Grand Sage). Utilisez-le pour ajouter la rune à votre sac de runes.",
+  "keywords": [
+    "Buff",
+    "Aoe",
+    "Duration"
+  ],
+  "cast": {
+    "animationSet": "Staff",
+    "charging": "CastSummonCharging",
+    "release": "CastSummon",
+    "chargeTime": 0.5,
+    "releaseTime": 0.4,
+    "moveSpeed": 0.5,
+    "cameraEffect": "Ability_Cast_Generic",
+    "sound": null,
+    "releaseSound": "SFX_Deployable_Totem_Heal_Spawn",
+    "handParticles": "Bifrost_Divine",
+    "handParticlesScale": 0.2,
+    "costMoment": "start"
+  },
+  "design": {
+    "castTimeS": 0.5,
+    "range": 0,
+    "radius": "6 (dome fixe)",
+    "targets": "allies du dome",
+    "persistentFx": "dome Bifrost_Divine (2 anneaux + sommet) / 0,5 s, Apollo_Heal_Pulse au centre / s ; effet Elda_Sanctuaire sur les allies",
+    "impactFx": "Apollo_Heal_Pulse a l'apparition",
+    "sounds": "SFX_Deployable_Totem_Heal_Spawn a l'apparition, SFX_Deployable_Totem_Heal_Despawn a la fin",
+    "effects": "Elda_Sanctuaire (DamageResistance 40 %) pose a l'entree, retire a la sortie ; cureAllDebuffs + unlock / 0,5 s ; +1 % PV / s",
+    "terrain": "aucun",
+    "persistentDurationS": 8,
+    "interruptions": "aucune",
+    "restrictions": "mage",
+    "edgeCases": "allie qui sort : effet retire ; distinct de l'Egide royale (projectiles et repoussement)",
+    "balance": {
+      "damage": 0,
+      "range": 1,
+      "duration": 2,
+      "mobility": 0,
+      "control": 1,
+      "defense": 3,
+      "targets": 2,
+      "frequency": 1,
+      "terrain": 0,
+      "difficulty": 1
+    }
+  },
+  "overrides": {
+    "mana": null,
+    "cooldown": null,
+    "reason": ""
+  },
+  "loot": null
+}

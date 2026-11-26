@@ -5,7 +5,7 @@ import com.eldanior.system.Leveling.utils.NotificationHelper;
 import com.eldanior.system.config.CraftingConfig;
 import com.eldanior.system.config.EldaniorLogger;
 import com.eldanior.system.config.Player.PlayerLevelData;
-import com.eldanior.system.skills.skillsInteraction.PassiveSkill;
+import com.eldanior.system.skills.skillsInteraction.Metier;
 import com.eldanior.system.util.WorldBlockUtil;
 import com.hypixel.hytale.builtin.crafting.component.BenchBlock;
 import com.hypixel.hytale.component.*;
@@ -94,22 +94,13 @@ public class CraftingRestrictionSystem extends EntityEventSystem<EntityStore, Us
             return;
         }
 
-        // Verifier si le joueur a la competence "Artisanat" (passe-partout)
-        boolean hasArtisanat = false;
-        if (playerData.getActivePassives() != null) {
-            for (PassiveSkill skill : playerData.getActivePassives()) {
-                if (skill == PassiveSkill.ARTISANAT) {
-                    hasArtisanat = true;
-                    break;
-                }
-            }
-        }
-        if (hasArtisanat) return; // Artisanat = acces a tout
+        // Metier "Artisanat" (passe-partout) : acces a tous les etablis
+        if (playerData.hasMetier(Metier.ARTISANAT)) return;
 
         // Chercher la competence specifique pour ce bench
-        PassiveSkill requiredSkill = null;
+        Metier requiredSkill = null;
         String skillName = "";
-        for (Map.Entry<String, PassiveSkill> entry : CraftingConfig.BENCH_SKILLS.entrySet()) {
+        for (Map.Entry<String, Metier> entry : CraftingConfig.BENCH_SKILLS.entrySet()) {
             if (benchName.contains(entry.getKey())) {
                 requiredSkill = entry.getValue();
                 skillName = entry.getValue().getDisplayName();
@@ -126,31 +117,7 @@ public class CraftingRestrictionSystem extends EntityEventSystem<EntityStore, Us
             return;
         }
 
-        // Verifier si le joueur a la competence specifique
-        boolean hasSpecificSkill = false;
-        if (playerData.getActivePassives() != null) {
-            for (PassiveSkill skill : playerData.getActivePassives()) {
-                if (skill == requiredSkill) {
-                    hasSpecificSkill = true;
-                    break;
-                }
-            }
-        }
-
-        // Verifier aussi dans enabledSkills et unlockedSkills
-        if (!hasSpecificSkill) {
-            hasSpecificSkill = playerData.isSkillEnabled(requiredSkill.name())
-                    || playerData.getUnlockedSkills().contains(requiredSkill.name())
-                    || playerData.getUnlockedSkills().contains(requiredSkill.name().toLowerCase());
-        }
-
-        // Debug log pour diagnostiquer
-        EldaniorLogger.debug("[Craft] Bench: '" + benchName + "' | RequiredSkill: " + requiredSkill.name()
-                + " | hasSpecific: " + hasSpecificSkill
-                + " | activePassives: " + playerData.getActivePassives()
-                + " | unlockedSkills: " + playerData.getUnlockedSkills()
-                + " | enabledSkills: " + playerData.getEnabledSkills()
-                + " | disabledSkills: " + playerData.getDisabledSkills());
+        boolean hasSpecificSkill = playerData.hasMetier(requiredSkill);
 
         if (!hasSpecificSkill) {
             event.setCancelled(true);

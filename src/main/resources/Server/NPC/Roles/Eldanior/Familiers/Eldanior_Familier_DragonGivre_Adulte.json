@@ -1,0 +1,115 @@
+{
+  "$Comment": "Dragon de givre adulte : familier lie a un joueur (FamilierManager : niveau, PV, degats, laisse, monture). Genere par scripts/familiers/gen_familiers.py.",
+  "Type": "Variant",
+  "Reference": "Template_Eldanior_Familier",
+  "Modify": {
+    "Appearance": "Eldanior_Familier_DragonGivre_Adulte",
+    "DropList": "Empty",
+    "WakingPeriod": [
+      0,
+      24
+    ],
+    "BedBlockSet": "",
+    "Patrol": false,
+    "FollowPatrolPath": false,
+    "ViewRange": 18,
+    "ViewSector": 300,
+    "HearingRange": 14,
+    "AlertedRange": 30,
+    "AlertedTime": [
+      0.2,
+      0.4
+    ],
+    "LeashMinPlayerDistance": 3,
+    "LeashTimer": [
+      1,
+      2
+    ],
+    "SearchTimeRange": [
+      3,
+      5
+    ],
+    "BreathesInWater": true,
+    "NameTranslationKey": {
+      "Compute": "NameTranslationKey"
+    },
+    "MaxHealth": 760,
+    "MaxSpeed": 13,
+    "RunThreshold": 0.3,
+    "KnockbackScale": 0.3,
+    "Weapons": [],
+    "OffHand": [],
+    "DefaultOffHandSlot": -1,
+    "NighttimeOffhandSlot": -1,
+    "WakingIdleBehaviorComponent": "Component_Instruction_Eldanior_Leash_Follow",
+    "WanderRadius": 1,
+    "LeashDistance": 40,
+    "HardLeashDistance": 80,
+    "UseCombatActionEvaluator": false,
+    "Attack": "Root_NPC_Wolf_Attack",
+    "AttackDistance": 4.32,
+    "DesiredAttackDistanceRange": [
+      2.38,
+      3.24
+    ],
+    "AttackPauseRange": [
+      0.9,
+      1.3
+    ],
+    "CombatAttackPreDelay": [
+      0.1,
+      0.25
+    ],
+    "BlockAbility": "",
+    "BlockProbability": 0,
+    "AttitudeGroup": "Eldanior_Guard",
+    "DefaultPlayerAttitude": "Ignore",
+    "DisableDamageGroups": [
+      "Self",
+      "Eldanior_Guards"
+    ],
+    "IsMemory": false,
+    "IsMountable": true,
+    "MountAnchorY": 2.0,
+    "_InteractionVars": {
+      "Melee_Start": {
+        "Interactions": [
+          {
+            "Parent": "Wolf_Bite",
+            "$Comment": "Sets animations and delay before hit",
+            "Effects": {
+              "ItemPlayerAnimationsId": "Wolf_Black_Default",
+              "ItemAnimationId": "Bite"
+            },
+            "RunTime": 0.167
+          }
+        ]
+      },
+      "Bite_Damage": {
+        "Interactions": [
+          {
+            "Parent": "Wolf_Bite_Damage",
+            "DamageCalculator": {
+              "Type": "Absolute",
+              "BaseDamage": {
+                "Physical": 27
+              },
+              "RandomPercentageModifier": 0.1
+            },
+            "DamageEffects": {
+              "Knockback": {
+                "Force": 1
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "Parameters": {
+    "NameTranslationKey": {
+      "Value": "server.npcRoles.Eldanior_Familier_DragonGivre.name",
+      "Description": "Translation key for NPC name display"
+    }
+  }
+}

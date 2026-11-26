@@ -26,15 +26,16 @@ import javax.annotation.Nonnull;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-// /es family [action] [joueur/familyId] — Actions: choose, invite, info
+// /es family [action] [joueur/familyId] — Actions: choose, invite, info, agreer, revoquer
+// agreer / revoquer : marchands agrees du Comptoir de la Porte du Dragon (Clan Luo), par le Patriarche ou un Doyen Luo.
 public class FamilyCommand extends AbstractAsyncCommand {
 
     private final RequiredArg<String> actionArg;
     private final RequiredArg<String> arg1;
 
     public FamilyCommand() {
-        super("family", "Gestion des familles (choose/invite/info)");
-        this.actionArg = this.withRequiredArg("action", "choose|invite|info", ArgTypes.STRING);
+        super("family", "Gestion des familles (choose/invite/info/agreer/revoquer)");
+        this.actionArg = this.withRequiredArg("action", "choose|invite|info|agreer|revoquer", ArgTypes.STRING);
         this.arg1 = this.withRequiredArg("arg", "FamilyId ou joueur", ArgTypes.STRING);
     }
 
@@ -62,7 +63,9 @@ public class FamilyCommand extends AbstractAsyncCommand {
                     case "choose" -> handleChoose(sender, ctx, world);
                     case "invite" -> handleInvite(sender, ctx, world);
                     case "info" -> handleInfo(sender, ctx);
-                    default -> senderRef.sendMessage(Message.raw("Usage : /es family <choose|invite|info> <familyId/joueur>"));
+                    case "agreer" -> handleMerchant(sender, senderRef, ctx, true);
+                    case "revoquer" -> handleMerchant(sender, senderRef, ctx, false);
+                    default -> senderRef.sendMessage(Message.raw("Usage : /es family <choose|invite|info|agreer|revoquer> <familyId/joueur>"));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -131,7 +134,6 @@ public class FamilyCommand extends AbstractAsyncCommand {
 
             sender.getPlayerRef().sendMessage(Message.raw("Vous etes Patriarche de la famille " + family.getFormattedName() + " !"));
             sender.getPlayerRef().sendMessage(Message.raw("Devise : " + family.getMotto()));
-            sender.getPlayerRef().sendMessage(Message.raw("Competence : " + family.getFamilyPassive().getDisplayName()));
         } catch (Exception e) { e.printStackTrace(); }
     }
 
@@ -148,7 +150,7 @@ public class FamilyCommand extends AbstractAsyncCommand {
             if (senderData == null) return;
 
             if (!senderData.canInviteToFamily()) {
-                sender.getPlayerRef().sendMessage(Message.raw("Seul le Patriarche ou le Vice-Patriarche peut inviter."));
+                sender.getPlayerRef().sendMessage(Message.raw("Seuls le Patriarche, les Doyens et le Seigneur peuvent inviter."));
                 return;
             }
 
@@ -188,14 +190,70 @@ public class FamilyCommand extends AbstractAsyncCommand {
             PlayerLevelData copy = (PlayerLevelData) data.clone();
             if (copy == null) return;
             copy.setNobleFamilyId(familyId);
-            copy.setStatus("MEMBER");
+            copy.setStatus(com.eldanior.system.titles.nobility.family.FamilyRole.MEMBER.code());
             store.putComponent(ref, type, copy);
 
             // Verifier titres en temps reel apres avoir rejoint une famille
             com.eldanior.system.titles.TitleManager.checkAndUnlockTitles(ref, store, copy, targetPlayer);
 
-            sender.getPlayerRef().sendMessage(Message.raw("" + targetName + " a rejoint " + family.getFormattedName() + " en tant que Membre."));
+            sender.getPlayerRef().sendMessage(Message.raw("" + targetName + " a rejoint " + family.getFormattedName() + " en tant que membre sans titre."));
             targetPlayer.sendMessage(Message.raw("Vous avez rejoint la famille " + family.getFormattedName() + " - " + family.getMotto()));
+        } catch (Exception e) { e.printStackTrace(); }
+    }
+
+    // ==================== MARCHANDS AGREES (Clan Luo) ====================
+    // Le Patriarche ou un Doyen Luo agree un etranger : LuoPlaqueSystem lui remet la plaque de Marchand agree du Comptoir.
+    // Les admins peuvent aussi agreer et revoquer (territoire gere par l'admin).
+    private void handleMerchant(Player sender, PlayerRef senderRef, CommandContext ctx, boolean grant) {
+        String targetName = this.arg1.get(ctx);
+        String familyId = com.eldanior.system.luo.LuoPlaques.FAMILY;
+        try {
+            var ref = sender.getReference();
+            if (ref == null) return;
+            ComponentType<EntityStore, PlayerLevelData> type = EldaniorSystem.get().getPlayerLevelDataType();
+            PlayerLevelData senderData = ref.getStore().getComponent(ref, type);
+            com.eldanior.system.titles.nobility.family.FamilyRole role =
+                    senderData == null || !familyId.equals(senderData.getNobleFamilyId()) ? null
+                            : com.eldanior.system.titles.nobility.family.FamilyRole.of(senderData.getStatus());
+            boolean allowed = role == com.eldanior.system.titles.nobility.family.FamilyRole.PATRIARCH
+                    || role == com.eldanior.system.titles.nobility.family.FamilyRole.ELDER
+                    || senderRef.hasPermission(com.eldanior.system.config.EldaniorLogger.ADMIN_PERMISSION);
+            if (!allowed) {
+                senderRef.sendMessage(Message.raw("Seuls le Patriarche et les Doyens du Clan Luo agreent les marchands du Comptoir."));
+                return;
+            }
+
+            if (!grant) {
+                UUID removed = FamilyManager.removeMerchant(familyId, targetName);
+                if (removed == null) {
+                    senderRef.sendMessage(Message.raw(targetName + " n'est pas un marchand agree du Comptoir."));
+                    return;
+                }
+                senderRef.sendMessage(Message.raw("Agrement de " + targetName + " retire : sa plaque de marchand lui sera reprise."));
+                PlayerRef target = Universe.get().getPlayer(removed);
+                if (target != null) target.sendMessage(Message.raw("Le Clan Luo vous retire votre agrement de marchand du Comptoir."));
+                return;
+            }
+
+            PlayerRef target = Universe.get().getPlayerByUsername(targetName, NameMatching.EXACT_IGNORE_CASE);
+            if (target == null || target.getReference() == null) {
+                senderRef.sendMessage(Message.raw("Le joueur doit etre connecte."));
+                return;
+            }
+            var targetRef = target.getReference();
+            PlayerLevelData targetData = targetRef.getStore().getComponent(targetRef, type);
+            if (targetData != null && familyId.equals(targetData.getNobleFamilyId())) {
+                senderRef.sendMessage(Message.raw(target.getUsername() + " est du clan : sa plaque de rang lui suffit."));
+                return;
+            }
+            UUID targetUUID = extractUUID(target);
+            if (targetUUID == null) return;
+            if (!FamilyManager.addMerchant(familyId, targetUUID, target.getUsername())) {
+                senderRef.sendMessage(Message.raw(target.getUsername() + " est deja marchand agree du Comptoir."));
+                return;
+            }
+            senderRef.sendMessage(Message.raw(target.getUsername() + " est desormais marchand agree du Comptoir de la Porte du Dragon."));
+            target.sendMessage(Message.raw("Le Clan Luo vous agree comme marchand du Comptoir de la Porte du Dragon. Portez votre plaque pour y entrer."));
         } catch (Exception e) { e.printStackTrace(); }
     }
 
@@ -214,9 +272,11 @@ public class FamilyCommand extends AbstractAsyncCommand {
         sender.getPlayerRef().sendMessage(Message.raw("Devise : " + family.getMotto()));
         sender.getPlayerRef().sendMessage(Message.raw("Rarete : " + family.getRarity().getDisplayName()));
         sender.getPlayerRef().sendMessage(Message.raw("Rang requis : " + family.getMinimumRank().getFormattedName()));
-        sender.getPlayerRef().sendMessage(Message.raw("Competence : " + family.getFamilyPassive().getDisplayName()
-                + " (" + family.getFamilyPassive().getDescription() + ")"));
         sender.getPlayerRef().sendMessage(Message.raw("Disponible : " + (FamilyManager.isFamilyTaken(familyId) ? "Non (prise)" : "Oui")));
+        java.util.Map<UUID, String> merchants = FamilyManager.getMerchants(family.getId());
+        if (!merchants.isEmpty()) {
+            sender.getPlayerRef().sendMessage(Message.raw("Marchands agrees : " + String.join(", ", merchants.values())));
+        }
     }
 
     private UUID extractUUID(PlayerRef playerRef) throws Exception {

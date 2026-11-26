@@ -17,12 +17,13 @@ public class DragonAncestral extends ClassModel {
                 "Dragon Ancestral Divin",
                 Rarity.DIVINE,
                 ClassType.DRAGON,
-                List.of(PassiveSkill.VOL, PassiveSkill.MANA_HEART),
-                List.of(WeaponMastery.ANY, WeaponMastery.SHIELD, WeaponMastery.SPEAR, WeaponMastery.STAFF, WeaponMastery.SPELLBOOK, WeaponMastery.SWORD, WeaponMastery.BOW, WeaponMastery.CLUB, WeaponMastery.AXE, WeaponMastery.MACE, WeaponMastery.DAGGER),
+                List.of(PassiveSkill.VOL.r(6)),
+                List.of(WeaponMastery.ANY, WeaponMastery.SHIELD, WeaponMastery.SPEAR, WeaponMastery.STAFF, WeaponMastery.SPELLBOOK, WeaponMastery.SWORD, WeaponMastery.BOW, WeaponMastery.CLUB, WeaponMastery.AXE, WeaponMastery.MACE, WeaponMastery.FLAIL, WeaponMastery.DAGGER),
                 List.of(),
                 999,
                 true,
                 500, 500, 1500, 500, 500, 1000
         );
+        runes("Rune_AvatarDragon", "Rune_AvenementBahamut");
     }
 }

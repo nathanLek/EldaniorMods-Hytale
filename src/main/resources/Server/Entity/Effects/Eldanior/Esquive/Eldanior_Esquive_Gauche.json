@@ -1,0 +1,32 @@
+{
+  "Duration": 0.3,
+  "ApplicationEffects": {
+    "EntityAnimationId": "DashLeft",
+    "Particles": [
+      {
+        "SystemId": "Daggers_Dash_Straight",
+        "TargetEntityPart": "Entity",
+        "TargetNodeName": "Hip",
+        "PositionOffset": {
+          "Y": 1.0
+        },
+        "Color": "#d7e5ec"
+      }
+    ],
+    "FirstPersonParticles": [
+      {
+        "SystemId": "Dagger_Dash_Left_FP",
+        "TargetEntityPart": "Entity",
+        "TargetNodeName": "Head",
+        "Color": "#d7e5ec",
+        "PositionOffset": {
+          "Z": 1.0,
+          "Y": -0.5,
+          "X": 0.0
+        }
+      }
+    ],
+    "ModelVFXId": "Dagger_Dash"
+  },
+  "OverlapBehavior": "Extend"
+}

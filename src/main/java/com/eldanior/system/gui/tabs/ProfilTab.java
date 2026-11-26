@@ -9,7 +9,6 @@ import com.eldanior.system.titles.nobility.family.NobleFamilyModel;
 import com.hypixel.hytale.component.ComponentType;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatsModule;
 import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
@@ -48,107 +47,106 @@ public class ProfilTab {
         int bAgl = cAgl + tAgl;
         int bLck = cLck + tLck;
 
-        // Nom + famille noble
-        String displayName = playerName;
-        String familyId = data.getNobleFamilyId();
-        if (familyId != null && !familyId.isEmpty()) {
-            NobleFamilyModel family = FamilyManager.get(familyId);
-            if (family != null) {
-                displayName = playerName + " Von " + family.getDisplayName();
-            }
-        }
+        // Identite (panneau de gauche, a cote du personnage ; l'onglet Profil a ete retire le 2026-11-12)
+        ui.set("#ProfilAdvRank.Text", getAdventureRank(data.getLevel()));
+        ui.set("#ProfilAdvRank.Style.TextColor", getAdventureRankColor(data.getLevel()));
+        ui.set("#IdLevel.Text", String.valueOf(data.getLevel()));
+        ui.set("#IdClass.Text", data.getPlayerClass() != null ? data.getPlayerClass() : "Sans classe");
 
-        ui.set("#ProfilName.Text", displayName);
+        // Noblesse (icone : le decret du rang ; couronne pour le roi, parchemin pour le roturier)
+        com.eldanior.system.titles.nobility.NobilityRank noble =
+                com.eldanior.system.titles.nobility.NobilityRank.fromString(data.getNobilityRank());
+        ui.set("#IdNoble.Text", noble != null ? noble.getDisplayName() : "Roturier");
+        String nobleIcon = noble == null || noble == com.eldanior.system.titles.nobility.NobilityRank.ROTURIER ? "Deco_Scroll"
+                : noble == com.eldanior.system.titles.nobility.NobilityRank.ROI ? "Butin_Couronne_Spectrale"
+                : "Decret_" + noble.getDisplayName();
+        icon(ui, "#IdIconNoble", nobleIcon, "Deco_Scroll");
 
-        // Rang aventurier basé sur le niveau
-        String rank = getAdventureRank(data.getLevel());
-        String rankColor = getAdventureRankColor(data.getLevel());
-        ui.set("#ProfilAdvRank.Text", rank);
-        ui.set("#ProfilAdvRank.Style.TextColor", rankColor);
-
-        ui.set("#ProfilClass.Text", data.getPlayerClass());
-
-        // Rang
-        String rankStr = data.getNobilityRank();
-        ui.set("#ProfilRank.Text", (rankStr != null && !rankStr.isEmpty() && !"ROTURIER".equals(rankStr)) ? rankStr : "Roturier");
-
-        // Status (Patriarch/Vice/Membre/Chef de Guilde/etc - jamais PK ici)
-        String status = data.getStatus();
-        if (status != null && !status.isEmpty()) {
-            ui.set("#ProfilStatus.Text", status);
-        } else if (data.hasGuild()) {
-            ui.set("#ProfilStatus.Text", data.getGuildRole());
-        } else {
-            ui.set("#ProfilStatus.Text", "-");
-        }
-
-        // Eglise / PK
+        // Eglise : criminel (PK, le cadre du menu passe au rouge), laique ou rang religieux
+        com.eldanior.system.titles.church.ChurchRank rank = null;
+        try {
+            String cr = data.getChurchRank();
+            if (cr != null && !cr.isEmpty()) rank = com.eldanior.system.titles.church.ChurchRank.valueOf(cr.toUpperCase());
+        } catch (IllegalArgumentException ignored) { }
         if (data.isPK()) {
-            String bountyText = " | Prime: " + data.getBounty() + " Or";                 // meme a 0 : tableau de prime
-            ui.set("#ProfilChurch.Text", "CRIMINEL - EXCOMMUNIE" + bountyText);
+            com.hypixel.hytale.server.core.universe.PlayerRef me = store.getComponent(ref, com.hypixel.hytale.server.core.universe.PlayerRef.getComponentType());
+            boolean starred = me != null && com.eldanior.system.guards.BankLoans.isStarred(me.getUuid());   // dette impayee
+            ui.set("#IdChurch.Text", (starred ? "Criminel étoilé · " : "Criminel · ") + data.getBounty() + " or");
+            ui.set("#IdChurch.Style.TextColor", "#ff6b5e");
+            icon(ui, "#IdIconChurch", "Deco_Bone_Skulls", null);
         } else {
-            String churchRank = data.getChurchRank();
-            if (churchRank != null && !churchRank.isEmpty() && !"LAIQUE".equals(churchRank)) {
-                ui.set("#ProfilChurch.Text", "Eglise : " + churchRank);
-            } else {
-                ui.set("#ProfilChurch.Text", "Laique");
-            }
+            boolean clergy = rank != null && rank.isClergy();
+            ui.set("#IdChurch.Text", clergy ? accent(rank.getDisplayName()) : "Laïque");
+            ui.set("#IdChurch.Style.TextColor", clergy ? "#f0d58c" : "#d1dae6");
+            icon(ui, "#IdIconChurch", clergy ? "Benediction_" + rank.getDisplayName() : "Furniture_Human_Ruins_Candle",
+                    "Furniture_Temple_Light_Statue");
         }
 
-        // Titre
-        // Titre : afficher le displayName au lieu de l'id
-        String titleId = data.getCurrentTitle();
-        com.eldanior.system.titles.models.TitleModel titleModel = com.eldanior.system.titles.TitleManager.get(titleId);
-        ui.set("#ProfilTitle.Text", titleModel != null ? titleModel.getDisplayName() : (titleId != null ? titleId : "Aucun"));
+        // Famille et guilde : seulement si le joueur en a une
+        String familyId = data.getNobleFamilyId();
+        NobleFamilyModel family = familyId != null && !familyId.isEmpty() ? FamilyManager.get(familyId) : null;
+        ui.set("#IdRowFamily.Visible", family != null);
+        if (family != null) {
+            var role = data.getFamilyRole();
+            ui.set("#IdFamily.Text", family.getDisplayName() + (role != null ? " · " + role.label() : ""));
+            icon(ui, "#IdIconFamily", "Eldanior_Banniere_Famille_" + Character.toUpperCase(familyId.charAt(0)) + familyId.substring(1),
+                    "Furniture_Outlander_Banner");
+        }
+        var g = data.hasGuild() ? com.eldanior.system.guild.GuildManager.get(data.getGuildId()) : null;
+        ui.set("#IdRowGuild.Visible", g != null);
+        if (g != null) {
+            String gr = data.getGuildRole() == null ? "" : data.getGuildRole().toUpperCase();
+            String grLabel = switch (gr) { case "CHEF" -> "Chef"; case "OFFICER" -> "Officier"; default -> "Membre"; };
+            ui.set("#IdGuild.Text", g.getName() + " · " + grLabel);
+            icon(ui, "#IdIconGuild", "Furniture_Human_Ruins_Banner", null);
+        }
 
-        // XP
-        ui.set("#ProfilXPLabel.TextSpans", Message.raw("XP : " + data.getExperience() + " / " + data.getRequiredExperience()));
-        ui.set("#ProfilXPBar.Value", data.getExperienceProgress());
+        // XP (panneau de gauche, refonte du 2026-11-12)
+        ui.set("#ProfilXPLabel.Text", data.getLevel() >= PlayerLevelData.MAX_LEVEL ? "Niveau maximal"
+                : group(data.getExperience()) + " / " + group(data.getRequiredExperience()));
+        ui.set("#ProfilXPBar.Value", Math.max(0f, Math.min(1f, data.getExperienceProgress())));
 
-        // Mana
+        ui.set("#ProfilPreviewBox.TooltipText", combatTooltip(data));
+
+        // Statistiques reelles (vie, endurance, mana, defense) : remplacent la barre de mana (2026-11-12)
         populateResourceBars(ui, ref, store);
+        populateDerived(ui, data, classModel);
 
-        // Points disponibles
+        // Points disponibles : les boutons + n'apparaissent que s'il en reste (+5 : au moins 5)
         int pts = data.getAttributePoints();
-        ui.set("#ProfilPoints.TextSpans", Message.raw("POINTS DISPONIBLES : " + pts));
-
-        // Attributs
-        ui.set("#ProfilStr.TextSpans", Message.raw("FORCE  " + data.getStrength() + "  (+" + bStr + ")"));
-        ui.set("#ProfilVit.TextSpans", Message.raw("VITALITE  " + data.getVitality() + "  (+" + bVit + ")"));
-        ui.set("#ProfilInt.TextSpans", Message.raw("INTELLIGENCE  " + data.getIntelligence() + "  (+" + bInt + ")"));
-        ui.set("#ProfilEnd.TextSpans", Message.raw("ENDURANCE  " + data.getEndurance() + "  (+" + bEnd + ")"));
-        ui.set("#ProfilAgl.TextSpans", Message.raw("AGILITE  " + data.getAgility() + "  (+" + bAgl + ")"));
-        ui.set("#ProfilLck.TextSpans", Message.raw("CHANCE   " + data.getLuck() + "  (+" + bLck + ")"));
+        ui.set("#ProfilPoints.Text", pts > 0 ? pts + (pts > 1 ? " points à répartir" : " point à répartir") : "Aucun point");
+        String[][] attrs = {{"Str", String.valueOf(data.getStrength()), String.valueOf(bStr)},
+                {"Vit", String.valueOf(data.getVitality()), String.valueOf(bVit)},
+                {"Int", String.valueOf(data.getIntelligence()), String.valueOf(bInt)},
+                {"End", String.valueOf(data.getEndurance()), String.valueOf(bEnd)},
+                {"Agl", String.valueOf(data.getAgility()), String.valueOf(bAgl)},
+                {"Lck", String.valueOf(data.getLuck()), String.valueOf(bLck)}};
+        for (String[] a : attrs) {
+            ui.set("#Profil" + a[0] + ".Text", a[1] + ("0".equals(a[2]) ? "" : "  (+" + a[2] + ")"));
+            ui.set("#Btn" + a[0] + "1.Visible", pts > 0);
+            ui.set("#Btn" + a[0] + "5.Visible", pts >= 5);
+        }
 
         // Foi & Dignite
         ui.set("#ProfilFaith.Text", String.valueOf(data.getFaith()));
         ui.set("#ProfilDignity.Text", String.valueOf(data.getDignity()));
 
-        // Stats PvP
-        ui.set("#StatKills.Text", String.valueOf(data.getPlayerKills()));
-        ui.set("#StatDeaths.Text", String.valueOf(data.getPlayerDeaths()));
-        ui.set("#StatKDR.Text", String.format("%.1f", data.getKDR()));
-        ui.set("#StatStreak.Text", String.valueOf(data.getKillStreak()));
-        ui.set("#StatBestStreak.Text", String.valueOf(data.getBestKillStreak()));
-        ui.set("#StatChests.Text", String.valueOf(data.getChestsDiscovered()));
-        ui.set("#StatTotalMobs.Text", "Total : " + data.getTotalMobKills());
+    }
 
-        // Mob kills (max 15 slots)
-        java.util.List<java.util.Map.Entry<String, Integer>> mobList = new java.util.ArrayList<>(data.getMobKills().entrySet());
-        mobList.sort((a, b) -> b.getValue() - a.getValue()); // tri par nombre desc
+    /** Icone d'objet d'une ligne d'identite ; repli si l'objet n'existe pas (un ItemId inconnu n'est jamais envoye). */
+    private static void icon(UICommandBuilder ui, String id, String item, String fallback) {
+        var map = com.hypixel.hytale.server.core.asset.type.item.config.Item.getAssetMap();
+        String use = item != null && map.getAsset(item) != null ? item : fallback != null && map.getAsset(fallback) != null ? fallback : null;
+        if (use != null) ui.set(id + ".ItemId", use);
+    }
 
-        for (int i = 0; i < 15; i++) {
-            if (i < mobList.size()) {
-                var entry = mobList.get(i);
-                ui.set("#MobKillRow" + i + ".Visible", true);
-                // Formater le nom du mob : "goblin_scrapper" -> "Goblin Scrapper"
-                String mobName = formatMobName(entry.getKey());
-                ui.set("#MobName" + i + ".Text", mobName);
-                ui.set("#MobCount" + i + ".Text", String.valueOf(entry.getValue()));
-            } else {
-                ui.set("#MobKillRow" + i + ".Visible", false);
-            }
-        }
+    /** Libelles d'Eglise sans accents dans l'enum (Pretre, Archeveque) : accents pour l'affichage. */
+    private static String accent(String s) {
+        return s.replace("Pretre", "Prêtre").replace("Archeveque", "Archevêque").replace("Laique", "Laïque");
+    }
+
+    private static String group(long v) {
+        return String.format(java.util.Locale.FRANCE, "%,d", v).replace('\u202f', ' ').replace('\u00a0', ' ');
     }
 
     private static String formatMobName(String mobId) {
@@ -164,18 +162,58 @@ public class ProfilTab {
         return sb.toString();
     }
 
+    /** Vie, endurance et mana actuelles / maximum, comme le panneau de l'inventaire. */
     public static void populateResourceBars(UICommandBuilder ui, Ref<EntityStore> ref, Store<EntityStore> store) {
         EntityStatMap statMap = store.getComponent(ref, EntityStatsModule.get().getEntityStatMapComponentType());
-        if (statMap == null) return;
-
-        int manaIndex = DefaultEntityStatTypes.getMana();
-        var manaStat = statMap.get(manaIndex);
-        if (manaStat != null) {
-            float currentMp = manaStat.get();
-            float maxMp = manaStat.getMax();
-            ui.set("#ProfilMana.TextSpans", Message.raw((int) currentMp + " / " + (int) maxMp));
-            ui.set("#ProfilManaBar.Value", maxMp > 0 ? currentMp / maxMp : 0.0f);
+        String[][] stats = {{"#RealHealth", String.valueOf(DefaultEntityStatTypes.getHealth())},
+                {"#RealStamina", String.valueOf(DefaultEntityStatTypes.getStamina())},
+                {"#RealMana", String.valueOf(DefaultEntityStatTypes.getMana())}};
+        for (String[] st : stats) {
+            var v = statMap != null ? statMap.get(Integer.parseInt(st[1])) : null;
+            ui.set(st[0] + ".Text", v != null ? Math.round(v.get()) + " / " + Math.round(v.getMax()) : "—");
         }
+    }
+
+    /** Empreinte des valeurs actuelles (vie, endurance, mana) : SystemScreen ne renvoie les statistiques que si elle change. */
+    public static String resourceKey(Ref<EntityStore> ref, Store<EntityStore> store) {
+        EntityStatMap statMap = store.getComponent(ref, EntityStatsModule.get().getEntityStatMapComponentType());
+        if (statMap == null) return "";
+        StringBuilder b = new StringBuilder();
+        for (int id : new int[]{DefaultEntityStatTypes.getHealth(), DefaultEntityStatTypes.getStamina(), DefaultEntityStatTypes.getMana()}) {
+            var v = statMap.get(id);
+            b.append(v != null ? Math.round(v.get()) + "/" + Math.round(v.getMax()) : "-").append('|');
+        }
+        return b.toString();
+    }
+
+    /** Infobulle du personnage 3D : statistiques de combat qui ne sont plus affichees ailleurs (2026-11-12). */
+    private static String combatTooltip(PlayerLevelData d) {
+        return "Joueurs tués : " + d.getPlayerKills()
+                + "\nMorts : " + d.getPlayerDeaths()
+                + "\nRatio (KDR) : " + String.format(java.util.Locale.FRANCE, "%.2f", d.getKDR())
+                + "\nSérie actuelle : " + d.getKillStreak() + "  ·  meilleure : " + d.getBestKillStreak()
+                + "\nMonstres tués : " + d.getTotalMobKills()
+                + "\nDuels : " + d.getDuelWins() + " gagnés, " + d.getDuelLosses() + " perdus"
+                + (d.getDuelBestStreak() > 0 ? "  ·  meilleure série " + d.getDuelBestStreak() : "");
+    }
+
+    /** Defense et effets des caracteristiques (StatConfig, memes formules que le combat) : Force, Defense, critique et esquive en %. */
+    private static void populateDerived(UICommandBuilder ui, PlayerLevelData data, ClassModel model) {
+        try {
+            float def = com.eldanior.system.config.configs.StatConfig.ENDURANCE_DEFENSE.getFinalValue(data, model);
+            float dmg = com.eldanior.system.config.configs.StatConfig.STRENGTH_DAMAGE.getFinalValue(data, model);
+            float crit = com.eldanior.system.config.configs.StatConfig.LUCK_CRITICAL.getFinalValue(data, model);
+            float dodge = com.eldanior.system.config.configs.StatConfig.DODGE_CHANCE.getFinalValue(data, model);
+            ui.set("#RealDefense.Text", "-" + num(def) + " % de dégâts reçus");       // CombatStatsSystem (en % depuis le 2026-11-25)
+            ui.set("#RealDerived.Text", "Dégâts +" + num(dmg) + " %   ·   Critique " + num(crit) + " %   ·   Esquive " + num(dodge) + " %");
+        } catch (Exception e) {
+            ui.set("#RealDefense.Text", "—");
+            ui.set("#RealDerived.Text", "");
+        }
+    }
+
+    private static String num(float v) {
+        return Math.abs(v - Math.round(v)) < 0.05f ? String.valueOf(Math.round(v)) : String.format(java.util.Locale.FRANCE, "%.1f", v);
     }
 
     public static boolean handleAttribute(String action, Ref<EntityStore> ref, Store<EntityStore> store) {
@@ -227,7 +265,7 @@ public class ProfilTab {
     }
 
     public static String getAdventureRank(int level) {
-        if (level >= 600) return "S";
+        if (level >= 650) return "S";
         if (level >= 400) return "A";
         if (level >= 250) return "B";
         if (level >= 150) return "C";
@@ -237,7 +275,7 @@ public class ProfilTab {
     }
 
     public static String getAdventureRankColor(int level) {
-        if (level >= 600) return "#FFD700";
+        if (level >= 650) return "#FFD700";
         if (level >= 400) return "#cc4444";
         if (level >= 250) return "#ff9800";
         if (level >= 150) return "#9C27B0";

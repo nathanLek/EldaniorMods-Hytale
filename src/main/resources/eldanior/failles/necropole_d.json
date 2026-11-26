@@ -1,0 +1,529 @@
+{
+ "id": "necropole_d",
+ "name": "La Nécropole Calcinée",
+ "rank": "D",
+ "theme": "calciné",
+ "instance": "Eldanior_Faille_Necropole",
+ "minutes": 15,
+ "keyName": "Clé de boss ED",
+ "overlay": "Eldanior/Failles/Necropole_D_Sceau.prefab.json",
+ "pieces": [],
+ "min": [
+  -161,
+  -9,
+  -161
+ ],
+ "max": [
+  161,
+  116,
+  161
+ ],
+ "arrival": [
+  0,
+  1,
+  -60
+ ],
+ "exitStart": [
+  4,
+  1,
+  -62
+ ],
+ "exitEnd": [
+  0,
+  1,
+  2
+ ],
+ "boss": [
+  0,
+  1,
+  8
+ ],
+ "chests": [],
+ "generateurs": {
+  "-42|2|-8": {
+   "role": "Skeleton_Burnt_Soldier",
+   "count": 3
+  },
+  "31|0|-71": {
+   "role": "Skeleton_Burnt_Soldier",
+   "count": 3
+  },
+  "22|32|-95": {
+   "role": "Skeleton_Burnt_Soldier",
+   "count": 2
+  },
+  "-68|0|-9": {
+   "role": "Skeleton_Burnt_Archer",
+   "count": 3
+  },
+  "-42|1|9": {
+   "role": "Skeleton_Burnt_Archer",
+   "count": 2
+  },
+  "53|1|27": {
+   "role": "Skeleton_Burnt_Lancer",
+   "count": 3
+  },
+  "71|4|-19": {
+   "role": "Skeleton_Burnt_Lancer",
+   "count": 1
+  },
+  "-63|3|26": {
+   "role": "Skeleton_Incandescent_Head",
+   "count": 3
+  },
+  "67|5|-56": {
+   "role": "Skeleton_Incandescent_Head",
+   "count": 1
+  },
+  "49|8|66": {
+   "role": "Skeleton_Burnt_Gunner",
+   "count": 3
+  },
+  "2|0|-33": {
+   "role": "Skeleton_Incandescent_Footman",
+   "count": 3
+  },
+  "-41|0|36": {
+   "role": "Skeleton_Burnt_Knight",
+   "count": 2
+  },
+  "77|40|80": {
+   "role": "Skeleton_Incandescent_Mage",
+   "count": 2
+  },
+  "-88|8|13": {
+   "role": "Emberwulf",
+   "count": 2
+  },
+  "0|1|8": {
+   "role": "Skeleton_Burnt_Praetorian",
+   "count": 1
+  }
+ },
+ "bossRole": "Skeleton_Burnt_Praetorian",
+ "bossName": "Le Prétorien Calciné",
+ "esplanade": {
+  "center": [
+   0,
+   0,
+   8
+  ],
+  "radius": 36
+ },
+ "rooms": [
+  {
+   "id": "caldeira",
+   "name": "La Caldeira",
+   "safe": false,
+   "min": [
+    -161,
+    -9,
+    -161
+   ],
+   "max": [
+    161,
+    116,
+    161
+   ],
+   "center": [
+    0,
+    1,
+    8
+   ],
+   "spawns": [
+    [
+     -42,
+     2,
+     -8
+    ],
+    [
+     31,
+     0,
+     -71
+    ],
+    [
+     22,
+     32,
+     -95
+    ],
+    [
+     -68,
+     0,
+     -9
+    ],
+    [
+     -42,
+     1,
+     9
+    ],
+    [
+     53,
+     1,
+     27
+    ],
+    [
+     71,
+     4,
+     -19
+    ],
+    [
+     -63,
+     3,
+     26
+    ],
+    [
+     67,
+     5,
+     -56
+    ],
+    [
+     49,
+     8,
+     66
+    ],
+    [
+     2,
+     0,
+     -33
+    ],
+    [
+     -41,
+     0,
+     36
+    ],
+    [
+     77,
+     40,
+     80
+    ],
+    [
+     -88,
+     8,
+     13
+    ],
+    [
+     65,
+     27,
+     -82
+    ],
+    [
+     77,
+     9,
+     -1
+    ],
+    [
+     -27,
+     1,
+     -33
+    ],
+    [
+     -1,
+     2,
+     50
+    ],
+    [
+     28,
+     2,
+     -49
+    ],
+    [
+     -10,
+     2,
+     59
+    ],
+    [
+     -85,
+     8,
+     -26
+    ],
+    [
+     -51,
+     2,
+     -35
+    ],
+    [
+     39,
+     1,
+     -9
+    ],
+    [
+     -22,
+     1,
+     -47
+    ],
+    [
+     -13,
+     0,
+     -38
+    ],
+    [
+     61,
+     33,
+     80
+    ],
+    [
+     -39,
+     0,
+     56
+    ],
+    [
+     85,
+     19,
+     -15
+    ],
+    [
+     48,
+     3,
+     -39
+    ],
+    [
+     -79,
+     10,
+     33
+    ],
+    [
+     59,
+     7,
+     -66
+    ],
+    [
+     60,
+     -2,
+     0
+    ],
+    [
+     -38,
+     1,
+     -41
+    ],
+    [
+     -55,
+     40,
+     80
+    ],
+    [
+     86,
+     16,
+     9
+    ],
+    [
+     71,
+     3,
+     -34
+    ],
+    [
+     -16,
+     16,
+     87
+    ],
+    [
+     16,
+     1,
+     -31
+    ],
+    [
+     91,
+     50,
+     62
+    ],
+    [
+     72,
+     5,
+     20
+    ],
+    [
+     -54,
+     2,
+     -23
+    ],
+    [
+     -46,
+     12,
+     66
+    ],
+    [
+     -36,
+     3,
+     -57
+    ],
+    [
+     20,
+     5,
+     -76
+    ],
+    [
+     47,
+     1,
+     -24
+    ],
+    [
+     -62,
+     2,
+     5
+    ],
+    [
+     2,
+     35,
+     -96
+    ],
+    [
+     84,
+     19,
+     -33
+    ],
+    [
+     -7,
+     1,
+     73
+    ],
+    [
+     49,
+     -1,
+     11
+    ],
+    [
+     21,
+     1,
+     43
+    ],
+    [
+     39,
+     1,
+     -60
+    ],
+    [
+     33,
+     -1,
+     45
+    ],
+    [
+     -67,
+     1,
+     -21
+    ],
+    [
+     34,
+     5,
+     74
+    ],
+    [
+     -53,
+     1,
+     38
+    ],
+    [
+     15,
+     2,
+     81
+    ],
+    [
+     35,
+     2,
+     -21
+    ],
+    [
+     -72,
+     3,
+     13
+    ],
+    [
+     2,
+     7,
+     86
+    ]
+   ],
+   "mobs": [
+    [
+     "Skeleton_Burnt_Soldier",
+     8,
+     225,
+     255
+    ],
+    [
+     "Skeleton_Burnt_Archer",
+     5,
+     210,
+     240
+    ],
+    [
+     "Skeleton_Burnt_Lancer",
+     4,
+     220,
+     250
+    ],
+    [
+     "Skeleton_Incandescent_Head",
+     4,
+     215,
+     245
+    ],
+    [
+     "Skeleton_Burnt_Gunner",
+     3,
+     215,
+     245
+    ],
+    [
+     "Skeleton_Incandescent_Footman",
+     3,
+     225,
+     260
+    ],
+    [
+     "Skeleton_Burnt_Knight",
+     2,
+     225,
+     255
+    ],
+    [
+     "Skeleton_Incandescent_Mage",
+     2,
+     245,
+     280
+    ],
+    [
+     "Emberwulf",
+     2,
+     250,
+     330
+    ]
+   ],
+   "stars": 2,
+   "boss": [
+    "Skeleton_Burnt_Praetorian",
+    300,
+    1.8,
+    "Le Prétorien Calciné"
+   ],
+   "reinforcements": [
+    [
+     "Skeleton_Incandescent_Footman",
+     2,
+     240,
+     260
+    ],
+    [
+     "Skeleton_Burnt_Archer",
+     1,
+     235,
+     245
+    ]
+   ]
+  }
+ ],
+ "overflow": [
+  [
+   "Skeleton_Burnt_Soldier",
+   4
+  ],
+  [
+   "Skeleton_Burnt_Archer",
+   2
+  ],
+  [
+   "Skeleton_Burnt_Knight",
+   1
+  ]
+ ]
+}

@@ -1,0 +1,46 @@
+{
+  "TranslationProperties": {
+    "Name": "Rune de la Tempête de Feuilles",
+    "Description": "Sort épique d'air (Mage, rune de prédilection du Druide Primordial). Une tornade de feuilles tranchantes se lève au point visé (jusqu'à 20 blocs) et suit votre viseur pendant 8 s. Elle aspire les ennemis à moins de 3,5 blocs, les fait tournoyer et les entaille (16 dégâts toutes les demi-secondes), puis les éjecte à la fin (60 dégâts). Épargne votre groupe, votre guilde et votre famille. Coût : 300 mana. Recharge : 120 s."
+  },
+  "Icon": "Icons/ItemsGenerated/Rune_TempeteFeuilles.png",
+  "Quality": "Epic",
+  "ItemLevel": 60,
+  "Categories": [
+    "Items.Ingredients",
+    "Eldanior_Runes.Air"
+  ],
+  "Model": "Items/Runes/Rune_Ability.blockymodel",
+  "Texture": "Items/Runes/Rune_Textures/Rune_Ability_TempeteFeuilles.png",
+  "PlayerAnimationsId": "Item",
+  "IconProperties": {
+    "Scale": 0.75,
+    "Rotation": [
+      0,
+      30,
+      15
+    ],
+    "Translation": [
+      4,
+      -18
+    ]
+  },
+  "MaxStack": 1,
+  "DropOnDeath": false,
+  "Scale": 0.8,
+  "ItemSoundSetId": "ISS_Items_Gems",
+  "Ability": {
+    "Slot": "Core",
+    "Cooldown": 120,
+    "Cost": 300,
+    "CostType": "Mana",
+    "AbilityKeywords": [
+      "Elemental",
+      "Wind",
+      "Damage",
+      "Aoe",
+      "Duration"
+    ],
+    "Cast": "Root_Ability_TempeteFeuilles"
+  }
+}

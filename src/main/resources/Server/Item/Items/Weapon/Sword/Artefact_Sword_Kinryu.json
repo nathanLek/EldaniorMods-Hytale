@@ -1,0 +1,122 @@
+{
+  "Parent": "Template_Weapon_Sword",
+  "TranslationProperties": {
+    "Name": "Kinryū-Ō, Lame du Dieu-Dragon d'Or",
+    "Description": "Arme divine. Forgée d'une écaille du Dieu-Dragon d'Or, celui qui avala le soleil : lame d'or blanc gravée du dragon, garde au dragon enroulé autour du soleil noir, fourreau d'écailles d'or. Trésor du Clan Luo, avec la Tenue Ancestrale du Dieu-Dragon d'Or : remis au Patriarche seul, et repris à la succession. Tenu au fourreau dans la main gauche, dégainé au premier coup, il reste au clair tant que l'on frappe. Clic droit : bref, rengainer ; maintenu, garde. Maintenir l'attaque : Souffle du Dragon d'Or, un dragon de lumière serpente devant le porteur et transperce tout sur son passage. Signature, Éclipse du Dieu-Dragon : le ciel s'assombrit sur la zone visée, puis un dragon d'or en descend et la frappe tout entière."
+  },
+  "Quality": "Divin",
+  "ItemLevel": 800,
+  "Texture": "Items/Weapons/artefacts/Artefact_Sword_Kinryu.png",
+  "Icon": "Icons/ItemsGenerated/Artefact_Sword_Kinryu.png",
+  "IconProperties": {
+    "Scale": 0.33,
+    "Rotation": [
+      45,
+      90,
+      0
+    ],
+    "Translation": [
+      -33,
+      -38
+    ]
+  },
+  "MaxStack": 1,
+  "Variant": false,
+  "InteractionVars": {
+    "Swing_Left_Damage": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Primary_Swing_Left_Damage",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Physical": 50
+            }
+          },
+          "DamageEffects": {
+            "WorldSoundEventId": "SFX_Sword_T2_Impact",
+            "LocalSoundEventId": "SFX_Sword_T2_Impact"
+          },
+          "EntityStatsOnHit": [
+            {
+              "EntityStatId": "SignatureEnergy",
+              "Amount": 2
+            }
+          ]
+        }
+      ]
+    },
+    "Swing_Right_Damage": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Primary_Swing_Right_Damage",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Physical": 50
+            }
+          },
+          "DamageEffects": {
+            "WorldSoundEventId": "SFX_Sword_T2_Impact",
+            "LocalSoundEventId": "SFX_Sword_T2_Impact"
+          },
+          "EntityStatsOnHit": [
+            {
+              "EntityStatId": "SignatureEnergy",
+              "Amount": 2
+            }
+          ]
+        }
+      ]
+    },
+    "Swing_Down_Damage": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Primary_Swing_Down_Damage",
+          "DamageCalculator": {
+            "BaseDamage": {
+              "Physical": 90
+            }
+          },
+          "DamageEffects": {
+            "WorldSoundEventId": "SFX_Sword_T2_Impact",
+            "LocalSoundEventId": "SFX_Sword_T2_Impact"
+          },
+          "EntityStatsOnHit": [
+            {
+              "EntityStatId": "SignatureEnergy",
+              "Amount": 4
+            }
+          ]
+        }
+      ]
+    },
+    "Guard_Wield": {
+      "Interactions": [
+        {
+          "Parent": "Weapon_Sword_Secondary_Guard_Wield",
+          "StaminaCost": {
+            "Value": 10,
+            "CostType": "Damage"
+          }
+        }
+      ]
+    },
+    "Thrust": {
+      "Interactions": [
+        "Luo_Iai_Degainee"
+      ]
+    }
+  },
+  "MaxDurability": 1200,
+  "$Comment": "Katana du Clan Luo au fourreau (rien en main droite). Genere par scripts/artefacts/gen_luo_katanas.py.",
+  "Model": "Items/Weapons/artefacts/Artefact_Sword_Tenryumaru_Main_Vide.blockymodel",
+  "PlayerAnimationsId": "Tenryumaru_Fourreau",
+  "Categories": [
+    "Eldanior_Empire_Luo.Luo",
+    "Items.Weapons"
+  ],
+  "Interactions": {
+    "Primary": "Root_Luo_Fourreau_Primary",
+    "Secondary": "Root_Weapon_Sword_Secondary_Guard",
+    "Ability1": "Root_Luo_Signature_Fourreau"
+  }
+}

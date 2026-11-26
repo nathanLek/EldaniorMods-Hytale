@@ -1,0 +1,41 @@
+{
+  "$Comment": "Lame d'air du katana Luo Kinryū-Ō, Lame du Dieu-Dragon d'Or (iai, Iaigiri, lames de Ki du kata), deplacee par le code. Genere par gen_luo_katanas.py.",
+  "Model": "Items/Projectiles/Tenryumaru_Lame_Kinryu_D.blockymodel",
+  "Texture": "Items/Projectiles/Tenryumaru_Lame_Kinryu_H.png",
+  "MinScale": 1.0,
+  "MaxScale": 1.0,
+  "HitBox": {
+    "Max": {
+      "X": 1.2,
+      "Y": 0.6,
+      "Z": 0.6
+    },
+    "Min": {
+      "X": -1.2,
+      "Y": -0.6,
+      "Z": -0.6
+    }
+  },
+  "Trails": [
+    {
+      "TrailId": "Katana_Kinryu_Trail",
+      "TargetNodeName": "Lame",
+      "PositionOffset": {
+        "X": 1.0,
+        "Z": 0.5
+      }
+    },
+    {
+      "TrailId": "Katana_Kinryu_Trail",
+      "TargetNodeName": "Lame",
+      "PositionOffset": {
+        "X": -1.0,
+        "Z": 0.5
+      }
+    }
+  ],
+  "Light": {
+    "Color": "#fff1b8",
+    "Radius": 5
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "$Comment": "Canon de char : viseur periscopique (x2,5).",
+  "Type": "Serial",
+  "Interactions": [
+    {
+      "Type": "RuneSpell",
+      "RunTime": 0.0,
+      "Spell": "MousquetVisee"
+    },
+    {
+      "Type": "Charging",
+      "AllowIndefiniteHold": true,
+      "DisplayProgress": false,
+      "CancelOnOtherClick": false,
+      "HorizontalSpeedMultiplier": 0.45,
+      "Effects": {
+        "MovementEffects": {
+          "DisableSprint": true
+        },
+        "HideFirstPersonHeldItem": true,
+        "Zoom": {
+          "MagnificationMultiplier": 2.5,
+          "MouseSensitivityMultiplier": 0.5,
+          "OverlayTexture": "ScreenEffects/Eldanior_Lunette_Mousquet.png",
+          "DepthOfField": false,
+          "ForcePerspective": "FirstPerson",
+          "LodMultiplier": 1.8333333333333335,
+          "InLerp": 0.1,
+          "OutLerp": 0.15,
+          "OverlayFade": true,
+          "OverlayFadePerSecond": 12
+        }
+      }
+    }
+  ]
+}

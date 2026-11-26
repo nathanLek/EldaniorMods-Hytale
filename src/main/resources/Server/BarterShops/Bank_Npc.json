@@ -132,6 +132,70 @@
         },
         "Stock": 10000
       }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Input": [
+          {
+            "ItemId": "Elda_Zenith_Coins",
+            "Quantity": 10
+          }
+        ],
+        "Output": {
+          "ItemId": "Elda_Astral_Coins",
+          "Quantity": 1
+        },
+        "Stock": 10000
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Input": [
+          {
+            "ItemId": "Elda_Astral_Coins",
+            "Quantity": 1
+          }
+        ],
+        "Output": {
+          "ItemId": "Elda_Zenith_Coins",
+          "Quantity": 10
+        },
+        "Stock": 10000
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Input": [
+          {
+            "ItemId": "Elda_Astral_Coins",
+            "Quantity": 10
+          }
+        ],
+        "Output": {
+          "ItemId": "Elda_Imperial_Coins",
+          "Quantity": 1
+        },
+        "Stock": 10000
+      }
+    },
+    {
+      "Type": "Fixed",
+      "Trade": {
+        "Input": [
+          {
+            "ItemId": "Elda_Imperial_Coins",
+            "Quantity": 1
+          }
+        ],
+        "Output": {
+          "ItemId": "Elda_Astral_Coins",
+          "Quantity": 10
+        },
+        "Stock": 10000
+      }
     }
   ]
 }

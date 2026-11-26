@@ -1,0 +1,39 @@
+{
+  "$Comment": "Manuel de magie, genere par scripts/runes/gen_manuels_magie.py. Maintenir le clic droit : lecture, puis le sort Java ManuelMagieApprendre enseigne Rune_VoileNyx (remplace le parchemin rune_page_voile_nyx).",
+  "TranslationProperties": {
+    "Name": "Manuel des Ténèbres : Trône du Néant Éternel",
+    "Description": "Sort divin de ténèbres (Assassin, Mage, Dragon). Pendant 1 minute, vous devenez maître de la mort et du néant sur tout le royaume autour de vous (30 blocs). Un globe de goudron noir se referme sur la zone : on peut y entrer, on ne peut plus en sortir. Tout le sol du globe devient noir sous un tapis de brume noire, et seul votre trône éclaire le royaume : un trône de ferraille noirci s'élève et flotte au centre, vous y prenez place, une couronne noire à la petite flamme violette au-dessus de la tête. Dans le royaume, vous infligez 50 % de dégâts en plus et en subissez 30 % de moins. L'ombre de chaque ennemi se dresse : sa copie toute noire, un peu plus faible que lui (90 % de sa vie et de sa force), qui court sur lui, tourne autour, se fend et le frappe ; il peut la frapper en retour. Abattue, une ombre fond dans l'ombre et se reforme 6 s plus tard. Clic gauche : le sol éclate en cercles runiques d'où quatre chaînes violettes jaillissent comme des grappins ; elles s'accrochent à l'ennemi visé (plus haut sur les grandes créatures), s'enroulent autour de lui et le tiennent enchaîné jusqu'à la fin du sort, en aspirant son mana à votre profit (sans lui infliger de dégâts). Clic droit : retour au néant, le sol s'ouvre et aspire lentement l'ennemi visé (environ 1800 dégâts), puis se referme. À la fin, les ombres fondent, le trône redescend dans le sol et le globe se dissout. Épargne votre groupe, votre guilde et votre famille. Coût : 2000 mana. Recharge : 5 s (valeur de test).\n\nMaintenez le clic droit pour lire le manuel et apprendre la rune. Le manuel se consume une fois lu."
+  },
+  "Categories": [
+    "Eldanior_Runes.Tenebres"
+  ],
+  "Quality": "Divin",
+  "ItemLevel": 100,
+  "Model": "Items/Eldanior/Manuels/Manuel_Magie.blockymodel",
+  "Texture": "Items/Eldanior/Manuels/Manuel_Magie_Tenebres_Texture.png",
+  "Icon": "Icons/ItemsGenerated/Eldanior_Manuel_Magie_Tenebres_VoileNyx.png",
+  "PlayerAnimationsId": "Luo_Manuel",
+  "IconProperties": {
+    "Scale": 0.6,
+    "Rotation": [
+      0,
+      0,
+      0
+    ],
+    "Translation": [
+      0,
+      -4
+    ]
+  },
+  "Interactions": {
+    "Secondary": "Root_Manuel_Magie_Lecture"
+  },
+  "Tags": {
+    "Type": [
+      "Item"
+    ]
+  },
+  "ItemSoundSetId": "ISS_Weapons_Books",
+  "MaxStack": 1,
+  "Scale": 1.0
+}

@@ -9,29 +9,24 @@
   "Quality": "Unique",
   "ItemLevel": 500,
   "Recipe": {
-    "TimeSeconds": 4,
-    "BenchRequirement": [
-      {
-        "Id": "Weapon_Bench",
-        "Type": "Crafting",
-        "Categories": [
-          "Weapon_Daggers"
-        ],
-        "RequiredTierLevel": 2
-      }
-    ],
+    "TimeSeconds": 10,
     "Input": [
       {
-        "ItemId": "Ingredient_Bar_Thorium",
+        "ItemId": "Ingredient_Bar_Divin",
         "Quantity": 6
       },
       {
-        "ItemId": "Ingredient_Leather_Medium",
-        "Quantity": 2
-      },
+        "ItemId": "Ingredient_Bar_Adamantite",
+        "Quantity": 10
+      }
+    ],
+    "BenchRequirement": [
       {
-        "ItemId": "Ingredient_Fabric_Scrap_Linen",
-        "Quantity": 3
+        "Type": "Crafting",
+        "Id": "Forge_Divine",
+        "Categories": [
+          "Forge_Dagues"
+        ]
       }
     ]
   },
